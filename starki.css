@@ -1,0 +1,172 @@
+.body4{
+  background-image: url("image/fon4-min.jpg");
+  color: blanchedalmond;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.body1{
+  background-image: url("image/fon1-min.jpg");
+  color: blanchedalmond;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.body2{
+  background-image: url("image/fon2-min.jpg");
+  color: blanchedalmond;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.body3{
+  background-image: url("image/fon3-min.jpg");
+  color: blanchedalmond;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.body5{
+  background-image: url("image/fon5-min.jpg");
+  color: blanchedalmond;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.body6{
+  background-image: url("image/fon6-min.jpg");
+  color: blanchedalmond;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.body7{
+  background-image: url("image/fon7-min.jpg");
+  color: blanchedalmond;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.body8{
+  background-image: url("image/fon8-min.jpg");
+  color: blanchedalmond;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.body9{
+  background-image: url("image/fon9-min.jpg");
+  color: blanchedalmond;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.button_menu_up_stark{
+  float:left;
+  height: 30px;
+  width: 90px;
+  margin: 2px;
+}
+.form_menu_up_stark{
+    margin: 2px;
+  }
+.divMenuUpStarki{
+    height: 35px;
+    width: 100%; 
+}
+.sokol1000{
+  height: 400px;
+  width: 400px; 
+}
+.soloDiv{
+  position: static;
+  right: 50px;
+}
+.login_stark
+{
+  float:right;
+  width: 100%;
+  height: 40px;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+.form_login_stark
+{
+  float:right;
+}
+.button_login_stark
+{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+}
+.text_login_stark
+{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  color: azure;
+}
+.privetDrug{
+  color: aquamarine;
+}
+.login{
+  height:40px;
+  margin: 5px;
+}
+.form_login{
+  margin: 5px;
+}
+.button_login_status{
+  margin: 5px;
+}
+.text_login_status{
+  margin: 5px;
+  background: #eaf3f3;
+}
+/******************************Стили для второго меню***********************************/
+.menu_stark_glawnoe{
+ margin: 100px;
+}
+/********************************Члены клана*********************************************/
+.button_dolgnosti_starkow{
+  background-image: url("image/zwezda.jpg");
+  color:#eaf3f3;
+  background-size: cover;
+}
+.zagolowok_dolgnosti{
+  text-align: center;
+}
+.imgProfil{
+  height: 150px;
+  width: 150px;
+  float: left;
+  background-color: beige;
+}
+.urlFoto{
+  float:left;
+  margin: 60px;
+}
+.submit_redakt_profil{
+  float: right;
+  width: 150px;
+}
+.statusProfil
+{
+  width: 150px;
+  font-size: 0.8vw;
+}
+.statusProf{
+  float: left;
+  
+}
+.statusProfPunkt{
+  float: left;
+  font-size: 0.8vw;
+}
+.Hrredakt_profil{
+  size: 2;
+}
+.bootstrap_1_redakt_profil{
+  width: 25%;
+}
+.bootstrap_2_redakt_profil{
+  width: 50%;
+}
+.bootstrap_3_redakt_profil{
+  width: 16%;
+}
+.bootstrap_4_redakt_profil{
+  width: 8%;
+}
