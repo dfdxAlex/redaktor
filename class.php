@@ -10,7 +10,7 @@ class instrument
     public $classButton;
 
     public function __construct(){
-    }  //  код добавлен .. ппп
+    }  //  код добавлен .. ппп gggg hghythy 
    // Функция выводит некое сообщение $mesaz, задает название кнопок, которым будет присвоено OK или Cansel ///проверка git 1-3
    // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
    // $classP - класс тегов Р - сообщения, $classButton - класс для кнопок
