@@ -139,7 +139,7 @@ class initBD extends instrument
     // zapretUdaleniaTablicy($nameTablicy)               // запрет на удаление таблиц
     //Функция проверяет статус в заданной таблице, выводит checked="checked" если статус есть или ''
     // printTab('fff',1);                                // отладочная функция создает таблицу debuger и что-то туда пишет
-    // printTabEcho();                                   // выводит содержимое таблицы debuger
+    // printTabEcho();       //не работает                            // выводит содержимое таблицы debuger
     public function searcIdPoUsloviu($nameTablicy,$usl1,$usl2,$usl3,$usl4,$usl5)               //Проверяет есть ли запись по условиям, возвращает ID, записи 
     {
       
