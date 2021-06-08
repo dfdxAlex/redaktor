@@ -328,6 +328,7 @@ echo '<div class="row menu_redaktor_down">'."\n";
  //header("Refresh:0");
  
 // }
+$red->printTabEcho()
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

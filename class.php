@@ -139,7 +139,7 @@ class initBD extends instrument
     // zapretUdaleniaTablicy($nameTablicy)               // запрет на удаление таблиц
     //Функция проверяет статус в заданной таблице, выводит checked="checked" если статус есть или ''
     // printTab('fff',1);                                // отладочная функция создает таблицу debuger и что-то туда пишет
-    //
+    // printTabEcho();                                   // выводит содержимое таблицы debuger
     public function searcIdPoUsloviu($nameTablicy,$usl1,$usl2,$usl3,$usl4,$usl5)               //Проверяет есть ли запись по условиям, возвращает ID, записи 
     {
       
@@ -194,6 +194,25 @@ class initBD extends instrument
       $this->zaprosSQL($zapros);
       $zapros="INSERT INTO debuger(mesage) VALUES ('".$mesadz."')";
       $this->zaprosSQL($zapros);
+    }
+    public function printTabEcho()
+    {
+      //if ($kill) $this->zaprosSQL("DELETE FROM `debuger` WHERE 1");
+      $zapros="SELECT * FROM debuger WRERE 1";
+      $rez=$this->zaprosSQL($zapros);
+      if (!$rez) {
+          echo 'не получилось скачать данные из таблицы debuger'; return false;
+       }
+      $stroka=mysqli_fetch_assoc($rez);
+      //$zapros="INSERT INTO debuger(mesage) VALUES ('".$mesadz."')";
+      //$this->zaprosSQL($zapros);
+      while (!in_null($stroka=mysqli_fetch_assoc($rez)))
+      {
+        foreach ($stroka as $key => $value)
+          {
+           echo $key.'=>'.$value;
+          }
+      }
     }
     public function zapretUdaleniaTablicy($nameTablicy)
     {
@@ -1791,10 +1810,11 @@ class redaktor  extends menu
                 if ($stroka['name_attrib']=='блок') $badAttrib=true;
                 if ($stroka['name_attrib']=='импорт из клетки ?-?') $badAttrib=true;
                 if ($stroka['name_attrib']=='число строк')  $badAttrib=true;
+                //if ($stroka['name_attrib']=='импорт ?-?')  $badAttrib=true;
                 if ($stroka['name_attrib']=="ввести код")  $badAttrib=true; //источник ссылки
                 if ($stroka['name_attrib']=="источник ссылки")  $badAttrib=true; //источник ссылки
                 if ($stroka['name_attrib']=="источник текста")  $badAttrib=true; //источник ссылки
-                if ($stroka['name_attrib']=="разделение блоков с BR")  $badAttrib=true; //источник ссылки импорт из клетки ?-?
+                if ($stroka['name_attrib']=="разделение блоков с BR")  $badAttrib=true; //источник ссылки импорт ?-?
                 if ($stroka['name_attrib']=="разделение блоков с HR")  $badAttrib=true; //источник ссылки
                  //работаем с тегом Select
                if ($teg=='select' && $stroka['name_attrib']=="option") 
@@ -2004,6 +2024,23 @@ class redaktor  extends menu
            $stroka="INSERT INTO ".$nameTable."_tegi(stolb, str, name_teg, name_attrib, text) VALUES (".$pole.",".$str.",'".$teg."','блок','".$strokaTime."')";
            parent::zaprosSQL($stroka);  
            return true;
+         }
+         if ($attrib=='импорт из клетки ?-?')
+         {
+           $pozicii=preg_split("/-/",$text);  // находим позицию - источник импорта
+           $strP=(int)$pozicii[0];                 // находим позицию - источник импорта
+           $stolpP=(int)$pozicii[1];               // находим позицию - источник импорта
+           $strokaImport=parent::zaprosSQL("SELECT * FROM ".$nameTable."_tegi WHERE stolb=".$stolpP." AND str=".$strP);
+           
+           while (!is_null($zCopy=mysqli_fetch_assoc($strokaImport)))
+           {
+                  $strokaTime=preg_replace('%(Str)[0-9]+?%','Str'.$str,$zCopy['text']);
+                  $strokaTime2=preg_replace('%(Stolb)[0-9]+?%','Stolb'.$pole,$strokaTime);
+                  $zCopy['text']=$strokaTime2;
+                  $stroka="INSERT INTO ".$nameTable."_tegi(stolb, str, name_teg, name_attrib, text) VALUES (".$pole.",".$str.",'".$zCopy['name_teg']."','".$zCopy['name_attrib']."','".$zCopy['text']."')";
+                  parent::zaprosSQL($stroka);
+                  parent::printTab ($stroka,1);
+                }
          }
          if ($attrib=='удалить блок' && isset($_SESSION['text_checkbox_'.$str.'_'.$pole]))
          {
