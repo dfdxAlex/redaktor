@@ -1,6 +1,6 @@
 <?php
 
-// класс с общими функциями демонстрация сервиса для тёти Оли.
+// класс с общими функциями 
 class instrument
 {
     public $mesaz;
@@ -1204,6 +1204,15 @@ class redaktor  extends menu
          echo '<p class="infoHelpGlTablP">value="V_statusStr1Stolb3" где Str1 - это строка 1, Stolb3 - это (столбец 3 или позиция 3 или поле 3), V_ - просто маркер, он обязателен!</p>';
          echo '<p class="infoHelpGlTablP">Далее программа сама добавит порядковые номера.</p>';
          echo '<p class="infoHelpGlTablP">При заполнении свойства аттрибутов можно просто скопировать отсюда и изменить лишь строку и столбец.</p>';
+         echo '<h5>Импорт и очистка блоков шаблона</h5>';
+         echo '<p class="infoHelpGlTablP">Импорт - это взятие настроек чекбоксов из соседних ячеек с преобразованием всех имен.</p>';
+         echo '<p class="infoHelpGlTablP">На пример: если импортируете чекбоксы из строки 2 столбца 3 в строку 3 столбец 3, то </p>';
+         echo '<p class="infoHelpGlTablP">id="statusStr2Stolb3" будет преобразован в id="statusStr3Stolb3" и так далее, надписи текстовые сохранятся.</p>';
+         echo '<p class="infoHelpGlTablP">Для импорта достаточно в нужной ячейке выбрать фальш-аттрибут "импорт из клетки ?-?", в значении аттрибута следует задать строку и столбец</p>';
+         echo '<p class="infoHelpGlTablP">места, из которого происходит импорт, через тире или минус. На пример: "импорт из клетки ?-?"=3-4. В данном примере в текущую клетку</p>';
+         echo '<p class="infoHelpGlTablP">будут импортированы настройки чекбокса из позиции строка 3, столбец 4.</p>';
+         echo '<p class="infoHelpGlTablP">Для очистки блока или ячейки достаточно выбрать псевдо-аттрибут "очистить аттрибуты" и Запомнить.</p>';
+         echo '<p class="infoHelpGlTablP"></p>';
          echo '</div>';
          echo '</div>';
          echo '<div class="btn btn-outline-info vverhInfoPoleRedaktoraHablona"><a href="#vverh">Вверх</a></div>';
