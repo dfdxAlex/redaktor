@@ -1,6 +1,6 @@
 <?php
 
-// класс с общими функциями
+// класс с общими функциями демонстрация сервиса для тёти Оли.
 class instrument
 {
     public $mesaz;
@@ -113,7 +113,7 @@ class initBD extends instrument
     public function initBdNameBD(){return $this->nameBD;}
     public function initsite(){return $this->site;}
 
-    // Инструментарий от родительского
+    // Инструментарий от родительского  
          // Функция выводит некое сообщение $mesaz, задает название кнопок, которым будет присвоено OK или Cansel
          // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
          // $classP - класс тегов Р - сообщения, $classButton - класс для кнопок
@@ -1810,7 +1810,7 @@ class redaktor  extends menu
                 if ($stroka['name_attrib']=='блок') $badAttrib=true;
                 if ($stroka['name_attrib']=='импорт из клетки ?-?') $badAttrib=true;
                 if ($stroka['name_attrib']=='число строк')  $badAttrib=true;
-                //if ($stroka['name_attrib']=='импорт ?-?')  $badAttrib=true;
+                if ($stroka['name_attrib']=='очистить аттрибуты')  $badAttrib=true;
                 if ($stroka['name_attrib']=="ввести код")  $badAttrib=true; //источник ссылки
                 if ($stroka['name_attrib']=="источник ссылки")  $badAttrib=true; //источник ссылки
                 if ($stroka['name_attrib']=="источник текста")  $badAttrib=true; //источник ссылки
@@ -2025,6 +2025,12 @@ class redaktor  extends menu
            parent::zaprosSQL($stroka);  
            return true;
          }
+         //очистить аттрибуты
+         if ($attrib=='очистить аттрибуты')
+         {
+          parent::zaprosSQL("DELETE FROM `".$nameTable."_tegi` WHERE stolb=".$pole." AND str=".$str);
+         }
+         // импорт аттрибутов
          if ($attrib=='импорт из клетки ?-?')
          {
            $pozicii=preg_split("/-/",$text);  // находим позицию - источник импорта
@@ -2039,8 +2045,8 @@ class redaktor  extends menu
                   $zCopy['text']=$strokaTime2;
                   $stroka="INSERT INTO ".$nameTable."_tegi(stolb, str, name_teg, name_attrib, text) VALUES (".$pole.",".$str.",'".$zCopy['name_teg']."','".$zCopy['name_attrib']."','".$zCopy['text']."')";
                   parent::zaprosSQL($stroka);
-                  parent::printTab ($stroka,1);
-                }
+                  //parent::printTab ($stroka,1);
+            }
          }
          if ($attrib=='удалить блок' && isset($_SESSION['text_checkbox_'.$str.'_'.$pole]))
          {
@@ -2341,7 +2347,6 @@ class redaktor  extends menu
             echo '<option>вставить Tcl код</option>';
             echo '<option>вставить C++(bin) код</option>';
             echo '<option>задать тег</option>';
-            //echo '<option>удалить</option>';
           }
          
           if ($teg=='заголовок')
@@ -2390,6 +2395,7 @@ class redaktor  extends menu
          echo '<option>class для label</option>';
          echo $this->nomerStrokRadio($nameSelect,$nameTablic);
         }
+        echo '<option>очистить аттрибуты</option>';
         if ($teg=='radio' || $teg=='checkbox')
         echo '<option>число строк</option>';
         if ($teg=='button' || $teg=='textarea' || ($teg=='radio' && $this->nomerStrokRadio($nameSelect,$nameTablic)=='') || ($teg=='checkbox' && $this->nomerStrokRadio($nameSelect,$nameTablic)=='') || $teg=='заголовок')
