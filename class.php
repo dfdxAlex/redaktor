@@ -1451,6 +1451,7 @@ class redaktor  extends menu
                                  || $nameTega[0]=='h4'  && $stroka['name_attrib']!='источник текста' 
                                   || $nameTega[0]=='h5'  && $stroka['name_attrib']!='источник текста' 
                                    || $nameTega[0]=='h6'  && $stroka['name_attrib']!='источник текста' 
+                                   || ($nameTega[0]=='textarea' && $stroka['name_attrib']!='текст на кнопке')
                                     || ($nameTega[0]=='button' && $stroka['name_attrib']!='текст на кнопке')
                                       || ($nameTega[0]=='checkbox'  && $stroka['name_attrib']!='текст на кнопке' && $stroka['name_attrib']!='for' && $stroka['name_attrib']!='checked')
                                          || ($nameTega[0]=='html' && $stroka['name_attrib']!='ввести код') 
@@ -1482,11 +1483,15 @@ class redaktor  extends menu
                          {
                            if ($stroka['name_teg']=='button'                              //выдернуть(запомнить) текст на кнопке
                              || $stroka['name_teg']=='checkbox'
-                              )
+                              || $stroka['name_teg']=='radio'
+                               || $stroka['name_teg']=='textarea'
+                                )
                             $textNaKnopke=$stroka['text'];
+                            if ($stroka['name_teg']=='textarea' && $info) $textNaKnopke=$info; // Запоминаем текст в поле Текст ареа.
                           }
                         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        ////////////Работаем с For
+                        
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Работаем с For
                         if ($stroka['name_attrib']=='for')
                           $for=$stroka['text'];                            //выдернуть(запомнить) For
                           ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1506,6 +1511,9 @@ class redaktor  extends menu
 
                          if ($nameTega[0]=='button') // добавить текст на кнопке для тега button и сформировать строку
                            $viv='<button '.$viv.'>'.$textNaKnopke.'</button>';
+
+                         if ($nameTega[0]=='textarea') // добавить текст на поле и сформировать строку
+                           $viv='<textarea '.$viv.'>'.$textNaKnopke.'</textarea>';
 
                          if ($nameTega[0]=='img')    
                           $viv='<img '.$viv.'>';
@@ -1638,8 +1646,6 @@ class redaktor  extends menu
               {
                 $nameTega[0]='';
                 $nameTega=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$stolbi." FROM ".$nameTablic." WHERE id_tab_gl=".$stri));
-                //echo $nameTega[0];
-                //if ($nameTega[0]=='img') Break(); // Если тег img, то ничего не записываем
                 if ($nameTega[0]=='text' || $nameTega[0]=='textarea') 
                  {
                    $searcName=mysqli_fetch_array(parent::zaprosSQL("SELECT text FROM ".$nameTablic."_tegi WHERE str=".$stri.' AND stolb='.$stolbi.' AND name_attrib=\'name\''));
@@ -1649,8 +1655,6 @@ class redaktor  extends menu
                  if ($nameTega[0]=='radio' || $nameTega[0]=='checkbox') 
                  {
                    $searcName=mysqli_fetch_array(parent::zaprosSQL("SELECT text FROM ".$nameTablic."_tegi WHERE str=".$stri.' AND stolb='.$stolbi.' AND name_attrib=\'id\''));
-                   //if (isset($_POST[$searcName[0]]))
-                    //echo $searcName[0];
                     $this->saveStrData($nameTablic,$stri,$stolbi,$this->statusVStroku($searcName[0]),false);
                  }
 
@@ -2063,7 +2067,7 @@ class redaktor  extends menu
            return true;
          }
          ////////////////////////////////////////////////////
-         if ($teg=='произвольный' && $attrib=='задать тег') 
+         if ($teg=='произвольный' && $attrib=='задать тег' || $teg=='заголовок' && $attrib=='задать тег') 
           {
           $stroka="UPDATE ".$nameTable." SET poz".$pole."='".$text."' WHERE id_tab_gl=".$str;// WHERE 1
           parent::zaprosSQL($stroka);   
