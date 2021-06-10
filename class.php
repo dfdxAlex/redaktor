@@ -1434,6 +1434,7 @@ class redaktor  extends menu
                            $viv=$str0.$str1.$str2.$str3.$str4.$str5.$str9;
                          }
                       } 
+                      $textPoUmolcaniu="здесь фальш_аттрибута текста по умолчанию нет";
                       //---------------------------------------------------------------------------------------------------
                       $info=$this->loadInfoData($nameTablic,$stri,$stolbi); //Получаем пользовательское значение из таблицы _data, если оно есть
                       if (!$blockJest) // Есть смысл создавать строку с аттрибутами только если чекбокс или радио не заданы блоком
@@ -1467,10 +1468,7 @@ class redaktor  extends menu
                                     
                                     // Если на данный момент рассматривается тег img тега text, и в базе _data есть новое значение, то заменить значение стартовое из _tegi на значение из базы _data
                                     if ($stroka['name_attrib']=='текст по умолчанию') 
-                                      {
-                                        $urlDlaImage=$this->searcUrlImage($nameTablic,$stri,$stolbi,''); 
-                                        if ($urlDlaImage) {$text=$urlDlaImage;}
-                                      }
+                                        $textPoUmolcaniu=$text;
                                    
                                     // Работа с чекбоксами написанными кодом
                                     if ($stroka['string_ili_int']==0) // строим строку аттрибутов
@@ -1480,10 +1478,6 @@ class redaktor  extends menu
                           //------------------------------------------------------------------------------------------------------
                           if ($stroka['name_attrib']=='checked') $viv=$viv.' checked';  // простые аттрибуты
                        
-                          if ($stroka['name_attrib']=='текст по умолчанию')
-                          {
-                            $textPoUmolcaniu=
-                          }
                        //////////////////////////////////////////////////////////////////////////////////////////////////////////
                        ////////////Работаем со значением Текст на кнопке
                        if ($stroka['name_attrib']=='текст на кнопке')
@@ -1525,7 +1519,7 @@ class redaktor  extends menu
                          if ($nameTega[0]=='img')    
                           $viv='<img '.$viv.'>';
 
-                          //$textPh1h6
+                          //
                           if ($nameTega[0]=='p' || $nameTega[0]=='h1' || $nameTega[0]=='h2' || $nameTega[0]=='h3' || $nameTega[0]=='h4' || $nameTega[0]=='h5' || $nameTega[0]=='h6')    
                           {
                             $strIstok=0;
@@ -1533,8 +1527,12 @@ class redaktor  extends menu
                             $rezult=preg_split("/-/",$textPh1h6);
                             $strIstok=(int)$rezult[0];
                             $stolbIstok=(int)$rezult[1];
-                            $textPh1h6=mysqli_fetch_array(parent::zaprosSQL("SELECT info FROM ".$nameTablic."_data WHERE str=".$strIstok." AND stolb=".$stolbIstok." AND login='".$_SESSION['login']."'" ));
-                           $viv='<'.$nameTega[0].' '.$viv.'>'.$textPh1h6[0].'</'.$nameTega[0].'>';
+                            // прочитать значение текста из пользовательской таблицы _data
+                            if ($textPoUmolcaniu=="здесь фальш_аттрибута текста по умолчанию нет")
+                              $textPh1h6=mysqli_fetch_array(parent::zaprosSQL("SELECT info FROM ".$nameTablic."_data WHERE str=".$strIstok." AND stolb=".$stolbIstok." AND login='".$_SESSION['login']."'" ));
+                            if ($textPoUmolcaniu!="здесь фальш_аттрибута текста по умолчанию нет") 
+                              $textPh1h6[0]=$textPoUmolcaniu;
+                            $viv='<'.$nameTega[0].' '.$viv.'>'.$textPh1h6[0].'</'.$nameTega[0].'>';
                           }
 
                          if ($nameTega[0]=='text')
