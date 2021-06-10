@@ -1444,26 +1444,29 @@ class redaktor  extends menu
                          if ($nameTega[0]==$stroka['name_teg']) // отсеваем строки со старыми тегами, если они есть (с неактуальными)
                          if ($nameTega[0]=='img'  && $stroka['name_attrib']!='источник ссылки'
                           || $nameTega[0]=='text' 
-                           || $nameTega[0]=='p'  && $stroka['name_attrib']!='источник текста' 
-                            || $nameTega[0]=='h1'  && $stroka['name_attrib']!='источник текста' 
-                             || $nameTega[0]=='h2'  && $stroka['name_attrib']!='источник текста' 
-                               || $nameTega[0]=='h3'  && $stroka['name_attrib']!='источник текста' 
-                                 || $nameTega[0]=='h4'  && $stroka['name_attrib']!='источник текста' 
-                                  || $nameTega[0]=='h5'  && $stroka['name_attrib']!='источник текста' 
-                                   || $nameTega[0]=='h6'  && $stroka['name_attrib']!='источник текста' 
-                                   || ($nameTega[0]=='textarea' && $stroka['name_attrib']!='текст на кнопке')
-                                    || ($nameTega[0]=='button' && $stroka['name_attrib']!='текст на кнопке')
-                                      || ($nameTega[0]=='checkbox'  && $stroka['name_attrib']!='текст на кнопке' && $stroka['name_attrib']!='for' && $stroka['name_attrib']!='checked')
-                                         || ($nameTega[0]=='html' && $stroka['name_attrib']!='ввести код') 
+                            || $nameTega[0]=='p'  && $stroka['name_attrib']!='источник текста'  
+                              || $nameTega[0]=='h1'  && $stroka['name_attrib']!='источник текста'  
+                                || $nameTega[0]=='h2'  && $stroka['name_attrib']!='источник текста'  
+                                  || $nameTega[0]=='h3'  && $stroka['name_attrib']!='источник текста'  
+                                    || $nameTega[0]=='h4'  && $stroka['name_attrib']!='источник текста'
+                                      || $nameTega[0]=='h5'  && $stroka['name_attrib']!='источник текста' 
+                                        || $nameTega[0]=='h6'  && $stroka['name_attrib']!='источник текста' 
+                                          || ($nameTega[0]=='textarea' && $stroka['name_attrib']!='текст на кнопке')
+                                            || ($nameTega[0]=='button' && $stroka['name_attrib']!='текст на кнопке')
+                                              || ($nameTega[0]=='checkbox'  && $stroka['name_attrib']!='текст на кнопке' && $stroka['name_attrib']!='for' && $stroka['name_attrib']!='checked')
+                                                || ($nameTega[0]=='html' && $stroka['name_attrib']!='ввести код') 
                                   )
                                   {
                                     $text=$stroka['text']; // Значение аттрибута по умолчанию, из таблицы _tegi
                                     
                                     // Если на данный момент рассматривается тег value тега text, и в базе _data есть новое значение, то заменить значение стартовое из _tegi на значение из базы _data
                                     if ($nameTega[0]=='text' && $stroka['name_attrib']=='value' && $info) $text=$info; 
+
+                                    // Если на данный момент рассматривается фальш-аттрибут (текст по умолчанию)
+                                    if ($nameTega[0]=='text' && $stroka['name_attrib']=='value' && $info) $text=$info;
                                     
                                     // Если на данный момент рассматривается тег img тега text, и в базе _data есть новое значение, то заменить значение стартовое из _tegi на значение из базы _data
-                                    if ($nameTega[0]=='img' && $stroka['name_attrib']=='src') 
+                                    if ($stroka['name_attrib']=='текст по умолчанию') 
                                       {
                                         $urlDlaImage=$this->searcUrlImage($nameTablic,$stri,$stolbi,''); 
                                         if ($urlDlaImage) {$text=$urlDlaImage;}
@@ -1477,6 +1480,10 @@ class redaktor  extends menu
                           //------------------------------------------------------------------------------------------------------
                           if ($stroka['name_attrib']=='checked') $viv=$viv.' checked';  // простые аттрибуты
                        
+                          if ($stroka['name_attrib']=='текст по умолчанию')
+                          {
+                            $textPoUmolcaniu=
+                          }
                        //////////////////////////////////////////////////////////////////////////////////////////////////////////
                        ////////////Работаем со значением Текст на кнопке
                        if ($stroka['name_attrib']=='текст на кнопке')
@@ -2385,6 +2392,7 @@ class redaktor  extends menu
         }
         if ($teg=='p' || $teg=='h1' || $teg=='h2' || $teg=='h3' || $teg=='h4' || $teg=='h5' || $teg=='h6')
         {
+        echo '<option>текст по умолчанию</option>';
         echo '<option>источник текста</option>';
         }
         if ($teg=='form')
