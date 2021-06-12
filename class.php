@@ -1281,8 +1281,7 @@ class redaktor  extends menu
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // параметры $st определают размер соответствующего столбца. Если все 5 равны 0, то размер будет автоматический.
-    public function hablon($nameTablic)//,$st1,$st2,$st3,$st4,$st5) //шаблон, если второй параметр True, то записать
+    public function hablon($nameTablic)
     {
         $urovnejHablona=$this->cisloUrovnejHablon($nameTablic);
         $stolbovHablona=$this->cisloStolbovjHablon($nameTablic);
@@ -1316,7 +1315,7 @@ class redaktor  extends menu
         if (!$rez) {echo 'Не найдена таблица шаблона'; return 'Не найдена таблица шаблона';}
         $viv=' ';
         $vivteg='';
-        $textPh1h6='';
+        $textPh1h6='0-0';
         while ($stroka=mysqli_fetch_assoc($rez))
         {
             if ($stroka['name_attrib']!='ширина столбцов bootstrap' && $stroka['name_attrib']!='разделение блоков с BR' && $stroka['name_attrib']!='разделение блоков с HR')
@@ -1435,12 +1434,15 @@ class redaktor  extends menu
                          }
                       } 
                       $textPoUmolcaniu="здесь фальш_аттрибута текста по умолчанию нет";
+                      //$linkNaImg='здесь фальш_аттрибута источник ссылки нет';
                       //---------------------------------------------------------------------------------------------------
+                     
                       $info=$this->loadInfoData($nameTablic,$stri,$stolbi); //Получаем пользовательское значение из таблицы _data, если оно есть
                       if (!$blockJest) // Есть смысл создавать строку с аттрибутами только если чекбокс или радио не заданы блоком
                       while ($stroka=mysqli_fetch_assoc($rez))
                         { 
                          if ($stroka['name_attrib']=='источник текста') $textPh1h6=$stroka['text'];
+                         //if (stripos($stroka['name_attrib'],'ссылки')>0) $linkNaImg=$stroka['text'];
                          // Работаем со стандартным оформлением аттрибутов по схеме <тег аттрибут="значение"> //////////////////////
                          if ($nameTega[0]==$stroka['name_teg']) // отсеваем строки со старыми тегами, если они есть (с неактуальными)
                          if ($nameTega[0]=='img'  && $stroka['name_attrib']!='источник ссылки'
@@ -1501,6 +1503,19 @@ class redaktor  extends menu
                           {
                                $kodHtml=$stroka['text'];                            //выдернуть(запомнить) html код
                           }
+                        ////////////Работаем с img
+                         if ($stroka['name_teg']=='img' && $stroka['name_attrib']=='источник ссылки')
+                           {
+                            echo $stroka['name_teg'].'--'.$stroka['name_attrib'];
+                            $strIstok=0;
+                            $stolbIstok=0;
+                            $rezult=preg_split("/-/",$stroka['text']);
+                            $strIstok=(int)$rezult[0];
+                            $stolbIstok=(int)$rezult[1];
+                            $linkImg=$this->loadInfoData($nameTablic,$strIstok,$stolbIstok); //Получаем пользовательское значение из таблицы _data, если оно есть
+                            $viv=$viv.' src="'.$linkImg.'"';
+                            if (preg_match("/(http.+)/",$linkImg)) $viv=preg_replace("/(src)?.+(jpg)?/",' src="'.$linkImg.'"',$viv);
+                           }
                          ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         } ////////////////////////////////////////////////// крнец while
                          ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1522,17 +1537,20 @@ class redaktor  extends menu
                           //
                           if ($nameTega[0]=='p' || $nameTega[0]=='h1' || $nameTega[0]=='h2' || $nameTega[0]=='h3' || $nameTega[0]=='h4' || $nameTega[0]=='h5' || $nameTega[0]=='h6')    
                           {
-                            $strIstok=0;
-                            $stolbIstok=0;
-                            $rezult=preg_split("/-/",$textPh1h6);
-                            $strIstok=(int)$rezult[0];
-                            $stolbIstok=(int)$rezult[1];
                             // прочитать значение текста из пользовательской таблицы _data
                             if ($textPoUmolcaniu=="здесь фальш_аттрибута текста по умолчанию нет")
-                              $textPh1h6=mysqli_fetch_array(parent::zaprosSQL("SELECT info FROM ".$nameTablic."_data WHERE str=".$strIstok." AND stolb=".$stolbIstok." AND login='".$_SESSION['login']."'" ));
-                            if ($textPoUmolcaniu!="здесь фальш_аттрибута текста по умолчанию нет") 
-                              $textPh1h6[0]=$textPoUmolcaniu;
-                            $viv='<'.$nameTega[0].' '.$viv.'>'.$textPh1h6[0].'</'.$nameTega[0].'>';
+                              {
+                                $strIstok=0;
+                                $stolbIstok=0;
+                                $rezult=preg_split("/-/",$textPh1h6);
+                                $strIstok=(int)$rezult[0];
+                                $stolbIstok=(int)$rezult[1];
+                                $textPh1h6=mysqli_fetch_array(parent::zaprosSQL("SELECT info FROM ".$nameTablic."_data WHERE str=".$strIstok." AND stolb=".$stolbIstok." AND login='".$_SESSION['login']."'" ));
+                                $viv='<'.$nameTega[0].' '.$viv.'>'.$textPh1h6[0].'</'.$nameTega[0].'>';
+                              }
+
+                              if ($textPoUmolcaniu!="здесь фальш_аттрибута текста по умолчанию нет") 
+                                $viv='<'.$nameTega[0].' '.$viv.'>'.$textPoUmolcaniu.'</'.$nameTega[0].'>';
                           }
 
                          if ($nameTega[0]=='text')
@@ -2000,6 +2018,7 @@ class redaktor  extends menu
         //записываем аттрибут тега
         public function saveAttribTega($nameTable,$teg,$attrib,$nameButton,$text,$striliint)
         {
+          if ($attrib=="----------") return false;
           //глобальные переменные функции
           $stringIliInt=0;
           $z=true;
