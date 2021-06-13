@@ -1506,7 +1506,7 @@ class redaktor  extends menu
                         ////////////Работаем с img
                          if ($stroka['name_teg']=='img' && $stroka['name_attrib']=='источник ссылки')
                            {
-                            echo $stroka['name_teg'].'--'.$stroka['name_attrib'];
+                            //echo $stroka['name_teg'].'--'.$stroka['name_attrib'];
                             $strIstok=0;
                             $stolbIstok=0;
                             $rezult=preg_split("/-/",$stroka['text']);

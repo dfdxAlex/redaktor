@@ -90,11 +90,14 @@ if (isset($_POST['podtverdit'])  &&  $_POST['podtverdit']=='Подтвердит
     else {echo '<p class="error">Код не верен!!</p>';}
           if ($_SESSION['status']!=4 && $_SESSION['status']!=5 && $_SESSION['status']!=9) $status->naGlavnuStranicu();
 }
-if (isset($_POST['login'])  &&  $_POST['login']=='Вход')  { //Если нажата кнопка Вход
+if (isset($_POST['login'])  &&  $_POST['login']=='Вход'  && $status->statusRegi($_POST['login_status'],$_POST['parol_status']))  { //Если нажата кнопка Вход
   $_SESSION['regimRaboty']=16;
   $_SESSION['status']=$status->statusRegi($_POST['login_status'],$_POST['parol_status']);
-  $_SESSION['login']=$_POST['login_status'];
-  $_SESSION['parol']=$_POST['parol_status'];
+  if ($_SESSION['status']>99 || $_SESSION['status']==9 || $_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3 || $_SESSION['status']==4 || $_SESSION['status']==5)
+  {
+   $_SESSION['login']=$_POST['login_status'];
+   $_SESSION['parol']=$_POST['parol_status'];
+  }
   header("Refresh:0");
 }
 if (isset($_POST['login'])  &&  $_POST['login']=='На сайт')  { //Если нажата кнопка На сайт
@@ -328,7 +331,7 @@ echo '<div class="row menu_redaktor_down">'."\n";
  //header("Refresh:0");
  
 // }
-$red->printTabEcho()
+//$red->printTabEcho()
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

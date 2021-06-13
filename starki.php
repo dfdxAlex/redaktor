@@ -34,7 +34,8 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
 </div>
 <div class="col-2">
 <?php
-$privet='Привет Гость';
+//$privet='Привет Гость';
+$privet='Привет';
 if (isset($_SESSION['login'])) $privet='Привет '.$_SESSION['login'];
 $privet=$privet.' ('.$status->statusString().')';
 echo '<p class="privetDrug">'.$privet.'</p>';
@@ -122,26 +123,31 @@ if (isset($_POST['menu_stark_up_status'])  &&  $_POST['menu_stark_up_status']=='
      echo '<script>location.reload()</script>';
     }
 }
-if (isset($_POST['menu_stark_up_status'])  &&  $_POST['menu_stark_up_status']=='Вход')  { //Если нажата кнопка Вход
-  $_SESSION['regimRaboty']=16;
+if (isset($_POST['menu_stark_up_status'])  &&  $_POST['menu_stark_up_status']=='Вход' && $status->statusRegi($_POST['login_status_stark'],$_POST['parol_status_stark']))  { //Если нажата кнопка Вход
+  //проверить статус запрашиваемого пользователя
   $_SESSION['status']=$status->statusRegi($_POST['login_status_stark'],$_POST['parol_status_stark']);
-  $_SESSION['login']=$_POST['login_status_stark'];
-  $_SESSION['parol']=$_POST['parol_status_stark'];
+  $_SESSION['regimRaboty']=16;
+
+  if ($_SESSION['status']>99 || $_SESSION['status']==9 || $_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3 || $_SESSION['status']==4 || $_SESSION['status']==5)
+   {
+    $_SESSION['login']=$_POST['login_status_stark'];
+    $_SESSION['parol']=$_POST['parol_status_stark'];
+   }
+
   if (!isset($_SESSION['vhod']) || isset($_SESSION['vhod']) && $_SESSION['vhod']==false)
     {
      $_SESSION['vhod']=true;
      $_SESSION['vyhod']=false;
-    // $_SESSION['vhod']=false;
      echo '<script>location.reload()</script>';
     }
 }
 
 
-if (isset($_POST['login_stark'])  &&  $_POST['login_stark']=='Регистрация' || $_SESSION['regimRaboty']==13)  { //Если нажата кнопка Регистрация
-  $_SESSION['sSajta']=true;
+//if (isset($_POST['login_stark'])  &&  $_POST['login_stark']=='Регистрация' || $_SESSION['regimRaboty']==13)  { //Если нажата кнопка Регистрация
+//  $_SESSION['sSajta']=true;
   //header('Location: redaktor.php ');
-  exit("<meta http-equiv='refresh' content='0; url= redaktor.php'>");
-}
+//  exit("<meta http-equiv='refresh' content='0; url= redaktor.php'>");/
+//}
 ///////////////////////////////////////////////////////////Конец работы с регистрацией///////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //$_SESSION['regimRaboty']=20 // Редактирование профиля пользователя
