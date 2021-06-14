@@ -23,6 +23,7 @@ $spisokTablic=false;    // Признак нажатия кнопки Списо
 
 $red = new redaktor();
 $status = new login();
+$maty = new maty();
 
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
 if ($_SESSION['status']>99) $_SESSION['status']=9;
@@ -113,7 +114,7 @@ if (isset($_POST['registracia'])  && $status->lovimOtvetNaCapcu($_POST['registra
    } else {
            $_SESSION['regimRaboty']=14;
            $menuUp->__unserialize('menu4','registracia',array('redaktor.php',$_POST['Логин'],$_POST['parol'],$_POST['parol2'],$_POST['Почта'],$status->capcha()));
-           if ($status->prowerkaLogin()) echo '<p class="error">Такой логин уже существует.</p>';
+           if ($status->prowerkaLogin()) echo '<p class="error">Такой логин уже существует или не соответствует правилам.</p>';
            if ($status->prowerkaMail()) echo '<p class="error">Такая почта уже существует.</p>';
            if ($_POST['parol']!=$_POST['parol2']) echo '<p class="error">Разные пароли</p>';
            if ($_POST['parol']=="" || $_POST['parol']==" " || $_POST['parol']=="Пароль") echo '<p class="error">Отсутствует или плохой пароль</p>';
@@ -123,7 +124,7 @@ if (isset($_POST['registracia'])  && $status->lovimOtvetNaCapcu($_POST['registra
 if (isset($_POST['registracia'])  &&  $_POST['registracia']=='Проверить')  { //Если нажата кнопка Проверить 
   $_SESSION['regimRaboty']=13;
   $menuUp->__unserialize('menu4','registracia',array('redaktor.php',$_POST['Логин'],$_POST['parol'],$_POST['parol2'],$_POST['Почта'],$status->capcha()));
-  if ($status->prowerkaLogin()) echo '<p class="error">Такой логин уже существует.</p>'; else  echo '<p class="mesage">Логин свободен.</p>';
+  if ($status->prowerkaLogin()) echo '<p class="error">Такой логин уже существует или не соответствует правилам.</p>'; else  echo '<p class="mesage">Логин свободен.</p>';
   if ($status->prowerkaMail()) echo '<p class="error">Такая почта уже существует.</p>'; else  echo '<p class="mesage">Почта свободна.</p>';
 }
 if (isset($_POST['registracia'])  &&  $_POST['registracia']=='Очистить')  { //Если нажата кнопка Очистить
@@ -156,6 +157,13 @@ if (isset($_POST['redaktirowanieStatusa']) && $_POST['redaktirowanieStatusa']=='
 if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',7)) || $_SESSION['regimRaboty']==19)  { 
   $_SESSION['regimRaboty']=19;
   $status->listKlientow();
+}
+//Если нажата  кнопка Маты
+if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',8)) || $_SESSION['regimRaboty']==20)  { 
+  $_SESSION['regimRaboty']=20;
+  $maty->redactMaty();
+  
+  //$status->listKlientow();
 }
 if (isset($_POST['pokazNULL'])  && isset($_POST['pokazNULLSelect']) && $_POST['pokazNULLSelect']=='pokazNULLValue')  { //Если нажата кнопка Загрузить таблицу для меню
   $_SESSION['regimRaboty']=10;
@@ -363,5 +371,6 @@ $_SESSION['regimRaboty']=16 // Нажата кнопка входа
 $_SESSION['regimRaboty']=17 // Нажата кнопка Подтвердить запись
 $_SESSION['regimRaboty']=18 // Создание меню типа 5
 $_SESSION['regimRaboty']=19 // Редактирование учётных записей
+$_SESSION['regimRaboty']=20 // маты
 
   -->

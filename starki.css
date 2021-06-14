@@ -91,12 +91,17 @@
   margin: 1px;
   background-image: url("image/zwezda.jpg");
 }
+input::placeholder {
+  color: rgb(226, 216, 216);
+  font-size: 1.2em;
+  font-style: italic;
+}
 .text_login_stark
 {
   border: 1px;
   margin: 1px;
   background-image: url("image/zwezda.jpg");
-  color: azure;
+  color: rgb(226, 240, 240);
 }
 .privetDrug{
   color: aquamarine;

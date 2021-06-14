@@ -270,6 +270,15 @@ color: blanchedalmond;
   color:rgba(28, 3, 138, 0.301);
   font-weight:900;
 }
+.button_redaktor_nastr7_maty{
+  background-image: url("image/background22.png");
+  height:40px;
+  width:80px;
+  margin: 2px;
+  border-color: rgb(140, 67, 150);
+  color:rgba(28, 3, 138, 0.301);
+  font-weight:900;
+}
 .poleTablicy{
   /*background-image: url("image/background22.png");*/
   height:700px;
@@ -455,3 +464,28 @@ a {
  {
   border: 4px double black;
  }
+ .form_menu_maty{
+   margin-top: 100px;
+   margin-bottom: 50px;
+ }
+ .button_menu_maty{
+  width: 90px;
+  background-image: url("image/background22.png");
+  height:40px;
+  margin: 2px;
+  border-color: rgb(140, 67, 150);
+}
+.button_menu_maty_prowerit_slowo{
+  width: 150px;
+  background-image: url("image/background22.png");
+  height:40px;
+  margin: 2px;
+  border-color: rgb(140, 67, 150);
+}
+.button_maty{
+  width: 350px;
+  background-image: url("image/background22.png");
+  height:40px;
+  margin: 2px;
+  border-color: rgb(140, 67, 150);
+}
