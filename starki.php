@@ -6,6 +6,7 @@
     <link rel="shortcut icon" href="image/favicon.png" type="image/x-icon">
     <title>Starki</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="styli.css">
     <link rel="stylesheet" href="starki.css">
     <meta name="Cache-Control" content="no-store">
 </head>
@@ -23,6 +24,7 @@ $spisokTablic=false;    // Признак нажатия кнопки Списо
 $red = new redaktor();
 $status = new login();
 $menuUp = new menu(); 
+$maty = new maty();
 
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
 if ($_SESSION['status']>99) $_SESSION['status']=9;
@@ -151,9 +153,12 @@ if (isset($_POST['menu_stark_up_status'])  &&  $_POST['menu_stark_up_status']=='
 ///////////////////////////////////////////////////////////Конец работы с регистрацией///////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //$_SESSION['regimRaboty']=20 // Редактирование профиля пользователя
+
 ?>
-
-
+<?php
+if ($_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3 || $_SESSION['status']==4 || $_SESSION['status']==5)
+$maty->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
+ ?>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

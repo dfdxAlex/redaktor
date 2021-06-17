@@ -43,8 +43,23 @@ class instrument
    public function poleInputokCansel($mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput){
     echo '<section class="container">';
     echo '<div class="row '.$classDiv.'">';
-    echo '<p class="'.$classP.'">'.$mesaz.'</p>';
+    //echo '<p class="'.$classP.'">'.$mesaz.'</p>';
     echo '<form action="redaktor.php" method="POST">';
+    echo '<p class="'.$classP.'">'.$mesaz.'</p>';
+    echo '<input class="'.$classInput.'" type="text" name="'.$nameKn.'Text">';
+    echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Ok">';
+    echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
+    echo '</form>';
+    echo '</div>';
+    echo '</section>';
+   }
+   // Набор текстовое поле + кнопки Ok Cansel + указывает на страницу обработчик
+   public function poleInputokCanselPlusNameStr($nameStr,$mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput){
+    echo '<section class="container">';
+    echo '<div class="row '.$classDiv.'">';
+    //echo '<p class="'.$classP.'">'.$mesaz.'</p>';
+    echo '<form action="'.$nameStr.'" method="POST">';
+    echo '<p class="'.$classP.'">'.$mesaz.'</p>';
     echo '<input class="'.$classInput.'" type="text" name="'.$nameKn.'Text">';
     echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Ok">';
     echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
@@ -119,7 +134,8 @@ class initBD extends instrument
          // $classP - класс тегов Р - сообщения, $classButton - класс для кнопок
          // statusNumerSlovo($status) Преобразуем номер статуса в его значение
     // okCansel($mesaz,$nameKn,$classDiv,$classP,$classButton)
-    // poleInputokCansel($nameKn,$classDiv,$classP,$classInput) выводит дополнительную строку для ввода текста
+    // poleInputokCansel($mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput) выводит дополнительную строку для ввода текста -- параметры. Имя кнопки задается. Имя кнопки может быть Ok или Cancel. Имя текстового поля - это имя кнопки + "Text"
+    // poleInputokCanselPlusNameStr($nameStr,$mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput) как и верх, только плюс имя страницы обработчика
     // okSelect($mesaz,$nameKn,$classDiv,$classP,$classButton) выводит переключатель select и кнопку ок. 
 
     // Инструментарий
@@ -141,6 +157,7 @@ class initBD extends instrument
     // printTab('fff',1);                                // отладочная функция создает таблицу debuger и что-то туда пишет
     // printTabEcho();       //не работает                            // выводит содержимое таблицы debuger
     // proverkaMata($slovo)                              // функция проверяет наличие оскорбительного слова мата проверка мата
+    
     public function proverkaMata($slovo)
     {
       //if (preg_match('/(\<хуй)?/',$slovo,$mas)==1) {print_r($mas);return true;}
@@ -4370,95 +4387,290 @@ public function redaktProfil()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class maty extends menu  // Работа с матами и нецензурной лексикой
 {
-  public $mas_mat;
-  public function __construct()
-  {
-     parent::__construct();
-      //проверим есть ли вспомогательная таблица и если нет, то создадим её 
-      if (!parent::searcNameTablic('maty'))
-        parent::zaprosSQL("CREATE TABLE maty(mat VARCHAR(15))");
-      $rez=parent::zaprosSQL("SELECT mat FROM maty WHERE 1");
-      $i=0;
-      while(!is_null($stroka=mysqli_fetch_array($rez)))
+    public $mas_mat;
+    public $nie_mat;
+    public function __construct()
       {
-        $this->mas_mat[$i]=$stroka[0];
-        $i++;
-      }
-  }
+        parent::__construct();
+         //проверим есть ли вспомогательная таблица и матов
+         if (!parent::searcNameTablic('maty'))
+         parent::zaprosSQL("CREATE TABLE maty(mat VARCHAR(15))");
+         $rez=parent::zaprosSQL("SELECT mat FROM maty WHERE 1");
+         //проверим есть ли вспомогательная таблица и Не матов
+         if (!parent::searcNameTablic('nie_maty'))
+          parent::zaprosSQL("CREATE TABLE nie_maty(nie_mat VARCHAR(15))");
+         $rez_nieMat=parent::zaprosSQL("SELECT nie_mat FROM nie_maty WHERE 1");
+         //проверим есть ли вспомогательная таблица для матов от пользователей
+         if (!parent::searcNameTablic('mat_ot_polzovatelej'))
+          parent::zaprosSQL("CREATE TABLE mat_ot_polzovatelej(mat VARCHAR(15), login VARCHAR(15))");
 
- public function searcMata($mat) // Функция ищет матерное слово в базе, если находит, то возвращает true
-  {
+          $i=0;
+         //Читаем таблицу ы массив
+         while(!is_null($stroka=mysqli_fetch_array($rez)))
+          {
+            $this->mas_mat[$i]=$stroka[0];
+            $i++;
+          }
+          $i=0;
+         //Читаем таблицу ы массив
+         while(!is_null($stroka=mysqli_fetch_array($rez_nieMat)))
+          {
+           $this->nie_mat[$i]=$stroka[0];
+           $i++;
+           }
+       }
+       //функция должна разбить текст на оттельные слова и искать мат при условии, что слово не входит в базу исключений.
+       //цель в правильном написании слова подстраХуй
+       public function echoBezMatovPlusIsklucenia($text) // функция находит совпадения матов и меняет их на звездочки.
+       {  // Не работает!!!!!!!!!!!!!!!!!!!!!!!!
+         $rezultat=$text;
+         //$vyragenie='/\s|(\.)|(,)|(\d)|(-)|(#)|(!)|(\?)|(_)/';
+         //$vyragenie='/[^\s\d[:punct:]]+[a-zA-Zа-яёА-ЯЁ]+[\s[:punct:]\d\Z]/';
+         //$vyragenie='/\s([а-яё]|[А-ЯЁ])+\s/';
+         //$masRezult=preg_split($vyragenie,$rezultat,PREG_SPLIT_OFFSET_CAPTURE);
+         //if (!preg_match_all('/\s[а-яё]+\s?/ui',$text,$masRezult)) echo 'ошибка<br>';
+         
+         echo $text.'<br>';
+         $mas_rezult=$masRezult[0];
+         foreach($mas_rezult as $value)
+              { 
+                 $hablon=$this->createRegularNotRegistr($value);  // сделать матюк регистронезависимым
+                 $vyragenie='/\s('.$hablon.')\s?/';
+                 $rezultat=preg_replace($vyragenie,' ** ',$rezultat);
+              }
+       }
+    public function echoBezMatov($text) // функция находит совпадения матов и меняет их на звездочки.
+          {
+            $rezultat=$text;
+            if (isset($this->mas_mat[0]))
+             foreach($this->mas_mat as $value)
+              {  
+                $hablon=$this->createRegularNotRegistr($value);  // сделать матюк регистронезависимым
+                $vyragenie='/(^|\s|\W|\d)'.$hablon.'($|\s|(\W)|\d+)?/uUmi';
+                $rezultat=preg_replace($vyragenie,'**',$rezultat);
+              }
+              echo $text.'<br>';
+              echo $rezultat;
+          }
+         public function createRegularNotRegistr($value) // функция возвращает преобразованные слова для регистронезависимого поиска
+         {
+          $value=preg_replace('/а|А/','(а|А)+?',$value);
+          $value=preg_replace('/б|Б/','(б|Б)+?',$value);
+          $value=preg_replace('/в|В/','(в|В)+?',$value);
+          $value=preg_replace('/г|Г/','(г|Г)+?',$value);
+          $value=preg_replace('/д|Д/','(д|Д)+?',$value);
+          $value=preg_replace('/е|Е/','(е|Е)+?',$value);
+          $value=preg_replace('/ё|Ё/','(ё|Ё)+?',$value);
+          $value=preg_replace('/ж|Ж/','(ж|Ж)+?',$value);
+          $value=preg_replace('/з|З/','(з|З)+?',$value);
+          $value=preg_replace('/и|И/','(и|И)+?',$value);
+          $value=preg_replace('/й|Й/','(й|Й)+?',$value);
+          $value=preg_replace('/к|К/','(к|К)+?',$value);
+          $value=preg_replace('/л|Л/','(л|Л)+?',$value);
+          $value=preg_replace('/м|М/','(м|М)+?',$value);
+          $value=preg_replace('/н|Н/','(н|Н)+?',$value);
+          $value=preg_replace('/о|О/','(о|О)+?',$value);
+          $value=preg_replace('/п|П/','(п|П)+?',$value);
+          $value=preg_replace('/р|Р/','(р|Р)+?',$value);
+          $value=preg_replace('/с|С/','(с|С)+?',$value);
+          $value=preg_replace('/т|Т/','(т|Т)+?',$value);
+          $value=preg_replace('/у|У/','(у|У)+?',$value);
+          $value=preg_replace('/ф|Ф/','(ф|Ф)+?',$value);
+          $value=preg_replace('/х|Х/','(х|Х)+?',$value);
+          $value=preg_replace('/ч|Ч/','(ч|Ч)+?',$value);
+          $value=preg_replace('/ц|Ц/','(ц|Ц)+?',$value);
+          $value=preg_replace('/ш|Ш/','(ш|Ш)+?',$value);
+          $value=preg_replace('/щ|Щ/','(щ|Щ)+?',$value);
+          $value=preg_replace('/ъ|Ъ/','(ъ|Ъ)+?',$value);
+          $value=preg_replace('/ы|Ы/','(ы|Ы)+?',$value);
+          $value=preg_replace('/ь|Ь/','(ь|Ь)+?',$value);
+          $value=preg_replace('/э|Э/','(э|Э)+?',$value);
+          $value=preg_replace('/ю|Ю/','(ю|Ю)+?',$value);
+          $value=preg_replace('/я|Я/','(я|Я)+?',$value);
+          $hablon=$value;
+          return $hablon;
+         }
+         public function searcMata($mat) // Функция ищет матерное слово в базе, если находит, то возвращает true
+          {
             // сначала проверим наличие слова
             $rez=parent::zaprosSQL("SELECT mat FROM maty WHERE mat='".$mat."'");
             $stroka=mysqli_fetch_array($rez);
             if ($stroka[0]) return true;
             return false;
-  }
- public function kill_mat()
- {
-  if (isset($this->mas_mat[0]))
-   foreach($this->mas_mat as $value)
-   { //echo 'зашли в функцию-';
-     if (isset($_POST['maty_'.$value])) // Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
-     { //echo '-нажата кнопка матюков';
-      parent::zaprosSQL("DELETE FROM maty WHERE mat='".$value."'"); 
-     }
-   }
- }
- public function redactMaty() // Работа с меню ретактирования таблицы матов
-  {
-     $this->kill_mat(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова
-     parent::menu4('menu_maty','redaktor.php');
+          }
+          public function searcNieMata($nie_mat) // Функция ищет слово в базе исключений для матерных слов, если находит, то возвращает true
+          {
+            // сначала проверим наличие слова
+            $rez=parent::zaprosSQL("SELECT nie_mat FROM nie_maty WHERE nie_mat='".$nie_mat."'");
+            $stroka=mysqli_fetch_array($rez);
+            if ($stroka[0]) return true;
+            return false;
+          }
+        public function kill_mat()  // Функция быстрое удаление конкретного слова через его кнопку
+         {
+           if (isset($this->mas_mat[0]))
+             foreach($this->mas_mat as $value)
+               if (isset($_POST['maty_'.$value])) // Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
+                 parent::zaprosSQL("DELETE FROM maty WHERE mat='".$value."'"); 
+         }
+         public function kill_nie_mat()  // Функция быстрое удаление конкретного слова через его кнопку
+         {
+           if (isset($this->nie_mat[0]))
+             foreach($this->nie_mat as $value)
+               if (isset($_POST['nie_maty_'.$value])) // Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
+                 parent::zaprosSQL("DELETE FROM nie_maty WHERE nie_mat='".$value."'"); 
+         }
 
-  if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Удалить' && $_POST['mat_text']!='')
-     {
-        // Если слово есть, то удаляем
-        if ($this->searcMata($_POST['mat_text'])) {
-         parent::zaprosSQL("DELETE FROM maty WHERE mat='".$_POST['mat_text']."'");
-        //Снова проверяем наличие слова в БД
-        if ($this->searcMata($_POST['mat_text'])) echo 'Не удалось удалить';
-        if (!$this->searcMata($_POST['mat_text'])) echo 'Слово удалено<br>';
+      public function redactMaty() // Работа с меню ретактирования таблицы матов
+       {
+          $this->kill_mat(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова
+          $this->kill_nie_mat(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова
+          parent::menu4('menu_maty','redaktor.php');
+
+          if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Удалить мат' && $_POST['mat_text']!='')
+            {
+             // Если слово есть, то удаляем
+             if ($this->searcMata($_POST['mat_text'])) 
+              {
+               parent::zaprosSQL("DELETE FROM maty WHERE mat='".$_POST['mat_text']."'");
+               //Снова проверяем наличие слова в БД
+               if ($this->searcMata($_POST['mat_text'])) echo 'Не удалось удалить';
+               if (!$this->searcMata($_POST['mat_text'])) echo 'Слово удалено<br>';
+              }
+           // если слова нет, то заносим его в базу данных
+           if (!$this->searcMata($_POST['mat_text'])) echo 'Слова в базе отсутствует';
+          }
+        if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Удалить не мат' && $_POST['mat_text']!='')
+          {
+           // Если слово есть, то удаляем
+           if ($this->searcNieMata($_POST['mat_text'])) 
+            {
+             parent::zaprosSQL("DELETE FROM nie_maty WHERE nie_mat='".$_POST['mat_text']."'");
+             //Снова проверяем наличие слова в БД
+             if ($this->searcNieMata($_POST['mat_text'])) echo 'Не удалось удалить';
+             if (!$this->searcNieMata($_POST['mat_text'])) echo 'Слово удалено<br>';
+            }
+         // если слова нет, то заносим его в базу данных
+         if (!$this->searcNieMata($_POST['mat_text'])) echo 'Слова в базе отсутствует';
         }
-        // если слова нет, то заносим его в базу данных
-        if (!$this->searcMata($_POST['mat_text'])) echo 'Слова в базе отсутствует';
-     }
-  if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Показать')
-      {
-        $rez=parent::zaprosSQL("SELECT mat FROM maty WHERE 1");
-        echo '<section class="container-fluid">';
-        echo '<form action="redaktor.php" method="post">';
-        while(!is_null($stroka=mysqli_fetch_array($rez)))
+
+      if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Показать')
         {
-          echo '<div class="row">';
-          echo '<div class="col">';
-          echo '<input class="button_maty" type="submit" name="maty_'.$stroka[0].'" value="Удалить ('.$stroka[0].')">';
-         echo '</div>';
-         echo '</div>';
-        }
-        echo '</section>';
-        echo 'Конец списка';
-      }
+          $rez=parent::zaprosSQL("SELECT mat FROM maty WHERE 1");
+          echo '<section class="container-fluid">';
+          echo '<form action="redaktor.php" method="post">';
+          while(!is_null($stroka=mysqli_fetch_array($rez)))
+           {
+             echo '<div class="row">';
+             echo '<div class="col">';
+             echo '<input class="button_maty" type="submit" name="maty_'.$stroka[0].'" value="Удалить ('.$stroka[0].')">';
+             echo '</div>';
+             echo '</div>';
+           }
+          echo '</section>';
+          echo 'Конец списка';
+         }
+        if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Показать не маты')
+         {
+           $rez=parent::zaprosSQL("SELECT nie_mat FROM nie_maty WHERE 1");
+           echo '<section class="container-fluid">';
+           echo '<form action="redaktor.php" method="post">';
+           while(!is_null($stroka=mysqli_fetch_array($rez)))
+            {
+              echo '<div class="row">';
+              echo '<div class="col">';
+              echo '<input class="button_nie_maty" type="submit" name="nie_maty_'.$stroka[0].'" value="Удалить ('.$stroka[0].')">';
+              echo '</div>';
+              echo '</div>';
+            }
+           echo '</section>';
+           echo 'Конец списка';
+          }
 
   if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Проверить слово' && $_POST['mat_text']!='')
       {
         $rez=parent::zaprosSQL("SELECT mat FROM maty WHERE mat='".$_POST['mat_text']."'");
         $stroka=mysqli_fetch_array($rez);
-        if (!$stroka[0]) echo 'Слово не найдено';
-        if ($stroka[0]) echo 'Слово присутствует в БД';
+        if (!$stroka[0]) echo 'Слово не найдено в БД матов<br>';
+        if ($stroka[0]) echo 'Слово присутствует в БД матов<br>';
+      }
+  if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Проверить слово' && $_POST['mat_text']!='')
+      {
+        $rez=parent::zaprosSQL("SELECT nie_mat FROM nie_maty WHERE nie_mat='".$_POST['mat_text']."'");
+        $stroka=mysqli_fetch_array($rez);
+        if (!$stroka[0]) echo 'Слово не найдено в БД НЕ матов<br>';
+        if ($stroka[0]) echo 'Слово присутствует в БД НЕ матов<br>';
       }
   if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Добавить' && $_POST['mat_text']!='')
       {
         // сначала проверим наличие слова
-        if ($this->searcMata($_POST['mat_text'])) echo 'Слово уже присутствует в справочнике!';
+        if ($this->searcMata($_POST['mat_text'])) echo 'Слово уже присутствует в справочнике матов!<br>';
         // если слова нет, то заносим его в базу данных
-        if (!$this->searcMata($_POST['mat_text'])) {
+        if (!$this->searcMata($_POST['mat_text'])) 
+        {
           parent::zaprosSQL("INSERT INTO maty(mat) VALUES ('".$_POST['mat_text']."')");
         //Снова проверяем наличие слова в БД
-        if ($this->searcMata($_POST['mat_text'])) echo 'Слово успешно добавлено в справочник!';
-        if (!$this->searcMata($_POST['mat_text'])) echo 'Слово не удалось добавить в справочник!';
+        if ($this->searcMata($_POST['mat_text'])) echo 'Слово успешно добавлено в справочник матов!<br>';
+        if (!$this->searcMata($_POST['mat_text'])) echo 'Слово не удалось добавить в справочник матов!<br>';
+        }
+      }
+    if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Добавить не мат' && $_POST['mat_text']!='')
+      {
+        // сначала проверим наличие слова
+        if ($this->searcNieMata($_POST['mat_text'])) echo 'Слово уже присутствует в справочнике НЕ матов!<br>';
+        // если слова нет, то заносим его в базу данных
+        if (!$this->searcNieMata($_POST['mat_text'])) 
+        {
+          parent::zaprosSQL("INSERT INTO nie_maty(nie_mat) VALUES ('".$_POST['mat_text']."')");
+        //Снова проверяем наличие слова в БД
+        if ($this->searcNieMata($_POST['mat_text'])) echo 'Слово успешно добавлено в справочник НЕ матов!<br>';
+        if (!$this->searcNieMata($_POST['mat_text'])) echo 'Слово не удалось добавить в справочник НЕ матов!<br>';
         }
       }
   }
+      // работаем с заполнением базы матов от пользователей на главной странице сайта
+      public function dobavilMat($text) //mat_ot_polzovatelej
+       {
+         // Узнаем сколько матов пользователь может ввести
+         $rez=parent::zaprosSQL("SELECT * FROM mat_ot_polzovatelej WHERE login='".$_SESSION['login']."'");
+         if (!$rez) $cisloMatov=10;
+         $cisloMatov=10;
+         
+           while(!is_null($stroka=mysqli_fetch_array($rez)))
+            {
+              $cisloMatov--;
+            }
 
+        if ($cisloMatov>0 && isset($_POST['dobawilMat']) && $_POST['dobawilMat']=='Ok' && $_POST['dobawilMatText']!='')
+         {
+           foreach($this->mas_mat as $value)
+            if ($value==$_POST['dobawilMatText']) $text='Спасибо, но данное нецензурное слово уже присутствует в базе данных.';
+           foreach($this->nie_mat as $value)
+            if ($value==$_POST['dobawilMatText']) $text='Спасибо, но данное слово уже присутствует в базе данных и помечено как слово, разрешенное к применению на данном ресурсе.';
+           if (!preg_match_all('/Спасибо/u',$text)>0)  //Если мата нет в двух постоянных таблицах матов и нематов, то проверяем во временной таблице
+           {
+            $rez=parent::zaprosSQL("SELECT * FROM mat_ot_polzovatelej WHERE login='".$_SESSION['login']."'");
+            if (!$rez) echo 'не удалось прочитать данные из таблицы временных нецензурных слов';
+            while(!is_null($stroka=mysqli_fetch_assoc($rez)))
+            {
+              if ($stroka['mat']==$_POST['dobawilMatText']) $text='Спасибо, но некто, с логином '.$stroka['login'].' уже отправил данное слово на рассмотрение.';
+            }
+           }
+
+          if (!preg_match_all('/Спасибо/u',$text)>0)  //Если мата нет в двух постоянных таблицах матов и нематов, то проверяем во временной таблице
+           {
+            echo 'пишем мат';
+           } 
+           
+           
+           //echo 'пишем мат';
+         }
+
+         if ($cisloMatov<1) $text=='Лимит ввода нецензурных слов исчерпан, подождите пока модератор одобрит предыдущие Ваши предложения.';
+
+        parent::poleInputokCanselPlusNameStr(parent::initsite(),$text.' Лимит матов-'.$cisloMatov,'dobawilMat','dobawilMatDiv','dobawilMatP','dobawilMatButton','dobawilMatInput'); //выводит дополнительную строку для ввода текста
+    //  Имя кнопки может быть Ok или Cancel. Имя текстового поля - это имя кнопки + "Text"
+       
+      }
 }// конец класса maty
 ?>

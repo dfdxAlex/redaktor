@@ -473,7 +473,8 @@ a {
   background-image: url("image/background22.png");
   height:40px;
   margin: 2px;
-  border-color: rgb(140, 67, 150);
+  color:rgb(180, 26, 15);
+  border-color: rgb(243, 5, 5);
 }
 .button_menu_maty_prowerit_slowo{
   width: 150px;
@@ -487,5 +488,80 @@ a {
   background-image: url("image/background22.png");
   height:40px;
   margin: 2px;
+    color:rgb(180, 26, 15);
+  border-color: rgb(243, 5, 5);
+}
+.button_menu_maty_pokaz{
+  width: 150px;
+  background-image: url("image/background22.png");
+  height:40px;
+  margin: 2px;
   border-color: rgb(140, 67, 150);
+}
+.button_menu_maty_dobavit{
+  width: 140px;
+  background-image: url("image/background22.png");
+  height:40px;
+  margin: 2px;
+  color:rgb(27, 177, 35);
+  border-color: rgb(7, 158, 20);
+}
+.button_menu_maty_kill{
+  width: 130px;
+  background-image: url("image/background22.png");
+  height:40px;
+  margin: 2px;
+  color:rgb(27, 177, 35);
+  border-color: rgb(7, 158, 20);
+}
+.button_menu_maty_kill_mat{
+  width: 110px;
+  background-image: url("image/background22.png");
+  height:40px;
+  margin: 2px;
+  color:rgb(180, 26, 15);
+  border-color: rgb(243, 5, 5);
+}
+.button_menu_nematy_pokaz{
+  width: 150px;
+  background-image: url("image/background22.png");
+  height:40px;
+  margin: 2px;
+  color:rgb(27, 177, 35);
+  border-color: rgb(7, 158, 20);
+}
+.button_nie_maty{
+    width: 350px;
+    background-image: url("image/background22.png");
+    height:40px;
+    margin: 2px;
+    color:rgb(27, 177, 35);
+    border-color: rgb(7, 158, 20);
+}
+.dobawilMatP
+{
+  color:rgb(200, 209, 200);
+  font-size: 12px;
+  line-height:14px;
+}
+.dobawilMatInput
+{
+  height: 20px;
+  font-size: 12px;
+  float:left;
+  margin-top: 5px;
+}
+.dobawilMatButton
+{
+  height: 20px;
+  font-size: 9px;
+  float:left;
+  margin-top: 5px;
+}
+.dobawilMatDiv
+{
+height: 70px;
+margin-top: 250px;
+width: 100%;
+background: darkslategray;
 }
