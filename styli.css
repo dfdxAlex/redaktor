@@ -537,6 +537,36 @@ a {
     margin: 2px;
     color:rgb(27, 177, 35);
     border-color: rgb(7, 158, 20);
+    float:left;
+}
+.button_mat_ot_polzovatelej_list{
+width: 550px;
+background-image: url("image/background22.png");
+height:30px;
+margin: 2px;
+color:rgb(27, 177, 35);
+border-color: rgb(7, 158, 20);
+text-align: left;
+float: left;
+line-height:14px;
+}
+.button_mat_ot_polzovatelej_save{
+  width: 90px;
+  background-image: url("image/background22.png");
+  height:30px;
+  margin: 2px;
+  color:rgb(27, 177, 35);
+  border-color: rgb(7, 158, 20);
+  text-align: left;
+  line-height:14px;
+  }
+.button_menu_maty_ot_polzovatel{
+  width: 150px;
+  background-image: url("image/background22.png");
+  height:40px;
+  margin: 2px;
+  color:rgb(104, 112, 104);
+  border-color: rgba(51, 72, 117, 0.685);
 }
 .dobawilMatP
 {
@@ -564,4 +594,27 @@ height: 70px;
 margin-top: 250px;
 width: 100%;
 background: darkslategray;
+}
+.vklSborMatov{
+  height: 30px;
+  width: 400px;
+  font-size: 12px;
+  float:left;
+  margin-top: 5px; 
+  margin-bottom: 20px;
+  background: rgb(53, 173, 42);
+}
+.vyklSborMatov{
+  height: 30px;
+  width: 400px;
+  font-size: 12px;
+  float:left;
+  margin-top: 5px; 
+  margin-bottom: 20px;
+  color:azure;
+  background: rgb(199, 11, 11);
+}
+.vklSborMatovDiv{
+  height: 40px;
+  width: 100%;
 }

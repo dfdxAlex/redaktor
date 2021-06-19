@@ -25,6 +25,7 @@ $red = new redaktor();
 $status = new login();
 $maty = new maty();
 
+
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
 if ($_SESSION['status']>99) $_SESSION['status']=9;
 ?>

@@ -109,6 +109,9 @@ class initBD extends instrument
     public $nameBD;
     public $con;
     public $site;
+    ////////////////////////////////////////////////Настройка движка
+    //public $pokazFormDobableniaMataOtPolzovatela; // информация показывать ли на сайте форму сбора матов. 1-показать, 0-не показывать.
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function __construct()
     {
         parent::__construct();
@@ -120,7 +123,26 @@ class initBD extends instrument
         $this->site=stristr(fgets($fd),';',true); 
         fclose($fd);
         $this->con = mysqli_connect($this->initBdHost(),$this->initBdLogin(),$this->initBdParol(),$this->initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд        mysqli_set_charset ( $con , "utf8" ) ;
-    }
+ 
+            ///////////////////////// Проверка таблиц движка
+            // ------------------------Расшифровка позиций в таблице настроек----------------------
+            // id=1 - Сюда записан признак включить или выключить форму сбора нецензурных слов от пользователей
+            //проверка существует ли таблица настроек
+            if (!$this->searcNameTablic('tablica_nastroer_dvigka_int'))
+              $this->zaprosSQL("CREATE TABLE tablica_nastroer_dvigka_int(id INT, nastr INT)");
+            ////////////////////////////////Восстановление таблицы tablica_nastroer_dvigka_int
+            $zapros="SELECT nastr FROM tablica_nastroer_dvigka_int WHERE id=1"; //настройка показа формы сбора данных
+            $rez=$this->zaprosSQL($zapros);
+            if ($rez) $stroka=mysqli_fetch_array($rez);
+            if (is_null($stroka[0])) 
+             {
+               $this->zaprosSQL("INSERT INTO tablica_nastroer_dvigka_int(id, nastr) VALUES (1,0)");
+            //   $this->pokazFormDobableniaMataOtPolzovatela=0;
+             }
+           // if ($stroka[0]==0 || $stroka[0]==1) $this->pokazFormDobableniaMataOtPolzovatela=$stroka[0];
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+      }
     public function __destruct(){mysqli_close($this->con);}
     public function initBdHost(){return $this->host;}
     public function initBdLogin(){return $this->loginBD;}
@@ -128,6 +150,12 @@ class initBD extends instrument
     public function initBdNameBD(){return $this->nameBD;}
     public function initsite(){return $this->site;}
 
+      public function sborMatov()  {
+        $zapros="SELECT nastr FROM tablica_nastroer_dvigka_int WHERE id=1"; //настройка показа формы сбора данных
+        $rez=$this->zaprosSQL($zapros);
+        if ($rez) $stroka=mysqli_fetch_array($rez);
+        return $stroka[0];
+      }
     // Инструментарий от родительского  
          // Функция выводит некое сообщение $mesaz, задает название кнопок, которым будет присвоено OK или Cansel
          // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
@@ -158,6 +186,8 @@ class initBD extends instrument
     // printTabEcho();       //не работает                            // выводит содержимое таблицы debuger
     // proverkaMata($slovo)                              // функция проверяет наличие оскорбительного слова мата проверка мата
     
+    
+
     public function proverkaMata($slovo)
     {
       //if (preg_match('/(\<хуй)?/',$slovo,$mas)==1) {print_r($mas);return true;}
@@ -244,7 +274,7 @@ class initBD extends instrument
         if ($nameTablicy=='redaktor_up') return 'Невозможно удалить';
         if ($nameTablicy=='tablica_tablic') return 'Невозможно удалить';
         if ($nameTablicy=='login') return 'Невозможно удалить';
-        if ($nameTablicy=='registracia') return 'Невозможно удалить';//menu_maty
+        if ($nameTablicy=='registracia') return 'Невозможно удалить';//
         if ($nameTablicy=='podtverdit') return 'Невозможно удалить';
         if ($nameTablicy=='status_klienta') return 'Невозможно удалить';
         if ($nameTablicy=='type_menu_po_imeni') return 'Невозможно удалить';
@@ -252,6 +282,9 @@ class initBD extends instrument
         if ($nameTablicy=='redakt_profil_tegi') return 'Невозможно удалить';
         if ($nameTablicy=='maty') return 'Невозможно удалить';
         if ($nameTablicy=='menu_maty') return 'Невозможно удалить';
+        if ($nameTablicy=='mat_ot_polzovatelej') return 'Невозможно удалить';
+        if ($nameTablicy=='nie_maty') return 'Невозможно удалить';
+        if ($nameTablicy=='tablica_nastroer_dvigka_int') return 'Невозможно удалить';
         return 'Согласен удалить';
     }
     
@@ -4389,6 +4422,7 @@ class maty extends menu  // Работа с матами и нецензурно
 {
     public $mas_mat;
     public $nie_mat;
+    public $mat_polsovat;
     public function __construct()
       {
         parent::__construct();
@@ -4403,9 +4437,10 @@ class maty extends menu  // Работа с матами и нецензурно
          //проверим есть ли вспомогательная таблица для матов от пользователей
          if (!parent::searcNameTablic('mat_ot_polzovatelej'))
           parent::zaprosSQL("CREATE TABLE mat_ot_polzovatelej(mat VARCHAR(15), login VARCHAR(15))");
+         $rez_mat_polsovat=parent::zaprosSQL("SELECT mat FROM mat_ot_polzovatelej WHERE 1");
 
           $i=0;
-         //Читаем таблицу ы массив
+         //Читаем таблицу ы массив mat_polsovat
          while(!is_null($stroka=mysqli_fetch_array($rez)))
           {
             $this->mas_mat[$i]=$stroka[0];
@@ -4418,6 +4453,12 @@ class maty extends menu  // Работа с матами и нецензурно
            $this->nie_mat[$i]=$stroka[0];
            $i++;
            }
+         $i=0;
+         while(!is_null($stroka=mysqli_fetch_array($rez_mat_polsovat)))
+           {
+            $this->mat_polsovat[$i]=$stroka[0];
+            $i++;
+            }
        }
        //функция должна разбить текст на оттельные слова и искать мат при условии, что слово не входит в базу исключений.
        //цель в правильном написании слова подстраХуй
@@ -4520,12 +4561,58 @@ class maty extends menu  // Работа с матами и нецензурно
                if (isset($_POST['nie_maty_'.$value])) // Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
                  parent::zaprosSQL("DELETE FROM nie_maty WHERE nie_mat='".$value."'"); 
          }
-
+         public function kill_ot_polsovatelej()  // Функция быстрое удаление конкретного слова через его кнопку
+         {//echo ',skb';
+           if (isset($this->mat_polsovat[0]))
+             foreach($this->mat_polsovat as $value)
+               if (isset($_POST['kill_mat_ot_polzovatelej_'.$value])) // Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
+                 parent::zaprosSQL("DELETE FROM mat_ot_polzovatelej WHERE mat='".$value."'"); 
+         }
+       public function save_ot_polsovatelej()  // Функция переноса мата из временной таблицы в постоянную
+         {//echo ',skb';
+           if (isset($this->mat_polsovat[0]))
+             foreach($this->mat_polsovat as $value)
+               if (isset($_POST['save_mat_ot_polzovatelej_'.$value])) // Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
+                {
+                   parent::zaprosSQL("DELETE FROM mat_ot_polzovatelej WHERE mat='".$value."'"); 
+                   parent::zaprosSQL("INSERT INTO maty(mat) VALUES ('".$value."')");
+                }
+         }
       public function redactMaty() // Работа с меню ретактирования таблицы матов
        {
+         // echo '-'.parent::sborMatov() ;
           $this->kill_mat(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова
           $this->kill_nie_mat(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова
+          $this->kill_ot_polsovatelej(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова пользователей
+          $this->save_ot_polsovatelej(); // функция просматривает не была ли нажата одна из кнопок быстрого переноса слова из временной таблицы пользователей в постоянную
+          
           parent::menu4('menu_maty','redaktor.php');
+
+          ///////////////////////////////////////начало работы и обработки кнопки включения и отключения сбора нецензурных слов от пользователей///////////////////////////////////////////////////////////////////////
+          echo '<br>';
+         if (isset($_POST['vklSborMatov']))
+          parent::zaprosSQL("UPDATE tablica_nastroer_dvigka_int SET nastr=1 WHERE id=1");
+         if (isset($_POST['vyklSborMatov']))
+          parent::zaprosSQL("UPDATE tablica_nastroer_dvigka_int SET nastr=0 WHERE id=1");
+         if (parent::sborMatov()==1) // Значит сбор матов включен, поставить кнопку выключения
+           {
+            echo '<div class="vklSborMatovDiv">';
+            echo '<form method="POST" action="redaktor.php">';
+            echo '<input type="submit" class="vyklSborMatov" name="vyklSborMatov" value="Выключить форму сбора нецензурных слов от пользователей">';
+            echo '</form>';
+            echo '</div>';
+            echo '<br>';             
+           } else // иначе сбор матов выключен, поставить кнопку включения
+            {
+                  echo '<div class="vklSborMatovDiv">';
+                  echo '<form method="POST" action="redaktor.php">';
+                  echo '<input type="submit" class="vklSborMatov" name="vklSborMatov" value="Включить форму сбора нецензурных слов от пользователей">';
+                  echo '</form>';
+                  echo '</div>';
+                  echo '<br>';
+            }
+           ///////////////////////////////////////конец работы и обработки кнопки включения и отключения сбора нецензурных слов от пользователей///////////////////////////////////////////////////////////////////////
+
 
           if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Удалить мат' && $_POST['mat_text']!='')
             {
@@ -4587,6 +4674,25 @@ class maty extends menu  // Работа с матами и нецензурно
            echo 'Конец списка';
           }
 
+       if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='От пользователей')
+          {
+            $rez=parent::zaprosSQL("SELECT * FROM mat_ot_polzovatelej WHERE 1");
+            echo '<section class="container-fluid">';
+            echo '<form action="redaktor.php" method="post">';
+            while(!is_null($stroka=mysqli_fetch_assoc($rez)))
+             {
+               echo '<div class="row">';
+               echo '<div class="col">';
+               echo '<input class="button_mat_ot_polzovatelej_list" type="submit" name="kill_mat_ot_polzovatelej_'.$stroka['mat'].'" value="Пользователь '.$stroka['login'].' добавил мат ('.$stroka['mat'].'). Удалить!">';
+               echo '<input class="button_mat_ot_polzovatelej_save" type="submit" name="save_mat_ot_polzovatelej_'.$stroka['mat'].'" value="Сохранить">';
+               
+               echo '</div>';
+               echo '</div>';
+             }
+            echo '</section>';
+            echo 'Конец списка';
+           }
+
   if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Проверить слово' && $_POST['mat_text']!='')
       {
         $rez=parent::zaprosSQL("SELECT mat FROM maty WHERE mat='".$_POST['mat_text']."'");
@@ -4631,11 +4737,11 @@ class maty extends menu  // Работа с матами и нецензурно
       // работаем с заполнением базы матов от пользователей на главной странице сайта
       public function dobavilMat($text) //mat_ot_polzovatelej
        {
+        if (parent::sborMatov()==0) return false;
          // Узнаем сколько матов пользователь может ввести
          $rez=parent::zaprosSQL("SELECT * FROM mat_ot_polzovatelej WHERE login='".$_SESSION['login']."'");
          if (!$rez) $cisloMatov=10;
          $cisloMatov=10;
-         
            while(!is_null($stroka=mysqli_fetch_array($rez)))
             {
               $cisloMatov--;
@@ -4647,7 +4753,8 @@ class maty extends menu  // Работа с матами и нецензурно
             if ($value==$_POST['dobawilMatText']) $text='Спасибо, но данное нецензурное слово уже присутствует в базе данных.';
            foreach($this->nie_mat as $value)
             if ($value==$_POST['dobawilMatText']) $text='Спасибо, но данное слово уже присутствует в базе данных и помечено как слово, разрешенное к применению на данном ресурсе.';
-           if (!preg_match_all('/Спасибо/u',$text)>0)  //Если мата нет в двух постоянных таблицах матов и нематов, то проверяем во временной таблице
+           
+        if (!preg_match_all('/Спасибо/u',$text)>0)  //Если мата нет в двух постоянных таблицах матов и нематов, то проверяем во временной таблице
            {
             $rez=parent::zaprosSQL("SELECT * FROM mat_ot_polzovatelej WHERE login='".$_SESSION['login']."'");
             if (!$rez) echo 'не удалось прочитать данные из таблицы временных нецензурных слов';
@@ -4659,18 +4766,11 @@ class maty extends menu  // Работа с матами и нецензурно
 
           if (!preg_match_all('/Спасибо/u',$text)>0)  //Если мата нет в двух постоянных таблицах матов и нематов, то проверяем во временной таблице
            {
-            echo 'пишем мат';
+            parent::zaprosSQL("INSERT INTO mat_ot_polzovatelej(mat, login) VALUES ('".$_POST['dobawilMatText']."','".$_SESSION['login']."')");
            } 
-           
-           
-           //echo 'пишем мат';
          }
-
          if ($cisloMatov<1) $text=='Лимит ввода нецензурных слов исчерпан, подождите пока модератор одобрит предыдущие Ваши предложения.';
-
         parent::poleInputokCanselPlusNameStr(parent::initsite(),$text.' Лимит матов-'.$cisloMatov,'dobawilMat','dobawilMatDiv','dobawilMatP','dobawilMatButton','dobawilMatInput'); //выводит дополнительную строку для ввода текста
-    //  Имя кнопки может быть Ok или Cancel. Имя текстового поля - это имя кнопки + "Text"
-       
       }
 }// конец класса maty
 ?>
