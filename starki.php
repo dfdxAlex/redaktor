@@ -156,7 +156,7 @@ if (isset($_POST['menu_stark_up_status'])  &&  $_POST['menu_stark_up_status']=='
 
 ?>
 <?php
-if ($_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3 || $_SESSION['status']==4 || $_SESSION['status']==5)
+
 $maty->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
  ?>
 

@@ -560,6 +560,16 @@ line-height:14px;
   text-align: left;
   line-height:14px;
   }
+  .button_mat_ot_polzovatelej_block{
+    width: 350px;
+    background-image: url("image/background22.png");
+    height:30px;
+    margin: 2px;
+    color:rgb(55, 27, 177);
+    border-color: rgb(189, 11, 11);
+    text-align: left;
+    line-height:14px;
+  }
 .button_menu_maty_ot_polzovatel{
   width: 150px;
   background-image: url("image/background22.png");
@@ -574,22 +584,33 @@ line-height:14px;
   font-size: 12px;
   line-height:14px;
 }
-.dobawilMatInput
+.formaSborMatadobawilMatText3
 {
   height: 20px;
   font-size: 12px;
   float:left;
   margin-top: 5px;
 }
-.dobawilMatButton
+.formaSborMatadobawilMat5
 {
   height: 20px;
   font-size: 9px;
   float:left;
   margin-top: 5px;
 }
-.dobawilMatDiv
-{
+.formaSborMatareset7{
+  height: 20px;
+  font-size: 9px;
+  float:left;
+  margin-top: 5px;
+}
+.formaSborMataotkazDobawleniaMatow8{
+  height: 20px;
+  font-size: 9px;
+  float:left;
+  margin-top: 5px;
+}
+.formaSborMata {
 height: 70px;
 margin-top: 250px;
 width: 100%;
@@ -614,7 +635,41 @@ background: darkslategray;
   color:azure;
   background: rgb(199, 11, 11);
 }
+.buttonListBocked{
+  height: 30px;
+  width: 280px;
+  font-size: 12px;
+  float:left;
+  margin-top: 5px; 
+  margin-bottom: 20px;
+  margin-left: 5px;
+  color:azure;
+  background: rgb(218, 101, 6);
+}
 .vklSborMatovDiv{
   height: 40px;
   width: 100%;
+}
+input::placeholder {
+  color: rgb(226, 216, 216);
+  font-size: 1.2em;
+  font-style: italic;
+}
+.button_dla_statusob_123{
+  background-image: url("image/background22.png");
+  height:40px;
+  width:110px;
+  margin-top: 5px; 
+  margin-bottom: 20px;
+  margin-left: 5px;
+  border-color: rgba(51, 72, 117, 0.685);
+}
+.button_kill_form_mat{
+  height:20px;
+  width:510px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: rgb(226, 216, 216);
+  color:brown;
+  line-height:14px;
 }

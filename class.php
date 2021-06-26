@@ -57,7 +57,6 @@ class instrument
    public function poleInputokCanselPlusNameStr($nameStr,$mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput){
     echo '<section class="container">';
     echo '<div class="row '.$classDiv.'">';
-    //echo '<p class="'.$classP.'">'.$mesaz.'</p>';
     echo '<form action="'.$nameStr.'" method="POST">';
     echo '<p class="'.$classP.'">'.$mesaz.'</p>';
     echo '<input class="'.$classInput.'" type="text" name="'.$nameKn.'Text">';
@@ -67,6 +66,128 @@ class instrument
     echo '</div>';
     echo '</section>';
    }
+   // Функция ставит блок кнопок и текстовых полей без использования базы данных.
+   //$nameBlock - имя блока кнопок 
+   //$actionN - ссылка на страницу обработки
+   //...$parametr дальше пошел список параметров
+   // первым в параметре идёт тип кнопки или название тега:
+   // Если br то после этого тега можно указать число данных тегов <br>, если не указать, то будет 1 тег
+   // Если text, то будет текстовое поле, следующим параметром должно идти имя name=.. за ним текст по умолчанию для value 
+   // class="$nameBlock+name+номер кнопки" , по умолчанию value будет пустая строка
+   // Если text2, то будет текстовое поле, следующим параметром должно идти имя name=.. за ним текст по умолчанию для placeholder 
+   // class="$nameBlock+name+номер кнопки", по умолчанию placeholder будет пустая строка
+   // Если password, то будет текстовое поле для ввода пароля, следующим параметром должно идти имя name=.. за ним текст по умолчанию для value 
+   // class="$nameBlock+name+номер кнопки" , по умолчанию value будет пустая строка
+   // Если password2, то будет текстовое поле для ввода пароля, следующим параметром должно идти имя name=.. за ним текст по умолчанию для placeholder 
+   // class="$nameBlock+name+номер кнопки", по умолчанию placeholder будет пустая строка
+   // Если reset то будет кнопка очистки текстовых полей. После него следует ввести надпись на кнопке, если параметр пропустить, то на кнопке будет надпись Reset
+   // class="$nameBlock+reset+номер кнопки"
+   // Если submit то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
+   // class="$nameBlock+name+номер кнопки", надпись на кнопке по умолчанию Ок
+   // Если P или h1-h6, то создаем заголовок. Текст - это следующий параметр, класс - это второй параметр.
+   public function formBlock($nameBlock, $actionN,...$parametr)
+   {
+      echo '<section class="continer">';
+      echo '<div class="row">';
+      echo '<div class="'.$nameBlock.'">';
+      echo '<form action="'.$actionN.'" method="POST">';
+      $i=0;
+      foreach ($parametr as $key => $value)
+       {
+         if ($value=='br') 
+          {
+            if (isset($parametr[$i+1]) && $parametr[$i+1]>1) $kolWoBr=$parametr[$i+1]; else $kolWoBr=1;
+            for($j=0; $j<$kolWoBr; $j++)
+             echo '<br>';
+          }
+        if ($value=='text') 
+          {
+            if (isset($parametr[$i+1]))
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
+            if (isset($parametr[$i+2]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+            $class=$nameBlock.$name.$i;
+            echo '<input type="text" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
+          }
+        if ($value=='text2') 
+          {
+            if (isset($parametr[$i+1]))
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
+            if (isset($parametr[$i+2]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+            $class=$nameBlock.$name.$i;
+            echo '<input type="text" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
+          }
+        if ($value=='password') 
+          {
+            if (isset($parametr[$i+1]))
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
+            if (isset($parametr[$i+2]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+            $class=$nameBlock.$name.$i;
+            echo '<input type="password" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
+          }
+        if ($value=='password2') 
+          {
+            if (isset($parametr[$i+1]))
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
+            if (isset($parametr[$i+2]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+            $class=$nameBlock.$name.$i;
+            echo '<input type="password" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
+          }
+        if ($value=='reset') 
+          {
+            if (isset($parametr[$i+1]))
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $textValue=$parametr[$i+1]; else $textValue='Reset'; else $textValue='Reset';
+            $class=$nameBlock.'reset'.$i;
+            echo '<input type="reset" class="'.$class.'" value="'.$textValue.'">';
+          }
+        if ($value=='submit') 
+          {
+            if (isset($parametr[$i+1]))
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
+            if (isset($parametr[$i+2]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
+            if (isset($parametr[$i+3]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
+            $class=$nameBlock.$name.$i;
+            echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
+          }
+        if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') 
+          {
+            if (isset($parametr[$i+1]))
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
+            if (isset($parametr[$i+2]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
+            echo '<'.$value.' class="'.$class.'">'.$text.'</'.$value.'>';
+          }
+          $i++;
+       }
+       echo '</form>';
+       echo '</div>';
+       echo '</div>';
+       echo '</section>';
+   }
+   // Служебная функция проверяет не является ли параметр кнопкой
+   public function searcTegFormBlock($parametr)
+    {
+        if ($parametr=='br') return true;
+        if ($parametr=='text') return true;
+        if ($parametr=='text2') return true;
+        if ($parametr=='password') return true;
+        if ($parametr=='password2') return true;
+        if ($parametr=='reset') return true;
+        if ($parametr=='p') return true;
+        if ($parametr=='h1') return true;
+        if ($parametr=='h2') return true;
+        if ($parametr=='h3') return true;
+        if ($parametr=='h4') return true;
+        if ($parametr=='h5') return true;
+        if ($parametr=='h6') return true;
+        if ($parametr=='submit') return true;
+        return false;
+    }
    // Преобразуем номер статуса в его значение
    public function statusNumerSlovo($status)
    {
@@ -135,13 +256,12 @@ class initBD extends instrument
             $rez=$this->zaprosSQL($zapros);
             if ($rez) $stroka=mysqli_fetch_array($rez);
             if (is_null($stroka[0])) 
-             {
                $this->zaprosSQL("INSERT INTO tablica_nastroer_dvigka_int(id, nastr) VALUES (1,0)");
-            //   $this->pokazFormDobableniaMataOtPolzovatela=0;
-             }
-           // if ($stroka[0]==0 || $stroka[0]==1) $this->pokazFormDobableniaMataOtPolzovatela=$stroka[0];
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+            //////////////////////////////////// таблица блокировки пользователей для добавления мата blocked_list_dobavit_mat////////////////
+            //проверка существует ли таблица блокировки пользователей для добавления мата blocked_list_dobavit_mat
+            if (!$this->searcNameTablic('blocked_list_dobavit_mat'))
+              $this->zaprosSQL("CREATE TABLE blocked_list_dobavit_mat(id INT, login VARCHAR(50))");
       }
     public function __destruct(){mysqli_close($this->con);}
     public function initBdHost(){return $this->host;}
@@ -188,12 +308,13 @@ class initBD extends instrument
     
     
 
-    public function proverkaMata($slovo)
+    public function proverkaMata($slovo) // проверяет входной параметр на соответствие мату из базы данных
     {
-      //if (preg_match('/(\<хуй)?/',$slovo,$mas)==1) {print_r($mas);return true;}
-      if (strripos('-'.$slovo,'хуй')>0) return true;
-
-
+      $rez=$this->zaprosSQL("SELECT mat FROM maty WHERE 1");
+      while(!is_null($stroka=mysqli_fetch_array($rez)))
+       {
+         if ($slovo==$stroka[0]) return true;
+       }
       return false;
     }
     public function searcIdPoUsloviu($nameTablicy,$usl1,$usl2,$usl3,$usl4,$usl5)               //Проверяет есть ли запись по условиям, возвращает ID, записи 
@@ -284,7 +405,8 @@ class initBD extends instrument
         if ($nameTablicy=='menu_maty') return 'Невозможно удалить';
         if ($nameTablicy=='mat_ot_polzovatelej') return 'Невозможно удалить';
         if ($nameTablicy=='nie_maty') return 'Невозможно удалить';
-        if ($nameTablicy=='tablica_nastroer_dvigka_int') return 'Невозможно удалить';
+        if ($nameTablicy=='tablica_nastroer_dvigka_int') return 'Невозможно удалить'; //dla_statusob_123
+        if ($nameTablicy=='dla_statusob_123') return 'Невозможно удалить';
         return 'Согласен удалить';
     }
     
@@ -347,8 +469,8 @@ class initBD extends instrument
         $rez=mysqli_query($this->con,$zapros);
         if (!$rez) return -1;
         $stroka=mysqli_fetch_array($rez);
-        if (!isset($stroka)) return -1;
-        if ($stroka[0]==NULL) $stroka[0]=-1;
+        if (is_null($stroka[0])) $stroka[0]=-1;
+        //if ($stroka[0]==NULL) $stroka[0]=-1;
         $rezId=$stroka[0]+1;
         return $rezId;
      }
@@ -2845,11 +2967,14 @@ public function loadTablic($nameTablic)  // загрузить главную т
               echo '<dd class="col-9 text-truncate style-infoMenu">Не использовать</dd>';
              ////////////////////////////////////////////////////////////////
              if ($typeMenu==4 || $typeMenu==5 || $typeMenu==6 || $typeMenu==7 || $typeMenu==8 || $typeMenu==9) { // text2
-              echo '<dt class="col-3 text-truncate">Свойство placeholder или value</dt>';
+              echo '<dt class="col-3 text-truncate">Аттрибут PLACEHOLDER или VALUE</dt>';
               echo '<dd class="col-9 text-truncate style-infoMenu"><p>Если в поле ссылки "text", то в поле ввода текст по умолчанию выводится с помощью value</p>';
-              echo '<p>Если в поле ссылки "text2", то в поле ввода текст по умолчанию выводится с помощью placeholder</p>';
-              echo '<p>во втором случае стиль можно задать псевдоэлементом ::placeholder{}</p>';
-              echo '<p>на пример input::placeholder{стили, которые заработают в том случае, когда будет задействован в теге input аттрибут placeholder}</p></dd>';
+              echo '<p>Если в поле ссылки "text2", то в поле ввода текст по умолчанию выводится с помощью PLACEHOLDER</p>';
+              echo '<p>Если в поле ссылки "textP", то будет поле ввода пароля, со звёздочками и аттрибутом VALUE</p>';
+              echo '<p>Если в поле ссылки "textP2" или "text2P", то будет поле ввода пароля, со звёздочками и аттрибутом PLACEHOLDER</p></p>';
+              echo '<p>в случае с аттрибутом PLACEHOLDER стиль можно задать псевдоэлементом ::placeholder{}, как в примере.</p>';
+              echo '<p>Если стиль не задать, то поля с аттрибутом PLACEHOLDER будут пустыми.</p>';
+              echo '<p>на пример:<br> input::placeholder{<br>стили, которые заработают в том случае, когда будет задействован в теге input аттрибут placeholder<br>}<br></p></dd>';
             }
 
               if ($typeMenu==1) { // если menu
@@ -3269,7 +3394,6 @@ class menu extends initBD
             echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
           if ($stroka['URL']=='default')
             echo '<form class="form_'.$stroka['CLASS'].'" action="'.parent::initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
-           
             $i++;
         }
         echo'</section>';
@@ -3356,7 +3480,6 @@ class menu extends initBD
             if ($this->kn[$i])
             if ($stroka['URL']=='default')
             echo '<form class="form_'.$stroka['CLASS'].'" action="'.parent::initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
-            
             $i++;
         }
         echo'</section>';
@@ -3472,13 +3595,12 @@ class menu extends initBD
         $i=0;
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
-            if ($stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && $stroka['URL']!='default')
+            if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && $stroka['URL']!='default')
               echo '<button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
             if ($stroka['URL']=='reset')
               echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
            
           if ($stroka['URL']=='text')
-             {
               if ($stroka['NAME']!='br')
               {
               $textStart="";
@@ -3486,10 +3608,8 @@ class menu extends initBD
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
               $ii++;
               } else echo '<br>';
-             }
 
           if ($stroka['URL']=='text2')
-             {
               if ($stroka['NAME']!='br')
               {
               $textStart="";
@@ -3497,7 +3617,25 @@ class menu extends initBD
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
               $ii++;
               } else echo '<br>';
-             }
+
+          if ($stroka['URL']=='textP')
+              if ($stroka['NAME']!='br')
+              {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['URL']=='text2P' || $stroka['URL']=='textP2')
+                 if ($stroka['NAME']!='br')
+                       {
+                         $textStart="";
+                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                          $ii++;
+                       } else echo '<br>';           
+
 
             if ($stroka['URL']=='default')
             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
@@ -3551,13 +3689,13 @@ class menu extends initBD
         
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
-            if ($stroka['URL']!='text2' && $stroka['URL']!='text' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
+            if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
+            if ($stroka['URL']!='text2'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
               echo '<button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
             if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
               echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
             
             if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-             {
               if ($stroka['NAME']!='br')
               {
               $textStart="";
@@ -3565,10 +3703,8 @@ class menu extends initBD
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
               $ii++;
               } else echo '<br>';
-             }
 
             if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-             {
               if ($stroka['NAME']!='br')
               {
               $textStart="";
@@ -3576,8 +3712,25 @@ class menu extends initBD
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
               $ii++;
               } else echo '<br>';
-             }
-            
+             
+          if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br')
+              {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
+                 if ($stroka['NAME']!='br')
+                       {
+                         $textStart="";
+                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                          $ii++;
+                       } else echo '<br>';    
+             
              if ($stroka['URL']=='default')
               echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
             $i++;
@@ -3631,13 +3784,13 @@ class menu extends initBD
         
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
-          if ($stroka['URL']!='text'  && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
+          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
+          if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP'  && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
               echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$stroka['URL'].'"/>';
               if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
               echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
           
           if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-           {
              if ($stroka['NAME']!='br')
               {
               $textStart="";
@@ -3645,10 +3798,8 @@ class menu extends initBD
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
               $ii++;
               } else echo '<br>';
-            }
 
           if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-            {
               if ($stroka['NAME']!='br')
                {
                $textStart="";
@@ -3656,8 +3807,25 @@ class menu extends initBD
                echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
                $ii++;
                } else echo '<br>';
-             }
 
+           if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
+            if ($stroka['NAME']!='br')
+              {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['ID']==$idPoz)
+              if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
+                 if ($stroka['NAME']!='br')
+                       {
+                         $textStart="";
+                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                          $ii++;
+                       } else echo '<br>';    
             if ($stroka['URL']=='default')
              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
          }
@@ -3714,8 +3882,9 @@ class menu extends initBD
        { 
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
+          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
+            if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
               echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$stroka['URL'].'">';
           
           if ($stroka['ID']==$idPoz)
@@ -3724,7 +3893,6 @@ class menu extends initBD
           
           if ($stroka['ID']==$idPoz)
              if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-               {
                 if ($stroka['NAME']!='br')
                   {
                     $textStart="";
@@ -3732,10 +3900,19 @@ class menu extends initBD
                      echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
                      $ii++;
                   } else echo '<br>';
-               }
-          if ($stroka['ID']==$idPoz)
+
+           if ($stroka['ID']==$idPoz)
+              if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
+                 if ($stroka['NAME']!='br')
+                       {
+                         $textStart="";
+                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                          $ii++;
+                       } else echo '<br>';                  
+
+        if ($stroka['ID']==$idPoz)
            if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-             {
               if ($stroka['NAME']!='br')
               {
               $textStart="";
@@ -3743,7 +3920,17 @@ class menu extends initBD
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
               $ii++;
               } else echo '<br>';
-             }
+
+        if ($stroka['ID']==$idPoz)
+          if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br')
+              {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
           if ($stroka['ID']==$idPoz)
            if ($stroka['URL']=='default')
             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
@@ -3804,16 +3991,17 @@ class menu extends initBD
        { 
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
+          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']!='textarea' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
+            if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
               echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$stroka['URL'].'">';
           
           if ($stroka['ID']==$idPoz)
               if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
               echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';
-          if ($stroka['ID']==$idPoz)
-              if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-             {
+         
+              if ($stroka['ID']==$idPoz)
+           if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
               if ($stroka['NAME']!='br')
               {
               $textStart="";
@@ -3821,10 +4009,19 @@ class menu extends initBD
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
               $ii++;
               } else echo '<br>';
-             }         
+
           if ($stroka['ID']==$idPoz)
-              if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-             {
+             if ($stroka['URL']=='textP')
+                 if ($stroka['NAME']!='br')
+                 {
+                 $textStart="";
+                 if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                 echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+                 $ii++;
+                 } else echo '<br>';
+                        
+          if ($stroka['ID']==$idPoz)
+            if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
               if ($stroka['NAME']!='br')
               {
               $textStart="";
@@ -3832,7 +4029,7 @@ class menu extends initBD
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
               $ii++;
               } else echo '<br>';
-             }
+
           if ($stroka['ID']==$idPoz)
            if ($stroka['URL']=='textarea' &&  strrpos($stroka['STATUS'],$status)!=false)
             {
@@ -3841,6 +4038,16 @@ class menu extends initBD
              echo '<textarea class="textarea_'.$stroka['CLASS'].'" name="'.$stroka['NAME'].'"/>'.$textStart.'</textarea>';
              $ii++;
             }
+          if ($stroka['ID']==$idPoz)
+            if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
+               if ($stroka['NAME']!='br')
+                     {
+                       $textStart="";
+                        if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                        echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                        $ii++;
+                     } else echo '<br>';   
+
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']=='default')
              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
@@ -3910,8 +4117,9 @@ class menu extends initBD
        { 
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
+          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']!='textarea' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default' && $stroka['URL']!='p'  
+            if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default' && $stroka['URL']!='p'  
               && $stroka['URL']!='h1' && $stroka['URL']!='h2' && $stroka['URL']!='h3' && $stroka['URL']!='h4' && $stroka['URL']!='h5' && $stroka['URL']!='h6' && $stroka['URL']!='div' && $stroka['NAME']!='img' 
                && $stroka['NAME']!='hr'  && $stroka['NAME']!='col1' && (!stripos('-'.$stroka['NAME'],'col2') && !stripos($stroka['NAME'],'&') && !stripos ('-'.$stroka['NAME'],'col3')) )
                   echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$stroka['URL'].'">';
@@ -3922,7 +4130,6 @@ class menu extends initBD
           
           if ($stroka['ID']==$idPoz)
            if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-             {
               if ($stroka['NAME']!='br')
               {
               $textStart="";
@@ -3930,11 +4137,19 @@ class menu extends initBD
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
               $ii++;
               } else echo '<br>';
-             }
 
           if ($stroka['ID']==$idPoz)
+             if ($stroka['URL']=='textP')
+                 if ($stroka['NAME']!='br')
+                 {
+                 $textStart="";
+                 if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                 echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+                 $ii++;
+                 } else echo '<br>';
+                 
+          if ($stroka['ID']==$idPoz)
             if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-             {
               if ($stroka['NAME']!='br')
               {
               $textStart="";
@@ -3942,7 +4157,7 @@ class menu extends initBD
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
               $ii++;
               } else echo '<br>';
-             }
+
           if ($stroka['ID']==$idPoz)
            if ($stroka['URL']=='textarea' &&  strrpos($stroka['STATUS'],$status)!=false)
             {
@@ -3951,6 +4166,15 @@ class menu extends initBD
              echo '<textarea class="textarea_'.$stroka['CLASS'].'" name="'.$stroka['NAME'].'"/>'.$textStart.'</textarea>';
              $ii++;
             }
+          if ($stroka['ID']==$idPoz)
+            if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
+               if ($stroka['NAME']!='br')
+                     {
+                       $textStart="";
+                        if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                        echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                        $ii++;
+                     } else echo '<br>';    
          if ($stroka['ID']==$idPoz)
             if ($stroka['URL']=='default')
              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
@@ -4052,6 +4276,7 @@ class login extends initBd  // Работа с регистрациями
    }
    public function prowerkaMail()
    {
+    if (preg_match('/(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/',$_POST['Почта'])!=1) return true;
     $zapros="SELECT status FROM status_klienta WHERE mail='".$_POST['Почта']."'";
     $rez=parent::zaprosSQL($zapros);
     $stroka=mysqli_fetch_array($rez);
@@ -4561,15 +4786,44 @@ class maty extends menu  // Работа с матами и нецензурно
                if (isset($_POST['nie_maty_'.$value])) // Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
                  parent::zaprosSQL("DELETE FROM nie_maty WHERE nie_mat='".$value."'"); 
          }
+         public function list_block_save()  // Функция блокировки пользователя для добавления матов.
+         {
+            $rez=parent::zaprosSQL("SELECT login FROM status_klienta WHERE status>0 AND status<6"); // получаем все логины со статусами от 1 до 5
+            while(!is_null($stroka=mysqli_fetch_array($rez)))
+             {
+               if (isset($_POST['blok_user_mat_ot_polzovatelej_'.$stroka[0]])) // Если была нажата кнопка, блокировки пользователя
+                { 
+                  $id=parent::maxIdLubojTablicy('blocked_list_dobavit_mat');
+                  if ($id<1) $id=1;
+                  parent::zaprosSQL("INSERT INTO blocked_list_dobavit_mat(id, login) VALUES (".$id.", '".$stroka[0]."')");
+                }
+             }
+         }
          public function kill_ot_polsovatelej()  // Функция быстрое удаление конкретного слова через его кнопку
-         {//echo ',skb';
+         {
            if (isset($this->mat_polsovat[0]))
              foreach($this->mat_polsovat as $value)
                if (isset($_POST['kill_mat_ot_polzovatelej_'.$value])) // Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
                  parent::zaprosSQL("DELETE FROM mat_ot_polzovatelej WHERE mat='".$value."'"); 
          }
+        public function razblokirovka_polsovatelej()  // Функция разблокировка пользователя
+         {
+          $rez=parent::zaprosSQL("SELECT login FROM blocked_list_dobavit_mat WHERE 1"); // получаем все логины со статусами от 1 до 5
+          while(!is_null($stroka=mysqli_fetch_array($rez)))
+             if (isset($_POST['buttonListBocked'.$stroka[0]])) // Если была нажата кнопка, блокировки пользователя
+               parent::zaprosSQL("DELETE FROM blocked_list_dobavit_mat WHERE login='".$stroka[0]."'"); 
+         }
+        public function zablokirovanMaty()  // Функция разблокировка пользователя
+         {
+          $vivod=false;
+          $rez=parent::zaprosSQL("SELECT login FROM blocked_list_dobavit_mat WHERE 1"); // проверяем заблокирован ли пользователь на добавление матов
+          while(!is_null($stroka=mysqli_fetch_array($rez)))
+             if ($stroka[0]==$_SESSION['login']) // Если была нажата кнопка, блокировки пользователя
+              {$vivod=true; break;}
+          return $vivod;
+         }
        public function save_ot_polsovatelej()  // Функция переноса мата из временной таблицы в постоянную
-         {//echo ',skb';
+         {
            if (isset($this->mat_polsovat[0]))
              foreach($this->mat_polsovat as $value)
                if (isset($_POST['save_mat_ot_polzovatelej_'.$value])) // Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
@@ -4580,7 +4834,9 @@ class maty extends menu  // Работа с матами и нецензурно
          }
       public function redactMaty() // Работа с меню ретактирования таблицы матов
        {
-         // echo '-'.parent::sborMatov() ;
+          
+          $this->razblokirovka_polsovatelej();  // Функция разблокировка пользователя
+          $this->list_block_save(); // функция проверяет не была ли нажата кнопка блокировки пользователя, если была, то заносит логин в таблицу банов
           $this->kill_mat(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова
           $this->kill_nie_mat(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова
           $this->kill_ot_polsovatelej(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова пользователей
@@ -4599,6 +4855,7 @@ class maty extends menu  // Работа с матами и нецензурно
             echo '<div class="vklSborMatovDiv">';
             echo '<form method="POST" action="redaktor.php">';
             echo '<input type="submit" class="vyklSborMatov" name="vyklSborMatov" value="Выключить форму сбора нецензурных слов от пользователей">';
+            echo '<input type="submit" class="buttonListBocked" name="buttonListBocked" value="Список заблокированных пользователей">';
             echo '</form>';
             echo '</div>';
             echo '<br>';             
@@ -4607,13 +4864,29 @@ class maty extends menu  // Работа с матами и нецензурно
                   echo '<div class="vklSborMatovDiv">';
                   echo '<form method="POST" action="redaktor.php">';
                   echo '<input type="submit" class="vklSborMatov" name="vklSborMatov" value="Включить форму сбора нецензурных слов от пользователей">';
+                  echo '<input type="submit" class="buttonListBocked" name="buttonListBocked" value="Список заблокированных пользователей">';
                   echo '</form>';
                   echo '</div>';
                   echo '<br>';
             }
            ///////////////////////////////////////конец работы и обработки кнопки включения и отключения сбора нецензурных слов от пользователей///////////////////////////////////////////////////////////////////////
-
-
+          ////////// Показать список заблокированных пользователей
+         if (isset($_POST['buttonListBocked'])) //&& $_POST['menu_maty']=='Список заблокированных пользователей')
+           {
+             $rez=parent::zaprosSQL("SELECT login FROM blocked_list_dobavit_mat WHERE 1");
+             echo '<section class="container-fluid">';
+             echo '<form action="redaktor.php" method="post">';
+             while(!is_null($stroka=mysqli_fetch_array($rez)))
+              {
+                echo '<div class="row">';
+                echo '<div class="col">';
+                echo '<input class="buttonListBocked" type="submit" name="buttonListBocked'.$stroka[0].'" value="Разблокировать ('.$stroka[0].')">';
+                echo '</div>';
+                echo '</div>';
+              }
+             echo '</section>';
+             echo 'Конец списка';
+            }
           if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Удалить мат' && $_POST['mat_text']!='')
             {
              // Если слово есть, то удаляем
@@ -4657,7 +4930,7 @@ class maty extends menu  // Работа с матами и нецензурно
           echo '</section>';
           echo 'Конец списка';
          }
-        if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Показать не маты')
+        if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Показать не маты') // Рисуем кнопки нематов
          {
            $rez=parent::zaprosSQL("SELECT nie_mat FROM nie_maty WHERE 1");
            echo '<section class="container-fluid">';
@@ -4674,7 +4947,7 @@ class maty extends menu  // Работа с матами и нецензурно
            echo 'Конец списка';
           }
 
-       if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='От пользователей')
+       if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='От пользователей') // Рисуем кнопки матов от пользователей
           {
             $rez=parent::zaprosSQL("SELECT * FROM mat_ot_polzovatelej WHERE 1");
             echo '<section class="container-fluid">';
@@ -4685,7 +4958,7 @@ class maty extends menu  // Работа с матами и нецензурно
                echo '<div class="col">';
                echo '<input class="button_mat_ot_polzovatelej_list" type="submit" name="kill_mat_ot_polzovatelej_'.$stroka['mat'].'" value="Пользователь '.$stroka['login'].' добавил мат ('.$stroka['mat'].'). Удалить!">';
                echo '<input class="button_mat_ot_polzovatelej_save" type="submit" name="save_mat_ot_polzovatelej_'.$stroka['mat'].'" value="Сохранить">';
-               
+               echo '<input class="button_mat_ot_polzovatelej_block" type="submit" name="blok_user_mat_ot_polzovatelej_'.$stroka['login'].'" value="Заблокировать пользователя - '.$stroka['login'].'">';
                echo '</div>';
                echo '</div>';
              }
@@ -4735,42 +5008,52 @@ class maty extends menu  // Работа с матами и нецензурно
       }
   }
       // работаем с заполнением базы матов от пользователей на главной странице сайта
-      public function dobavilMat($text) //mat_ot_polzovatelej
+  public function dobavilMat($text) //mat_ot_polzovatelej
        {
+        if (isset($_POST['otkazDobawleniaMatow'])) //Самозаблокироваться от показа окна добавления матов
+         {
+          $id=parent::maxIdLubojTablicy('blocked_list_dobavit_mat');
+          if ($id<1) $id=1;
+          parent::zaprosSQL("INSERT INTO blocked_list_dobavit_mat(id, login) VALUES (".$id.", '".$_SESSION['login']."')");
+         }
+        if ($_SESSION['status']<1 || $_SESSION['status']>5) return false;
+        if ($this->zablokirovanMaty()) return false; // если пользователь заблокирован, то выйти
         if (parent::sborMatov()==0) return false;
          // Узнаем сколько матов пользователь может ввести
          $rez=parent::zaprosSQL("SELECT * FROM mat_ot_polzovatelej WHERE login='".$_SESSION['login']."'");
-         if (!$rez) $cisloMatov=10;
          $cisloMatov=10;
-           while(!is_null($stroka=mysqli_fetch_array($rez)))
-            {
+           while(!is_null($stroka=mysqli_fetch_assoc($rez)))
               $cisloMatov--;
-            }
 
-        if ($cisloMatov>0 && isset($_POST['dobawilMat']) && $_POST['dobawilMat']=='Ok' && $_POST['dobawilMatText']!='')
-         {
-           foreach($this->mas_mat as $value)
-            if ($value==$_POST['dobawilMatText']) $text='Спасибо, но данное нецензурное слово уже присутствует в базе данных.';
-           foreach($this->nie_mat as $value)
-            if ($value==$_POST['dobawilMatText']) $text='Спасибо, но данное слово уже присутствует в базе данных и помечено как слово, разрешенное к применению на данном ресурсе.';
+        if ($cisloMatov>0 && isset($_POST['dobawilMat']) && $_POST['dobawilMat']=='Ok' && $_POST['dobawilMatText']!='') {
+                foreach($this->mas_mat as $value)
+                  if ($value==$_POST['dobawilMatText']) $text='Спасибо, но данное нецензурное слово уже присутствует в базе данных.';
+                foreach($this->nie_mat as $value)
+                  if ($value==$_POST['dobawilMatText']) $text='Спасибо, но данное слово уже присутствует в базе данных и помечено как слово, разрешенное к применению на данном ресурсе.';
            
-        if (!preg_match_all('/Спасибо/u',$text)>0)  //Если мата нет в двух постоянных таблицах матов и нематов, то проверяем во временной таблице
-           {
-            $rez=parent::zaprosSQL("SELECT * FROM mat_ot_polzovatelej WHERE login='".$_SESSION['login']."'");
-            if (!$rez) echo 'не удалось прочитать данные из таблицы временных нецензурных слов';
-            while(!is_null($stroka=mysqli_fetch_assoc($rez)))
-            {
-              if ($stroka['mat']==$_POST['dobawilMatText']) $text='Спасибо, но некто, с логином '.$stroka['login'].' уже отправил данное слово на рассмотрение.';
+            if (!preg_match_all('/Спасибо/u',$text)>0) { //Если мата нет в двух постоянных таблицах матов и нематов, то проверяем во временной таблице
+                $rez=parent::zaprosSQL("SELECT * FROM mat_ot_polzovatelej WHERE login='".$_SESSION['login']."'");
+                if (!$rez) echo 'не удалось прочитать данные из таблицы временных нецензурных слов';
+                while(!is_null($stroka=mysqli_fetch_assoc($rez))) 
+                    if ($stroka['mat']==$_POST['dobawilMatText']) $text='Спасибо, но некто, с логином '.$stroka['login'].' уже отправил данное слово на рассмотрение.';
             }
-           }
 
-          if (!preg_match_all('/Спасибо/u',$text)>0)  //Если мата нет в двух постоянных таблицах матов и нематов, то проверяем во временной таблице
-           {
-            parent::zaprosSQL("INSERT INTO mat_ot_polzovatelej(mat, login) VALUES ('".$_POST['dobawilMatText']."','".$_SESSION['login']."')");
-           } 
-         }
-         if ($cisloMatov<1) $text=='Лимит ввода нецензурных слов исчерпан, подождите пока модератор одобрит предыдущие Ваши предложения.';
-        parent::poleInputokCanselPlusNameStr(parent::initsite(),$text.' Лимит матов-'.$cisloMatov,'dobawilMat','dobawilMatDiv','dobawilMatP','dobawilMatButton','dobawilMatInput'); //выводит дополнительную строку для ввода текста
-      }
+            if (!preg_match_all('/Спасибо/u',$text)>0) {  //Если мата нет в двух постоянных таблицах матов и нематов, то проверяем во временной таблице
+                  parent::zaprosSQL("INSERT INTO mat_ot_polzovatelej(mat, login) VALUES ('".$_POST['dobawilMatText']."','".$_SESSION['login']."')");
+                  $cisloMatov--;
+            } 
+        }
+        if ($cisloMatov<1) $text=='Лимит ввода нецензурных слов исчерпан, подождите пока модератор одобрит предыдущие Ваши предложения.';
+            {
+              $text=$text.' Лимит матов-'.$cisloMatov;
+              parent::formBlock('formaSborMata','starki.php',
+                                'p', $text, 'dobawilMatP',
+                                'text2','dobawilMatText',
+                                'submit','dobawilMat',
+                                'reset',
+                                'submit','otkazDobawleniaMatow','Заблокировать данную функцию');
+
+            }
+    }
 }// конец класса maty
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 12 2021 г., 11:35
+-- Время создания: Июн 24 2021 г., 15:56
 -- Версия сервера: 10.4.11-MariaDB
 -- Версия PHP: 7.2.29
 
@@ -24,12 +24,33 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `debuger`
+-- Структура таблицы `blocked_list_dobavit_mat`
 --
 
-CREATE TABLE `debuger` (
-  `mesage` varchar(255) COLLATE utf8_bin DEFAULT NULL
+CREATE TABLE `blocked_list_dobavit_mat` (
+  `id` int(11) DEFAULT NULL,
+  `login` varchar(50) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `dla_statusob_123`
+--
+
+CREATE TABLE `dla_statusob_123` (
+  `ID` int(11) DEFAULT NULL,
+  `NAME` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `URL` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `CLASS` varchar(255) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `dla_statusob_123`
+--
+
+INSERT INTO `dla_statusob_123` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
+(0, 'На Сайт', 'starki.php', 'dla_statusob_123');
 
 -- --------------------------------------------------------
 
@@ -91,8 +112,8 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
-(0, 'login_status', 'text', 'login_stark'),
-(1, 'parol_status', 'text', 'login_stark'),
+(0, 'login_status', 'text2', 'login_stark'),
+(1, 'parol_status', 'text2', 'login_stark'),
 (2, 'Вход', 'starki.php', 'login_stark'),
 (3, 'Регистрация', 'starki.php', 'login_stark'),
 (4, 'На сайт', 'starki.php', 'login_stark');
@@ -100,10 +121,54 @@ INSERT INTO `login` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `login_stark`
+-- Структура таблицы `maty`
 --
 
-CREATE TABLE `login_stark` (
+CREATE TABLE `maty` (
+  `mat` varchar(15) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `maty`
+--
+
+INSERT INTO `maty` (`mat`) VALUES
+('гавно'),
+('пизда'),
+('чувак'),
+('говно'),
+('хуй'),
+('хуя'),
+('хую'),
+('fuck'),
+('хуйня'),
+('нахуй'),
+('похуй'),
+('захуй'),
+('хуёвый'),
+('лох'),
+('гнида'),
+('заебись'),
+('блять');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `mat_ot_polzovatelej`
+--
+
+CREATE TABLE `mat_ot_polzovatelej` (
+  `mat` varchar(15) COLLATE utf8_bin DEFAULT NULL,
+  `login` varchar(15) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `menu_maty`
+--
+
+CREATE TABLE `menu_maty` (
   `ID` int(11) DEFAULT NULL,
   `NAME` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `URL` varchar(255) COLLATE utf8_bin DEFAULT NULL,
@@ -111,14 +176,19 @@ CREATE TABLE `login_stark` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Дамп данных таблицы `login_stark`
+-- Дамп данных таблицы `menu_maty`
 --
 
-INSERT INTO `login_stark` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
-(0, 'login_status_stark', 'text', 'login_stark btn'),
-(1, 'parol_status_stark', 'text', 'login_stark btn'),
-(2, 'Вход', 'starki.php', 'login_stark btn'),
-(3, 'Регистрация', 'redaktor.php', 'login_stark btn');
+INSERT INTO `menu_maty` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
+(0, 'mat_text', 'text', 'menu_maty'),
+(1, 'Показать', 'redaktor.php', 'menu_maty'),
+(2, 'Добавить', 'redaktor.php', 'menu_maty'),
+(3, 'Удалить мат', 'redaktor.php', 'menu_maty_kill_mat'),
+(4, 'Проверить слово', 'redaktor.php', 'menu_maty_prowerit_slowo'),
+(5, 'Показать не маты', 'redaktor.php', 'menu_nematy_pokaz'),
+(6, 'Добавить не мат', 'redaktor.php', 'menu_maty_dobavit'),
+(7, 'Удалить не мат', 'redaktor.php', 'menu_maty_kill'),
+(8, 'От пользователей', 'redaktor.php', 'menu_maty_ot_polzovatel');
 
 -- --------------------------------------------------------
 
@@ -183,35 +253,14 @@ CREATE TABLE `menu_stark_up_status` (
 --
 
 INSERT INTO `menu_stark_up_status` (`ID`, `NAME`, `URL`, `CLASS`, `STATUS`) VALUES
-(0, 'login_status_stark', 'text', 'login_stark btn', '-0-'),
-(1, 'parol_status_stark', 'text', 'login_stark btn', '-0'),
+(0, 'login_status_stark', 'text2', 'login_stark btn', '-0-'),
+(1, 'parol_status_stark', 'textP2', 'login_stark btn', '-0'),
 (2, 'Вход', 'starki.php', 'login_stark btn', '-0'),
 (3, 'Регистрация', 'redaktor.php', 'login_stark btn', '-0'),
 (4, 'Редактор', 'redaktor.php', 'login_stark btn', '-54'),
 (5, 'Выход', 'starki.php', 'login_stark btn', '-123459'),
 (6, 'Подтвердить', 'redaktor.php', 'login_stark btn', '-9'),
 (7, 'Профиль', 'starki.php', 'login_stark btn', '-12345');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `menu_up_stark`
---
-
-CREATE TABLE `menu_up_stark` (
-  `ID` int(11) DEFAULT NULL,
-  `NAME` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `URL` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `CLASS` varchar(255) COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Дамп данных таблицы `menu_up_stark`
---
-
-INSERT INTO `menu_up_stark` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
-(0, 'Редактор', 'redaktor.php', 'menu_up_stark btn btn-secondary'),
-(1, 'Главная', 'starki.php', 'menu_up_stark btn btn-secondary');
 
 -- --------------------------------------------------------
 
@@ -228,7 +277,26 @@ CREATE TABLE `nastrolkiredaktora` (
 --
 
 INSERT INTO `nastrolkiredaktora` (`imiePosTabl`) VALUES
-('redakt_profil');
+('menu_stark_up_status');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `nie_maty`
+--
+
+CREATE TABLE `nie_maty` (
+  `nie_mat` varchar(15) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `nie_maty`
+--
+
+INSERT INTO `nie_maty` (`nie_mat`) VALUES
+('подстрахуй'),
+('страхуй'),
+('застрахуй');
 
 -- --------------------------------------------------------
 
@@ -339,10 +407,10 @@ CREATE TABLE `podtverdit` (
 --
 
 INSERT INTO `podtverdit` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
-(0, 'kod', 'text', 'podtverdit btn btn-info'),
+(0, 'kod', 'text2', 'podtverdit btn btn-info'),
 (1, 'Подтвердить запись', 'redaktor.php', 'podtverdit btn btn-info'),
 (2, 'Найти письмо', 'redaktor.php', 'podtverdit btn btn-info'),
-(3, 'Выйти', 'redaktor.php', 'podtverdit btn btn-info'),
+(3, 'Выйти', 'starki.php', 'podtverdit btn btn-info'),
 (4, 'На сайт', 'starki.php', 'podtverdit btn btn-info');
 
 -- --------------------------------------------------------
@@ -393,7 +461,8 @@ INSERT INTO `redaktor_nastr7` (`ID`, `NAME`, `URL`, `CLASS`, `STATUS`) VALUES
 (4, 'Список таблиц', 'redaktor.php', 'redaktor_nastr_spis_tab', '-45'),
 (5, 'Удалить', 'redaktor.php', 'redaktor_nastr_udalit', '-5'),
 (6, 'Меню 5-9', 'redaktor.php', 'redaktor_nastr_menu_5', '-5'),
-(7, 'Статус', 'redaktor.php', 'redaktor_nastr_status', '-54');
+(7, 'Статус', 'redaktor.php', 'redaktor_nastr_status', '-54'),
+(8, 'Маты', 'redaktor.php', 'redaktor_nastr7_maty', '-54');
 
 -- --------------------------------------------------------
 
@@ -990,19 +1059,19 @@ CREATE TABLE `registracia` (
 --
 
 INSERT INTO `registracia` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
-(0, 'Логин', 'text', 'registracia btn btn-info'),
+(0, 'Логин', 'text2', 'registracia btn btn-info'),
 (5, 'br', 'text', 'registracia btn btn-info'),
-(6, 'parol', 'text', 'registracia btn btn-info'),
+(6, 'parol', 'text2', 'registracia btn btn-info'),
 (7, 'br', 'text', 'registracia btn btn-info'),
-(6, 'parol2', 'text', 'registracia btn btn-info'),
+(6, 'parol2', 'text2', 'registracia btn btn-info'),
 (7, 'br', 'text', 'registracia btn btn-info'),
-(8, 'Почта', 'text', 'registracia btn btn-info'),
+(8, 'Почта', 'text2', 'registracia btn btn-info'),
 (9, 'br', 'text', 'registracia btn btn-info'),
 (10, 'Capcha', 'text', 'registracia btn btn-info'),
-(11, 'Колесо круглое', 'redaktor.php', 'registracia btn btn-info'),
-(12, 'Пи=3,1415...', 'redaktor.php', 'registracia btn btn-info'),
-(13, 'Ночью темно', 'redaktor.php', 'registracia btn btn-info'),
-(14, 'Зимой холодно', 'redaktor.php', 'registracia btn btn-info'),
+(11, 'Дважды по три бутылки', 'redaktor.php', 'registracia btn btn-info'),
+(12, 'Конь на холме пасётся', 'redaktor.php', 'registracia btn btn-info'),
+(13, 'Больше чем два поллитра', 'redaktor.php', 'registracia btn btn-info'),
+(14, 'Пять раз по двадцать пять', 'redaktor.php', 'registracia btn btn-info'),
 (15, 'br', 'text', 'registracia btn btn-info'),
 (16, 'Сменить капчу', 'redaktor.php', 'registracia btn btn-info'),
 (17, 'Очистить', 'redaktor.php', 'registracia btn btn-info'),
@@ -1074,6 +1143,24 @@ INSERT INTO `status_klienta` (`login`, `parol`, `mail`, `status`, `time`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `tablica_nastroer_dvigka_int`
+--
+
+CREATE TABLE `tablica_nastroer_dvigka_int` (
+  `id` int(11) DEFAULT NULL,
+  `nastr` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `tablica_nastroer_dvigka_int`
+--
+
+INSERT INTO `tablica_nastroer_dvigka_int` (`id`, `nastr`) VALUES
+(1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `tablica_tablic`
 --
 
@@ -1092,14 +1179,14 @@ INSERT INTO `tablica_tablic` (`ID`, `NAME`, `CLASS`, `kol_voKn`) VALUES
 (1, 'redaktor_up', 0, 5),
 (2, 'redaktor_down', 0, 3),
 (5, 'menu_parametr_tab', 0, 4),
-(6, 'menu_up_stark', 0, 2),
 (7, 'login', 0, 5),
 (8, 'podtverdit', 0, 5),
-(9, 'login_stark', 0, 4),
 (10, 'menu_stark_up_status', 0, 8),
 (11, 'menu_stark_glawnoe', 0, 1),
-(13, 'redaktor_nastr7', 0, 8),
-(14, 'dolgnosti_starkow', 0, 22);
+(13, 'redaktor_nastr7', 0, 9),
+(14, 'dolgnosti_starkow', 0, 22),
+(15, 'menu_maty', 0, 9),
+(16, 'dla_statusob_123', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1127,8 +1214,12 @@ INSERT INTO `type_menu_po_imeni` (`name_menu`, `type_menu`) VALUES
 ('menu_test_5', 2),
 ('login', 4),
 ('menu_parametr_tab', 4),
-('podtverdit', 4),
-('test9', 9);
+('test9', 9),
+('registracia', 4),
+('menu_maty', 4),
+('menu', 1),
+('dla_statusob_123', 1),
+('podtverdit', 6);
 
 --
 -- Индексы сохранённых таблиц
