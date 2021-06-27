@@ -21,9 +21,9 @@ include 'class.php';
 $redaktor=false;        // Признак нажатия кнопки настройки редактора
 $spisokTablic=false;    // Признак нажатия кнопки Список таблиц
 
-$red = new redaktor();
-$status = new login();
-$maty = new maty();
+$red = new redaktor\redaktor();
+$status = new redaktor\login();
+$maty = new redaktor\maty();
 
 
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
@@ -32,7 +32,7 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
 <a name="vverh">
    
       <?php 
-      $menuUp = new menu(); 
+      $menuUp = new redaktor\menu(); 
       if ($_SESSION['status']>99 || $_SESSION['status']==9)
        $menuUp->__unserialize('menu6','podtverdit',array('redaktor.php','Введите код'));
 
@@ -74,6 +74,14 @@ if ($_SESSION['status']==5 || $_SESSION['status']==4) $red->startMenuRedaktora()
 
 /////////////////////////////////////////////Работа со входом и регистрацией////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Если не нажата кнопка Список таблиц zaprosSQL($zapros)
+if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',4)))// || $_SESSION['regimRaboty']==3)  
+{ 
+$redaktor=true;
+$spisokTablic=true;
+$_SESSION['regimRaboty']=3;
+$red->nazataPokazatSpisokTablic();
+}
 if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit']=='На сайт') //Переход на главную страницу
 {
   $_SESSION['regimRaboty']=0;
@@ -277,14 +285,7 @@ if (isset($_POST['redaktor_down']) && $_POST['redaktor_down']=='Настроит
   $_SESSION['resetNameTable']=false;
 }
 
-//Если не нажата кнопка Список таблиц zaprosSQL($zapros)
-  if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',4)))// || $_SESSION['regimRaboty']==3)  
-  { 
-  $redaktor=true;
-  $spisokTablic=true;
-  $_SESSION['regimRaboty']=3;
-  $red->nazataPokazatSpisokTablic();
-}
+
 
 //Если была нажата кнопка, соответствующая некоторой таблице, обрабатываем тут
 if (isset($_POST['bottonListTablic'])){
@@ -320,7 +321,7 @@ if ($_SESSION['regimRaboty']==2 || $_SESSION['regimRaboty']==18)
          }
 }
 
- $data=new dataAktual();
+ $data=new redaktor\dataAktual();
 
 echo '<div class="container-fluid">'."\n";
 echo '<div class="row menu_redaktor_down">'."\n";

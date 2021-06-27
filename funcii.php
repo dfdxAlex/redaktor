@@ -1,4 +1,7 @@
 <?php
+
+//include 'class.php';
+
 function forma($idTeg,$Teg,$opisanie,$opisanieVideo,$idPrimer,$idAtribut,$idSintax,$kluc1,$kluc2,$kluc3,$kluc4,$kluc5,$kluc6,$kluc7,$kluc8,$kluc9,$kluc10)
 {
 echo '<div class="container">';
@@ -57,10 +60,7 @@ function formaVyborBd() { // форма для выбора базы данны�
     echo ('<input type="submit" name="poiskButton" value="MQL4">  ');
     echo ('<input type="submit" name="poiskButton" value="MQL5">  ');
     echo ('<input type="submit" name="poiskButton" value="Электроника">  ');
-    //echo ('');
-    //echo ('');
-    //echo ('');
-    //echo ('');
+
     echo ("</form>");
  }
 

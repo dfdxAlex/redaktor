@@ -17,18 +17,24 @@ if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=1;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
 include 'funcii.php';
-include 'class.php';
+//include 'class.php';
+include 'classStark.php';
 $redaktor=false;        // Признак нажатия кнопки настройки редактора
 $spisokTablic=false;    // Признак нажатия кнопки Список таблиц
 
-$red = new redaktor();
-$status = new login();
-$menuUp = new menu(); 
-$maty = new maty();
+$red = new redaktor\redaktor();
+$status = new redaktor\login();
+$menuUp = new redaktor\menu(); 
+$maty = new redaktor\maty();
 
+// Проверка пары логин-пароль. Если такая пара есть в БД, то получить статус пользователя. Если пользователь не подтвердил регистрацию
+// то в его статусе находится проверочное число из письма. Если так, то присвоить такому ползователю статус 9.
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
 if ($_SESSION['status']>99) $_SESSION['status']=9;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
+
+<!------------------------------------Шапка сайта---------------------------------------->
 <section class="container-fluid">
 <div class="row">
 <div class="col-3">
@@ -36,15 +42,17 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
 </div>
 <div class="col-2">
 <?php
-//$privet='Привет Гость';
+///////////////////////////////////// Приветствие с проверкой  ////////////////////////////////
 $privet='Привет';
 if (isset($_SESSION['login'])) $privet='Привет '.$_SESSION['login'];
 $privet=$privet.' ('.$status->statusString().')';
 echo '<p class="privetDrug">'.$privet.'</p>';
+///////////////////////////////////////////////////////////////////////////////////////////////
 ?>
 </div>
+<!-------------------------------------------конец шапки------------------------------------------------------>
 
-<!-------------------------Верхнее меню, главное для сайта----------------------------------------------->
+<!-------------------------Верхнее меню, главное для сайта с логином----------------------------------------------->
 <div class="col-7"> 
   <?php 
       if ($_SESSION['status']>99) $_SESSION['status']=9; //Меню входа и регистрации
@@ -62,7 +70,7 @@ echo '<p class="privetDrug">'.$privet.'</p>';
 <?php
 ////////////////////////////////Левое меню с должностями, занимает 2 позиции////////////////////////////
 echo '<div class="col-2">';
-$menuUp->__unserialize('menu7','dolgnosti_starkow',array('starki.php'));
+//$menuUp->__unserialize('menu7','dolgnosti_starkow',array('starki.php'));
 echo '</div>';
 ?>
 <!--///////////////////////////////////////////////////////////////////////////////////////////////////////-->
