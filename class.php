@@ -141,7 +141,7 @@ class instrument
             if (isset($parametr[$i+1]))
               if (!$this->searcTegFormBlock($parametr[$i+1])) $textValue=$parametr[$i+1]; else $textValue='Reset'; else $textValue='Reset';
             $class=$nameBlock.'reset'.$i;
-            echo '<input type="reset" class="'.$class.'" value="'.$textValue.'">';
+            echo '<input type="reset" class="'.$class.' btn" value="'.$textValue.'">';
           }
         if ($value=='submit') 
           {
@@ -152,7 +152,7 @@ class instrument
             if (isset($parametr[$i+3]))
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
             $class=$nameBlock.$name.$i;
-            echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
+            echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
           }
         if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') 
           {
@@ -281,7 +281,7 @@ class initBD extends instrument
          // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
          // $classP - класс тегов Р - сообщения, $classButton - класс для кнопок
          // statusNumerSlovo($status) Преобразуем номер статуса в его значение
-    // okCansel($mesaz,$nameKn,$classDiv,$classP,$classButton)
+    // okCansel($mesaz,$nameKn,$classDiv,$classP,$classButton)  // отправляет на страницу редактора
     // poleInputokCansel($mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput) выводит дополнительную строку для ввода текста -- параметры. Имя кнопки задается. Имя кнопки может быть Ok или Cancel. Имя текстового поля - это имя кнопки + "Text"
     // poleInputokCanselPlusNameStr($nameStr,$mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput) как и верх, только плюс имя страницы обработчика
     // okSelect($mesaz,$nameKn,$classDiv,$classP,$classButton) выводит переключатель select и кнопку ок. 
@@ -3731,7 +3731,7 @@ class menu extends initBD
                           $ii++;
                        } else echo '<br>';    
              
-             if ($stroka['URL']=='default')
+             if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
               echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
             $i++;
         }
@@ -3826,7 +3826,7 @@ class menu extends initBD
                           echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
                           $ii++;
                        } else echo '<br>';    
-            if ($stroka['URL']=='default')
+            if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
          }
         echo '</form>';
@@ -3883,6 +3883,7 @@ class menu extends initBD
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
+          
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
               echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$stroka['URL'].'">';
@@ -3931,7 +3932,7 @@ class menu extends initBD
               $ii++;
               } else echo '<br>';
 
-          if ($stroka['ID']==$idPoz)
+          if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
            if ($stroka['URL']=='default')
             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
     
@@ -4000,7 +4001,7 @@ class menu extends initBD
               if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
               echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';
          
-              if ($stroka['ID']==$idPoz)
+          if ($stroka['ID']==$idPoz)
            if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
               if ($stroka['NAME']!='br')
               {
@@ -4049,7 +4050,7 @@ class menu extends initBD
                      } else echo '<br>';   
 
           if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']=='default')
+            if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
      
         }
@@ -4113,10 +4114,12 @@ class menu extends initBD
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
         $stroka=(mysqli_fetch_array(mysqli_query($this->con,$zapros)));
         $idMax=$stroka[0];
+        
        for ($idPoz=0; $idPoz<=$idMax; $idPoz++)
        { 
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
+          //echo $stroka['STATUS'];
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default' && $stroka['URL']!='p'  
@@ -4176,24 +4179,24 @@ class menu extends initBD
                         $ii++;
                      } else echo '<br>';    
          if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']=='default')
+            if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
           
-         if ($stroka['ID']==$idPoz)
+         if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
             if ($stroka['URL']=='p' || $stroka['URL']=='h1' || $stroka['URL']=='h2' || $stroka['URL']=='h3' || $stroka['URL']=='h4' || $stroka['URL']=='h5' || $stroka['URL']=='h6' || $stroka['URL']=='div')
               echo '<'.$stroka['URL'].' class="'.$stroka['URL'].'_'.$stroka['CLASS'].'">'.$stroka['NAME'].'</'.$stroka['URL'].'>';
           
         if ($stroka['ID']==$idPoz)
-          if ($stroka['NAME']=='img')
+          if ($stroka['NAME']=='img' &&  strrpos($stroka['STATUS'],$status)!=false)
             echo '<div class="imgDiv_'.$stroka['CLASS'].'"><img src="'.$stroka['URL'].'" alt="название и путь к файлу:'.$stroka['URL'].'"></div>';
         if ($stroka['ID']==$idPoz)
-          if ($stroka['NAME']=='hr')
+          if ($stroka['NAME']=='hr' &&  strrpos($stroka['STATUS'],$status)!=false)
             echo '<hr class="hr_'.$stroka['CLASS'].'">';
         if ($stroka['ID']==$idPoz)
-          if ($stroka['NAME']=='col1')
+          if ($stroka['NAME']=='col1' &&  strrpos($stroka['STATUS'],$status)!=false)
             echo '<div class="container-fluid"><div class="row"><div class="col-12"><div class=col1_'.$stroka['CLASS'].'">'.$stroka['URL'].'</div></div></div></div>';
          
-        if ($stroka['ID']==$idPoz)
+        if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
           if ($stroka['NAME']=='col2' || $stroka['NAME']=='col2_1/11' || $stroka['NAME']=='col2_2/10' || $stroka['NAME']=='col2_3/9' 
              || $stroka['NAME']=='col2_4/8' || $stroka['NAME']=='col2_5/7' || $stroka['NAME']=='col2_7/5' || $stroka['NAME']=='col2_8/4' || $stroka['NAME']=='col2_9/3' 
                || $stroka['NAME']=='col2_10/2' || $stroka['NAME']=='col2_11/1' || $stroka['NAME']=='col2_6/6')
@@ -4212,7 +4215,7 @@ class menu extends initBD
                 echo '<div class="container-fluid"><div class="row"><div class="col-'.$box1.'"><div class="col2_'.$stroka['CLASS'].'">'.$stroka1.'</div></div><div class="col-'.$box2.'"><div class="col2_'.$stroka['CLASS'].'">'.$stroka2.'</div></div></div></div>';
              }
 
-          if ($stroka['ID']==$idPoz)
+          if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
              if (stripos ('-'.$stroka['NAME'],'col3'))
              {
                 $box1=4;

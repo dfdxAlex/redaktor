@@ -175,3 +175,11 @@ input::placeholder {
 .bootstrap_4_redakt_profil{
   width: 8%;
 }
+.classStrarkiMenuDolgnostiPrefix{
+  color:aquamarine;
+}
+.strarki_menu_dolgnostinetMenu5{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+}

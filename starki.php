@@ -13,6 +13,7 @@
 <body class="bod<?php echo 'y'.rand(1,9)?>">
 <?php
 session_start();
+if (!isset($_POST['strarki_menu_dolgnosti'])) $_SESSION['redaktor_menu_dolgnosti_stark']=true;
 if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=1;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
@@ -69,13 +70,35 @@ echo '<p class="privetDrug">'.$privet.'</p>';
 <section class="container-fluid"><div class="row">
 <?php
 ////////////////////////////////Левое меню с должностями, занимает 2 позиции////////////////////////////
-echo '<div class="col-2">';
-//$menuUp->__unserialize('menu7','dolgnosti_starkow',array('starki.php'));
+if (isset($_POST['strarki_menu_dolgnosti']) && $_POST['strarki_menu_dolgnosti']=='Изменить ширину меню') 
+ {
+   $izmenili=false;
+   if (isset($_POST['strarki_menu_dolgnosti']) && $_SESSION['redaktor_menu_dolgnosti_stark']==true ) 
+     {
+       $_SESSION['redaktor_menu_dolgnosti_stark']=false;
+       $izmenili=true;
+     }
+   if (isset($_POST['strarki_menu_dolgnosti']) && $_SESSION['redaktor_menu_dolgnosti_stark']==false && !$izmenili) $_SESSION['redaktor_menu_dolgnosti_stark']=true;
+ }
+//---------------------
+if ($_SESSION['redaktor_menu_dolgnosti_stark']==true)
+  echo '<div class="col-2">';
+if ($_SESSION['redaktor_menu_dolgnosti_stark']==false)
+  echo '<div class="col-8">';
+  //---------------------
+$masStrarkiMenuDolgnosti = array();
+createTableDolgnostiStarkow($masStrarkiMenuDolgnosti);
+$menuUp->__unserialize('menu9','strarki_menu_dolgnosti',$masStrarkiMenuDolgnosti); //strarki_menu_dolgnosti
+resetTableStrarkiMenuDolgnostiPrefix();  // Если есть несоответствие между менюшкой и регами вывести кнопку с решением
 echo '</div>';
-?>
-<!--///////////////////////////////////////////////////////////////////////////////////////////////////////-->
-<div class="col-8">
-<?php
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////-->
+if ($_SESSION['redaktor_menu_dolgnosti_stark']==true)
+  echo '<div class="col-10">';
+if ($_SESSION['redaktor_menu_dolgnosti_stark']==false)
+  echo '<div class="col-4">';
+
+
 ////////////////////////////////Среднее поле на 8 позиций////////////////////////////
 /////////////////////////////////////////////Редактирование профиля////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
