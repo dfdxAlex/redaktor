@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 24 2021 г., 15:56
+-- Время создания: Июл 03 2021 г., 03:03
 -- Версия сервера: 10.4.11-MariaDB
 -- Версия PHP: 7.2.29
 
@@ -31,6 +31,15 @@ CREATE TABLE `blocked_list_dobavit_mat` (
   `id` int(11) DEFAULT NULL,
   `login` varchar(50) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `blocked_list_dobavit_mat`
+--
+
+INSERT INTO `blocked_list_dobavit_mat` (`id`, `login`) VALUES
+(1, 'alfa54'),
+(2, 'Starki'),
+(3, 'Stark');
 
 -- --------------------------------------------------------
 
@@ -97,6 +106,27 @@ INSERT INTO `dolgnosti_starkow` (`ID`, `NAME`, `URL`, `CLASS`, `STATUS`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `dolgnost_opis`
+--
+
+CREATE TABLE `dolgnost_opis` (
+  `ID` int(11) DEFAULT NULL,
+  `dolgnost` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `opis` varchar(5000) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `dolgnost_opis`
+--
+
+INSERT INTO `dolgnost_opis` (`ID`, `dolgnost`, `opis`) VALUES
+(1, 'Глава альянса', 'Трали-вали и что-то ещё'),
+(2, 'Падаван', 'хз что может'),
+(3, 'Магистр науки', 'Наука всему голова');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `login`
 --
 
@@ -149,7 +179,8 @@ INSERT INTO `maty` (`mat`) VALUES
 ('лох'),
 ('гнида'),
 ('заебись'),
-('блять');
+('блять'),
+('пиздабол');
 
 -- --------------------------------------------------------
 
@@ -189,6 +220,46 @@ INSERT INTO `menu_maty` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
 (6, 'Добавить не мат', 'redaktor.php', 'menu_maty_dobavit'),
 (7, 'Удалить не мат', 'redaktor.php', 'menu_maty_kill'),
 (8, 'От пользователей', 'redaktor.php', 'menu_maty_ot_polzovatel');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `menu_opisania_prawa_dolgnost`
+--
+
+CREATE TABLE `menu_opisania_prawa_dolgnost` (
+  `ID` int(11) DEFAULT NULL,
+  `NAME` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `URL` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `CLASS` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `STATUS` varchar(50) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `menu_opisania_prawa_dolgnost`
+--
+
+INSERT INTO `menu_opisania_prawa_dolgnost` (`ID`, `NAME`, `URL`, `CLASS`, `STATUS`) VALUES
+(0, 'Глава альянса', 'starki.php', 'prawa_dolgnost_sawe', '-s45'),
+(1, 'br', 'text', 'prawa_dolgnost_br', '-s45'),
+(2, 'Заместитель', 'starki.php', 'prawa_dolgnost_sawe', '-s45'),
+(3, 'br', 'text', 'prawa_dolgnost_br', '-s45'),
+(4, 'Магистр науки', 'starki.php', 'prawa_dolgnost_sawe', '-s45'),
+(5, 'br', 'text', 'prawa_dolgnost_br', '-s45'),
+(6, 'Магистр дипломатии', 'starki.php', 'prawa_dolgnost_sawe', '-s45'),
+(7, 'br', 'text', 'prawa_dolgnost_br', '-s45'),
+(8, 'Магистр разведки', 'starki.php', 'prawa_dolgnost_sawe', '-s45'),
+(9, 'br', 'text', 'prawa_dolgnost_br', '-s45'),
+(10, 'Магистр', 'starki.php', 'prawa_dolgnost_sawe', '-s45'),
+(11, 'br', 'text', 'prawa_dolgnost_br', '-s45'),
+(12, 'Джедай', 'starki.php', 'prawa_dolgnost_sawe', '-s45'),
+(13, 'br', 'text', 'prawa_dolgnost_br', '-s45'),
+(14, 'Падаван', 'starki.php', 'prawa_dolgnost_sawe', '-s45'),
+(15, 'br', 'text', 'prawa_dolgnost_br', '-s45'),
+(16, 'Юнлинг', 'starki.php', 'prawa_dolgnost_sawe', '-s45'),
+(17, 'br', 'text', 'prawa_dolgnost_br', '-s45'),
+(18, 'Рядовой', 'starki.php', 'prawa_dolgnost_sawe', '-s45'),
+(19, 'br', 'text', 'prawa_dolgnost_br', '-s45');
 
 -- --------------------------------------------------------
 
@@ -260,7 +331,8 @@ INSERT INTO `menu_stark_up_status` (`ID`, `NAME`, `URL`, `CLASS`, `STATUS`) VALU
 (4, 'Редактор', 'redaktor.php', 'login_stark btn', '-54'),
 (5, 'Выход', 'starki.php', 'login_stark btn', '-123459'),
 (6, 'Подтвердить', 'redaktor.php', 'login_stark btn', '-9'),
-(7, 'Профиль', 'starki.php', 'login_stark btn', '-12345');
+(7, 'Профиль', 'starki.php', 'login_stark btn', '-12345'),
+(8, 'Наш Discord', 'https://discord.gg/FZkzYFma9A', 'login_stark btn', '-12345');
 
 -- --------------------------------------------------------
 
@@ -277,7 +349,7 @@ CREATE TABLE `nastrolkiredaktora` (
 --
 
 INSERT INTO `nastrolkiredaktora` (`imiePosTabl`) VALUES
-('menu_stark_up_status');
+('strarki_menu_dolgnosti');
 
 -- --------------------------------------------------------
 
@@ -416,6 +488,31 @@ INSERT INTO `podtverdit` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `prawa_dolgnost`
+--
+
+CREATE TABLE `prawa_dolgnost` (
+  `ID` int(11) DEFAULT NULL,
+  `NAME` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `URL` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `CLASS` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `STATUS` varchar(50) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `prawa_dolgnost`
+--
+
+INSERT INTO `prawa_dolgnost` (`ID`, `NAME`, `URL`, `CLASS`, `STATUS`) VALUES
+(0, 'Магистр разведки', 'h2', 'prawa_dolgnost_h2', '-s12345'),
+(1, '', 'p', 'prawa_dolgnost_p', '-s12345'),
+(2, 'Izmenit', 'textarea', 'prawa_dolgnost_textarea', '-s45'),
+(3, 'br', 'text', 'prawa_dolgnost_br', '-s45'),
+(4, 'Изменить', 'starki.php', 'prawa_dolgnost_sawe', '-s45');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `redaktor_down`
 --
 
@@ -545,8 +642,6 @@ CREATE TABLE `redakt_profil_data` (
 --
 
 INSERT INTO `redakt_profil_data` (`id`, `str`, `stolb`, `info`, `login`) VALUES
-(32, 1, 2, 'https://cspromogame.ru//storage/upload_images/avatars/838.jpg', 'Starki'),
-(33, 1, 3, '-s1s2s3s4s5s9', 'Starki'),
 (132, 3, 1, '', 'alfa54'),
 (137, 6, 1, '', 'alfa54'),
 (139, 7, 1, '', 'alfa54'),
@@ -612,7 +707,32 @@ INSERT INTO `redakt_profil_data` (`id`, `str`, `stolb`, `info`, `login`) VALUES
 (599, 14, 3, '-s1s2s3s4s5s9', 'alfa54'),
 (600, 15, 2, 'неа', 'alfa54'),
 (601, 15, 3, '-s1s2s3s4s5s9', 'alfa54'),
-(602, 20, 1, '-', 'alfa54');
+(602, 20, 1, '-', 'alfa54'),
+(603, 1, 2, 'https://cspromogame.ru//storage/upload_images/avatars/838.jpg', 'Starki'),
+(604, 1, 3, '-s1s2s3s4s5s9', 'Starki'),
+(605, 2, 2, 'Имя', 'Starki'),
+(606, 2, 3, '-s1s2s3s4s5s9', 'Starki'),
+(607, 3, 2, 'Введите фамилию', 'Starki'),
+(608, 3, 3, '-', 'Starki'),
+(609, 4, 1, 'Немного о себе', 'Starki'),
+(610, 4, 3, '-', 'Starki'),
+(611, 5, 2, 'ссылка на сайт', 'Starki'),
+(612, 5, 3, '-', 'Starki'),
+(613, 6, 2, 'Моя почта', 'Starki'),
+(614, 6, 3, '-', 'Starki'),
+(615, 7, 2, 'Мой Skype', 'Starki'),
+(616, 7, 3, '-', 'Starki'),
+(617, 8, 2, 'Мой WhatsApp', 'Starki'),
+(618, 8, 3, '-', 'Starki'),
+(619, 9, 2, 'Мой Telegram', 'Starki'),
+(620, 9, 3, '-', 'Starki'),
+(621, 10, 2, 'Мой Viber', 'Starki'),
+(622, 10, 3, '-', 'Starki'),
+(623, 14, 2, 'Мой Youtube', 'Starki'),
+(624, 14, 3, '-', 'Starki'),
+(625, 15, 2, 'Мой facebook', 'Starki'),
+(626, 15, 3, '-', 'Starki'),
+(627, 20, 1, '-', 'Starki');
 
 -- --------------------------------------------------------
 
@@ -1136,9 +1256,102 @@ CREATE TABLE `status_klienta` (
 INSERT INTO `status_klienta` (`login`, `parol`, `mail`, `status`, `time`) VALUES
 ('alfa54', '123123', 'alexmway@mail.ru', 5, 1618426782),
 ('Модератор', '123123', 'Почта', 4, 1618926955),
-('Stark', '123123', 'arbfaergf', 1111, 1619007402),
+('Stark', '123123', 'arbfaergf', 1, 1619007402),
 ('Starki', '123123', 'swtrugnwsioer', 1, 1619007929),
-('Логин11', '123123', 'Почта11', 10317, 1619226084);
+('Логин11', '123123', 'Почта11', 1, 1619226084);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `strarki_menu_dolgnosti`
+--
+
+CREATE TABLE `strarki_menu_dolgnosti` (
+  `ID` int(11) DEFAULT NULL,
+  `NAME` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `URL` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `CLASS` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `STATUS` varchar(20) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `strarki_menu_dolgnosti`
+--
+
+INSERT INTO `strarki_menu_dolgnosti` (`ID`, `NAME`, `URL`, `CLASS`, `STATUS`) VALUES
+(0, 'Изменить ширину меню', 'starki.php', 'strarki_menu_dolgnosti_rashirit btn', '-s45'),
+(1, 'br', 'text', 'strarki_menu_dolgnosti_br', '-s45'),
+(2, 'Zwanie_alfa54', 'text2', 'strarki_menu_dolgnosti_text2', '-s45'),
+(3, 'Глава альянса', 'starki.php', 'strarki_menu_dolgnosti_prefix btn', '-s123'),
+(4, 'alfa54', 'starki.php', 'strarki_menu_dolgnosti_login btn', '-s0123459'),
+(5, '<<<     alfa54', 'starki.php', 'strarki_menu_dolgnosti_down btn', '-s45'),
+(6, '^1', 'starki.php', 'strarki_menu_dolgnosti_up1 btn', '-s45'),
+(7, '^10', 'starki.php', 'strarki_menu_dolgnosti_up10 btn', '-s45'),
+(8, '^20', 'starki.php', 'strarki_menu_dolgnosti_up20 btn', '-s45'),
+(9, 'Сохранить alfa54', 'starki.php', 'strarki_menu_dolgnosti_save btn', '-s45'),
+(10, 'br', 'text', 'strarki_menu_dolgnosti_br', '-s0123459'),
+(11, 'Zwanie_Модератор', 'text2', 'strarki_menu_dolgnosti_text2', '-s45'),
+(12, 'Магистр разведки', 'starki.php', 'strarki_menu_dolgnosti_prefix btn', '-s123'),
+(13, 'Модератор', 'starki.php', 'strarki_menu_dolgnosti_login btn', '-s0123459'),
+(14, '<<<     Модератор', 'starki.php', 'strarki_menu_dolgnosti_down btn', '-s45'),
+(15, '^1', 'starki.php', 'strarki_menu_dolgnosti_up1 btn', '-s45'),
+(16, '^10', 'starki.php', 'strarki_menu_dolgnosti_up10 btn', '-s45'),
+(17, '^20', 'starki.php', 'strarki_menu_dolgnosti_up20 btn', '-s45'),
+(18, 'Сохранить Модератор', 'starki.php', 'strarki_menu_dolgnosti_save btn', '-s45'),
+(19, 'br', 'text', 'strarki_menu_dolgnosti_br', '-s0123459'),
+(20, 'Zwanie_Stark', 'text2', 'strarki_menu_dolgnosti_text2', '-s45'),
+(21, 'Магистр науки', 'starki.php', 'strarki_menu_dolgnosti_prefix btn', '-s123'),
+(22, 'Stark', 'starki.php', 'strarki_menu_dolgnosti_login btn', '-s0123459'),
+(23, '<<<     Stark', 'starki.php', 'strarki_menu_dolgnosti_down btn', '-s45'),
+(24, '^1', 'starki.php', 'strarki_menu_dolgnosti_up1 btn', '-s45'),
+(25, '^10', 'starki.php', 'strarki_menu_dolgnosti_up10 btn', '-s45'),
+(26, '^20', 'starki.php', 'strarki_menu_dolgnosti_up20 btn', '-s45'),
+(27, 'Сохранить Stark', 'starki.php', 'strarki_menu_dolgnosti_save btn', '-s45'),
+(28, 'br', 'text', 'strarki_menu_dolgnosti_br', '-s0123459'),
+(29, 'Zwanie_Starki', 'text2', 'strarki_menu_dolgnosti_text2', '-s45'),
+(30, 'Магистр дипломат', 'starki.php', 'strarki_menu_dolgnosti_prefix btn', '-s123'),
+(31, 'Starki', 'starki.php', 'strarki_menu_dolgnosti_login btn', '-s0123459'),
+(32, '<<<     Starki', 'starki.php', 'strarki_menu_dolgnosti_down btn', '-s45'),
+(33, '^1', 'starki.php', 'strarki_menu_dolgnosti_up1 btn', '-s45'),
+(34, '^10', 'starki.php', 'strarki_menu_dolgnosti_up10 btn', '-s45'),
+(35, '^20', 'starki.php', 'strarki_menu_dolgnosti_up20 btn', '-s45'),
+(36, 'Сохранить Starki', 'starki.php', 'strarki_menu_dolgnosti_save btn', '-s45'),
+(37, 'br', 'text', 'strarki_menu_dolgnosti_br', '-s0123459'),
+(38, 'Zwanie_Логин11', 'text2', 'strarki_menu_dolgnosti_text2', '-s45'),
+(39, 'Зам Главы', 'starki.php', 'strarki_menu_dolgnosti_prefix btn', '-s123'),
+(40, 'Логин11', 'starki.php', 'strarki_menu_dolgnosti_login btn', '-s0123459'),
+(41, '<<<     Логин11', 'starki.php', 'strarki_menu_dolgnosti_down btn', '-s45'),
+(42, '^1', 'starki.php', 'strarki_menu_dolgnosti_up1 btn', '-s45'),
+(43, '^10', 'starki.php', 'strarki_menu_dolgnosti_up10 btn', '-s45'),
+(44, '^20', 'starki.php', 'strarki_menu_dolgnosti_up20 btn', '-s45'),
+(45, 'Сохранить Логин11', 'starki.php', 'strarki_menu_dolgnosti_save btn', '-s45'),
+(46, 'br', 'text', 'strarki_menu_dolgnosti_br', '-s0123459'),
+(47, 'Изменить ширину меню', 'starki.php', 'strarki_menu_dolgnosti_rashirit btn', '-s45'),
+(48, 'br', 'text', 'strarki_menu_dolgnosti_br', '-s45'),
+(49, 'Меню описания должностей', 'starki.php', 'strarki_menu_dolgnosti_rashirit btn', '-s45');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `strarki_menu_dolgnosti_prefix`
+--
+
+CREATE TABLE `strarki_menu_dolgnosti_prefix` (
+  `ID` int(11) DEFAULT NULL,
+  `prefix` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `login` varchar(50) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Дамп данных таблицы `strarki_menu_dolgnosti_prefix`
+--
+
+INSERT INTO `strarki_menu_dolgnosti_prefix` (`ID`, `prefix`, `login`) VALUES
+(11, 'Глава альянса', 'alfa54'),
+(12, 'Магистр разведки', 'Модератор'),
+(13, 'Магистр науки', 'Stark'),
+(14, 'Магистр дипломат', 'Starki'),
+(15, 'Зам Главы', 'Логин11');
 
 -- --------------------------------------------------------
 
@@ -1181,7 +1394,7 @@ INSERT INTO `tablica_tablic` (`ID`, `NAME`, `CLASS`, `kol_voKn`) VALUES
 (5, 'menu_parametr_tab', 0, 4),
 (7, 'login', 0, 5),
 (8, 'podtverdit', 0, 5),
-(10, 'menu_stark_up_status', 0, 8),
+(10, 'menu_stark_up_status', 0, 9),
 (11, 'menu_stark_glawnoe', 0, 1),
 (13, 'redaktor_nastr7', 0, 9),
 (14, 'dolgnosti_starkow', 0, 22),
@@ -1219,7 +1432,10 @@ INSERT INTO `type_menu_po_imeni` (`name_menu`, `type_menu`) VALUES
 ('menu_maty', 4),
 ('menu', 1),
 ('dla_statusob_123', 1),
-('podtverdit', 6);
+('podtverdit', 6),
+('strarki_menu_dolgnosti', 9),
+('menu_opisania_prawa_dolgnost', 9),
+('prawa_dolgnost', 9);
 
 --
 -- Индексы сохранённых таблиц

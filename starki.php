@@ -66,10 +66,29 @@ echo '<p class="privetDrug">'.$privet.'</p>';
 <?php $menuUp->__unserialize('menu7','menu_stark_glawnoe',array('starki.php','О членах'));?>
 </div></div></section>
 <!------------------------------------------------------------------------>
+<?php
+////////////////////////////////////////////////////Определяем режим работы, какая кнопка была нажата
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (isset($_POST['menu_stark_glawnoe']) && $_POST['menu_stark_glawnoe']=='О членах клана') $_SESSION['regimMenu2']=1;  // Была нажата кнопка О членах клана
+if (isset($_POST['strarki_menu_dolgnosti']) && $_POST['strarki_menu_dolgnosti']=='Меню описания должностей') $_SESSION['regimMenu2']=2;  // Была нажата кнопка О членах клана
+if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Глава альянса') $_SESSION['regimMenu2']=3; // Нажата кнопка описания главы альянса
+if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Заместитель') $_SESSION['regimMenu2']=4; // Нажата кнопка описания главы альянса
+if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Магистр науки') $_SESSION['regimMenu2']=5; // Нажата кнопка описания главы альянса
+if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Магистр дипломатии') $_SESSION['regimMenu2']=6; // Нажата кнопка описания главы альянса
+if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Магистр разведки') $_SESSION['regimMenu2']=7; // Нажата кнопка описания главы альянса
+if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Магистр') $_SESSION['regimMenu2']=8; // Нажата кнопка описания главы альянса
+if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Джедай') $_SESSION['regimMenu2']=9; // Нажата кнопка описания главы альянса
+if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Падаван') $_SESSION['regimMenu2']=10; // Нажата кнопка описания главы альянса
+if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Юнлинг') $_SESSION['regimMenu2']=11; // Нажата кнопка описания главы альянса
+if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Рядовой') $_SESSION['regimMenu2']=12; // Нажата кнопка описания главы альянса
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Меню описания должностей
+?>
 <section class="container-fluid"><div class="row">
 <?php
 ////////////////////////////////Левое меню с должностями, занимает 2 позиции////////////////////////////
+if (isset($_SESSION['regimMenu2']) && $_SESSION['regimMenu2']==1)
+{
 if (isset($_POST['strarki_menu_dolgnosti']) && $_POST['strarki_menu_dolgnosti']=='Изменить ширину меню') 
  {
    $izmenili=false;
@@ -82,10 +101,11 @@ if (isset($_POST['strarki_menu_dolgnosti']) && $_POST['strarki_menu_dolgnosti']=
  }
 //---------------------
 if ($_SESSION['redaktor_menu_dolgnosti_stark']==true)
-  echo '<div class="col-2">';
+  echo '<div class="col-3">';
 if ($_SESSION['redaktor_menu_dolgnosti_stark']==false)
   echo '<div class="col-8">';
   //---------------------
+saveZwanie(); // Ловим кнопку сохранения звания конкретного логина
 $masStrarkiMenuDolgnosti = array();
 createTableDolgnostiStarkow($masStrarkiMenuDolgnosti);
 $menuUp->__unserialize('menu9','strarki_menu_dolgnosti',$masStrarkiMenuDolgnosti); //strarki_menu_dolgnosti
@@ -94,12 +114,14 @@ echo '</div>';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////-->
 if ($_SESSION['redaktor_menu_dolgnosti_stark']==true)
-  echo '<div class="col-10">';
+  echo '<div class="col-9">';
 if ($_SESSION['redaktor_menu_dolgnosti_stark']==false)
   echo '<div class="col-4">';
 
-
+} //------------------------------------ конец меню о членах клана
 ////////////////////////////////Среднее поле на 8 позиций////////////////////////////
+// Реакция на нажатия кнопок должностей
+prawaDolgnost();
 /////////////////////////////////////////////Редактирование профиля////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if (isset($_POST['submit_redakt_profil'])  &&  $_POST['submit_redakt_profil']=='Отправить')  { //Если нажата кнопка Профиль
@@ -199,3 +221,15 @@ $maty->dobavilMat('Здесь можно пополнить справочник
 </body>
 </html>
 
+<!-- $_SESSION['regimMenu2']=1; была нажата кнопка меню 2 О членах клана--> 
+<!-- $_SESSION['regimMenu2']=2; была нажата кнопка меню Меню описания должностей--> 
+<!-- $_SESSION['regimMenu2']=3; Нажата кнопка описания главы альянса-->
+<!-- $_SESSION['regimMenu2']=4; Нажата кнопка описания --->
+<!-- $_SESSION['regimMenu2']=5; Нажата кнопка описания --->
+<!-- $_SESSION['regimMenu2']=6; Нажата кнопка описания --->
+<!-- $_SESSION['regimMenu2']=7; Нажата кнопка описания --->
+<!-- $_SESSION['regimMenu2']=8; Нажата кнопка описания --->
+<!-- $_SESSION['regimMenu2']=9; Нажата кнопка описания --->
+<!-- $_SESSION['regimMenu2']=10; Нажата кнопка описания---->
+<!-- $_SESSION['regimMenu2']=11; Нажата кнопка описания ---->
+<!-- $_SESSION['regimMenu2']=12; Нажата кнопка описания рядовой-->

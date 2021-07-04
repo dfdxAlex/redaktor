@@ -183,3 +183,113 @@ input::placeholder {
   margin: 1px;
   background-image: url("image/zwezda.jpg");
 }
+.button_strarki_menu_dolgnosti_prefix{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.strarki_menu_dolgnosti{
+  margin-bottom: 100px;
+}
+.text_strarki_menu_dolgnosti_text2{
+  width: 100px;
+  height: 28px;
+  font-size: 1vw;
+}
+.button_strarki_menu_dolgnosti_rashirit{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 200px;
+  font-size: 1vw;
+  color:azure;
+}
+.button_strarki_menu_dolgnosti_login{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 100px;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.button_strarki_menu_dolgnosti_down{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 50px;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.button_strarki_menu_dolgnosti_up1{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 35px;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.button_strarki_menu_dolgnosti_up10{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 45px;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.button_strarki_menu_dolgnosti_up20{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 45px;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.button_strarki_menu_dolgnosti_save{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 145px;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.starkiPravaH2{
+  font: italic;
+}
+.starkiPravaDiv{
+  width: 80%;
+  border: 4px double black;
+}
+.button_prawa_dolgnost_sawe{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 145px;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.textarea_prawa_dolgnost_textarea{
+  width: 400px;
+  height: 128px;
+}
+.menu_opisania_prawa_dolgnost{
+  margin-bottom: 100px;
+}

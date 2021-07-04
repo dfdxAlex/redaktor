@@ -295,7 +295,7 @@ class initBD extends instrument
     // maxIdLubojTablicy($nameTablice)                   // поиск максимального ID таблицы +1
     // searcIdPoUsloviu($nameTablicy,$usl1,$usl2,$usl3,$usl4,$usl5)               //Проверяет есть ли запись по условиям, возвращает ID, записи 
     // killZapisTablicy($nameTablice,$were) //           // Удалить строку в таблице
-    // zaprosSQL($zapros)                                // создать SQL запрос, условие согласно синтаксису SQL
+    // zaprosSQL($zapros)                                // создать SQL запрос, условие согласно синтаксису SQL// false если ошибка
     // tablicaDlaMenu($nameTablice)                      // проверяет принадлежность таблицы к кнопкам, возвращает ID имени таблицы в "tablice_tablic"
     // kolVoZapisTablice($nameTablice)                   // считает число записей в таблице
     // kolVoStolbovTablice($nameTablice)                 // считает число столбцов в таблице
@@ -332,9 +332,10 @@ class initBD extends instrument
         if ($usl5!="")
         $zapros=$zapros.' AND '.$usl5;
         $rez=$this->zaprosSQL($zapros);
+        if (!$rez) return 0;
         $stroka=mysqli_fetch_array($rez);
+        if (is_null($stroka)) return 0;
         if ($stroka[0]=='') return 0;
-        if ($stroka[0]==NULL) return 0;
         if ($stroka) return $stroka[0];
         return 0;
     }
@@ -4189,9 +4190,11 @@ class menu extends initBD
         if ($stroka['ID']==$idPoz)
           if ($stroka['NAME']=='img' &&  strrpos($stroka['STATUS'],$status)!=false)
             echo '<div class="imgDiv_'.$stroka['CLASS'].'"><img src="'.$stroka['URL'].'" alt="название и путь к файлу:'.$stroka['URL'].'"></div>';
-        if ($stroka['ID']==$idPoz)
+        
+            if ($stroka['ID']==$idPoz)
           if ($stroka['NAME']=='hr' &&  strrpos($stroka['STATUS'],$status)!=false)
             echo '<hr class="hr_'.$stroka['CLASS'].'">';
+
         if ($stroka['ID']==$idPoz)
           if ($stroka['NAME']=='col1' &&  strrpos($stroka['STATUS'],$status)!=false)
             echo '<div class="container-fluid"><div class="row"><div class="col-12"><div class=col1_'.$stroka['CLASS'].'">'.$stroka['URL'].'</div></div></div></div>';
