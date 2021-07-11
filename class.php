@@ -2840,7 +2840,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
           $typeMenu=34;
           $rez=mysqli_query($this->con,$zapros);
           $stroka=mysqli_fetch_assoc($rez);
-          if ($stroka['ORDINAL_POSITION']==5) $typeMenu="5";
+          if ($stroka['ORDINAL_POSITION']>4) $typeMenu="5";
           //////////////////////////////////////////////////////////////////////
             $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
             $rez=mysqli_query($this->con,$zapros);
@@ -2877,7 +2877,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
                  {
                   $stroka=mysqli_fetch_assoc($rez);
                   $id=$stroka['ID'];
-                  $name=$stroka['NAME'];
+                  $name=preg_quote($stroka['NAME']);
                   $url=$stroka['URL'];
                   $class=$stroka['CLASS'];
                   if ($typeMenu==5) $status=$stroka['STATUS'];
@@ -2892,7 +2892,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
                  echo ' NAME<input type="text" size=10 name="NAME'.$i.'" value="'.$name.'">';
                  echo ' URL<input type="text" size=10 name="URL'.$i.'" value="'.$url.'">';
                  echo ' CLASS<input type="text" size=10 name="CLASS'.$i.'" value="'.$class.'">';
-                 if ($typeMenu==5) echo ' STATUS<input type="text" size=10 name="STATUS'.$i.'" value="'.$status.'">';
+                 if ($typeMenu>4) echo ' STATUS<input type="text" size=10 name="STATUS'.$i.'" value="'.$status.'">';
                  echo '<br>';
             }
             echo '<input type="submit" name="saveTabeMenu" value="Сохранить">';
@@ -2935,6 +2935,8 @@ public function loadTablic($nameTablic)  // загрузить главную т
               echo '<p>Кнопка Button</p>';
               if ($typeMenu==6  || $typeMenu==7 || $typeMenu==8 || $typeMenu==9)
               echo '<p>Кнопка input type=submit</p>';
+              if ($typeMenu==6  || $typeMenu==7 || $typeMenu==8 || $typeMenu==9)
+              echo '<p>Возможна передача ссылки через переменную $_SESSION</p>';
               if ($typeMenu==6  || $typeMenu==7 || $typeMenu==8 || $typeMenu==4 || $typeMenu==5 || $typeMenu==9)
               echo '<p>Текстовое поле text</p>';
               if ($typeMenu==6  || $typeMenu==7 || $typeMenu==8 || $typeMenu==4 || $typeMenu==5 || $typeMenu==9)
@@ -3032,14 +3034,20 @@ public function loadTablic($nameTablic)  // загрузить главную т
               if ($typeMenu==4  || $typeMenu==5 || $typeMenu==6 || $typeMenu==7 || $typeMenu==8 || $typeMenu==9) { // если menu 4 или 5
                 echo '<dt class="col-3">Правила заполнения таблицы</dt>';
                 echo '<dd class="col-9 text-truncate style-infoMenu">';
-                if ($typeMenu==4  || $typeMenu==5 || $typeMenu==6)
+              if ($typeMenu==4  || $typeMenu==5 || $typeMenu==6)
                 echo '<p>Первый столбец заполняется автоматически.</p>';
-                if ($typeMenu==8 || $typeMenu==7 || $typeMenu==9)
+              if ($typeMenu==8 || $typeMenu==7 || $typeMenu==9)
                 echo '<p>Первый столбец заполняется автоматически, однако, можно менять ID кнопок для изменения последовательности их вывода.</p>';
                 echo '<p>Второй столбец - это имя кнопки. Данное имя кнопки будет передаваться в переменную $_POST как значение VALUE=...</p>';
                 echo '<p>Третий столбец - задает тип объекта - это будет кнопка, текстовое поле либо просто перевод строки.</p>';
+              if ($typeMenu==1  || $typeMenu==3 || $typeMenu==4 || $typeMenu==5) 
                 echo '<p>Ссылка как адрес обработчика здесь игнорируется. Адрес обработчика задается в параметре функции.</p>';
-                echo '<p>Если в третьем столбце будет любая ссылка, то меню поставит кнопку, которая отправит данные формы по ссылке, <br>указанной в параметре функции.</p>';
+                echo '<p>Если в третьем столбце будет ссылка, то меню поставит кнопку, которая отправит данные формы по ссылке, ';
+              if ($typeMenu==1  || $typeMenu==3 || $typeMenu==4 || $typeMenu==5)
+                echo '<br>указанной в параметре функции.</p>';
+              if ($typeMenu==6  || $typeMenu==7 || $typeMenu==8 || $typeMenu==9)
+                echo '<br>указанной в поле URL. Однако перед этим функция проверит нет ли переменной сессии с таким именем и если есть,<br>то ссылка будет взята из этой переменной.<br>Другими словами, если необходимо кнопке передать ссылку через переменную сессии $_SESSION[link]<br>';
+                echo 'то в качестве ссылки записываем имя этой переменной, URL=link.</p>';
                 echo '<p>Если в третьем столбце будет слово "reset", то меню поставит кнопку типа RESET.</p>';
                 echo '<p>Если в третьем столбце будет слово text, а имя кнопки будет отличаться от слова br, то меню поставит текстовое <br>поле для ввода информации.</p>';
                 echo '<p>Данную возможность следует использовать с магическим методом, и в массиве магического метода перечислить надписи <br>внутри текстовых полей.</p>';
@@ -3785,10 +3793,14 @@ class menu extends initBD
         
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
+
+          $linkButton=$stroka['URL'];
+          if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
+
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP'  && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
-              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$stroka['URL'].'"/>';
-              if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
+              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'"/>';
+          if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
               echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
           
           if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
@@ -3883,11 +3895,15 @@ class menu extends initBD
        { 
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
+
+          $linkButton=$stroka['URL'];
+          if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
+
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
-              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$stroka['URL'].'">';
+              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
           
           if ($stroka['ID']==$idPoz)
               if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
@@ -3993,10 +4009,14 @@ class menu extends initBD
        { 
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
+
+          $linkButton=$stroka['URL'];
+          if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
+
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
-              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$stroka['URL'].'">';
+              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
           
           if ($stroka['ID']==$idPoz)
               if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
@@ -4120,13 +4140,16 @@ class menu extends initBD
        { 
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
-          //echo $stroka['STATUS'];
+
+          $linkButton=$stroka['URL'];
+          if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
+
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default' && $stroka['URL']!='p'  
               && $stroka['URL']!='h1' && $stroka['URL']!='h2' && $stroka['URL']!='h3' && $stroka['URL']!='h4' && $stroka['URL']!='h5' && $stroka['URL']!='h6' && $stroka['URL']!='div' && $stroka['NAME']!='img' 
                && $stroka['NAME']!='hr'  && $stroka['NAME']!='col1' && (!stripos('-'.$stroka['NAME'],'col2') && !stripos($stroka['NAME'],'&') && !stripos ('-'.$stroka['NAME'],'col3')) )
-                  echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$stroka['URL'].'">';
+                  echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
           
           if ($stroka['ID']==$idPoz)
               if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)

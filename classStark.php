@@ -2,14 +2,49 @@
     //namespace stark;
     include 'class.php';
 
-// Обрабатывает вывод информации при нажатии на кнопки должностей для Пользователя
-function sprawkaPrawaDolgnost()
-{
-     if (isset($_POST['strarki_menu_dolgnosti']))
-      {
+    //Функция обрабатывает клик по логину игрока
+function klikLoginIgroka()
+    {
+        $classdxdl = new redaktor\maty();
+        //Проверяем есть ли таблища шаблона описания с уставом, если нет, то создаем ей
+            $id=0;
+            if (!$classdxdl->searcNameTablic('starki_ustaw'))
+               {
+                   $classdxdl->zaprosSQL("CREATE TABLE starki_ustaw(ID INT, NAME VARCHAR(65000), URL VARCHAR(50), CLASS VARCHAR(50), STATUS VARCHAR(50))");
+                   $classdxdl->zaprosSQL("INSERT INTO starki_ustaw(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", 'Устав альянса STARK ink','h2','starki_ustaw_h2','-s12345')");
+                   $classdxdl->zaprosSQL("INSERT INTO starki_ustaw(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", 'Устав альянса','p','starki_ustaw_p','-s12345')");
+                   $classdxdl->zaprosSQL("INSERT INTO starki_ustaw(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", 'Izmenit','textarea','starki_ustaw_textarea','-s45')");
+                   $classdxdl->zaprosSQL("INSERT INTO starki_ustaw(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", 'br','text','starki_ustaw_br','-s45')");
+                   $classdxdl->zaprosSQL("INSERT INTO starki_ustaw(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", 'Изменить','starki.php','starki_ustaw_sawe','-s45')");
+                }
 
-      }
-}
+                if (isset($_POST['starki_ustaw']) && $_POST['starki_ustaw']=='Изменить')
+                {
+                    // Узнать из меню какая должность редактируется
+                   //$dolgnost=mysqli_fetch_array($classdxdl->zaprosSQL("SELECT NAME FROM prawa_dolgnost WHERE 1"));
+                    
+                    //if ($classdxdl->searcIdPoUsloviu('dolgnost_opis','dolgnost="'.$dolgnost[0].'"','','','','')>0)
+                    $text=$_POST['Izmenit'];
+                    //$text2=preg_replace('/^/','<br>',$text);
+                    $text3=preg_replace('/\n/','<br>',$text);
+                     $classdxdl->zaprosSQL("UPDATE starki_ustaw SET NAME='".$text3."' WHERE ID=1");
+     
+                   // if (!$classdxdl->searcIdPoUsloviu('dolgnost_opis','dolgnost="'.$dolgnost[0].'"','','','','')>0)
+                    // {
+                     //    $id=$classdxdl->maxIdLubojTablicy('dolgnost_opis');
+                      //   if (!$id>0) $id=1;
+                      //   $classdxdl->zaprosSQL("INSERT INTO dolgnost_opis(ID, dolgnost, opis) VALUES (".$id.",'".$dolgnost[0]."','".$_POST['Izmenit']."')");
+                    // }
+                }
+
+                echo '<section class="container-fluid">';
+                echo '<div class="row">';
+                echo '<div class="col">';
+                    $classdxdl->menu9('starki_ustaw','starki.php');               //Поле редактирования устава
+                echo '</div>';
+                echo '</div>';
+                echo '</section>';
+    }
 
 function prawaDolgnost()  
     {
@@ -20,7 +55,7 @@ function prawaDolgnost()
                 //Проверяем есть ли таблища шаблона описания должностей, если нет, создаем
                  if (!$classdxdl->searcNameTablic('prawa_dolgnost'))
                     {
-                        $classdxdl->zaprosSQL("CREATE TABLE prawa_dolgnost(ID INT, NAME VARCHAR(50), URL VARCHAR(50), CLASS VARCHAR(50), STATUS VARCHAR(50))");
+                        $classdxdl->zaprosSQL("CREATE TABLE prawa_dolgnost(ID INT, NAME VARCHAR(65000), URL VARCHAR(50), CLASS VARCHAR(50), STATUS VARCHAR(50))");
                         $classdxdl->zaprosSQL("INSERT INTO prawa_dolgnost(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", 'Глава альянса','h2','prawa_dolgnost_h2','-s12345')");
                         $classdxdl->zaprosSQL("INSERT INTO prawa_dolgnost(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", 'Описание','p','prawa_dolgnost_p','-s12345')");
                         $classdxdl->zaprosSQL("INSERT INTO prawa_dolgnost(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", 'Izmenit','textarea','prawa_dolgnost_textarea','-s45')");
@@ -66,7 +101,7 @@ function prawaDolgnost()
                     $dolgnost=mysqli_fetch_array($classdxdl->zaprosSQL("SELECT NAME FROM prawa_dolgnost WHERE 1"));
                     
                     if ($classdxdl->searcIdPoUsloviu('dolgnost_opis','dolgnost="'.$dolgnost[0].'"','','','','')>0)
-                     $classdxdl->zaprosSQL("UPDATE dolgnost_opis SET opis='".$_POST['Izmenit']."' WHERE dolgnost='".$dolgnost[0]."'");
+                     $classdxdl->zaprosSQL("UPDATE dolgnost_opis SET opis='".preg_quote($_POST['Izmenit'])."' WHERE dolgnost='".$dolgnost[0]."'");
      
                     if (!$classdxdl->searcIdPoUsloviu('dolgnost_opis','dolgnost="'.$dolgnost[0].'"','','','','')>0)
                      {
@@ -303,7 +338,10 @@ function createTableDolgnostiStarkow(&$masMenu1)
         if (isset($_POST['strarki_menu_dolgnosti']))
          {
      
-             if (preg_match('/<<</','ftre'.$_POST['strarki_menu_dolgnosti']))
+             if (preg_match('/<<</','ftre'.$_POST['strarki_menu_dolgnosti'])
+                 ||  preg_match('/\^1/','ftre'.$_POST['strarki_menu_dolgnosti'])
+                   ||  preg_match('/\^20/','ftre'.$_POST['strarki_menu_dolgnosti'])
+             )
              {
      
                $max=$classdxdl->maxIdLubojTablicy('strarki_menu_dolgnosti')-4; // Последний ИД последней кнопки последней записи в меню игроков
@@ -314,8 +352,10 @@ function createTableDolgnostiStarkow(&$masMenu1)
      
                $startIdVerh=$id[0]-3;  // Это ID первой позиции (начало меню конкретного пользователя) Будем опускать на 1
                $endId=$startIdVerh+8;  // Последний ID блока кнопок конкретного игрока
-               echo 'begin'.$startIdVerh.'end'.$endId.'max'.$max;
      
+            // если кнопка предпоследняя ($max-9>=$endId) тогда можно опускать
+            if ($max-9>=$endId && preg_match('/<<</','ftre'.$_POST['strarki_menu_dolgnosti']))
+             {
                // Запоминаем старые записи
                $rez=$classdxdl->zaprosSQL("SELECT * FROM strarki_menu_dolgnosti WHERE ID>=".$startIdVerh." AND ID<=".($startIdVerh+8));
                $rez2=$classdxdl->zaprosSQL("SELECT * FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh+9)." AND ID<=".($startIdVerh+17));
@@ -329,8 +369,58 @@ function createTableDolgnostiStarkow(&$masMenu1)
                     $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".($stroka['ID']+9).", '".$stroka['NAME']."', '".$stroka['URL']."', '".$stroka['CLASS']."', '".$stroka['STATUS']."')");
                 while(!is_null($stroka=mysqli_fetch_assoc($rez2)))
                     $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".($stroka['ID']-9).", '".$stroka['NAME']."','".$stroka['URL']."','".$stroka['CLASS']."', '".$stroka['STATUS']."')");
-       
-              }
+             }
+
+          if ($endId>19 && preg_match('/\^1\s/','ftre'.$_POST['strarki_menu_dolgnosti']))
+             { 
+               // Запоминаем старые записи
+               $rez=$classdxdl->zaprosSQL("SELECT * FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-1)." AND ID<=".($startIdVerh+7));
+               $rez2=$classdxdl->zaprosSQL("SELECT * FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-10)." AND ID<=".($startIdVerh-2));
+               
+               // Удаляем старые записи
+               $classdxdl->zaprosSQL("DELETE FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-1)." AND ID<=".($startIdVerh+7));
+               $classdxdl->zaprosSQL("DELETE FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-10)." AND ID<=".($startIdVerh-2));
+     
+               // Добавляем обратно старые записи с новыми ID
+                while(!is_null($stroka=mysqli_fetch_assoc($rez)))
+                    $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".($stroka['ID']-9).", '".$stroka['NAME']."', '".$stroka['URL']."', '".$stroka['CLASS']."', '".$stroka['STATUS']."')");
+                while(!is_null($stroka=mysqli_fetch_assoc($rez2)))
+                    $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".($stroka['ID']+9).", '".$stroka['NAME']."','".$stroka['URL']."','".$stroka['CLASS']."', '".$stroka['STATUS']."')");
+             }
+
+          if ($endId>100 && preg_match('/\^10\s/','ftre'.$_POST['strarki_menu_dolgnosti']))
+             { 
+               // Запоминаем старые записи
+               $rez=$classdxdl->zaprosSQL("SELECT * FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-2)." AND ID<=".($startIdVerh+6));
+               $rez2=$classdxdl->zaprosSQL("SELECT * FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-92)." AND ID<=".($startIdVerh-3));
+               
+               // Удаляем старые записи
+               $classdxdl->zaprosSQL("DELETE FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-2)." AND ID<=".($startIdVerh+6));
+               $classdxdl->zaprosSQL("DELETE FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-92)." AND ID<=".($startIdVerh-3));
+     
+               // Добавляем обратно старые записи с новыми ID
+                while(!is_null($stroka=mysqli_fetch_assoc($rez)))
+                    $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".($stroka['ID']-90).", '".$stroka['NAME']."', '".$stroka['URL']."', '".$stroka['CLASS']."', '".$stroka['STATUS']."')");
+                while(!is_null($stroka=mysqli_fetch_assoc($rez2)))
+                    $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".($stroka['ID']+9).", '".$stroka['NAME']."','".$stroka['URL']."','".$stroka['CLASS']."', '".$stroka['STATUS']."')");
+             }
+         if ($endId>189 && preg_match('/\^20\s/','ftre'.$_POST['strarki_menu_dolgnosti']))
+             { 
+               // Запоминаем старые записи
+               $rez=$classdxdl->zaprosSQL("SELECT * FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-3)." AND ID<=".($startIdVerh+5));
+               $rez2=$classdxdl->zaprosSQL("SELECT * FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-183)." AND ID<=".($startIdVerh-4));
+               
+               // Удаляем старые записи
+               $classdxdl->zaprosSQL("DELETE FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-3)." AND ID<=".($startIdVerh+5));
+               $classdxdl->zaprosSQL("DELETE FROM strarki_menu_dolgnosti WHERE ID>=".($startIdVerh-183)." AND ID<=".($startIdVerh-4));
+     
+               // Добавляем обратно старые записи с новыми ID
+                while(!is_null($stroka=mysqli_fetch_assoc($rez)))
+                    $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".($stroka['ID']-180).", '".$stroka['NAME']."', '".$stroka['URL']."', '".$stroka['CLASS']."', '".$stroka['STATUS']."')");
+                while(!is_null($stroka=mysqli_fetch_assoc($rez2)))
+                    $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".($stroka['ID']+9).", '".$stroka['NAME']."','".$stroka['URL']."','".$stroka['CLASS']."', '".$stroka['STATUS']."')");
+             }
+        }
          }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //   Заносим данные в массив для подписания званий и запуска меню через магический метод
@@ -398,9 +488,9 @@ function createTableDolgnostiStarkow(&$masMenu1)
                 $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", '".paraPrefixLogin($stroka[0])."','starki.php','strarki_menu_dolgnosti_prefix btn','-s123')"); 
                 $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", '".$stroka[0]."','starki.php','strarki_menu_dolgnosti_login btn','-s0123459')");
                 $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", '<<<     ".$stroka[0]."','starki.php','strarki_menu_dolgnosti_down btn','-s45')");
-                $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", '^1','starki.php','strarki_menu_dolgnosti_up1 btn','-s45')");
-                $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", '^10','starki.php','strarki_menu_dolgnosti_up10 btn','-s45')");
-                $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", '^20','starki.php','strarki_menu_dolgnosti_up20 btn','-s45')");
+                $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", '^1     ".$stroka[0]."','starki.php','strarki_menu_dolgnosti_up1 btn','-s45')");
+                $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", '^10     ".$stroka[0]."','starki.php','strarki_menu_dolgnosti_up10 btn','-s45')");
+                $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", '^20     ".$stroka[0]."','starki.php','strarki_menu_dolgnosti_up20 btn','-s45')");
                 $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", 'Сохранить ".$stroka[0]."','starki.php','strarki_menu_dolgnosti_save btn','-s45')");
                 $classdxdl->zaprosSQL("INSERT INTO strarki_menu_dolgnosti(ID, NAME, URL, CLASS, STATUS) VALUES (".$id++.", 'br','text','strarki_menu_dolgnosti_br','-s0123459')");
             }

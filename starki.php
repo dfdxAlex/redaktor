@@ -13,6 +13,7 @@
 <body class="bod<?php echo 'y'.rand(1,9)?>">
 <?php
 session_start();
+$_SESSION['linkNaDiskord']='https://discord.gg/NFNU2mkYuz';
 if (!isset($_POST['strarki_menu_dolgnosti'])) $_SESSION['redaktor_menu_dolgnosti_stark']=true;
 if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=1;
@@ -32,6 +33,11 @@ $maty = new redaktor\maty();
 // то в его статусе находится проверочное число из письма. Если так, то присвоить такому ползователю статус 9.
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
 if ($_SESSION['status']>99) $_SESSION['status']=9;
+
+$prowerkaKlana=file_get_contents("https://starfederation.ru/?m=api&a=player&name=".$_SESSION['login']); // Гет запрос на сайт звёздной федерации, проверяем игрока на принадлежность к клану Старков
+$rezPoisKlana=strripos($prowerkaKlana,'S_T_A_R_K_ink');
+if (!$rezPoisKlana && $_SESSION['status']!=9 && $_SESSION['status']!=4 && $_SESSION['status']!=5) {$_SESSION['youNotKlan']=false;$_SESSION['linkNaDiskord']='starki.php';} else $_SESSION['youNotKlan']=true;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
 
@@ -46,6 +52,7 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
 ///////////////////////////////////// Приветствие с проверкой  ////////////////////////////////
 $privet='Привет';
 if (isset($_SESSION['login'])) $privet='Привет '.$_SESSION['login'];
+if (isset($_SESSION['login']) && isset($_SESSION['youNotKlan']) && !$_SESSION['youNotKlan']) $privet=$privet.' Тебя ещё нет в нашем клане, твои возможности на сайте немного ограничены.';
 $privet=$privet.' ('.$status->statusString().')';
 echo '<p class="privetDrug">'.$privet.'</p>';
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,8 +64,13 @@ echo '<p class="privetDrug">'.$privet.'</p>';
 <div class="col-7"> 
   <?php 
       if ($_SESSION['status']>99) $_SESSION['status']=9; //Меню входа и регистрации
-      $menuUp->__unserialize('menu7','menu_stark_up_status',array('starki.php','Логин','Пароль','Вход','Регистрация','Выход','Редактор'));
+      $menuUp->__unserialize('menu9','menu_stark_up_status',array('starki.php','Логин','Пароль','Вход','Регистрация','Выход','Редактор'));
+      
    ?>
+<!--\<form method="POST" action=\"https://discord.gg/FZkzYFma9A\"\>
+ '<input type="submit" class="linkDiskord btn" value="Discord" formaction="'.$_SESSION['linkNaDiskord'].'">'
+ <input type="submit" class="linkDiskord btn" value="Discord" formaction="https://discord.gg/FZkzYFma9A">
+\</form\>-->
 </div></div></section>
 <!------------------------------------------------------------------------>
 <!-------------------------Второе меню, главное для сайта----------------------------------------------->
@@ -70,6 +82,8 @@ echo '<p class="privetDrug">'.$privet.'</p>';
 ////////////////////////////////////////////////////Определяем режим работы, какая кнопка была нажата
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if (isset($_POST['menu_stark_glawnoe']) && $_POST['menu_stark_glawnoe']=='О членах клана') $_SESSION['regimMenu2']=1;  // Была нажата кнопка О членах клана
+if (isset($_POST['menu_stark_glawnoe']) && $_POST['menu_stark_glawnoe']=='Устав клана') $_SESSION['regimMenu2']=13;  // Была нажата кнопка устав клана
+
 if (isset($_POST['strarki_menu_dolgnosti']) && $_POST['strarki_menu_dolgnosti']=='Меню описания должностей') $_SESSION['regimMenu2']=2;  // Была нажата кнопка О членах клана
 if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Глава альянса') $_SESSION['regimMenu2']=3; // Нажата кнопка описания главы альянса
 if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Заместитель') $_SESSION['regimMenu2']=4; // Нажата кнопка описания главы альянса
@@ -86,6 +100,27 @@ if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa
 ?>
 <section class="container-fluid"><div class="row">
 <?php
+///////////////////////////////////Форматируем страницу под работу с уставом альянса///////////
+if (isset($_SESSION['regimMenu2']) && $_SESSION['regimMenu2']==13)
+{
+   echo '<div class="1">';
+   echo '</div class="1">';
+   echo '<div class="10">';
+
+if ($_SESSION['youNotKlan']) // если чел есть в клане старков
+   klikLoginIgroka(); // обрабатываем клик по кнопке устава
+   
+
+
+
+
+   echo '</div class="10">';
+   echo '<div class="1">';
+   echo '</div class="1">';
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////Форматируем страницу под работу с должностями игроков
 ////////////////////////////////Левое меню с должностями, занимает 2 позиции////////////////////////////
 if (isset($_SESSION['regimMenu2']) && $_SESSION['regimMenu2']==1)
 {
@@ -100,23 +135,29 @@ if (isset($_POST['strarki_menu_dolgnosti']) && $_POST['strarki_menu_dolgnosti']=
    if (isset($_POST['strarki_menu_dolgnosti']) && $_SESSION['redaktor_menu_dolgnosti_stark']==false && !$izmenili) $_SESSION['redaktor_menu_dolgnosti_stark']=true;
  }
 //---------------------
-if ($_SESSION['redaktor_menu_dolgnosti_stark']==true)
-  echo '<div class="col-3">';
-if ($_SESSION['redaktor_menu_dolgnosti_stark']==false)
-  echo '<div class="col-8">';
+  if ($_SESSION['redaktor_menu_dolgnosti_stark']==true)
+    echo '<div class="col-3">';
+  if ($_SESSION['redaktor_menu_dolgnosti_stark']==false)
+    echo '<div class="col-8">';
   //---------------------
-saveZwanie(); // Ловим кнопку сохранения звания конкретного логина
-$masStrarkiMenuDolgnosti = array();
-createTableDolgnostiStarkow($masStrarkiMenuDolgnosti);
-$menuUp->__unserialize('menu9','strarki_menu_dolgnosti',$masStrarkiMenuDolgnosti); //strarki_menu_dolgnosti
-resetTableStrarkiMenuDolgnostiPrefix();  // Если есть несоответствие между менюшкой и регами вывести кнопку с решением
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if ($_SESSION['youNotKlan']) // если чел есть в клане старков
+{
+  saveZwanie(); // Ловим кнопку сохранения звания конкретного логина
+  $masStrarkiMenuDolgnosti = array();
+  createTableDolgnostiStarkow($masStrarkiMenuDolgnosti);
+  $menuUp->__unserialize('menu9','strarki_menu_dolgnosti',$masStrarkiMenuDolgnosti); //strarki_menu_dolgnosti
+  resetTableStrarkiMenuDolgnostiPrefix();  // Если есть несоответствие между менюшкой и регами вывести кнопку с решением
+}
 echo '</div>';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////-->
+//////////////////////////////////////////Вторая часть форматирования страницы под должности игроков
 if ($_SESSION['redaktor_menu_dolgnosti_stark']==true)
   echo '<div class="col-9">';
 if ($_SESSION['redaktor_menu_dolgnosti_stark']==false)
   echo '<div class="col-4">';
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 } //------------------------------------ конец меню о членах клана
 ////////////////////////////////Среднее поле на 8 позиций////////////////////////////
@@ -233,3 +274,4 @@ $maty->dobavilMat('Здесь можно пополнить справочник
 <!-- $_SESSION['regimMenu2']=10; Нажата кнопка описания---->
 <!-- $_SESSION['regimMenu2']=11; Нажата кнопка описания ---->
 <!-- $_SESSION['regimMenu2']=12; Нажата кнопка описания рядовой-->
+<!-- $_SESSION['regimMenu2']=13; Работаем с уставом клана-->

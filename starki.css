@@ -293,3 +293,17 @@ input::placeholder {
 .menu_opisania_prawa_dolgnost{
   margin-bottom: 100px;
 }
+.starki_ustaw{
+  background:rgb(65, 46, 117);
+}
+.p_starki_ustaw_p{
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 1vw;
+}
+.linkDiskord{
+  float:right;
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+}
