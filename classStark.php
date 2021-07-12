@@ -295,7 +295,10 @@ function createTableDolgnostiStarkow(&$masMenu1)
 
         // Если была нажата кнопка удаления таблицы меню, то удалить
         if (isset($_POST['netMenu']) && $_POST['netMenu']=='Исправить?')
-          $classdxdl->killTab('strarki_menu_dolgnosti');
+        {
+          $classdxdl->killTab2('strarki_menu_dolgnosti');
+          echo 'Удалить strarki_menu_dolgnosti';
+        }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

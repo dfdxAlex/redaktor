@@ -443,6 +443,11 @@ class initBD extends instrument
           $zapros="DROP TABLE ".$_SESSION['nameTablice'];
           $rez=mysqli_query($this->con,$zapros);
        }
+     public function killTab2($nameTablicy)  //Удаление таблицы из БД через входящий параметр
+       {
+          $zapros="DROP TABLE ".$nameTablicy;
+          $rez=mysqli_query($this->con,$zapros);
+       }
      public function killTabEtap1($nameTablicy)  //Удаление таблицы из БД если только она не служебная
      {      
                                             //Если таблица служебная, то подменяется имя кнопки "Согласен удалить" на "Невозможно удалить"
@@ -3794,13 +3799,16 @@ class menu extends initBD
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
 
-          $linkButton=$stroka['URL'];
-          if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
 
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP'  && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
-              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'"/>';
-          if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
+          {   
+            $linkButton=$stroka['URL'];
+            if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
+            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'"/>';
+            if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
+          }
+         if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
               echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
           
           if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
@@ -3896,15 +3904,16 @@ class menu extends initBD
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
 
-          $linkButton=$stroka['URL'];
-          if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
-
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
+            {   
+              $linkButton=$stroka['URL'];
+              if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
               echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
-          
+              if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
+            }
           if ($stroka['ID']==$idPoz)
               if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
               echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';
@@ -4010,14 +4019,16 @@ class menu extends initBD
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
 
-          $linkButton=$stroka['URL'];
-          if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
 
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
+            {   
+              $linkButton=$stroka['URL'];
+              if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];  
               echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
-          
+              if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
+            }
           if ($stroka['ID']==$idPoz)
               if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
               echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';
@@ -4141,16 +4152,19 @@ class menu extends initBD
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
 
-          $linkButton=$stroka['URL'];
-          if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
+          
 
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default' && $stroka['URL']!='p'  
               && $stroka['URL']!='h1' && $stroka['URL']!='h2' && $stroka['URL']!='h3' && $stroka['URL']!='h4' && $stroka['URL']!='h5' && $stroka['URL']!='h6' && $stroka['URL']!='div' && $stroka['NAME']!='img' 
                && $stroka['NAME']!='hr'  && $stroka['NAME']!='col1' && (!stripos('-'.$stroka['NAME'],'col2') && !stripos($stroka['NAME'],'&') && !stripos ('-'.$stroka['NAME'],'col3')) )
-                  echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
-          
+               {   
+                $linkButton=$stroka['URL'];
+                if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
+                echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
+                if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
+              }
           if ($stroka['ID']==$idPoz)
               if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
               echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';

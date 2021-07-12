@@ -13,7 +13,8 @@
 <body class="bod<?php echo 'y'.rand(1,9)?>">
 <?php
 session_start();
-$_SESSION['linkNaDiskord']='https://discord.gg/NFNU2mkYuz';
+$_SESSION['youNotKlan']=false; // по умолчению игрок не состоит в клане
+$_SESSION['linkNaDiskord']='https://discord.gg/NFNU2mkYuz'; // содержит ссылку на дискорд, которая может быть изменена на ссылку на главную страницу, если игрок не состоит в клане
 if (!isset($_POST['strarki_menu_dolgnosti'])) $_SESSION['redaktor_menu_dolgnosti_stark']=true;
 if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=1;
@@ -34,10 +35,12 @@ $maty = new redaktor\maty();
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
 if ($_SESSION['status']>99) $_SESSION['status']=9;
 
+// Проверяем состоит ли игрок в клане Старков, если состоит, то $_SESSION['youNotKlan']=true, инача $_SESSION['youNotKlan']=false
 $prowerkaKlana=file_get_contents("https://starfederation.ru/?m=api&a=player&name=".$_SESSION['login']); // Гет запрос на сайт звёздной федерации, проверяем игрока на принадлежность к клану Старков
 $rezPoisKlana=strripos($prowerkaKlana,'S_T_A_R_K_ink');
-if (!$rezPoisKlana && $_SESSION['status']!=9 && $_SESSION['status']!=4 && $_SESSION['status']!=5) {$_SESSION['youNotKlan']=false;$_SESSION['linkNaDiskord']='starki.php';} else $_SESSION['youNotKlan']=true;
 
+if (!$rezPoisKlana && $_SESSION['status']!=9 && $_SESSION['status']!=4 && $_SESSION['status']!=5) {$_SESSION['youNotKlan']=false;$_SESSION['linkNaDiskord']='starki.php';} else $_SESSION['youNotKlan']=true;
+//if ($_SESSION['youNotKlan']) echo 'я в клане';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
 
@@ -52,7 +55,7 @@ if (!$rezPoisKlana && $_SESSION['status']!=9 && $_SESSION['status']!=4 && $_SESS
 ///////////////////////////////////// Приветствие с проверкой  ////////////////////////////////
 $privet='Привет';
 if (isset($_SESSION['login'])) $privet='Привет '.$_SESSION['login'];
-if (isset($_SESSION['login']) && isset($_SESSION['youNotKlan']) && !$_SESSION['youNotKlan']) $privet=$privet.' Тебя ещё нет в нашем клане, твои возможности на сайте немного ограничены.';
+if (isset($_SESSION['login']) && !$_SESSION['youNotKlan']) $privet=$privet.' Тебя ещё нет в нашем клане, твои возможности на сайте немного ограничены.';
 $privet=$privet.' ('.$status->statusString().')';
 echo '<p class="privetDrug">'.$privet.'</p>';
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,6 +165,7 @@ if ($_SESSION['redaktor_menu_dolgnosti_stark']==false)
 } //------------------------------------ конец меню о членах клана
 ////////////////////////////////Среднее поле на 8 позиций////////////////////////////
 // Реакция на нажатия кнопок должностей
+if ($_SESSION['youNotKlan']) // если чел есть в клане старков
 prawaDolgnost();
 /////////////////////////////////////////////Редактирование профиля////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
