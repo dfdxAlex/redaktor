@@ -92,7 +92,6 @@ class modul
                 $classPhp->zaprosSQL("CREATE TABLE ".$nametablice."(id INT, name VARCHAR(200), news VARCHAR(65000), login_redaktora VARCHAR(200))");
              }
              // Воспроизводим статью от pokazarStatijRedaktora-здесь хранится имя автора, чьи статьи показать
-             
              $zapros='';
              if ($pokazarStatijRedaktora=='')
                $zapros="SELECT * FROM ".$nametablice." WHERE 1";
@@ -115,13 +114,20 @@ class modul
              $otstupBr='<br>';
              for ($j=0; $j<$otstup;$j++) $otstupBr=$otstupBr.'<br>';
              
+             // вывести статью согласно определенному шаблону.
              if ($hablon==1)
               for ($ii=0; $ii<$i; $ii++)
-                  echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0].'</div><small> автор: '.$dataMas[$ii][0][0][1].'</small>'.$otstupBr;
+                {
+                  echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0].'</div><small> автор: '.$dataMas[$ii][0][0][1].'</small>';
+                  if (1) echo 'удалить статью'.$otstupBr;
+                }
              if ($hablon==2)
                   for ($ii=$i-1; $ii>-1; $ii--)
-                      echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0].'</div><small> автор: '.$dataMas[$ii][0][0][1].'</small>'.$otstupBr;
-    
+                  {
+                      echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0].'</div><small> автор: '.$dataMas[$ii][0][0][1].'</small>';
+                      if (1) echo 'удалить статью'.$otstupBr;
+                  }
+                      
              /////////////////////////////////////////////////////////////////////////////////////////////////////////
              // Запись статьи, если была нажата кнопка Сохранить
 

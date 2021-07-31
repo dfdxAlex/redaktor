@@ -11,11 +11,40 @@ class instrument
 
     public function __construct(){
     }  
+
+   
+   // функция рисует кнопку с использованием параметров префикса и переменной. Работает с функцией buttonHanter()
+   public function buttonPrefix(...$parametr)
+   {
+    $container=false;
+
+    foreach($parametr as $value)
+    if (stripos('sss'.$value,'container'))
+      $container=true;
+       //$nametablice=preg_replace('/nameTD=/','',$value);
+    if ($container) 'в контейнере';
+     //обработка параметра help
+     foreach($parametr as $value)
+      if ($value=='help' || $value=='Помощь')
+       {
+         echo '<p>Чтобы кнопка была в отдельном контейнеое, то нужен параметр container. Пример:buttonPrefix("container");</p><br>';
+         echo '<p></p><br>';
+         echo '<p></p><br>';
+         echo '<p></p><br>';
+         echo '<p></p><br>';
+         echo '<p></p><br>';
+         echo '<p></p><br>';
+         echo '<p></p><br>';
+         echo '<p></p><br>';
+         echo '<p></p><br>';
+         echo '<p></p><br>';
+         echo '<p></p><br>';
+       }
+   }
+
    // Функция выводит некое сообщение $mesaz, задает название кнопок, которым будет присвоено OK или Cansel ///проверка git 1-3
    // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
    // $classP - класс тегов Р - сообщения, $classButton - класс для кнопок
-   
-
    public function okCansel($mesaz,$nameKn,$classDiv,$classP,$classButton){
     echo '<section class="container">';
     echo '<div class="row '.$classDiv.'">';

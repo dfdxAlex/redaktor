@@ -21,20 +21,9 @@ function klikLoginIgroka()
                 if (isset($_POST['starki_ustaw']) && $_POST['starki_ustaw']=='Изменить')
                 {
                     // Узнать из меню какая должность редактируется
-                   //$dolgnost=mysqli_fetch_array($classdxdl->zaprosSQL("SELECT NAME FROM prawa_dolgnost WHERE 1"));
-                    
-                    //if ($classdxdl->searcIdPoUsloviu('dolgnost_opis','dolgnost="'.$dolgnost[0].'"','','','','')>0)
                     $text=$_POST['Izmenit'];
-                    //$text2=preg_replace('/^/','<br>',$text);
                     $text3=preg_replace('/\n/','<br>',$text);
                      $classdxdl->zaprosSQL("UPDATE starki_ustaw SET NAME='".$text3."' WHERE ID=1");
-     
-                   // if (!$classdxdl->searcIdPoUsloviu('dolgnost_opis','dolgnost="'.$dolgnost[0].'"','','','','')>0)
-                    // {
-                     //    $id=$classdxdl->maxIdLubojTablicy('dolgnost_opis');
-                      //   if (!$id>0) $id=1;
-                      //   $classdxdl->zaprosSQL("INSERT INTO dolgnost_opis(ID, dolgnost, opis) VALUES (".$id.",'".$dolgnost[0]."','".$_POST['Izmenit']."')");
-                    // }
                 }
 
                 echo '<section class="container-fluid">';
