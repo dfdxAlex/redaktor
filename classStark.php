@@ -1,6 +1,6 @@
 <?php
     //namespace stark;
-    include 'class.php';
+    include 'classInstrument.php';
 
     //Функция обрабатывает клик по логину игрока
 function klikLoginIgroka()

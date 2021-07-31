@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf8mb4">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="image/favicon.png" type="image/x-icon">
     <title>Starki</title>
@@ -29,6 +29,7 @@ $red = new redaktor\redaktor();
 $status = new redaktor\login();
 $menuUp = new redaktor\menu(); 
 $maty = new redaktor\maty();
+$blok = new redaktor\modul();
 
 // Проверка пары логин-пароль. Если такая пара есть в БД, то получить статус пользователя. Если пользователь не подтвердил регистрацию
 // то в его статусе находится проверочное число из письма. Если так, то присвоить такому ползователю статус 9.
@@ -38,6 +39,7 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
 // Проверяем состоит ли игрок в клане Старков, если состоит, то $_SESSION['youNotKlan']=true, инача $_SESSION['youNotKlan']=false
 $prowerkaKlana=file_get_contents("https://starfederation.ru/?m=api&a=player&name=".$_SESSION['login']); // Гет запрос на сайт звёздной федерации, проверяем игрока на принадлежность к клану Старков
 $rezPoisKlana=strripos($prowerkaKlana,'S_T_A_R_K_ink');
+//echo file_get_contents("https://starfederation.ru/?m=api&a=player&name=alex25");
 
 if (!$rezPoisKlana && $_SESSION['status']!=9 && $_SESSION['status']!=4 && $_SESSION['status']!=5) {$_SESSION['youNotKlan']=false;$_SESSION['linkNaDiskord']='starki.php';} else $_SESSION['youNotKlan']=true;
 //if ($_SESSION['youNotKlan']) echo 'я в клане';
@@ -69,11 +71,8 @@ echo '<p class="privetDrug">'.$privet.'</p>';
       if ($_SESSION['status']>99) $_SESSION['status']=9; //Меню входа и регистрации
       $menuUp->__unserialize('menu9','menu_stark_up_status',array('starki.php','Логин','Пароль','Вход','Регистрация','Выход','Редактор'));
       
+      $blok->news1('Отступ=3','nameTD=news1','Заголовок=h2','Статус редактора=-s45','Логин редактора=alex25','Шаблон=2','Статьи редактора=alfa54');
    ?>
-<!--\<form method="POST" action=\"https://discord.gg/FZkzYFma9A\"\>
- '<input type="submit" class="linkDiskord btn" value="Discord" formaction="'.$_SESSION['linkNaDiskord'].'">'
- <input type="submit" class="linkDiskord btn" value="Discord" formaction="https://discord.gg/FZkzYFma9A">
-\</form\>-->
 </div></div></section>
 <!------------------------------------------------------------------------>
 <!-------------------------Второе меню, главное для сайта----------------------------------------------->
@@ -205,11 +204,9 @@ if (isset($_POST['menu_stark_glawnoe'])  &&  $_POST['menu_stark_glawnoe']==$menu
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if (isset($_POST['dolgnosti_starkow']))  
 { 
-//echo 'о магистре'.$_POST['dolgnosti_starkow'];
 }
 if (isset($_POST['menu_stark_glawnoe'])  &&  $_POST['menu_stark_glawnoe']==$menuUp->getNamepoId('menu_stark_glawnoe',0))  
 { //
-//echo 'о нас';
 }
 if (isset($_POST['menu_stark_up_status'])  &&  $_POST['menu_stark_up_status']=='Выход')  { //Если нажата кнопка Вход
   $_SESSION['status']=0;
@@ -219,19 +216,18 @@ if (isset($_POST['menu_stark_up_status'])  &&  $_POST['menu_stark_up_status']=='
     {
      $_SESSION['vyhod']=true;
      $_SESSION['vhod']=false;
-    // $_SESSION['vhod']=false;
      echo '<script>location.reload()</script>';
     }
 }
 if (isset($_POST['menu_stark_up_status'])  &&  $_POST['menu_stark_up_status']=='Вход' && $status->statusRegi($_POST['login_status_stark'],$_POST['parol_status_stark']))  { //Если нажата кнопка Вход
   //проверить статус запрашиваемого пользователя
-  $_SESSION['status']=$status->statusRegi($_POST['login_status_stark'],$_POST['parol_status_stark']);
+  $_SESSION['status']=$status->statusRegi(quotemeta($_POST['login_status_stark']),quotemeta($_POST['parol_status_stark']));
   $_SESSION['regimRaboty']=16;
 
   if ($_SESSION['status']>99 || $_SESSION['status']==9 || $_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3 || $_SESSION['status']==4 || $_SESSION['status']==5)
    {
-    $_SESSION['login']=$_POST['login_status_stark'];
-    $_SESSION['parol']=$_POST['parol_status_stark'];
+    $_SESSION['login']=quotemeta($_POST['login_status_stark']);
+    $_SESSION['parol']=quotemeta($_POST['parol_status_stark']);
    }
 
   if (!isset($_SESSION['vhod']) || isset($_SESSION['vhod']) && $_SESSION['vhod']==false)
@@ -243,11 +239,6 @@ if (isset($_POST['menu_stark_up_status'])  &&  $_POST['menu_stark_up_status']=='
 }
 
 
-//if (isset($_POST['login_stark'])  &&  $_POST['login_stark']=='Регистрация' || $_SESSION['regimRaboty']==13)  { //Если нажата кнопка Регистрация
-//  $_SESSION['sSajta']=true;
-  //header('Location: redaktor.php ');
-//  exit("<meta http-equiv='refresh' content='0; url= redaktor.php'>");/
-//}
 ///////////////////////////////////////////////////////////Конец работы с регистрацией///////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //$_SESSION['regimRaboty']=20 // Редактирование профиля пользователя

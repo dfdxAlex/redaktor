@@ -109,7 +109,7 @@ if (isset($_POST['podtverdit'])  &&  $_POST['podtverdit']=='Подтвердит
 }
 if (isset($_POST['login'])  &&  $_POST['login']=='Вход'  && $status->statusRegi($_POST['login_status'],$_POST['parol_status']))  { //Если нажата кнопка Вход
   $_SESSION['regimRaboty']=16;
-  $_SESSION['status']=$status->statusRegi($_POST['login_status'],$_POST['parol_status']);
+  $_SESSION['status']=$status->statusRegi(quotemeta($_POST['login_status']),quotemeta($_POST['parol_status']));
   if ($_SESSION['status']>99 || $_SESSION['status']==9 || $_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3 || $_SESSION['status']==4 || $_SESSION['status']==5)
   {
    $_SESSION['login']=$_POST['login_status'];
@@ -127,10 +127,10 @@ if (isset($_POST['registracia'])  && $status->lovimOtvetNaCapcu($_POST['registra
    {
      $_SESSION['regimRaboty']=15;
      $mailText='Доброго времени суток. Данная почта используется для регистрации на сайте '.$status->nameGlawnogoSite().' . Код для подтверждения регистрации:';
-     $status->zapisGostia($_POST['Логин'],$_POST['parol'],$_POST['Почта'],'Клан S.T.A.R.K.I. Подтверждение учётной записи.',$mailText); //Первая запись в базу данных
+     $status->zapisGostia(quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['Почта']),'Клан S.T.A.R.K.I. Подтверждение учётной записи.',$mailText); //Первая запись в базу данных
    } else {
            $_SESSION['regimRaboty']=14;
-           $menuUp->__unserialize('menu4','registracia',array('redaktor.php',$_POST['Логин'],$_POST['parol'],$_POST['parol2'],$_POST['Почта'],$status->capcha()));
+           $menuUp->__unserialize('menu4','registracia',array('redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),quotemeta($_POST['Почта']),$status->capcha()));
            if ($status->prowerkaLogin()) echo '<p class="error">Такой логин уже существует или не соответствует правилам.</p>';
            if ($status->prowerkaMail()) echo '<p class="error">Такая почта уже существует или не соответствует правилам.</p>';
            if ($_POST['parol']!=$_POST['parol2']) echo '<p class="error">Разные пароли</p>';
@@ -140,7 +140,7 @@ if (isset($_POST['registracia'])  && $status->lovimOtvetNaCapcu($_POST['registra
 
 if (isset($_POST['registracia'])  &&  $_POST['registracia']=='Проверить')  { //Если нажата кнопка Проверить 
   $_SESSION['regimRaboty']=13;
-  $menuUp->__unserialize('menu4','registracia',array('redaktor.php',$_POST['Логин'],$_POST['parol'],$_POST['parol2'],$_POST['Почта'],$status->capcha()));
+  $menuUp->__unserialize('menu4','registracia',array('redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),quotemeta($_POST['Почта']),$status->capcha()));
   if ($status->prowerkaLogin()) echo '<p class="error">Такой логин уже существует или не соответствует правилам.</p>'; else  echo '<p class="mesage">Логин свободен.</p>';
   if ($status->prowerkaMail()) echo '<p class="error">Такая почта уже существует или не соответствует правилам.</p>'; else  echo '<p class="mesage">Почта свободна.</p>';
 }
@@ -150,7 +150,7 @@ if (isset($_POST['registracia'])  &&  $_POST['registracia']=='Очистить')
 }
 if (isset($_POST['registracia'])  &&  $_POST['registracia']=='Сменить капчу')  { //Если нажата кнопка Сменить капчу
   $_SESSION['regimRaboty']=13;
-  $menuUp->__unserialize('menu4','registracia',array('redaktor.php',$_POST['Логин'],$_POST['parol'],$_POST['parol2'],$_POST['Почта'],$status->capcha()));
+  $menuUp->__unserialize('menu4','registracia',array('redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),quotemeta($_POST['Почта']),$status->capcha()));
 }
 if (isset($_POST['login'])  &&  $_POST['login']=='Регистрация' && $_SESSION['regimRaboty']!=13)  { //Если нажата кнопка Регистрация
   $menuUp->__unserialize('menu4','registracia',array('redaktor.php','Логин','Пароль','Повторить','Почта',$status->capcha()));

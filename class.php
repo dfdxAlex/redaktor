@@ -414,7 +414,7 @@ class initBD extends instrument
     public function radioAndChekboxSearc($nameTablicy) // 
     {
         $zapros="select  from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='".$nameTablicy."'";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=$this->zaprosSQL($zapros);
         $vozvrat=false;
         $str=$this->kolVoZapisTablice($nameTablice);
         while (!is_null($stroka=(mysqli_fetch_assoc($rez))))
@@ -424,7 +424,7 @@ class initBD extends instrument
     public function id_tab_gl_searc($nameTablicy)
      {
         $zapros="select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='".$nameTablicy."'";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=$this->zaprosSQL($zapros);
         $stroka=(mysqli_fetch_assoc($rez));
         if ($stroka['COLUMN_NAME']=='id_tab_gl') {return true;}
         return false;
@@ -433,7 +433,7 @@ class initBD extends instrument
     {
         $result=false;
         $zapros="SHOW TABLES";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=$this->zaprosSQL($zapros);
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
             if ($stroka[0]==$nameTablicy)   $result=true;            //
         return $result;
@@ -441,12 +441,12 @@ class initBD extends instrument
      public function killTab($nameTablicy)  //Удаление таблицы из БД
        {
           $zapros="DROP TABLE ".$_SESSION['nameTablice'];
-          $rez=mysqli_query($this->con,$zapros);
+          $rez=$this->zaprosSQL($zapros);
        }
      public function killTab2($nameTablicy)  //Удаление таблицы из БД через входящий параметр
        {
           $zapros="DROP TABLE ".$nameTablicy;
-          $rez=mysqli_query($this->con,$zapros);
+          $rez=$this->zaprosSQL($zapros);
        }
      public function killTabEtap1($nameTablicy)  //Удаление таблицы из БД если только она не служебная
      {      
@@ -467,12 +467,12 @@ class initBD extends instrument
      public function clearTab($nameTablicy)  //Очистка таблицы
      {
       $zapros="TRUNCATE TABLE ".$nameTablicy;
-      $rez=mysqli_query($this->con,$zapros);
+      $rez=$this->zaprosSQL($zapros);
      }
      public function maxIdLubojTablicy($nameTablice)  // поиск максимального ID таблицы +1
      {
         $zapros="SELECT MAX(id) FROM ".$nameTablice;
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=$this->zaprosSQL($zapros);
         if (!$rez) return -1;
         $stroka=mysqli_fetch_array($rez);
         if (is_null($stroka[0])) $stroka[0]=-1;
@@ -485,11 +485,13 @@ class initBD extends instrument
      public function killZapisTablicy($nameTablice,$were) //// Удалить строку в таблице
      {
         $zapros="DELETE FROM ".$nameTablice." ".$were;
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=$this->zaprosSQL($zapros);
         //echo $zapros;
      }
      public function zaprosSQL($zapros) // создать SQL запрос, условие согласно синтаксису SQL
      {
+         // $rez=mysqli_query($this->con,quotemeta($zapros));
+          //echo mysqli_character_set_name($this->con);
         $rez=mysqli_query($this->con,$zapros);
         return $rez;
      }
@@ -498,7 +500,7 @@ class initBD extends instrument
      {
         $boolRez=false;
         $zapros="SELECT ID FROM tablica_tablic WHERE NAME='".$nameTablice."'";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=$this->zaprosSQL($zapros);
         if (!$rez) echo 'Проблема с таблицей "tablica_tablic"';
         $stroka=mysqli_fetch_array($rez);
         if ($stroka[0]!=NULL && $stroka[0]>-1)  $boolRez=true;
@@ -509,7 +511,7 @@ class initBD extends instrument
        if ($this->searcNameTablic($nameTablice))
        {
         $zapros="SELECT COUNT(1) FROM ".$nameTablice;
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=$this->zaprosSQL($zapros);
         $viv=mysqli_fetch_array($rez);
         return $viv[0];
        } else return 0;
@@ -517,7 +519,7 @@ class initBD extends instrument
      public function kolVoStolbovTablice($nameTablice) //число столбцов в таблице
      {
      $zapros="SELECT MAX(ORDINAL_POSITION) FROM INFORMATION_SCHEMA.columns WHERE TABLE_NAME='".$nameTablice."'";
-     $query=mysqli_query($this->con,$zapros);   
+     $query=$this->zaprosSQL($zapros);   
      $viv=mysqli_fetch_array($query);
      return $viv[0];
      }
@@ -561,7 +563,7 @@ class htmlTeg extends initBD
             $con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд
             mysqli_set_charset ( $con , "utf8" ) ;
             $zapros="SELECT * FROM html_teg WHERE teg=".chr(39).$nameTeg.chr(39);
-            $rez=mysqli_query($con,$zapros) OR die ('Не удалось отправить запрос стр.17');
+            $rez=parent::zaprosSQL($zapros) OR die ('Не удалось отправить запрос стр.17');
             $stroka=mysqli_fetch_assoc($rez) OR die ('Не удалось получить массив данных, скорее всего нет такой темы, ищите по ключевым словам или тексту.');
             if ($stroka!=false){
             $this->id=$stroka['id'];
@@ -614,7 +616,7 @@ class htmlTeg extends initBD
                   if ($nameTeg=="") {$nameTeg="html";}
                   $con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд                  mysqli_set_charset ( $con , "utf8" ) ;
                   $zapros="SELECT * FROM html_teg WHERE teg=".chr(39).$nameTeg.chr(39);
-                  $rez=mysqli_query($con,$zapros);// OR die ('Не удалось отправить запрос стр.17');
+                  $rez=parent::zaprosSQL($zapros);// OR die ('Не удалось отправить запрос стр.17');
                   $stroka=mysqli_fetch_assoc($rez);// OR die ('Не удалось получить массив');
                   if ($stroka!=false){
                   $this->id=$stroka['id'];
@@ -646,7 +648,7 @@ class htmlTeg extends initBD
             if ($nameTablica=='') $nameTablica="html_teg";
             $con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд            mysqli_set_charset ( $con , "utf8" ) ;
             $zapros="SELECT MAX(id) FROM html_teg";
-            $rez=mysqli_query($con,$zapros);
+            $rez=parent::zaprosSQL($zapros);
             if (!$rez) {mysqli_close($con);return -1;}
             $stroka=mysqli_fetch_array($rez);
             if (!isset($stroka)) {mysqli_close($con);return -1;}
@@ -659,7 +661,7 @@ class htmlTeg extends initBD
             if ($teg=='') return -1;
             $con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд            mysqli_set_charset ( $con , "utf8" ) ;
             $zapros="SELECT id FROM html_teg WHERE teg=".chr(39).$teg.chr(39);
-            $rez=mysqli_query($con,$zapros);
+            $rez=parent::zaprosSQL($zapros);
             if (!$rez) {mysqli_close($con);return -1;}
             $stroka=mysqli_fetch_array($rez);
             if (!isset($stroka)) {mysqli_close($con);return -1;}
@@ -675,7 +677,7 @@ class htmlTeg extends initBD
              $zapros="INSERT INTO  ".$nameTablica."(`id`, `teg`, `info`, `infoVideo`, `leson_id`, `atrib_id`, `sintax_id`, `kluc1`, `kluc2`, `kluc3`, `kluc4`, `kluc5`, `kluc6`, `kluc7`, `kluc8`, `kluc9`, `kluc10`) VALUES (".$this->maxid($nameTablica).",'".$_POST['Teg']."','".$_POST['opisanie']."','".$_POST['opisanieVideo']."',".$_POST['idPrimer'].",".$_POST['idAtribut'].",".$_POST['idSintax'].",'".$_POST['kluc1']."','".$_POST['kluc2']."','".$_POST['kluc3']."','".$_POST['kluc4']."','".$_POST['kluc5']."','".$_POST['kluc6']."','".$_POST['kluc7']."','".$_POST['kluc8']."','".$_POST['kluc9']."','".$_POST['kluc10']."')";
             if ($this->idTega($_POST['Teg'])>-1)
              $zapros="UPDATE ".$nameTablica." SET `id`=".$_POST['idTeg'].",`teg`='".$_POST['Teg']."',`info`='".$_POST['opisanie']."',`infoVideo`='".$_POST['opisanieVideo']."',`leson_id`=".$_POST['idPrimer'].",`atrib_id`=".$_POST['idAtribut'].",`sintax_id`=".$_POST['idSintax'].",`kluc1`='".$_POST['kluc1']."',`kluc2`='".$_POST['kluc2']."',`kluc3`='".$_POST['kluc3']."',`kluc4`='".$_POST['kluc4']."',`kluc5`='".$_POST['kluc5']."',`kluc6`='".$_POST['kluc6']."',`kluc7`='".$_POST['kluc7']."',`kluc8`='".$_POST['kluc8']."',`kluc9`='".$_POST['kluc9']."',`kluc10`='".$_POST['kluc10']."' WHERE teg='".$_POST['Teg']."'";
-             $rez=mysqli_query($con,$zapros);
+             $rez=parent::zaprosSQL($zapros);
             if (!$rez) $start=false;
             mysqli_close($con);
             $this->initTeg($_POST['Teg']);     // Освежить свойства объекта
@@ -687,12 +689,12 @@ class htmlTeg extends initBD
         {
             $con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд            mysqli_set_charset ( $con , "utf8" ) ;           // установить кодировку
             $zapros="SELECT html FROM statistik WHERE 1";
-            $rez=mysqli_query($con,$zapros);
+            $rez=parent::zaprosSQL($zapros);
             $stroka=mysqli_fetch_array($rez);
             $chet=1;
             $chet=$stroka[0]+1;
             $zapros="UPDATE statistik SET html=".$chet." WHERE 1";
-            $rez=mysqli_query($con,$zapros);
+            $rez=parent::zaprosSQL($zapros);
             mysqli_close($con);
             return $chet;
         }
@@ -743,7 +745,7 @@ class dataAktual  extends initBD
             parent::__construct();
             $this->con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд            mysqli_set_charset ( $con , "utf8" ) ;
             $zapros="SELECT "."*"." FROM statistik WHERE 1";
-            $rez=mysqli_query($this->con,$zapros) OR die ('Не удалось отправить запрос стр.17');
+            $rez=parent::zaprosSQL($zapros) OR die ('Не удалось отправить запрос стр.17');
             $stroka=mysqli_fetch_assoc($rez) OR die ('Не удалось получить массив');
             $this->secondsSite=$stroka['SiteUpSec'];
             $this->minutesSite=$stroka['SiteUpMin'];
@@ -774,13 +776,13 @@ class dataAktual  extends initBD
         {
             $masData=getdate( );
             $zapros="UPDATE statistik SET `SiteUpSec`=".$masData['seconds'].",`SiteUpMin`=".$masData['minutes'].",`SiteUpHours`=".$masData['hours'].",`SiteUpDay`=".$masData['mday'].",`SiteUpWday`=".$masData['wday'].",`SiteUpMon`=".$masData['mon'].",`SiteUpYears`=".$masData['year'].",`SiteUpYday`=".$masData['yday'].",`SiteUpWeekday`=".chr(34).$masData['weekday'].chr(34).",`SiteUpMonth`=".chr(34).$masData['month'].chr(34)." WHERE 1";
-            $rez=mysqli_query($this->con,$zapros);// OR die ('Не удалось отправить запрос стр.17');
+            $rez=parent::zaprosSQL($zapros);// OR die ('Не удалось отправить запрос стр.17');
         }
         public function saveDataBd()            // Функция увеличивает на 1 число запросов к базе данных html
         {
             $masData=getdate( );
             $zapros="UPDATE statistik SET `BdUpSec`=".$masData['seconds'].",`BdUpMin`=".$masData['minutes'].",`BdUpHours`=".$masData['hours'].",`BdUpDay`=".$masData['mday'].",`BdUpWday`=".$masData['wday'].",`BdUpMon`=".$masData['mon'].",`BdUpYears`=".$masData['year'].",`BdUpYday`=".$masData['yday'].",`BdUpWeekday`=".chr(34).$masData['weekday'].chr(34).",`BdUpMonth`=".chr(34).$masData['month'].chr(34)." WHERE 1";
-            $rez=mysqli_query($this->con,$zapros);// OR die ('Не удалось отправить запрос стр.17');
+            $rez=parent::zaprosSQL($zapros);// OR die ('Не удалось отправить запрос стр.17');
         }
 } // Конец класса dataAktual
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -850,7 +852,7 @@ class redaktor  extends menu
      public function startMenuRedaktora(){
         //Читаем последнее число выводимых таблиц и последнее имя выводимой таблицы
         $zapros="SELECT * FROM nastrolkiredaktora WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         $stroka=mysqli_fetch_assoc($rez);
         $poslednijZapros=$stroka['imiePosTabl'];
         $_SESSION['nameTablice']=$poslednijZapros;
@@ -866,7 +868,7 @@ class redaktor  extends menu
      public function kakovClass($nameMenu) //Узнает у менюшки общий класс у всех кнопок или у каждой кнопки свой класс
       {
         $zapros="SELECT CLASS FROM tablica_tablic WHERE NAME='".$nameMenu."'";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         $stroka=mysqli_fetch_array($rez);
         if ($stroka[0]==0) return false;
         if ($stroka[0]==1) return true;
@@ -884,7 +886,7 @@ class redaktor  extends menu
           if ($j!=$_SESSION['col']) $zapros=$zapros.", ";
          }
         $zapros=$zapros.")";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         }
         for ($j=1; $j<=$_SESSION['str']; $j++)
         {
@@ -901,7 +903,7 @@ class redaktor  extends menu
             $zapros2=$zapros2.")"; 
             $zapros=$zapros1.$zapros2;
             echo $zapros."<br>";
-            $rez=mysqli_query($this->con,$zapros);
+            $rez=parent::zaprosSQL($zapros);
         } 
       }
       public function createPoleTablicy($nameTable,$col,$str) // рисуем поле для редактирования таблицы
@@ -987,7 +989,7 @@ class redaktor  extends menu
         echo '<p class="zapretNaUdalenieP">Таблицу невозможно удалить</p>';
         echo '</div>';
         $zapros="SHOW TABLES";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         echo '<div class="container-fluid">';
         echo '<div class="row spisokTablic">';
         echo'<form method="POST" active="redaktor.php">';
@@ -1015,7 +1017,7 @@ class redaktor  extends menu
       { // Обработка нажатия одной из кнопок соответствующих некой таблице
         $_SESSION['nameTablice']=$nameTable;
         $zapros="UPDATE nastrolkiredaktora SET `imiePosTabl`='".$nameTable."' WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
       }
    public function createNameMenu($nameTablic) // Нажали на Создать Меню
     {
@@ -1046,26 +1048,26 @@ class redaktor  extends menu
     public function createTabDlaMenu(){
           // Создание пустой таблицы для нового меню
           $zapros="CREATE TABLE ".$_SESSION['nameTablice']."(ID INT, NAME VARCHAR(255), URL VARCHAR(255), CLASS VARCHAR(255))";
-          $rez=mysqli_query($this->con,$zapros);
+          $rez=parent::zaprosSQL($zapros);
           $rezId=parent::maxIdLubojTablicy('tablica_tablic');
           ////////////////////////////////////////////////
           $nameTable=$_SESSION['nameTablice']; // вытягиваем имя таблицы
           if ($_POST['listStyle']=="Общий стиль для всех кнопок") $class=0; // определяем класс будет общим или индивидуальным для каждой кнопки
           if ($_POST['listStyle']=="У каждой кнопки свой стиль") $class=1;
           $zapros="INSERT INTO `tablica_tablic`(`ID`, `NAME`, `CLASS`) VALUES (".$rezId.",'".$nameTable."',".$class.")";
-          $rez=mysqli_query($this->con,$zapros);
+          $rez=parent::zaprosSQL($zapros);
     }
     public function createTabDlaMenu5(){
       // Создание пустой таблицы для нового меню
       $zapros="CREATE TABLE ".$_SESSION['nameTablice']."(ID INT, NAME VARCHAR(255), URL VARCHAR(255), CLASS VARCHAR(255), STATUS VARCHAR(255))";
-      $rez=mysqli_query($this->con,$zapros);
+      $rez=parent::zaprosSQL($zapros);
       $rezId=parent::maxIdLubojTablicy('tablica_tablic');
       ////////////////////////////////////////////////
       $nameTable=$_SESSION['nameTablice']; // вытягиваем имя таблицы
       if ($_POST['listStyle']=="Общий стиль для всех кнопок") $class=0; // определяем класс будет общим или индивидуальным для каждой кнопки
       if ($_POST['listStyle']=="У каждой кнопки свой стиль") $class=1;
       $zapros="INSERT INTO `tablica_tablic`(`ID`, `NAME`, `CLASS`) VALUES (".$rezId.",'".$nameTable."',".$class.")";
-      $rez=mysqli_query($this->con,$zapros);
+      $rez=parent::zaprosSQL($zapros);
 }
 public function loadTablic($nameTablic)  // загрузить главную таблицу загрузить шаблон нарисовать шаблон 
     {
@@ -1200,7 +1202,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
                {
                 
                 $zapros="SELECT poz".$j." FROM ".$nameTablic." WHERE id_tab_gl=".$i;
-                $rez=mysqli_query($this->con,$zapros);
+                $rez=parent::zaprosSQL($zapros);
                 $stroka=mysqli_fetch_array($rez);
                 if ($stroka[0]!="NULL" || $_SESSION['pokazNULL']) 
                  {
@@ -1420,7 +1422,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
     public function cisloUrovnejHablon($nameTablice)  // число уровней шаблона
     {
        $zapros="SELECT MAX(str) FROM ".$nameTablice.'_tegi';
-       $rez=mysqli_query($this->con,$zapros);
+       $rez=parent::zaprosSQL($zapros);
        if (!$rez) return -1;
        $stroka=mysqli_fetch_array($rez);
        if (!isset($stroka)) return -1;
@@ -1431,7 +1433,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
     public function cisloStolbovjHablon($nameTablice)  // Число столбов в шаблоне
     {
        $zapros="SELECT MAX(stolb) FROM ".$nameTablice.'_tegi';
-       $rez=mysqli_query($this->con,$zapros);
+       $rez=parent::zaprosSQL($zapros);
        if (!$rez) return -1;
        $stroka=mysqli_fetch_array($rez);
        if (!isset($stroka)) return -1;
@@ -1443,7 +1445,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
     public function setapTeg($nameTablice,$nameAtrib,$stolb,$str)  // страница обработчика шаблона
     {
        $zapros="SELECT text FROM ".$nameTablice."_tegi"." WHERE name_attrib='".$nameAtrib."' AND stolb=".$stolb." AND str=".$str;
-       $rez=mysqli_query($this->con,$zapros);
+       $rez=parent::zaprosSQL($zapros);
        if (!$rez) return -1;
        $stroka=mysqli_fetch_array($rez);
        if (!isset($stroka)) return -1;
@@ -2843,12 +2845,12 @@ public function loadTablic($nameTablic)  // загрузить главную т
           // Проверка будет меню 3,4 или меню 5  ////////////////////////////
           $zapros="SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '".parent::initBdNameBD()."' AND TABLE_NAME = '".$nameTablic."' AND COLUMN_NAME = 'STATUS'";
           $typeMenu=34;
-          $rez=mysqli_query($this->con,$zapros);
+          $rez=parent::zaprosSQL($zapros);
           $stroka=mysqli_fetch_assoc($rez);
           if ($stroka['ORDINAL_POSITION']>4) $typeMenu="5";
           //////////////////////////////////////////////////////////////////////
             $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-            $rez=mysqli_query($this->con,$zapros);
+            $rez=parent::zaprosSQL($zapros);
             $kol_voZapisej=parent::kolVoZapisTablice($nameTablic);        // Проверяем фактическое число записей в таблице
             $zapros="SELECT kol_voKn FROM tablica_tablic WHERE NAME='".$nameTablic."'";  // Проверяем данные о числе записей в таблице таблиц
             $kol_voZapisejTablicaTablic=mysqli_fetch_assoc(parent::zaprosSQL($zapros));
@@ -3263,7 +3265,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
                     // Проверка будет меню 3,4 или меню 5  ////////////////////////////
                     $zapros="SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '".parent::initBdNameBD()."' AND TABLE_NAME = '".$nameTablic."' AND COLUMN_NAME = 'STATUS'";
                     $typeMenu=34;
-                    $rez=mysqli_query($this->con,$zapros);
+                    $rez=parent::zaprosSQL($zapros);
                     $stroka=mysqli_fetch_assoc($rez);
                     if ($stroka['ORDINAL_POSITION']==5) $typeMenu="5";
                     //////////////////////////////////////////////////////////////////////
@@ -3282,7 +3284,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
                     if ($typeMenu==5) 
                     $zapros="INSERT INTO ".$nameTablic."(`ID`, `NAME`, `URL`, `CLASS`, `STATUS`) VALUES (".$_POST[$id].",'".$_POST[$name]."','".$_POST[$url]."','".$_POST[$class]."','".$_POST[$status]."')";
 
-                    $rez=mysqli_query($this->con,$zapros);
+                    $rez=parent::zaprosSQL($zapros);
                 }
                 $i++;
                 $id="ID".$i;
@@ -3353,7 +3355,7 @@ class menu extends initBD
      public function getNamepoId($tab,$id) 
      {
         $zapros="SELECT NAME FROM ".$tab." WHERE ID=".$id;
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         $stroka=mysqli_fetch_array($rez);
         return $stroka['NAME'];
      }
@@ -3361,7 +3363,7 @@ class menu extends initBD
      {
       $zapros="SELECT type_menu FROM type_menu_po_imeni WHERE name_menu='".$nameTablic."'";
       $rez=parent::zaprosSQL($zapros);
-      $stroka=mysqli_fetch_array($rez);
+      if ($rez) $stroka=mysqli_fetch_array($rez); else return 0;
       if ($stroka[0]>0) return $stroka[0]; else return 0;
      }
      public function saveTypMenu($nameTablic,$typ) // Функция исправляет или изменяет тип уже существующей менюшки
@@ -3399,7 +3401,7 @@ class menu extends initBD
             //////////////////////////////////////
         
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         $i=0;
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
@@ -3482,7 +3484,7 @@ class menu extends initBD
        $kod=$kod << 1;
        if ($kod>=32768) $this->kn[0]=true; else $this->kn[0]=false;
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         $i=0;
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
@@ -3522,7 +3524,7 @@ class menu extends initBD
         foreach ($this->masKn as $value)
          {
             $zapros="SELECT * FROM ".$nameTablic." WHERE NAME='".$value."'";
-            $rez=mysqli_query($this->con,$zapros);
+            $rez=parent::zaprosSQL($zapros);
             $stroka=mysqli_fetch_array($rez);
             if ($stroka['URL']!='default')
             echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
@@ -3601,7 +3603,7 @@ class menu extends initBD
                      if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,4);   }
                    //////////////////////////////////////
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         if (!$rez) echo'Не удалось загрузить таблицу для menu4';
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
@@ -3694,7 +3696,7 @@ class menu extends initBD
                     }
                    //////////////////////////////////////
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
         $ii=1;
@@ -3790,7 +3792,7 @@ class menu extends initBD
                     }
                    //////////////////////////////////////
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" method="POST">';
         $ii=1;
@@ -3891,13 +3893,13 @@ class menu extends initBD
                     }
                    //////////////////////////////////////
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
         $ii=1;
         $status=(string)$_SESSION['status'];
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
-        $stroka=(mysqli_fetch_array(mysqli_query($this->con,$zapros)));
+        $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
         $idMax=$stroka[0];
        for ($idPoz=0; $idPoz<=$idMax; $idPoz++)
        { 
@@ -3964,7 +3966,7 @@ class menu extends initBD
     
         }
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
       }
         echo '</form>';
         echo'</section>';
@@ -4006,13 +4008,13 @@ class menu extends initBD
                     }
                    //////////////////////////////////////
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
         $ii=1;
         $status=(string)$_SESSION['status'];
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
-        $stroka=(mysqli_fetch_array(mysqli_query($this->con,$zapros)));
+        $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
         $idMax=$stroka[0];
        for ($idPoz=0; $idPoz<=$idMax; $idPoz++)
        { 
@@ -4087,7 +4089,7 @@ class menu extends initBD
      
         }
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
       }
         echo '</form>';
         echo'</section>';
@@ -4138,13 +4140,13 @@ class menu extends initBD
                     }
                    //////////////////////////////////////
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
         $ii=1;
         $status=(string)$_SESSION['status'];
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
-        $stroka=(mysqli_fetch_array(mysqli_query($this->con,$zapros)));
+        $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
         $idMax=$stroka[0];
         
        for ($idPoz=0; $idPoz<=$idMax; $idPoz++)
@@ -4278,11 +4280,12 @@ class menu extends initBD
              }
         }
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=mysqli_query($this->con,$zapros);
+        $rez=parent::zaprosSQL($zapros);
       }
         echo '</form>';
         echo'</section>';
      }
+
  }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4748,7 +4751,7 @@ class maty extends menu  // Работа с матами и нецензурно
                  $rezultat=preg_replace($vyragenie,' ** ',$rezultat);
               }
        }
-    public function echoBezMatov($text) // функция находит совпадения матов и меняет их на звездочки.
+       public function echoBezMatov($text) // функция находит совпадения матов и меняет их на звездочки и выводит результат
           {
             $rezultat=$text;
             if (isset($this->mas_mat[0]))
@@ -4758,8 +4761,19 @@ class maty extends menu  // Работа с матами и нецензурно
                 $vyragenie='/(^|\s|\W|\d)'.$hablon.'($|\s|(\W)|\d+)?/uUmi';
                 $rezultat=preg_replace($vyragenie,'**',$rezultat);
               }
-              echo $text.'<br>';
               echo $rezultat;
+          }
+        public function bezMatov($text) // функция находит совпадения матов и меняет их на звездочки и возвращает результат
+          {
+            $rezultat=$text;
+            if (isset($this->mas_mat[0]))
+             foreach($this->mas_mat as $value)
+              {  
+                $hablon=$this->createRegularNotRegistr($value);  // сделать матюк регистронезависимым
+                $vyragenie='/(^|\s|\W|\d)'.$hablon.'($|\s|(\W)|\d+)?/uUmi';
+                $rezultat=preg_replace($vyragenie,'**',$rezultat);
+              }
+              return $rezultat;
           }
          public function createRegularNotRegistr($value) // функция возвращает преобразованные слова для регистронезависимого поиска
          {
