@@ -17,28 +17,114 @@ class instrument
    public function buttonPrefix(...$parametr)
    {
     $container=false;
+    $classB="";
+    $action="#";
+    $method='method="POST"';
+    $classDiv="";
+    $knopok=1;
+    $classKnopok='';
+    $masNameKnopok = array();
+    $masValueKnopok = array();
+    $masClassKnopok = array();
 
-    foreach($parametr as $value)
+foreach($parametr as $value)
+ {
     if (stripos('sss'.$value,'container'))
       $container=true;
-       //$nametablice=preg_replace('/nameTD=/','',$value);
-    if ($container) 'в контейнере';
+    if (stripos('sss'.$value,'class=-row-'))
+      $classB=preg_replace('/-/','"',$value);
+    if (stripos('sss'.$value,'class') && stripos('sss'.$value,'class=-row-')==false)
+      $classDiv=preg_replace('/-/','"',$value);
+    if (stripos('sss'.$value,'action'))
+      $action=preg_replace('/-/','"',$value);
+    if (stripos('sss'.$value,'method'))
+      $method=preg_replace('/-/','"',$value);
+    if (stripos('sss'.$value,'classButton='))
+      {
+       $classKnopok=preg_replace('/-/','"',$value);
+       $classKnopok=preg_replace('/Button/','',$classKnopok);
+      }
+    if (stripos('sss'.$value,'кнопок-'))
+      $knopok=preg_replace('/кнопок-/','',$value);
+  }
+    for ($i=1;$i<=$knopok;$i++) //объявить пустой массив
+     {
+        $masNameKnopok[$i]='имя не задано';
+        $masValueKnopok[$i]='название не задано';
+        $masClassKnopok[$i]='';
+     }
+    for ($i=1;$i<=$knopok;$i++)
+     {
+      foreach($parametr as $value)
+       {
+        $poisk='n'.$i.'-';
+        if (stripos('sss'.$value,$poisk))
+         {
+          $poisk='/'.$poisk.'/';
+          $masNameKnopok[$i]=preg_replace($poisk,'',$value);
+         }
+        $poisk='v'.$i.'-';
+        if (stripos('sss'.$value,$poisk))
+         {
+          $poisk='/'.$poisk.'/';
+          $masValueKnopok[$i]=preg_replace($poisk,'',$value);
+         }
+        $poisk='c'.$i.'=';
+        if (stripos('sss'.$value,$poisk))
+         { 
+          $poisk='/'.$poisk.'/';
+          $masClassKnopok[$i]=preg_replace($poisk,'class=',$value);
+          $masClassKnopok[$i]=preg_replace('/-/','"',$masClassKnopok[$i]);
+         } 
+       }
+     }
+
+    //рисуем кнопку
+    if ($container) echo '<section class="container">';
+    if ($container && $classB!="") echo '<div '.$classB.'>';
+    if ($classDiv!="") echo '<div '.$classDiv.'>';
+    echo '<form '.$action.' '.$method.'>';
+    $class=$classKnopok;
+
+    for ($i=1; $i<=$knopok;$i++)
+     {
+      echo '<input ';
+      if ($masClassKnopok[$i]!='') echo $masClassKnopok[$i];
+      if ($masClassKnopok[$i]=='' && $class!='') echo $class;
+      echo ' type="submit" name="'.$masNameKnopok[$i].'" value="'.$masValueKnopok[$i].'">';
+     }
+
+    echo '</form>';
+    if ($classDiv!="") echo '</div>';
+    if ($container && $classB!="") echo '</div>';
+    if ($container) echo '</section">';
      //обработка параметра help
      foreach($parametr as $value)
       if ($value=='help' || $value=='Помощь')
        {
-         echo '<p>Чтобы кнопка была в отдельном контейнеое, то нужен параметр container. Пример:buttonPrefix("container");</p><br>';
-         echo '<p></p><br>';
-         echo '<p></p><br>';
-         echo '<p></p><br>';
-         echo '<p></p><br>';
-         echo '<p></p><br>';
-         echo '<p></p><br>';
-         echo '<p></p><br>';
-         echo '<p></p><br>';
-         echo '<p></p><br>';
-         echo '<p></p><br>';
-         echo '<p></p><br>';
+         echo '<p class="mesage">Чтобы кнопка была в отдельном контейнере, то нужен параметр container. Пример:buttonPrefix("container");</p><br>';
+         echo '<p class="mesage">Чтобы добавить CLASS=ROW от бутстрапа, то вводим параметр данного класса в параметр функции:<br>';
+         echo 'Пример:buttonPrefix("class=-row-"); Знак "-" там, где нужны кавычки. В функцию передаем "-"<br>';
+         echo 'Для добавления произвольного класса вместе с дивом вводим параметр<br>';
+         echo 'Пример:buttonPrefix("class=-имя произвольного класса-"); Знак "-" там, где нужны кавычки. В функцию передаем "-"</p><br>';
+         echo '<p class="mesage"></p><br>';
+         echo '<p class="mesage"></p><br>';
+         echo '<p class="mesage">Далее параметры кнопки<br>';
+         echo 'Для указания ссылки на страницу обработки вводим параметр buttonPrefix("action=-ссылка-")<br>';
+         echo 'Для указания метода передачи параметров вводим параметр buttonPrefix("method=-post или get-"), по умолчанию POST уже есть.</p><br>';
+         echo '<p class="mesage">Число кнопок задается словом "кнопок-5" buttonPrefix("кнопок-5");</p><br>';
+         echo '<p class="mesage">Имена кнопок задаются с помощью символа n+номер кнопки. buttonPrefix("n1=nameButton");</p><br>';
+         echo '<p class="mesage">Название на кнопке задается с помощью символа v+номер кнопки. buttonPrefix("v1=имя первой кнопки");</p><br>';
+         echo '<p class="mesage"></p><br>';
+         echo '<p class="mesage"></p><br>';
+         echo '<p class="mesage">Далее работа с классами кнопок</p><br>';
+         echo '<p class="mesage">Для назначения класса по умолчанию для тех кнопок, у которых нет своего класса используется слово classButton;<br>';
+         echo 'buttonPrefix("classButton=-имя общего класса-");</p><br>';
+         echo '<p class="mesage">Чтобы задать персональный класс кнопке, передаем параметр с1=-новый класс- buttonPrefix("с1=-bottonClass-")</p><br>';
+         echo '<p class="mesage"></p><br>';
+         echo '<p class="mesage"></p><br>';
+         echo '<p class="mesage"></p><br>';
+         echo '<p class="mesage"></p><br>';
        }
    }
 

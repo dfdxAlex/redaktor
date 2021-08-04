@@ -51,15 +51,14 @@ class modul
            //ищем чьи статьи показать
            foreach($parametr as $value)
             if (stripos('sss'.$value,'Статьи редактора='))
-             {
                   $pokazarStatijRedaktora=preg_replace('/Статьи редактора=/','',$value); // Выделяем логин редактора/ов
-             }
-           foreach($parametr as $value)
+
+            foreach($parametr as $value)
              if (stripos('sss'.$value,'Шаблон='))
               {
                    $hablon=preg_replace('/Шаблон=/','',$value); // Выделяем логин редактора/ов
               }
-           foreach($parametr as $value)
+            foreach($parametr as $value)
               if (stripos('sss'.$value,'Отступ='))
                {
                     $otstup=(int)preg_replace('/Отступ=/','',$value); // Выделяем логин редактора/ов

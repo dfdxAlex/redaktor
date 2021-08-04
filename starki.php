@@ -71,7 +71,7 @@ echo '<p class="privetDrug">'.$privet.'</p>';
       if ($_SESSION['status']>99) $_SESSION['status']=9; //Меню входа и регистрации
       $menuUp->__unserialize('menu9','menu_stark_up_status',array('starki.php','Логин','Пароль','Вход','Регистрация','Выход','Редактор'));
       
-      $menuUp->buttonPrefix('Помощь');
+      $menuUp->buttonPrefix('c2=-button_prawa_dolgnost_sawe-','classButton=-button_prawa_dolgnost_sawe btn-','container','Помощь','action=-starki.php-','class=-row-','кнопок-3','n1-первая кнопка','n2-вторая кнопка','n3-третья кнопка','v1-первая кнопка','v2-вторая кнопка','v3-третья кнопка');
       echo '<br><br><br><br><br><br><br><br><br><br>';
       $blok->news1('Отступ=3','nameTD=news1','Заголовок=h2','Статус редактора=-s45','Логин редактора=alex25','Шаблон=2','Статьи редактора=alfa54');
    ?>
