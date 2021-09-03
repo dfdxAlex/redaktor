@@ -2,6 +2,100 @@
     //namespace stark;
     include 'classInstrument.php';
 
+function myZone()
+{
+
+    $loginMy='--';
+    if (!isset($_POST['strarki_menu_dolgnosti']) 
+        || (isset($_POST['strarki_menu_dolgnosti']) 
+         && $_POST['strarki_menu_dolgnosti']!='Глава альянса'
+          && $_POST['strarki_menu_dolgnosti']!='Заместитель'
+           && $_POST['strarki_menu_dolgnosti']!='Магистр науки'
+            && $_POST['strarki_menu_dolgnosti']!='Магистр дипломатии'
+             && $_POST['strarki_menu_dolgnosti']!='Магистр разведки'
+              && $_POST['strarki_menu_dolgnosti']!='Магистр'
+               && $_POST['strarki_menu_dolgnosti']!='Джедай'
+                && $_POST['strarki_menu_dolgnosti']!='Падаван'
+                 && $_POST['strarki_menu_dolgnosti']!='Юнлинг'
+                  && $_POST['strarki_menu_dolgnosti']!='Рядовой'
+                   && $_POST['strarki_menu_dolgnosti']!='Администратор'
+                    && $_POST['strarki_menu_dolgnosti']!='Супер Администратор'
+                     && $_POST['strarki_menu_dolgnosti']!='Изменить ширину меню'
+                      && $_POST['strarki_menu_dolgnosti']!='Меню описания должностей'
+                       && !stripos('sss'.$_POST['strarki_menu_dolgnosti'],'^1')
+                        && !stripos('sss'.$_POST['strarki_menu_dolgnosti'],'^2')
+                         && !stripos('sss'.$_POST['strarki_menu_dolgnosti'],'<<<')
+                          && !stripos('sss'.$_POST['strarki_menu_dolgnosti'],'Сохранить')
+                    )
+        )
+
+      if (isset($_POST['strarki_menu_dolgnosti']) || (isset($_SESSION['regimMenu2']) && $_SESSION['regimMenu2']==18))
+       { 
+            $classPhp = new redaktor\maty();
+            $modul = new redaktor\modul();
+            if (isset($_POST['strarki_menu_dolgnosti']))
+             {
+                $loginMy=preg_replace('/Zwanie_/','',$_POST['strarki_menu_dolgnosti']); // Выделяем логин редактора/ов
+                $_SESSION['zonePokaz']=$loginMy;
+                $_SESSION['name1']='n1-myZoneBaza'.$loginMy;
+                $_SESSION['name2']='n2-myZoneProekt'.$loginMy;
+                $_SESSION['name3']='n3-myZoneFree'.$loginMy;
+             }
+            $_SESSION['regimMenu2']=18;
+
+            // форматируем личное пространство
+            echo '<section class="container-fluid">';
+            echo '<div class="row myZone">';
+            echo '<div class="col-1">';
+            echo '</div>';
+            echo '<div class="col-10">';
+            
+            
+            $regimZonyInfo=$classPhp->hanterButton("rez=hant","nameStatic=myZone",'returnValue');
+            if (!$regimZonyInfo) $regimZonyInfo='Базы';
+            echo '<h3 class="dobroPozalovatVzonu">Добро пожаловать в личное пространство игрока: '.$_SESSION['zonePokaz'].' ('.$regimZonyInfo.')'.'</h3>';
+            $classPhp->buttonPrefix('class=-row-','container','action=-starki.php-','кнопок-3',$_SESSION['name1'],$_SESSION['name2'],$_SESSION['name3'],'v1-Базы','v2-Проекты','v3-Разное','classButton=-btn myZoneMenu-');
+            
+            echo '<br>';
+        if (!isset($_POST['myZoneProekt'.$_SESSION['zonePokaz']]) && !isset($_POST['myZoneFree'.$_SESSION['zonePokaz']]))
+            if (isset($_POST['myZoneBaza'.$_SESSION['zonePokaz']]) || (isset($_SESSION['regimMyZone']) && $_SESSION['regimMyZone']==1))
+              {
+                echo '<div class="my_zone_baza_div">';
+                $modul->news1('classKill=-button_statia-','classRedakt=-button_statia-',
+                                "Отступ=1","Шаблон=2",'Статьи редактора='.$_SESSION['zonePokaz'],
+                                'nameTD=my_zone_baza'.$_SESSION['zonePokaz'],"Заголовок=h3",'Логин редактора='.$_SESSION['zonePokaz']);
+                echo '</div>';
+                $_SESSION['regimMyZone']=1;
+              }
+        if (!isset($_POST['myZoneBaza'.$_SESSION['zonePokaz']]) && !isset($_POST['myZoneFree'.$_SESSION['zonePokaz']]))
+            if (isset($_POST['myZoneProekt'.$_SESSION['zonePokaz']]) || (isset($_SESSION['regimMyZone']) && $_SESSION['regimMyZone']==2))
+              {
+                echo '<div class="my_zone_baza_div">';
+                $modul->news1('classKill=-button_statia-','classRedakt=-button_statia-',
+                                "Отступ=1","Шаблон=2",'Статьи редактора='.$_SESSION['zonePokaz'],
+                                'nameTD=my_zone_proect'.$_SESSION['zonePokaz'],"Заголовок=h3",'Логин редактора='.$_SESSION['zonePokaz']);
+                echo '</div>';
+                $_SESSION['regimMyZone']=2;
+              }
+        if (!isset($_POST['myZoneProekt'.$_SESSION['zonePokaz']]) && !isset($_POST['myZoneBaza'.$_SESSION['zonePokaz']]))
+            if (isset($_POST['myZoneFree'.$_SESSION['zonePokaz']]) || (isset($_SESSION['regimMyZone']) && $_SESSION['regimMyZone']==3))
+              {
+                echo '<div class="my_zone_baza_div">';
+                $modul->news1('classKill=-button_statia-','classRedakt=-button_statia-',
+                                "Отступ=1","Шаблон=2",'Статьи редактора='.$_SESSION['zonePokaz'],
+                                'nameTD=my_zone_free'.$_SESSION['zonePokaz'],"Заголовок=h3",'Логин редактора='.$_SESSION['zonePokaz']);
+                echo '</div>';
+                $_SESSION['regimMyZone']=3;
+              }
+
+            echo '</div>';
+            echo '<div class="col-1">';
+            echo '</div>';
+            echo '</div>';
+            echo '</section>';
+       }
+}
+
     //Функция обрабатывает клик по логину игрока
 function klikLoginIgroka()
     {
@@ -284,10 +378,7 @@ function createTableDolgnostiStarkow(&$masMenu1)
 
         // Если была нажата кнопка удаления таблицы меню, то удалить
         if (isset($_POST['netMenu']) && $_POST['netMenu']=='Исправить?')
-        {
           $classdxdl->killTab2('strarki_menu_dolgnosti');
-          echo 'Удалить strarki_menu_dolgnosti';
-        }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

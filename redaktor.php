@@ -176,13 +176,13 @@ if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->get
   $status->listKlientow();
 }
 //Если нажата  кнопка Маты
-if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',8)) || $_SESSION['regimRaboty']==21)  { 
+if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',8)) || $_SESSION['regimRaboty']==21)  
   $_SESSION['regimRaboty']=21;
-  $maty->redactMaty();
-  
-  //$status->listKlientow();
-}
-if (isset($_POST['pokazNULL'])  && isset($_POST['pokazNULLSelect']) && $_POST['pokazNULLSelect']=='pokazNULLValue')  { //Если нажата кнопка Загрузить таблицу для меню
+
+if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',9)) || $_SESSION['regimRaboty']==22)    // нажата кнопка Статистика
+  $_SESSION['regimRaboty']=22;
+
+  if (isset($_POST['pokazNULL'])  && isset($_POST['pokazNULLSelect']) && $_POST['pokazNULLSelect']=='pokazNULLValue')  { //Если нажата кнопка Загрузить таблицу для меню
   $_SESSION['regimRaboty']=10;
   $_SESSION['pokazNULL']=true;
   $red->loadTablic($_SESSION['nameTablice']);
@@ -305,7 +305,7 @@ if ($redaktor && $spisokTablic) {  // Нажата кнопка в редакт�
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////Ниже зона выполнения выбранного режима, так должно быть)//////////////////////////////////////////////////////////////////////////
 
 
 if ($_SESSION['regimRaboty']==2 || $_SESSION['regimRaboty']==18)
@@ -335,8 +335,18 @@ echo '<div class="row menu_redaktor_down">'."\n";
       $data->saveDataBd();
       echo("Актуализация даты изменения Базы Данных проведена");
     }
-//echo '</div>'."\n";
-//echo '</div>'."\n";
+
+
+  if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
+    {
+      $statistik = new redaktor\statistic();
+      $statistik->statistikOnOff();
+    }
+
+  if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
+     {
+       $maty->redactMaty();
+     }
 ?>
 
 </div>
@@ -350,6 +360,7 @@ echo '<div class="row menu_redaktor_down">'."\n";
  
 // }
 //$red->printTabEcho()
+//$_SESSION['regimRaboty']=0;
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

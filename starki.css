@@ -286,6 +286,17 @@ input::placeholder {
   font-weight:900;
   height: 28px;
 }
+.button_statia{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
 .textarea_prawa_dolgnost_textarea{
   width: 400px;
   height: 128px;
@@ -306,4 +317,143 @@ input::placeholder {
   border: 1px;
   margin: 1px;
   background-image: url("image/zwezda.jpg");
+}
+.textarea_news1_redaktor_textarea{
+  width: 600px;
+  height: 450px;
+}
+.my_na_youtub_redaktorstatia4{
+  width: 600px;
+  height: 450px;
+}
+.my_na_youtub_redaktormy_na_youtub_redaktor11{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.nash_proekt_redaktorstatia4{
+  width: 600px;
+  height: 450px;
+}
+.nash_proekt_redaktornash_proekt_redaktor11{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.nashi_bazy_redaktorstatia4{
+  width: 600px;
+  height: 450px;
+}
+.nashi_bazy_redaktornashi_bazy_redaktor11{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.info_redaktorstatia4{
+  width: 600px;
+  height: 450px;
+}
+.info_free_redaktorstatia4{
+  width: 600px;
+  height: 450px;
+}
+.info_redaktorinfo_redaktor11{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.info_free_redaktorinfo_free_redaktor11{
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.myZone{
+  margin-top: 150px;
+}
+.myZoneMenu{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+  
+}
+.my_zone_baza_div textarea{
+  width: 600px;
+  height: 450px;
+}
+
+.myZoneSave{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  font-size: 1vw;
+  color:rgb(100, 36, 6);
+  font-weight:900;
+  height: 28px;
+}
+.footerStark{
+  width: 100%;
+  height: 35px;
+  color: rgb(33, 160, 132);
+  background: rgb(12, 2, 48);
+}
+.futterDiv{
+  background: rgb(12, 2, 48);
+  color: rgb(33, 160, 132);
+  margin-top: 250px;
+  font-size: 1vw;
+  line-height: 50%;
+  height: 85px;
+  width: 100%;
+  float: left;
+}
+.futterP{
+  margin-top: 10px;
+  color: rgb(33, 160, 132);
+  font-size: 1vw;
+  line-height: 10%;
+  height: 75px;
+  float: left;
+}
+.nacaloVerstki{
+  font-size: 0.7vw;
 }

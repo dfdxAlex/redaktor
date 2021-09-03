@@ -11,8 +11,93 @@ class instrument
 
     public function __construct(){
     }  
-
    
+   // ловим кнопку
+   public function hanterButton(...$parametr)
+    {
+       // просматриваем входящие параметры
+      foreach($parametr as $value)
+       {
+          $reztrue=false;
+          $rezhant=false;
+          $valueButton='';
+          $returnNameDinamik=false;
+          $returnName=false;
+          $returnValue=false;
+          $nameStatic='';
+
+        if (stripos('sss'.$value,'rez=hant')) // если необходимо поймать нажатую динамическую кнопку
+          foreach($parametr as $value)
+            {
+             if (stripos('sss'.$value,'nameStatic='))  // ищем имя кнопки
+               $nameStatic=preg_replace('/nameStatic=/','',$value);                        // выделяем имя кнопки
+             if (stripos('sss'.$value,'returnNameDynamic'))  // ищем имя кнопки
+                $returnNameDinamik=true;  // вернуть динамическую часть имени кнопки если труе
+             if (stripos('sss'.$value,'returnName'))  // ищем имя кнопки
+                $returnName=true;  // вернуть полное имя кнопки если труе
+             if (stripos('sss'.$value,'returnValue'))  // ищем имя кнопки
+                $returnValue=true;  // вернуть надпись на кнопке если труе
+            }
+          if ($nameStatic!='')
+            foreach($_POST as $key=>$value)
+              if (stripos('sss'.$key,$nameStatic)) //найти нажатую кнопку по статичной части её имени
+               {
+                  if ($returnValue) return $value;
+                  if ($returnNameDinamik) return preg_replace('/'.$nameStatic.'/','',$key);
+                  if ($returnName) return $key;
+               }
+          if (stripos('sss'.$value,'rez=true')) // если необходимо проверить была ли нажата кнопка
+          foreach($parametr as $value)
+            {
+              $reztrue=true;
+             if (stripos('sss'.$value,'name='))  // ищем имя кнопки
+               $nameButton=preg_replace('/name=/','',$value);                        // выделяем имя кнопки
+             if (stripos('sss'.$value,'value='))  // ищем имя кнопки
+               $valueButton=preg_replace('/value=/','',$value);                        // выделяем надпись на кнопке
+            }
+          if (stripos('sss'.$value,'rez=info')) // если необходимо вернуть название нажатой кнопки
+            foreach($parametr as $value)
+                if (stripos('sss'.$value,'name='))  // ищем имя кнопки
+                 {
+                   $nameButton=preg_replace('/name=/','',$value);                        // выделяем имя кнопки
+                   return $_POST[$nameButton];
+                 }
+         if ($reztrue)
+          if (isset($_POST[$nameButton]) && ($valueButton=='' || $valueButton==$_POST[$nameButton])) return true; else return false;       // если она нажата, то вернуть труе
+        }
+
+     //обработка параметра help
+     foreach($parametr as $value)
+     if ($value=='help' || $value=='Помощь' || $value=='помощь')
+      {
+        echo '<p class="mesage">Функция проверяет была ли нажата некоторая кнопка и результат выдает в нужном виде.</p><br>';
+        echo '<p class="mesage">Узнать была ли нажата некотороя кнопка:</p><br>';
+        echo '<p class="mesage">Нужно задать в кавычках "rez=true"</p><br>';
+        echo '<p class="mesage">Нужно задать в кавычках "name=имя кнопки"</p><br>';
+        echo '<p class="mesage">Если задать "value=надпись на кнопке", проверяется так-же параметр value</p><br>';
+        echo '<p class="mesage"></p><br>';
+        echo '<p class="mesage">Узнать какая кнопка была нажата</p><br>';
+        echo '<p class="mesage">Нужно задать в кавычках "rez=info"</p><br>';
+        echo '<p class="mesage">Нужно задать в кавычках "name=имя кнопки"</p><br>';
+        echo '<p class="mesage"></p><br>';
+        echo '<p class="mesage">Поймать динамическую кнопку</p><br>';
+        echo '<p class="mesage">Здесь можно узнать какая из динамически созданных кнопок была нажата</p><br>';
+        echo '<p class="mesage">Нужно задать в кавычках "rez=hant" (активировать режим)</p><br>';
+        echo '<p class="mesage">Необходимо задать неизменяемую часть имени кнопок "nameStatic=имя кнопки"</p><br>';
+        echo '<p class="mesage">Необходимо задать возвращаемый параметр:</p><br>';
+        echo '<p class="mesage"> "returnNameDynamik" - вернуть динамическую часть имени нажатой кнопки</p><br>';
+        echo '<p class="mesage"> "returnName" - Вернуть полное имя нажатой кнопки</p><br>';
+        echo '<p class="mesage"> "returnValue" - Вернуть надпись на нажатой кнопке</p><br>';
+        echo '<p class="mesage"></p><br>';
+        echo '<p class="mesage"></p><br>';
+        echo '<p class="mesage"></p><br>';
+        echo '<p class="mesage"></p><br>';
+        echo '<p class="mesage"></p><br>';
+        echo '<p class="mesage"></p><br>';
+        echo '<p class="mesage"></p><br>';
+      }
+     return false;
+    }
    // функция рисует кнопку с использованием параметров префикса и переменной. Работает с функцией buttonHanter()
    public function buttonPrefix(...$parametr)
    {
@@ -97,10 +182,10 @@ foreach($parametr as $value)
     echo '</form>';
     if ($classDiv!="") echo '</div>';
     if ($container && $classB!="") echo '</div>';
-    if ($container) echo '</section">';
+    if ($container) echo '</section>';
      //обработка параметра help
      foreach($parametr as $value)
-      if ($value=='help' || $value=='Помощь')
+      if ($value=='help' || $value=='Помощь' || $value=='помощь')
        {
          echo '<p class="mesage">Чтобы кнопка была в отдельном контейнере, то нужен параметр container. Пример:buttonPrefix("container");</p><br>';
          echo '<p class="mesage">Чтобы добавить CLASS=ROW от бутстрапа, то вводим параметр данного класса в параметр функции:<br>';
@@ -108,23 +193,18 @@ foreach($parametr as $value)
          echo 'Для добавления произвольного класса вместе с дивом вводим параметр<br>';
          echo 'Пример:buttonPrefix("class=-имя произвольного класса-"); Знак "-" там, где нужны кавычки. В функцию передаем "-"</p><br>';
          echo '<p class="mesage"></p><br>';
-         echo '<p class="mesage"></p><br>';
          echo '<p class="mesage">Далее параметры кнопки<br>';
          echo 'Для указания ссылки на страницу обработки вводим параметр buttonPrefix("action=-ссылка-")<br>';
          echo 'Для указания метода передачи параметров вводим параметр buttonPrefix("method=-post или get-"), по умолчанию POST уже есть.</p><br>';
          echo '<p class="mesage">Число кнопок задается словом "кнопок-5" buttonPrefix("кнопок-5");</p><br>';
-         echo '<p class="mesage">Имена кнопок задаются с помощью символа n+номер кнопки. buttonPrefix("n1=nameButton");</p><br>';
-         echo '<p class="mesage">Название на кнопке задается с помощью символа v+номер кнопки. buttonPrefix("v1=имя первой кнопки");</p><br>';
-         echo '<p class="mesage"></p><br>';
+         echo '<p class="mesage">Имена кнопок задаются с помощью символа n+номер кнопки. buttonPrefix("n1-nameButton");</p><br>';
+         echo '<p class="mesage">Название на кнопке задается с помощью символа v+номер кнопки. buttonPrefix("v1-имя первой кнопки");</p><br>';
          echo '<p class="mesage"></p><br>';
          echo '<p class="mesage">Далее работа с классами кнопок</p><br>';
          echo '<p class="mesage">Для назначения класса по умолчанию для тех кнопок, у которых нет своего класса используется слово classButton;<br>';
          echo 'buttonPrefix("classButton=-имя общего класса-");</p><br>';
          echo '<p class="mesage">Чтобы задать персональный класс кнопке, передаем параметр с1=-новый класс- buttonPrefix("с1=-bottonClass-")</p><br>';
-         echo '<p class="mesage"></p><br>';
-         echo '<p class="mesage"></p><br>';
-         echo '<p class="mesage"></p><br>';
-         echo '<p class="mesage"></p><br>';
+         echo '<p class="mesage">Для использования стилей Бутстрапа добавляем класс btn ...</p><br>';
        }
    }
 
@@ -191,6 +271,7 @@ foreach($parametr as $value)
    // class="$nameBlock+name+номер кнопки" , по умолчанию value будет пустая строка
    // Если text2, то будет текстовое поле, следующим параметром должно идти имя name=.. за ним текст по умолчанию для placeholder 
    // class="$nameBlock+name+номер кнопки", по умолчанию placeholder будет пустая строка
+   // Если textarea то создаем текстовое поле как text, только большое
    // Если password, то будет текстовое поле для ввода пароля, следующим параметром должно идти имя name=.. за ним текст по умолчанию для value 
    // class="$nameBlock+name+номер кнопки" , по умолчанию value будет пустая строка
    // Если password2, то будет текстовое поле для ввода пароля, следующим параметром должно идти имя name=.. за ним текст по умолчанию для placeholder 
@@ -199,10 +280,14 @@ foreach($parametr as $value)
    // class="$nameBlock+reset+номер кнопки"
    // Если submit то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
    // class="$nameBlock+name+номер кнопки", надпись на кнопке по умолчанию Ок
+   // Если submit2 то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
+   // class="$nameBlock+номер кнопки", надпись на кнопке по умолчанию Ок
+   // Если submit3 то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
+   // class кнопки задается 4-м параметром, надпись на кнопке по умолчанию Ок
    // Если P или h1-h6, то создаем заголовок. Текст - это следующий параметр, класс - это второй параметр.
    public function formBlock($nameBlock, $actionN,...$parametr)
    {
-      echo '<section class="continer">';
+      echo '<section class="container-fluid">';
       echo '<div class="row">';
       echo '<div class="'.$nameBlock.'">';
       echo '<form action="'.$actionN.'" method="POST">';
@@ -223,6 +308,15 @@ foreach($parametr as $value)
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
             $class=$nameBlock.$name.$i;
             echo '<input type="text" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
+          }
+        if ($value=='textarea') 
+          {
+            if (isset($parametr[$i+1]))
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
+            if (isset($parametr[$i+2]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+            $class=$nameBlock.$name.$i;
+            echo '<textarea name="'.$name.'" class="'.$class.'">'.$textValue.'</textarea>';
           }
         if ($value=='text2') 
           {
@@ -269,6 +363,31 @@ foreach($parametr as $value)
             $class=$nameBlock.$name.$i;
             echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
           }
+        if ($value=='submit2') 
+          {
+            if (isset($parametr[$i+1]))
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
+            if (isset($parametr[$i+2]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
+            if (isset($parametr[$i+3]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
+            $class=$nameBlock.$i;
+            echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
+          }
+        if ($value=='submit3') 
+          {
+            if (isset($parametr[$i+1]))
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
+            if (isset($parametr[$i+2]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
+            if (isset($parametr[$i+3]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
+            if (isset($parametr[$i+4]))
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3]) && !$this->searcTegFormBlock($parametr[$i+4])) $class=$parametr[$i+4]; else $class=''; else $textWww='';
+            
+             // $class=$nameBlock.$i;
+            echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
+          }
         if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') 
           {
             if (isset($parametr[$i+1]))
@@ -301,6 +420,8 @@ foreach($parametr as $value)
         if ($parametr=='h5') return true;
         if ($parametr=='h6') return true;
         if ($parametr=='submit') return true;
+        if ($parametr=='submit2') return true;
+        if ($parametr=='submit3') return true;
         return false;
     }
    // Преобразуем номер статуса в его значение
@@ -384,6 +505,7 @@ class initBD extends instrument
     public function initBdParol(){return $this->parol;}
     public function initBdNameBD(){return $this->nameBD;}
     public function initsite(){return $this->site;}
+
 
       public function sborMatov()  {
         $zapros="SELECT nastr FROM tablica_nastroer_dvigka_int WHERE id=1"; //настройка показа формы сбора данных
@@ -605,8 +727,18 @@ class initBD extends instrument
      }
      public function zaprosSQL($zapros) // создать SQL запрос, условие согласно синтаксису SQL
      {
-         // $rez=mysqli_query($this->con,quotemeta($zapros));
-          //echo mysqli_character_set_name($this->con);
+        $statistikTrueFalseRez=mysqli_query($this->con,'SELECT statik_true FROM statistik_dfdx WHERE 1');
+        $statistikTrueFalse=mysqli_fetch_assoc($statistikTrueFalseRez);
+
+        if ($statistikTrueFalse['statik_true']==1)
+         {
+          $statistikTrueFalseRez=mysqli_query($this->con,'SELECT n_zapros FROM statistik_dfdx WHERE 1');
+          $statistik_n_zapros=mysqli_fetch_assoc($statistikTrueFalseRez);
+          $statistik_n_zapros['n_zapros']++;
+          mysqli_query($this->con,'UPDATE statistik_dfdx SET n_zapros='.$statistik_n_zapros['n_zapros'].' WHERE 1');
+          mysqli_query($this->con,'UPDATE statistik_dfdx SET d_zapros="'.date("y.m.d").'" WHERE 1');
+         }
+
         $rez=mysqli_query($this->con,$zapros);
         return $rez;
      }
@@ -637,6 +769,122 @@ class initBD extends instrument
      $query=$this->zaprosSQL($zapros);   
      $viv=mysqli_fetch_array($query);
      return $viv[0];
+     }
+
+     public function createTab(...$parametr) //функция проверяет есть ли таблица и если нет, то создает её
+     {
+      $nametablice='';
+      $masN=array();
+      $masT=array();
+      $masS=array();
+      $prosmotr=false;
+      $zapros1='Таблица уже существует!';
+      $zapros2='Стартовое значение уже задано!';
+
+      foreach($parametr as $value)
+      if (stripos('sss'.$value,'name='))
+      {
+         $nametablice=preg_replace('/name=/','',$value);
+         $nametablice=mb_strtolower($nametablice);
+      }
+
+      foreach($parametr as $value)
+      if (stripos('sss'.$value,'просмотр'))
+        $prosmotr=true;
+
+        $i=0;
+      foreach($parametr as $value)
+        if (stripos('sss'.$value,'poleN='))
+         $masN[$i++]=preg_replace('/poleN=/','',$value);
+
+      $ii=0;
+      foreach($parametr as $value)
+        if (stripos('sss'.$value,'poleT='))
+         $masT[$ii++]=preg_replace('/poleT=/','',$value);
+
+      $iii=0;
+      foreach($parametr as $value)
+        if (stripos('sss'.$value,'poleS='))
+         $masS[$iii++]=preg_replace('/poleS=/','',$value);
+      
+      //обработка параметра help
+      foreach($parametr as $value)
+      if ($value=='help' || $value=='Помощь')
+        {
+          echo '<p>Функция проверяет существует ли таблица, если нет, то создает её и присваивает начальные значения</p>';
+          echo '<p>Обязательный параметр "name=имя таблица"</p>';
+          echo '<p>Имя поля задается параметром "poleN=имя поля"</p>';
+          echo '<p>Тип поля задается параметром "poleT=тип поля"</p>';
+          echo '<p>Первичное значение поля задается параметром "poleS=тип поля"</p>';
+          echo '<p>Если необходимо только посмотреть запроссы, то добавляем параметр "просмотр"</p>';
+          echo '<p></p>';
+          echo '<p></p>';
+          echo '<p></p>';
+          echo '<p></p>';
+        } 
+
+      if ($nametablice=='' || $i!=$ii || $ii!=$iii) return false; //если забыли задать имя таблицы, то выходим из функции
+
+      if (!$this->searcNameTablic($nametablice))
+       {
+         $zapros="CREATE TABLE ".$nametablice.' (';
+         $z='';
+         for($j=0; $j<$i; $j++)
+           {
+             if ($j+1<$i)
+            $z=$z.$masN[$j].' '.$masT[$j].', ';
+            else $z=$z.$masN[$j].' '.$masT[$j];
+           }
+          $zapros=$zapros.$z.')';
+          $zapros1=$zapros;
+          if (!$prosmotr)
+           $this->zaprosSQL($zapros);
+        } 
+    
+    if (!$this->kolVoZapisTablice($nametablice)>0)
+      {
+        $zapros="INSERT INTO ".$nametablice.' (';
+        $z='';
+        $z1='';
+
+        for($j=0; $j<$i; $j++)
+        {
+          if ($j+1<$i)
+          $z=$z.$masN[$j].', ';
+          else $z=$z.$masN[$j];
+          $znak='';
+
+          if (stripos('sss'.$masT[$j],'VARCHAR')
+           || $masT[$j]=='TEXT'
+           || $masT[$j]=='DATE'
+           || $masT[$j]=='DATETIME'
+           || $masT[$j]=='TIMESTAMP'
+           || $masT[$j]=='TIME'
+           || $masT[$j]=='CHAR'
+           || $masT[$j]=='TINYTEXT'
+           || $masT[$j]=='MEDIUMTEXT'
+           || $masT[$j]=='LONGTEXT'
+           || $masT[$j]=='BINARY'
+           || $masT[$j]=='VARBINARY'
+           || $masT[$j]=='TINYBLOB'
+           || $masT[$j]=='MEDIUMBLOB'
+           || $masT[$j]=='LONGBLOB'
+           || $masT[$j]=='BLOB'
+           || $masT[$j]=='ENUM'
+           || $masT[$j]=='SET'
+           ) $znak="'";
+            
+          if ($j+1<$i)
+          $z1=$z1.$znak.$masS[$j].$znak.',';
+          else $z1=$z1.$znak.$masS[$j].$znak;
+         }
+         $zapros=$zapros.$z.') VALUES ('.$z1.')';
+         $zapros2=$zapros;
+         if (!$prosmotr)
+          $this->zaprosSQL($zapros);
+      } 
+      if ($prosmotr)  //режим просмотра запроссов
+        echo '<p>Запрос для создания таблицы: '.$zapros1.'</p><p>Запрос для первой строки: '.$zapros2.'</p>';
      }
 }
 ////////////////////////////////////////////////////////////////////////////
@@ -900,48 +1148,7 @@ class dataAktual  extends initBD
             $rez=parent::zaprosSQL($zapros);// OR die ('Не удалось отправить запрос стр.17');
         }
 } // Конец класса dataAktual
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class futter  extends dataAktual  // Класс выводит информацию в низ сайта
-{
-    public  $stHtml;
-    public function __construct($statHtml)
-     {
-        parent::__construct();
-        $this->stHtml=$statHtml;
-     }
-     public function dataRedaktSite()
-     {
-        echo ("<h3>Статистика обращений к базам данных</h3>");
-        echo '<h4>Обращений к базе HTML:'.$this->stHtml.'</h4>';
-        $chislo="".$this->mdaySite;   // нормализация числа даты, вместо 1.12.2021 --> 01.12.2021
-        if ($this->mdaySite<10) $chislo="0".$this->mdaySite;
-        $dat="".$this->monSite;   // нормализация месяца даты, вместо 01.2.2021 --> 01.02.2021
-        if ($this->monSite<10) $dat="0".$this->monSite;
-        $min="".$this->minutesSite;   // нормализация минут даты, вместо 01.2.2021 --> 01.02.2021
-        if ($this->minutesSite<10) $min="0".$this->minutesSite;
-        $sek="".$this->secondsSite;   // нормализация секунд даты, вместо 01.2.2021 --> 01.02.2021
-        if ($this->secondsSite<10) $sek="0".$this->secondsSite;
-        echo '<h5>Последнее изменение сайта '.$chislo.'.'.$dat.'.'.$this->yearSite.'. <span>Время изменения <span>'.$this->hoursSite.':'.$min.':'.$sek.'</span></span></h5>';
-        $chislo="".$this->mdayBd;   // нормализация числа даты, вместо 1.12.2021 --> 01.12.2021
-        if ($this->mdayBd<10) $chislo="0".$this->mdayBd;
-        $dat="".$this->monBd;   // нормализация месяца даты, вместо 01.2.2021 --> 01.02.2021
-        if ($this->monBd<10) $dat="0".$this->monBd;
-        $min="".$this->minutesBd;   // нормализация минут даты, вместо 01.2.2021 --> 01.02.2021
-        if ($this->minutesBd<10) $min="0".$this->minutesBd;
-        $sek="".$this->secondsBd;   // нормализация секунд даты, вместо 01.2.2021 --> 01.02.2021
-        if ($this->secondsBd<10) $sek="0".$this->secondsBd;
-        echo '<h5>Последнее изменение БД '.$chislo.'.'.$dat.'.'.$this->yearBd.'. <span>Время изменения <span>'.$this->hoursBd.':'.$min.':'.$sek.'</span></span></h5>';
-        echo '<h6>Используемые языки: HTML,CSS,PHP,MySQL</h6>';
-     }
-}   // Конец класса футтер
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5228,4 +5435,211 @@ class maty extends menu  // Работа с матами и нецензурно
             }
     }
 }// конец класса maty
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class futter  extends maty //dataAktual  // Класс выводит информацию в низ сайта
+{
+    //public  $stHtml;
+    public function __construct()
+     {
+        parent::__construct();
+      //  $this->stHtml=$statHtml;
+     }
+     public function futterR(...$parametr)
+     {
+      $bootStrap=false;
+      $container='-fluid';
+      $dataSozdania='';
+      $classPole='';
+      // Ищем параметр подключающий бутстрап
+      foreach($parametr as $value)
+        if (stripos('sss'.$value,'bootstrap'))
+          $bootStrap=true;
+
+      //ищем приставку к классу container
+      foreach($parametr as $value)
+        if (stripos('sss'.$value,'container='))
+          $container='-'.preg_replace('/container=/','',$value); // Выделяем логин редактора/ов
+
+      //ищем создания сайта
+      foreach($parametr as $value)
+        if (stripos('sss'.$value,'дата:'))
+          $dataSozdania=preg_replace('/дата:/','',$value); // Выделяем логин редактора/ов
+
+      //ищем имя класса главного поля
+      foreach($parametr as $value)
+        if (stripos('sss'.$value,'pole='))
+        $classPole=preg_replace('/pole=/','',$value); // Выделяем логин редактора/ов
+
+      foreach($parametr as $value)
+      if ($value=='help' || $value=='Помощь')
+       {
+           echo '<p>Функция выводит нижний блок</p>';
+           echo '<p>Параметры функции произвольные и задаются как обычно!</p>';
+           echo '<p>Функция проверяет все параметры и по ключевым словам определяет с каким параметром, что следует делать.</p>';
+           echo '<p>Параметров произвольное колличество</p>';
+           echo '<p>Для настройки блока под бутстрап необходимо вписать параметр "bootstrap"</p>';
+           echo '<p>Для задания приставки к классу container-...fluid задаем дополнительный параметр "container=...fluid"</p>';
+           echo '<p>по умолчанию параметр container=fluid</p>';
+           echo '<p>Дальше выводимая информация</p>';
+           echo '<p>Дата создания сайта задается параметром "дата:18.02.2021"</p>';
+           echo '<p></p>';
+           echo '<p></p>';
+           echo '<p>Работа с классами</p>';
+           echo '<p>Задать имя класса главного поля можно через параметр "pole=имя класса"</p>';
+           echo '<p>По умолчанию есть класс futter заданный в стилях движка, после него идёт класс заданный с помощью pole=</p>';
+           echo '<p></p>';
+           
+        }
+
+        // Выводим футтер
+      if ($bootStrap) echo '<section class="container'.$container.'">';
+      if ($bootStrap) echo '<div class="row">';
+      if ($classPole=='') echo '<div class="futtrer">';
+      if ($classPole!='') echo '<div class='.$classPole.'>';
+      
+      if ($dataSozdania!='') echo '<p>Дата создания сайта:'.$dataSozdania.'</p>';
+
+      //if ($classPole!='') echo '</div>';
+      echo '</div>';
+      if ($bootStrap) echo '</div>';
+      if ($bootStrap) echo '</section>';
+
+     }
+     public function dataRedaktSite()
+     {
+      //  echo ("<h3>Статистика обращений к базам данных</h3>");
+       // echo '<h4>Обращений к базе HTML:'.$this->stHtml.'</h4>';
+       // $chislo="".$this->mdaySite;   // нормализация числа даты, вместо 1.12.2021 --> 01.12.2021
+       // if ($this->mdaySite<10) $chislo="0".$this->mdaySite;
+       // $dat="".$this->monSite;   // нормализация месяца даты, вместо 01.2.2021 --> 01.02.2021
+       // if ($this->monSite<10) $dat="0".$this->monSite;
+       // $min="".$this->minutesSite;   // нормализация минут даты, вместо 01.2.2021 --> 01.02.2021
+       // if ($this->minutesSite<10) $min="0".$this->minutesSite;
+       // $sek="".$this->secondsSite;   // нормализация секунд даты, вместо 01.2.2021 --> 01.02.2021
+       // if ($this->secondsSite<10) $sek="0".$this->secondsSite;
+       // echo '<h5>Последнее изменение сайта '.$chislo.'.'.$dat.'.'.$this->yearSite.'. <span>Время изменения <span>'.$this->hoursSite.':'.$min.':'.$sek.'</span></span></h5>';
+       // $chislo="".$this->mdayBd;   // нормализация числа даты, вместо 1.12.2021 --> 01.12.2021
+       // if ($this->mdayBd<10) $chislo="0".$this->mdayBd;
+       // $dat="".$this->monBd;   // нормализация месяца даты, вместо 01.2.2021 --> 01.02.2021
+       // if ($this->monBd<10) $dat="0".$this->monBd;
+       // $min="".$this->minutesBd;   // нормализация минут даты, вместо 01.2.2021 --> 01.02.2021
+       // if ($this->minutesBd<10) $min="0".$this->minutesBd;
+       // $sek="".$this->secondsBd;   // нормализация секунд даты, вместо 01.2.2021 --> 01.02.2021
+       // if ($this->secondsBd<10) $sek="0".$this->secondsBd;
+       // echo '<h5>Последнее изменение БД '.$chislo.'.'.$dat.'.'.$this->yearBd.'. <span>Время изменения <span>'.$this->hoursBd.':'.$min.':'.$sek.'</span></span></h5>';
+       // echo '<h6>Используемые языки: HTML,CSS,PHP,MySQL</h6>';
+     }
+}   // Конец класса футтер
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class statistic  extends futter // // Класс работа со статистикой
+{
+  public function __construct()
+  {
+     parent::__construct();
+
+     parent::createTab(
+       'name=statistik_dfdx',
+       'poleN=statik_true',
+       'poleT=int',
+       'poleS=0',
+       'poleN=n_zapros',
+       'poleT=int',
+       'poleS=0',
+       'poleN=d_zapros',
+       'poleT=DATE',
+       'poleS=1000-01-01'
+     );
+     parent::createTab(
+      'name=slegka_dfdx',
+      'poleN=id',
+      'poleT=int',
+      'poleS=0',
+      'poleN=metka',
+      'poleT=VARCHAR(500)',
+      'poleS=-',
+      'poleN=zaprosov',
+      'poleT=int',
+      'poleS=0'//,'просмотр'
+    );
+
+  }
+  
+  public function statistikOnOff()
+  {
+
+
+      if (isset($_POST['buttonStatistik']))
+      {
+        if ($_POST['buttonStatistik']=='Включить статистику запроссов к БД (функция zaprosSQL)')
+           parent::zaprosSQL("UPDATE statistik_dfdx SET statik_true=1 WHERE 1");
+        if ($_POST['buttonStatistik']=='Выключить статистику запроссов к БД (функция zaprosSQL)')
+           parent::zaprosSQL("UPDATE statistik_dfdx SET statik_true=0 WHERE 1");
+      }
+      //echo 'нажата кнопка статистики';
+      $rez=parent::zaprosSQL("SELECT statik_true FROM statistik_dfdx WHERE 1");
+      $stroka=mysqli_fetch_assoc($rez);
+
+      if ($stroka['statik_true']==0) {$classButtonStatik='classButtonStatikFalse'; $valueButtonStatik="Включить статистику запроссов к БД (функция zaprosSQL)";}
+      else {$classButtonStatik='classButtonStatikTrue';$valueButtonStatik="Выключить статистику запроссов к БД (функция zaprosSQL)";}
+
+      //кнока включить-выключить статистику запросов в БД
+      echo '<section class="container-fluid">';
+      echo '<div class="row">';
+      echo '<div class="buttonStatistikDiv">';
+      echo '<form action="redaktor.php" method="post">';
+      echo '<input type="submit" class="'.$classButtonStatik.' btn" value="'.$valueButtonStatik.'" name="buttonStatistik">';
+      echo '</form>';
+      echo '</div>';
+      echo '</div>';
+      echo '</section>';
+
+  }
+  public function dataObnov()
+  {
+    $rez=parent::zaprosSQL("SELECT d_zapros FROM statistik_dfdx WHERE 1");
+    $stroka=mysqli_fetch_assoc($rez);
+    return $stroka['d_zapros'];
+  }
+  public function kolZaprosow()
+  {
+    $rez=parent::zaprosSQL("SELECT n_zapros FROM statistik_dfdx WHERE 1");
+    $stroka=mysqli_fetch_assoc($rez);
+    return $stroka['n_zapros'];
+  }
+  public function metkaStatistika($metka)
+  {
+    $rez=parent::zaprosSQL("SELECT id FROM slegka_dfdx WHERE metka='".$metka."'");
+    $stroka=mysqli_fetch_assoc($rez);
+    if ($stroka['id']>0) {
+      $id=$stroka['id'];
+      $rez=parent::zaprosSQL("SELECT zaprosov FROM slegka_dfdx WHERE metka='".$metka."'");
+      $stroka=mysqli_fetch_assoc($rez);
+      $stroka['zaprosov']++;
+      parent::zaprosSQL("UPDATE slegka_dfdx SET zaprosov=".$stroka['zaprosov']." WHERE id=".$id);
+    } else parent::zaprosSQL("INSERT INTO slegka_dfdx(id, metka, zaprosov) VALUES (".parent::maxIdLubojTablicy('slegka_dfdx') .",'".$metka."',1)");
+  }
+  public function getMetkaStatistik($metka)
+  {
+    $rez=parent::zaprosSQL("SELECT zaprosov FROM slegka_dfdx WHERE metka='".$metka."'");
+    $stroka=mysqli_fetch_assoc($rez); 
+    return $stroka['zaprosov'];
+  }
+}
 ?>
