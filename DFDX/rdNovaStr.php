@@ -51,21 +51,21 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
             echo '<h6 class="mesage">Так-же Вы всегда можете вернуться на сайт нажав на кнопку "На сайт"</h6>';
         }
       ?>
-    
-<form method="POST">
-  <input type="text" name="nameFile" value="Введите имя файла страницы." class="nameNowaSranica">
-</form>
+
 <?php
 
-
-
-$maty->buttonPrefix("container",
-                    "class=-row-",
-                    "action=-nastrNowaStranica.php-",
-                    "кнопок-1",
-                    "n1-variantNowaStr",
-                    "v1-Пустая страница, только необходимая разметка.",
-                    "classButton=-buttonHabNowaStranica btn-"
+// меню выбора типа страницы
+$maty->formBlock(
+  'nastrNovStranic',
+  'nastrNowaStranica.php',
+  'text',                          //class="nastrNovStranicnameFile0"
+  'nameFile', 
+  'Введите имя файла страницы.',
+  'br',
+  3,
+  'submit',                         //class="nastrNovStranicvariantNowaStr5"
+  'variantNowaStr',
+  'Пустая страница, только необходимая разметка.'
 );
 
 

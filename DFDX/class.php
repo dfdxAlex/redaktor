@@ -268,24 +268,35 @@ foreach($parametr as $value)
    //$actionN - ссылка на страницу обработки
    //...$parametr дальше пошел список параметров
    // первым в параметре идёт тип кнопки или название тега:
+
    // Если br то после этого тега можно указать число данных тегов <br>, если не указать, то будет 1 тег
+
    // Если text, то будет текстовое поле, следующим параметром должно идти имя name=.. за ним текст по умолчанию для value 
    // class="$nameBlock+name+номер кнопки" , по умолчанию value будет пустая строка
+
    // Если text2, то будет текстовое поле, следующим параметром должно идти имя name=.. за ним текст по умолчанию для placeholder 
    // class="$nameBlock+name+номер кнопки", по умолчанию placeholder будет пустая строка
+
    // Если textarea то создаем текстовое поле как text, только большое
+
    // Если password, то будет текстовое поле для ввода пароля, следующим параметром должно идти имя name=.. за ним текст по умолчанию для value 
    // class="$nameBlock+name+номер кнопки" , по умолчанию value будет пустая строка
+
    // Если password2, то будет текстовое поле для ввода пароля, следующим параметром должно идти имя name=.. за ним текст по умолчанию для placeholder 
    // class="$nameBlock+name+номер кнопки", по умолчанию placeholder будет пустая строка
+
    // Если reset то будет кнопка очистки текстовых полей. После него следует ввести надпись на кнопке, если параметр пропустить, то на кнопке будет надпись Reset
    // class="$nameBlock+reset+номер кнопки"
+
    // Если submit то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
    // class="$nameBlock+name+номер кнопки", надпись на кнопке по умолчанию Ок
+
    // Если submit2 то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
    // class="$nameBlock+номер кнопки", надпись на кнопке по умолчанию Ок
+
    // Если submit3 то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
    // class кнопки задается 4-м параметром, надпись на кнопке по умолчанию Ок
+   
    // Если P или h1-h6, то создаем заголовок. Текст - это следующий параметр, класс - это второй параметр.
    public function formBlock($nameBlock, $actionN,...$parametr)
    {
@@ -4472,11 +4483,7 @@ class menu extends initBD
         $ii=1;
         $status=(string)$_SESSION['status'];
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
-        //if ($zapros==false) return false;
-        //if (is_null($zapros)) return false;
         $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
-        //if ($zapros==false) return false;
-        //if (is_null($zapros)) return false;
         $idMax=$stroka[0];
         
        for ($idPoz=0; $idPoz<=$idMax; $idPoz++)
@@ -4980,19 +4987,19 @@ public function saveStatusR() // Сохранить учётку
 {
   parent::zaprosSQL("UPDATE status_klienta SET parol='".$_POST['parol']."', mail='".$_POST['mail']."', status=".$_POST['status']." WHERE login='".$_POST['login']."'");
 }
-public function killGosc() // Удалить учётку учётку
+  public function killGosc() // Удалить учётку учётку
 {
   parent::zaprosSQL("DELETE FROM status_klienta WHERE login='".$_POST['login']."'");
 }
-public function naGlavnuStranicu()
+  public function naGlavnuStranicu()
 {
   exit("<meta http-equiv='refresh' content='0; url= ".parent::initsite()."'>");
 }
-public function tutObnovit()
-{
+  public function tutObnovit()
+  {
   exit("<meta http-equiv='refresh' content='0; url= 'redaktor.php'>");
 }
-public function nameGlawnogoSite()
+  public function nameGlawnogoSite()
 {
   return parent::initsite();
 }
@@ -5006,10 +5013,10 @@ if ($_SESSION['status']==3) return 'Подписчик.';
 if ($_SESSION['status']==4) return 'Администратор.';
 if ($_SESSION['status']==5) return 'Супер Администратор.';
 }
-public function redaktProfil()
-{
+//public function redaktProfil()
+//{
       
-}
+//}
 } // конец класса login
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5066,12 +5073,6 @@ class maty extends menu  // Работа с матами и нецензурно
        public function echoBezMatovPlusIsklucenia($text) // функция находит совпадения матов и меняет их на звездочки.
        {  // Не работает!!!!!!!!!!!!!!!!!!!!!!!!
          $rezultat=$text;
-         //$vyragenie='/\s|(\.)|(,)|(\d)|(-)|(#)|(!)|(\?)|(_)/';
-         //$vyragenie='/[^\s\d[:punct:]]+[a-zA-Zа-яёА-ЯЁ]+[\s[:punct:]\d\Z]/';
-         //$vyragenie='/\s([а-яё]|[А-ЯЁ])+\s/';
-         //$masRezult=preg_split($vyragenie,$rezultat,PREG_SPLIT_OFFSET_CAPTURE);
-         //if (!preg_match_all('/\s[а-яё]+\s?/ui',$text,$masRezult)) echo 'ошибка<br>';
-         
          echo $text.'<br>';
          $mas_rezult=$masRezult[0];
          foreach($mas_rezult as $value)
