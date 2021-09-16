@@ -442,7 +442,7 @@ input::placeholder {
   margin-top: 250px;
   font-size: 1vw;
   line-height: 50%;
-  height: 85px;
+  height: 110px;
   width: 100%;
   float: left;
 }
@@ -456,4 +456,316 @@ input::placeholder {
 }
 .nacaloVerstki{
   font-size: 0.7vw;
+}
+.button_class_rasy_stark_gelion{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  color:rgb(231, 81, 21);
+  font-weight:900;
+  height: 28px;
+}
+.button_class_rasy_stark_zect{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  color:rgb(231, 209, 7);
+  font-weight:900;
+  height: 28px;
+}
+.button_class_rasy_stark_tormal{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  color:rgb(6, 56, 112);
+  font-weight:900;
+  height: 28px;
+}
+.button_class_rasy_stark_velid{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  color:rgb(55, 199, 218);
+  font-weight:900;
+  height: 28px;
+}
+.button_class_rasy_stark_glarg{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  color:rgb(71, 189, 120);
+  font-weight:900;
+  height: 28px;
+}
+.button_class_rasy_stark_astoks{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  color:rgb(182, 41, 22);
+  font-weight:900;
+  height: 28px;
+}
+.button_class_rasy_stark_mrun{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-image: url("image/zwezda.jpg");
+  width: 125px;
+  float: left;
+  color:rgb(71, 8, 122);
+  font-weight:900;
+  height: 28px;
+}
+.button_class_rasy_stark_gelion_modul{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(250, 177, 19);
+  width: 325px;
+  float: left;
+  color:rgb(3, 1, 0);
+  font-weight:900;
+  height: 28px;
+}
+.text_moduly_gelion_text{
+  color: rgb(250, 177, 19);
+  height: 28px;
+}
+.button_class_rasy_stark_zekt_modul{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(251, 255, 41);
+  width: 325px;
+  float: left;
+  color:rgb(3, 1, 0);
+  font-weight:900;
+  height: 28px;
+}
+.text_moduly_zekt_text{
+  color: rgb(199, 202, 20);
+  height: 28px;
+}
+.button_class_rasy_stark_tormal_modul{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(15, 36, 223);
+  width: 325px;
+  float: left;
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+.text_moduly_tormal_text{
+  color: rgb(15, 36, 223);
+  height: 28px;
+}
+.button_class_rasy_stark_velid_modul{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(72, 194, 224);
+  width: 325px;
+  float: left;
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+.text_moduly_velid_text{
+  color: rgb(72, 194, 224);
+  height: 28px;
+}
+.button_class_rasy_stark_glarg_modul{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(140, 216, 104);
+  width: 325px;
+  float: left;
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+.text_moduly_glarg_text{
+  color: rgb(140, 216, 104);
+  height: 28px;
+}
+.button_class_rasy_stark_astoks_modul{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(226, 53, 0);
+  width: 325px;
+  float: left;
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+.text_moduly_astoks_text{
+  color: rgb(226, 53, 0);
+  height: 28px;
+}
+.button_class_rasy_stark_mroon_modul{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(101, 31, 167);
+  width: 325px;
+  float: left;
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+.text_moduly_astoks_text{
+  color: rgba(122, 120, 124, 0);
+  height: 28px;
+}
+.polosaFon0{
+  background-color: rgb(136, 133, 138);
+}
+.polosaFon1{
+  background-color: rgb(175, 175, 175);
+}
+
+
+.button_class_rasy_stark_gelion_modul_pokaz{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(250, 177, 19);
+  width: 95px;
+  color:rgb(3, 1, 0);
+  font-weight:900;
+  height: 28px;
+}
+
+.button_class_rasy_stark_zekt_modul_pokaz{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(251, 255, 41);
+  width: 95px;
+  color:rgb(3, 1, 0);
+  font-weight:900;
+  height: 28px;
+}
+
+.button_class_rasy_stark_tormal_modul_pokaz{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(15, 36, 223);
+  width: 95px;
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+
+.button_class_rasy_stark_velid_modul_pokaz{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(72, 194, 224);
+  width: 95px;
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+
+.button_class_rasy_stark_glarg_modul_pokaz{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(140, 216, 104);
+  width: 95px;
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+
+.button_class_rasy_stark_astoks_modul_pokaz{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(226, 53, 0);
+  width: 95px;
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+
+.button_class_rasy_stark_mroon_modul_pokaz{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(101, 31, 167);
+  width: 95px;
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+.button_class_rasy_stark_vse_modul_pokaz{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  background-color: rgb(36, 16, 54);
+  width: 95px;
+  color:rgb(185, 160, 160);
+  font-weight:900;
+  height: 28px;
+}
+.fon{
+  background: rgb(107, 105, 105);
+}
+.spisok_modul{
+  margin-top: 50px;
+}
+.mesage{
+  color:rgb(0, 255, 106, 0.986);
+  line-height: 1;
+}
+.mesageFon{
+  background: rgba(53, 67, 70, 0.301);
+  line-height: 120%;
+}
+.poiskBaz{
+  margin-top: 150px;
+  border: 1px;
+  margin: 1px;
+  float: left;
+  background-image: url("image/zwezda.jpg");
+  color:rgb(0, 0, 0);
+  font-weight:900;
+  height: 28px;
+}
+.pokazat_bazy_federacii{
+  float: left;
+}
+.potverditBazu_Gost{
+  border: 1px;
+  margin: 1px;
+  background: rgb(14, 107, 34);
+  color:rgb(0, 0, 0);
+  height: 18px;
+  font-size: 10px;
+  line-height: 100%;
 }

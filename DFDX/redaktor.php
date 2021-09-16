@@ -37,7 +37,7 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
        $menuUp->__unserialize('menu6','podtverdit',array('redaktor.php','Введите код'));
 
       if ($_SESSION['status']==5 || $_SESSION['status']==4)
-         $menuUp->__unserialize('menu3','redaktor_up',array('Редактор','Сайт','Выйти','Создать'));
+         $menuUp->__unserialize('menu3','redaktor_up',array('Редактор','Сайт','Выйти','Создать страницу'));
 
       if ($_SESSION['status']==0)
        $menuUp->__unserialize('menu4','login',array('redaktor.php','Логин','Пароль','Вход','Регистрация'));
@@ -337,31 +337,22 @@ echo '<div class="row menu_redaktor_down">'."\n";
     }
 
 
-  if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
-    {
-      $statistik = new redaktor\statistic();
-      $statistik->statistikOnOff();
-    }
+/// Статистика///////////////////////////////////////
+if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
+{
+  $statistik = new redaktor\statistic();
+  $statistik->statistikOnOff();
+}
 
-  if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
-     {
-       $maty->redactMaty();
-     }
+if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
+   $maty->redactMaty();
 ?>
+
 
 </div>
 </div>
 
-<?php
- //if (isset($_POST['obnovit']) && $_SESSION['obnovit'])
- //{
- // $_SESSION['obnovit']=false;
- //header("Refresh:0");
- 
-// }
-//$red->printTabEcho()
-//$_SESSION['regimRaboty']=0;
-?>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

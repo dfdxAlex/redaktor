@@ -42,6 +42,7 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
 // Проверяем состоит ли игрок в клане Старков, если состоит, то $_SESSION['youNotKlan']=true, инача $_SESSION['youNotKlan']=false
 $prowerkaKlana=file_get_contents("https://starfederation.ru/?m=api&a=player&name=".$_SESSION['login']); // Гет запрос на сайт звёздной федерации, проверяем игрока на принадлежность к клану Старков
 $rezPoisKlana=strripos($prowerkaKlana,'S_T_A_R_K_ink');
+$_SESSION['myKlan']=$rezPoisKlana;  // игрок есть в клане
 //echo file_get_contents("https://starfederation.ru/?m=api&a=player&name=alex25");
 
 if (!$rezPoisKlana && $_SESSION['status']!=9 && $_SESSION['status']!=4 && $_SESSION['status']!=5) {$_SESSION['youNotKlan']=false;$_SESSION['linkNaDiskord']='starki.php';} else $_SESSION['youNotKlan']=true;
@@ -92,7 +93,10 @@ if (isset($_POST['menu_stark_glawnoe']) && $_POST['menu_stark_glawnoe']=='Наш
 if (isset($_POST['menu_stark_glawnoe']) && $_POST['menu_stark_glawnoe']=='Наши Базы') $_SESSION['regimMenu2']=16;  // Была нажата кнопка наши проекты
 if (isset($_POST['menu_stark_glawnoe']) && $_POST['menu_stark_glawnoe']=='Info') $_SESSION['regimMenu2']=17;  // Была нажата кнопка наши проекты
 if (isset($_POST['menu_stark_glawnoe']) && $_POST['menu_stark_glawnoe']=='Help') $_SESSION['regimMenu2']=19;  // Была нажата кнопка наши проекты
-
+if (isset($_POST['menu_stark_glawnoe']) && $_POST['menu_stark_glawnoe']=='Добавить модуль') $_SESSION['regimMenu2']=20;  // Была нажата кнопка наши проекты
+if (isset($_POST['menu_stark_glawnoe']) && $_POST['menu_stark_glawnoe']=='Наши модули') $_SESSION['regimMenu2']=21;  // Была нажата кнопка наши проекты
+if (isset($_POST['menu_stark_glawnoe']) && $_POST['menu_stark_glawnoe']=='Поиск баз') $_SESSION['regimMenu2']=22;  // Была нажата кнопка поиск баз
+ 
 if (isset($_POST['strarki_menu_dolgnosti']) && $_POST['strarki_menu_dolgnosti']=='Меню описания должностей') $_SESSION['regimMenu2']=2;  // Была нажата кнопка О членах клана
 if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Глава альянса') $_SESSION['regimMenu2']=3; // Нажата кнопка описания главы альянса
 if (isset($_POST['menu_opisania_prawa_dolgnost']) && $_POST['menu_opisania_prawa_dolgnost']=='Заместитель') $_SESSION['regimMenu2']=4; // Нажата кнопка описания главы альянса
@@ -113,6 +117,60 @@ myZone();
 ?>
 <section class="container-fluid"><div class="row">
 <?php
+///////////////////////////////////Форматируем страницу под работу с поиск баз///////////
+if (isset($_SESSION['regimMenu2']) && $_SESSION['regimMenu2']==22 && $_SESSION['myKlan'] || $_SESSION['status']==4 && $_SESSION['regimMenu2']==22 || $_SESSION['status']==5 && $_SESSION['regimMenu2']==22)
+{
+  echo '<section class="container-fluid">';
+  echo '<div class="row">';
+  echo '<div class=col-4>';
+  pokazatMenuPoiskBaz();
+  echo '</div>';
+  echo '<div class=col-8>';
+  echo '<p class="mesage mesageFon">Раздел помогает найти ближайшую базу.<br>';
+  echo 'По умолчанию ищем ближайшую безопасную базу.<br>';
+  echo 'В меню слева можно задать ресурс или предмет, который необходимо найти на базе.<br>';
+  echo 'Если база игрока, который не состоит в Вашем клане, то необходимо убедиться в безопасности посещения данного места.<br>';
+  echo 'Информация берется из личного акаунта игрока, проверка актуальности информации не доступна.<br>';
+  echo 'В текстовое поле следует ввести координаты точки, для которой необходимо найти базу.</p>';
+  //pokazModul();
+  //echo 'Pfikb';
+  poiskBaz();
+  //hanterButton(...$parametr);
+  echo '</div>';
+  
+  //echo '<div class=col-1>';
+  //echo '</div>';
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////Форматируем страницу под работу с инфой для пользователя///////////
+if (isset($_SESSION['regimMenu2']) && $_SESSION['regimMenu2']==21 && $_SESSION['myKlan'] || $_SESSION['status']==4 && $_SESSION['regimMenu2']==21 || $_SESSION['status']==5 && $_SESSION['regimMenu2']==21)
+{
+  echo '<section class="container-fluid">';
+  echo '<div class="row">';
+  echo '<div class=col-1>';
+  echo '</div>';
+  echo '<div class=col-10>';
+  pokazModul();
+  echo '</div>';
+  
+  echo '<div class=col-1>';
+  echo '</div>';
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////Форматируем страницу под работу с инфой для пользователя///////////
+if (isset($_SESSION['regimMenu2']) && $_SESSION['regimMenu2']==20)
+{
+  echo '<section class="container-fluid">';
+  echo '<div class="row">';
+  echo '<div class=col-2>';
+  echo '</div>';
+  echo '<div class=col-8>';
+  dobavitModul();
+  echo '</div>';
+  echo '<div class=col-2>';
+  echo '</div>';
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////Форматируем страницу под работу с инфой для пользователя///////////
 if (isset($_SESSION['regimMenu2']) && $_SESSION['regimMenu2']==19)
 {
@@ -340,6 +398,7 @@ echo '<p></p>';
 echo '<p>Просмотров:'.$stat->getMetkaStatistik('главная').'</p>';
 echo '<p>Число запросов к БД: '.$stat->kolZaprosow().'</p>';
 echo '<p class="nacaloVerstki">Начало верстки сайта 2021-02-18</p>';
+echo '<p class="nacaloVerstki">CMS-DFDX</p>';
 echo '</div>';
 echo '</div>';
 $maty->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
@@ -372,6 +431,9 @@ $maty->dobavilMat('Здесь можно пополнить справочник
 <!-- $_SESSION['regimMenu2']=17; Работаем с пунктом Info-->
 <!-- $_SESSION['regimMenu2']=18; Кто-то зашел в личное пространство-->
 <!-- $_SESSION['regimMenu2']=19; Кто-то зашел в инфа для всех-->
+<!-- $_SESSION['regimMenu2']=20; Редактирование расовых модулей-->
+<!-- $_SESSION['regimMenu2']=21; Поиск модулей-->
+<!-- $_SESSION['regimMenu2']=22; Поиск баз-->
 
 
 <!-- $_SESSION['regimMyZone']==1  Режим работы в личной зоне с базами-->
