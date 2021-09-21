@@ -31,6 +31,8 @@ class modul
            $poleRedaktora=false;
            $netNowostej=false;
            $classSave='';
+           $razdel="";
+           $action="dfdx.php";
            // Ищем имя таблицы
             foreach($parametr as $value)
               if (stripos('sss'.$value,'nameTD='))
@@ -39,10 +41,19 @@ class modul
                  $nametablice=mb_strtolower($nametablice);
               }
 
+            foreach($parametr as $value) // ищем обработчик кнопок Сохранить ...
+              if (stripos('sss'.$value,'action='))
+                $action=preg_replace('/action=/','',$value);
+
            // Ищем размер заголовка
             foreach($parametr as $value)
               if (stripos('sss'.$value,'Заголовок='))
                $zagolowok=preg_replace('/Заголовок=/','',$value);
+
+          // Проверяем задан ли раздел статей
+            foreach($parametr as $value)
+              if (stripos('sss'.$value,'Раздел='))
+                 $razdel=preg_replace('/Раздел=/','',$value);
 
            // Статус редактора
              foreach($parametr as $value)
@@ -55,10 +66,7 @@ class modul
                  {
                      $loginRedaktora=preg_replace('/Логин редактора=/','',$value); // Выделяем логин редактора/ов
                      if (stripos('---'.$loginRedaktora,$_SESSION['login'])>0) 
-                     {
                        $razresheniePoLoginu=true; // Если в списке логинов присутствует текущий логин, то разрешаем запуск открытого меню
-                       //echo 'работаем по логину';
-                     }
                   }
            //ищем чьи статьи показать
            foreach($parametr as $value)
@@ -106,7 +114,9 @@ class modul
                    echo '<p>Шаблон статьи. Пример: news1("Шаблон=1"); Показать статьи в шаблоне №1</p>';
                    echo '<p>---Шаблон статьи №1. Статьи отображаются подряд, название и статья за ним. Первая статья сверху, последняя снизу.</p>';
                    echo '<p>---Шаблон статьи №2. Статьи отображаются подряд, название и статья за ним. Последняя статья сверху, первая снизу.</p>';
-                   
+                   echo '<p>Можно задать дополнительный маркер Раздел. news1("Раздел=html")</p>';
+                   echo '<p>Ссылка на обработчик кнопок задается news1("action=dfdx.php")</p>';
+
                    echo '<p>Задать отступ между статьями. Пример: news1("Отступ=1"); Отступ равен одной строке</p>';
 
                    echo '<p>Работа с классами</p>';
@@ -121,20 +131,28 @@ class modul
              // Запись статьи, если была нажата кнопка Сохранить
 
             if ($nametablice!='' && $classPhp->searcNameTablic($nametablice) 
-            && ((isset($_POST[$nametablice.'_redaktor']) && $_POST[$nametablice.'_redaktor']=='Сохранить')
-             || (isset($_POST[$nametablice.'_redaktor2']) && $_POST[$nametablice.'_redaktor2']=='Сохранить'))
+              && ((isset($_POST[$nametablice.'_redaktor']) && $_POST[$nametablice.'_redaktor']=='Сохранить')
+                || (isset($_POST[$nametablice.'_redaktor2']) && $_POST[$nametablice.'_redaktor2']=='Сохранить'))
         )
          {
-             // Преобразовываем имя статьи и статью в нормальный вид и записываем.
+             // Преобразовываем имя статьи и статью в нормальный вид и записываем. //&ltimg src="ссылка на картинку"&gt</p>';
              $imieNowosti=$classPhp->bezMatov(quotemeta($_POST['zagolowok']));
+
+             //clearCode($cod,...$parametr);
+             //Найти хештег Раздел
+             $mas=array();
+             $kluc=preg_match('/#[a-zA-Zа-яёА-ЯЁ0-9]+#?/',$_POST['statia'],$mas); // Поиск в текстк категории
+             if (!$kluc) $razdel='-';        // Если нет категории в тексте, то присвоить -
+              else $razdel=preg_replace('/#/','',$mas[0]);   // Удалить лишнее
+
              $news=$classPhp->bezMatov(quotemeta($_POST['statia']));
              if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1)
               {
                 $classPhp->killZapisTablicy($nametablice,'WHERE id='.$_SESSION['redaktirowatId']);
-                $classPhp->zaprosSQL("INSERT INTO ".$nametablice."(id, name,news,login_redaktora) VALUES (".$_SESSION['redaktirowatId'].", '".$imieNowosti."','".$news."', '".$_SESSION['login']."')");
+                $classPhp->zaprosSQL("INSERT INTO ".$nametablice."(id, name,news,login_redaktora,razdel) VALUES (".$_SESSION['redaktirowatId'].", '".$imieNowosti."','".$news."', '".$_SESSION['login']."','".$razdel."')");
               } 
               else 
-                $classPhp->zaprosSQL("INSERT INTO ".$nametablice."(id, name,news,login_redaktora) VALUES (".$classPhp->maxIdLubojTablicy($nametablice).", '".$imieNowosti."','".$news."', '".$_SESSION['login']."')");
+                $classPhp->zaprosSQL("INSERT INTO ".$nametablice."(id, name,news,login_redaktora,razdel) VALUES (".$classPhp->maxIdLubojTablicy($nametablice).", '".$imieNowosti."','".$news."', '".$_SESSION['login']."','".$razdel."')");
              
               $_SESSION['redaktirowatId']=-1;
                 ///////////////////////////////////////////////////////////////////////////////
@@ -157,14 +175,13 @@ class modul
               $redaktirowat=preg_replace('/statia/','',$redaktirowat); // Удалить лишнее
               $redaktirowat=preg_replace('/redakt/','',$redaktirowat); // Удалить лишнее
               $redaktirowat=preg_replace('/'.$_SESSION['login'].'/','',$redaktirowat); // Удалить лишнее // нашли ID редактируемой статьи
-              $_SESSION['redaktirowatId']=$redaktirowat;
-              //echo '--'.$redaktirowat;
+              $_SESSION['redaktirowatId']=$redaktirowat; //Получить id редактируемой статьи
             }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////
             // Начало прорисовки блока
             // Проверим присутствует ли таблица блока, если нет, то создадим её
             if ($nametablice!='' && !$classPhp->searcNameTablic($nametablice))
-                $classPhp->zaprosSQL("CREATE TABLE ".$nametablice."(id INT, name VARCHAR(200), news VARCHAR(65000), login_redaktora VARCHAR(200))");
+                $classPhp->zaprosSQL("CREATE TABLE ".$nametablice."(id INT, name VARCHAR(200), news VARCHAR(65000), login_redaktora VARCHAR(200), razdel VARCHAR(100))");
             // проверим пустая ли таблица новостей, если да, то вывести кнопку добавления новости
             if ($classPhp->kolVoZapisTablice($nametablice)==0)
               $netNowostej=true;
@@ -174,8 +191,8 @@ class modul
                $zapros="SELECT * FROM ".$nametablice." WHERE 1";
              if ($pokazarStatijRedaktora!='') 
                $zapros="SELECT * FROM ".$nametablice." WHERE login_redaktora='".$pokazarStatijRedaktora."'";
-             //echo $zapros;
-             $dataMas = array(array(),array(),array(),array());
+
+             $dataMas = array(array(),array(),array(),array(),array());
              $rez=$classPhp->zaprosSQL($zapros);
 
 
@@ -187,64 +204,73 @@ class modul
              $i=0; //Загрузить таблицу в массив
              while(!is_null($stroka=mysqli_fetch_assoc($rez)))
              {
-               $dataMas[$i][0][0][0]=$stroka['id'];
-               $dataMas[$i][1][0][0]=$stroka['name'];
-               $dataMas[$i][0][1][0]=$stroka['news'];
-               $dataMas[$i++][0][0][1]=$stroka['login_redaktora'];
+               $dataMas[$i][0][0][0][0]=$stroka['id'];
+               $dataMas[$i][1][0][0][0]=$stroka['name'];
+               $dataMas[$i][0][1][0][0]=$stroka['news'];
+               $dataMas[$i][0][0][1][0]=$stroka['login_redaktora'];
+               $dataMas[$i++][0][0][0][1]=$stroka['razdel'];
              }
              
              // вывести статью согласно определенному шаблону.
              if ($hablon==1)
               for ($ii=0; $ii<$i; $ii++)
-                {
-                  echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0].'</div><small> автор: '.$dataMas[$ii][0][0][1].'</small>';
-                  if ($redaktirowat==$dataMas[$ii][0][0][0]) 
+                { 
+                if (stripos('sss'.$dataMas[$ii][0][0][0][1],$razdel)  || $dataMas[$ii][0][0][0][1]=='-') // Если заданный раздел входит в категорию статьи
+                  {
+                  echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0][0].'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';
+                  if ($redaktirowat==$dataMas[$ii][0][0][0][0]) 
                    {
-                     $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora);
+                     $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action);
                      $poleRedaktora=true;
                    }
+                //if ($_SESSION['redaktirowatId']==-1)
                   if ($_SESSION['status']==4 
                     || $_SESSION['status']==5 
-                     || $_SESSION['login']==$dataMas[$ii][0][0][1]
+                     || $_SESSION['login']==$dataMas[$ii][0][0][1][0]
                       )
-                  $classPhp->buttonPrefix('container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
-                                          'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0],
-                                          'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-starki.php-');
+                  $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
+                                          'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
+                                          'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-"'.$action.'"-');
                   echo $otstupBr;
+                  }
                 }
              if ($hablon==2)
                   for ($ii=$i-1; $ii>-1; $ii--)
                   {
-                      echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0].'</div><small> автор: '.$dataMas[$ii][0][0][1].'</small>';
-                      if ($redaktirowat==$dataMas[$ii][0][0][0]) 
+                    if (stripos('sss'.$dataMas[$ii][0][0][0][1],$razdel) || $dataMas[$ii][0][0][0][1]=='-') // Если заданный раздел входит в категорию статьи
+                    { 
+                    echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0][0].'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';
+                      if ($redaktirowat==$dataMas[$ii][0][0][0][0]) 
                       {
-                        $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora);
+                        $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action);
                         $poleRedaktora=true;
                       }
+                      //echo $_SESSION['redaktirowatId'];
+                     //if ($_SESSION['redaktirowatId']==-1)
                       if ($_SESSION['status']==4 
                       || $_SESSION['status']==5 
-                       || $_SESSION['login']==$dataMas[$ii][0][0][1]
+                       || $_SESSION['login']==$dataMas[$ii][0][0][1][0]
                         )
-                        $classPhp->buttonPrefix('container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
-                        'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0],
-                        'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-starki.php-');
+                        $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
+                        'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
+                        'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-"'.$action.'"-');
                     echo $otstupBr;
+                    }
                   }
                  
               
               if (isset($_POST['dobawitNow']) || $netNowostej)
               {
                 $_SESSION['redaktirowatId']=-1;
-                $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora);
+                $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action);
                  }
 
         }
         // вспомогательная функция к news1
-        public function poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora)
+        public function poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action)
          {
           
           $classPhp = new maty();
-           //if ($razresheniePoLoginu) echo 'разрешение по логину';
            if ($nametablice!='' && $classPhp->searcNameTablic($nametablice))
             {
 
@@ -262,15 +288,24 @@ class modul
                $statia=$stroka['news'];
                $awtor=$stroka['login_redaktora'];
              }
-            $classPhp->formBlock($nametablice."_redaktor", 'starki.php','text','zagolowok',$zagolowok,'br',
+            $classPhp->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
                                 'textarea', 'statia',$statia,'br',
                                 'p',$awtor,'br',
-                                'submit3',$nametablice.'_redaktor','Сохранить','starki.php','myZoneSave'
+                                'submit3',$nametablice.'_redaktor','Сохранить',$action,'myZoneSave'
                                 );
-            echo '<p class="mesage">&ltbr&gt - переход на новую строку</p>';
-            echo '<p class="mesage">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку"&gt</p>'; 
-            echo '<p class="mesage">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</p>';
-           }
+                                //echo '---';
+            echo '<div class="container-fluid">';
+            echo '<div class="row">';
+            echo '<div class="col-12">';                  
+            echo '<h6 class="mesage">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
+            echo '<h6 class="mesage">&ltbr&gt - переход на новую строку</h6>';
+            echo '<h6 class="mesage">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку"&gt</h6>'; 
+            echo '<h6 class="mesage">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</h6>';
+            echo '<h6>Допустимые теги:'.$classPhp->clearCode('','список').'</h6>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+          }
            if ($razresheniePoLoginu) // Запускаем это меню только если есть разрешения по логину
             {
               $zagolowok='';
@@ -285,17 +320,26 @@ class modul
                  $statia=$stroka['news'];
                  $awtor=$stroka['login_redaktora'];
                }
-              $classPhp->formBlock($nametablice."_redaktor", 'starki.php','text','zagolowok',$zagolowok,'br',
+              $classPhp->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
               'textarea', 'statia',$statia,'br',
               'p',$awtor,'br',
-              'submit3',$nametablice.'_redaktor2','Сохранить','starki.php','myZoneSave'
+              'submit3',$nametablice.'_redaktor2','Сохранить',$action,'myZoneSave'
               );
-             echo '<p class="mesage">&ltbr&gt - переход на новую строку</p>';
-             echo '<p class="mesage">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку"&gt</p>'; 
-             echo '<p class="mesage">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</p>'; 
+             echo '<div class="container-fluid">';
+             echo '<div class="row">';
+             echo '<div class="col-12">';
+             echo '<div class="helpPodRedaktoromStatej">';
+             echo '<h6 class="mesage">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
+             echo '<h6 class="mesage">&ltbr&gt - переход на новую строку</h6>';
+             echo '<h6 class="mesage">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку"&gt</h6>'; 
+             echo '<h6 class="mesage">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</h6>'; 
+             echo '</div>';
+             echo '<h6>Допустимые теги:'.$classPhp->clearCode('','список').'</h6>';
+             echo '</div>';
+             echo '</div>';
+             echo '</div>';
             }
             }
-
          }
 
     } // конец класса modul

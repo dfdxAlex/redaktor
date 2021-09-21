@@ -724,3 +724,47 @@ float: left;
     height:18px;
     width: 300px;
   }
+  .generaciaStr{
+    height:30px;
+  margin: 2px;
+  border-color: rgb(140, 67, 150);
+  color:rgb(0, 0, 0);
+  }
+  .bd2_redaktorzagolowok0{
+    height:20px;
+    float: left;
+  }
+  .bd2_redaktorstatia4{
+    height:320px;
+    float: left;
+    width: 70%;
+  }
+  .bd2_redaktorp8{
+    color:rgb(0, 0, 0);
+  }
+  .bd2_redaktorp8PH{
+    width: 100%;
+    clear:both;
+  } 
+  .myZoneSave{
+    height:30px;
+    margin: 2px;
+    border-color: rgb(140, 67, 150);
+    color:rgb(0, 0, 0);
+  }
+  .myZoneSaveDiv{
+    height:30px;
+    width: 100%;
+    margin: 2px;
+  } 
+  .SaveLoadRedaktButton{
+    margin: 2px;
+    border-color: rgb(140, 67, 150);
+    color:rgb(0, 0, 0);
+    width: 100%;
+    clear:both;
+  }
+  .helpPodRedaktoromStatej{
+    line-height: 1em;
+    background-color: rgba(201, 169, 169, 0.411);
+  }

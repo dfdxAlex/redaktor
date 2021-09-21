@@ -1,0 +1,81 @@
+body{
+    background-image: url("image/background22.png");
+   }
+.pole{
+    min-height: 800px;
+}
+.button_menu_up_dfdx{
+    height:30px;
+    margin: 2px;
+    border-color: rgb(140, 67, 150);
+    color:rgb(0, 0, 0);
+    float: left;
+   }
+.text_menu_up_dfdx{
+    height:30px;
+    margin: 2px;
+    float: left;
+   }
+.menu_up_dfdx{
+    float:right;
+}
+
+.futterDivDfdx{
+    margin-top: 10px;
+    height:50 px; 
+    width: 100%;
+    float: left;
+}
+
+.futter{
+    height: 80px;  
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.596);
+    color:rgb(238, 225, 225);
+    
+}
+.footerMarginTop{
+    line-height: 1em;
+    font-size:10px;
+    height:10 px; 
+    margin-top: 3px; /* Отступ сверху */
+    margin-bottom: 3px; /* Отступ снизу */
+}
+.logoHtml{
+    text-align: center;
+    margin-top: 30px;
+}
+.mesage{
+    text-align: left;
+}
+
+.levBlocklevBlock0 {
+    margin-top: 100px;
+    height:20 px; 
+    width: 100px;
+    border-color: rgb(140, 67, 150);
+    float:left;
+}
+.levBlocklevBlock5 {
+    margin-top: 5px;
+    height:20 px; 
+    width: 100px;
+    border-color: rgb(140, 67, 150);
+    float:left;
+}
+
+.prawy{
+    margin-top: 95px; 
+}
+.prawBlock {
+    margin-top: 5px;
+    height:12 px; 
+    width: 100px;
+    border-color: rgb(140, 67, 150);
+    float:left;
+    font-size:10px;
+    line-height: 1em;
+}
+.bd2_redaktor{
+    height:500px; 
+}

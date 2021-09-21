@@ -54,19 +54,51 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
 
 <?php
 
-// меню выбора типа страницы
+$_SESSION['variantNowaStr']=0;
+
+if (isset($_POST['variantNowaStr']) && $_POST['variantNowaStr']=='Пустая страница для редактора DFDX, только необходимая разметка.')
+ $_SESSION['variantNowaStr']=1;
+
+// меню выбора типа страницы nastrNowaStranica.php
+if ($_SESSION['variantNowaStr']==0)
 $maty->formBlock(
   'nastrNovStranic',
-  'nastrNowaStranica.php',
+  'rdNovaStr.php',
   'text',                          //class="nastrNovStranicnameFile0"
   'nameFile', 
   'Введите имя файла страницы.',
   'br',
-  3,
+   3,
   'submit',                         //class="nastrNovStranicvariantNowaStr5"
   'variantNowaStr',
-  'Пустая страница, только необходимая разметка.'
+  'Пустая страница для редактора DFDX, только необходимая разметка.'
 );
+
+if ($_SESSION['variantNowaStr']==1) // Нажата кнопка ...Пустая страница для редактора DFDX, только необходимая разметка.
+{
+
+     // проверим есть ли в названии файла .php, если нет, то добавить
+     if (stripos($_POST['nameFile'],'.php')>0) $_SESSION['nameFile']=$_POST['nameFile'];
+     else $_SESSION['nameFile']=$_POST['nameFile'].'.php';
+
+   echo '<section class="container">';
+   echo '<div class="row">';
+   echo '<div class="col-1">';
+   echo '</div>';
+   echo '<div class="col-10">';
+   echo '<p class="mesage">Данная опция создает файл - стартовую страницу для редактора DFDX.</p>';
+   echo '<p class="mesage">В начале файла будут стартовые настройки для html.</p>';
+   echo '<p class="mesage">Подключен Bootstrap 5.</p>';
+   echo '<p class="mesage">Установлено верхнее меню и настроена система Статусов.</p>';
+   echo '<form method="POST">';
+   echo '<button class="generaciaStr btn" formaction="nastrNowaStranica.php" >Ok</button>';
+   echo '<button class="generaciaStr btn"formaction="rdNovaStr.php" >Вернуться</button>';
+   echo '</form>';
+   echo '</div>';
+   echo '<div class="col-1">';
+   echo '</div>'; 
+   
+}
 
 
 
