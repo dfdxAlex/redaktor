@@ -44,38 +44,222 @@ body{
 .logoHtml{
     text-align: center;
     margin-top: 30px;
+    margin-bottom: 50px;
 }
 .mesage{
     text-align: left;
 }
-
+/*************************Стили левого меню********************/
 .levBlocklevBlock0 {
-    margin-top: 100px;
-    height:20 px; 
-    width: 100px;
+    height:25px; 
+    width: 90%;
     border-color: rgb(140, 67, 150);
-    float:left;
+    font-size: 12px;
 }
 .levBlocklevBlock5 {
     margin-top: 5px;
-    height:20 px; 
-    width: 100px;
+    height:25px; 
+    width: 90%;
     border-color: rgb(140, 67, 150);
-    float:left;
+    font-size: 12px;
 }
-
+.levBlocklevBlock10 {
+    margin-top: 5px;
+    height:25px; 
+    width: 90%;
+    border-color: rgb(140, 67, 150);
+    font-size: 12px;
+}
+/*************************Стили левого меню конец********************/
+.otstup{
+    margin-top: 50px;   
+}
 .prawy{
-    margin-top: 95px; 
+    margin-top: 1px; 
 }
 .prawBlock {
     margin-top: 5px;
     height:12 px; 
-    width: 100px;
+    width: 100%;
     border-color: rgb(140, 67, 150);
-    float:left;
     font-size:10px;
     line-height: 1em;
 }
 .bd2_redaktor{
     height:500px; 
 }
+.poiskstrPoisk0{
+    height:20px; 
+    width: 150px;
+}
+.poiskpoisk2{
+    height:20px; 
+    width: 150px;
+}
+.poisk{
+    min-height: 50px;
+    border-width: 2px;
+    width: 100%;
+}
+.poiskDiv{
+position: relative;
+float: right;
+top: -50px;
+left: -150px;
+width: 270px;
+}
+.poiskstrPoisk0{
+    height: 25px;
+    border-color: rgb(104, 103, 104);
+    border-width: 2px;
+    margin: 2px;
+}
+.poiskpoisk3{
+    border-color: rgb(140, 67, 150);
+    height: 25px;
+    font-size: 12px;
+    line-height: 1em;
+    color: black;
+}
+code {
+    width: 100%;
+    min-height: 150px;
+    border-color: rgb(89, 62, 102);
+    border-width: 2px;
+}
+.select-function-php-button{
+    margin-top: 5px;
+    margin-bottom: 55px;
+    margin-left: 10px;
+    height:25px; 
+    width: 100px;
+    border-color: rgb(140, 67, 150);
+    font-size: 12px;
+    float: left;
+}
+.regular-select-select{
+    margin-top: 5px;
+    height:25px; 
+    width: 200px;
+    border-color: rgb(140, 67, 150);
+    font-size: 12px;
+    float: left;
+    margin-bottom: 15px;
+}
+.working-with-the-function-p{
+  margin-top: 30px;
+  width: 100%;
+  float: left;
+  position: relative;
+}
+.regular-form-select-function{
+    width: 100%;
+}
+.fon{
+    background: rgb(143, 79, 79);
+}
+.fon2{
+    background: rgb(39, 33, 33);
+}
+/**************************************************** функция preg_quites ****************************************************/
+.block_function_test-div{
+    width: 100%;
+    line-height: 15px;
+    font-size: 15px;
+    color:rgb(19, 19, 8);
+    border-radius: 5px;
+    margin-top: 30px;
+}
+.regular-block-name-functionPH{ /*DIV выводит название функции + скобка*/
+    margin-left: 20px;
+    float:left;
+    width: 85px;
+    height: 20px;
+}
+.block_function_testp7PH{ /*первая запятая*/
+    float: left;
+    margin-left: 5px;
+}
+.block_function_teststringFunctionBegin4{ /*первое текстовое поле*/
+    width: 200px; 
+    float: left;
+    height: 20px;
+}
+.block_function_teststringFunctionDelimiter10{ /*второе текстовое поле*/
+    margin-top: 10px;
+    margin-left: 105px;
+    float:left;
+    height: 20px;
+    width: 200px; 
+}
+.regular-block-close-functionPH{ /*вторая запятая*/
+    margin-top: 10px;
+    margin-left: 5px;
+    float:left;
+}
+.block_function_testbuttonPregQuote17{
+    margin-top: 30px;
+    float:left;
+    margin-left: 105px;
+    height: 20px;
+}
+/*****************************************************конец preg_quites******************************************************************/
+/************************************************классы для Филтер filter************************************************************/
+.block_function_test_filter-div{ /*внутренний блок элементов формы*/
+    margin-top: 30px;
+    width: 100%;
+    font-size: 13px;
+    line-height: 15px;
+}
+.regular-block-name-function-filter-pPH{ /*Абзац названия функции*/
+    float:left;
+    width: 70px;
+}
+.block_function_test_filterpattern4{ /*первый параметр ввода паттерн*/
+    float:left;
+    width: 300px;
+    height: 20px;
+}
+.zapiatajaPH{
+    float: left;
+    width: 20px;
+    margin-left: 5px;
+}
+.block_function_test_filterreplacement11{/*второй параметр ввода реплацемент*/
+    float: left;
+    width: 300px;
+    height: 20px;
+    margin-left: 70px;
+}
+.block_function_test_filtersubjekt18{/*третий параметр ввода Входная строка*/
+    float: left;
+    width: 300px;
+    height: 20px;
+    margin-left: 70px;
+}
+.block_function_test_filtersubstitutions25{ /*четвертый параметр ввода Максимальное число замен*/
+    float: left;
+    width: 300px;
+    height: 20px;
+    margin-left: 70px;
+}
+.substitutions_rezPH{
+    width: 300px;
+    margin-left: 70px;
+    border-style: double;
+    border-radius: 5px;
+    height: 25px;
+}
+.block_function_test_filterbuttonPregQuote36{
+    margin-top: 20px;
+    float:left;
+    margin-left: 80px;
+    height: 20px;
+}
+.block_function_test_filterreset40{
+    margin-top: 20px;
+    float:left;
+    margin-left: 10px;
+    height: 20px;
+}
+/***************************************************конец filter*******************************************************************/

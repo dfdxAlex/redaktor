@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,7 +15,7 @@
 </head>
 <body>
 <?php
-session_start();
+//session_start();
 if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
@@ -386,5 +390,5 @@ $_SESSION['regimRaboty']=18 // Создание меню типа 5
 $_SESSION['regimRaboty']=19 // Редактирование учётных записей
 $_SESSION['regimRaboty']=20 // найти письмо
 $_SESSION['regimRaboty']=21 // маты
-
+$_SESSION['regimRaboty']=22 // статистика
   -->

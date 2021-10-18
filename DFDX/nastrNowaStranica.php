@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,7 +12,7 @@
 </head>
 <body>
 <?php
-session_start();
+//session_start();
 if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
@@ -80,6 +81,7 @@ if (!$errorName)
    {
      echo '<p class="mesage">Создаю страницу '.$nameFile.'</p>';
      $fp = fopen($nameFile, "w");//поэтому используем режим 'w' 
+     fwrite($fp, '<?php session_start(); ?>'."\r\n");
      fwrite($fp, '<!DOCTYPE html>'."\r\n");
      fwrite($fp, '<html lang="ru">'."\r\n");
      fwrite($fp, '<head>'."\r\n");
@@ -95,13 +97,13 @@ if (!$errorName)
      fwrite($fp, " \r\n");
      fwrite($fp, '<body>'."\r\n");
      fwrite($fp, '<?php'."\r\n");
-     fwrite($fp, 'session_start();'."\r\n");
+     //fwrite($fp, 'session_start();'."\r\n");
      fwrite($fp, 'if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;'."\r\n");
      fwrite($fp, 'if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;'."\r\n");
      fwrite($fp, 'if (!isset($_SESSION["status"])) $_SESSION["status"]=0;'."\r\n");
      fwrite($fp, 'if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;'."\r\n");
      fwrite($fp, 'include "funcii.php";'."\r\n");
-     fwrite($fp, 'include "class.php";'."\r\n");
+     fwrite($fp, 'include "functionDfdx.php";'."\r\n");
 
      fwrite($fp, '$class = new redaktor\statistic();'."\r\n");
      fwrite($fp, '$status = new redaktor\login();'."\r\n");

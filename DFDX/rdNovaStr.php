@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,7 +15,7 @@
 </head>
 <body>
 <?php
-session_start();
+
 if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
@@ -19,7 +23,6 @@ if (!isset($_SESSION['sSajta'])) $_SESSION['sSajta']=false;
 include 'funcii.php';
 include 'class.php';
 
-//$red = new redaktor\redaktor();
 $class = new redaktor\statistic();
 $status = new redaktor\login();
 $maty = new redaktor\maty();

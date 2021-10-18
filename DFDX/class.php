@@ -20,10 +20,12 @@ class instrument
         //Если есть входящий параметр список_тегов_столбец, то список вернется одной строкой разделенное тегами <br>
         //Чтобы функция вернула преобразованный текст, следует задать параметр 'текст' (по умолчанию)
         //Чтобы получить список разрешенных тегов, необходимо задать параметр 'список'
+        //Чтобы удалить ВСЕ теги нужен параметр удалить_все
 
         $spisokPlusBr=false;
         $listTegow='';
         $vivod=true;
+        $udalitVse=false;
       
         foreach($parametr as $value)
           if ($value=='список_тегов_столбец')
@@ -33,8 +35,20 @@ class instrument
           if ($value=='список')
             $vivod=false;
 
+        foreach($parametr as $value)
+          if ($value=='удалить_все')
+            $udalitVse=true;
+
+        if ($udalitVse) // Если команда Удалить Все теги
+          {
+            $cod=preg_replace('/>|</','',$cod); // Удалить лишнее
+          }
+        if (!$udalitVse) // Если нет команды Удалить Все теги
+         {
             $cod=preg_replace('/</','&lt',$cod); // Удалить лишнее
-            $cod=preg_replace('/>/','&gt',$cod); // Удалить лишнее
+            $cod=preg_replace('/<\?php/','&lt?php',$cod); // Заменить открывающий тег php на нарисованный
+            $cod=preg_replace('/>/','&gt',$cod); // 
+
             $cod=preg_replace('/class/','',$cod); // Удалить лишнее
             $cod=preg_replace('/"&gt/','">',$cod); // вернуть кавычку с закрытым тегом
             $cod=preg_replace('/&ltp&gt/','<p>',$cod); // Удалить лишнее
@@ -187,6 +201,29 @@ class instrument
             $listTegow=$listTegow.'&ltb&gt ';
             if (!$spisokPlusBr) $listTegow=$listTegow.',';
             if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+            $cod=preg_replace('/&ltiframe/','<iframe',$cod); // Удалить лишнее
+            $cod=preg_replace('/&gt&lt\/iframe&gt/','></iframe>',$cod); // Вернуть закрытый тег
+            $listTegow=$listTegow.'&ltiframe&gt ';
+
+            if (!$spisokPlusBr) $listTegow=$listTegow.',';  // переработка и разрешение тегов <br /> в <br>
+            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+            $cod=preg_replace('/&ltbr/','<br',$cod); // Удалить лишнее
+            $cod=preg_replace('/\s\/&gt/','>',$cod); // Вернуть закрытый тег
+
+
+            if (!$spisokPlusBr) $listTegow=$listTegow.',';
+            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+            $cod=preg_replace('/&ltdiv&gt/','<div> ',$cod); // Удалить лишнее
+            $cod=preg_replace('/&lt\/div&gt/','</div>',$cod); // Вернуть закрытый тег
+            $listTegow=$listTegow.'&ltdiv&gt ';
+
+            if (!$spisokPlusBr) $listTegow=$listTegow.',';
+            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+            $cod=preg_replace('/&ltimg/','<img ',$cod); // Удалить лишнее
+            //$cod=preg_replace('/&lt\/div&gt/','</div>',$cod); // Вернуть закрытый тег
+            $listTegow=$listTegow.'&ltimg&gt ';
+            
+         }
 
         if ($vivod) return $cod;
         if (!$vivod) return $listTegow;
@@ -195,6 +232,8 @@ class instrument
    // ловим кнопку
    public function hanterButton(...$parametr)
     {
+      $falseRez=false;
+
        // просматриваем входящие параметры
       foreach($parametr as $value)
        {
@@ -205,6 +244,9 @@ class instrument
           $returnName=false;
           $returnValue=false;
           $nameStatic='';
+
+        if (stripos('sss'.$value,'false=')) // определяет значение, которое функция вернет в случае неудачного поиска
+          $falseRez=preg_replace('/false=/','',$value);
 
         if (stripos('sss'.$value,'rez=hant')) // если необходимо поймать нажатую динамическую кнопку
           foreach($parametr as $value)
@@ -219,6 +261,7 @@ class instrument
                 $returnValue=true;  // вернуть надпись на кнопке если труе
             }
           if ($nameStatic!='')
+           if (isset($_POST))
             foreach($_POST as $key=>$value)
               if (stripos('sss'.$key,$nameStatic)) //найти нажатую кнопку по статичной части её имени
                {
@@ -226,6 +269,7 @@ class instrument
                   if ($returnNameDinamik) return preg_replace('/'.$nameStatic.'/','',$key);
                   if ($returnName) return $key;
                }
+           //else return false; // Если массив Пост удалили, то выйти из функции
           if (stripos('sss'.$value,'rez=true')) // если необходимо проверить была ли нажата кнопка
           foreach($parametr as $value)
             {
@@ -271,17 +315,19 @@ class instrument
         echo '<p class="mesage"> "returnName" - Вернуть полное имя нажатой кнопки</p><br>';
         echo '<p class="mesage"> "returnValue" - Вернуть надпись на нажатой кнопке</p><br>';
         echo '<p class="mesage"></p><br>';
-        echo '<p class="mesage"></p><br>';
+        echo '<p class="mesage">Определить false. Определить значение, которое выведется вместо false можно параметром "false=значение"</p><br>';
         echo '<p class="mesage"></p><br>';
         echo '<p class="mesage"></p><br>';
         echo '<p class="mesage"></p><br>';
         echo '<p class="mesage"></p><br>';
         echo '<p class="mesage"></p><br>';
       }
-     return false;
+     return $falseRez;
     }
-   // функция рисует кнопку с использованием параметров префикса и переменной. Работает с функцией buttonHanter()
-   public function buttonPrefix(...$parametr)
+
+
+// функция рисует кнопку с использованием параметров префикса и переменной. Работает с функцией buttonHanter()
+public function buttonPrefix(...$parametr)
    {
     $container=false;
     $classB="";
@@ -480,16 +526,57 @@ foreach($parametr as $value)
    
    // Если P или h1-h6, то создаем заголовок. Текст - это следующий параметр, класс - это второй параметр.
    // Добавлен див, класс Дива равен классу заголовка+PH
+
+   // Признаки form_not_open form_not_close не обязательны и управляют отсутствием открывающего тега form и закрывающего тега form соответственно.
+   // Признак zero_style, если задать этот признак, то элементы будут без  бутстрапа
+   // Стили
+   // Класс общего Дива равен имени блока. <div class="$nameBlock">
+   // Класс внутриформенного блока <div class="$nameBlock-div">
+
+   // бутстрап
+   // bootstrap-start - добавляет section, row, col-12
+   // bootstrap-f-start - добавляет /col-12 /row row, col-12
+   // bootstrap-finish - добавляет /col-12 /row /section
    public function formBlock($nameBlock, $actionN,...$parametr)
    {
+      $form_not_open=false;          // Управляет выводом открывающего тега Форм, если фалс, то выводим.
+      $form_not_close=false;         // Управляет выводом закрывающего тега Форм, если фалс, то выводим.
+      $zero_style=false;
+      foreach ($parametr as $value)  // поиск признаков $form_not_open и $form_not_close=false;
+       {
+        if ($value=='form_not_open') $form_not_open=true;
+        if ($value=='form_not_close') $form_not_close=true;
+        if ($value=='zero_style') $zero_style=true;
+       }
+    
+    if (!$zero_style)
+     {
       echo '<section class="container-fluid">';
       echo '<div class="row">';
+     }
       echo '<div class="'.$nameBlock.'">';
-      echo '<form action="'.$actionN.'" method="POST">';
+      if (!$form_not_open)
+        echo '<form action="'.$actionN.'" method="POST">';
+      echo '<div class="'.$nameBlock.'-div">';
       $i=0;
       foreach ($parametr as $key => $value)
        {
-         if ($value=='br') 
+         if ($value=='bootstrap-start')
+          {
+            echo '<section class="container-fluid">';
+            echo '<div class="row">';
+            echo '<div class="col-12">';
+          }
+        if ($value=='bootstrap-f-start')
+          {
+            echo '</div></div>';
+            echo '<div class="row">';
+            echo '<div class="col-12">';
+          }
+        if ($value=='bootstrap-finish')
+            echo '</div></div></section>';
+
+        if ($value=='br') 
           {
             if (isset($parametr[$i+1]) && $parametr[$i+1]>1) $kolWoBr=$parametr[$i+1]; else $kolWoBr=1;
             for($j=0; $j<$kolWoBr; $j++)
@@ -497,104 +584,109 @@ foreach($parametr as $value)
           }
         if ($value=='text') 
           {
-            if (isset($parametr[$i+1]))
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-            if (isset($parametr[$i+2]))
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
             $class=$nameBlock.$name.$i;
             echo '<input type="text" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
           }
         if ($value=='textarea') 
           {
-            if (isset($parametr[$i+1]))
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-            if (isset($parametr[$i+2]))
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
             $class=$nameBlock.$name.$i;
             echo '<textarea name="'.$name.'" class="'.$class.'">'.$textValue.'</textarea>';
           }
         if ($value=='text2') 
           {
-            if (isset($parametr[$i+1]))
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-            if (isset($parametr[$i+2]))
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
             $class=$nameBlock.$name.$i;
             echo '<input type="text" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
           }
         if ($value=='password') 
           {
-            if (isset($parametr[$i+1]))
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
-            if (isset($parametr[$i+2]))
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
             $class=$nameBlock.$name.$i;
             echo '<input type="password" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
           }
         if ($value=='password2') 
           {
-            if (isset($parametr[$i+1]))
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
-            if (isset($parametr[$i+2]))
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
             $class=$nameBlock.$name.$i;
             echo '<input type="password" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
           }
         if ($value=='reset') 
           {
-            if (isset($parametr[$i+1]))
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $textValue=$parametr[$i+1]; else $textValue='Reset'; else $textValue='Reset';
             $class=$nameBlock.'reset'.$i;
-            echo '<input type="reset" class="'.$class.' btn" value="'.$textValue.'">';
+            if (!$zero_style) echo '<input type="reset" class="'.$class.' btn" value="'.$textValue.'">';
+            if ($zero_style) echo '<input type="reset" class="'.$class.' " value="'.$textValue.'">';
           }
         if ($value=='submit') 
           {
-            if (isset($parametr[$i+1]))
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-            if (isset($parametr[$i+2]))
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-            if (isset($parametr[$i+3]))
+            if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
             $class=$nameBlock.$name.$i;
-            echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
+            if (!$zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
+            if ($zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' " formaction="'.$textWww.'">';
           }
         if ($value=='submit2') 
           {
-            if (isset($parametr[$i+1]))
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-            if (isset($parametr[$i+2]))
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-            if (isset($parametr[$i+3]))
+            if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
             $class=$nameBlock.$i;
-            echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
+            if (!$zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
+            if ($zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
           }
         if ($value=='submit3') 
           {
-            if (isset($parametr[$i+1]))
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-            if (isset($parametr[$i+2]))
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-            if (isset($parametr[$i+3]))
+            if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
-            if (isset($parametr[$i+4]))
+            if (isset($parametr[$i+4]) && $parametr[$i+4]!='bootstrap-start' && $parametr[$i+4]!='bootstrap-f-start' && $parametr[$i+4]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3]) && !$this->searcTegFormBlock($parametr[$i+4])) $class=$parametr[$i+4]; else $class=''; else $textWww='';
-            echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'"></div>';
+            if (!$zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'"></div>';
+            if ($zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'"></div>';
           }
         if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') 
           {
-            if (isset($parametr[$i+1]))
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
-            if (isset($parametr[$i+2]))
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
             echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'">'.$text.'</'.$value.'></div>';
           }
           $i++;
        }
-       echo '</form>';
+       echo '</div>'; // конец внутреннего блока
+       if (!$form_not_close)
+          echo '</form>';
        echo '</div>';
-       echo '</div>';
-       echo '</section>';
+       if (!$zero_style) echo '</div></section>';
    }
    // Служебная функция проверяет не является ли параметр кнопкой
    public function searcTegFormBlock($parametr)
@@ -717,6 +809,7 @@ class initBD extends instrument
     // okSelect($mesaz,$nameKn,$classDiv,$classP,$classButton) выводит переключатель select и кнопку ок. 
 
     // Инструментарий
+    // База данных
     // searcNameTablic($nameTablicy)                     // Поиск таблицы в базе данных
     // siearcSlova($nameTablice,$stolb,$slovo)           // проверяем есть ли слово в некотором столбце (вывод труе или фальш)
     // killTab($nameTablicy)                             //Удаление таблицы из БД
@@ -724,7 +817,7 @@ class initBD extends instrument
     // clearTab($nameTablicy)                            //Очистка таблицы
     // maxIdLubojTablicy($nameTablice)                   // поиск максимального ID таблицы +1
     // searcIdPoUsloviu($nameTablicy,$usl1,$usl2,$usl3,$usl4,$usl5)               //Проверяет есть ли запись по условиям, возвращает ID, записи 
-    // killZapisTablicy($nameTablice,$were) //           // Удалить строку в таблице
+    // killZapisTablicy($nameTablice,$were) //           // Удалить строку в таблице $were-условие для удаления включая ключевое слово WHERE
     // zaprosSQL($zapros)                                // создать SQL запрос, условие согласно синтаксису SQL// false если ошибка
     // tablicaDlaMenu($nameTablice)                      // проверяет принадлежность таблицы к кнопкам, возвращает ID имени таблицы в "tablice_tablic"
     // kolVoZapisTablice($nameTablice)                   // считает число записей в таблице
@@ -732,11 +825,23 @@ class initBD extends instrument
     // id_tab_gl_searc($nameTablicy)                     // Проверяем относится ли таблица к главным таблицам
     // zapretUdaleniaTablicy($nameTablicy)               // запрет на удаление таблиц
     //Функция проверяет статус в заданной таблице, выводит checked="checked" если статус есть или ''
+
+    // Работа с матами
+    // proverkaMata($slovo)                              // функция проверяет наличие оскорбительного слова мата проверка мата
+
+    // Работа с массивами
+    // proverkaMassiwa($mas,$slowo)                // Ищет слово $slowo в массиве $mas. Если нашли, то возврат true
+
     // printTab('fff',1);                                // отладочная функция создает таблицу debuger и что-то туда пишет
     // printTabEcho();       //не работает                            // выводит содержимое таблицы debuger
-    // proverkaMata($slovo)                              // функция проверяет наличие оскорбительного слова мата проверка мата
+ 
     
-    
+    public function proverkaMassiwa($mas,$slowo)
+    {
+      foreach($mas as $value)
+        if ($value==$slowo) return true;
+      return false;
+    }
 
     public function proverkaMata($slovo) // проверяет входной параметр на соответствие мату из базы данных
     {
@@ -809,7 +914,7 @@ class initBD extends instrument
           echo 'не получилось скачать данные из таблицы debuger'; return false;
        }
       $stroka=mysqli_fetch_assoc($rez);
-      while (!in_null($stroka=mysqli_fetch_assoc($rez)))
+      while (!is_null($stroka=mysqli_fetch_assoc($rez)))
       {
         foreach ($stroka as $key => $value)
           {
@@ -981,6 +1086,7 @@ class initBD extends instrument
       {
          $nametablice=preg_replace('/name=/','',$value);
          $nametablice=mb_strtolower($nametablice);
+         //echo '--'.$nametablice;
       }
 
       foreach($parametr as $value)
@@ -1011,6 +1117,7 @@ class initBD extends instrument
           echo '<p>Имя поля задается параметром "poleN=имя поля"</p>';
           echo '<p>Тип поля задается параметром "poleT=тип поля"</p>';
           echo '<p>Первичное значение поля задается параметром "poleS=значение"</p>';
+          echo '<p>Число полей poleN,poleT,poleS должно быть одинаково.</p>';
           echo '<p>Если необходимо только посмотреть запроссы, то добавляем параметр "просмотр"</p>';
           echo '<p></p>';
           echo '<p></p>';
@@ -1018,7 +1125,7 @@ class initBD extends instrument
           echo '<p></p>';
         } 
 
-      if ($nametablice=='' || $i!=$ii || $ii!=$iii) return false; //если забыли задать имя таблицы, то выходим из функции
+      if ($nametablice=='' || $i!=$ii || $ii!=$iii) {echo 'Не корректное имя таблицы';return false;} //если забыли задать имя таблицы, то выходим из функции
 
       if (!$this->searcNameTablic($nametablice))
        {
@@ -5831,4 +5938,155 @@ class statistic  extends futter // // Класс работа со статис�
     return $stroka['zaprosov'];
   }
 }
+
+class poisk extends statistic // // Класс работа со статистикой
+{
+ function __construct()
+  {
+     parent::__construct();
+  }
+
+  // Функция поиска статьи по слову, возвращает массив с ID найденных статей
+  public function poiskStati($nametablic,$slowo,&$masRezult=array(),...$data)
+  {
+    $help=false;
+    $rezPoiska=0;
+    $autor=false;
+    $autor_login='';
+    $razdel=false;
+    $razdel_text='';
+    $uslovie=1;
+    $masRezult[0]=-1;
+    $i=0;
+    foreach($data as $value) 
+    if (stripos('sss'.$value,'help') || stripos('sss'.$value,'помощь'))
+     $help=true;
+
+    foreach($data as $value) 
+     if (stripos('sss'.$value,'заголовки'))
+      $rezPoiska=1;
+
+    foreach($data as $value) 
+      if (stripos('sss'.$value,'текст'))
+       $rezPoiska=2;
+
+    foreach($data as $value) 
+      if (stripos('sss'.$value,'автор'))
+      {
+       $autor=true;
+       $autor_login=preg_replace('/автор-/','',$value);
+      }
+
+      foreach($data as $value) 
+      if (stripos('sss'.$value,'категория'))
+      {
+       $razdel=true;
+      }
+
+
+    $smegnyeKategorii = array(); // массив со смежными категориями
+    $iSmegKat=0;
+    $masWhere = array();
+    $masWhereI=0;
+
+    if (!$autor && $razdel)
+     $rez=parent::zaprosSQL("SELECT razdel FROM ".$nametablic." WHERE 1"); //прочитать все категории из базы
+    if ($autor && $razdel)
+     $rez=parent::zaprosSQL("SELECT razdel FROM ".$nametablic." WHERE login_redaktora='".$autor_login."'"); //прочитать все категории из базы 
+
+   if ($razdel) // Если нашли заданные разделы, то найти комбинированные разделы например html3 входит в html3html5
+    while(!is_null($stroka=mysqli_fetch_array($rez))) 
+      if (!parent::proverkaMassiwa($smegnyeKategorii,$stroka[0])) // если такой категории в массиве нет
+       {
+        foreach($data as $value) 
+         if (stripos('sss'.$value,'категория-'))       // Если проверяемая категория входит в перечень тех категорий, которые есть на входе функции
+          {
+           $razdelTest=preg_replace('/категория-/','',$value); // Удалить лишнее
+            if (stripos('sss'.$stroka[0],$razdelTest))
+             {
+              $smegnyeKategorii[$iSmegKat++]=$stroka[0];
+              $razdel=true;
+             }
+          }
+       }
+    if ($razdel)   // 
+     {
+      // если задан логин, то добавить его в запрос
+      if ($razdel) $uslovie='';
+      if ($autor) $uslovie='login_redaktora="'.$autor_login.'" AND ';
+        foreach($smegnyeKategorii as $value) 
+         {
+            $uslovie=$uslovie.'razdel="'.$value.'"';
+            $masWhere[$masWhereI++]=$uslovie;
+            $uslovie='';
+            if ($autor) $uslovie='login_redaktora="'.$autor_login.'" AND '; 
+          }
+       // Имеем массив с условиями запроссов связанных с категориями и логином $masWhere
+      }
+        if (!$razdel && !$autor) $uslovie=1; // Если не задан автор и не заданы категории, то смотрим все
+        if (!$razdel && $autor) $uslovie="login_redaktora='".$autor_login."'"; // Если задан только автор
+         
+      $i=0;
+      if ($razdel) //если разделы были заданы, то перебираем статьи по каждому разделу
+       foreach($masWhere as $value) // перебираем массив с условиями запросов, зависящими от логинов и категорий
+        {
+          if ($rezPoiska==0) $zapros="SELECT id,name,news FROM ".$nametablic." WHERE ".$value;
+          if ($rezPoiska==1) $zapros="SELECT id,name FROM ".$nametablic." WHERE ".$value;
+          if ($rezPoiska==2) $zapros="SELECT id,news FROM ".$nametablic." WHERE ".$value;
+          $rez=parent::zaprosSQL($zapros);
+          while(!is_null($stroka=mysqli_fetch_assoc($rez))) 
+          {
+            if ($rezPoiska==0 && (stripos('sss'.$stroka['name'],$slowo) || stripos('sss'.$stroka['news'],$slowo))) $masRezult[$i++]=$stroka['id'];
+            if ($rezPoiska==1 && stripos('sss'.$stroka['name'],$slowo)) $masRezult[$i++]=$stroka['id'];
+            if ($rezPoiska==2 && stripos('sss'.$stroka['news'],$slowo)) $masRezult[$i++]=$stroka['id'];
+          }
+        }
+       
+      if (!$razdel) //если разделы не были заданы, то перебираем все статьи 
+       {
+        if ($rezPoiska==0) $zapros="SELECT id,name,news FROM ".$nametablic." WHERE ".$uslovie;
+        if ($rezPoiska==1) $zapros="SELECT id,name FROM ".$nametablic." WHERE ".$uslovie;
+        if ($rezPoiska==2) $zapros="SELECT id,news FROM ".$nametablic." WHERE ".$uslovie;
+        $rez=parent::zaprosSQL($zapros);
+        while (!is_null($stroka=mysqli_fetch_assoc($rez))) 
+        {
+         if ($rezPoiska==0 && (stripos('sss'.$stroka['name'],$slowo) || stripos('sss'.$stroka['news'],$slowo))) $masRezult[$i++]=$stroka['id'];
+         if ($rezPoiska==1 && stripos('sss'.$stroka['name'],$slowo)) $masRezult[$i++]=$stroka['id'];
+         if ($rezPoiska==2 && stripos('sss'.$stroka['news'],$slowo)) $masRezult[$i++]=$stroka['id'];
+        }
+       }
+
+     $masRezult=array_unique ($masRezult);
+     $mas=$masRezult;
+     $i=-1;
+     foreach($mas as $value)
+      $i++;
+     foreach($mas as $value)
+      $masRezult[$i--]=$value;
+     
+
+
+    if ($help)
+    {
+      echo '<p class="mesage">Функция совершает поиск статьи по слову.</p>';
+      echo '<p class="mesage">Первый параметр - это имя таблицы, в которой производим поиск</p>';
+      echo '<p class="mesage">Второй параметр - это искомое слово.</p>';
+      echo '<p class="mesage">Третий параметр - это массив, в который возвращаются ID номера найденных статей.</p>';
+
+      echo '<p class="mesage">Не обязательные параметры</p>';
+      echo '<p class="mesage">Ключевое слово "заголовки", производит поиск только по заголовкам. По умолчанию поиск максимальный</p>';
+      echo '<p class="mesage">Ключевое слово "текст", производит поиск только по текстам. По умолчанию поиск максимальный</p>';
+      echo '<p class="mesage">Для поиска по заголовкам и тексту не вводим ни параметр "заголовки" ни "текст"</p>';
+
+      echo '<p class="mesage">Фильтр по автору "автор-логин"</p>';
+      echo '<p class="mesage">Фильтр по категории "категория-имя категории"</p>';
+      echo '<p class="mesage"></p>';
+      echo '<p class="mesage"></p>';
+      $masRezult[0]=-1;
+    }
+
+  }
+  
+}
+
 ?>

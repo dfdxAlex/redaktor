@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -13,19 +16,18 @@
  
 <body>
 <?php
-session_start();
 if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
 include "funcii.php";
 include "functionDfdx.php";
-
+$redaktor=new redaktor\modul();
 $status = new redaktor\login();
 $maty = new redaktor\maty();
 
 if ($_SESSION["status"]>99) $_SESSION["status"]=9;
-
+if (isset($_POST['redaktor_up'])) $_SESSION["regimRaboty"]=0; // Если пришли из редактора движка, то абнулитьрежим работы
 ////////////////////////////////////////////Верхнее меню///////////////////////////////////////////////////////   
 
 ///////////////////////////////////////////Обработка верхнего меню
@@ -44,24 +46,70 @@ if ($_SESSION["status"]==0)             // если пользователь н�
         $_SESSION["login"]=$_POST['login'];
         $_SESSION["parol"]=$_POST['parol'];
       }
-
 if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
-
+echo '<section class="container-fluid">';
+echo '<div class="row">';
+echo '<div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-12">';
+//echo $_SESSION["login"].' ';
+if (isset($_SESSION["login"]))
+ {
+  
+  echo '<div class="monetki"><img src="image/pngwingmal.png" class="img-fluid" alt="монет"></div>';
+  echo $redaktor->money('login='.$_SESSION["login"]);
+ }
+echo '</div>';
+echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">';
 $maty->__unserialize('menu9','menu_up_dfdx',array('dfdx.php','Логин','Пароль'));
+echo '</div>';
+echo '</div>';
+echo '</section>';
+
 ////////////////////////////Начало основного кода страницы//////////////////////////  
 ///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
 echo '  <img src="image/logo.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
  //////////////////////////////////////////////////////////////////////////////////////////////////
 echo '<section class="container-fluid pole">';
 echo '<div class="row">';
-echo '<div class="col-2">';  // Левое меню
+echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12 otstup">';  // Левое меню
 levoeMenu();
 echo '</div>';
 
-echo '<div class="col-8">';  // Центр
+echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12 otstup">';  // Центр
+
+$bylPoisk=false;
+$poisk = new \redaktor\poisk();
+$redaktor=new redaktor\modul();
+if (isset($_POST['poisk']))
+ {
+  $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati) ;
+  if ($idStati[0]>-1)
+    foreach($idStati as $value) 
+     $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",'action=dfdx.php','id='.$value);
+
+   $bylPoisk=true;
+ }
+
+ if (!$bylPoisk)
+ {
+    if (isset($_POST['menu_up_dfdx'])) // Если нажата кнопка главного верхнего меню
+    {// echo 'ловим кнопку';
+      $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
+    
+      if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
+        $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",'action=dfdx.php');
+
+      if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
+        $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",'action=dfdx.php');
+    } else 
+       {
+        $id=$poisk->maxIdLubojTablicy('bd2');$id--;
+        $redaktor->news1("id=".$id,"nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Статус редактора=-s12345","Шаблон=2","Отступ=1",'action=dfdx.php');
+       }
+  }
 echo '</div>';
 
-echo '<div class="col-2">';  // правое меню
+echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 otstup">';  // правое меню
+poiskDfdx('dfdx.php');
 echo '</div>';
 echo '</div>';
 echo '</section>';

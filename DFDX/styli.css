@@ -1,3 +1,6 @@
+.display-block{
+  display: block;
+}
 body{
  background: rgb(172, 167, 167);
  background-image: url("image/background22.png");
@@ -342,6 +345,9 @@ color: blanchedalmond;
   .futterMenu{
     margin: 15px;
   }
+  .futter{
+    margin-top: 150px;
+  }
   .radio_class_button{
     margin: 5px;
     float: left;
@@ -663,7 +669,7 @@ background: darkslategray;
   width: 100%;
 }
 input::placeholder {
-  color: rgb(226, 216, 216);
+  color: rgb(114, 69, 69);
   font-size: 1.2em;
   font-style: italic;
 }
@@ -766,5 +772,236 @@ float: left;
   }
   .helpPodRedaktoromStatej{
     line-height: 1em;
-    background-color: rgba(201, 169, 169, 0.411);
+    min-height: 70px;
   }
+  .helpPodRedaktoromStatejDopTegi{
+    min-height:90px;
+    width: 100%;
+    margin-bottom: 100px;
+  }
+  .helpPodRedaktoromStatejH6{
+    width:100%;
+  }
+  .statiaKrutka{
+    color:rgb(0, 0, 0);
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .Publikacia{
+    margin: 2px;
+    border-color: rgb(140, 67, 150);
+    color:rgb(0, 0, 0);
+    font-size: 12px;
+    width: 170px;
+    height: 25px;
+  }
+  .monetki{
+    margin-left: 20px;
+    width: 20px;
+    height: 20px;
+    float: left;
+  }
+  .pricina{
+    height:23px; 
+    width: 150px;
+    margin-left: 50px;
+  }
+
+  /*Стили для оформления статей №1*/
+  .nazwanie1{
+    font-size: 40px;
+    width: 100%;
+    margin-top: 30px;
+  }
+  .perwaLitera1{ 
+    clear:both;
+    margin-top: 30px;
+    font-size: 70px;
+    font-family: "Monotype Corsiva","Segoe print" ;
+    float: left;
+    line-height: 1em;
+    height: 75px;
+    width: 75px;
+    font-weight: bold;
+    color: gold;
+  }
+  .osnownojText1{
+    font-size: 15px;
+    margin-top: 30px;
+    margin-left: 10px;
+  }
+  .kod1{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-width: 2px;
+    border-style: inset;
+  }
+  /*Стили для оформления статей №1 конец*/
+  .nazwanie2{
+    font-size: 40px;
+    margin-top: 30px;
+    width: 100%;
+  }
+  .perwaLitera2{ 
+    font-size: 80px;
+    float: left;
+    line-height: 1em;
+    height: 85px;
+    width: 85px;
+    font-weight: bold;
+    color: gold;
+  }
+  .osnownojText2{
+    font-size: 15px;
+    margin-left: 10px;
+    font-family:  "Comic Sans MS";
+    font-weight: 500;
+  }
+  .kod2{
+    margin-top: 10px;
+    margin-bottom: 100px;
+    border-width: 2px;
+    border-style: inset;
+    height: 60px;
+    overflow:auto;
+  }
+  /*Стили для оформления статей №1 конец*/
+  .nazwanie3 {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    font-size: calc(24px + 16 * ((100vw - 320px) / (1280 - 320)));
+    position: relative;
+    font-weight: 700;
+    color: transparent;
+    animation: text 1s ease-in-out 0.7s 1 forwards;
+  }
+  .nazwanie3:after {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background-color: yellowgreen;
+    top: 50%;
+    left: 50%;
+    transform: translate(-25%, -25%);
+    z-index: -1;
+    opacity: 0;
+    animation: slow_2 1s ease 0.5s 1 forwards;
+  }
+  .nazwanie3:before {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    opacity: 0;
+    background-color: orange;
+    top: 0%;
+    left: 0%;
+    transform: translate(25%, 25%);
+    z-index: -1;
+    animation: slow 1s ease 0.2s 1 forwards;
+  }
+  .osnownojText3 {
+    font-size: calc(8px + 16 * ((100vw - 320px) / (1920 - 320)));
+    line-height: 150%;
+  }
+  .kod3 {
+    background-color: #282c34;
+    color: #28ff34;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+  .perwaLitera3 {
+    color: #333;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 60px;
+    vertical-align: top;
+    float: left;
+    position: relative;
+  }
+  .perwaLitera3:before {
+    background-color: orange;
+    opacity: 0.5;
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -25%;
+    left: -25%;
+    z-index: -1;
+  }
+  .perwaLitera3::after {
+    background-color: yellowgreen;
+    opacity: 0.5;
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    z-index: -1;
+  }
+  @keyframes slow {
+    from {
+      opacity: 0;
+      width: 0%;
+      left: 50%;
+    }
+    to {
+      opacity: 1;
+      left: 0%;
+      width: 50%;
+    }
+  }
+  
+  @keyframes slow_2 {
+    from {
+      opacity: 0;
+      width: 0%;
+      left: 0%;
+    }
+    to {
+      opacity: 1;
+      left: 50%;
+      width: 50%;
+    }
+  }
+  
+  @keyframes text {
+    from {
+      color: transparent;
+    }
+    to {
+      color: #333;
+      text-shadow: 2px 3px 0 grey, 5px 6px 0 rgba(100, 100, 100, 0.5), 10px 12px 0 rgba(100, 100, 100, 0.1);
+    }
+  }
+  .img-div-3{
+    /*float: left;*/
+    /*border-radius: 10px;*/
+    height: 300px;
+    /*text-align:left;*/
+
+  }
+  .img-div-3-next{
+    float: left;
+    text-align:left;
+  }
+  .img-3{
+    height: 300px;
+    border-radius: 10px;
+  }
+  .img-3-nextMesage{
+    height: 30px;
+    border-radius: 3px;
+  }
+  .news-code{
+    clear:left;
+    clear:both;
+    width: 100%;
+  }
+   /*Стили для оформления статей №3 конец*/

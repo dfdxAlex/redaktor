@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,7 +17,7 @@
  
 <body>
 <?php
-session_start();
+//session_start();
 if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
@@ -54,24 +57,61 @@ $maty->__unserialize('menu9','menu_up_dfdx',array('dfdx.php','Логин','Па�
 ///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
 echo '  <img src="image/logo.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
  //////////////////////////////////////////////////////////////////////////////////////////////////
+// Раздел сайта показать
+echo '<section class="container-fluid">';
+echo '<div class="row">';
+echo '<div class="col-12">';
+echo '<div class="logoHtml">';
+echo '<img src="image/html5.png" alt="html5">';
+echo '<hr>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '</section>';
+//////////////////////////////////////////////////////////////////////////////////////
+
 echo '<section class="container-fluid pole">';
 echo '<div class="row">';
-echo '<div class="col-2">';  // Левое меню
+
+echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';  // Левое меню
 levoeMenu();
 echo '</div>';
 
-echo '<div class="col-8">';  // Центр
-echo '<div class="logoHtml">';
-echo '<img src="image/html5.png" alt="html">';
-echo '<hr>';
+echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
+$bylPoisk=false;
+$poisk = new \redaktor\poisk();
 $redaktor=new redaktor\modul();
-$redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Шаблон=2","Отступ=1",'action=html5FoDfdx.php','Раздел=html5');
-echo '</div>';
-echo '</div>';
+if (isset($_POST['poisk']))
+ { 
+  $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati,'категория-html5') ;
+  if ($idStati[0]>-1)
+    foreach($idStati as $value) 
+     $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Шаблон=2","Отступ=1",'action=html5FoDfdx.php','id='.$value);
+  $bylPoisk=true;
+ }
 
-echo '<div class="col-2 prawy">';  // правое меню
+ if (!$bylPoisk)
+ {
+    $redaktor=new redaktor\modul();
+    //ловим кнопку правой панели
+    $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
+    //Запуск функции если не было нажатие правого меню
+    if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
+      $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Шаблон=2","Отступ=1",'action=html5FoDfdx.php','Раздел=html5');
+    //Запуск функции если была нажата кнопка правой панели
+    if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
+      $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Шаблон=2","Отступ=1",'action=html5FoDfdx.php','Раздел=html5');
+    }
+
+ echo '</div>';
+
+echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
+ echo '<div class="poiskDiv">';
+  poiskDfdx('html5FoDfdx.php');
+ echo '</div>';
 pravoePole('html5');
 echo '</div>';
+
 echo '</div>';
 echo '</section>';
 ////////////////////////////////////////////////////////////////////////////////////////////////// 
