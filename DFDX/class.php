@@ -436,6 +436,35 @@ foreach($parametr as $value)
        }
    }
 
+   //Функция возвращает имя и относительный путь к файлу при условии, что искомый файл находится выше текущего места.
+   public function searcNamePath($nameFile)
+    {
+      while (!file_exists($nameFile))
+        $nameFile='../'.$nameFile;
+      return $nameFile;
+    }
+   //public function searcNamePathDown($nameFile)
+   // {
+   //   while (!file_exists($nameFile))
+   //    {
+        //$nameFile=preg_filter('/\/.*\.php/','/'.$nameFile,$nameFile,1,$zamen);
+        //$zamen=0;
+        //$pattern='/\/.*\/'.$nameFile.'/';
+        //$nameFile=preg_filter($pattern,'/'.$nameFile,$nameFile,1,$zamen);
+        //if ($zamen==0) 
+        //  {
+        //    $pattern='.*/'.$nameFile;
+        //    $nameFile=preg_filter($pattern,$nameFile,$nameFile,1,$zamen);
+        //    break;
+        //  } 
+
+     //  }
+      
+
+        //$nameFile=preg_filter('/\<.*\//','',$nameFile,1);
+    //  return $nameFile;
+   // }
+
    // Функция выводит некое сообщение $mesaz, задает название кнопок, которым будет присвоено OK или Cansel ///проверка git 1-3
    // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
    // $classP - класс тегов Р - сообщения, $classButton - класс для кнопок
@@ -526,6 +555,10 @@ foreach($parametr as $value)
    
    // Если P или h1-h6, то создаем заголовок. Текст - это следующий параметр, класс - это второй параметр.
    // Добавлен див, класс Дива равен классу заголовка+PH
+
+   // Если span то создаем строчный тег внутри дивов. Текст - это следующий параметр, класс - это второй параметр.
+   // Добавлен див, класс Дива равен классу заголовка+PH
+   // <div class="classPH"><span class="class">Текст</span></div>
 
    // Признаки form_not_open form_not_close не обязательны и управляют отсутствием открывающего тега form и закрывающего тега form соответственно.
    // Признак zero_style, если задать этот признак, то элементы будут без  бутстрапа
@@ -680,6 +713,14 @@ foreach($parametr as $value)
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
             echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'">'.$text.'</'.$value.'></div>';
           }
+        if ($value=='span') 
+          {
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
+            echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'">'.$text.'</'.$value.'></div>';
+          }
           $i++;
        }
        echo '</div>'; // конец внутреннего блока
@@ -707,6 +748,7 @@ foreach($parametr as $value)
         if ($parametr=='submit') return true;
         if ($parametr=='submit2') return true;
         if ($parametr=='submit3') return true;
+        if ($parametr=='span') return true;
         return false;
     }
    // Преобразуем номер статуса в его значение
@@ -757,7 +799,11 @@ class initBD extends instrument
     public function __construct()
     {
         parent::__construct();
-        $fd = fopen("initBD.ini", 'r') or die("не удалось открыть файл");
+        //$filePath='initBD.ini';
+        //while (!file_exists($filePath))
+        //  $filePath='../'.$filePath;
+
+        $fd = fopen(parent::searcNamePath('initBD.ini'), 'r') or die("не удалось открыть файл");
         $this->host=stristr(fgets($fd),';',true); 
         $this->loginBD=stristr(fgets($fd),';',true); 
         $this->parol=stristr(fgets($fd),';',true); 
@@ -824,6 +870,9 @@ class initBD extends instrument
     // kolVoStolbovTablice($nameTablice)                 // считает число столбцов в таблице
     // id_tab_gl_searc($nameTablicy)                     // Проверяем относится ли таблица к главным таблицам
     // zapretUdaleniaTablicy($nameTablicy)               // запрет на удаление таблиц
+       
+    // public function searcNamePath($nameFile)          //Функция возвращает имя и относительный путь к файлу при условии, что искомый файл находится выше текущего места.
+    
     //Функция проверяет статус в заданной таблице, выводит checked="checked" если статус есть или ''
 
     // Работа с матами

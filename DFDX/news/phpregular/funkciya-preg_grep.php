@@ -1,7 +1,7 @@
 <?php
 session_start();
-include "funcii.php";
-include "functionDfdx.php";
+include "../../funcii.php";
+include "../../functionDfdx.php";
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -61,7 +61,7 @@ if (isset($_SESSION["login"]))
  }
 echo '</div>';
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">';
-$maty->__unserialize('menu9','menu_up_dfdx',array('dfdx.php','Логин','Пароль'));
+echo '<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>';
 echo '</div>';
 echo '</div>';
 echo '</section>';
@@ -73,14 +73,14 @@ echo '  <img src="'.$b->searcNamePath('image/logo.png').'" alt="Картинка
 echo '<section class="container-fluid pole">';
 echo '<div class="row">';
 echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12 otstup">';  // Левое меню
-levoeMenu();
+//levoeMenu();
 echo '</div>';
 
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12 otstup">';  // Центр
 $bylPoisk=false;
 $poisk = new \redaktor\poisk();
 $redaktor=new redaktor\modul();
-$action='action=dfdx.php';  //страница обработки кнопок в модуле news()
+$action='action=funkciya-preg_grep-.php';  //страница обработки кнопок в модуле news()
 //if (!file_exists($action)) $action=basename(__FILE__);
 
 ////////////////////////////////////////////////////поиск
@@ -110,14 +110,14 @@ if (isset($_POST['poisk']))
        {
         $id=$poisk->maxIdLubojTablicy('bd2');$id--;
         
-        $redaktor->news1("id=".$id,"nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action);
+        $redaktor->news1("id=6","nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action);
        }
   }
   //buttonTwitter
 echo '</div>';
 
 echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 otstup">';  // правое меню
-poiskDfdx('dfdx.php');
+//poiskDfdx('dfdx.php');
 echo '</div>';
 echo '</div>';
 echo '</section>';

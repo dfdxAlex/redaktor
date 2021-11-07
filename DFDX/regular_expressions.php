@@ -12,6 +12,7 @@ session_start();
 <link rel="stylesheet" href="styli.css">
 <link rel="stylesheet" href="dfdx.css">
 <meta name="Cache-Control" content="no-store">
+
 </head>
  
  
@@ -87,6 +88,7 @@ if ($statiaPoId=='netKnopki') // если не было нажато право�
 if (!isset($_POST['poisk']) || isset($_POST['selectFunctionPhp'])) // Выводим работу с регулярными выражениями только если не было нажатой кнопки Поиск
  {
     
+  if (!isset($_SESSION['name_function_test'])) $_SESSION['name_function_test']='preg_filter()';
 //////////////////////////////////////форма выбора функции////////////////////////////////
 echo '<section class="container-fluid">';
 echo '<div class="row">';
@@ -100,7 +102,7 @@ echo '<div class="col-12">';
       echo '<select name="functionPhp">';
         echo '<optgroup label="Выберите функцию php">';
           echo '<option>preg_filter()</option>';
-          echo '<option>preg_preg()</option>';
+          echo '<option>preg_grep()</option>';
           echo '<option>preg_match()</option>';
           echo '<option>preg_match_all()</option>';
           echo '<option>preg_quote()</option>';
@@ -118,9 +120,381 @@ echo '<div class="col-12">';
 echo '</div>';
 echo '</div>';
 ///////////////////////////////////////////////////////////////////////////
-    if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isset($_POST['buttonPregQuote']))  ) //если нажимали кнопку выбора функции и есть выбранная функция, то заходим в раздел работы с конкретной функцией
-      {
-        ////////////////////////////////////////////// работа с preg_filter ////////////////////////////////////////////////
+if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isset($_POST['buttonPregQuote'])) || (isset($_POST['buttonPregGrep']))  ) //если нажимали кнопку выбора функции и есть выбранная функция, то заходим в раздел работы с конкретной функцией
+{
+   ////////////////////////////////////////////// работа с preg_match_all ////////////////////////////////////////////////
+  if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_match_all()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_match_all()')  ) // preg_match_all()
+   {
+     if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
+     echo '<div class="row">';
+       echo '<div class="col-12">';
+        echo '<div class="working-with-the-function-p">';
+         echo '<p><b>Работаем с preg_match_all()</b></p>';
+         echo '<p>Синтаксис:</p>';
+         echo '<code><div class="kod3">';
+         echo "<p>preg_match_all(string \$pattern, //искомый шаблон <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; string \$subject, //входящая строка <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; array &\$matches = null, // массив с результатами поиска<br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; int \$flags = 0 //задает объем информации, выданной в массив <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; int \$offset = 0 // задает с какой позиции начинать поиск, в байтах): int|false|null</p>";
+        echo '</div></code>';
+       echo '</div>';
+      echo '</div>';
+     echo '</div>';
+     echo '<div class="row">';
+      echo '<div class="col-12">';
+        // запоминаем данные с формы
+     if (!isset($_SESSION['pattern'])) $_SESSION['pattern_']='Выражение';
+     if (isset($_POST['pattern']) && $_POST['pattern']!='') $_SESSION['pattern']=$_POST['pattern']; 
+
+     if (!isset($_SESSION['subject'])) $_SESSION['subject']='Строка';
+     if (isset($_POST['subject']) && $_POST['subject']!='') $_SESSION['subject']=$_POST['subject']; 
+
+     if (!isset($_SESSION['flags'])) $_SESSION['flags']='PREG_PATTERN_ORDER';
+     if (isset($_POST['flags']) && $_POST['flags']!='') $_SESSION['flags']=$_POST['flags']; 
+
+     if (!isset($_SESSION['offset'])) $_SESSION['offset']='0';
+     if (isset($_POST['offset']) && $_POST['offset']!='') $_SESSION['offset']=$_POST['offset']; 
+ 
+ ///////////////////////////////////////////////////////////////////////////////////
+ $maty->formBlock('block_function_test_preg_match_all','regular_expressions.php','bootstrap-start',
+        'p','preg_match_all(','regular-block-name-function-preg_match-all-p',
+        'bootstrap-f-start',
+        'p','string $pattern=>','regular-block-name-function-preg_match-pattern',
+        'text','pattern',$_SESSION['pattern'],
+        'bootstrap-f-start',
+        'p','string $subject=>','regular-block-name-function-preg_match-pattern',
+        'text','subject',$_SESSION['subject'],
+        'bootstrap-f-start',
+        'p','array &$matches null=>','regular-block-name-function-preg_match-pattern',
+        'p','массив добавлен автоматически, в коде он не обязателен','regular-block-name-function-preg_match-info-k-masivu',
+        'bootstrap-f-start',
+        'p','int $flags =>','regular-block-name-function-preg_match-pattern',
+        'text','flags',$_SESSION['flags'],
+        'bootstrap-f-start',
+        'p','int $offset  =>','regular-block-name-function-preg_match-pattern',
+        'text','offset',$_SESSION['offset'],
+        'p',')','regular-block-name-function-preg_match-finish',
+        'bootstrap-f-start',
+        'p','флаг=> PREG_PATTERN_ORDER','regular-block-name-function-preg_match-pattern-help',
+        'bootstrap-f-start',
+        'p','флаг=> PREG_SET_ORDER','regular-block-name-function-preg_match-pattern-help',
+        'bootstrap-f-start',
+        'p','флаг=> PREG_OFFSET_CAPTURE','regular-block-name-function-preg_match-pattern-help',
+        'bootstrap-f-start',
+        'p','разделитель флагов |','regular-block-name-function-preg_match-pattern-help',
+        'bootstrap-f-start',
+        'submit','buttonPregGrep','Отработать','regular_expressions.php',
+        'reset','Очистить',
+        'bootstrap-finish'
+        );
+   echo '</div>';
+   echo '</div>';
+   echo '<div class="row">';
+   echo '<div class="col-12">';
+     echo '<p>Результат:</p>';
+     echo '<code><div class="kod3">';
+       $pattern='/'.$_SESSION['pattern'].'/u';
+       $offset=$_SESSION['offset']+0;
+       $flags='sss'.$_SESSION['flags'];
+       //echo $flags;
+
+       if (stripos($flags,'PREG_PATTERN_ORDER')>1 && stripos($flags,'PREG_SET_ORDER')===false) 
+        if (stripos($flags,'PREG_OFFSET_CAPTURE')>1)
+         $flags_flags=PREG_PATTERN_ORDER|PREG_OFFSET_CAPTURE;
+        else $flags_flags=PREG_PATTERN_ORDER;
+
+       if (stripos($flags,'PREG_SET_ORDER')>1 && stripos($flags,'PREG_PATTERN_ORDER')===false) 
+       if (stripos($flags,'PREG_OFFSET_CAPTURE')>1)
+         $flags_flags=PREG_SET_ORDER|PREG_OFFSET_CAPTURE;
+       else $flags_flags=PREG_SET_ORDER;
+
+
+       if (stripos($flags,'PREG_PATTERN_ORDER')>1 && stripos($flags,'PREG_OFFSET_CAPTURE')>1) 
+        $flags_flags=PREG_PATTERN_ORDER|PREG_OFFSET_CAPTURE;
+      
+       //очистим флаги
+       if (stripos($flags,'PREG_PATTERN_ORDER')>1) //$flag=(int)PREG_PATTERN_ORDER;
+          {
+            $rezPreg_match=preg_match_all($pattern,$_SESSION['subject'],$matches,$flags_flags,$offset);
+          }
+
+       //else $rezPreg_match=preg_match_all($pattern,$_SESSION['subject'],$matches);
+
+       //print_r($matches);
+       foreach ($matches as $mat1 => $matches2)
+       foreach ($matches2 as $mat => $value)
+        {
+          echo 'matches['.$mat1.']['.$mat.']='.$value;
+          echo '<br>';
+        }
+      // if (stripos($_SESSION['flags'],'PREG_OFFSET_CAPTURE')===false && stripos($_SESSION['flags'],'PREG_UNMATCHED_AS_NULL')===false)
+      //     $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches);
+
+      // if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0 || stripos('sss'.$_SESSION['flags'],'PREG_UNMATCHED_AS_NULL')>0)
+      //     if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0)
+      //      {
+      //        if (stripos('sss'.$_SESSION['flags'],'PREG_UNMATCHED_AS_NULL')>0)
+      //         $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches,PREG_OFFSET_CAPTURE | PREG_UNMATCHED_AS_NULL,$offset);   
+      //        else $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches,PREG_OFFSET_CAPTURE,$offset);
+      //      } else $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches,PREG_UNMATCHED_AS_NULL,$offset);
+      // if ($rezPreg_match===false) echo 'Вернули False - Осторожно! У данной функции 0 и False - это одно и то же! Используйте ===';
+      // if ($rezPreg_match===0) echo 'Вернули 0 - Осторожно! У данной функции 0 и False - это одно и то же! Используйте ===';
+      // if ($rezPreg_match) echo 'Вернули '.$rezPreg_match.'<br><br>';
+
+    //if ($rezPreg_match)
+    //  {
+    //   echo '<br><br>var_dump()<br>';
+    //   var_dump($matches);
+    //   echo '<br><br>print_r()<br>';
+    //   print_r($matches);
+    //   echo '<br><br>echo()<br>';
+    //  }
+      // if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0)
+      //  {
+      //   foreach ($matches as $mat => $matches2)
+      //    foreach ($matches2 as $mat2 => $value)
+      //      {
+      //       if (!is_null($value))
+      //          echo 'echo $matches['.$mat.']['.$mat2.']='.$value.'<br>';
+      //       else echo 'echo $matches['.$mat.']['.$mat2.']=null:-)<br>';
+      //      }
+      //  } else 
+      //          {
+      //            foreach ($matches as $mat=>$value)
+      //             if (!is_null($value))
+      //              echo 'echo $matches['.$mat.']='.$value.'<br>';
+      //             else echo 'echo $matches['.$mat.']=null:-)<br>';
+      //          }
+
+      //}
+     echo '</div></code>';
+   echo '</div>';
+   echo '</div>';
+ }// конец работы с preg_filter
+
+ //////////////////////////////---------------------------------------------------------------------
+         ////////////////////////////////////////////// работа с preg_match ////////////////////////////////////////////////
+        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_match()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_match()')  ) // preg_match()
+         {
+           if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
+           echo '<div class="row">';
+             echo '<div class="col-12">';
+              echo '<div class="working-with-the-function-p">';
+               echo '<p><b>Работаем с preg_match()</b></p>';
+               echo '<p>Синтаксис:</p>';
+               echo '<code><div class="kod3">';
+               echo "<p>preg_match(string \$pattern, //искомый шаблон <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; string \$subject, //входящая строка <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; array &\$matches = null, // массив с результатами поиска<br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; int \$flags = 0 //задает объем информации, выданной в массив <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; int \$offset = 0 // задает с какой позиции начинать поиск, в байтах): int|false</p>";
+              echo '</div></code>';
+             echo '</div>';
+            echo '</div>';
+           echo '</div>';
+           echo '<div class="row">';
+            echo '<div class="col-12">';
+              // запоминаем данные с формы
+           if (!isset($_SESSION['pattern'])) $_SESSION['pattern_']='Выражение';
+           if (isset($_POST['pattern']) && $_POST['pattern']!='') $_SESSION['pattern']=$_POST['pattern']; 
+
+           if (!isset($_SESSION['subject'])) $_SESSION['subject']='Строка';
+           if (isset($_POST['subject']) && $_POST['subject']!='') $_SESSION['subject']=$_POST['subject']; 
+
+           if (!isset($_SESSION['flags'])) $_SESSION['flags']='Флаги';
+           if (isset($_POST['flags']) && $_POST['flags']!='') $_SESSION['flags']=$_POST['flags']; 
+
+           if (!isset($_SESSION['offset'])) $_SESSION['offset']='0';
+           if (isset($_POST['offset']) && $_POST['offset']!='') $_SESSION['offset']=$_POST['offset']; 
+       
+       ///////////////////////////////////////////////////////////////////////////////////
+       $maty->formBlock('block_function_test_preg_match','regular_expressions.php','bootstrap-start',
+              'p','preg_match(','regular-block-name-function-preg_match-p',
+              'p','string $pattern=>','regular-block-name-function-preg_match-pattern',
+              'text','pattern',$_SESSION['pattern'],
+              'bootstrap-f-start',
+              'p','string $subject=>','regular-block-name-function-preg_match-pattern',
+              'text','subject',$_SESSION['subject'],
+              'bootstrap-f-start',
+              'p','array &$matches null=>','regular-block-name-function-preg_match-pattern',
+              'p','массив добавлен автоматически, в коде он не обязателен','regular-block-name-function-preg_match-info-k-masivu',
+              'bootstrap-f-start',
+              'p','int $flags =>','regular-block-name-function-preg_match-pattern',
+              'text','flags',$_SESSION['flags'],
+              'bootstrap-f-start',
+              'p','int $offset  =>','regular-block-name-function-preg_match-pattern',
+              'text','offset',$_SESSION['offset'],
+              'p',')','regular-block-name-function-preg_match-finish',
+              'bootstrap-f-start',
+              'p','флаг=> PREG_OFFSET_CAPTURE','regular-block-name-function-preg_match-pattern-help',
+              'bootstrap-f-start',
+              'p','флаг=> PREG_UNMATCHED_AS_NULL','regular-block-name-function-preg_match-pattern-help',
+              'bootstrap-f-start',
+              'p','разделитель флагов |','regular-block-name-function-preg_match-pattern-help',
+              'bootstrap-f-start',
+              'submit','buttonPregGrep','Отработать','regular_expressions.php',
+              'reset','Очистить',
+              'bootstrap-finish'
+              );
+         echo '</div>';
+         echo '</div>';
+         echo '<div class="row">';
+         echo '<div class="col-12">';
+           echo '<p>Результат:</p>';
+           echo '<code><div class="kod3">';
+             $pattern='/'.$_SESSION['pattern'].'/u';
+             $offset=$_SESSION['offset']+0;
+             if (stripos($_SESSION['flags'],'PREG_OFFSET_CAPTURE')===false && stripos($_SESSION['flags'],'PREG_UNMATCHED_AS_NULL')===false)
+                 $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches);
+
+             if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0 || stripos('sss'.$_SESSION['flags'],'PREG_UNMATCHED_AS_NULL')>0)
+                 if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0)
+                  {
+                    if (stripos('sss'.$_SESSION['flags'],'PREG_UNMATCHED_AS_NULL')>0)
+                     $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches,PREG_OFFSET_CAPTURE | PREG_UNMATCHED_AS_NULL,$offset);   
+                    else $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches,PREG_OFFSET_CAPTURE,$offset);
+                  } else $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches,PREG_UNMATCHED_AS_NULL,$offset);
+             if ($rezPreg_match===false) echo 'Вернули False - Осторожно! У данной функции 0 и False - это одно и то же! Используйте ===';
+             if ($rezPreg_match===0) echo 'Вернули 0 - Осторожно! У данной функции 0 и False - это одно и то же! Используйте ===';
+             if ($rezPreg_match) echo 'Вернули '.$rezPreg_match.'<br><br>';
+
+          if ($rezPreg_match)
+            {
+             echo '<br><br>var_dump()<br>';
+             var_dump($matches);
+             echo '<br><br>print_r()<br>';
+             print_r($matches);
+             echo '<br><br>echo()<br>';
+             if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0)
+              {
+               foreach ($matches as $mat => $matches2)
+                foreach ($matches2 as $mat2 => $value)
+                  {
+                   if (!is_null($value))
+                      echo 'echo $matches['.$mat.']['.$mat2.']='.$value.'<br>';
+                   else echo 'echo $matches['.$mat.']['.$mat2.']=null:-)<br>';
+                  }
+              } else 
+                      {
+                        foreach ($matches as $mat=>$value)
+                         if (!is_null($value))
+                          echo 'echo $matches['.$mat.']='.$value.'<br>';
+                         else echo 'echo $matches['.$mat.']=null:-)<br>';
+                      }
+            }
+           echo '</div></code>';
+
+
+         echo '</div>';
+         echo '</div>';
+         
+       }// конец работы с preg_match
+       //////////////////////////////---------------------------------------------------------------------
+     ////////////////////////////////////////////// работа с preg_filter ////////////////////////////////////////////////
+        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_grep()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_grep()')  ) // preg_grep()
+         {
+           if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
+           echo '<div class="row">';
+             echo '<div class="col-12">';
+              echo '<div class="working-with-the-function-p">';
+               echo '<p><b>Работаем с preg_grep()</b></p>';
+               echo '<p>Синтаксис:</p>';
+               echo '<code><div class="kod3">';
+               echo "<p>preg_grep(string \$pattern, //искомый шаблон <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; array \$array, //входящий массив <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; int \$flags = 0 //может быть PREG_GREP_INVERT): array|false</p>";
+              echo '</div></code>';
+             echo '</div>';
+            echo '</div>';
+           echo '</div>';
+
+           echo '<div class="row">';
+            echo '<div class="col-12">';
+              // запоминаем данные с формы
+              if (!isset($_SESSION['pattern'])) $_SESSION['pattern']='Введите регулярное выражение';
+              if (isset($_POST['pattern']) && $_POST['pattern']!='') $_SESSION['pattern']=$_POST['pattern']; 
+       
+              if (!isset($_SESSION['flag'])) $_SESSION['flag']='flag';
+              if (isset($_POST['flag']) && $_POST['flag']!='') $_SESSION['flag']=$_POST['flag']; 
+       
+              for ($i=1;$i<11;$i++) // объявляются или инициализируются 10 пар переменных, работающих со значениями массива
+               {
+                 if (!isset($_SESSION['array_poz_'.$i])) $_SESSION['array_poz_'.$i]='Poz-'.$i;
+                 if (isset($_POST['array_poz_'.$i]) && $_POST['array_poz_'.$i]!='') $_SESSION['array_poz_'.$i]=$_POST['array_poz_'.$i]; 
+                 if (!isset($_SESSION['array_'.$i])) $_SESSION['array_'.$i]='meaning-'.$i;
+                 if (isset($_POST['array_'.$i]) && $_POST['array_'.$i]!='') $_SESSION['array_'.$i]=$_POST['array_'.$i]; 
+               }
+            $masResult=array();
+              if (isset($_POST['buttonPregGrep']) && $_POST['buttonPregGrep']=='Отработать')
+                {
+                 for ($i=1; $i<11;$i++)
+                   {
+                     if ($_SESSION['array_poz_'.$i]=='') $_SESSION['array_poz_'.$i]='Poz-'.$i;
+                     if ($_SESSION['array_'.$i]=='') $_SESSION['array_'.$i]='meaning-'.$i;
+                    }
+            $masStart=array(
+            $_SESSION['array_poz_1']=>$_SESSION['array_1'],
+            $_SESSION['array_poz_2']=>$_SESSION['array_2'],
+            $_SESSION['array_poz_3']=>$_SESSION['array_3'],
+            $_SESSION['array_poz_4']=>$_SESSION['array_4'],
+            $_SESSION['array_poz_5']=>$_SESSION['array_5'],
+            $_SESSION['array_poz_6']=>$_SESSION['array_6'],
+            $_SESSION['array_poz_7']=>$_SESSION['array_7'],
+            $_SESSION['array_poz_8']=>$_SESSION['array_8'],
+            $_SESSION['array_poz_9']=>$_SESSION['array_9'],
+            $_SESSION['array_poz_10']=>$_SESSION['array_10']
+          );
+          $pattern='/'.$_SESSION['pattern'].'/u';
+          if ($_SESSION['flag']!='PREG_GREP_INVERT')
+              $masResult=preg_grep($pattern,$masStart);
+          else $masResult=preg_grep($pattern,$masStart,PREG_GREP_INVERT);
+        }
+
+
+       
+       ///////////////////////////////////////////////////////////////////////////////////
+       $maty->formBlock('block_function_test_grep','regular_expressions.php','bootstrap-start',
+             'p','array=','regular-block-name-function-filter-p',
+             'text2','array_poz_1',$_SESSION['array_poz_1'],'span','=>','vektor-mas','text2','array_1',$_SESSION['array_1'],
+             'bootstrap-f-start',
+             'text2','array_poz_2',$_SESSION['array_poz_2'],'span','=>','vektor-mas','text2','array_2',$_SESSION['array_2'],
+             'bootstrap-f-start',
+             'text2','array_poz_3',$_SESSION['array_poz_3'],'span','=>','vektor-mas','text2','array_3',$_SESSION['array_3'],
+             'bootstrap-f-start',
+             'text2','array_poz_4',$_SESSION['array_poz_4'],'span','=>','vektor-mas','text2','array_4',$_SESSION['array_4'],
+             'bootstrap-f-start',
+             'text2','array_poz_5',$_SESSION['array_poz_5'],'span','=>','vektor-mas','text2','array_5',$_SESSION['array_5'],
+             'bootstrap-f-start',
+             'text2','array_poz_6',$_SESSION['array_poz_6'],'span','=>','vektor-mas','text2','array_6',$_SESSION['array_6'],
+             'bootstrap-f-start',
+             'text2','array_poz_7',$_SESSION['array_poz_7'],'span','=>','vektor-mas','text2','array_7',$_SESSION['array_7'],
+             'bootstrap-f-start',
+             'text2','array_poz_8',$_SESSION['array_poz_8'],'span','=>','vektor-mas','text2','array_8',$_SESSION['array_8'],
+             'bootstrap-f-start',
+             'text2','array_poz_9',$_SESSION['array_poz_9'],'span','=>','vektor-mas','text2','array_9',$_SESSION['array_9'],
+             'bootstrap-f-start',
+             'text2','array_poz_10',$_SESSION['array_poz_10'],'span','=>','vektor-mas','text2','array_10',$_SESSION['array_10'],
+             'bootstrap-f-start',
+             'span','Форма отображает массив входного параметра функции. Можно оставить значения по умолчанию!!','regular-block-name-function-grep-mesage',
+             'br','4',
+             'bootstrap-f-start',//начало формы функции
+             'p','preg_grep(','regular-block-name-function-grep',
+             'text2','pattern',$_SESSION['pattern'],'p',' ,','zapiataja','p','inpuy-array','regular-block-name-function-grep',
+             'bootstrap-f-start',
+             'text2','flag',$_SESSION['flag'],'p',');','regular-block-name-function-grep',
+             'bootstrap-f-start',
+             'submit','buttonPregGrep','Отработать','regular_expressions.php',
+             'reset','Очистить',
+             'bootstrap-finish',
+             'zero_style'
+              );
+         echo '</div>';
+         echo '</div>';
+         
+         echo '<div class="row">';
+         echo '<div class="col-12">';
+           echo '<p>Результат:</p>';
+           echo '<code><div class="kod3">';
+            // echo '<p>'.$_SESSION['result_regular_function'].'</p>';
+            foreach($masResult  as $key => $value)
+              echo '<p>'.$key.'=>'.$value.'</p>';
+           echo '</div></code>';
+         echo '</div>';
+         echo '</div>';
+       }// конец работы с preg_filter
+       //////////////////////////////---------------------------------------------------------------------
+   ////////////////////////////////////////////// работа с preg_filter ////////////////////////////////////////////////
       if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_filter()') || (isset($_POST['buttonPregQuote']) && $_SESSION['name_function_test']=='preg_filter()')  ) // preg_filter()
         {
           if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
@@ -248,18 +622,16 @@ if (isset($_POST['poisk']))
   $bylPoisk=true;
  }
 
- if (!$bylPoisk)
- {
-
-    //Запуск функции если не было нажатие правого меню
-    //if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
-     //$redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Шаблон=2","Отступ=1",'action=regular_expressions.php','Раздел=regular');
-    //Запуск функции если была нажата кнопка правой панели
-    if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
+  if (!$bylPoisk)
+    {
+      if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
       $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Шаблон=2","Отступ=1",'action=regular_expressions.php','Раздел=regular');
     }
 
+ buttonTwitter('Тестирование функции (php) '.$_SESSION['name_function_test'].'http://dfdx.uxp.ru/regular_expressions.php');
+
  echo '</div>';
+
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
@@ -296,6 +668,7 @@ echo '</div>';
 
 $maty->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
 ?>
+
 </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

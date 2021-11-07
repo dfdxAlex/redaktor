@@ -41,6 +41,8 @@ class modul
            $redaktorRedaktor=false;
            $_SESSION['action']='';
 
+           if (!isset($_SESSION['redaktirowatId'])) $_SESSION['redaktirowatId']=-1;
+
            if (!isset($_SESSION['mas_time_name_news']))
               $_SESSION['mas_time_name_news']='';
            if (!isset($_SESSION['mas_time_news']))  
@@ -193,11 +195,11 @@ class modul
                  //Найти хештег Раздел
                  $mas=array();
                  $kluc=preg_match('/#[a-zA-Zа-яёА-ЯЁ0-9]+#?/',$_POST['statia'],$mas); // Поиск в текстк категории
-                 //echo $mas[0];
+
                  if (!$kluc) $razdel='-';        // Если нет категории в тексте, то присвоить -
                    else $razdel=preg_replace('/#/','',$mas[0]);   // Удалить лишнее
-                 //echo  $razdel;
-                    $news=$classPhp->bezMatov(quotemeta($classPhp->clearCode(nl2br($_POST['statia'])))); // удаляем маты и теги из статьи
+
+                   $news=$classPhp->bezMatov(quotemeta($classPhp->clearCode(nl2br($_POST['statia'])))); // удаляем маты и теги из статьи
 
                   $dlinaStati=strlen($news); // длина статьи из текстового окна сайта
                    if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) // если есть Ид статьи
@@ -244,8 +246,9 @@ class modul
                         $_SESSION['mas_time_name_news']='';
                          $_SESSION['mas_time_news']='';
                  
-                 }///////////////////////////////////////////////////////////////////////////////
-                 if ((isset($_POST[$nametablice.'_redaktor']) || isset($_POST[$nametablice.'_redaktor2']))  && !isset($_POST['vvv'])) {$_SESSION['redaktirowatId']=-1;echo '<meta http-equiv="refresh" content="0; URL=dfdx.php">';}
+                 }
+                 ///////////////////////////////////////////////////////////////////////////////
+                 if ((isset($_POST[$nametablice.'_redaktor']) || isset($_POST[$nametablice.'_redaktor2']))  && !isset($_POST['vvv'])) {$_SESSION['redaktirowatId']=-1;echo '<meta http-equiv="refresh" content="0; URL='.$action.'">';}
          /////////////////////////////////////// работаем с кнопкой удалить ////////////////////////////////// row button_statia
          if ($classPhp->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Удалить')
            {
@@ -253,6 +256,17 @@ class modul
              $killStroka=preg_replace('/statia/','',$killStroka); // Удалить лишнее
              $killStroka=preg_replace('/kill/','',$killStroka); // Удалить лишнее
              $killStroka=preg_replace('/'.$_SESSION['login'].'/','',$killStroka); // Удалить лишнее $killStroka - ИД статьи, которую нужно удалить 
+            
+             //Вытягиваем путь к удаленному файлу из базы данных
+             $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nametablice." WHERE id=".$killStroka);
+             $killPath=mysqli_fetch_array($rez);
+             //Находим файл на диске и удаляем его
+             if (!file_exists($killPath[0]))
+              $killName=preg_filter('/news\/.+\//','',$killPath[0]);
+             else $killName=$killPath[0];
+
+             unlink($classPhp->searcNamePath($killName));
+             $classPhp->killZapisTablicy('url_po_id_'.$nametablice,'WHERE id='.$killStroka);
 
              if (($_SESSION['status']==4 || $_SESSION['status']==5) && $this->statusStati($killStroka)) 
              {
@@ -372,56 +386,61 @@ if ($hablon==2)
                      {
                       if (!$statiaVozwrat)  // показ первой статьи при обычных условиях
                        {
-                        $class='statiaKrutka btn'; // класс заголовка по умолчанию
-                        if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0)  // класс заголовка в зависимости от стиля
-                         {
-                          $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
-                          $class='nazwanie'.$hablon.' btn'; // класс по шаблону
+                                $class='statiaKrutka btn'; // класс заголовка по умолчанию
+                                // Условие сработает если задан какой-либо вид оформления статьи
+                                if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0)  // класс заголовка в зависимости от стиля тут
+                                      {
+                                          $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
+                                          $class='nazwanie'.$hablon.' btn'; // класс по шаблону
 
-                          $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
-                          $text=mb_substr($dataMas[$ii][0][1][0][0],1); // подготовить оставшийся текст
+                                          $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
+                                          $text=mb_substr($dataMas[$ii][0][1][0][0],1); // подготовить оставшийся текст
                           
-                          $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
+                                          $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
                          
- 
-                          //Находим содержимое свойства alt
-                          if (preg_match('/alt=\"\w+\"/u',$text, $alt))
-                          {
-                          //echo 'перестраиваем<br>';
-                            $alt=preg_filter('/alt=/','',$alt[0],-1);
-                            $alt=preg_filter('/\"/','',$alt,-1);
-                           //--------------------------------------------
-                          // Находим содержимое URL
-                          if (preg_match('/src.*alt/u',$text, $url))
-                            {
-                              $url=preg_filter('/src=/','',$url[0],-1);
-                              $url=preg_filter('/alt/','',$url,-1);
-                              $url=preg_filter('/\"/','',$url,-1);
-                            } 
-                            //---------------------------------------------
-                            //Добавить див в начале ссылки
-                            $text=preg_filter('/<img/','<div class="img-div-'.$hablon.'"><img ',$text,-1); // добавить див с классом к img
-                            //Заменили урл на картинку на такой же урл, но обрамленный тегами ДИВ с классом нужного типа
-                            $text=preg_filter('/src=.*"\s*>/','class="img-'.$hablon.'" src="'.$url.'" alt="'.$alt.'"></div>',$text,-1);
-                          }
+                          ////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                      //Находим содержимое свойства alt
+                                                      if (preg_match('/alt=\"\w+\"/u',$text, $alt))
+                                                          {
+                                                              //echo 'перестраиваем<br>';
+                                                              $alt=preg_filter('/alt=/','',$alt[0],-1);
+                                                              $alt=preg_filter('/\"/','',$alt,-1);
+                                                              //--------------------------------------------
+                                                              // Находим содержимое URL
+                                                              if (preg_match('/src.*alt/u',$text, $url))
+                                                                        {
+                                                                             $url=preg_filter('/src=/','',$url[0],-1);
+                                                                             $url=preg_filter('/alt/','',$url,-1);
+                                                                             $url=preg_filter('/\"/','',$url,-1);
+                                                                        } 
+                                                                        //---------------------------------------------
+                                                                    //Добавить див в начале ссылки
+                                                               $text=preg_filter('/<img/','<div class="img-div-'.$hablon.'"><img ',$text,-1); // добавить див с классом к img
+                                                               //Заменили урл на картинку на такой же урл, но обрамленный тегами ДИВ с классом нужного типа
+                                                               $text=preg_filter('/src=.*"\s*>/','class="img-'.$hablon.'" src="'.$url.'" alt="'.$alt.'"></div>',$text,-1);
+                                                          }
 
-                          $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
-                          $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
+                                                      $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
+                                                      $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
 
-                          echo '<section class="container-fluid">';
-                          echo '<div class="row">';
-                          echo '<div class="col-12">';
-                          echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
-                          echo '</div></div>';
-                          echo '<div class="row">';
-                          echo '<div class="col-12">';
-                          echo '<div>'.$text.'</div>';
-                          echo '</div></div>';
-                          echo '<div class="row">';
-                          echo '<div class="col-12">';
-                          echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
-                          echo '</div></div></section>';
-                        }
+                                              echo '<section class="container-fluid">';
+                                              echo '<div class="row">';
+                                              echo '<div class="col-12">';
+                                                if (file_exists($action))
+                                                  echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
+                                                else 
+                                                  echo '<p class="'.$class.'">'.$dataMas[$ii][1][0][0][0].'</p>';
+                                                  
+                                              echo '</div></div>';
+                                              echo '<div class="row">';
+                                              echo '<div class="col-12">';
+                                              echo '<div>'.$text.'</div>';
+                                              echo '</div></div>';
+                                              echo '<div class="row">';
+                                              echo '<div class="col-12">';
+                                              echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
+                                              echo '</div></div></section>';
+                                      }
                         else
                         {
                           echo '<section class="container-fluid">';
@@ -501,8 +520,6 @@ if ($hablon==2)
                         $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
                         $text=mb_substr($dataMas[$ii][0][1][0][0],1,strlen($dataMas[$ii][0][1][0][0])-1); // подготовить оставшийся текст
                         $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
-                        
-                        
                           
                           //Находим содержимое свойства alt
                           if (preg_match('/alt=\"\w+\"/u',$text, $alt))
@@ -527,9 +544,91 @@ if ($hablon==2)
                         
                         $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><div class="news-code"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
                         $text=preg_replace('/<\/code>/','</div></code></div></div></div></section>',$text); // вставить класс в теги code
-                        //echo 'этот';
-                        echo '<section class="container-fluid">';
+                        
+                        ///////////////////////////////////////////создаем нужные папки ////////////////////////////
+                        //initsite()
+                        if (!file_exists('../../'.$classPhp->initsite())) // Создаем папки только в том случае, если не находимся в уже созданных папках
+                         {
+                            if ($dataMas[$ii][0][0][0][1]!='-')
+                               $katalog2='news/'.$dataMas[$ii][0][0][0][1]; // Папка со статьями + текущая категория
+                            else $katalog2='news/non-path';
+                            if (!is_dir('news')) // Если нет главной папки со статьями, то создать её
+                               mkdir('news',0777,1);
+                            if (!is_dir($katalog2)) // Если нет папки соответствующей категории, то создать её
+                               mkdir($katalog2,0777,1);
+                        }
 
+                        /////////////////////////////////////////////////////////////////////////////////////////////
+                        $fileNameNotPhp=translit($dataMas[$ii][1][0][0][0]); // создаем имя файла
+                        $fileName=$katalog2.'/'.$fileNameNotPhp.'.php';       // имя файла с каталогом
+                        if (!is_null(preg_filter('/-\./','.',$fileName))) $fileName=preg_filter('/-\./','.',$fileName);
+                        if (!is_null(preg_filter('/\/-/','/',$fileName))) $fileName=preg_filter('/\/-/','/',$fileName);
+
+                        // Проверить существует ли статья с таким же названием
+                        $newsAlready=false;
+                        if (file_exists($fileName)) $newsAlready=true;
+                        $newsName=preg_filter('/news\/.+\//','',$fileName);
+                        if (file_exists($newsName)) $newsAlready=true;
+                        if ($newsAlready) $fileName=preg_filter('/\.php/','-double-'.time().'.php',$fileName);
+
+                        $urlNews=$this->urlPoId($nametablice,$nomerZagolowkaStati);
+
+                        if ($urlNews) // если для статьи есть свой файл, то просто перейти на него
+                         {
+                          $action=$this->urlPoIdPath($nametablice,$nomerZagolowkaStati);
+                           header('Location: '.$action);
+                         }
+
+                        // если статусы 4 или 5 или смотрит статью её автор, то работаем
+                        if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
+                        if ($_SESSION['status']==4 || $_SESSION['status']==5 || ($_SESSION['login']==$dataMas[$i][0][0][1][0]))
+                         {
+                            $dfdx=file($classPhp->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
+                           foreach ($dfdx as &$value)
+                            {
+                              $valueTemp=preg_filter('/\$action.*php/u','\$action=\'action='.$fileNameNotPhp.'.php',$value); // Замена страниц обработчиков
+                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
+                            }
+                            foreach ($dfdx as &$value)
+                            {
+                              $valueTemp=preg_filter('/include "/u','include "../../',$value); // Замена пути для Инклудов
+                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
+                            }
+                            foreach ($dfdx as &$value)  /// Замена главной менюшки на простую кнопку Главная
+                            {
+                              $valueTemp=preg_filter('/\$maty.*огин.*роль.*/u','echo \'<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>\';',$value);
+                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
+                            }
+                            foreach ($dfdx as &$value)  /// Комментируем левое меню
+                            {
+                              $valueTemp=preg_filter('/levoeMenu/u','//levoeMenu',$value);
+                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
+                            }
+                            foreach ($dfdx as &$value)  /// блокирем кнопку поиска
+                            {
+                              $valueTemp=preg_filter('/poiskDfdx/u','//poiskDfdx',$value);
+                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
+                            }
+                            foreach ($dfdx as &$value)  /// задаем ИД статьи
+                            {
+                              $valueTemp=preg_filter('/\"id=\"\.\$id/u','"id='.$nomerZagolowkaStati.'"',$value);
+                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
+                            }
+                            foreach ($dfdx as &$value)  /// заменяем маркер функции buttonTwitter на саму функцию
+                            {
+                              $strokaZameny='buttonTwitter("'.$dataMas[$ii][1][0][0][0].' http://dfdx.uxp.ru/'.$fileName.'");';
+                              $valueTemp=preg_filter('/\/\/buttonTwitter/u',$strokaZameny,$value);
+                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
+                            }
+                            $this->urlPoIdSave($nametablice,$nomerZagolowkaStati,$fileName);
+                            file_put_contents($fileName,$dfdx);
+                            header('Location: '.$fileName);
+                        } else {
+                          sleep(5);
+                          header('Location: '.$classPhp->initsite());
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        //вывод статьи, рабочий блок, пытаюсь вывести его в отдельной ссылке
+                        /*echo '<section class="container-fluid">';
                         echo '<div class="row">';
                         echo '<div class="col-12">';
                         echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
@@ -541,10 +640,13 @@ if ($hablon==2)
                         echo '<div class="row">';
                         echo '<div class="col-12">';
                         echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
-                        echo '</div></div></section>';
+                        echo '</div></div>';
+                        echo '</section>';*/
+                        ///////////////////////////////////////////////////////////////////////
 
                         //echo '<p class="'.$class.'">'.$dataMas[$ii][1][0][0][0].'</p>'.'<div>'.$text.'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';
-                       }
+                      }
+                      }
                       else
                       {
                         echo '<section class="container-fluid">';
@@ -560,10 +662,8 @@ if ($hablon==2)
                         echo '<div class="col-12">';
                         echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
                         echo '</div></div></section>';
-                       //echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0][0].'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';
                       }
                         $pokazalStatej=1;
-                      //echo $otstupBr;
                     }
 
                 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -581,8 +681,7 @@ if ($hablon==2)
                           echo '<input type="text"  value="Причина возврата" name="pricina" class="pricina">';
                           echo '<input type="submit" class="Publikacia btn" value="Вернуть" name="vernut'.$dataMas[$ii][0][0][0][0].'">';
                        }
-                      else
-                      if ($this->vernutStati($dataMas[$ii][0][0][0][0]))
+                      else if ($this->vernutStati($dataMas[$ii][0][0][0][0]))
                         {
                           echo '<input type="submit" class="Publikacia btn" value="Отмена возврата" name="vernut'.$dataMas[$ii][0][0][0][0].'">';
                           echo '<p>Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]).'</p>';
@@ -633,23 +732,77 @@ if ($hablon==2)
               // Выводит поле редактирования в случае, если не вывелось ни одной статьи или нажата кнопка Добавить
              if (!$poleRedaktora)
               if (isset($_POST['dobawitNow']) || $netNowostej || (isset($_POST['vvv']) && $_SESSION['redaktirowatId']=-1))
-               {
-                
                 $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action);
-               }
-             // $classPhp->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
-              //                    'textarea', 'statia',$statia,'br',
-               //                   'p',$awtor,'br',
+
              ///////////////////////////////////////////Нажали кнопку Запомнить Шаблон//////////////////////////////
               if (isset($_POST['vvv']))
-               {
                 $this->styliStati('id='.$_SESSION['redaktirowatId'],'hablon='.$_SESSION['nomerStylaStatii']);
-                //$_SESSION['mas_time_name_news']=$_POST['zagolowok'];
-                //$_SESSION['mas_time_news']=$_POST['statia'];
-                //echo 'запомнить--'.$_SESSION['mas_time_news'].'<br>';
-               }
                              ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+}
+// Служебная функция поиск правильного пути к папке файла
+function urlPoIdPath($nameBd,$id)
+{
+  $classPhp = new maty();
+  $classPhp->createTab(
+      "name=url_po_id_".$nameBd,
+      "poleN=id",   // будет соответствовать ИД статьи
+      "poleT=int", 
+      "poleS=-1",
+      "poleN=url", 
+      "poleT=varchar(1000)",
+      "poleS=пусто"
+  );
+
+  $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
+  $stroka=mysqli_fetch_array($rez);
+
+  if (file_exists($stroka[0])) return $stroka[0]; // если файл существует по текущему пути
+
+  if (!file_exists($stroka[0])) 
+   {
+    $stroka[0]=preg_filter('/news\//','',$stroka[0]);
+    if (file_exists($stroka[0])) return $stroka[0]; // удалил из пути news/
+   }
+
+   if (!file_exists($stroka[0])) 
+   {
+    $stroka[0]=preg_filter('/\b.*\//','',$stroka[0]);
+    if (file_exists($stroka[0])) return $stroka[0]; // удалил из пути news/
+   }
+
+
+  //if (!is_null($stroka) && $stroka!=false) return $stroka[0];
+  return false;
+}
+// Служебная функция возвращает ссылку на статью по ID или false
+function urlPoId($nameBd,$id)
+{
+  $classPhp = new maty();
+  $classPhp->createTab(
+      "name=url_po_id_".$nameBd,
+      "poleN=id",   // будет соответствовать ИД статьи
+      "poleT=int", 
+      "poleS=-1",
+      "poleN=url", 
+      "poleT=varchar(1000)",
+      "poleS=пусто"
+  );
+
+  $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
+  $stroka=mysqli_fetch_array($rez);
+  if (!is_null($stroka) && $stroka!=false) return $stroka[0];
+  return false;
+}
+// Служебная функция записывает ссылку на статью по ID или false
+function urlPoIdSave($nameBd,$id,$url)
+{
+  $classPhp = new maty();
+
+   if ($this->urlPoId($nameBd,$id)) return false; // если запись уже есть то выходим с результатом Фалс
+
+   $classPhp->zaprosSQL("INSERT INTO url_po_id_".$nameBd."(id, url) VALUES (".$id.",'".$url."')");
+   return true;
 }
 // служебная функция для задания стилей оформления статьи
 function styliStati(...$parametr) // тут
@@ -862,6 +1015,10 @@ function money(...$parametr) // работа с символами или ден
         public function poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action)
          {
           
+          //echo $action; тут
+         // if (!file_exists($action)) $action=basename(__FILE__); // Если ссылка на кнопке планируется быть несуществующей, то заменить её на текущую
+
+
           $classPhp = new maty();
            if ($nametablice!='' && $classPhp->searcNameTablic($nametablice))
             {

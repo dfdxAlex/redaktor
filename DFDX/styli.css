@@ -1005,3 +1005,21 @@ float: left;
     width: 100%;
   }
    /*Стили для оформления статей №3 конец*/
+   /*твиттер*/
+   .buttonTwitterDiv{
+    
+     background: rgb(40, 93, 207);
+     border-radius: 10px 100px / 120px;
+     font-weight:bold;
+    height: 30px;
+    width: 80px;
+   }
+   .link-button-twitter-text{
+    color:rgb(255, 255, 255);
+    margin-left: 5px;
+   }
+   .link-button-twitter-text:hover {
+    color:rgb(219, 199, 199);
+    margin-left: 5px;
+   }
+   
