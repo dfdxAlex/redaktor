@@ -508,8 +508,8 @@ if ($hablon==2)
                       echo $otstupBr; 
                     }
 
-                  //////////////////////////////////// Блок выводит статью при нажатии на её заголовок-///////////////////////////////////////
-                  if ($statusStatii)// Если труе, то статья проверена модератором
+            //////////////////////////////////// Блок выводит статью при нажатии на её заголовок-///////////////////////////////////////
+            if ($statusStatii)// Если труе, то статья проверена модератором
                     if ($dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati && $pokazalStatej==0) // Вывод по клику по заголовку статьи
                     {
                       $class='statiaKrutka btn';  // класс заголовка по умолчанию
@@ -564,6 +564,10 @@ if ($hablon==2)
                         if (!is_null(preg_filter('/-\./','.',$fileName))) $fileName=preg_filter('/-\./','.',$fileName);
                         if (!is_null(preg_filter('/\/-/','/',$fileName))) $fileName=preg_filter('/\/-/','/',$fileName);
 
+                        //путь к обработчику файла для модуля news на персональной странице конкретной статьи
+                        //$fileNameAction=preg_filter('/news\/.\//','',$fileName);
+                        //$fileNameAction=preg_filter('/news\//','',$fileNameAction)
+
                         // Проверить существует ли статья с таким же названием
                         $newsAlready=false;
                         if (file_exists($fileName)) $newsAlready=true;
@@ -585,8 +589,8 @@ if ($hablon==2)
                          {
                             $dfdx=file($classPhp->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
                            foreach ($dfdx as &$value)
-                            {
-                              $valueTemp=preg_filter('/\$action.*php/u','\$action=\'action='.$fileNameNotPhp.'.php',$value); // Замена страниц обработчиков
+                            {                                                                // fileName fileNameNotPhp
+                              $valueTemp=preg_filter('/\$action.*php/u','\$action=\'action=#',$value); // Замена страниц обработчиков
                               if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
                             }
                             foreach ($dfdx as &$value)
@@ -627,24 +631,9 @@ if ($hablon==2)
                           sleep(5);
                           header('Location: '.$classPhp->initsite());
                         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        //вывод статьи, рабочий блок, пытаюсь вывести его в отдельной ссылке
-                        /*echo '<section class="container-fluid">';
-                        echo '<div class="row">';
-                        echo '<div class="col-12">';
-                        echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
-                        echo '</div></div>';
-                        echo '<div class="row">';
-                        echo '<div class="col-12">';
-                        echo $text;
-                        echo '</div></div>';
-                        echo '<div class="row">';
-                        echo '<div class="col-12">';
-                        echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
-                        echo '</div></div>';
-                        echo '</section>';*/
+
                         ///////////////////////////////////////////////////////////////////////
 
-                        //echo '<p class="'.$class.'">'.$dataMas[$ii][1][0][0][0].'</p>'.'<div>'.$text.'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';
                       }
                       }
                       else

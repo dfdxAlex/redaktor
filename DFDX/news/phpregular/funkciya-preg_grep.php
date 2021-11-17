@@ -80,7 +80,7 @@ echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12 otstup">';  // Це
 $bylPoisk=false;
 $poisk = new \redaktor\poisk();
 $redaktor=new redaktor\modul();
-$action='action=funkciya-preg_grep-.php';  //страница обработки кнопок в модуле news()
+$action='action=#';  //страница обработки кнопок в модуле news()
 //if (!file_exists($action)) $action=basename(__FILE__);
 
 ////////////////////////////////////////////////////поиск
@@ -113,7 +113,7 @@ if (isset($_POST['poisk']))
         $redaktor->news1("id=6","nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action);
        }
   }
-  //buttonTwitter
+  buttonTwitter("Функция preg_grep(). http://dfdx.uxp.ru/news/phpregular/funkciya-preg_grep.php");
 echo '</div>';
 
 echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 otstup">';  // правое меню

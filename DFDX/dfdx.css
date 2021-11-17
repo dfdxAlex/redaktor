@@ -399,7 +399,7 @@ code {
 .block_function_test_preg_match_allflags29{
     margin-left: 40px;
 }
-.block_function_test_preg_match_allbuttonPregGrep59,.block_function_test_preg_match_allreset63{
+.block_function_test_preg_match_allbuttonPregGrep63,.block_function_test_preg_match_allreset67{
     height: 30px;
     float: left;
     margin-left: 158px;
@@ -408,7 +408,47 @@ code {
     border-style: solid;
     margin-top: 20px;
 }
-.block_function_test_preg_match_allreset63{
+.block_function_test_preg_match_allreset67{
     margin-left: 10px;
 }
 /*******************************************************preg_match_all*****************************************************************/
+/*******************************************************preg_split*****************************************************************/
+.block_function_test_preg_split{ /*общий класс формы*/
+    font-size: 14px;
+    line-height: 15px;
+}
+.block_function_test_preg_split_div{ /*общий див формы*/
+    margin-left: 20px;
+    color:rgb(15, 56, 3);
+}
+.regular-block-name-function-preg_split-pPH{
+    margin-left: 80px;
+    margin-top: 10px;
+    height: 16px;
+    float: left;
+}
+.block_function_test_preg_splitlimit22,.block_function_test_preg_splitflags29,.block_function_test_preg_splitsubject15,.block_function_test_preg_splitpattern8{
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 25px;
+}
+.block_function_test_preg_splitlimit22{
+    margin-left: 43px;
+}
+.block_function_test_preg_splitflags29{
+    margin-left: 46px;
+}
+.block_function_test_preg_splitbuttonPregGrep48,.block_function_test_preg_splitreset52{
+    height: 30px;
+    float: left;
+    margin-left: 158px;
+    font-size: 14px;
+    border-color: black;
+    border-style: solid;
+    margin-top: 20px;
+}
+.block_function_test_preg_splitreset52{
+    margin-left: 10px;
+}
+/*******************************************************preg_split*****************************************************************/
