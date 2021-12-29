@@ -5,6 +5,14 @@ session_start();
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MF3F7YTKCQ');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
@@ -36,15 +44,16 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
 <a name="vverh">
    
       <?php 
+      //$_SESSION['status']=5;
       $menuUp = new redaktor\menu(); 
       if ($_SESSION['status']>99 || $_SESSION['status']==9)
-       $menuUp->__unserialize('menu6','podtverdit',array('redaktor.php','Введите код'));
+       $menuUp->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
 
       if ($_SESSION['status']==5 || $_SESSION['status']==4)
-         $menuUp->__unserialize('menu3','redaktor_up',array('Редактор','Сайт','Выйти','Создать страницу'));
+         $menuUp->__unserialize(array('menu3','redaktor_up','Редактор','Сайт','Выйти','Создать страницу','Подсветить меню'));
 
       if ($_SESSION['status']==0)
-       $menuUp->__unserialize('menu4','login',array('redaktor.php','Логин','Пароль','Вход','Регистрация'));
+       $menuUp->__unserialize(array('menu4','login','redaktor.php','Логин','Пароль','Вход','Регистрация'));
 
        if ($_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3)
          $menuUp->menu('dla_statusob_123');
@@ -63,7 +72,7 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
 <div class="row">
   <div class="col-12">
  <div class="kartinkaHapki"> 
-  <img class="kartinkaHapkiImg" width="300px" height="300px" src="image/hapka2.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>
+  <!--<img class="kartinkaHapkiImg" width="300px" height="300px" src="image/hapka2.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>-->
 </div>
 </div>
 </div>
@@ -98,20 +107,27 @@ if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit'
   $_SESSION['parol']='';
   $_SESSION['status']=0;
   $_SESSION['regimRaboty']=0;
-  //$status->naGlavnuStranicu();
+  $status->naGlavnuStranicu();
 }
 if ($_SESSION['status']==9 && isset($_POST['podtverdit'])  &&  $_POST['podtverdit']=='Найти письмо')  { //Если нажата кнопка Найти письмо
   $_SESSION['regimRaboty']=20;
   $mailText='Доброго времени суток. Была запрошена повторная отправка письма с кодом регистрации с сайта '.$status->nameGlawnogoSite().' Код для подтверждения регистрации:';
-  $status->siearcMail($_SESSION['login'],$meilText);
+  $status->siearcMail($_SESSION['login'],$mailText);
   echo '<p class="mesage">Письмо отправлено</p>';
 }
+
 if (isset($_POST['podtverdit'])  &&  $_POST['podtverdit']=='Подтвердить запись')  { //Если нажата кнопка Подтвердить запись
   $_SESSION['regimRaboty']=17;
-  if ($status->statusRegi($_SESSION['login'],$_SESSION['parol'])==$_POST['kod']) {$_SESSION['status']=1;$status->saveStatus(1);echo '<p class="mesage">Код верный, приятного серфинга!</p>';}
-    else {echo '<p class="error">Код не верен!!</p>';}
+  $admin=regaAdministratora($_POST['kod']); // проверяет регистрировался ли администратор, если нет, то вернет Фальс, если да, то Труе и зарегит админгистратора по коду из файла
+  if (!$admin) // Если регистрируется не администратор
+   {
+      if ($status->statusRegi($_SESSION['login'],$_SESSION['parol'])==$_POST['kod']) {$_SESSION['status']=1;$status->saveStatus(1);echo '<p class="mesage">Код верный, приятного серфинга!</p>';}
+        else {echo '<p class="error">Код не верен!!</p>';}
           if ($_SESSION['status']!=4 && $_SESSION['status']!=5 && $_SESSION['status']!=9) $status->naGlavnuStranicu();
+   }
+   if ($admin===2) header("Refresh:0");
 }
+
 if (isset($_POST['login'])  &&  $_POST['login']=='Вход'  && $status->statusRegi($_POST['login_status'],$_POST['parol_status']))  { //Если нажата кнопка Вход
   $_SESSION['regimRaboty']=16;
   $_SESSION['status']=$status->statusRegi(quotemeta($_POST['login_status']),quotemeta($_POST['parol_status']));
@@ -128,37 +144,49 @@ if (isset($_POST['login'])  &&  $_POST['login']=='Вход'  && $status->statusR
 
 if (isset($_POST['registracia'])  && $status->lovimOtvetNaCapcu($_POST['registracia']) )  { //Нажата кнопка выбора варианта ответа на капчу
   $_SESSION['regimRaboty']=13;
+  $mailQ=quotemeta($_POST['Почта']);
+  $mailQ=preg_replace('/\\\./','.',$mailQ);
   if ($status->capcaRez($_POST['Capcha'],$_POST['registracia']) && !$status->prowerkaLogin() && !$status->prowerkaMail() && $_POST['parol']==$_POST['parol2'] && $_POST['parol']!="" && $_POST['parol']!="Пароль")  
    {
      $_SESSION['regimRaboty']=15;
      $mailText='Доброго времени суток. Данная почта используется для регистрации на сайте '.$status->nameGlawnogoSite().' . Код для подтверждения регистрации:';
-     $status->zapisGostia(quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['Почта']),'Клан S.T.A.R.K.I. Подтверждение учётной записи.',$mailText); //Первая запись в базу данных
-   } else {
+     genericKodAdmina(quotemeta($_POST['Логин']));// Сгенерировать пароль в файл, если регится администратор
+     $status->zapisGostia(quotemeta($_POST['Логин']),quotemeta($_POST['parol']),$mailQ,'CMS-DFDX Подтверждение учётной записи.',$mailText); //Первая запись в базу данных
+     echo '<p class="mesage">Регистрация почти завершена. На почту '.$mailQ.' отправлен одноразовый пароль.<p>';
+     echo '<p class="mesage">Для завершения регистрации войдите на сайт используя логин и пароль.<p>';
+     echo '<p class="mesage">После этого в меню вврху введите код, отправленный на электронную почту.<p>';
+    } else {
            $_SESSION['regimRaboty']=14;
-           $menuUp->__unserialize('menu4','registracia',array('redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),quotemeta($_POST['Почта']),$status->capcha()));
+           
+           $menuUp->__unserialize(array('menu4','registracia','redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),$mailQ,$status->capcha()));
            if ($status->prowerkaLogin()) echo '<p class="error">Такой логин уже существует или не соответствует правилам.</p>';
            if ($status->prowerkaMail()) echo '<p class="error">Такая почта уже существует или не соответствует правилам.</p>';
            if ($_POST['parol']!=$_POST['parol2']) echo '<p class="error">Разные пароли</p>';
            if ($_POST['parol']=="" || $_POST['parol']==" " || $_POST['parol']=="Пароль") echo '<p class="error">Отсутствует или плохой пароль</p>';
           }
+    
 }
 
 if (isset($_POST['registracia'])  &&  $_POST['registracia']=='Проверить')  { //Если нажата кнопка Проверить 
   $_SESSION['regimRaboty']=13;
-  $menuUp->__unserialize('menu4','registracia',array('redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),quotemeta($_POST['Почта']),$status->capcha()));
+  $mailQ=quotemeta($_POST['Почта']);
+  $mailQ=preg_replace('/\\\./','.',$mailQ);
+  $menuUp->__unserialize(array('menu4','registracia','redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),$mailQ,$status->capcha()));
   if ($status->prowerkaLogin()) echo '<p class="error">Такой логин уже существует или не соответствует правилам.</p>'; else  echo '<p class="mesage">Логин свободен.</p>';
   if ($status->prowerkaMail()) echo '<p class="error">Такая почта уже существует или не соответствует правилам.</p>'; else  echo '<p class="mesage">Почта свободна.</p>';
 }
 if (isset($_POST['registracia'])  &&  $_POST['registracia']=='Очистить')  { //Если нажата кнопка Очистить
   $_SESSION['regimRaboty']=13;
-  $menuUp->__unserialize('menu4','registracia',array('redaktor.php','Логин','Пароль','Повторить','Почта',$status->capcha()));
+  $menuUp->__unserialize(array('menu4','registracia','redaktor.php','Логин','Пароль','Повторить','Почта',$status->capcha()));
 }
 if (isset($_POST['registracia'])  &&  $_POST['registracia']=='Сменить капчу')  { //Если нажата кнопка Сменить капчу
   $_SESSION['regimRaboty']=13;
-  $menuUp->__unserialize('menu4','registracia',array('redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),quotemeta($_POST['Почта']),$status->capcha()));
+  $mailQ=quotemeta($_POST['Почта']);
+  $mailQ=preg_replace('/\\\./','.',$mailQ);
+  $menuUp->__unserialize(array('menu4','registracia','redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),$mailQ,$status->capcha()));
 }
-if (isset($_POST['login'])  &&  $_POST['login']=='Регистрация' && $_SESSION['regimRaboty']!=13)  { //Если нажата кнопка Регистрация
-  $menuUp->__unserialize('menu4','registracia',array('redaktor.php','Логин','Пароль','Повторить','Почта',$status->capcha()));
+if (isset($_POST['login'])  &&  $_POST['login']=='Регистрация'){// && $_SESSION['regimRaboty']!=13)   { //Если нажата кнопка Регистрация
+  $menuUp->__unserialize(array('menu4','registracia','redaktor.php','Логин','Пароль','Повторить','Почта',$status->capcha()));
   $_SESSION['regimRaboty']=13;
 }
 ///////////////////////////////////////////////////////////Конец работы с регистрацией///////////////////////////////////////////

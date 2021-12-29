@@ -54,41 +54,36 @@ body{
     text-align: left;
 }
 /*************************Стили левого меню********************/
-.levBlocklevBlock0 {
+.levBlocklevBlock0,.levBlocklevBlock5,.levBlocklevBlock10,.levBlocklevBlock15,.levBlocklevBlock20,.levBlocklevBlock25,
+.levBlocklevBlock30,.levBlocklevBlock35,.levBlocklevBlock40,.levBlocklevBlock45,.levBlocklevBlock50,.levBlocklevBlock55
+{
     height:25px; 
     width: 90%;
     border-color: rgb(140, 67, 150);
     font-size: 12px;
 }
-.levBlocklevBlock5 {
-    margin-top: 5px;
-    height:25px; 
-    width: 90%;
-    border-color: rgb(140, 67, 150);
-    font-size: 12px;
-}
-.levBlocklevBlock10 {
-    margin-top: 5px;
-    height:25px; 
-    width: 90%;
-    border-color: rgb(140, 67, 150);
-    font-size: 12px;
-}
+
 /*************************Стили левого меню конец********************/
-.otstup{
-    margin-top: 50px;   
-}
+/*****************************правое меню***************************/
 .prawy{
     margin-top: 1px; 
 }
+.pravoe-pole-div{
+    margin-top: 75px;
+}
 .prawBlock {
     margin-top: 5px;
-    height:12 px; 
+    height:25px; 
     width: 100%;
     border-color: rgb(140, 67, 150);
     font-size:10px;
     line-height: 1em;
 }
+/*****************************правое меню конец***************************/
+.otstup{
+    margin-top: 50px;   
+}
+
 .bd2_redaktor{
     height:500px; 
 }
@@ -452,3 +447,207 @@ code {
     margin-left: 10px;
 }
 /*******************************************************preg_split*****************************************************************/
+/*******************************************************preg_replace*****************************************************************/
+.block_function_test_preg_replace{ /*общий класс формы*/
+    font-size: 14px;
+    line-height: 15px;
+}
+.block_function_test_preg_replace_div{ /*общий див формы*/
+    margin-left: 20px;
+    color:rgb(15, 56, 3);
+}
+.regular-block-name-function-preg_replace-pPH{
+    margin-left: 80px;
+    margin-top: 10px;
+    height: 16px;
+    float: left;
+}
+.block_function_test_preg_replacepattern8,.block_function_test_preg_replacepatternMas112,
+.block_function_test_preg_replacepatternMas215,.block_function_test_preg_replacepatternMas318,
+.block_function_test_preg_replacepatternMas422,.block_function_test_preg_replacepatternMas525,
+.block_function_test_preg_replacepatternMas628,.block_function_test_preg_replacepatternMas732,
+.block_function_test_preg_replacepatternMas835,.block_function_test_preg_replacepatternMas938,
+.block_function_test_preg_replacereplacement47,.block_function_test_preg_replacereplacement151,
+.block_function_test_preg_replacereplacement254,.block_function_test_preg_replacereplacement357,
+.block_function_test_preg_replacereplacement461,.block_function_test_preg_replacereplacement564,
+.block_function_test_preg_replacereplacement667,.block_function_test_preg_replacereplacement771,
+.block_function_test_preg_replacereplacement874,.block_function_test_preg_replacereplacement977,
+.block_function_test_preg_replacesubject86,.block_function_test_preg_replacesubject190,
+.block_function_test_preg_replacesubject293,.block_function_test_preg_replacesubject396,
+.block_function_test_preg_replacesubject4100,.block_function_test_preg_replacesubject5103,
+.block_function_test_preg_replacesubject6106,.block_function_test_preg_replacesubject7110,
+.block_function_test_preg_replacesubject8113,.block_function_test_preg_replacesubject9116,
+.block_function_test_preg_replacelimit125{
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 25px;
+}
+.block_function_test_preg_replacepattern8{
+    margin-left: 43px;
+}
+.block_function_test_preg_replacesubject86{
+    margin-left: 46px;
+}
+.block_function_test_preg_replacelimit125{
+    margin-left: 80px;
+}
+.block_function_test_preg_replacebuttonPregGrep136,.block_function_test_preg_replacereset140{
+    height: 30px;
+    float: left;
+    margin-left: 158px;
+    font-size: 14px;
+    border-color: black;
+    border-style: solid;
+    margin-top: 20px;
+}
+.block_function_test_preg_replacereset140{
+    margin-left: 10px;
+}
+/*******************************************************preg_replace*****************************************************************/
+/*******************************************************preg_replace_callback*****************************************************************/
+.block_function_test_preg_replace_callback{ /*общий класс формы*/
+    font-size: 14px;
+    line-height: 15px;
+}
+.block_function_test_preg_replace_callback_div{ /*общий див формы*/
+    margin-left: 20px;
+    color:rgb(15, 56, 3);
+}
+.regular-block-name-function-preg_replace_callback-pPH{
+    margin-left: 80px;
+    margin-top: 10px;
+    height: 16px;
+    float: left;
+}
+.block_function_test_preg_replace_callbackpattern8,.block_function_test_preg_replace_callbackpatternMas112,
+.block_function_test_preg_replace_callbackpatternMas215,.block_function_test_preg_replace_callbackpatternMas318,
+.block_function_test_preg_replace_callbackpatternMas422,.block_function_test_preg_replace_callbackpatternMas525,
+.block_function_test_preg_replace_callbackpatternMas628,.block_function_test_preg_replace_callbackpatternMas732,
+.block_function_test_preg_replace_callbackpatternMas835,.block_function_test_preg_replace_callbackpatternMas938,
+
+.block_function_test_preg_replace_callbacksubject88,
+.block_function_test_preg_replace_callbacksubject192,
+.block_function_test_preg_replace_callbacksubject295,
+.block_function_test_preg_replace_callbacksubject398,
+.block_function_test_preg_replace_callbacksubject4102,
+.block_function_test_preg_replace_callbacksubject5105,
+.block_function_test_preg_replace_callbacksubject6108,
+.block_function_test_preg_replace_callbacksubject7112,
+.block_function_test_preg_replace_callbacksubject8115,
+.block_function_test_preg_replace_callbacksubject9118,
+
+.block_function_test_preg_replace_callbackflags138,
+.block_function_test_preg_replace_callbacklimit127
+{
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 25px;
+}
+
+.block_function_test_preg_replace_callbacklimit8{
+    margin-left: 43px;
+}
+.block_function_test_preg_replace_callbackcallBack52
+{
+    margin-left: 96px;
+}
+.block_function_test_preg_replace_callbacklimit107{
+    margin-left: 46px;
+}
+.block_function_test_preg_replace_callbackflags118{
+    margin-left: 43px;
+}
+.block_function_test_preg_replace_callbackbuttonPregGrep157,.block_function_test_preg_replace_callbackreset161{
+    height: 30px;
+    float: left;
+    margin-left: 158px;
+    font-size: 14px;
+    border-color: black;
+    border-style: solid;
+    margin-top: 20px;
+}
+.block_function_test_preg_replace_callbackreset161{
+    margin-left: 10px;
+}
+
+.regular-block-name-function-preg_match-pattern-nameFunc,.regular-block-name-function-preg_match-pattern-poz1,
+.regular-block-name-function-preg_match-pattern-poz2,.block_function_test_preg_replace_callbackcallBack64
+{
+background-color: rgba(77, 158, 158, 0.596); 
+width: 100%;
+}
+.regular-block-name-function-preg_match-pattern-nameFunc{ /*имя келбек функции*/
+    float: left;
+    margin-left: 5px;  
+}
+.regular-block-name-function-preg_match-pattern-poz1{
+    float: left;
+    margin-left: 15px;  
+}
+.regular-block-name-function-preg_match-pattern-poz2,.block_function_test_preg_replace_callbackcallBack64{
+    float: left;
+    margin-left: 25px;  
+    
+}
+.block_function_test_preg_replace_callbackcallBack64{
+    width: 30px;
+}
+/*******************************************************preg_replace*****************************************************************/
+/*******************************************************preg_replace_callback_array*****************************************************************/
+.block_function_test_preg_replace_callback_array{ /*общий класс формы*/
+    font-size: 14px;
+    line-height: 15px;
+}
+.block_function_test_preg_replace_callback_array_div{ /*общий див формы*/
+    margin-left: 20px;
+    color:rgb(15, 56, 3);
+    
+}
+.regular-block-name-function-preg_replace_callback_array{ /*общай класс для тега Р */
+    float: left;
+}
+
+.regular-block-name-function-preg_replace_callback_array-pPH{
+    margin-left: 80px;
+    margin-top: 10px;
+    height: 16px;
+    float: left;
+}
+.block_function_test_preg_replace_callback_arraypattern15, /*поля типа текст*/
+.block_function_test_preg_replace_callback_arrayretur114,
+.block_function_test_preg_replace_callback_arraypattern221,
+.block_function_test_preg_replace_callback_arrayretur230,
+.block_function_test_preg_replace_callback_arraypattern337,
+.block_function_test_preg_replace_callback_arrayretur346,
+.block_function_test_preg_replace_callback_arraysubject58,
+.block_function_test_preg_replace_callback_arraylimit67,
+.block_function_test_preg_replace_callback_arrayflags78
+{
+    float:left;
+    height: 22px;
+}
+
+.block_function_test_preg_replace_callback_arraybuttonPregGrep97,.block_function_test_preg_replace_callback_arrayreset101{
+    float: left;
+    margin-left: 20px;  
+    margin-bottom: 20px;
+    width: 120px;
+    border-color: black;
+    border-style: solid;
+    height: 25px;
+    font-size: 12px;
+}
+.block_function_test_preg_replace_callback_arraybuttonPregGrep97:hover,.block_function_test_preg_replace_callback_arrayreset101:hover{
+    border-color: rgb(32, 35, 211);
+    border-style: solid;
+    height: 30px;
+    font-size: 15px;
+    margin-bottom: 15px;
+    background-color: rgba(89, 146, 36, 0.267);
+}
+.block_function_test_preg_replace_callback_arrayreset101{
+    margin-left: 30px;
+}
+/*******************************************************preg_replace*****************************************************************/

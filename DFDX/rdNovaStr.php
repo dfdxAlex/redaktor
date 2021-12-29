@@ -5,6 +5,15 @@ session_start();
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MF3F7YTKCQ');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
@@ -21,11 +30,13 @@ if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
 if (!isset($_SESSION['sSajta'])) $_SESSION['sSajta']=false;
 include 'funcii.php';
-include 'class.php';
+//include 'class.php';
+include 'classInstrument.php';
 
 $class = new redaktor\statistic();
 $status = new redaktor\login();
 $maty = new redaktor\maty();
+
 
 
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
@@ -36,13 +47,13 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
       <?php 
       $menuUp = new redaktor\menu(); 
       if ($_SESSION['status']>99 || $_SESSION['status']==9)
-       $menuUp->__unserialize('menu6','podtverdit',array('redaktor.php','Введите код'));
+       $menuUp->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
 
       if ($_SESSION['status']==5 || $_SESSION['status']==4)
-         $menuUp->__unserialize('menu3','redaktor_up',array('Редактор','Сайт','Выйти','Создать страницу'));
+         $menuUp->__unserialize(array('menu3','redaktor_up','Редактор','Сайт','Выйти','Создать страницу'));
 
       if ($_SESSION['status']==0)
-       $menuUp->__unserialize('menu4','login',array('redaktor.php','Логин','Пароль','Вход','Регистрация'));
+       $menuUp->__unserialize(array('menu4','login','redaktor.php','Логин','Пароль','Вход','Регистрация'));
 
        if ($_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3)
          $menuUp->menu('dla_statusob_123');
@@ -62,6 +73,9 @@ $_SESSION['variantNowaStr']=0;
 if (isset($_POST['variantNowaStr']) && $_POST['variantNowaStr']=='Пустая страница для редактора DFDX, только необходимая разметка.')
  $_SESSION['variantNowaStr']=1;
 
+if (isset($_POST['variantNowaStr']) && $_POST['variantNowaStr']=='Пустая страница для сайта, только необходимая разметка.')
+ $_SESSION['variantNowaStr']=2;
+
 // меню выбора типа страницы nastrNowaStranica.php
 if ($_SESSION['variantNowaStr']==0)
 $maty->formBlock(
@@ -74,8 +88,64 @@ $maty->formBlock(
    3,
   'submit',                         //class="nastrNovStranicvariantNowaStr5"
   'variantNowaStr',
-  'Пустая страница для редактора DFDX, только необходимая разметка.'
+  'Пустая страница для редактора DFDX, только необходимая разметка.',
+  'br',
+  'submit',                         //class="nastrNovStranicvariantNowaStr9"
+  'variantNowaStr',
+  'Пустая страница для сайта, только необходимая разметка.'
 );
+
+if ($_SESSION['variantNowaStr']==2) // Нажата кнопка ...Пустая страница для редактора DFDX, только необходимая разметка.
+{
+  $nameFileNotPhp=$_POST['nameFile'];
+  $nameCategori=$nameFileNotPhp;
+  //$nameCategori=preg_replace('/\c/','',$nameCategori,-1);
+  //$nameCategori=preg_replace('/\s/','',$nameCategori,-1);
+  $nameCategori=preg_replace('/[^\d\w]/','',$nameCategori,-1);
+  $nameMetka=$nameFileNotPhp;
+
+  $instrum = new redaktor\modul(); //
+  $stat = new redaktor\statistic();
+     
+  if ($instrum->numberNews($nameCategori)>0) $nameCategori='Задайте категорию вручную';
+  if ($stat->getMetkaStatistik($nameMetka)>0) $nameMetka='Задайте метку счётчика для страницы';
+
+     // проверим есть ли в названии файла .php, если нет, то добавить
+     if (stripos($_POST['nameFile'],'.php')>0) $_SESSION['nameFile']=$_POST['nameFile'];
+     else $_SESSION['nameFile']=$_POST['nameFile'].'.php';
+
+   echo '<section class="container">';
+   echo '<div class="row">';
+   echo '<div class="col-1">';
+   echo '</div>';
+   echo '<div class="col-10">';
+   echo '<p class="mesage">Данная опция создает файл - стартовую страницу для Вашего сайта.</p>';
+   echo '<p class="mesage">В начале файла будут стартовые настройки для html.</p>';
+   echo '<p class="mesage">Подключен Bootstrap 5.</p>';
+   echo '<p class="mesage">Установлено верхнее меню.</p>';
+   echo '<p class="mesage">Заданы необходимые изменения в странице шаблона, для этого необходимо ввести дополнительные данные.</p>';
+   echo '<br>';
+   echo '<form method="POST">';
+   echo '<p class="mesage">В поле ниже путь к картинке-шапке</p>';
+   echo '<input type="text" class="pole-dop-inf-rdNovaStr" name="images-hapka-rdNovaStr" value="image/logo.png"><br><br>';
+
+   echo '<p class="mesage">В поле ниже путь к картинке-заголовку, описывающую тематику раздела</p>';
+   echo '<input type="text" class="pole-dop-inf-rdNovaStr" name="images-tema-kategirii-rdNovaStr"  value="image/html.png"><br><br>';
+
+   echo '<p class="mesage">В поле ниже категория статей, согласно этой категории в правом меню будут кнопки со статьями.</p>';
+   echo '<input type="text" class="pole-dop-inf-rdNovaStr" name="kategoria-news-rdNovaStr" value="'.$nameCategori.'"><br><br>';
+
+   echo '<p class="mesage">В поле ниже задайте метку для счётчика посещений.</p>';
+   echo '<input type="text" class="pole-dop-inf-rdNovaStr" name="metka-rdNovaStr" value="'.$nameMetka.'"><br><br>';
+   
+   echo '<button class="generaciaStr btn" formaction="nastrNowaStranica.php" >Ok</button>';
+   echo '<button class="generaciaStr btn"formaction="rdNovaStr.php" >Вернуться</button>';
+   echo '</form>';
+   echo '</div>';
+   echo '<div class="col-1">';
+   echo '</div>'; 
+   
+}
 
 if ($_SESSION['variantNowaStr']==1) // Нажата кнопка ...Пустая страница для редактора DFDX, только необходимая разметка.
 {

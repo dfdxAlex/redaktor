@@ -3,31 +3,34 @@ namespace redaktor;
 // класс с общими функциями 
 class instrument
 {
-    public $mesaz;
-    public $nameKn;
-    public $classDiv;
-    public $classP;
-    public $classButton;
-
     public function __construct(){
     }  
+   // функция возвращает труе, если входящее значение не равно Фальс и не равно NULL и существует class instrument
+   public function notFalseAndNULL($data)
+   {
+     if ($data===false) return false;
+     if (is_null($data)) return false;
+     if (!isset($data)) return false;
+     return true;
+   }
    // функция выводит на экран массив неизвестного уровня - главная задача
    // функция выводит тип переменной и её значение если это не массив
    // функция просматривает до 9-ти мерные массивы включительно
    public function printMas($mas)
    {
+      if (!isset($mas)) {echo 'Переменная не существует';return;}
       if ($this->trueFalseNull($mas)!==false) echo $this->trueFalseNull($mas);
-      if (gettype($mas)=='unknown type') echo 'Неопределенный тип переменной';
-      if (gettype($mas)=='object') echo 'Входной параметр тира "object"';
-      if (gettype($mas)=='resource') echo 'Входной параметр тира "resource"';
-      if (gettype($mas)=='string') echo 'Тип "string": '.$mas;
-      if (gettype($mas)=='double') echo 'Тип "double или float": '.$mas;
-      if (gettype($mas)=='integer') echo 'Тип "integer": '.$mas;
-
+      if (gettype($mas)=='unknown type') {echo 'Неопределенный тип переменной';return;}
+      if (gettype($mas)=='object') {echo 'Входной параметр тира "object"';return;}
+      if (gettype($mas)=='resource') {echo 'Входной параметр тира "resource"';return;}
+      if (gettype($mas)=='string') {echo 'Тип "string": '.$mas;return;}
+      if (gettype($mas)=='double') {echo 'Тип "double или float": '.$mas;return;}
+      if (gettype($mas)=='integer') {echo 'Тип "integer": '.$mas;return;}
+      $masZero=true; // если не будет ни одного входа, то считать массив пустым
       if (gettype($mas)=='array')
-        {
+        { 
           foreach ($mas as $index2 => $mas2)
-           {
+           {$masZero=false;
              if ($this->trueFalseNull($mas2)!==false) echo '['.$index2.']='.$this->trueFalseNull($mas2);
              if (gettype($mas2)=='string' || gettype($mas2)=='double' || gettype($mas2)=='integer') echo '['.$index2.']='.$mas2;
              if (gettype($mas2)=='array')
@@ -92,7 +95,7 @@ class instrument
            echo '<br>';
         }
         echo '<br>';
-
+        if (gettype($mas)=='array' && $masZero) echo 'Массив пуст';
    }
    // функция возвращает текстовое значение переданного параметра булеан или нулл или false, если параметр не соответствует этим типам
    public function trueFalseNull($param)
@@ -681,7 +684,7 @@ foreach($parametr as $value)
 
         if ($value=='br') 
           {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]>1) $kolWoBr=$parametr[$i+1]; else $kolWoBr=1;
+            if (isset($parametr[$i+1]) && $parametr[$i+1]>1 && gettype($parametr[$i+1])=='integer') $kolWoBr=$parametr[$i+1]; else $kolWoBr=1;
             for($j=0; $j<$kolWoBr; $j++)
              echo '<br>';
           }
@@ -740,6 +743,7 @@ foreach($parametr as $value)
           }
         if ($value=='submit') 
           {
+            //echo '<br>нашли submit';
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
@@ -791,7 +795,7 @@ foreach($parametr as $value)
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
             echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'">'.$text.'</'.$value.'></div>';
           }
-          $i++;
+          $i++; 
        }
        echo '</div>'; // конец внутреннего блока
        if (!$form_not_close)
@@ -857,22 +861,12 @@ foreach($parametr as $value)
 // ////////////////Считываем параметры инициализации базы данных////////////////////////////
 class initBD extends instrument
 {
-    public $host;
-    public $loginBD;
-    public $parol;
-    public $nameBD;
-    public $con;
-    public $site;
     ////////////////////////////////////////////////Настройка движка
     //public $pokazFormDobableniaMataOtPolzovatela; // информация показывать ли на сайте форму сбора матов. 1-показать, 0-не показывать.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function __construct()
     {
         parent::__construct();
-        //$filePath='initBD.ini';
-        //while (!file_exists($filePath))
-        //  $filePath='../'.$filePath;
-
         $fd = fopen(parent::searcNamePath('initBD.ini'), 'r') or die("не удалось открыть файл");
         $this->host=stristr(fgets($fd),';',true); 
         $this->loginBD=stristr(fgets($fd),';',true); 
@@ -905,7 +899,7 @@ class initBD extends instrument
     public function initBdLogin(){return $this->loginBD;}
     public function initBdParol(){return $this->parol;}
     public function initBdNameBD(){return $this->nameBD;}
-    public function initsite(){return $this->site;}
+    public function initsite(){return $this->site;} // домашняя страница
 
 
       public function sborMatov()  {
@@ -1012,6 +1006,7 @@ class initBD extends instrument
       $rez=$this->zaprosSQL($zapros);
       if (!$rez) return false;
       $stroka=mysqli_fetch_array($rez);
+      if (is_null($stroka)) return false;
       $strr='--'.$stroka[0];
       $strVhod=stripos( $strr ,$slovo);
       if ($strVhod>1) return true;
@@ -1140,12 +1135,9 @@ class initBD extends instrument
      {
         $zapros="DELETE FROM ".$nameTablice." ".$were;
         $rez=$this->zaprosSQL($zapros);
-        //echo $zapros;
      }
      public function zaprosSQL($zapros) // создать SQL запрос, условие согласно синтаксису SQL
      {
-       //if ($zapros==false) return false;
-       //if (is_null($zapros)) return false;
         $statistikTrueFalseRez=mysqli_query($this->con,'SELECT statik_true FROM statistik_dfdx WHERE 1');
         $statistikTrueFalse=mysqli_fetch_assoc($statistikTrueFalseRez);
 
@@ -1157,7 +1149,6 @@ class initBD extends instrument
           mysqli_query($this->con,'UPDATE statistik_dfdx SET n_zapros='.$statistik_n_zapros['n_zapros'].' WHERE 1');
           mysqli_query($this->con,'UPDATE statistik_dfdx SET d_zapros="'.date("y.m.d").'" WHERE 1');
          }
-
         $rez=mysqli_query($this->con,$zapros);
         return $rez;
      }
@@ -1169,7 +1160,7 @@ class initBD extends instrument
         $rez=$this->zaprosSQL($zapros);
         if (!$rez) echo 'Проблема с таблицей "tablica_tablic"';
         $stroka=mysqli_fetch_array($rez);
-        if ($stroka[0]!=NULL && $stroka[0]>-1)  $boolRez=true;
+        if (isset($stroka[0]) && !is_null($stroka[0]) && $stroka[0]>-1)  $boolRez=true;
         return $boolRez;
      }
      public function kolVoZapisTablice($nameTablice) // считает число записей в таблицк
@@ -1321,23 +1312,6 @@ class initBD extends instrument
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class htmlTeg extends initBD
 {
-    public $id;
-    public $teg;
-    public $info;
-    public $infoVideo;
-    public $leson_id;
-    public $atrib_id;
-    public $sintax_id;
-    public $kluc1;
-    public $kluc2;
-    public $kluc3;
-    public $kluc4;
-    public $kluc5;
-    public $kluc6;
-    public $kluc7;
-    public $kluc8;
-    public $kluc9;
-    public $kluc10;
 
 ///////////////////////////////////////////////Конструктор///////////////////////////////////////////////
     public function __construct($nameTeg)
@@ -1501,28 +1475,6 @@ class htmlTeg extends initBD
 
 class dataAktual  extends initBD
 {
-    public $con;
-    public $secondsSite; //	Числовое представление секунд	от 0 до 59
-    public $minutesSite; //	Числовое представление минут	от 0 до 59
-    public $hoursSite;   //	Числовое представление часов	от 0 до 23
-    public $mdaySite;    //	Порядковый номер дня месяца	от 1 до 31
-    public $wdaySite;    //	Порядковый номер дня недели	от 0 (воскресенье) до 6 (суббота)
-    public $monSite;     //	Порядковый номер месяца	от 1 до 12
-    public $yearSite;    //	Номер года, 4 цифры	Примеры: 1999, 2003
-    public $ydaySite;    //	Порядковый номер дня в году	от 0 до 365
-    public $weekdaySite; //	Полное наименование дня недели	от Sunday до Saturday
-    public $monthSite;   //	Полное наименование месяца, например, January или March	от January до December
-
-    public $secondsBd;   //	Числовое представление секунд	от 0 до 59
-    public $minutesBd;   //	Числовое представление минут	от 0 до 59
-    public $hoursBd;     //	Числовое представление часов	от 0 до 23
-    public $mdayBd;      //	Порядковый номер дня месяца	от 1 до 31
-    public $wdayBd;      //	Порядковый номер дня недели	от 0 (воскресенье) до 6 (суббота)
-    public $monBd;       //	Порядковый номер месяца	от 1 до 12
-    public $yearBd;      //	Номер года, 4 цифры	Примеры: 1999, 2003
-    public $ydayBd;      //	Порядковый номер дня в году	от 0 до 365
-    public $weekdayBd;   //	Полное наименование дня недели	от Sunday до Saturday
-    public $monthBd;     //	Полное наименование месяца, например, January или March	от January до December
 
     public function __construct()
         {
@@ -1581,9 +1533,7 @@ class dataAktual  extends initBD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class redaktor  extends menu
 {
-    public $con;
-    public $strok;
-    public $stolb;
+ 
     public function __construct()
      {
         $this->colVn=0; // для хранения информации о размере поля редактирования главной таблицы
@@ -1603,7 +1553,7 @@ class redaktor  extends menu
         //Читаем последнее число выводимых таблиц и последнее имя выводимой таблицы
         echo '<h6 class="mesage">*поле слева предназначено для имени таблицы</h6>';
         echo '<h6 class="error">**Внимание!! Не использовать заглавные буквы в названии таблицы</h6>';
-         parent::__unserialize('menu7','redaktor_nastr7',array('redaktor.php',$poslednijZapros,'не важно','не важно','не важно','не важно','не важно','не важно','не важно','не важно','не важно','не важно'));
+         parent::__unserialize(array('menu7','redaktor_nastr7','redaktor.php',$poslednijZapros,'не важно','не важно','не важно','не важно','не важно','не важно','не важно','не важно','не важно','не важно'));
      }
     public function __destruct(){
         mysqli_close($this->con);
@@ -1613,6 +1563,7 @@ class redaktor  extends menu
         $zapros="SELECT CLASS FROM tablica_tablic WHERE NAME='".$nameMenu."'";
         $rez=parent::zaprosSQL($zapros);
         $stroka=mysqli_fetch_array($rez);
+        if (!isset($stroka)) return false;
         if ($stroka[0]==0) return false;
         if ($stroka[0]==1) return true;
       }
@@ -1832,8 +1783,12 @@ public function loadTablic($nameTablic)  // загрузить главную т
         if (parent::searcNameTablic($nameTablic) && !parent::id_tab_gl_searc($nameTablic)) //Если нашли таблицу
         {
             $zapros="SELECT kol_voKn FROM tablica_tablic WHERE NAME='".$nameTablic."'";  // Проверяем данные о числе записей в таблице таблиц
-            $kol_voZapisejTablicaTablic=mysqli_fetch_assoc(parent::zaprosSQL($zapros));
-            echo '<p class="mesage">Число записей в таблице '.$nameTablic.' равно '.$kol_voZapisejTablicaTablic['kol_voKn'].'</p>';
+            $rez=parent::zaprosSQL($zapros);
+            $kol_voZapisejTablicaTablic=array();
+            $kol_voZapisejTablicaTablic[0]=2;
+            if ($rez!==false) $kol_voZapisejTablicaTablic=mysqli_fetch_array($rez);
+            if (!isset($kol_voZapisejTablicaTablic)) $kol_voZapisejTablicaTablic[0]='Число записей не известно';
+            echo '<p class="mesage">Число записей в таблице '.$nameTablic.' равно '.$kol_voZapisejTablicaTablic[0].'</p>';
             $mesaz="В поле ниже введите число позиций(кнопок) в создаваемом меню";
             $nameKn='kol_voKn';
             $classDiv="buttonCreateNameMenuDiv";
@@ -3590,6 +3545,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
           $typeMenu=34;
           $rez=parent::zaprosSQL($zapros);
           $stroka=mysqli_fetch_assoc($rez);
+          if (!is_null($stroka))
           if ($stroka['ORDINAL_POSITION']>4) $typeMenu="5";
           //////////////////////////////////////////////////////////////////////
             $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
@@ -3597,6 +3553,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
             $kol_voZapisej=parent::kolVoZapisTablice($nameTablic);        // Проверяем фактическое число записей в таблице
             $zapros="SELECT kol_voKn FROM tablica_tablic WHERE NAME='".$nameTablic."'";  // Проверяем данные о числе записей в таблице таблиц
             $kol_voZapisejTablicaTablic=mysqli_fetch_assoc(parent::zaprosSQL($zapros));
+            if (!isset($kol_voZapisejTablicaTablic['kol_voKn'])) $kol_voZapisejTablicaTablic['kol_voKn']=0;
             $kol_voStrok=$kol_voZapisejTablicaTablic['kol_voKn'];
             //Находим максимальное значение из трёх источников: из таблицы таблиц, из введенного и из фактического
             if ($kol_voStrokVvod>=$kol_voZapisej) $maxKnopok=$kol_voStrokVvod; else $maxKnopok=$kol_voZapisej;
@@ -3606,6 +3563,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
                 $zapros="UPDATE tablica_tablic SET `kol_voKn`=".$kol_voStrok." WHERE NAME='".$nameTablic."'";
                 parent::zaprosSQL($zapros);
             }
+            //parent::printMas($kol_voZapisejTablicaTablic['kol_voKn']);
             if ($kol_voZapisej>$kol_voZapisejTablicaTablic['kol_voKn'])
               {
                 $zapros="UPDATE tablica_tablic SET `kol_voKn`=".$kol_voStrok." WHERE NAME='".$nameTablic."'";
@@ -3623,7 +3581,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
             $status="";
             for ($i=0; $i<$kol_voStrok; $i++)
             {
-                if ($kol_voZapisej!=NULL && $kol_voZapisej>$i)
+                if (!is_null($kol_voZapisej) && $kol_voZapisej>$i)
                  {
                   $stroka=mysqli_fetch_assoc($rez);
                   $id=$stroka['ID'];
@@ -3671,12 +3629,12 @@ public function loadTablic($nameTablic)  // загрузить главную т
 
               if ($typeMenu==3) { // если menu3
                 echo '<dt class="col-3 text-truncate">Имя функции (PHP)</dt>';
-                echo '<dd class="col-9 text-truncate style-infoMenu">Функция __unserialize(menu3,'.$nameTablic.',array(kn4,kn1,kn2,kn1,kn4))</dd>';
+                echo '<dd class="col-9 text-truncate style-infoMenu">Функция __unserialize(array(menu3,'.$nameTablic.',kn4,kn1,kn2,kn1,kn4))</dd>';
                 }
 
               if ($typeMenu==4 || $typeMenu==5 || $typeMenu==6 || $typeMenu==7 || $typeMenu==8 || $typeMenu==9) { // если menu5
                   echo '<dt class="col-3 text-truncate">Имя функции (PHP)</dt>';
-                  echo '<dd class="col-9 text-truncate style-infoMenu">Функция __unserialize(menu'.$typeMenu.','.$nameTablic.',array(ссылка на страницу обработчика,имя текстового поля ввода,имя текстового поля ввода...,)) или<br>menu'.$typeMenu.'('.$nameTablic.',ссылка на страницу обработчика)</dd>';
+                  echo '<dd class="col-9 text-truncate style-infoMenu">Функция __unserialize(array(menu'.$typeMenu.','.$nameTablic.',ссылка на страницу обработчика,имя текстового поля ввода,имя текстового поля ввода...,)) или<br>menu'.$typeMenu.'('.$nameTablic.',ссылка на страницу обработчика)</dd>';
               }
              ////////////////////////////////////////////////////////////////
               echo '<dt class="col-3 text-truncate">Выводимые объекты</dt>';
@@ -3829,7 +3787,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
                   echo '<p>2-Редактор</p>';
                   echo '<p>3-Подписчик</p>';
                   echo '<p>4-Модератор (имеет доступ к таблицам в базе данных сайта)</p>';
-                  echo '<p>5-Супер Модератор (имеет доступ ко всем таблицам в базе данных)</p>';
+                  echo '<p>5-Администратор (имеет доступ ко всем таблицам в базе данных)</p>';
                   echo '<p>9-Зарегистрированный, но не подтвердивший регистрацию пользователь</p>';
                   echo '</dd>';
                 }  
@@ -3876,7 +3834,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
 
                   echo '<dt class="col-3">Работа с магическим методом</dt>';
                   echo '<dd class="col-9 text-truncate style-infoMenu">';
-                  echo '<p>__unserialize(menu'.$typeMenu.','.$nameTablic.',array(ссылка на обработчик,текст в первом текстовом поле,...));</p>';
+                  echo '<p>__unserialize(array(menu'.$typeMenu.','.$nameTablic.',ссылка на обработчик,текст в первом текстовом поле,...));</p>';
                   echo '<p>Первый параметр задает название меню.</p>';
                   echo '<p>Второй параметр задает имя таблицы меню.</p>';
                   if ($typeMenu==4 || $typeMenu==5) 
@@ -3894,7 +3852,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
               if ($typeMenu==3 || $typeMenu==1) { // если menu 3
               echo '<dt class="col-3">Применение в коде (PHP)</dt>'; 
               echo '<dd class="col-9 text-truncate style-infoMenu">';
-              echo '<p><code> __unserialize('.$nameTablic.',array(имя кнопки 1,имя кнопки 2)) </code></p>';
+              echo '<p><code> __unserialize(array('.$nameTablic.',имя кнопки 1,имя кнопки 2)) </code></p>';
               echo '<p>Меню выводит кнопки запрашивая их по именам, начиная с первого параметра в массиве.</p>';
               echo '</dd>';
               }
@@ -4010,6 +3968,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
                     $typeMenu=34;
                     $rez=parent::zaprosSQL($zapros);
                     $stroka=mysqli_fetch_assoc($rez);
+                    if (!is_null($stroka))
                     if ($stroka['ORDINAL_POSITION']==5) $typeMenu="5";
                     //////////////////////////////////////////////////////////////////////
             parent::clearTab($nameTablic);
@@ -4053,10 +4012,6 @@ public function loadTablic($nameTablic)  // загрузить главную т
 
 class menu extends initBD
  {
-    public $kn=array();
-    public $masKn=array();
-    public $con;
-    public $zapuskMenuMagiceski;
      public function __construct()
      {
         parent::__construct();
@@ -4146,6 +4101,7 @@ class menu extends initBD
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
         $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
         $i=0;
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
         {
@@ -4180,6 +4136,7 @@ class menu extends initBD
               if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,2);
              }
             //////////////////////////////////////
+            if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
        if ($kod>=32768) $this->kn[15]=true; else $this->kn[15]=false;
        while ($kod>=32768) {$kod=$kod-32768;}
        $kod=$kod << 1;
@@ -4264,6 +4221,7 @@ class menu extends initBD
               if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,3);}
             //////////////////////////////////////
         echo'<section class="'.$nameTablic.'">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
         foreach ($this->masKn as $value)
          {
             $zapros="SELECT * FROM ".$nameTablic." WHERE NAME='".$value."'";
@@ -4278,18 +4236,24 @@ class menu extends initBD
         echo'</section>';
      }
 
-     public function __unserialize($nameMenu,$nameTablic,array $data):void
+     //public function __unserialize($nameMenu,$nameTablic,array $data):void
+     // переделал параметры входящие функции, по какой-то причине функция стала принимать только массив на входе, после перехода на php8
+     public function __unserialize(array $data):void
      {
+      $nameMenu=$data[0];
+      $nameTablic=$data[1];
+      //echo $nameMenu.'--'.$nameTablic.'--'.$data[2];
         $this->zapuskMenuMagiceski=true;
     if ($nameMenu=='menu3')
         {
          $i=0;
          foreach ($data as $value)
           {
-            $this->masKn[$i] = $value;
+            if ($i>1) // блокируем проверку первых двух элементов массива, которые содержат в себе значения переменных $nameMenu и $nameTablic
+            $this->masKn[$i-2] = $value;
             $i++;
           }
-          unset($value);
+          //unset($value);
          $this->menu3($nameTablic);
         }
     if ($nameMenu=='menu4' || $nameMenu=='menu5' || $nameMenu=='menu6' || $nameMenu=='menu7' || $nameMenu=='menu8' || $nameMenu=='menu9')
@@ -4297,10 +4261,13 @@ class menu extends initBD
          $i=0;
          foreach ($data as $value)
           {
-            $this->masKn[$i] = $value;
+            if ($i>1) // блокируем проверку первых двух элементов массива, которые содержат в себе значения переменных $nameMenu и $nameTablic
+            $this->masKn[$i-2] = $value;
+            //echo '<br>'.$i.'--'.$value;
             $i++;
           }
-          unset($value);
+          //unset($value);
+          //echo $this->masKn[0];
           if ($nameMenu=='menu4')
             $this->menu4($nameTablic,$this->masKn[0]);
           if ($nameMenu=='menu5')
@@ -4350,6 +4317,7 @@ class menu extends initBD
         if (!$rez) echo'Не удалось загрузить таблицу для menu4';
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
         $ii=1;
         $i=0;
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
@@ -4397,7 +4365,7 @@ class menu extends initBD
 
 
             if ($stroka['URL']=='default')
-            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
+            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
             $i++;
         }
         echo '</form>';
@@ -4442,6 +4410,7 @@ class menu extends initBD
         $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
         $ii=1;
         $i=0;
         $status=(string)$_SESSION['status'];
@@ -4491,7 +4460,7 @@ class menu extends initBD
                        } else echo '<br>';    
              
              if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
+              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
             $i++;
         }
         echo '</form>';
@@ -4538,10 +4507,11 @@ class menu extends initBD
         $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
         $ii=1;
         $status=(string)$_SESSION['status'];
-        
-        while (!is_null($stroka=(mysqli_fetch_array($rez))))
+        if ($rez===false) return false;
+        while (!is_null($stroka=(mysqli_fetch_assoc($rez))))
         {
 
 
@@ -4583,7 +4553,7 @@ class menu extends initBD
               $ii++;
               } else echo '<br>';
 
-          if ($stroka['ID']==$idPoz)
+          //if ($stroka['ID']==$idPoz)
               if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
                  if ($stroka['NAME']!='br')
                        {
@@ -4593,7 +4563,7 @@ class menu extends initBD
                           $ii++;
                        } else echo '<br>';    
             if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
+             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
          }
         echo '</form>';
         echo'</section>';
@@ -4639,6 +4609,7 @@ class menu extends initBD
         $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
         $ii=1;
         $status=(string)$_SESSION['status'];
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
@@ -4705,7 +4676,7 @@ class menu extends initBD
 
           if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
            if ($stroka['URL']=='default')
-            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
+            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
     
         }
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
@@ -4754,6 +4725,7 @@ class menu extends initBD
         $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
         $ii=1;
         $status=(string)$_SESSION['status'];
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
@@ -4828,7 +4800,7 @@ class menu extends initBD
 
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
+             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
      
         }
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
@@ -4871,6 +4843,7 @@ class menu extends initBD
      // параметр ссылки default отправляет пользователя на главную страницу сайта
      public function menu9($nameTablic,$url)
      {
+      
                     // Регистрируем либо изменяем тип меню
                     if ($this->typMenu($nameTablic)!=9)
                     {
@@ -4886,12 +4859,15 @@ class menu extends initBD
         $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
         $ii=1;
         $status=(string)$_SESSION['status'];
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
         $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
         $idMax=$stroka[0];
         
+       
+
        for ($idPoz=0; $idPoz<=$idMax; $idPoz++)
        { 
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
@@ -4963,7 +4939,7 @@ class menu extends initBD
                      } else echo '<br>';    
          if ($stroka['ID']==$idPoz)
             if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$stroka['NAME'].'" value="'.$textStart.'" formaction="'.parent::initsite().'"/>';
+             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
           
          if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
             if ($stroka['URL']=='p' || $stroka['URL']=='h1' || $stroka['URL']=='h2' || $stroka['URL']=='h3' || $stroka['URL']=='h4' || $stroka['URL']=='h5' || $stroka['URL']=='h6' || $stroka['URL']=='div')
@@ -5041,8 +5017,6 @@ class menu extends initBD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class login extends initBd  // Работа с регистрациями
 {
-  public $milisek;
-
    public function __construct()
    {
     parent::__construct();
@@ -5060,7 +5034,8 @@ class login extends initBd  // Работа с регистрациями
     $zapros="SELECT status FROM status_klienta WHERE login='".$_POST['Логин']."'";
     $rez=parent::zaprosSQL($zapros);
     $stroka=mysqli_fetch_array($rez);
-    if ($stroka[0]>=0 && $stroka[0]!=NULL) return true;
+    if (is_null($stroka)) return false;
+    if ($stroka[0]>=0) return true;
     return false;
    }
    public function prowerkaMail()
@@ -5069,7 +5044,8 @@ class login extends initBd  // Работа с регистрациями
     $zapros="SELECT status FROM status_klienta WHERE mail='".$_POST['Почта']."'";
     $rez=parent::zaprosSQL($zapros);
     $stroka=mysqli_fetch_array($rez);
-    if ($stroka[0]>=0 && $stroka[0]!=NULL) return true;
+    if (is_null($stroka[0])) return false;
+    if ($stroka[0]>=0) return true;
     return false;
    }
    public function capcha()
@@ -5378,7 +5354,7 @@ public function listKlientow()
   echo '<p>2-Редактор</p>';
   echo '<p>3-Подписчик</p>';
   echo '<p>4-Модератор (имеет доступ к таблицам в базе данных сайта)</p>';
-  echo '<p>5-Модератор (имеет доступ ко всем таблицам в базе данных)</p>';
+  echo '<p>5-Администратор (имеет доступ ко всем таблицам в базе данных)</p>';
   echo '<p>9-Зарегистрированный, но не подтвердивший регистрацию пользователь</p>';
   echo '</dd>';
     echo '</section>';
@@ -5434,9 +5410,6 @@ if ($_SESSION['status']==5) return 'Супер Администратор.';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class maty extends menu  // Работа с матами и нецензурной лексикой
 {
-    public $mas_mat;
-    public $nie_mat;
-    public $mat_polsovat;
     public function __construct()
       {
         parent::__construct();
@@ -5862,11 +5835,9 @@ class maty extends menu  // Работа с матами и нецензурно
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class futter  extends maty //dataAktual  // Класс выводит информацию в низ сайта
 {
-    //public  $stHtml;
     public function __construct()
      {
         parent::__construct();
-      //  $this->stHtml=$statHtml;
      }
      public function futterR(...$parametr)
      {
@@ -5998,8 +5969,6 @@ class statistic  extends futter // // Класс работа со статис�
   
   public function statistikOnOff()
   {
-
-
       if (isset($_POST['buttonStatistik']))
       {
         if ($_POST['buttonStatistik']=='Включить статистику запроссов к БД (функция zaprosSQL)')
@@ -6032,13 +6001,13 @@ class statistic  extends futter // // Класс работа со статис�
     $stroka=mysqli_fetch_assoc($rez);
     return $stroka['d_zapros'];
   }
-  public function kolZaprosow()
+  public function kolZaprosow() // число запросов к базе данных
   {
     $rez=parent::zaprosSQL("SELECT n_zapros FROM statistik_dfdx WHERE 1");
     $stroka=mysqli_fetch_assoc($rez);
     return $stroka['n_zapros'];
   }
-  public function metkaStatistika($metka)
+  public function metkaStatistika($metka)  // увеличение запроссов к метке на 1
   {
     $rez=parent::zaprosSQL("SELECT id FROM slegka_dfdx WHERE metka='".$metka."'");
     $stroka=mysqli_fetch_assoc($rez);
@@ -6050,10 +6019,14 @@ class statistic  extends futter // // Класс работа со статис�
       parent::zaprosSQL("UPDATE slegka_dfdx SET zaprosov=".$stroka['zaprosov']." WHERE id=".$id);
     } else parent::zaprosSQL("INSERT INTO slegka_dfdx(id, metka, zaprosov) VALUES (".parent::maxIdLubojTablicy('slegka_dfdx') .",'".$metka."',1)");
   }
-  public function getMetkaStatistik($metka)
+  public function getMetkaStatistik($metka) // чтение числа запроссов к метке
   {
     $rez=parent::zaprosSQL("SELECT zaprosov FROM slegka_dfdx WHERE metka='".$metka."'");
+    
     $stroka=mysqli_fetch_assoc($rez); 
+
+    if (!$stroka || is_null($stroka)) return 0;
+
     return $stroka['zaprosov'];
   }
 }
@@ -6107,13 +6080,13 @@ class poisk extends statistic // // Класс работа со статист�
     $iSmegKat=0;
     $masWhere = array();
     $masWhereI=0;
-
+    $rez=false;
     if (!$autor && $razdel)
      $rez=parent::zaprosSQL("SELECT razdel FROM ".$nametablic." WHERE 1"); //прочитать все категории из базы
     if ($autor && $razdel)
      $rez=parent::zaprosSQL("SELECT razdel FROM ".$nametablic." WHERE login_redaktora='".$autor_login."'"); //прочитать все категории из базы 
 
-   if ($razdel) // Если нашли заданные разделы, то найти комбинированные разделы например html3 входит в html3html5
+   if ($razdel && $rez!==false) // Если нашли заданные разделы, то найти комбинированные разделы например html3 входит в html3html5
     while(!is_null($stroka=mysqli_fetch_array($rez))) 
       if (!parent::proverkaMassiwa($smegnyeKategorii,$stroka[0])) // если такой категории в массиве нет
        {

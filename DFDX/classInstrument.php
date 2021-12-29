@@ -11,7 +11,6 @@ class modul
 
         public function __construct()
             {
-                //$classPhp = new maty();
             }
 
 
@@ -24,7 +23,7 @@ class modul
            $statusRedaktora='-s12345'; // Определяет статус пользователя, для которого открывается меню редактирования
            $razresheniePoLoginu=false;
            $pokazarStatijRedaktora=''; // Содержит имя редактора, чьи статьи нужно показать. Если ='', то показать все
-           $hablon=1;  // Шаблон показа статьи, по умолчанию=1, первая статья сверху, последняя снизу.
+           $hablonNews=1;  // Шаблон показа статьи, по умолчанию=1, первая статья сверху, последняя снизу.
            $otstup=1;  // Отступ между статьями
            $classKill='';
            $classRedakt='';
@@ -41,6 +40,9 @@ class modul
            $redaktorRedaktor=false;
            $_SESSION['action']='';
 
+           if (!isset($_SESSION['newsTab']))
+            $_SESSION['newsTab']=''; // хранит имя таблицы, которую использует модуль news1 для использования за пределами класса
+
            if (!isset($_SESSION['redaktirowatId'])) $_SESSION['redaktirowatId']=-1;
 
            if (!isset($_SESSION['mas_time_name_news']))
@@ -49,13 +51,14 @@ class modul
                $_SESSION['mas_time_news']='';
 
            if (!isset($_SESSION['nomerStylaStatii']))
-             $_SESSION['nomerStylaStatii']=0;
+             $_SESSION['nomerStylaStatii']=1;
            // Ищем имя таблицы
             foreach($parametr as $value)
               if (stripos('sss'.$value,'nameTD='))
               {
                  $nametablice=preg_replace('/nameTD=/','',$value);
                  $nametablice=mb_strtolower($nametablice);
+                 $_SESSION['newsTab']=$nametablice;
               }
 
             foreach($parametr as $value) // ищем обработчик кнопок Сохранить ...
@@ -100,7 +103,7 @@ class modul
 
             foreach($parametr as $value)
              if (stripos('sss'.$value,'Шаблон='))
-                   $hablon=preg_replace('/Шаблон=/','',$value); // Выделяем логин редактора/ов
+                   $hablonNews=preg_replace('/Шаблон=/','',$value); // Выделяем логин редактора/ов
 
             foreach($parametr as $value)
               if (stripos('sss'.$value,'Отступ='))
@@ -252,6 +255,7 @@ class modul
          /////////////////////////////////////// работаем с кнопкой удалить ////////////////////////////////// row button_statia
          if ($classPhp->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Удалить')
            {
+            
              $killStroka=$classPhp->hanterButton('rez=hant','nameStatic=statia','returnName');
              $killStroka=preg_replace('/statia/','',$killStroka); // Удалить лишнее
              $killStroka=preg_replace('/kill/','',$killStroka); // Удалить лишнее
@@ -260,22 +264,30 @@ class modul
              //Вытягиваем путь к удаленному файлу из базы данных
              $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nametablice." WHERE id=".$killStroka);
              $killPath=mysqli_fetch_array($rez);
-             //Находим файл на диске и удаляем его
-             if (!file_exists($killPath[0]))
-              $killName=preg_filter('/news\/.+\//','',$killPath[0]);
-             else $killName=$killPath[0];
 
-             unlink($classPhp->searcNamePath($killName));
+             $killName='';
+                //Находим файл на диске и удаляем его
+              if ($classPhp->notFalseAndNULL($killPath))
+               {
+                $killName=$killPath[0];
+                if (!file_exists($killPath[0]))
+                  $killName=preg_filter('/news\/.+\//','',$killPath[0]);
+               }
+             if ($killName!='')
+                unlink($classPhp->searcNamePath($killName));
              $classPhp->killZapisTablicy('url_po_id_'.$nametablice,'WHERE id='.$killStroka);
 
              if (($_SESSION['status']==4 || $_SESSION['status']==5) && $this->statusStati($killStroka)) 
              {
               $rez=$classPhp->zaprosSQL("select login_redaktora, news from ".$nametablice." where id=".$killStroka); // логин редактора и статья
               $stroka=mysqli_fetch_assoc($rez);
-              $zaplatit=strlen($stroka['news']);
-              $zaplatit=0-$zaplatit;
-              $login=$stroka['login_redaktora'];
-              $this->money('login='.$login,'заплатить='.$zaplatit);
+              if ($classPhp->notFalseAndNULL($stroka))
+               {
+                $zaplatit=strlen($stroka['news']);
+                $zaplatit=0-$zaplatit;
+                $login=$stroka['login_redaktora'];
+                $this->money('login='.$login,'заплатить='.$zaplatit);
+               }
              }
              $classPhp->killZapisTablicy($nametablice,'WHERE id='.$killStroka);
              $classPhp->killZapisTablicy('status_statii_dfdx','WHERE id='.$killStroka);
@@ -326,8 +338,10 @@ class modul
             if ($nametablice!='' && !$classPhp->searcNameTablic($nametablice))
                 $classPhp->zaprosSQL("CREATE TABLE ".$nametablice."(id INT, name VARCHAR(200), news VARCHAR(65000), login_redaktora VARCHAR(200), razdel VARCHAR(100))");
             // проверим пустая ли таблица новостей, если да, то вывести кнопку добавления новости
-            if ($classPhp->kolVoZapisTablice($nametablice)==0)
+            if ($classPhp->kolVoZapisTablice($nametablice)==0 )//|| ) numberNews($kategori)
               $netNowostej=true;
+              
+            
 
 
              // Воспроизводим статью от pokazarStatijRedaktora-здесь хранится имя автора, чьи статьи показать
@@ -347,6 +361,7 @@ class modul
              
 
              $i=0; //Загрузить таблицу в массив
+             if ($classPhp->notFalseAndNULL($rez))
              while(!is_null($stroka=mysqli_fetch_assoc($rez)))
              {
                $dataMas[$i][0][0][0][0]=$stroka['id'];
@@ -366,9 +381,7 @@ class modul
              // Шаблон 1 не доделан, необходимо скопировать все изменения из шаблона 2
              // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-             
-
-if ($hablon==2)
+if ($hablonNews==2)
  if (!isset($_POST['dobawitNow']))
   for ($ii=$i-1; $ii>-1; $ii--)
     {             
@@ -376,7 +389,8 @@ if ($hablon==2)
                     $statiaVozwrat=$this->vernutStati($dataMas[$ii][0][0][0][0]); // Проверяет не вернута ли статья на доработку
                   else $statiaVozwrat=false;
 
-                  $statusStatii=$this->statusStati($dataMas[$ii][0][0][0][0]); // проверяет статус статьи по ИД номеру, проверена она или ещё нет
+                  // проверяет статус статьи по ИД номеру, проверена она или ещё нет
+                  $statusStatii=$this->statusStati($dataMas[$ii][0][0][0][0]); 
                  
           if ($pokazatStatiuPoId<0 || ($pokazatStatiuPoId==$dataMas[$ii][0][0][0][0] && $statusStatii))
              if (stripos('sss'.$dataMas[$ii][0][0][0][1],$razdel) || $dataMas[$ii][0][0][0][1]=='-' || $razdel=='') // Если заданный раздел входит в категорию статьи
@@ -392,12 +406,9 @@ if ($hablon==2)
                                       {
                                           $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
                                           $class='nazwanie'.$hablon.' btn'; // класс по шаблону
-
                                           $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
                                           $text=mb_substr($dataMas[$ii][0][1][0][0],1); // подготовить оставшийся текст
-                          
                                           $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
-                         
                           ////////////////////////////////////////////////////////////////////////////////////////////////////
                                                       //Находим содержимое свойства alt
                                                       if (preg_match('/alt=\"\w+\"/u',$text, $alt))
@@ -414,15 +425,13 @@ if ($hablon==2)
                                                                              $url=preg_filter('/\"/','',$url,-1);
                                                                         } 
                                                                         //---------------------------------------------
-                                                                    //Добавить див в начале ссылки
+                                                               //Добавить див в начале ссылки
                                                                $text=preg_filter('/<img/','<div class="img-div-'.$hablon.'"><img ',$text,-1); // добавить див с классом к img
                                                                //Заменили урл на картинку на такой же урл, но обрамленный тегами ДИВ с классом нужного типа
                                                                $text=preg_filter('/src=.*"\s*>/','class="img-'.$hablon.'" src="'.$url.'" alt="'.$alt.'"></div>',$text,-1);
                                                           }
-
                                                       $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
                                                       $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
-
                                               echo '<section class="container-fluid">';
                                               echo '<div class="row">';
                                               echo '<div class="col-12">';
@@ -430,7 +439,6 @@ if ($hablon==2)
                                                   echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
                                                 else 
                                                   echo '<p class="'.$class.'">'.$dataMas[$ii][1][0][0][0].'</p>';
-                                                  
                                               echo '</div></div>';
                                               echo '<div class="row">';
                                               echo '<div class="col-12">';
@@ -459,32 +467,29 @@ if ($hablon==2)
                         }
                        }
                        
-                      if ($statiaVozwrat)  // Показ статьи в случае, если её запостил статус 1 или 3
-                       {
-                       $class='statiaKrutka btn'; // класс заголовка по умолчанию
-                       if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0) // класс заголовка в зависимости от стиля
+            if ($statiaVozwrat)  // Показ статьи в случае, если её запостил статус 1 или 3
+               {
+                   $class='statiaKrutka btn'; // класс заголовка по умолчанию
+                   $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
+                   if ($hablon>0) // класс заголовка в зависимости от стиля
                         {
-                          $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
                           $class='nazwanie'.$hablon.' btn'; // класс по шаблону
                           $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
                           $text=mb_substr($dataMas[$ii][0][1][0][0],1,strlen($dataMas[$ii][0][1][0][0])-1); // подготовить оставшийся текст
-                          
                           $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
                           $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
-
                           $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
-                          
                         }
-                        else
-                          echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'">'.'<div>'.$text.'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small></form>';  
-                       echo $otstupBr;
-                       echo 'Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]);
-                       }
-                      }
+                    echo '<form method="post" action="'.$classPhp->initsite().'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'-вернули на доработку">'.'<div>'.$text.'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small></form>';
+                    echo $otstupBr;
+                    echo 'Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]);
+                }
+            }
                   ///////////////////////////Вторая и следующие статьи//////////////////////////////
                   if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))     // Если труе, то статья проверена модератором
                     if ($pokazalStatej>0 && $nomerZagolowkaStati=='www')   // вторая и дальше статья не по клику по названию статьи
                      {
+                          $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
                           $text=$dataMas[$ii][0][1][0][0]; 
                           //Находим содержимое свойства alt
                           if (preg_match('/alt=\"\w+\"/u',$text, $alt))
@@ -513,9 +518,10 @@ if ($hablon==2)
                     if ($dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati && $pokazalStatej==0) // Вывод по клику по заголовку статьи
                     {
                       $class='statiaKrutka btn';  // класс заголовка по умолчанию
-                      if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0) // класс заголовка в зависимости от стиля
+                      $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon');
+                      if ($hablon>0) // класс заголовка в зависимости от стиля
                        {
-                        $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon');
+                        //$hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon');
                         $class='nazwanie'.$hablon.' btn'; // класс по шаблону
                         $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
                         $text=mb_substr($dataMas[$ii][0][1][0][0],1,strlen($dataMas[$ii][0][1][0][0])-1); // подготовить оставшийся текст
@@ -546,7 +552,6 @@ if ($hablon==2)
                         $text=preg_replace('/<\/code>/','</div></code></div></div></div></section>',$text); // вставить класс в теги code
                         
                         ///////////////////////////////////////////создаем нужные папки ////////////////////////////
-                        //initsite()
                         if (!file_exists('../../'.$classPhp->initsite())) // Создаем папки только в том случае, если не находимся в уже созданных папках
                          {
                             if ($dataMas[$ii][0][0][0][1]!='-')
@@ -557,16 +562,11 @@ if ($hablon==2)
                             if (!is_dir($katalog2)) // Если нет папки соответствующей категории, то создать её
                                mkdir($katalog2,0777,1);
                         }
-
                         /////////////////////////////////////////////////////////////////////////////////////////////
                         $fileNameNotPhp=translit($dataMas[$ii][1][0][0][0]); // создаем имя файла
                         $fileName=$katalog2.'/'.$fileNameNotPhp.'.php';       // имя файла с каталогом
                         if (!is_null(preg_filter('/-\./','.',$fileName))) $fileName=preg_filter('/-\./','.',$fileName);
                         if (!is_null(preg_filter('/\/-/','/',$fileName))) $fileName=preg_filter('/\/-/','/',$fileName);
-
-                        //путь к обработчику файла для модуля news на персональной странице конкретной статьи
-                        //$fileNameAction=preg_filter('/news\/.\//','',$fileName);
-                        //$fileNameAction=preg_filter('/news\//','',$fileNameAction)
 
                         // Проверить существует ли статья с таким же названием
                         $newsAlready=false;
@@ -579,62 +579,47 @@ if ($hablon==2)
 
                         if ($urlNews) // если для статьи есть свой файл, то просто перейти на него
                          {
-                          $action=$this->urlPoIdPath($nametablice,$nomerZagolowkaStati);
+                           $_SESSION['statiaPoId']=$classPhp->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
+                           $action=$this->urlPoIdPath($nametablice,$nomerZagolowkaStati);
+                           $_SESSION["runStrNews"]=true;
                            header('Location: '.$action);
                          }
+
+                         if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки)
+                          if ($_SESSION['status']<4 || $_SESSION['status']==9) // если жмёт не модератор или администратор
+                            header('Location: '.$classPhp->initsite());
 
                         // если статусы 4 или 5 или смотрит статью её автор, то работаем
                         if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
                         if ($_SESSION['status']==4 || $_SESSION['status']==5 || ($_SESSION['login']==$dataMas[$i][0][0][1][0]))
-                         {
-                            $dfdx=file($classPhp->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
+                         {  
+                           $dfdx=file($classPhp->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
                            foreach ($dfdx as &$value)
                             {                                                                // fileName fileNameNotPhp
                               $valueTemp=preg_filter('/\$action.*php/u','\$action=\'action=#',$value); // Замена страниц обработчиков
-                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
-                            }
-                            foreach ($dfdx as &$value)
-                            {
+                              if (!is_null($valueTemp)) $value=$valueTemp;
                               $valueTemp=preg_filter('/include "/u','include "../../',$value); // Замена пути для Инклудов
-                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
-                            }
-                            foreach ($dfdx as &$value)  /// Замена главной менюшки на простую кнопку Главная
-                            {
+                              if (!is_null($valueTemp)) $value=$valueTemp;
                               $valueTemp=preg_filter('/\$maty.*огин.*роль.*/u','echo \'<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>\';',$value);
-                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
-                            }
-                            foreach ($dfdx as &$value)  /// Комментируем левое меню
-                            {
+                              if (!is_null($valueTemp)) $value=$valueTemp;
                               $valueTemp=preg_filter('/levoeMenu/u','//levoeMenu',$value);
-                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
-                            }
-                            foreach ($dfdx as &$value)  /// блокирем кнопку поиска
-                            {
+                              if (!is_null($valueTemp)) $value=$valueTemp;
                               $valueTemp=preg_filter('/poiskDfdx/u','//poiskDfdx',$value);
-                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
-                            }
-                            foreach ($dfdx as &$value)  /// задаем ИД статьи
-                            {
-                              $valueTemp=preg_filter('/\"id=\"\.\$id/u','"id='.$nomerZagolowkaStati.'"',$value);
-                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
-                            }
-                            foreach ($dfdx as &$value)  /// заменяем маркер функции buttonTwitter на саму функцию
-                            {
+                              if (!is_null($valueTemp)) $value=$valueTemp;
+                              $valueTemp=preg_filter('/\$runNewsIsNews1=-1/','$runNewsIsNews1='.$nomerZagolowkaStati,$value);
+                              if (!is_null($valueTemp)) $value=$valueTemp;
+                              $valueTemp=preg_filter('/\/\/if\s\(!\$/','if (!$',$value);
+                              if (!is_null($valueTemp)) $value=$valueTemp;
                               $strokaZameny='buttonTwitter("'.$dataMas[$ii][1][0][0][0].' http://dfdx.uxp.ru/'.$fileName.'");';
                               $valueTemp=preg_filter('/\/\/buttonTwitter/u',$strokaZameny,$value);
-                              if (!is_null($valueTemp)) {$value=$valueTemp;echo 'Заменили на '.$valueTemp.'<br>';}
+                              if (!is_null($valueTemp)) $value=$valueTemp;
                             }
                             $this->urlPoIdSave($nametablice,$nomerZagolowkaStati,$fileName);
                             file_put_contents($fileName,$dfdx);
+                            $_SESSION["runStrNews"]=true;
+                            $_SESSION['statiaPoId']=$classPhp->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
                             header('Location: '.$fileName);
-                        } else {
-                          sleep(5);
-                          header('Location: '.$classPhp->initsite());
-                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                        ///////////////////////////////////////////////////////////////////////
-
-                      }
+                        } else header('Location: '.$classPhp->initsite());
                       }
                       else
                       {
@@ -712,7 +697,7 @@ if ($hablon==2)
                    if ($_SESSION['redaktirowatId']==$dataMas[$ii][0][0][0][0]) // Сравнение ИД статьи, которую следует редактировать с ИД текущей статьи
                       { 
                         $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action);
-                        $poleRedaktora=true;
+                        $poleRedaktora=true; // Показывает было ли установлено поле редактора
                       }
               
     } // конец FOR
@@ -720,7 +705,7 @@ if ($hablon==2)
 
               // Выводит поле редактирования в случае, если не вывелось ни одной статьи или нажата кнопка Добавить
              if (!$poleRedaktora)
-              if (isset($_POST['dobawitNow']) || $netNowostej || (isset($_POST['vvv']) && $_SESSION['redaktirowatId']=-1))
+              if (isset($_POST['dobawitNow']) || ($razdel!='' && $this->numberNews($razdel)==0 && ($_SESSION['status']==5 || $_SESSION['status']==4 || $_SESSION['status']==2) )  || (isset($_POST['vvv']) && $_SESSION['redaktirowatId']=-1))
                 $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action);
 
              ///////////////////////////////////////////Нажали кнопку Запомнить Шаблон//////////////////////////////
@@ -729,6 +714,17 @@ if ($hablon==2)
                              ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
+// Служебная функция считает число статей в БД с заданное категорией
+  public function numberNews($kategori)
+    {
+      $number=0;
+      $classPhp = new maty();
+      $rez=$classPhp->zaprosSQL("SELECT razdel FROM ".$_SESSION['newsTab']." WHERE 1");
+      while (!is_null($stroka=mysqli_fetch_array($rez))) 
+       if (stripos('sss'.$stroka[0],$kategori)>0)
+        $number++;
+      return $number;
+    }
 // Служебная функция поиск правильного пути к папке файла
 function urlPoIdPath($nameBd,$id)
 {
@@ -742,26 +738,19 @@ function urlPoIdPath($nameBd,$id)
       "poleT=varchar(1000)",
       "poleS=пусто"
   );
-
   $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
   $stroka=mysqli_fetch_array($rez);
-
   if (file_exists($stroka[0])) return $stroka[0]; // если файл существует по текущему пути
-
   if (!file_exists($stroka[0])) 
    {
     $stroka[0]=preg_filter('/news\//','',$stroka[0]);
     if (file_exists($stroka[0])) return $stroka[0]; // удалил из пути news/
    }
-
    if (!file_exists($stroka[0])) 
    {
     $stroka[0]=preg_filter('/\b.*\//','',$stroka[0]);
     if (file_exists($stroka[0])) return $stroka[0]; // удалил из пути news/
    }
-
-
-  //if (!is_null($stroka) && $stroka!=false) return $stroka[0];
   return false;
 }
 // Служебная функция возвращает ссылку на статью по ID или false
@@ -777,7 +766,6 @@ function urlPoId($nameBd,$id)
       "poleT=varchar(1000)",
       "poleS=пусто"
   );
-
   $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
   $stroka=mysqli_fetch_array($rez);
   if (!is_null($stroka) && $stroka!=false) return $stroka[0];
@@ -787,9 +775,7 @@ function urlPoId($nameBd,$id)
 function urlPoIdSave($nameBd,$id,$url)
 {
   $classPhp = new maty();
-
    if ($this->urlPoId($nameBd,$id)) return false; // если запись уже есть то выходим с результатом Фалс
-
    $classPhp->zaprosSQL("INSERT INTO url_po_id_".$nameBd."(id, url) VALUES (".$id.",'".$url."')");
    return true;
 }
@@ -797,6 +783,7 @@ function urlPoIdSave($nameBd,$id,$url)
 function styliStati(...$parametr) // тут
 {
   $classPhp = new maty();
+  $instrum = new instrument();
     $classPhp->createTab(
         "name=styl_statii_dfdx",
         "poleN=id",   // будет соответствовать ИД статьи
@@ -806,7 +793,6 @@ function styliStati(...$parametr) // тут
         "poleT=int",
         "poleS=-1"
     );
-
 $variantow=0;   //число отображаемых радиокнопок
 $idStati=-1;
 $hablonStati=-1;
@@ -822,26 +808,22 @@ foreach ($parametr as $value)  // поиск признаков $form_not_open �
     foreach($parametr as $value) // задать ИД статьи
       if (stripos('sss'.$value,'id='))
        $idStati=preg_replace('/id=/','',$value);
-
     foreach($parametr as $value) // задать шаблон статьи
       if (stripos('sss'.$value,'hablon='))
        $hablonStati=preg_replace('/hablon=/','',$value);
-
     foreach($parametr as $value) // задать шаблон статьи
       if (stripos('sss'.$value,'id-hablon') || stripos('sss'.$value,'hablon-id'))
        {
         $rez=$classPhp->zaprosSQL("select nomer_styla FROM styl_statii_dfdx WHERE id=".$idStati);
         $stroka=mysqli_fetch_array($rez);
+        if ($stroka===false || is_null($stroka)) return 1;
         return $stroka[0];
        }
-
-
     foreach($parametr as $value)
     if ($value=='link' || $value=='образец')
-      return  '<a href="obrazec.php" target="_blank">Посмотреть образцы оформлений</a>';
-
+      return  '<a href="'.$classPhp->searcNamePath('obrazec.php').'" target="_blank">Посмотреть образцы оформлений</a>';
     
-    foreach($parametr as $value) // показать радио кнопки
+      foreach($parametr as $value) // показать радио кнопки
       if (stripos('sss'.$value,'вариантов='))
        {
         $stroka='';
@@ -867,15 +849,11 @@ foreach ($parametr as $value)  // поиск признаков $form_not_open �
          $stroka=$stroka.'</div></div></section>';
          return $stroka;
        }
-       
-
-
       if ($idStati>-1 && $hablonStati>0) // реализация присвоения статье своего стиля
        {
         $classPhp->zaprosSQL("DELETE FROM styl_statii_dfdx WHERE id=".$idStati);
         $classPhp->zaprosSQL("INSERT INTO styl_statii_dfdx(id, nomer_styla) VALUES (".$idStati.",".$hablonStati.")");
        }
-
       //обработка параметра help
       foreach($parametr as $value)
       if ($value=='help' || $value=='Помощь' || $value=='помощь')
@@ -891,7 +869,6 @@ foreach ($parametr as $value)  // поиск признаков $form_not_open �
           echo '<p></p>';
           echo '<p></p>';
         } 
-
 }
 function money(...$parametr) // работа с символами или деньгами
  {
@@ -905,18 +882,15 @@ function money(...$parametr) // работа с символами или ден
         "poleT=int",
         "poleS=0"
     );
-    
     $login='';
     $zaplatit=0;
     foreach($parametr as $value)
      if (stripos('sss'.$value,'login='))
       $login=preg_replace('/login=/','',$value);
-
     foreach($parametr as $value)
       if (stripos('sss'.$value,'заплатить='))
        $zaplatit=preg_replace('/заплатить=/','',$value);
-
-    if ($login!='')// && $zaplatit>0) // Обработка параметра Логин + заплатить
+    if ($login!='')// Обработка параметра Логин + заплатить
      {
       $regaJest=false;
       $regaJest=$classPhp->siearcSlova('monety_dfdx','login',$login);
@@ -932,18 +906,15 @@ function money(...$parametr) // работа с символами или ден
        if (!$regaJest)
        {
         $zapros="INSERT INTO monety_dfdx(login, monet) VALUES ('".$login."',".$zaplatit.") ";
-        //$zapros="UPDATE monety_dfdx SET monet=".$monet." WHERE 1";
         $classPhp->zaprosSQL($zapros);
        }
      }
-
     if ($login!='' && $zaplatit==0) // Обработка параметра Логин
      {
        $rez=$classPhp->zaprosSQL("SELECT monet FROM monety_dfdx WHERE login='".$login."'");
        $stroka=mysqli_fetch_array($rez);
        return $stroka[0];
      }
-
       //обработка параметра help
       foreach($parametr as $value)
       if ($value=='help' || $value=='Помощь')
@@ -1003,39 +974,32 @@ function money(...$parametr) // работа с символами или ден
         // вспомогательная функция к news1
         public function poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action)
          {
-          
-          //echo $action; тут
-         // if (!file_exists($action)) $action=basename(__FILE__); // Если ссылка на кнопке планируется быть несуществующей, то заменить её на текущую
-
-
           $classPhp = new maty();
            if ($nametablice!='' && $classPhp->searcNameTablic($nametablice))
             {
-
-           if (!$razresheniePoLoginu &&  ($_SESSION['status']>0)) //|| $_SESSION['status']<6)) // Запускаем это меню только если нет разрешения по логину
-           {
-            $zagolowok='';//echo 'разрешение по логину';
-            $statia='';
-            $awtor='';
-            if ($_SESSION['redaktirowatId']>-1)  //если была нажата кнопка редактирования, то достать статью из базы
-             {
-               $zapros="SELECT * FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']; //настройка показа формы сбора данных
-               $rez=$classPhp->zaprosSQL($zapros);
-               if ($rez) $stroka=mysqli_fetch_assoc($rez);
-               $zagolowok=$stroka['name'];
-               $statia=$stroka['news'];
-               $zagolowok=$stroka['name'];
-               $awtor=$stroka['login_redaktora'];
-             } 
-            if ($_SESSION['mas_time_news']!='') $statia=$_SESSION['mas_time_news'];
-            if ($_SESSION['mas_time_name_news']!='') $zagolowok=$_SESSION['mas_time_name_news'];
-            $statia=preg_replace('/<br>/','',$statia);
-            $classPhp->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
+               if (!$razresheniePoLoginu &&  ($_SESSION['status']>0))  // Запускаем это меню только если нет разрешения по логину
+                { 
+                  $zagolowok='';//echo 'разрешение по логину';
+                  $statia='';
+                  $awtor='';
+                     if ($_SESSION['redaktirowatId']>-1)  //если была нажата кнопка редактирования, то достать статью из базы
+                       {
+                         $zapros="SELECT * FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']; //настройка показа формы сбора данных
+                         $rez=$classPhp->zaprosSQL($zapros);
+                         if ($rez) $stroka=mysqli_fetch_assoc($rez);
+                         $zagolowok=$stroka['name'];
+                         $statia=$stroka['news'];
+                         $zagolowok=$stroka['name'];
+                         $awtor=$stroka['login_redaktora'];
+                       } 
+                    if ($_SESSION['mas_time_news']!='') $statia=$_SESSION['mas_time_news'];
+                    if ($_SESSION['mas_time_name_news']!='') $zagolowok=$_SESSION['mas_time_name_news'];
+                    $statia=preg_replace('/<br>/','',$statia);
+                    $classPhp->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
                                 'textarea', 'statia',$statia,'br',
                                 'p',$awtor,'br',
                                 'submit3',$nametablice.'_redaktor','Сохранить',$action,'myZoneSave','form_not_close'
                                 );
-                                
             echo '<div class="container-fluid">';
              echo '<div class="row">';
               echo '<div class="col-12">'; 
@@ -1045,7 +1009,6 @@ function money(...$parametr) // работа с символами или ден
               echo '<div class="col-12">'; 
                echo '<h6 class="mesage helpPodRedaktoromStatejH6">Список существующих категорий:</h6>';
                echo '<h6 class="mesage helpPodRedaktoromStatejH6">'.listKategorijNews1($nametablice).'</h6>';
-               
               echo '</div>';
              echo '</div>';
               echo '<div class="row">';
@@ -1058,7 +1021,6 @@ function money(...$parametr) // работа с символами или ден
                  echo '</div>';
                 echo '</div>';
               echo '</div>';
-
               echo '<div class="row">';
                echo '<div class="col-12">';  
                  echo '<div class="helpPodRedaktoromStatejDopTegi">';
@@ -1066,9 +1028,7 @@ function money(...$parametr) // работа с символами или ден
                  echo '</div>';
                 echo '</div>';
               echo '</div>';
-
             echo '</div>';
-
           }
            if ($razresheniePoLoginu) // Запускаем это меню только если есть разрешения по логину
             {
@@ -1092,8 +1052,6 @@ function money(...$parametr) // работа с символами или ден
               'p',$awtor,'br',
               'submit3',$nametablice.'_redaktor2','Сохранить',$action,'myZoneSave','form_not_close'
               );
-
-
               echo '<div class="container-fluid">';
               echo '<div class="row">';
                echo '<div class="col-12">'; 
@@ -1103,7 +1061,6 @@ function money(...$parametr) // работа с символами или ден
                echo '<div class="col-12">'; 
                 echo '<h6 class="mesage helpPodRedaktoromStatejH6">Список существующих категорий:</h6>';
                 echo '<h6 class="mesage helpPodRedaktoromStatejH6">'.listKategorijNews1($nametablice).'</h6>';
-                
                echo '</div>';
               echo '</div>';
                echo '<div class="row">';
@@ -1116,7 +1073,6 @@ function money(...$parametr) // работа с символами или ден
                   echo '</div>';
                  echo '</div>';
                echo '</div>';
- 
                echo '<div class="row">';
                 echo '<div class="col-12">';  
                   echo '<div class="helpPodRedaktoromStatejDopTegi">';
@@ -1124,14 +1080,10 @@ function money(...$parametr) // работа с символами или ден
                   echo '</div>';
                  echo '</div>';
                echo '</div>';
- 
              echo '</div>';
- 
-
             }
             }
          }
-
     } // конец класса modul
 
 ?>

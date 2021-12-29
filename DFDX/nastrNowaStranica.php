@@ -2,6 +2,15 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MF3F7YTKCQ');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
@@ -33,13 +42,13 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
       <?php 
       $menuUp = new redaktor\menu(); 
       if ($_SESSION['status']>99 || $_SESSION['status']==9)
-       $menuUp->__unserialize('menu6','podtverdit',array('redaktor.php','Введите код'));
+       $menuUp->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
 
       if ($_SESSION['status']==5 || $_SESSION['status']==4)
-         $menuUp->__unserialize('menu3','redaktor_up',array('Редактор','Сайт','Выйти','Создать страницу'));
+         $menuUp->__unserialize(array('menu3','redaktor_up','Редактор','Сайт','Выйти','Создать страницу'));
 
       if ($_SESSION['status']==0)
-       $menuUp->__unserialize('menu4','login',array('redaktor.php','Логин','Пароль','Вход','Регистрация'));
+       $menuUp->__unserialize(array('menu4','login','redaktor.php','Логин','Пароль','Вход','Регистрация'));
 
        if ($_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3)
          $menuUp->menu('dla_statusob_123');
@@ -59,24 +68,70 @@ $errorName=true;
 $nameFile='';
 $fileUgeJest=true;
 $nameStranic='';
-// проверить ввели ли имя нового файла
-if ($_SESSION['variantNowaStr']==1) $errorName=false;
+$_SESSION['nameNotPhp']='';
+$_SESSION['nameFilePreg']='';
+if (!isset($_SESSION['newsTab'])) $_SESSION['newsTab']='bd2';
+// проверить ввели ли имя нового файла, значение переменной приходит со страницы rdNovaStr.php и означает, что стадия задания имени файла прошла успешно.
+if ($_SESSION['variantNowaStr']==1 || $_SESSION['variantNowaStr']==2) $errorName=false;
 
 if ($errorName) echo 'Имя файла не удовлетворяет условию';
 
 if (!$errorName)
  {
+  $_SESSION['nameNotPhp']=$_POST['images-tema-kategirii-rdNovaStr'];
+
+    //echo $_SESSION['nameNotPhp'].'<br>';
+    $_SESSION['nameNotPhp']=preg_replace('/\..*$/','',$_SESSION['nameNotPhp']); // очищаем имя файла от расширения
+    $_SESSION['nameNotPhp']=preg_replace('/.*\//','',$_SESSION['nameNotPhp']); // очищаем имя файла от расширения
+
      // проверим есть ли в названии файла .php, если нет, то добавить
-     if (stripos($_SESSION['nameFile'],'.php')>0) $nameFile=$_SESSION['nameFile'];
-     else $nameFile=$_SESSION['nameFile'].'.php';
+     if (stripos($_SESSION['nameFile'],'.php')>0) 
+          $nameFile=$_SESSION['nameFile'];
+        else $nameFile=$_SESSION['nameFile'].'.php';
      $nameStranic=preg_replace('/.php/','',$nameFile);
      // проверить существование файла
      $fileUgeJest=file_exists ($nameFile);
+     $_SESSION['nameFilePreg']=$nameFile;
+     echo '<br>';
+     echo '<form action='.$nameFile.'>';
+     echo '<input type="submit" value="Перейти на новую страницу">';
+     echo '</form>';
  }
 
  if ($fileUgeJest) echo '<p class="error">Файл '.$nameFile.' уже существует!</p>';
 
- if (!$fileUgeJest)   // Если всё в порядке, то создаем страницу
+ if (!$fileUgeJest && $_SESSION['variantNowaStr']==2)   // Если всё в порядке, то создаем страницу
+  if ($nameFile!='') 
+   {
+    $fileStart=file_get_contents('dfdx_start.php',true,null,0); // проситали файл в строку
+    if ($fileStart!==false)
+     { 
+      // преобразовываем файл image/logo.png
+      $fileStart=preg_replace_callback_array([
+                                              '/image\/logo\.png/' => function ($machh) {return $_POST['images-hapka-rdNovaStr'];},
+                                              '/image\/regular_expressions\.png/' => function ($machh) {return $_POST['images-tema-kategirii-rdNovaStr'];},
+                                              '/alt=\"regular_expressions/' => function ($machh) {return 'alt="'.$_SESSION['nameNotPhp'];},
+                                              '/poiskDfdx\(\'cms_dfdx\.php\'\)/' => function ($machh) {return 'poiskDfdx("'.$_SESSION['nameFilePreg'].'")';},
+                                              '/pravoePole\(\'cms-dfdx\'\)/' => function ($machh) {return 'pravoePole("'.$_POST['kategoria-news-rdNovaStr'].'")';},
+                                              '/metkaStatistika\(\'cms-dfdx\'\)/' => function ($machh) {return 'metkaStatistika("'.$_POST['metka-rdNovaStr'].'")';},
+                                              '/getMetkaStatistik\(\'cms-dfdx\'\)/' => function ($machh) {return 'getMetkaStatistik("'.$_POST['metka-rdNovaStr'].'")';},
+                                              '/action=dfdx\.php/' => function ($machh) {return 'action='.$_SESSION['nameFilePreg'];},
+                                              '/bd2/' => function ($machh) {return $_SESSION['newsTab'];},
+                                              '/\#pagetitleimages\#/' => function ($machh) {return $_POST['kategoria-news-rdNovaStr'].'();';},
+                                              '/Раздел=regular_expressions/' => function ($machh) {return 'Раздел='.$_POST['kategoria-news-rdNovaStr'];},
+                                              '/#таблица\sдля\sпоиска#/' => function ($machh) {return 'bd2';},
+                                              '/#категория\sдля\sпоиска#/' => function ($machh) {return 'категория-'.$_POST['kategoria-news-rdNovaStr'];},
+                                              '/#страница\sобработки\sправого\sменю#/' => function ($machh) {return $_SESSION['nameFilePreg'];},
+                                              ]
+                                              ,$fileStart);
+      //////////////////////
+      $saweRez=file_put_contents($nameFile,$fileStart,LOCK_EX);
+      if ($saweRez!==false) echo 'Записано '.$saweRez.' байт<br>'; //$_SESSION['newsTab']
+        else 'Страница не создана!';
+     }
+   }
+
+ if (!$fileUgeJest && $_SESSION['variantNowaStr']==1)   // Если всё в порядке, то создаем страницу
   if ($nameFile!='') 
    {
      echo '<p class="mesage">Создаю страницу '.$nameFile.'</p>';
@@ -115,13 +170,13 @@ if (!$errorName)
 
      fwrite($fp, ' $menuUp = new redaktor\menu();'."\r\n"); 
      fwrite($fp, '  if ($_SESSION["status"]>99 || $_SESSION["status"]==9)'."\r\n");
-     fwrite($fp, '   $menuUp->__unserialize("menu6","podtverdit",array("redaktor.php","Введите код"));'."\r\n");
+     fwrite($fp, '   $menuUp->__unserialize(array("menu6","podtverdit","redaktor.php","Введите код"));'."\r\n");
 
      fwrite($fp, ' if ($_SESSION["status"]==5 || $_SESSION["status"]==4)'."\r\n");
-     fwrite($fp, '    $menuUp->__unserialize("menu3","redaktor_up",array("Редактор","Сайт","Выйти","Создать страницу"));'."\r\n");
+     fwrite($fp, '    $menuUp->__unserialize(array("menu3","redaktor_up","Редактор","Сайт","Выйти","Создать страницу"));'."\r\n");
 
      fwrite($fp, ' if ($_SESSION["status"]==0)'."\r\n");
-     fwrite($fp, '  $menuUp->__unserialize("menu4","login",array("redaktor.php","Логин","Пароль","Вход","Регистрация"));'."\r\n");
+     fwrite($fp, '  $menuUp->__unserialize(array("menu4","login","redaktor.php","Логин","Пароль","Вход","Регистрация"));'."\r\n");
 
      fwrite($fp, ' if ($_SESSION["status"]==1 || $_SESSION["status"]==2 || $_SESSION["status"]==3)'."\r\n");
      fwrite($fp, '    $menuUp->menu("dla_statusob_123");'."\r\n");

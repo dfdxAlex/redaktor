@@ -1,19 +1,45 @@
 <?php
 
+function regaAdministratora($kod)
+{
+  if ($_SESSION['login']=='admin' || $_SESSION['login']=='Admin' || $_SESSION['login']=='Administrator' || $_SESSION['login']=='administrator') 
+   {
+     $status = new redaktor\login();
+     $kodFile=file_get_contents('kod.txt');
+     if ($kodFile==$kod)
+      {
+        echo '<p class="mesage">Код администратора верен.</p>';
+        $_SESSION['status']=5;$status->saveStatus(5);
+        if ($status->statusRegi($_SESSION['login'],$_SESSION['parol'])==5)
+         {
+            echo '<p class="mesage">Учётная запись администратора создана.</p>';
+            unlink('kod.txt');
+            return 2; // произвольное значение для определения третьего варианта, запись админа прошла успешно
+         }
+        
+      } else echo '<p class="mesage">Код администратора не верен.</p>';
+     return true; // попытка записать админа не удалась, не верный код
+   }
+   return false;  // нет попытки создать админа, просто вошли и вышли
+}
+function genericKodAdmina($login)
+{
+  $status = new redaktor\login();
+  if ($login=='admin' || $login=='Admin' || $login=='Administrator' || $login=='administrator') 
+   if (!$status->prowerkaLogin('admin') || !$status->prowerkaLogin('Admin') || !$status->prowerkaLogin('Administrator') || !$status->prowerkaLogin('administrator')) 
+    file_put_contents('kod.txt',mt_rand(1000000,9999999));
+}
+
 function buttonTwitter($text)
 {
   $textTwitter=preg_filter('/\s/','%20',$text);
   echo '<br><br>';
   echo '<div class="buttonTwitterDiv">';
   echo '<a class="link-button-twitter-text" target="_blank"';
-  //echo ' rel="me"';
   echo ' href="https://twitter.com/intent/tweet?text='.$textTwitter.'">';
-  //echo ' data-size="large">';
   echo 'Твитнуть</a>';
   echo '</div>';
 }
-
-//include 'class.php';
 
 function forma($idTeg,$Teg,$opisanie,$opisanieVideo,$idPrimer,$idAtribut,$idSintax,$kluc1,$kluc2,$kluc3,$kluc4,$kluc5,$kluc6,$kluc7,$kluc8,$kluc9,$kluc10)
 {
@@ -88,9 +114,7 @@ function formaPoisk() { // форма для поиска на сайте
    
    //Если была нажата одна из кнопок выбора базы данных, то переменной $nazwanieBd присваиваем значение массива $_POST['poiskButton']
    if (isset($_POST['poiskButton']))
-     {
       $_SESSION['nazwanieBd']=$_POST['poiskButton'];
-     }
 
    $title1="Первый тип поиска - поиск по названию темы-статьи, самый точный вариант поиска.";
    $title2="Второй тип поиска по ключевым словам, менее точный тип поиска информации.";
@@ -108,9 +132,7 @@ function poisk($zapros)  // форма для поиска на сайте
     $tegPoisk = new htmlTeg($zapros);
     if ($tegPoisk->teg=="<!--") $tegPoisk->teg="&lt!-- здесь любой текст --&gt";
     if (!$tegPoisk) {ops();echo ("ошибка при создании объекта<br>");}
-     else {
-            echo "<h1>",$tegPoisk->teg,"</h1>";
-          } 
+     else echo "<h1>".$tegPoisk->teg."</h1>";
   }
   
 

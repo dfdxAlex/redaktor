@@ -74,12 +74,31 @@ function poiskDfdx($strObrabotki) //Выводит кнопки поиска
 function levoeMenu() //Выводит левое меню
 {
     $clas=new redaktor\statistic();
-    $clas->formBlock('levBlock',
-                    'dfdx.php',
+    $clas->formBlock('levBlock','dfdx.php',
+                    'submit',
+                    'levBlock',
+                    'API DFDX',
+                    '#',
+                    'br',
+                    'submit',
+                    'levBlock',
+                    'CMS DFDX',
+                    'cms-dfdx.php',
+                    'br',
+                    'submit',
+                    'levBlock',
+                    'GIT',
+                    'git.php',
+                    'br',
                     'submit',
                     'levBlock',
                     'HTML',
                     'htmlFoDfdx.php',
+                    'br',
+                    'submit',
+                    'levBlock',
+                    'XHTML',
+                    'xhtml.php',
                     'br',
                     'submit',
                     'levBlock',
@@ -88,8 +107,33 @@ function levoeMenu() //Выводит левое меню
                     'br',
                     'submit',
                     'levBlock',
+                    'CSS3',
+                    '#',
+                    'br',
+                    'submit',
+                    'levBlock',
+                    'Bootstrap 5',
+                    '#',
+                    'br',
+                    'submit',
+                    'levBlock',
+                    'jQuery',
+                    '#',
+                    'br',
+                    'submit',
+                    'levBlock',
                     'Регулярные в...',
                     'regular_expressions.php',
+                    'br',
+                    'submit',
+                    'levBlock',
+                    'PHP8',
+                    '#',
+                    'br',
+                    'submit',
+                    'levBlock',
+                    'JavaScript',
+                    '#',
                     'br'
                         );
 
@@ -99,32 +143,56 @@ function levoeMenu() //Выводит левое меню
 function pravoePole($kluc)
 {
     echo '<section class="container-fluid">';
+    echo '<div class="pravoe-pole-div">';
     $clas=new redaktor\statistic();
+    $strSummRazdel='WHERE ('; // переменная с условием запроса
+    $zapros="SELECT razdel FROM bd2 WHERE 1";
+    $rez=$clas->zaprosSQL($zapros);
+    $connectOR=false; // определяет добавлять ли к строке OR
+    $redaktor=new redaktor\modul();
+    //Перебираем все категории из таблицы bd2 и добавляем в условия WHERE те, в которых есть подстрока $kluc
+    while (!is_null($stroka=(mysqli_fetch_array($rez))))
+     if (stripos($strSummRazdel,$stroka[0])===false)
+      if (stripos('s'.$stroka[0],$kluc)>0 || $kluc=='home')
+       {
+            if ($connectOR) $strSummRazdel=$strSummRazdel.' OR ';
+            $strSummRazdel=$strSummRazdel.'bd2.razdel="'.$stroka[0].'" ';
+            $connectOR=true;
+       }
 
-    if ($kluc=='html3') // Если функция вызвана со страницы html
-        $zapros="SELECT id,name FROM bd2 WHERE razdel='html3' OR razdel='html3html5' OR razdel='html5html3'";
-
-    if ($kluc=='html5') // Если функция вызвана со страницы html или html5
-        $zapros="SELECT id,name FROM bd2 WHERE  razdel='html5' OR razdel='html3html5' OR razdel='html5html3'";
-
-    if ($kluc=='regular') // Если функция вызвана со страницы html или html5
-        $zapros="SELECT id,name FROM bd2 WHERE  razdel='regular' OR razdel='phpregular' OR razdel='regularphp'";
-
-    if ($kluc=='html3' || $kluc=='html5' ||  $kluc=='regular') // Если функция вызвана со страницы html или html5
-     {
+      //$zapros="SELECT id,name FROM bd2 ".$strSummRazdel;
+      $zapros="SELECT bd2.name, url_po_id_bd2.url, bd2.id FROM bd2, url_po_id_bd2 ".$strSummRazdel.') AND bd2.id=url_po_id_bd2.id';
+      //echo $zapros;
       $rez=$clas->zaprosSQL($zapros);
+
+      if (!$clas->notFalseAndNULL($rez)) return false;
+
       echo '<form action="'.$_SESSION['redaktiruem'].'" method="post">';
       while (!is_null($stroka=(mysqli_fetch_assoc($rez))))
        {
         $stroka['name']=$clas->clearCode($stroka['name'],'удалить_все');
          echo '<div class="row">';
          echo '<div class="col-12">';
-         echo '<input class="prawBlock btn" type="submit" name="panelPrawa'.$stroka['id'].'" value="'.$stroka['name'].'">';
+         $nameSmall=mb_strcut($stroka['name'],0,27);
+         $strokaUrl=$stroka['url'];
+         $knopkaYes=false;
+         $_SESSION['id_news_right']=$stroka['id'];  // Запоминаем id статьи, которую пошли смотреть ---------------------------------
+         $knopkaYes=file_exists($strokaUrl); // если файл нашли, то присвоить признаку $knopkaYes труе
+         if (!$knopkaYes)
+             {
+                $path=$redaktor->urlPoIdPath('bd2',$stroka['id']);
+                if ($path!==false) {$strokaUrl=$path;$knopkaYes=true;}
+
+             }
+         
+         if ($knopkaYes)
+            echo '<button class="prawBlock btn"  name="panelPrawa'.$stroka['id'].'" formaction="'.$strokaUrl.'">'.$nameSmall.'</button>';
+         //echo '<input class="prawBlock btn" type="submit" name="panelPrawa'.$stroka['id'].'" value="'.$stroka['name'].'">';
          echo '</div>';
          echo '</div>';
        }
       echo '</form>';
-     }
+      echo '</div>';
      echo '</section>';
 }
 ?>

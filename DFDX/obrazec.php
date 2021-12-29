@@ -2,6 +2,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+   <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MF3F7YTKCQ');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
@@ -27,11 +35,11 @@ if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=
 if ($_SESSION["status"]>99) $_SESSION["status"]=9;
  $menuUp = new redaktor\menu();
   if ($_SESSION["status"]>99 || $_SESSION["status"]==9)
-   $menuUp->__unserialize("menu6","podtverdit",array("redaktor.php","Введите код"));
+   $menuUp->__unserialize(array("menu6","podtverdit","redaktor.php","Введите код"));
  if ($_SESSION["status"]==5 || $_SESSION["status"]==4)
-    $menuUp->__unserialize("menu3","redaktor_up",array("Редактор","Сайт","Выйти","Создать страницу"));
+    $menuUp->__unserialize(array("menu3","redaktor_up","Редактор","Сайт","Выйти","Создать страницу"));
  if ($_SESSION["status"]==0)
-  $menuUp->__unserialize("menu4","login",array("redaktor.php","Логин","Пароль","Вход","Регистрация"));
+  $menuUp->__unserialize(array("menu4","login","redaktor.php","Логин","Пароль","Вход","Регистрация"));
  if ($_SESSION["status"]==1 || $_SESSION["status"]==2 || $_SESSION["status"]==3)
     $menuUp->menu("dla_statusob_123");
 if (isset($_SESSION["status"]) && $_SESSION["status"]>0)
@@ -125,7 +133,7 @@ for($j=0; $j<$i; $j++)
 
 <div class="row">
 <div class="col-12">  
-<p class="nazwanie1">Шаблон №2.</p> 
+<p class="nazwanie1">Шаблон №3.</p> 
 </div>
 </div>
 

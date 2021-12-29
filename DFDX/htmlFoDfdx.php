@@ -4,6 +4,14 @@ session_start();
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MF3F7YTKCQ');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
@@ -24,6 +32,7 @@ if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
 include "funcii.php";
 include "functionDfdx.php";
+include "image/swapImages.php";
 
 $status = new redaktor\login();
 $maty = new redaktor\maty();
@@ -51,8 +60,8 @@ if ($_SESSION["status"]==0)             // если пользователь н�
 
 if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
 
-$_SESSION['redaktiruem']="htmlFoDfdx.php";
-$maty->__unserialize('menu9','menu_up_dfdx',array('dfdx.php','Логин','Пароль'));
+//$_SESSION['redaktiruem']="htmlFoDfdx.php";
+$maty->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Пароль'));
 ////////////////////////////Начало основного кода страницы//////////////////////////  
 ///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
 echo '  <img src="image/logo.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
@@ -62,7 +71,10 @@ echo '<section class="container-fluid">';
 echo '<div class="row">';
 echo '<div class="col-12">';
 echo '<div class="logoHtml">';
-echo '<img src="image/html.png" alt="html">';
+if (file_exists('image/html.png'))
+  echo '<img src="image/html.png" alt="html">';
+else
+  htmlPhp();
 echo '<hr>';
 echo '</div>';
 echo '</div>';
@@ -85,7 +97,7 @@ $redaktor=new redaktor\modul();
 
 
 if (isset($_POST['poisk']))
- { echo 'поиск-'.$_POST['strPoisk'];
+ { //echo 'поиск-'.$_POST['strPoisk'];
   $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati,'категория-html3') ;
   if ($idStati[0]>-1)
     foreach($idStati as $value) 
