@@ -11,7 +11,7 @@ class modul
 
         public function __construct()
             {
-              $a='dfvdf';
+              
             }
 
 
