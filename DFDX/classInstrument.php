@@ -18,6 +18,7 @@ class modul
         public function news1(...$parametr)
         {
            $classPhp = new maty();
+           $classInstr = new instrument();
            $nametablice=''; // по умолчанию
            $zagolowok='p';  // по умолчанию
            $statusRedaktora='-s12345'; // Определяет статус пользователя, для которого открывается меню редактирования
@@ -180,8 +181,8 @@ class modul
                          ///////////////////////////////////////////Нажали кнопку Запомнить Шаблон//////////////////////////////
                          if (isset($_POST['vvv']))
                          {
-                          $_SESSION['mas_time_name_news']=$_POST['zagolowok']; //nl2br
-                          $_SESSION['mas_time_news']=$_POST['statia'];//nl2br($_POST['statia']);
+                          $_SESSION['mas_time_name_news']=$_POST['zagolowok']; 
+                          $_SESSION['mas_time_news']=$_POST['statia'];
                          }
             // Запись статьи, если была нажата кнопка Сохранить
             if ($nametablice!='' && $classPhp->searcNameTablic($nametablice) 
@@ -410,26 +411,26 @@ if ($hablonNews==2)
                                           $text=mb_substr($dataMas[$ii][0][1][0][0],1); // подготовить оставшийся текст
                                           $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
                           ////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                      //Находим содержимое свойства alt
-                                                      if (preg_match('/alt=\"\w+\"/u',$text, $alt))
-                                                          {
-                                                              //echo 'перестраиваем<br>';
-                                                              $alt=preg_filter('/alt=/','',$alt[0],-1);
-                                                              $alt=preg_filter('/\"/','',$alt,-1);
+                                            $altTest=preg_match_all('/alt=\".+\"/u',$text, $alt);
+                                            //if (!isset($alt)) $alt='CMS-DFDX';
                                                               //--------------------------------------------
                                                               // Находим содержимое URL
-                                                              if (preg_match('/src.*alt/u',$text, $url))
-                                                                        {
-                                                                             $url=preg_filter('/src=/','',$url[0],-1);
-                                                                             $url=preg_filter('/alt/','',$url,-1);
-                                                                             $url=preg_filter('/\"/','',$url,-1);
-                                                                        } 
-                                                                        //---------------------------------------------
-                                                               //Добавить див в начале ссылки
-                                                               $text=preg_filter('/<img/','<div class="img-div-'.$hablon.'"><img ',$text,-1); // добавить див с классом к img
-                                                               //Заменили урл на картинку на такой же урл, но обрамленный тегами ДИВ с классом нужного типа
-                                                               $text=preg_filter('/src=.*"\s*>/','class="img-'.$hablon.'" src="'.$url.'" alt="'.$alt.'"></div>',$text,-1);
-                                                          }
+                                            preg_match_all('/src="[^"]+/u',$text, $url);
+                                            if (!isset($url)) $url='image/logo.php';
+                                                          if (gettype($url)=='array')
+                                                           {
+                                                             $i=0;
+                                                             foreach($alt[0] as $value)
+                                                             {
+                                                               $altVstavki=$value;
+                                                               $altReg=preg_filter('/\s/','\s',$altVstavki,-1); // строка alt без пробелов, для регулярного выражения
+                                                               if (!isset($altReg)) $altReg=$altVstavki;
+                                                               $regularV='/img.*jpg.*'.$altReg.'/u';
+                                                               $replacement='div class="img-div-'.$hablon.'"><img class="img-'.$hablon.'" '.$url[0][$i].'" '.$altVstavki.'></div';
+                                                               $text=preg_filter($regularV,$replacement,$text,-1);
+                                                               $i++;
+                                                             }
+                                                           }
                                                       $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
                                                       $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
                                               echo '<section class="container-fluid">';
@@ -517,51 +518,17 @@ if ($hablonNews==2)
             if ($statusStatii)// Если труе, то статья проверена модератором
                     if ($dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati && $pokazalStatej==0) // Вывод по клику по заголовку статьи
                     {
-                      $class='statiaKrutka btn';  // класс заголовка по умолчанию
-                      $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon');
-                      if ($hablon>0) // класс заголовка в зависимости от стиля
-                       {
-                        //$hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon');
-                        $class='nazwanie'.$hablon.' btn'; // класс по шаблону
-                        $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
-                        $text=mb_substr($dataMas[$ii][0][1][0][0],1,strlen($dataMas[$ii][0][1][0][0])-1); // подготовить оставшийся текст
-                        $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
-                          
-                          //Находим содержимое свойства alt
-                          if (preg_match('/alt=\"\w+\"/u',$text, $alt))
-                          {
-                          //echo 'перестраиваем<br>';
-                          $alt=preg_filter('/alt=/','',$alt[0],-1);
-                          $alt=preg_filter('/\"/','',$alt,-1);
-                           //--------------------------------------------
-                          // Находим содержимое URL
-                          if (preg_match('/src.*alt/u',$text, $url))
-                          {
-                          $url=preg_filter('/src=/','',$url[0],-1);
-                          $url=preg_filter('/alt/','',$url,-1);
-                          $url=preg_filter('/\"/','',$url,-1);
-                          } 
-                            //---------------------------------------------
-                          //Добавить див в начале ссылки
-                          $text=preg_filter('/<img/','<div class="img-div-'.$hablon.'"><img ',$text,-1); // добавить див с классом к img
-                          //Заменили урл на картинку на такой же урл, но обрамленный тегами ДИВ с классом нужного типа
-                          $text=preg_filter('/src=.*"\s*>/','class="img-'.$hablon.'" src="'.$url.'" alt="'.$alt.'"></div>',$text,-1);
-                          }
-                        
-                        $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><div class="news-code"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
-                        $text=preg_replace('/<\/code>/','</div></code></div></div></div></section>',$text); // вставить класс в теги code
-                        
                         ///////////////////////////////////////////создаем нужные папки ////////////////////////////
-                        if (!file_exists('../../'.$classPhp->initsite())) // Создаем папки только в том случае, если не находимся в уже созданных папках
-                         {
-                            if ($dataMas[$ii][0][0][0][1]!='-')
-                               $katalog2='news/'.$dataMas[$ii][0][0][0][1]; // Папка со статьями + текущая категория
-                            else $katalog2='news/non-path';
-                            if (!is_dir('news')) // Если нет главной папки со статьями, то создать её
-                               mkdir('news',0777,1);
-                            if (!is_dir($katalog2)) // Если нет папки соответствующей категории, то создать её
-                               mkdir($katalog2,0777,1);
-                        }
+                            if (!file_exists('../../'.$classPhp->initsite())) // Создаем папки только в том случае, если не находимся в уже созданных папках
+                                {
+                                  if ($dataMas[$ii][0][0][0][1]!='-')
+                                      $katalog2='news/'.$dataMas[$ii][0][0][0][1]; // Папка со статьями + текущая категория
+                                  else $katalog2='news/non-path';
+                                  if (!is_dir('news')) // Если нет главной папки со статьями, то создать её
+                                      mkdir('news',0777,1);
+                                  if (!is_dir($katalog2)) // Если нет папки соответствующей категории, то создать её
+                                      mkdir($katalog2,0777,1);
+                                }
                         /////////////////////////////////////////////////////////////////////////////////////////////
                         $fileNameNotPhp=translit($dataMas[$ii][1][0][0][0]); // создаем имя файла
                         $fileName=$katalog2.'/'.$fileNameNotPhp.'.php';       // имя файла с каталогом
@@ -613,31 +580,20 @@ if ($hablonNews==2)
                               $strokaZameny='buttonTwitter("'.$dataMas[$ii][1][0][0][0].' http://dfdx.uxp.ru/'.$fileName.'");';
                               $valueTemp=preg_filter('/\/\/buttonTwitter/u',$strokaZameny,$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
-                            }
+                              $valueTemp=preg_filter('/title\>dfdx\<\/title/u','title>'.$dataMas[$ii][1][0][0][0].'</title',$value);
+                              if (!is_null($valueTemp)) $value=$valueTemp;
+                              $valueTemp=preg_filter('/metkaStatistika\(\'dfdx\'\)/','metkaStatistika("'.$fileNameNotPhp.'")',$value);
+                              if (!is_null($valueTemp)) $value=$valueTemp;
+                              $valueTemp=preg_filter('/getMetkaStatistik\(\'dfdx\'\)/','getMetkaStatistik("'.$fileNameNotPhp.'")',$value);
+                              if (!is_null($valueTemp)) $value=$valueTemp;
+                            } //title>dfdx</title
                             $this->urlPoIdSave($nametablice,$nomerZagolowkaStati,$fileName);
                             file_put_contents($fileName,$dfdx);
                             $_SESSION["runStrNews"]=true;
                             $_SESSION['statiaPoId']=$classPhp->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
                             header('Location: '.$fileName);
                         } else header('Location: '.$classPhp->initsite());
-                      }
-                      else
-                      {
-                        echo '<section class="container-fluid">';
-                        echo '<div class="row">';
-                        echo '<div class="col-12">';
-                        echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
-                        echo '</div></div>';
-                        echo '<div class="row">';
-                        echo '<div class="col-12">';
-                        echo $dataMas[$ii][0][1][0][0];
-                        echo '</div></div>';
-                        echo '<div class="row">';
-                        echo '<div class="col-12">';
-                        echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
-                        echo '</div></div></section>';
-                      }
-                        $pokazalStatej=1;
+                      $pokazalStatej=1;
                     }
 
                 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1016,7 +972,8 @@ function money(...$parametr) // работа с символами или ден
                   echo '<div class="helpPodRedaktoromStatej">';           
                     echo '<h6 class="mesage helpPodRedaktoromStatejH6">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
                     echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
-                    echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку"&gt</h6>'; 
+                    echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку" alt="текст к картинке" &gt</h6>'; 
+                    echo '<h6 class="mesage helpPodRedaktoromStatejH6">Внимание!! Аттрибут alt="текст" обязателет и если картинок много, должен НЕ ПОВТОРЯТЬСЯ!!</h6>'; 
                     echo '<h6 class="mesage helpPodRedaktoromStatejH6">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</h6>';
                  echo '</div>';
                 echo '</div>';
@@ -1069,6 +1026,7 @@ function money(...$parametr) // работа с символами или ден
                      echo '<h6 class="mesage helpPodRedaktoromStatejH6">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
                      echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
                      echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку"&gt</h6>'; 
+                     echo '<h6 class="mesage helpPodRedaktoromStatejH6">Внимание!! Аттрибут alt="текст" обязателет и если картинок много, должен НЕ ПОВТОРЯТЬСЯ!!</h6>'; 
                      echo '<h6 class="mesage helpPodRedaktoromStatejH6">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</h6>';
                   echo '</div>';
                  echo '</div>';

@@ -6011,7 +6011,7 @@ class statistic  extends futter // // Класс работа со статис�
   {
     $rez=parent::zaprosSQL("SELECT id FROM slegka_dfdx WHERE metka='".$metka."'");
     $stroka=mysqli_fetch_assoc($rez);
-    if ($stroka['id']>0) {
+    if (!is_null($stroka) && $stroka['id']>0) {
       $id=$stroka['id'];
       $rez=parent::zaprosSQL("SELECT zaprosov FROM slegka_dfdx WHERE metka='".$metka."'");
       $stroka=mysqli_fetch_assoc($rez);

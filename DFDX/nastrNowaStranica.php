@@ -122,11 +122,12 @@ if (!$errorName)
                                               '/#таблица\sдля\sпоиска#/' => function ($machh) {return 'bd2';},
                                               '/#категория\sдля\sпоиска#/' => function ($machh) {return 'категория-'.$_POST['kategoria-news-rdNovaStr'];},
                                               '/#страница\sобработки\sправого\sменю#/' => function ($machh) {return $_SESSION['nameFilePreg'];},
+                                              '/#title#/' => function ($machh) {return '<title>'.$_SESSION['nameNotPhp'].'</title>';},
                                               ]
                                               ,$fileStart);
       //////////////////////
       $saweRez=file_put_contents($nameFile,$fileStart,LOCK_EX);
-      if ($saweRez!==false) echo 'Записано '.$saweRez.' байт<br>'; //$_SESSION['newsTab']
+      if ($saweRez!==false) echo 'Записано '.$saweRez.' байт<br>'; //$_SESSION['newsTab'] title>regular_expressions</title
         else 'Страница не создана!';
      }
    }

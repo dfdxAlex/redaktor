@@ -19,7 +19,7 @@ include "../../image/swapImages.php";
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<title>dfdx</title>
+<title>Комментарии в html.</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <?php 
 $b=new redaktor\instrument();
@@ -188,9 +188,9 @@ $maty->redactMaty();
 
 
 // Вывод статистики Футтер
-$statistik->metkaStatistika('dfdx');
+$statistik->metkaStatistika("kommentarii-v-html-");
 echo '<div class="futterDivDfdx">';
-echo '<p class="footerMarginTop">Просмотров:'.$statistik->getMetkaStatistik('dfdx').'</p>';
+echo '<p class="footerMarginTop">Просмотров:'.$statistik->getMetkaStatistik("kommentarii-v-html-").'</p>';
 echo '<p class="footerMarginTop">Число запросов к БД: '.$statistik->kolZaprosow().'</p>';
 echo '<p class="footerMarginTop">Начало верстки сайта 2021-09-19</p>';
 echo '<p class="footerMarginTop">CMS-DFDX</p>';
