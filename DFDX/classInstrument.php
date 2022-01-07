@@ -720,9 +720,7 @@ $ostatokStranic=$nomerStatejSumm%$nomerStatejStart;
   echo '<span class="text-blok-stranic-down">Страниц: </span>';
   $i=1;
   for ($i=1; $i<=$sumStranic; $i++)
-    {
        echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
-    }
   if ($ostatokStranic>0) echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
   echo '</form>';
   echo '</div></div></div></div>';
