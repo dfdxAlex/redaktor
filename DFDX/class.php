@@ -1136,7 +1136,7 @@ class initBD extends instrument
         $zapros="DELETE FROM ".$nameTablice." ".$were;
         $rez=$this->zaprosSQL($zapros);
      }
-     public function zaprosSQL($zapros) // создать SQL запрос, условие согласно синтаксису SQL
+  public function zaprosSQL($zapros) // создать SQL запрос, условие согласно синтаксису SQL
      {
         $statistikTrueFalseRez=mysqli_query($this->con,'SELECT statik_true FROM statistik_dfdx WHERE 1');
         $statistikTrueFalse=mysqli_fetch_assoc($statistikTrueFalseRez);
@@ -6011,7 +6011,7 @@ class statistic  extends futter // // Класс работа со статис�
   {
     $rez=parent::zaprosSQL("SELECT id FROM slegka_dfdx WHERE metka='".$metka."'");
     $stroka=mysqli_fetch_assoc($rez);
-    if (!is_null($stroka) && $stroka['id']>0) {
+    if (parent::notFalseAndNULL($stroka) && $stroka['id']>0) {
       $id=$stroka['id'];
       $rez=parent::zaprosSQL("SELECT zaprosov FROM slegka_dfdx WHERE metka='".$metka."'");
       $stroka=mysqli_fetch_assoc($rez);

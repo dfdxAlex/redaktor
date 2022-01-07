@@ -55,7 +55,8 @@ body{
 }
 /*************************Стили левого меню********************/
 .levBlocklevBlock0,.levBlocklevBlock5,.levBlocklevBlock10,.levBlocklevBlock15,.levBlocklevBlock20,.levBlocklevBlock25,
-.levBlocklevBlock30,.levBlocklevBlock35,.levBlocklevBlock40,.levBlocklevBlock45,.levBlocklevBlock50,.levBlocklevBlock55
+.levBlocklevBlock30,.levBlocklevBlock35,.levBlocklevBlock40,.levBlocklevBlock45,.levBlocklevBlock50,.levBlocklevBlock55,
+.levBlocklevBlock61
 {
     height:25px; 
     width: 90%;

@@ -1,8 +1,8 @@
 <?php
 session_start();
-include "funcii.php";
-include "functionDfdx.php";
-include "image/swapImages.php";
+include "../../funcii.php";
+include "../../functionDfdx.php";
+include "../../image/swapImages.php";
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -19,7 +19,7 @@ include "image/swapImages.php";
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<title>dfdx</title>
+<title>Функция : preg_filter().</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <?php 
 $b=new redaktor\instrument();
@@ -73,7 +73,7 @@ if (isset($_SESSION["login"]))
 echo '</div>';
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">';
 if ($_SESSION["status"]>99) $_SESSION["status"]=9;
-$maty->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Пароль'));
+echo '<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>';
 echo '</div>';
 echo '</div>';
 echo '</section>';
@@ -116,18 +116,16 @@ echo '</section>';
 echo '<section class="container-fluid pole">';
 echo '<div class="row">';
 echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';  // Левое меню
-levoeMenu();
+//levoeMenu();
 echo '</div>';
 
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 $bylPoisk=false;
 $poisk = new \redaktor\poisk();
 $redaktor=new redaktor\modul();
-$action='action=dfdx.php';  //страница обработки кнопок в модуле news()
-$runNewsIsNews1=-1;
-$metka='dfdx'; //метка для счётчика статистики посещения конкретной страницы
-$nomerNewsPoisk='Число_статей=5';
-$nomerNewsGlawn='Число_статей=5';
+$action='action=#';  //страница обработки кнопок в модуле news()
+$runNewsIsNews1=4;
+$metka='funkciya-preg_filter-'; //метка для счётчика статистики посещения конкретной страницы
 //if (!file_exists($action)) $action=basename(__FILE__);
 
 ////////////////////////////////////////////////////поиск
@@ -136,7 +134,7 @@ if (isset($_POST['poisk']))
   $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati) ;
   if ($idStati[0]>-1)
     foreach($idStati as $value) 
-     $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value,$nomerNewsPoisk);
+     $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
     $bylPoisk=true;
  }
 ///////////////////////////////////////////////////
@@ -145,25 +143,24 @@ if (isset($_POST['poisk']))
  {
               // echo 'ловим кнопку';
                $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
-               //echo 'стр.148-'.$statiaPoId.'<br>';
+    
                if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели проверяем нажатие заголовков статей
                   $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
-               //echo 'стр.151-'.$statiaPoId.'<br>';
 
               if (isset($_SESSION['statiaPoId']))
-               if ($statiaPoId=='netKnopki') 
+               if ($statiaPoId=='netKnopki')
                 $statiaPoId=$_SESSION['statiaPoId'];
 
               if ($statiaPoId=='netKnopki' || isset($_POST['menu_up_dfdx']))  // Если не была нажата кнопка правой панели
-                $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
+                $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action);
 
             //НЕ УДАЛЯТЬ, ИСПОЛЬЗУЕТСЯ в персональных ссылках
-            //if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
+            if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
 
-              if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']) && $statiaPoId!='netKnopki')
-                 $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
+              if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']))
+                 $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action);
  }
-  //buttonTwitter
+  buttonTwitter("Функция : preg_filter(). http://dfdx.uxp.ru/news/phpregular/funkciya-preg_filter-double-1641492465.php");
   $_SESSION["runStrNews"]=false; // обнуление переменной
 echo '</div>';
 //////////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +168,7 @@ echo '</div>';
 echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
 
 echo '<div class="poiskDiv">';
-poiskDfdx('dfdx.php');
+//poiskDfdx('dfdx.php');
 echo '</div>';
 
 pravoePole("home");   // категория статей, которые должны быть показаны в правом меню 

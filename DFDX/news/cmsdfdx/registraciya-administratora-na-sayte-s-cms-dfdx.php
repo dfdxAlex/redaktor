@@ -1,8 +1,8 @@
 <?php
 session_start();
-include "funcii.php";
-include "functionDfdx.php";
-include "image/swapImages.php";
+include "../../funcii.php";
+include "../../functionDfdx.php";
+include "../../image/swapImages.php";
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -36,7 +36,7 @@ if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
 if (!isset($_SESSION["runStrNews"])) $_SESSION["runStrNews"]=false; // если страницу загрузили из модуля news, то значение true, если по прямой ссылке, то остается false
-if (!isset($_SESSION['redaktiruem'])) $_SESSION['redaktiruem']='';
+
 $redaktor=new redaktor\modul();
 $status = new redaktor\login();
 $maty = new redaktor\maty();
@@ -73,7 +73,7 @@ if (isset($_SESSION["login"]))
 echo '</div>';
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">';
 if ($_SESSION["status"]>99) $_SESSION["status"]=9;
-$maty->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Пароль'));
+echo '<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>';
 echo '</div>';
 echo '</div>';
 echo '</section>';
@@ -116,18 +116,15 @@ echo '</section>';
 echo '<section class="container-fluid pole">';
 echo '<div class="row">';
 echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';  // Левое меню
-levoeMenu();
+//levoeMenu();
 echo '</div>';
 
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 $bylPoisk=false;
 $poisk = new \redaktor\poisk();
 $redaktor=new redaktor\modul();
-$action='action=dfdx.php';  //страница обработки кнопок в модуле news()
-$runNewsIsNews1=-1;
-$metka='dfdx'; //метка для счётчика статистики посещения конкретной страницы
-$nomerNewsPoisk='Число_статей=5';
-$nomerNewsGlawn='Число_статей=5';
+$action='action=#';  //страница обработки кнопок в модуле news()
+$runNewsIsNews1=14;
 //if (!file_exists($action)) $action=basename(__FILE__);
 
 ////////////////////////////////////////////////////поиск
@@ -136,7 +133,7 @@ if (isset($_POST['poisk']))
   $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati) ;
   if ($idStati[0]>-1)
     foreach($idStati as $value) 
-     $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value,$nomerNewsPoisk);
+     $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
     $bylPoisk=true;
  }
 ///////////////////////////////////////////////////
@@ -145,25 +142,24 @@ if (isset($_POST['poisk']))
  {
               // echo 'ловим кнопку';
                $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
-               //echo 'стр.148-'.$statiaPoId.'<br>';
+    
                if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели проверяем нажатие заголовков статей
                   $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
-               //echo 'стр.151-'.$statiaPoId.'<br>';
 
               if (isset($_SESSION['statiaPoId']))
-               if ($statiaPoId=='netKnopki') 
+               if ($statiaPoId=='netKnopki')
                 $statiaPoId=$_SESSION['statiaPoId'];
 
               if ($statiaPoId=='netKnopki' || isset($_POST['menu_up_dfdx']))  // Если не была нажата кнопка правой панели
-                $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
+                $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action);
 
             //НЕ УДАЛЯТЬ, ИСПОЛЬЗУЕТСЯ в персональных ссылках
-            //if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
+            if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
 
-              if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']) && $statiaPoId!='netKnopki')
-                 $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
+              if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']))
+                 $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action);
  }
-  //buttonTwitter
+  buttonTwitter("Регистрация администратора на сайте с CMS-DFDX http://dfdx.uxp.ru/news/cmsdfdx/registraciya-administratora-na-sayte-s-cms-dfdx.php");
   $_SESSION["runStrNews"]=false; // обнуление переменной
 echo '</div>';
 //////////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +167,7 @@ echo '</div>';
 echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
 
 echo '<div class="poiskDiv">';
-poiskDfdx('dfdx.php');
+//poiskDfdx('dfdx.php');
 echo '</div>';
 
 pravoePole("home");   // категория статей, которые должны быть показаны в правом меню 
@@ -192,9 +188,9 @@ $maty->redactMaty();
 
 
 // Вывод статистики Футтер
-$statistik->metkaStatistika($metka);
+$statistik->metkaStatistika('dfdx');
 echo '<div class="futterDivDfdx">';
-echo '<p class="footerMarginTop">Просмотров:'.$statistik->getMetkaStatistik($metka).'</p>';
+echo '<p class="footerMarginTop">Просмотров:'.$statistik->getMetkaStatistik('dfdx').'</p>';
 echo '<p class="footerMarginTop">Число запросов к БД: '.$statistik->kolZaprosow().'</p>';
 echo '<p class="footerMarginTop">Начало верстки сайта 2021-09-19</p>';
 echo '<p class="footerMarginTop">CMS-DFDX</p>';

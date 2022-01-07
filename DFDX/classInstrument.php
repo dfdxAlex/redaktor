@@ -40,6 +40,8 @@ class modul
            $redaktorPodpis=false;
            $redaktorRedaktor=false;
            $_SESSION['action']='';
+           $nomerStatej=1000; // число статей, которые нужно показать
+           $nomerStatejSumm=0; // сколько статей было к показу
 
            if (!isset($_SESSION['newsTab']))
             $_SESSION['newsTab']=''; // хранит имя таблицы, которую использует модуль news1 для использования за пределами класса
@@ -53,8 +55,12 @@ class modul
 
            if (!isset($_SESSION['nomerStylaStatii']))
              $_SESSION['nomerStylaStatii']=1;
+
+           // перебираем все параметры и выдергиваем данные, которые пришли на вход
            // Ищем имя таблицы
-            foreach($parametr as $value)
+           //-------------------------------------------------------------------------------------------
+    foreach($parametr as $value)
+          {
               if (stripos('sss'.$value,'nameTD='))
               {
                  $nametablice=preg_replace('/nameTD=/','',$value);
@@ -62,7 +68,7 @@ class modul
                  $_SESSION['newsTab']=$nametablice;
               }
 
-            foreach($parametr as $value) // ищем обработчик кнопок Сохранить ...
+           // foreach($parametr as $value) // ищем обработчик кнопок Сохранить ...
               if (stripos('sss'.$value,'action='))
                {
                 $action=preg_replace('/action=/','',$value);
@@ -70,17 +76,17 @@ class modul
                }
 
            // Ищем размер заголовка
-            foreach($parametr as $value)
+           // foreach($parametr as $value)
               if (stripos('sss'.$value,'Заголовок='))
                $zagolowok=preg_replace('/Заголовок=/','',$value);
 
           // Проверяем задан ли раздел статей
-            foreach($parametr as $value)
+           // foreach($parametr as $value)
               if (stripos('sss'.$value,'Раздел='))
                  $razdel=preg_replace('/Раздел=/','',$value);
 
            // Статус редактора
-             foreach($parametr as $value)
+            // foreach($parametr as $value)
                 if (stripos('sss'.$value,'Статус редактора='))
                  {
                      $statusRedaktora=preg_replace('/Статус редактора=/','',$value);
@@ -90,7 +96,7 @@ class modul
                  }
 
            //проверяем логин
-            foreach($parametr as $value)
+           // foreach($parametr as $value)
                 if (stripos('---'.$value,'Логин редактора='))
                  {
                      $loginRedaktora=preg_replace('/Логин редактора=/','',$value); // Выделяем логин редактора/ов
@@ -98,19 +104,19 @@ class modul
                        $razresheniePoLoginu=true; // Если в списке логинов присутствует текущий логин, то разрешаем запуск открытого меню
                   }
            //ищем чьи статьи показать
-           foreach($parametr as $value)
+           //foreach($parametr as $value)
             if (stripos('sss'.$value,'Статьи редактора='))
                   $pokazarStatijRedaktora=preg_replace('/Статьи редактора=/','',$value); // Выделяем логин редактора/ов
 
-            foreach($parametr as $value)
+           // foreach($parametr as $value)
              if (stripos('sss'.$value,'Шаблон='))
                    $hablonNews=preg_replace('/Шаблон=/','',$value); // Выделяем логин редактора/ов
 
-            foreach($parametr as $value)
+           // foreach($parametr as $value)
               if (stripos('sss'.$value,'Отступ='))
                     $otstup=(int)preg_replace('/Отступ=/','',$value); // Выделяем логин редактора/ов
 
-            foreach($parametr as $value)
+           // foreach($parametr as $value)
               if (stripos('sss'.$value,'id='))
                {
                    $pokazatStatiuPoId=preg_replace('/id=/','',$value); // Вывести статью по Id
@@ -118,34 +124,38 @@ class modul
                }
             
              ////////////////////////////////////////////////////////
-            foreach($parametr as $value)
+           // foreach($parametr as $value)
                if (stripos('sss'.$value,'classKill='))
                 {
                      $classKill=preg_replace('/classKill=/','',$value); // Удалить лишнее
                      $classKill=preg_replace('/-/','',$classKill); // Удалить лишнее
                 }
-            foreach($parametr as $value)
+          //  foreach($parametr as $value)
                 if (stripos('sss'.$value,'classRedakt='))
                  {
                       $classRedakt=preg_replace('/classRedakt=/','',$value); // Удалить лишнее
                       $classRedakt=preg_replace('/-/','',$classRedakt); // Удалить лишнее
                  }
-            foreach($parametr as $value)
+           // foreach($parametr as $value)
                  if (stripos('sss'.$value,'classSave='))
                   {
                        $classRedakt=preg_replace('/classSave=/','',$value); // Удалить лишнее
                        $classRedakt=preg_replace('/-/','',$classSave); // Удалить лишнее
                   }
 
-            foreach($parametr as $value)
-                  if (stripos('sss'.$value,'превью='))
+            //foreach($parametr as $value) // Нашли число статей на странице
+                  if (stripos('sss'.$value,'Число_статей='))
                    {
-                        $prevju=preg_replace('/превью=/','',$value); // Удалить лишнее
-                    
+                        $nomerStatej=preg_replace('/Число_статей=/','',$value); // Удалить лишнее
+                        $nomerStatej=$nomerStatej+0;
                    }
 
+           // foreach($parametr as $value)
+                  if (stripos('sss'.$value,'превью=')) // число символов во второй и следующих статьях
+                        $prevju=preg_replace('/превью=/','',$value); // Удалить лишнее
+            
             //обработка параметра help
-            foreach($parametr as $value)
+            //foreach($parametr as $value)
               if ($value=='help' || $value=='Помощь')
                {
                    echo '<p>Функция выводит новостной блок</p>';
@@ -164,6 +174,7 @@ class modul
                    echo '<p>Ссылка на обработчик кнопок задается news1("action=dfdx.php")</p>';
 
                    echo '<p>Задать отступ между статьями. Пример: news1("Отступ=1"); Отступ равен одной строке</p>';
+                   echo '<p>Задать число статей на странице. Пример: news1("Число_статей=1"); Одна статья на странице</p>';
 
                    echo '<p>Работа с классами</p>';
                    echo '<p>Класс для кнопки удаления новости "classKill=-имя класса-"</p>';
@@ -176,7 +187,8 @@ class modul
                    echo '<p></p>';
                    
                 }
-
+          } // конец перебора входных данных
+                //-------------------------------------------------------------------------------------------
                              /////////////////////////////////////////////////////////////////////////////////////////////////////////
                          ///////////////////////////////////////////Нажали кнопку Запомнить Шаблон//////////////////////////////
                          if (isset($_POST['vvv']))
@@ -347,8 +359,10 @@ class modul
 
              // Воспроизводим статью от pokazarStatijRedaktora-здесь хранится имя автора, чьи статьи показать
              $zapros='';
+             // Загрузить все статьи, если нет логина редактора
              if ($pokazarStatijRedaktora=='')
                $zapros="SELECT * FROM ".$nametablice." WHERE 1";
+             // загрузить статьи конкретного редактора
              if ($pokazarStatijRedaktora!='') 
                $zapros="SELECT * FROM ".$nametablice." WHERE login_redaktora='".$pokazarStatijRedaktora."'";
 
@@ -382,25 +396,40 @@ class modul
              // Шаблон 1 не доделан, необходимо скопировать все изменения из шаблона 2
              // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+             //запомнить число выводимых статей для будущего подсчёта страниц
+             $nomerStatejStart=$nomerStatej; //число статей на странице
+             $buttonStr=$classPhp->hanterButton("rez=hant","nameStatic=str","returnNameDynamic","false=netStr"); //номер страницы
+             if ($buttonStr!='netStr') $pokazatStatiuPoId=-1; // если была нажата кнопка листания страниц, то обнулить работу с ИД
+             if ($buttonStr=='netStr') $buttonStr=1;
+             $startOutNews=$buttonStr*$nomerStatej-$nomerStatej; //c какой по счёту статьи следует начинать выводить
+             $outBlokStranic=true;
+             if ($pokazatStatiuPoId>-1) $outBlokStranic=false;// запретить показ модуля страниц
+             
 if ($hablonNews==2)
  if (!isset($_POST['dobawitNow']))
   for ($ii=$i-1; $ii>-1; $ii--)
-    {             
+    {       
+      $nomerStatejSumm++; // считает число статей, которые можно было показать
+            
                   if ($_SESSION['status']==1 || $_SESSION['status']==3)
                     $statiaVozwrat=$this->vernutStati($dataMas[$ii][0][0][0][0]); // Проверяет не вернута ли статья на доработку
                   else $statiaVozwrat=false;
 
                   // проверяет статус статьи по ИД номеру, проверена она или ещё нет
                   $statusStatii=$this->statusStati($dataMas[$ii][0][0][0][0]); 
-                 
+                
+                  //echo 'показал-'.$nomerStatej.'всего-'.$nomerStatejSumm;
+        //общие условия для показа всех статей, первых, коротких, по названию и так далее
+      if ($startOutNews<=$nomerStatejSumm) // Задает с какой по счёту статьи начинать выводить
+        if ($nomerStatej>0)     // Счётчик показа статей  
           if ($pokazatStatiuPoId<0 || ($pokazatStatiuPoId==$dataMas[$ii][0][0][0][0] && $statusStatii))
              if (stripos('sss'.$dataMas[$ii][0][0][0][1],$razdel) || $dataMas[$ii][0][0][0][1]=='-' || $razdel=='') // Если заданный раздел входит в категорию статьи
               { 
                   if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))      // Если труе, то статья проверена модератором
                     if ($pokazalStatej==0 && $nomerZagolowkaStati=='www')  // первая статья не по клику по названию статьи
                      {
-                      if (!$statiaVozwrat)  // показ первой статьи при обычных условиях
-                       {
+                        if (!$statiaVozwrat)  // показ первой статьи при обычных условиях
+                          {
                                 $class='statiaKrutka btn'; // класс заголовка по умолчанию
                                 // Условие сработает если задан какой-либо вид оформления статьи
                                 if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0)  // класс заголовка в зависимости от стиля тут
@@ -412,7 +441,6 @@ if ($hablonNews==2)
                                           $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
                           ////////////////////////////////////////////////////////////////////////////////////////////////////
                                             $altTest=preg_match_all('/alt=\".+\"/u',$text, $alt);
-                                            //if (!isset($alt)) $alt='CMS-DFDX';
                                                               //--------------------------------------------
                                                               // Находим содержимое URL
                                             preg_match_all('/src="[^"]+/u',$text, $url);
@@ -449,47 +477,50 @@ if ($hablonNews==2)
                                               echo '<div class="col-12">';
                                               echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
                                               echo '</div></div></section>';
+                                              $nomerStatej--;
                                       }
-                        else
-                        {
-                          echo '<section class="container-fluid">';
-                          echo '<div class="row">';
-                          echo '<div class="col-12">';
-                          echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
-                          echo '</div></div>';
-                          echo '<div class="row">';
-                          echo '<div class="col-12">';
-                          echo '<div>'.$dataMas[$ii][0][1][0][0].'</div>';
-                          echo '</div></div>';
-                          echo '<div class="row">';
-                          echo '<div class="col-12">';
-                          echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
-                          echo '</div></div></section>';
+                                    else
+                                       {
+                                          echo '<section class="container-fluid">';
+                                          echo '<div class="row">';
+                                          echo '<div class="col-12">';
+                                          echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
+                                          echo '</div></div>';
+                                          echo '<div class="row">';
+                                          echo '<div class="col-12">';
+                                          echo '<div>'.$dataMas[$ii][0][1][0][0].'</div>';
+                                          echo '</div></div>';
+                                          echo '<div class="row">';
+                                          echo '<div class="col-12">';
+                                          echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
+                                          echo '</div></div></section>';
+                                          $nomerStatej--;
+                                        }
                         }
-                       }
                        
-            if ($statiaVozwrat)  // Показ статьи в случае, если её запостил статус 1 или 3
-               {
-                   $class='statiaKrutka btn'; // класс заголовка по умолчанию
-                   $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
-                   if ($hablon>0) // класс заголовка в зависимости от стиля
-                        {
-                          $class='nazwanie'.$hablon.' btn'; // класс по шаблону
-                          $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
-                          $text=mb_substr($dataMas[$ii][0][1][0][0],1,strlen($dataMas[$ii][0][1][0][0])-1); // подготовить оставшийся текст
-                          $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
-                          $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
-                          $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
+                        if ($statiaVozwrat)  // Показ статьи в случае, если её запостил статус 1 или 3
+                          {
+                            $class='statiaKrutka btn'; // класс заголовка по умолчанию
+                            $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
+                            if ($hablon>0) // класс заголовка в зависимости от стиля
+                             {
+                               $class='nazwanie'.$hablon.' btn'; // класс по шаблону
+                               $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
+                               $text=mb_substr($dataMas[$ii][0][1][0][0],1,strlen($dataMas[$ii][0][1][0][0])-1); // подготовить оставшийся текст
+                               $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
+                               $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
+                               $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
+                              }
+                            echo '<form method="post" action="'.$classPhp->initsite().'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'-вернули на доработку">'.'<div>'.$text.'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small></form>';
+                            echo $otstupBr;
+                            echo 'Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]);
                         }
-                    echo '<form method="post" action="'.$classPhp->initsite().'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'-вернули на доработку">'.'<div>'.$text.'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small></form>';
-                    echo $otstupBr;
-                    echo 'Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]);
-                }
-            }
-                  ///////////////////////////Вторая и следующие статьи//////////////////////////////
+                      }
+                    ///////////////////////////Вторая и следующие статьи//////////////////////////////
                   if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))     // Если труе, то статья проверена модератором
                     if ($pokazalStatej>0 && $nomerZagolowkaStati=='www')   // вторая и дальше статья не по клику по названию статьи
                      {
+                      $nomerStatej--;
                           $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
                           $text=$dataMas[$ii][0][1][0][0]; 
                           //Находим содержимое свойства alt
@@ -518,6 +549,7 @@ if ($hablonNews==2)
             if ($statusStatii)// Если труе, то статья проверена модератором
                     if ($dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati && $pokazalStatej==0) // Вывод по клику по заголовку статьи
                     {
+                      
                         ///////////////////////////////////////////создаем нужные папки ////////////////////////////
                             if (!file_exists('../../'.$classPhp->initsite())) // Создаем папки только в том случае, если не находимся в уже созданных папках
                                 {
@@ -565,27 +597,35 @@ if ($hablonNews==2)
                             {                                                                // fileName fileNameNotPhp
                               $valueTemp=preg_filter('/\$action.*php/u','\$action=\'action=#',$value); // Замена страниц обработчиков
                               if (!is_null($valueTemp)) $value=$valueTemp;
+                              
                               $valueTemp=preg_filter('/include "/u','include "../../',$value); // Замена пути для Инклудов
                               if (!is_null($valueTemp)) $value=$valueTemp;
+                              
                               $valueTemp=preg_filter('/\$maty.*огин.*роль.*/u','echo \'<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>\';',$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
+                              
                               $valueTemp=preg_filter('/levoeMenu/u','//levoeMenu',$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
+                              
                               $valueTemp=preg_filter('/poiskDfdx/u','//poiskDfdx',$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
+                              
                               $valueTemp=preg_filter('/\$runNewsIsNews1=-1/','$runNewsIsNews1='.$nomerZagolowkaStati,$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
+                              
                               $valueTemp=preg_filter('/\/\/if\s\(!\$/','if (!$',$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
+                              
                               $strokaZameny='buttonTwitter("'.$dataMas[$ii][1][0][0][0].' http://dfdx.uxp.ru/'.$fileName.'");';
                               $valueTemp=preg_filter('/\/\/buttonTwitter/u',$strokaZameny,$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
+                              
                               $valueTemp=preg_filter('/title\>dfdx\<\/title/u','title>'.$dataMas[$ii][1][0][0][0].'</title',$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
-                              $valueTemp=preg_filter('/metkaStatistika\(\'dfdx\'\)/','metkaStatistika("'.$fileNameNotPhp.'")',$value);
+
+                              $valueTemp=preg_filter('/tka=\'dfdx/u',"tka='".$fileNameNotPhp,$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
-                              $valueTemp=preg_filter('/getMetkaStatistik\(\'dfdx\'\)/','getMetkaStatistik("'.$fileNameNotPhp.'")',$value);
-                              if (!is_null($valueTemp)) $value=$valueTemp;
+
                             } //title>dfdx</title
                             $this->urlPoIdSave($nametablice,$nomerZagolowkaStati,$fileName);
                             file_put_contents($fileName,$dfdx);
@@ -668,7 +708,25 @@ if ($hablonNews==2)
               if (isset($_POST['vvv']))
                 $this->styliStati('id='.$_SESSION['redaktirowatId'],'hablon='.$_SESSION['nomerStylaStatii']);
                              ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+if ($outBlokStranic) // если есть разрешение на показ модуля вывода страниц
+{                     // запрещается показывать модуль, если было нажатие на заголовок статьи
+$sumStranic=intdiv($nomerStatejSumm,$nomerStatejStart);
+$ostatokStranic=$nomerStatejSumm%$nomerStatejStart;
+  echo '<div class="section">';
+  echo '<div class="row">';
+  echo '<div class="col-12">'; 
+  echo '<div class="block-stranic-down">';
+  echo '<form method="post" action="'.$action.'">';
+  echo '<span class="text-blok-stranic-down">Страниц: </span>';
+  $i=1;
+  for ($i=1; $i<=$sumStranic; $i++)
+    {
+       echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
+    }
+  if ($ostatokStranic>0) echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
+  echo '</form>';
+  echo '</div></div></div></div>';
+}
 }
 // Служебная функция считает число статей в БД с заданное категорией
   public function numberNews($kategori)

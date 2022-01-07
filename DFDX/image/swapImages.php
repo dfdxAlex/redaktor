@@ -25,4 +25,12 @@ function git()
 {
    echo '<p class="swap-images"><span>GitHub<span></p>';
 }
+function leson()
+{
+   echo '<p class="swap-images"><span>Различные реализованные задачи<span></p>';
+}
+function apidfdx()
+{
+   echo '<p class="swap-images"><span>API DFDX<span></p>';
+}
 ?>

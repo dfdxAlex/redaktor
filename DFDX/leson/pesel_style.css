@@ -1,0 +1,19 @@
+.form{
+    margin-top:100px;
+    margin-left:100px;
+    color: black;
+    font-size: 15px;
+}
+.dataNorm,.dataErr{
+    margin-top:10px;
+    width: 400px;
+}
+.dataErr{
+    border-style: solid;
+    border-color:red;
+ }
+ .pesel{
+    margin-top:20px; 
+    margin-left:300px;
+    font-size: 35px;
+ }

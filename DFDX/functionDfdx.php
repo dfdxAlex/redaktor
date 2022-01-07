@@ -71,6 +71,19 @@ function poiskDfdx($strObrabotki) //Выводит кнопки поиска
 
 
 }
+function contentLeson() //Выводит содержание для LESON
+{
+    $clas=new redaktor\statistic();
+    $clas->formBlock('levBlock','leson.php',
+                    'submit',
+                    'contentLeson',
+                    'Генерация PESEL ',
+                    'leson/pesel.php',
+                    'br'
+                        );
+
+
+}
 function levoeMenu() //Выводит левое меню
 {
     $clas=new redaktor\statistic();
@@ -78,7 +91,7 @@ function levoeMenu() //Выводит левое меню
                     'submit',
                     'levBlock',
                     'API DFDX',
-                    '#',
+                    'apidfdx.php',
                     'br',
                     'submit',
                     'levBlock',
@@ -134,7 +147,12 @@ function levoeMenu() //Выводит левое меню
                     'levBlock',
                     'JavaScript',
                     '#',
-                    'br'
+                    'br',
+                    '3',
+                    'submit',
+                    'levBlock',
+                    'Задачи',
+                    'leson.php'
                         );
 
 
@@ -159,9 +177,11 @@ function pravoePole($kluc)
             $strSummRazdel=$strSummRazdel.'bd2.razdel="'.$stroka[0].'" ';
             $connectOR=true;
        }
-
+      
       //$zapros="SELECT id,name FROM bd2 ".$strSummRazdel;
-      $zapros="SELECT bd2.name, url_po_id_bd2.url, bd2.id FROM bd2, url_po_id_bd2 ".$strSummRazdel.') AND bd2.id=url_po_id_bd2.id';
+      if ($connectOR)
+        $zapros="SELECT bd2.name, url_po_id_bd2.url, bd2.id FROM bd2, url_po_id_bd2 ".$strSummRazdel.') AND bd2.id=url_po_id_bd2.id';
+      else $zapros='SELECT bd2.name, url_po_id_bd2.url, bd2.id FROM bd2, url_po_id_bd2 WHERE bd2.id=url_po_id_bd2.id';
       //echo $zapros;
       $rez=$clas->zaprosSQL($zapros);
 
