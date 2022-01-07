@@ -404,6 +404,7 @@ class modul
              $startOutNews=$buttonStr*$nomerStatej-$nomerStatej; //c какой по счёту статьи следует начинать выводить
              $outBlokStranic=true;
              if ($pokazatStatiuPoId>-1) $outBlokStranic=false;// запретить показ модуля страниц
+             $a='test';
              
 if ($hablonNews==2)
  if (!isset($_POST['dobawitNow']))
