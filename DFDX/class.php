@@ -143,14 +143,17 @@ class instrument
    // функция возвращает текстовое значение переданного параметра булеан или нулл или false, если параметр не соответствует этим типам
    public function trueFalseNull($param)
     {
-      if ($param===true) return 'True';
-      if ($param===false) return 'False';
-      if (is_null($param)) return 'NULL';
+      if ($param===true) 
+          return 'True';
+      if ($param===false) 
+          return 'False';
+      if (is_null($param)) 
+          return 'NULL';
       return false;
     }
-   public function clearCode($cod,...$parametr) //Функция очищает код от вредных тегов оставляя разрешенные
+   //Функция очищает код от вредных тегов оставляя разрешенные
+   public function clearCode($cod,...$parametr) 
    {
-
         //разрешенные теги
         //Функция выводит очищенную строку с кодом, либо список допустимых тегов
         //Если есть входящий параметр список_тегов_строка, то список вернется одной строкой (значение по умолчанию)
@@ -164,207 +167,300 @@ class instrument
         $vivod=true;
         $udalitVse=false;
       
-        foreach($parametr as $value)
+        foreach($parametr as $value) {
           if ($value=='список_тегов_столбец')
             $spisokPlusBr=true;
 
-        foreach($parametr as $value)
+        //foreach($parametr as $value)
           if ($value=='список')
             $vivod=false;
 
-        foreach($parametr as $value)
+        //foreach($parametr as $value)
           if ($value=='удалить_все')
             $udalitVse=true;
+        }
 
         if ($udalitVse) // Если команда Удалить Все теги
-          {
             $cod=preg_replace('/>|</','',$cod); // Удалить лишнее
-          }
-        if (!$udalitVse) // Если нет команды Удалить Все теги
-         {
+
+        if (!$udalitVse) {// Если нет команды Удалить Все теги
+         
             $cod=preg_replace('/</','&lt',$cod); // Удалить лишнее
             $cod=preg_replace('/<\?php/','&lt?php',$cod); // Заменить открывающий тег php на нарисованный
             $cod=preg_replace('/>/','&gt',$cod); // 
-
             $cod=preg_replace('/class/','',$cod); // Удалить лишнее
             $cod=preg_replace('/"&gt/','">',$cod); // вернуть кавычку с закрытым тегом
             $cod=preg_replace('/&ltp&gt/','<p>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/p&gt/','</p>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&ltp&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&lth1&gt/','<h1>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/h1&gt/','</h1>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&lth1&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&lth2&gt/','<h2>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/h2&gt/','</h2>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&lth2&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&lth3&gt/','<h3>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/h3&gt/','</h3>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&lth3&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&lth4&gt/','<h4>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/h4&gt/','</h4>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&lth4&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&lth5&gt/','<h5>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/h5&gt/','</h5>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&lth5&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&lth6&gt/','<h6>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/h6&gt/','</h6>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&lth6&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&lti&gt/','<i>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/i&gt/','</i>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&lti&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltfont&gt/','<font>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/font&gt/','</font>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&ltfont&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltbr&gt/','<br>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/br&gt/','</br>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&ltbr&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltacronym&gt/','<acronym>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/acronym&gt/','</acronym>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&ltacronym&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltabbr&gt/','<abbr>',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/abbr&gt/','</abbr>',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&ltabbr&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&lta\s/','<a ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/a&gt/','</a>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&lta&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltu&gt/','<u> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/u&gt/','</u>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltu&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&lttt&gt/','<tt> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/tt&gt/','</tt>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&lttt&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltsup&gt/','<sup> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/sup&gt/','</sup>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltsup&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltstrong&gt/','<strong> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/strong&gt/','</strong>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltstrong&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltstrike&gt/','<strike> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/strike&gt/','</strike>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltstrike&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltspan&gt/','<span> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/span&gt/','</span>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltspan&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltsmall&gt/','<small> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/small&gt/','</small>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltsmall&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltsamp&gt/','<samp> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/samp&gt/','</samp>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltsamp&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+            
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&lts&gt/','<s> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/s&gt/','</s>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&lts&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltq&gt/','<q> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/q&gt/','</q>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltq&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltkbd&gt/','<kbd> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/kbd&gt/','</kbd>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltkbd&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltem&gt/','<em> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/em&gt/','</em>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltem&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltdfn&gt/','<dfn> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/dfn&gt/','</dfn>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltdfn&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltcode&gt/','<code> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/code&gt/','</code>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltcode&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltcite&gt/','<cite> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/cite&gt/','</cite>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltcite&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltbig&gt/','<big> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/big&gt/','</big>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltbig&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltb&gt/','<b> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/b&gt/','</b>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltb&gt ';
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltiframe/','<iframe',$cod); // Удалить лишнее
             $cod=preg_replace('/&gt&lt\/iframe&gt/','></iframe>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltiframe&gt ';
 
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';  // переработка и разрешение тегов <br /> в <br>
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';  // переработка и разрешение тегов <br /> в <br>
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltbr/','<br',$cod); // Удалить лишнее
             $cod=preg_replace('/\s\/&gt/','>',$cod); // Вернуть закрытый тег
 
-
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltdiv&gt/','<div> ',$cod); // Удалить лишнее
             $cod=preg_replace('/&lt\/div&gt/','</div>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltdiv&gt ';
 
-            if (!$spisokPlusBr) $listTegow=$listTegow.',';
-            if ($spisokPlusBr) $listTegow=$listTegow.'<br>';
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltimg/','<img ',$cod); // Удалить лишнее
-            //$cod=preg_replace('/&lt\/div&gt/','</div>',$cod); // Вернуть закрытый тег
             $listTegow=$listTegow.'&ltimg&gt ';
-            
          }
 
-        if ($vivod) return $cod;
-        if (!$vivod) return $listTegow;
-
+        if ($vivod) 
+            return $cod;
+        if (!$vivod) 
+            return $listTegow;
    }
    // ловим кнопку
    public function hanterButton(...$parametr)
