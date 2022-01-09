@@ -221,71 +221,68 @@ class modul
                                         echo 'Статья отправлена на модерацию, страница вот-вот перезагрузится';
                                       }
                                     }
+                          // Если статью сохранили статусы 4 или 5 и её ИД есть в таблице возвращенных статей, то удалить этот ИД из данной таблицы
+                          if ($_SESSION['status']==4 || $_SESSION['status']==5) {
+                              $classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
+                              // поиск автора редактируемой или создаваемой статьи
+                              if (!isset($_SESSION['redaktirowatId']) || $_SESSION['redaktirowatId']<0) // признак того, что создается новая статья
+                                  $loginAwtora=$_SESSION['login'];
+                              if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) {
+                                  $rez=$classPhp->zaprosSQL("select login_redaktora FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
+                                  $stroka=mysqli_fetch_array($rez);
+                                  $loginAwtora=$stroka[0];
+                                }
+                              $this->money('login='.$loginAwtora,'заплатить='.$dlinaStati); // добавить или отнять монеты
+                            }
 
-                    if ($_SESSION['status']==4 || $_SESSION['status']==5) // Если статью сохранили статусы 4 или 5 и её ИД есть в таблице возвращенных статей, то удалить этот ИД из данной таблицы
-                      {
-                        $classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
-                        // поиск автора редактируемой или создаваемой статьи
-                        if (!isset($_SESSION['redaktirowatId']) || $_SESSION['redaktirowatId']<0) // признак того, что создается новая статья
-                          $loginAwtora=$_SESSION['login'];
-                        if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1)
-                         {
-                          $rez=$classPhp->zaprosSQL("select login_redaktora FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
-                          $stroka=mysqli_fetch_array($rez);
-                          $loginAwtora=$stroka[0];
-                         }
-                        $this->money('login='.$loginAwtora,'заплатить='.$dlinaStati); // добавить или отнять монеты
+                          if ($_SESSION['status']==1 || $_SESSION['status']==3) // Если статью сохранили статусы 1 или 3 то удалить статью из таблицы возвратов
+                              $classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
+                 
+                          $_SESSION['mas_time_name_news']='';
+                          $_SESSION['mas_time_news']='';
+               }
+              ///////////////////////////////////////////////////////////////////////////////
+              if ((isset($_POST[$nametablice.'_redaktor']) || isset($_POST[$nametablice.'_redaktor2']))  && !isset($_POST['vvv'])) {
+                    $_SESSION['redaktirowatId']=-1;
+                    echo '<meta http-equiv="refresh" content="0; URL='.$action.'">';
+               }
+              
+              ////////////////////////////////////// работаем с кнопкой удалить //////////////////////////////////
+              if ($classPhp->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Удалить') {
+                  $killStroka=$classPhp->hanterButton('rez=hant','nameStatic=statia','returnName');
+                  $killStroka=preg_replace('/statia/','',$killStroka);  
+                  $killStroka=preg_replace('/kill/','',$killStroka);  
+                  //$killStroka - ИД статьи, которую нужно удалить 
+                  $killStroka=preg_replace('/'.$_SESSION['login'].'/','',$killStroka); 
+            
+                  //Вытягиваем путь к удаленному файлу из базы данных
+                  $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nametablice." WHERE id=".$killStroka);
+                  $killPath=mysqli_fetch_array($rez);
+
+                  $killName='';
+                  //Находим файл на диске и удаляем его
+                  if ($classPhp->notFalseAndNULL($killPath)) {
+                      $killName=$killPath[0];
+                      if (!file_exists($killPath[0]))
+                          $killName=preg_filter('/news\/.+\//','',$killPath[0]);
+                   }
+                  if ($killName!='')
+                      unlink($classPhp->searcNamePath($killName));
+                  $classPhp->killZapisTablicy('url_po_id_'.$nametablice,'WHERE id='.$killStroka);
+
+                  if (($_SESSION['status']==4 || $_SESSION['status']==5) && $this->statusStati($killStroka)) {
+                    $rez=$classPhp->zaprosSQL("select login_redaktora, news from ".$nametablice." where id=".$killStroka); // логин редактора и статья
+                    $stroka=mysqli_fetch_assoc($rez);
+                    if ($classPhp->notFalseAndNULL($stroka)) {
+                        $zaplatit=strlen($stroka['news']);
+                        $zaplatit=0-$zaplatit;
+                        $login=$stroka['login_redaktora'];
+                        $this->money('login='.$login,'заплатить='.$zaplatit);
                       }
-
-                    if ($_SESSION['status']==1 || $_SESSION['status']==3) // Если статью сохранили статусы 1 или 3 то удалить статью из таблицы возвратов
-                        $classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
-                 
-                        $_SESSION['mas_time_name_news']='';
-                         $_SESSION['mas_time_news']='';
-                 
-                 }
-                 ///////////////////////////////////////////////////////////////////////////////
-                 if ((isset($_POST[$nametablice.'_redaktor']) || isset($_POST[$nametablice.'_redaktor2']))  && !isset($_POST['vvv'])) {$_SESSION['redaktirowatId']=-1;echo '<meta http-equiv="refresh" content="0; URL='.$action.'">';}
-         /////////////////////////////////////// работаем с кнопкой удалить ////////////////////////////////// row button_statia
-         if ($classPhp->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Удалить')
-           {
-            
-             $killStroka=$classPhp->hanterButton('rez=hant','nameStatic=statia','returnName');
-             $killStroka=preg_replace('/statia/','',$killStroka); // Удалить лишнее
-             $killStroka=preg_replace('/kill/','',$killStroka); // Удалить лишнее
-             $killStroka=preg_replace('/'.$_SESSION['login'].'/','',$killStroka); // Удалить лишнее $killStroka - ИД статьи, которую нужно удалить 
-            
-             //Вытягиваем путь к удаленному файлу из базы данных
-             $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nametablice." WHERE id=".$killStroka);
-             $killPath=mysqli_fetch_array($rez);
-
-             $killName='';
-                //Находим файл на диске и удаляем его
-              if ($classPhp->notFalseAndNULL($killPath))
-               {
-                $killName=$killPath[0];
-                if (!file_exists($killPath[0]))
-                  $killName=preg_filter('/news\/.+\//','',$killPath[0]);
-               }
-             if ($killName!='')
-                unlink($classPhp->searcNamePath($killName));
-             $classPhp->killZapisTablicy('url_po_id_'.$nametablice,'WHERE id='.$killStroka);
-
-             if (($_SESSION['status']==4 || $_SESSION['status']==5) && $this->statusStati($killStroka)) 
-             {
-              $rez=$classPhp->zaprosSQL("select login_redaktora, news from ".$nametablice." where id=".$killStroka); // логин редактора и статья
-              $stroka=mysqli_fetch_assoc($rez);
-              if ($classPhp->notFalseAndNULL($stroka))
-               {
-                $zaplatit=strlen($stroka['news']);
-                $zaplatit=0-$zaplatit;
-                $login=$stroka['login_redaktora'];
-                $this->money('login='.$login,'заплатить='.$zaplatit);
-               }
-             }
-             $classPhp->killZapisTablicy($nametablice,'WHERE id='.$killStroka);
-             $classPhp->killZapisTablicy('status_statii_dfdx','WHERE id='.$killStroka);
-             $classPhp->killZapisTablicy('vernul_statii_dfdx','WHERE id='.$killStroka);
+                  }
+                  $classPhp->killZapisTablicy($nametablice,'WHERE id='.$killStroka);
+                  $classPhp->killZapisTablicy('status_statii_dfdx','WHERE id='.$killStroka);
+                  $classPhp->killZapisTablicy('vernul_statii_dfdx','WHERE id='.$killStroka);
            }
          /////////////////////////////////////////////////////////////////////////////////////////////////////
          /////////////////////////////////////// работаем с кнопкой редактировать ////////////////////////////////// row button_statia
