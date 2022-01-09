@@ -57,56 +57,51 @@ class modul
            if (!isset($_SESSION['nomerStylaStatii']))
              $_SESSION['nomerStylaStatii']=1;
 
-           // перебираем все параметры и выдергиваем данные, которые пришли на вход
-           // Ищем имя таблицы
-           //-------------------------------------------------------------------------------------------
-    foreach($parametr as $value)
-          {
-              if (stripos('sss'.$value,'nameTD='))
-              {
+    // перебираем все параметры и выдергиваем данные, которые пришли на вход
+    // Ищем имя таблицы
+    //-------------------------------------------------------------------------------------------
+    foreach($parametr as $value) {
+              if (stripos('sss'.$value,'nameTD=')) {
                  $nametablice=preg_replace('/nameTD=/','',$value);
                  $nametablice=mb_strtolower($nametablice);
                  $_SESSION['newsTab']=$nametablice;
               }
 
-           // foreach($parametr as $value) // ищем обработчик кнопок Сохранить ...
-              if (stripos('sss'.$value,'action='))
-               {
+              // foreach($parametr as $value) // ищем обработчик кнопок Сохранить ...
+              if (stripos('sss'.$value,'action=')) {
                 $action=preg_replace('/action=/','',$value);
                 $_SESSION['action']=$action;
-               }
+              }
 
-           // Ищем размер заголовка
-           // foreach($parametr as $value)
+              // Ищем размер заголовка
+              // foreach($parametr as $value)
               if (stripos('sss'.$value,'Заголовок='))
                $zagolowok=preg_replace('/Заголовок=/','',$value);
 
-          // Проверяем задан ли раздел статей
-           // foreach($parametr as $value)
+              // Проверяем задан ли раздел статей
+              // foreach($parametr as $value)
               if (stripos('sss'.$value,'Раздел='))
                  $razdel=preg_replace('/Раздел=/','',$value);
 
-           // Статус редактора
-            // foreach($parametr as $value)
-                if (stripos('sss'.$value,'Статус редактора='))
-                 {
-                     $statusRedaktora=preg_replace('/Статус редактора=/','',$value);
-                     if (stripos('sss'.$value,'1')) $redaktorUser=true;
-                     if (stripos('sss'.$value,'3')) $redaktorPodpis=true;
-                     if (stripos('sss'.$value,'2')) $redaktorRedaktor=true;
-                 }
+              // Статус редактора
+              // foreach($parametr as $value)
+              if (stripos('sss'.$value,'Статус редактора=')) {
+                 $statusRedaktora=preg_replace('/Статус редактора=/','',$value);
+                 if (stripos('sss'.$value,'1')) $redaktorUser=true;
+                 if (stripos('sss'.$value,'3')) $redaktorPodpis=true;
+                 if (stripos('sss'.$value,'2')) $redaktorRedaktor=true;
+              }
 
-           //проверяем логин
-           // foreach($parametr as $value)
-                if (stripos('---'.$value,'Логин редактора='))
-                 {
-                     $loginRedaktora=preg_replace('/Логин редактора=/','',$value); // Выделяем логин редактора/ов
-                     if (stripos('---'.$loginRedaktora,$_SESSION['login'])>0) 
-                       $razresheniePoLoginu=true; // Если в списке логинов присутствует текущий логин, то разрешаем запуск открытого меню
-                  }
-           //ищем чьи статьи показать
-           //foreach($parametr as $value)
-            if (stripos('sss'.$value,'Статьи редактора='))
+              //проверяем логин
+              // foreach($parametr as $value)
+              if (stripos('---'.$value,'Логин редактора=')) {
+                  $loginRedaktora=preg_replace('/Логин редактора=/','',$value); // Выделяем логин редактора/ов
+                  if (stripos('---'.$loginRedaktora,$_SESSION['login'])>0) 
+                    $razresheniePoLoginu=true; // Если в списке логинов присутствует текущий логин, то разрешаем запуск открытого меню
+              }
+              //ищем чьи статьи показать
+              //foreach($parametr as $value)
+              if (stripos('sss'.$value,'Статьи редактора='))
                   $pokazarStatijRedaktora=preg_replace('/Статьи редактора=/','',$value); // Выделяем логин редактора/ов
 
            // foreach($parametr as $value)
@@ -118,35 +113,30 @@ class modul
                     $otstup=(int)preg_replace('/Отступ=/','',$value); // Выделяем логин редактора/ов
 
            // foreach($parametr as $value)
-              if (stripos('sss'.$value,'id='))
-               {
+              if (stripos('sss'.$value,'id=')) {
                    $pokazatStatiuPoId=preg_replace('/id=/','',$value); // Вывести статью по Id
                    $pokazatStatiuPoId=$pokazatStatiuPoId*1;
                }
             
              ////////////////////////////////////////////////////////
            // foreach($parametr as $value)
-               if (stripos('sss'.$value,'classKill='))
-                {
+               if (stripos('sss'.$value,'classKill=')) {
                      $classKill=preg_replace('/classKill=/','',$value); // Удалить лишнее
                      $classKill=preg_replace('/-/','',$classKill); // Удалить лишнее
                 }
           //  foreach($parametr as $value)
-                if (stripos('sss'.$value,'classRedakt='))
-                 {
+                if (stripos('sss'.$value,'classRedakt=')) {
                       $classRedakt=preg_replace('/classRedakt=/','',$value); // Удалить лишнее
                       $classRedakt=preg_replace('/-/','',$classRedakt); // Удалить лишнее
                  }
            // foreach($parametr as $value)
-                 if (stripos('sss'.$value,'classSave='))
-                  {
+                 if (stripos('sss'.$value,'classSave=')) {
                        $classRedakt=preg_replace('/classSave=/','',$value); // Удалить лишнее
                        $classRedakt=preg_replace('/-/','',$classSave); // Удалить лишнее
                   }
 
             //foreach($parametr as $value) // Нашли число статей на странице
-                  if (stripos('sss'.$value,'Число_статей='))
-                   {
+                  if (stripos('sss'.$value,'Число_статей=')){
                         $nomerStatej=preg_replace('/Число_статей=/','',$value); // Удалить лишнее
                         $nomerStatej=$nomerStatej+0;
                    }
@@ -157,8 +147,7 @@ class modul
             
             //обработка параметра help
             //foreach($parametr as $value)
-              if ($value=='help' || $value=='Помощь')
-               {
+              if ($value=='help' || $value=='Помощь') {
                    echo '<p>Функция выводит новостной блок</p>';
                    echo '<p>Параметры функции произвольные и задаются как обычно!</p>';
                    echo '<p>Функция проверяет все параметры и по ключевым словам определяет с каким параметром, что следует делать.</p>';
