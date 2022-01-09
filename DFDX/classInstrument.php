@@ -709,22 +709,22 @@ if ($hablonNews==2)
                 $this->styliStati('id='.$_SESSION['redaktirowatId'],'hablon='.$_SESSION['nomerStylaStatii']);
                              ////////////////////////////////////////////////////////////////////////////////////////////////////////
 if ($outBlokStranic) // если есть разрешение на показ модуля вывода страниц
-{                     // запрещается показывать модуль, если было нажатие на заголовок статьи
-$sumStranic=intdiv($nomerStatejSumm,$nomerStatejStart);
-$ostatokStranic=$nomerStatejSumm%$nomerStatejStart;
-  echo '<div class="section">';
-  echo '<div class="row">';
-  echo '<div class="col-12">'; 
-  echo '<div class="block-stranic-down">';
-  echo '<form method="post" action="'.$action.'">';
-  echo '<span class="text-blok-stranic-down">Страниц: </span>';
-  $i=1;
-  for ($i=1; $i<=$sumStranic; $i++)
+  {                     // запрещается показывать модуль, если было нажатие на заголовок статьи
+    $sumStranic=intdiv($nomerStatejSumm,$nomerStatejStart);  
+    $ostatokStranic=$nomerStatejSumm%$nomerStatejStart;
+      echo '<div class="section">';
+      echo '<div class="row">';
+      echo '<div class="col-12">'; 
+      echo '<div class="block-stranic-down">';
+      echo '<form method="post" action="'.$action.'">';
+      echo '<span class="text-blok-stranic-down">Страниц: </span>';
+    $i=1;
+    for ($i=1; $i<=$sumStranic; $i++)
        echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
-  if ($ostatokStranic>0) echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
-  echo '</form>';
-  echo '</div></div></div></div>';
-}
+    if ($ostatokStranic>0) echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
+      echo '</form>';
+      echo '</div></div></div></div>';
+  }
 }
 // Служебная функция считает число статей в БД с заданное категорией
   public function numberNews($kategori)
