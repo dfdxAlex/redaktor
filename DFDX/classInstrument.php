@@ -918,7 +918,7 @@ class modul
                               );
           $rez=$classPhp->zaprosSQL("SELECT id FROM status_statii_dfdx WHERE 1");
           while (!is_null($stroka=mysqli_fetch_array($rez))) 
-           if ($id==$stroka[0]) return false;
+            if ($id==$stroka[0]) return false;
           return true;
         }
       // вспомогательная функция к news1
@@ -936,7 +936,7 @@ class modul
                               );
           $rez=$classPhp->zaprosSQL("SELECT id FROM vernul_statii_dfdx WHERE 1");
           while (!is_null($stroka=mysqli_fetch_array($rez))) 
-           if ($id==$stroka[0]) return true;
+            if ($id==$stroka[0]) return true;
           return false;
         }
         public function vernutStatiKomment($id) // Возврат коммента при возврате статьи
@@ -949,118 +949,115 @@ class modul
         // вспомогательная функция к news1
         public function poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action)
          {
-          $classPhp = new maty();
-           if ($nametablice!='' && $classPhp->searcNameTablic($nametablice))
-            {
-               if (!$razresheniePoLoginu &&  ($_SESSION['status']>0))  // Запускаем это меню только если нет разрешения по логину
-                { 
+            $classPhp = new maty();
+            if ($nametablice!='' && $classPhp->searcNameTablic($nametablice)) {
+               if (!$razresheniePoLoginu &&  ($_SESSION['status']>0)) {  // Запускаем это меню только если нет разрешения по логину
                   $zagolowok='';//echo 'разрешение по логину';
                   $statia='';
                   $awtor='';
-                     if ($_SESSION['redaktirowatId']>-1)  //если была нажата кнопка редактирования, то достать статью из базы
-                       {
+                  if ($_SESSION['redaktirowatId']>-1)  {//если была нажата кнопка редактирования, то достать статью из базы
                          $zapros="SELECT * FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']; //настройка показа формы сбора данных
                          $rez=$classPhp->zaprosSQL($zapros);
-                         if ($rez) $stroka=mysqli_fetch_assoc($rez);
+                         if ($classPhp->notFalseAndNULL($rez)) 
+                              $stroka=mysqli_fetch_assoc($rez);
                          $zagolowok=$stroka['name'];
                          $statia=$stroka['news'];
                          $zagolowok=$stroka['name'];
                          $awtor=$stroka['login_redaktora'];
-                       } 
-                    if ($_SESSION['mas_time_news']!='') $statia=$_SESSION['mas_time_news'];
-                    if ($_SESSION['mas_time_name_news']!='') $zagolowok=$_SESSION['mas_time_name_news'];
-                    $statia=preg_replace('/<br>/','',$statia);
-                    $classPhp->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
-                                'textarea', 'statia',$statia,'br',
-                                'p',$awtor,'br',
-                                'submit3',$nametablice.'_redaktor','Сохранить',$action,'myZoneSave','form_not_close'
-                                );
-            echo '<div class="container-fluid">';
-             echo '<div class="row">';
-              echo '<div class="col-12">'; 
-              echo '<h6 class="mesage helpPodRedaktoromStatejH6">Ниже можно выбрать стиль оформления статьи >>>'.$this->styliStati('link').'</h6>';
-              echo $this->styliStati('вариантов=3','form_not_open');
-              echo '</div>';
-              echo '<div class="col-12">'; 
-               echo '<h6 class="mesage helpPodRedaktoromStatejH6">Список существующих категорий:</h6>';
-               echo '<h6 class="mesage helpPodRedaktoromStatejH6">'.listKategorijNews1($nametablice).'</h6>';
-              echo '</div>';
-             echo '</div>';
-              echo '<div class="row">';
-                echo '<div class="col-12">';       
-                  echo '<div class="helpPodRedaktoromStatej">';           
-                    echo '<h6 class="mesage helpPodRedaktoromStatejH6">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
-                    echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
-                    echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку" alt="текст к картинке" &gt</h6>'; 
-                    echo '<h6 class="mesage helpPodRedaktoromStatejH6">Внимание!! Аттрибут alt="текст" обязателет и если картинок много, должен НЕ ПОВТОРЯТЬСЯ!!</h6>'; 
-                    echo '<h6 class="mesage helpPodRedaktoromStatejH6">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</h6>';
-                 echo '</div>';
-                echo '</div>';
-              echo '</div>';
-              echo '<div class="row">';
-               echo '<div class="col-12">';  
-                 echo '<div class="helpPodRedaktoromStatejDopTegi">';
-                   echo '<h6>Допустимые теги:'.$classPhp->clearCode('','список').'</h6>';
-                 echo '</div>';
-                echo '</div>';
-              echo '</div>';
-            echo '</div>';
-          }
-           if ($razresheniePoLoginu) // Запускаем это меню только если есть разрешения по логину
-            {
+                    } 
+                  if ($_SESSION['mas_time_news']!='') $statia=$_SESSION['mas_time_news'];
+                  if ($_SESSION['mas_time_name_news']!='') $zagolowok=$_SESSION['mas_time_name_news'];
+                        $statia=preg_replace('/<br>/','',$statia);
+                        $classPhp->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
+                                            'textarea', 'statia',$statia,'br',
+                                            'p',$awtor,'br',
+                                            'submit3',$nametablice.'_redaktor','Сохранить',$action,'myZoneSave','form_not_close'
+                                            );
+                  echo '<div class="container-fluid">';
+                      echo '<div class="row">';
+                          echo '<div class="col-12">'; 
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">Ниже можно выбрать стиль оформления статьи >>>'.$this->styliStati('link').'</h6>';
+                              echo $this->styliStati('вариантов=3','form_not_open');
+                          echo '</div>';
+                          echo '<div class="col-12">'; 
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">Список существующих категорий:</h6>';
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">'.listKategorijNews1($nametablice).'</h6>';
+                          echo '</div>';
+                      echo '</div>';
+                      echo '<div class="row">';
+                          echo '<div class="col-12">';       
+                              echo '<div class="helpPodRedaktoromStatej">';           
+                                  echo '<h6 class="mesage helpPodRedaktoromStatejH6">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
+                                  echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
+                                  echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку" alt="текст к картинке" &gt</h6>'; 
+                                  echo '<h6 class="mesage helpPodRedaktoromStatejH6">Внимание!! Аттрибут alt="текст" обязателет и если картинок много, должен НЕ ПОВТОРЯТЬСЯ!!</h6>'; 
+                                  echo '<h6 class="mesage helpPodRedaktoromStatejH6">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</h6>';
+                              echo '</div>';
+                          echo '</div>';
+                      echo '</div>';
+                      echo '<div class="row">';
+                          echo '<div class="col-12">';  
+                              echo '<div class="helpPodRedaktoromStatejDopTegi">';
+                                  echo '<h6>Допустимые теги:'.$classPhp->clearCode('','список').'</h6>';
+                              echo '</div>';
+                          echo '</div>';
+                      echo '</div>';
+                  echo '</div>';
+            }
+           if ($razresheniePoLoginu) {// Запускаем это меню только если есть разрешения по логину
               $zagolowok='';
               $statia='';
               $awtor='';
-              if ($_SESSION['redaktirowatId']>-1)  //если была нажата кнопка редактирования, то достать статью из базы
-               {
+              if ($_SESSION['redaktirowatId']>-1) { //если была нажата кнопка редактирования, то достать статью из базы
                  $zapros="SELECT * FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']; //настройка показа формы сбора данных
                  $rez=$classPhp->zaprosSQL($zapros);
-                 if ($rez) $stroka=mysqli_fetch_assoc($rez);
-                 $zagolowok=$stroka['name'];
-                 $statia=$stroka['news'];
-                 $awtor=$stroka['login_redaktora'];
+                    if ($classPhp->notFalseAndNULL($rez)) 
+                        $stroka=mysqli_fetch_assoc($rez);
+                    $zagolowok=$stroka['name'];
+                    $statia=$stroka['news'];
+                    $awtor=$stroka['login_redaktora'];
                } 
-                 if ($_SESSION['mas_time_news']!='') $statia=$_SESSION['mas_time_news'];
-                 if ($_SESSION['mas_time_name_news']!='') $zagolowok=$_SESSION['mas_time_name_news'];
-                 $statia=preg_replace('/<br>/','',$statia);
+              if ($_SESSION['mas_time_news']!='') 
+                  $statia=$_SESSION['mas_time_news'];
+              if ($_SESSION['mas_time_name_news']!='') $zagolowok=$_SESSION['mas_time_name_news'];
+                  $statia=preg_replace('/<br>/','',$statia);
               $classPhp->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
-              'textarea', 'statia',$statia,'br',
-              'p',$awtor,'br',
-              'submit3',$nametablice.'_redaktor2','Сохранить',$action,'myZoneSave','form_not_close'
-              );
+                                  'textarea', 'statia',$statia,'br','p',$awtor,'br',
+                                  'submit3',$nametablice.'_redaktor2','Сохранить',$action,'myZoneSave','form_not_close'
+                                  );
               echo '<div class="container-fluid">';
-              echo '<div class="row">';
-               echo '<div class="col-12">'; 
-               echo '<h6 class="mesage helpPodRedaktoromStatejH6">Ниже можно выбрать стиль оформления статьи. >>>'.$this->styliStati('link').'</h6>';
-               echo $this->styliStati('вариантов=3','form_not_open');
-              echo '</div>';
-               echo '<div class="col-12">'; 
-                echo '<h6 class="mesage helpPodRedaktoromStatejH6">Список существующих категорий:</h6>';
-                echo '<h6 class="mesage helpPodRedaktoromStatejH6">'.listKategorijNews1($nametablice).'</h6>';
-               echo '</div>';
-              echo '</div>';
-               echo '<div class="row">';
-                 echo '<div class="col-12">';       
-                   echo '<div class="helpPodRedaktoromStatej">';           
-                     echo '<h6 class="mesage helpPodRedaktoromStatejH6">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
-                     echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
-                     echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку"&gt</h6>'; 
-                     echo '<h6 class="mesage helpPodRedaktoromStatejH6">Внимание!! Аттрибут alt="текст" обязателет и если картинок много, должен НЕ ПОВТОРЯТЬСЯ!!</h6>'; 
-                     echo '<h6 class="mesage helpPodRedaktoromStatejH6">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</h6>';
+                  echo '<div class="row">';
+                      echo '<div class="col-12">'; 
+                          echo '<h6 class="mesage helpPodRedaktoromStatejH6">Ниже можно выбрать стиль оформления статьи. >>>'.$this->styliStati('link').'</h6>';
+                          echo $this->styliStati('вариантов=3','form_not_open');
+                      echo '</div>';
+                      echo '<div class="col-12">'; 
+                          echo '<h6 class="mesage helpPodRedaktoromStatejH6">Список существующих категорий:</h6>';
+                          echo '<h6 class="mesage helpPodRedaktoromStatejH6">'.listKategorijNews1($nametablice).'</h6>';
+                      echo '</div>';
                   echo '</div>';
-                 echo '</div>';
-               echo '</div>';
-               echo '<div class="row">';
-                echo '<div class="col-12">';  
-                  echo '<div class="helpPodRedaktoromStatejDopTegi">';
-                    echo '<h6>Допустимые теги:'.$classPhp->clearCode('','список').'</h6>';
+                  echo '<div class="row">';
+                      echo '<div class="col-12">';       
+                          echo '<div class="helpPodRedaktoromStatej">';           
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку"&gt</h6>'; 
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">Внимание!! Аттрибут alt="текст" обязателет и если картинок много, должен НЕ ПОВТОРЯТЬСЯ!!</h6>'; 
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</h6>';
+                          echo '</div>';
+                      echo '</div>';
                   echo '</div>';
-                 echo '</div>';
-               echo '</div>';
+                  echo '<div class="row">';
+                      echo '<div class="col-12">';  
+                          echo '<div class="helpPodRedaktoromStatejDopTegi">';
+                              echo '<h6>Допустимые теги:'.$classPhp->clearCode('','список').'</h6>';
+                          echo '</div>';
+                      echo '</div>';
+                  echo '</div>';
              echo '</div>';
             }
-            }
-         }
+          }
+        }
     } // конец класса modul
 
 ?>
