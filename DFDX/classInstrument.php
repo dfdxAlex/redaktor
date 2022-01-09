@@ -45,46 +45,43 @@ class modul
            $nomerStatejSumm=0; // сколько статей было к показу
 
            if (!isset($_SESSION['newsTab']))
-            $_SESSION['newsTab']=''; // хранит имя таблицы, которую использует модуль news1 для использования за пределами класса
+              $_SESSION['newsTab']=''; // хранит имя таблицы, которую использует модуль news1 для использования за пределами класса
 
            if (!isset($_SESSION['redaktirowatId'])) $_SESSION['redaktirowatId']=-1;
 
            if (!isset($_SESSION['mas_time_name_news']))
               $_SESSION['mas_time_name_news']='';
            if (!isset($_SESSION['mas_time_news']))  
-               $_SESSION['mas_time_news']='';
+              $_SESSION['mas_time_news']='';
 
            if (!isset($_SESSION['nomerStylaStatii']))
-             $_SESSION['nomerStylaStatii']=1;
+              $_SESSION['nomerStylaStatii']=1;
 
     // перебираем все параметры и выдергиваем данные, которые пришли на вход
     // Ищем имя таблицы
     //-------------------------------------------------------------------------------------------
-    foreach($parametr as $value) {
+          foreach($parametr as $value) {
               if (stripos('sss'.$value,'nameTD=')) {
                  $nametablice=preg_replace('/nameTD=/','',$value);
                  $nametablice=mb_strtolower($nametablice);
                  $_SESSION['newsTab']=$nametablice;
               }
 
-              // foreach($parametr as $value) // ищем обработчик кнопок Сохранить ...
+              // ищем обработчик кнопок Сохранить ...
               if (stripos('sss'.$value,'action=')) {
                 $action=preg_replace('/action=/','',$value);
                 $_SESSION['action']=$action;
               }
 
               // Ищем размер заголовка
-              // foreach($parametr as $value)
               if (stripos('sss'.$value,'Заголовок='))
                $zagolowok=preg_replace('/Заголовок=/','',$value);
 
               // Проверяем задан ли раздел статей
-              // foreach($parametr as $value)
               if (stripos('sss'.$value,'Раздел='))
                  $razdel=preg_replace('/Раздел=/','',$value);
 
               // Статус редактора
-              // foreach($parametr as $value)
               if (stripos('sss'.$value,'Статус редактора=')) {
                  $statusRedaktora=preg_replace('/Статус редактора=/','',$value);
                  if (stripos('sss'.$value,'1')) $redaktorUser=true;
@@ -93,60 +90,53 @@ class modul
               }
 
               //проверяем логин
-              // foreach($parametr as $value)
               if (stripos('---'.$value,'Логин редактора=')) {
-                  $loginRedaktora=preg_replace('/Логин редактора=/','',$value); // Выделяем логин редактора/ов
+                  $loginRedaktora=preg_replace('/Логин редактора=/','',$value); 
                   if (stripos('---'.$loginRedaktora,$_SESSION['login'])>0) 
-                    $razresheniePoLoginu=true; // Если в списке логинов присутствует текущий логин, то разрешаем запуск открытого меню
+                  // Если в списке логинов присутствует текущий логин, то разрешаем запуск открытого меню
+                    $razresheniePoLoginu=true; 
               }
+
               //ищем чьи статьи показать
-              //foreach($parametr as $value)
               if (stripos('sss'.$value,'Статьи редактора='))
-                  $pokazarStatijRedaktora=preg_replace('/Статьи редактора=/','',$value); // Выделяем логин редактора/ов
+                  $pokazarStatijRedaktora=preg_replace('/Статьи редактора=/','',$value); 
 
-           // foreach($parametr as $value)
-             if (stripos('sss'.$value,'Шаблон='))
-                   $hablonNews=preg_replace('/Шаблон=/','',$value); // Выделяем логин редактора/ов
+              if (stripos('sss'.$value,'Шаблон='))
+                  $hablonNews=preg_replace('/Шаблон=/','',$value); 
 
-           // foreach($parametr as $value)
               if (stripos('sss'.$value,'Отступ='))
-                    $otstup=(int)preg_replace('/Отступ=/','',$value); // Выделяем логин редактора/ов
+                  $otstup=(int)preg_replace('/Отступ=/','',$value); 
 
-           // foreach($parametr as $value)
               if (stripos('sss'.$value,'id=')) {
-                   $pokazatStatiuPoId=preg_replace('/id=/','',$value); // Вывести статью по Id
-                   $pokazatStatiuPoId=$pokazatStatiuPoId*1;
+                  $pokazatStatiuPoId=preg_replace('/id=/','',$value);  
+                  $pokazatStatiuPoId=$pokazatStatiuPoId*1;
                }
             
-             ////////////////////////////////////////////////////////
-           // foreach($parametr as $value)
-               if (stripos('sss'.$value,'classKill=')) {
-                     $classKill=preg_replace('/classKill=/','',$value); // Удалить лишнее
-                     $classKill=preg_replace('/-/','',$classKill); // Удалить лишнее
-                }
-          //  foreach($parametr as $value)
-                if (stripos('sss'.$value,'classRedakt=')) {
-                      $classRedakt=preg_replace('/classRedakt=/','',$value); // Удалить лишнее
-                      $classRedakt=preg_replace('/-/','',$classRedakt); // Удалить лишнее
-                 }
-           // foreach($parametr as $value)
-                 if (stripos('sss'.$value,'classSave=')) {
-                       $classRedakt=preg_replace('/classSave=/','',$value); // Удалить лишнее
-                       $classRedakt=preg_replace('/-/','',$classSave); // Удалить лишнее
-                  }
+              if (stripos('sss'.$value,'classKill=')) {
+                  $classKill=preg_replace('/classKill=/','',$value);  
+                  $classKill=preg_replace('/-/','',$classKill);  
+               }
 
-            //foreach($parametr as $value) // Нашли число статей на странице
-                  if (stripos('sss'.$value,'Число_статей=')){
-                        $nomerStatej=preg_replace('/Число_статей=/','',$value); // Удалить лишнее
-                        $nomerStatej=$nomerStatej+0;
-                   }
+              if (stripos('sss'.$value,'classRedakt=')) {
+                  $classRedakt=preg_replace('/classRedakt=/','',$value);  
+                  $classRedakt=preg_replace('/-/','',$classRedakt);  
+               }
 
-           // foreach($parametr as $value)
-                  if (stripos('sss'.$value,'превью=')) // число символов во второй и следующих статьях
-                        $prevju=preg_replace('/превью=/','',$value); // Удалить лишнее
+              if (stripos('sss'.$value,'classSave=')) {
+                  $classRedakt=preg_replace('/classSave=/','',$value);  
+                  $classRedakt=preg_replace('/-/','',$classSave);  
+               }
+
+              // Нашли число статей на странице
+              if (stripos('sss'.$value,'Число_статей=')){
+                  $nomerStatej=preg_replace('/Число_статей=/','',$value);  
+                  $nomerStatej=$nomerStatej+0;
+               }
+
+              if (stripos('sss'.$value,'превью=')) // число символов во второй и следующих статьях
+                  $prevju=preg_replace('/превью=/','',$value); // Удалить лишнее
             
-            //обработка параметра help
-            //foreach($parametr as $value)
+              //обработка параметра help
               if ($value=='help' || $value=='Помощь') {
                    echo '<p>Функция выводит новостной блок</p>';
                    echo '<p>Параметры функции произвольные и задаются как обычно!</p>';
@@ -175,7 +165,6 @@ class modul
                    echo '<p>Вывести статью по id: задать параметр "id=номер"</p>';
 
                    echo '<p></p>';
-                   
                 }
           } // конец перебора входных данных
                 //-------------------------------------------------------------------------------------------
