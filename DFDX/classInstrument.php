@@ -668,34 +668,35 @@ class modul
     } // конец FOR
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-              // Выводит поле редактирования в случае, если не вывелось ни одной статьи или нажата кнопка Добавить
-             if (!$poleRedaktora)
-              if (isset($_POST['dobawitNow']) || ($razdel!='' && $this->numberNews($razdel)==0 && ($_SESSION['status']==5 || $_SESSION['status']==4 || $_SESSION['status']==2) )  || (isset($_POST['vvv']) && $_SESSION['redaktirowatId']=-1))
-                $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action);
+   // Выводит поле редактирования в случае, если не вывелось ни одной статьи или нажата кнопка Добавить
+   if (!$poleRedaktora)
+       if (isset($_POST['dobawitNow']) || ($razdel!='' && $this->numberNews($razdel)==0 && ($_SESSION['status']==5 || $_SESSION['status']==4 || $_SESSION['status']==2) )  || (isset($_POST['vvv']) && $_SESSION['redaktirowatId']=-1))
+            $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action);
 
-             ///////////////////////////////////////////Нажали кнопку Запомнить Шаблон//////////////////////////////
-              if (isset($_POST['vvv']))
-                $this->styliStati('id='.$_SESSION['redaktirowatId'],'hablon='.$_SESSION['nomerStylaStatii']);
+   ///////////////////////////////////////////Нажали кнопку Запомнить Шаблон//////////////////////////////
+   if (isset($_POST['vvv']))
+       $this->styliStati('id='.$_SESSION['redaktirowatId'],'hablon='.$_SESSION['nomerStylaStatii']);
                              ////////////////////////////////////////////////////////////////////////////////////////////////////////
-if ($outBlokStranic) // если есть разрешение на показ модуля вывода страниц
-  {                     // запрещается показывать модуль, если было нажатие на заголовок статьи
-    $sumStranic=intdiv($nomerStatejSumm,$nomerStatejStart);  
-    $ostatokStranic=$nomerStatejSumm%$nomerStatejStart;
-      echo '<div class="section">';
-      echo '<div class="row">';
-      echo '<div class="col-12">'; 
-      echo '<div class="block-stranic-down">';
-      echo '<form method="post" action="'.$action.'">';
-      echo '<span class="text-blok-stranic-down">Страниц: </span>';
-    $i=1;
-    for ($i=1; $i<=$sumStranic; $i++)
-       echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
-    if ($ostatokStranic>0) echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
-      echo '</form>';
-      echo '</div></div></div></div>';
+    // если есть разрешение на показ модуля вывода страниц
+    // запрещается показывать модуль, если было нажатие на заголовок статьи
+    if ($outBlokStranic) {
+        $sumStranic=intdiv($nomerStatejSumm,$nomerStatejStart);  
+        $ostatokStranic=$nomerStatejSumm%$nomerStatejStart;
+        echo '<div class="section">';
+        echo '<div class="row">';
+        echo '<div class="col-12">'; 
+        echo '<div class="block-stranic-down">';
+        echo '<form method="post" action="'.$action.'">';
+        echo '<span class="text-blok-stranic-down">Страниц: </span>';
+        $i=1;
+        for ($i=1; $i<=$sumStranic; $i++)
+            echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
+        if ($ostatokStranic>0) echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
+            echo '</form>';
+        echo '</div></div></div></div>';
+      }
   }
-}
-// Служебная функция считает число статей в БД с заданное категорией
+  // Служебная функция считает число статей в БД с заданное категорией
   public function numberNews($kategori)
     {
       $number=0;
@@ -706,240 +707,233 @@ if ($outBlokStranic) // если есть разрешение на показ �
         $number++;
       return $number;
     }
-// Служебная функция поиск правильного пути к папке файла
-function urlPoIdPath($nameBd,$id)
-{
-  $classPhp = new maty();
-  $classPhp->createTab(
-      "name=url_po_id_".$nameBd,
-      "poleN=id",   // будет соответствовать ИД статьи
-      "poleT=int", 
-      "poleS=-1",
-      "poleN=url", 
-      "poleT=varchar(1000)",
-      "poleS=пусто"
-  );
-  $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
-  $stroka=mysqli_fetch_array($rez);
-  if (file_exists($stroka[0])) return $stroka[0]; // если файл существует по текущему пути
-  if (!file_exists($stroka[0])) 
-   {
-    $stroka[0]=preg_filter('/news\//','',$stroka[0]);
-    if (file_exists($stroka[0])) return $stroka[0]; // удалил из пути news/
-   }
-  if (!file_exists($stroka[0])) 
-   {
-    $stroka[0]=preg_filter('/\b.*\//','',$stroka[0]);
-    if (file_exists($stroka[0])) return $stroka[0]; // удалил из пути news/
-   }
-  return false;
-}
-// Служебная функция возвращает ссылку на статью по ID или false
-function urlPoId($nameBd,$id)
-{
-  $classPhp = new maty();
-  $classPhp->createTab(
-      "name=url_po_id_".$nameBd,
-      "poleN=id",   // будет соответствовать ИД статьи
-      "poleT=int", 
-      "poleS=-1",
-      "poleN=url", 
-      "poleT=varchar(1000)",
-      "poleS=пусто"
-  );
-  $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
-  $stroka=mysqli_fetch_array($rez);
-  if (!is_null($stroka) && $stroka!=false) return $stroka[0];
-  return false;
-}
-// Служебная функция записывает ссылку на статью по ID или false
-function urlPoIdSave($nameBd,$id,$url)
-{
-   $classPhp = new maty();
-   if ($this->urlPoId($nameBd,$id)) return false; // если запись уже есть то выходим с результатом Фалс
-   $classPhp->zaprosSQL("INSERT INTO url_po_id_".$nameBd."(id, url) VALUES (".$id.",'".$url."')");
-   return true;
-}
-// служебная функция для задания стилей оформления статьи
-function styliStati(...$parametr) // тут
-{
-  $classPhp = new maty();
-  $instrum = new instrument();
-    $classPhp->createTab(
-        "name=styl_statii_dfdx",
-        "poleN=id",   // будет соответствовать ИД статьи
-        "poleT=int", 
-        "poleS=-1",
-        "poleN=nomer_styla", 
-        "poleT=int",
-        "poleS=-1"
-    );
-$variantow=0;   //число отображаемых радиокнопок
-$idStati=-1;
-$hablonStati=-1;
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-$form_not_open=false;          // Управляет выводом открывающего тега Форм, если фалс, то выводим.
-$form_not_close=false;         // Управляет выводом закрывающего тега Форм, если фалс, то выводим.
-foreach ($parametr as $value)  // поиск признаков $form_not_open и $form_not_close=false;
- {
-  if ($value=='form_not_open') $form_not_open=true;
-  if ($value=='form_not_close') $form_not_close=true;
- }
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-    foreach($parametr as $value) // задать ИД статьи
-      if (stripos('sss'.$value,'id='))
-       $idStati=preg_replace('/id=/','',$value);
-    foreach($parametr as $value) // задать шаблон статьи
-      if (stripos('sss'.$value,'hablon='))
-       $hablonStati=preg_replace('/hablon=/','',$value);
-    foreach($parametr as $value) // задать шаблон статьи
-      if (stripos('sss'.$value,'id-hablon') || stripos('sss'.$value,'hablon-id'))
-       {
-        $rez=$classPhp->zaprosSQL("select nomer_styla FROM styl_statii_dfdx WHERE id=".$idStati);
-        $stroka=mysqli_fetch_array($rez);
-        if ($stroka===false || is_null($stroka)) return 1;
-        return $stroka[0];
-       }
-    foreach($parametr as $value)
-    if ($value=='link' || $value=='образец')
-      return  '<a href="'.$classPhp->searcNamePath('obrazec.php').'" target="_blank">Посмотреть образцы оформлений</a>';
-    
-      foreach($parametr as $value) // показать радио кнопки
-      if (stripos('sss'.$value,'вариантов='))
-       {
-        $stroka='';
-        $variantow=preg_replace('/вариантов=/','',$value);
-        $stroka=$stroka.'<section class="container-fluid"><div class="row"><div class="col-12">';
-        if (!$form_not_open)
-            $stroka=$stroka.'<form method="post" action="'.$_SESSION['action'].'">';
-        for ($i=1; $i<=$variantow; $i++)
-         {
-          $stroka=$stroka.'<input type="radio" id="contactChoice'.$i.'" name="variant" value="№'.$i.'"';
-          if ((isset($_POST['variant']) && $_POST['variant']=='№'.$i) || $_SESSION['nomerStylaStatii']==$i)
-            {
-            $stroka=$stroka.' checked ';
-            $_SESSION['nomerStylaStatii']=$i;
-            }
-          $stroka=$stroka.'>';
-          $stroka=$stroka.'<label for="contactChoice'.$i.'">№'.$i.'</label>';
-         }
+  // Служебная функция поиск правильного пути к папке файла
+  function urlPoIdPath($nameBd,$id)
+    {
+      $classPhp = new maty();
+      $classPhp->createTab(
+                            "name=url_po_id_".$nameBd,
+                            "poleN=id",   // будет соответствовать ИД статьи
+                            "poleT=int", 
+                            "poleS=-1",
+                            "poleN=url", 
+                            "poleT=varchar(1000)",
+                            "poleS=пусто"
+                          );
+      $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
+      $stroka=mysqli_fetch_array($rez);
+      if (file_exists($stroka[0])) 
+          return $stroka[0]; // если файл существует по текущему пути
+      if (!file_exists($stroka[0])) {
+          $stroka[0]=preg_filter('/news\//','',$stroka[0]);
+          if (file_exists($stroka[0])) 
+              return $stroka[0]; // удалил из пути news/
+        }
+      if (!file_exists($stroka[0])) {
+          $stroka[0]=preg_filter('/\b.*\//','',$stroka[0]);
+          if (file_exists($stroka[0])) 
+              return $stroka[0]; // удалил из пути news/
+        }
+      return false;
+    }
 
-         $stroka=$stroka.'<input class="myZoneSave btn" type="submit" name="vvv" value="Выбрать">';
-         if (!$form_not_close)
-            $stroka=$stroka.'</form>';
-         $stroka=$stroka.'</div></div></section>';
-         return $stroka;
-       }
-      if ($idStati>-1 && $hablonStati>0) // реализация присвоения статье своего стиля
-       {
-        $classPhp->zaprosSQL("DELETE FROM styl_statii_dfdx WHERE id=".$idStati);
-        $classPhp->zaprosSQL("INSERT INTO styl_statii_dfdx(id, nomer_styla) VALUES (".$idStati.",".$hablonStati.")");
-       }
-      //обработка параметра help
-      foreach($parametr as $value)
-      if ($value=='help' || $value=='Помощь' || $value=='помощь')
-        {
-          echo '<p>Функция работает со стилем оформления статьи</p>';
-          echo '<p>Если задать параметр функции "link" или "образец", то функция возвращает ссылку с надписью Посмотреть образцы оформлений</p>';
-          echo '<p>Задать число пунктов радиоблока можно параметром "вариантов=число пунктов", после нажатия на кнопку сохранить, информация сохранится в переменной $_SESSION["nomerStylaStatii"]</p>';
-          echo '<p>Чтобы присвоить статье свой шаблон необходимо задать два параметра "id=" и "hablon="</p>';
-          echo '<p>Чтобы узнать какой шаблон присвоен статье, нужно задать параметр "id-hablon" или "hablon-id" и нужен параметр "id="</p>';
-          echo '<p></p>';
-          echo '<p></p>';
-          echo '<p></p>';
-          echo '<p></p>';
-          echo '<p></p>';
-        } 
-}
-function money(...$parametr) // работа с символами или деньгами
- {
-  $classPhp = new maty();
-    $classPhp->createTab(
-        "name=monety_dfdx",
-        "poleN=login",
-        "poleT=varchar(50)",
-        "poleS=login",
-        "poleN=monet",
-        "poleT=int",
-        "poleS=0"
-    );
-    $login='';
-    $zaplatit=0;
-    foreach($parametr as $value)
-     if (stripos('sss'.$value,'login='))
-      $login=preg_replace('/login=/','',$value);
-    foreach($parametr as $value)
-      if (stripos('sss'.$value,'заплатить='))
-       $zaplatit=preg_replace('/заплатить=/','',$value);
-    if ($login!='')// Обработка параметра Логин + заплатить
-     {
-      $regaJest=false;
-      $regaJest=$classPhp->siearcSlova('monety_dfdx','login',$login);
-      if ($regaJest)
-       {
-        $rez=$classPhp->zaprosSQL("SELECT monet FROM monety_dfdx WHERE login='".$login."'");
+    // Служебная функция возвращает ссылку на статью по ID или false
+    function urlPoId($nameBd,$id)
+      {
+        $classPhp = new maty();
+        $classPhp->createTab(
+                              "name=url_po_id_".$nameBd,
+                              "poleN=id",   // будет соответствовать ИД статьи
+                              "poleT=int", 
+                              "poleS=-1",
+                              "poleN=url", 
+                              "poleT=varchar(1000)",
+                              "poleS=пусто"
+                            );
+        $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
         $stroka=mysqli_fetch_array($rez);
-        $monet=$stroka[0];
-        $monet=$monet+$zaplatit;
-        $zapros="UPDATE monety_dfdx SET monet=".$monet." WHERE login='".$login."'";
-        $classPhp->zaprosSQL($zapros);
-       }
-       if (!$regaJest)
-       {
-        $zapros="INSERT INTO monety_dfdx(login, monet) VALUES ('".$login."',".$zaplatit.") ";
-        $classPhp->zaprosSQL($zapros);
-       }
-     }
-    if ($login!='' && $zaplatit==0) // Обработка параметра Логин
-     {
-       $rez=$classPhp->zaprosSQL("SELECT monet FROM monety_dfdx WHERE login='".$login."'");
-       $stroka=mysqli_fetch_array($rez);
-       return $stroka[0];
-     }
-      //обработка параметра help
-      foreach($parametr as $value)
-      if ($value=='help' || $value=='Помощь')
+        if (!is_null($stroka) && $stroka!=false) 
+            return $stroka[0];
+        return false;
+      }
+    // Служебная функция записывает ссылку на статью по ID или false
+    function urlPoIdSave($nameBd,$id,$url)
+      {
+        $classPhp = new maty();
+        if ($this->urlPoId($nameBd,$id)) 
+            return false; // если запись уже есть то выходим с результатом Фалс
+        $classPhp->zaprosSQL("INSERT INTO url_po_id_".$nameBd."(id, url) VALUES (".$id.",'".$url."')");
+        return true;
+      }
+    // служебная функция для задания стилей оформления статьи
+    function styliStati(...$parametr) // тут
+      {
+        $classPhp = new maty();
+        $instrum = new instrument();
+        $classPhp->createTab(
+                              "name=styl_statii_dfdx",
+                              "poleN=id",   // будет соответствовать ИД статьи
+                              "poleT=int", 
+                              "poleS=-1",
+                              "poleN=nomer_styla", 
+                              "poleT=int",
+                              "poleS=-1"
+                            );
+        $variantow=0;   //число отображаемых радиокнопок
+        $idStati=-1;
+        $hablonStati=-1;
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        $form_not_open=false;          // Управляет выводом открывающего тега Форм, если фалс, то выводим.
+        $form_not_close=false;         // Управляет выводом закрывающего тега Форм, если фалс, то выводим.
+        foreach ($parametr as $value) { // поиск признаков $form_not_open и $form_not_close=false;
+            if ($value=='form_not_open') $form_not_open=true;
+            if ($value=='form_not_close') $form_not_close=true;
+          }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        foreach($parametr as $value) // задать ИД статьи
+            if (stripos('sss'.$value,'id='))
+                 $idStati=preg_replace('/id=/','',$value);
+        foreach($parametr as $value) // задать шаблон статьи
+            if (stripos('sss'.$value,'hablon='))
+                 $hablonStati=preg_replace('/hablon=/','',$value);
+        foreach($parametr as $value) // задать шаблон статьи
+            if (stripos('sss'.$value,'id-hablon') || stripos('sss'.$value,'hablon-id')) {
+                 $rez=$classPhp->zaprosSQL("select nomer_styla FROM styl_statii_dfdx WHERE id=".$idStati);
+                 $stroka=mysqli_fetch_array($rez);
+                 if ($stroka===false || is_null($stroka)) 
+                      return 1;
+                 return $stroka[0];
+              }
+        foreach($parametr as $value)
+          if ($value=='link' || $value=='образец')
+              return  '<a href="'.$classPhp->searcNamePath('obrazec.php').'" target="_blank">Посмотреть образцы оформлений</a>';
+    
+        foreach($parametr as $value) // показать радио кнопки
+          if (stripos('sss'.$value,'вариантов=')) {
+              $stroka='';
+              $variantow=preg_replace('/вариантов=/','',$value);
+              $stroka=$stroka.'<section class="container-fluid"><div class="row"><div class="col-12">';
+          if (!$form_not_open)
+              $stroka=$stroka.'<form method="post" action="'.$_SESSION['action'].'">';
+          for ($i=1; $i<=$variantow; $i++) {
+              $stroka=$stroka.'<input type="radio" id="contactChoice'.$i.'" name="variant" value="№'.$i.'"';
+              if ((isset($_POST['variant']) && $_POST['variant']=='№'.$i) || $_SESSION['nomerStylaStatii']==$i) {
+                  $stroka=$stroka.' checked ';
+                  $_SESSION['nomerStylaStatii']=$i;
+                }
+              $stroka=$stroka.'>';
+              $stroka=$stroka.'<label for="contactChoice'.$i.'">№'.$i.'</label>';
+            }
+
+          $stroka=$stroka.'<input class="myZoneSave btn" type="submit" name="vvv" value="Выбрать">';
+          if (!$form_not_close)
+                $stroka=$stroka.'</form>';
+          $stroka=$stroka.'</div></div></section>';
+          return $stroka;
+        }
+        if ($idStati>-1 && $hablonStati>0) {// реализация присвоения статье своего стиля
+            $classPhp->zaprosSQL("DELETE FROM styl_statii_dfdx WHERE id=".$idStati);
+            $classPhp->zaprosSQL("INSERT INTO styl_statii_dfdx(id, nomer_styla) VALUES (".$idStati.",".$hablonStati.")");
+          }
+        //обработка параметра help
+        foreach($parametr as $value)
+        if ($value=='help' || $value=='Помощь' || $value=='помощь') {
+            echo '<p>Функция работает со стилем оформления статьи</p>';
+            echo '<p>Если задать параметр функции "link" или "образец", то функция возвращает ссылку с надписью Посмотреть образцы оформлений</p>';
+            echo '<p>Задать число пунктов радиоблока можно параметром "вариантов=число пунктов", после нажатия на кнопку сохранить, информация сохранится в переменной $_SESSION["nomerStylaStatii"]</p>';
+            echo '<p>Чтобы присвоить статье свой шаблон необходимо задать два параметра "id=" и "hablon="</p>';
+            echo '<p>Чтобы узнать какой шаблон присвоен статье, нужно задать параметр "id-hablon" или "hablon-id" и нужен параметр "id="</p>';
+            echo '<p></p>';
+            echo '<p></p>';
+            echo '<p></p>';
+            echo '<p></p>';
+            echo '<p></p>';
+          } 
+    }
+    function money(...$parametr) // работа с символами или деньгами
         {
-          echo '<p>Функция проверяет существует ли таблица монет, если нет, то создает её и присваивает начальные значения</p>';
-          echo '<p>Чтобы функция вернула число монет пользователя, необходимо задать логин путем "login=логин игрока". Функция возвращает значение и выходит</p>';
-          echo '<p>Чтобы добавить число монет человеку, вводим логин и заплатить."login=логин игрока", "заплатить=1000" </p>';
-          echo '<p></p>';
-          echo '<p></p>';
-          echo '<p></p>';
-          echo '<p></p>';
-          echo '<p></p>';
-          echo '<p></p>';
-          echo '<p></p>';
-        } 
- }
-        // вспомогательная функция к news1
-        public function statusStati($id) // Проверяет статус статьи, проверил её модератор или нет
+            $classPhp = new maty();
+            $classPhp->createTab(
+                                  "name=monety_dfdx",
+                                  "poleN=login",
+                                  "poleT=varchar(50)",
+                                  "poleS=login",
+                                  "poleN=monet",
+                                  "poleT=int",
+                                  "poleS=0"
+                                  );
+            $login='';
+            $zaplatit=0;
+            foreach($parametr as $value)
+                if (stripos('sss'.$value,'login='))
+                    $login=preg_replace('/login=/','',$value);
+            foreach($parametr as $value)
+                if (stripos('sss'.$value,'заплатить='))
+                    $zaplatit=preg_replace('/заплатить=/','',$value);
+            if ($login!='') {// Обработка параметра Логин + заплатить
+                $regaJest=false;
+                $regaJest=$classPhp->siearcSlova('monety_dfdx','login',$login);
+                if ($regaJest) {
+                    $rez=$classPhp->zaprosSQL("SELECT monet FROM monety_dfdx WHERE login='".$login."'");
+                    $stroka=mysqli_fetch_array($rez);
+                    $monet=$stroka[0];
+                    $monet=$monet+$zaplatit;
+                    $zapros="UPDATE monety_dfdx SET monet=".$monet." WHERE login='".$login."'";
+                    $classPhp->zaprosSQL($zapros);
+                  }
+                if (!$regaJest) {
+                    $zapros="INSERT INTO monety_dfdx(login, monet) VALUES ('".$login."',".$zaplatit.") ";
+                    $classPhp->zaprosSQL($zapros);
+                  }
+              }
+            if ($login!='' && $zaplatit==0) {// Обработка параметра Логин
+                $rez=$classPhp->zaprosSQL("SELECT monet FROM monety_dfdx WHERE login='".$login."'");
+                $stroka=mysqli_fetch_array($rez);
+                return $stroka[0];
+              }
+            //обработка параметра help
+            foreach($parametr as $value)
+            if ($value=='help' || $value=='Помощь') {
+                echo '<p>Функция проверяет существует ли таблица монет, если нет, то создает её и присваивает начальные значения</p>';
+                echo '<p>Чтобы функция вернула число монет пользователя, необходимо задать логин путем "login=логин игрока". Функция возвращает значение и выходит</p>';
+                echo '<p>Чтобы добавить число монет человеку, вводим логин и заплатить."login=логин игрока", "заплатить=1000" </p>';
+                echo '<p></p>';
+                echo '<p></p>';
+                echo '<p></p>';
+                echo '<p></p>';
+                echo '<p></p>';
+                echo '<p></p>';
+                echo '<p></p>';
+              } 
+      }
+      // вспомогательная функция к news1
+      public function statusStati($id) // Проверяет статус статьи, проверил её модератор или нет
         {                                // если Труе, то можно показать статью
           $classPhp = new maty();
           $classPhp->createTab(
-              "name=status_statii_dfdx",
-              "poleN=id",
-              "poleT=int",
-              "poleS=-1"
-          );
+                              "name=status_statii_dfdx",
+                              "poleN=id",
+                              "poleT=int",
+                              "poleS=-1"
+                              );
           $rez=$classPhp->zaprosSQL("SELECT id FROM status_statii_dfdx WHERE 1");
           while (!is_null($stroka=mysqli_fetch_array($rez))) 
            if ($id==$stroka[0]) return false;
           return true;
         }
-        // вспомогательная функция к news1
-        public function vernutStati($id) // Возврат статьи на доработку, возвращает труе, если вернули статью
+      // вспомогательная функция к news1
+      public function vernutStati($id) // Возврат статьи на доработку, возвращает труе, если вернули статью
         {                                //
           $classPhp = new maty();
           $classPhp->createTab(
-              "name=vernul_statii_dfdx",
-              "poleN=id",
-              "poleT=int",
-              "poleS=-1",
-              "poleN=komment",
-              "poleT=varchar(500)",
-              "poleS=ноу комент))"
-          );
+                              "name=vernul_statii_dfdx",
+                              "poleN=id",
+                              "poleT=int",
+                              "poleS=-1",
+                              "poleN=komment",
+                              "poleT=varchar(500)",
+                              "poleS=ноу комент))"
+                              );
           $rez=$classPhp->zaprosSQL("SELECT id FROM vernul_statii_dfdx WHERE 1");
           while (!is_null($stroka=mysqli_fetch_array($rez))) 
            if ($id==$stroka[0]) return true;
