@@ -466,10 +466,8 @@ class instrument
    public function hanterButton(...$parametr)
     {
       $falseRez=false;
-
-       // просматриваем входящие параметры
-      foreach($parametr as $value)
-       {
+      // просматриваем входящие параметры
+      foreach($parametr as $value) {
           $reztrue=false;
           $rezhant=false;
           $valueButton='';
@@ -478,54 +476,64 @@ class instrument
           $returnValue=false;
           $nameStatic='';
 
-        if (stripos('sss'.$value,'false=')) // определяет значение, которое функция вернет в случае неудачного поиска
-          $falseRez=preg_replace('/false=/','',$value);
+          if (stripos($value,'false=')!==false) // определяет значение, которое функция вернет в случае неудачного поиска
+              $falseRez=preg_replace('/false=/','',$value);
 
-        if (stripos('sss'.$value,'rez=hant')) // если необходимо поймать нажатую динамическую кнопку
-          foreach($parametr as $value)
-            {
-             if (stripos('sss'.$value,'nameStatic='))  // ищем имя кнопки
-               $nameStatic=preg_replace('/nameStatic=/','',$value);                        // выделяем имя кнопки
-             if (stripos('sss'.$value,'returnNameDynamic'))  // ищем имя кнопки
-                $returnNameDinamik=true;  // вернуть динамическую часть имени кнопки если труе
-             if (stripos('sss'.$value,'returnName'))  // ищем имя кнопки
-                $returnName=true;  // вернуть полное имя кнопки если труе
-             if (stripos('sss'.$value,'returnValue'))  // ищем имя кнопки
-                $returnValue=true;  // вернуть надпись на кнопке если труе
-            }
-          if ($nameStatic!='')
-           if (isset($_POST))
-            foreach($_POST as $key=>$value)
-              if (stripos('sss'.$key,$nameStatic)) //найти нажатую кнопку по статичной части её имени
-               {
-                  if ($returnValue) return $value;
-                  if ($returnNameDinamik) return preg_replace('/'.$nameStatic.'/','',$key);
-                  if ($returnName) return $key;
-               }
-           //else return false; // Если массив Пост удалили, то выйти из функции
-          if (stripos('sss'.$value,'rez=true')) // если необходимо проверить была ли нажата кнопка
-          foreach($parametr as $value)
-            {
-              $reztrue=true;
-             if (stripos('sss'.$value,'name='))  // ищем имя кнопки
-               $nameButton=preg_replace('/name=/','',$value);                        // выделяем имя кнопки
-             if (stripos('sss'.$value,'value='))  // ищем имя кнопки
-               $valueButton=preg_replace('/value=/','',$value);                        // выделяем надпись на кнопке
-            }
-          if (stripos('sss'.$value,'rez=info')) // если необходимо вернуть название нажатой кнопки
-            foreach($parametr as $value)
-                if (stripos('sss'.$value,'name='))  // ищем имя кнопки
-                 {
-                   $nameButton=preg_replace('/name=/','',$value);                        // выделяем имя кнопки
-                   if (isset($_POST[$nameButton])) return $_POST[$nameButton];
+          if (stripos($value,'rez=hant')!==false) // если необходимо поймать нажатую динамическую кнопку
+              foreach($parametr as $value)  {
+
+                  if (stripos($value,'nameStatic=')!==false)                // ищем имя кнопки
+                      $nameStatic=preg_replace('/nameStatic=/','',$value);  // выделяем имя кнопки
+
+                  if (stripos($value,'returnNameDynamic')!==false)          // ищем имя кнопки
+                      $returnNameDinamik=true;                              // вернуть динамическую часть имени кнопки если труе
+
+                  if (stripos($value,'returnName')!==false)                 // ищем имя кнопки
+                      $returnName=true;                                     // вернуть полное имя кнопки если труе
+
+                  if (stripos($value,'returnValue')!==false)                // ищем имя кнопки
+                      $returnValue=true;                                    // вернуть надпись на кнопке если труе
+                }
+
+          if ($nameStatic!='')       // Если передали параметр nameStatic=
+            if (isset($_POST))       // Если есть любой массив POST
+                foreach($_POST as $key=>$value)             // перебераем массив POST
+                    if (stripos($key,$nameStatic)!==false) {//найти нажатую кнопку по статичной части её имени
+                        if ($returnValue) 
+                            return $value;
+                        if ($returnNameDinamik) 
+                            return preg_replace('/'.$nameStatic.'/','',$key);
+                        if ($returnName) 
+                            return $key;
+                    }
+                    
+           // Если массив Пост удалили, то выйти из функции
+           if (stripos($value,'rez=true')!==false) // если необходимо проверить была ли нажата кнопка
+              foreach($parametr as $value)  {
+                  $reztrue=true;
+                  if (stripos($value,'name=')!==false)                     // ищем имя кнопки
+                  $nameButton=preg_replace('/name=/','',$value);     // выделяем имя кнопки
+                  if (stripos($value,'value=')!==false)                    // ищем имя кнопки
+                  $valueButton=preg_replace('/value=/','',$value);   // выделяем надпись на кнопке
+                }
+
+           if (stripos($value,'rez=info')!==false) // если необходимо вернуть название нажатой кнопки
+              foreach($parametr as $value)
+                 if (stripos($value,'name=')!==false) {             // ищем имя кнопки
+                   $nameButton=preg_replace('/name=/','',$value);   // выделяем имя кнопки
+                   if (isset($_POST[$nameButton])) 
+                      return $_POST[$nameButton];
                    else false;
                  }
-         if ($reztrue)
-          if (isset($_POST[$nameButton]) && ($valueButton=='' || $valueButton==$_POST[$nameButton])) return true; else return false;       // если она нажата, то вернуть труе
+                 
+           if ($reztrue)
+              if (isset($_POST[$nameButton]) && ($valueButton=='' || $valueButton==$_POST[$nameButton])) 
+                  return true; 
+              else return false;       // если она нажата, то вернуть труе
         }
-
+        
      //обработка параметра help
-     foreach($parametr as $value)
+  foreach($parametr as $value)
      if ($value=='help' || $value=='Помощь' || $value=='помощь')
       {
         echo '<p class="mesage">Функция проверяет была ли нажата некоторая кнопка и результат выдает в нужном виде.</p><br>';

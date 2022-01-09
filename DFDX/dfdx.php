@@ -115,12 +115,12 @@ echo '<section class="container-fluid pole">';
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
         $bylPoisk=false;
         $poisk = new \redaktor\poisk();
-        $redaktor=new redaktor\modul();
-        $action='action=dfdx.php';  //страница обработки кнопок в модуле news()
-        $runNewsIsNews1=-1;
-        $metka='dfdx'; //метка для счётчика статистики посещения конкретной страницы
-        $nomerNewsPoisk='Число_статей=5';
-        $nomerNewsGlawn='Число_статей=5';
+        $redaktor = new redaktor\modul();
+        $action = 'action=dfdx.php';  //страница обработки кнопок в модуле news()
+        $runNewsIsNews1 = -1;
+        $metka = 'dfdx'; //метка для счётчика статистики посещения конкретной страницы
+        $nomerNewsPoisk = 'Число_статей=5';
+        $nomerNewsGlawn = 'Число_статей=5';
         //if (!file_exists($action)) $action=basename(__FILE__);
 
         ////////////////////////////////////////////////////поиск
@@ -128,7 +128,7 @@ echo '<section class="container-fluid pole">';
             $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati) ;
             if ($idStati[0]>-1)
                 foreach($idStati as $value) 
-                    $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value,$nomerNewsPoisk);
+                    $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
                 $bylPoisk=true;
          }
         ///////////////////////////////////////////////////

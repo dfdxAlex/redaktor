@@ -392,7 +392,7 @@ class modul
 
              //запомнить число выводимых статей для будущего подсчёта страниц
              $nomerStatejStart=$nomerStatej; //число статей на странице
-             $buttonStr=$classPhp->hanterButton("rez=hant","nameStatic=str","returnNameDynamic","false=netStr"); //номер страницы
+             $buttonStr=$classPhp->hanterButton("rez=hant","nameStatic=stranica","returnNameDynamic","false=netStr"); //номер страницы
              if ($buttonStr!='netStr') $pokazatStatiuPoId=-1; // если была нажата кнопка листания страниц, то обнулить работу с ИД
              if ($buttonStr=='netStr') $buttonStr=1;
              $startOutNews=$buttonStr*$nomerStatej-$nomerStatej; //c какой по счёту статьи следует начинать выводить
@@ -690,8 +690,8 @@ class modul
         echo '<span class="text-blok-stranic-down">Страниц: </span>';
         $i=1;
         for ($i=1; $i<=$sumStranic; $i++)
-            echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
-        if ($ostatokStranic>0) echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="str'.$i.'">';
+            echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="stranica'.$i.'">';
+        if ($ostatokStranic>0) echo '<input type="submit" value="'.$i.'" class="button-nomer-stranic btn" name="stranica'.$i.'">';
             echo '</form>';
         echo '</div></div></div></div>';
       }
