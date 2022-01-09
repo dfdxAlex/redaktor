@@ -612,62 +612,55 @@ class modul
                       $pokazalStatej=1;
                     }
 
-                //////////////////////////////////////////////////////////////////////////////////////////////////////
-                  if (!$statusStatii)// Статья не проверена модератором
-                    if ($_SESSION['status']==4 || $_SESSION['status']==5) // 
-                    {
-                      echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0][0].'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';
-                      echo '<section class="container-fluid">';
-                      echo '<div class="row">';
-                      echo '<div class="col-12">';
-                      echo '<form action="'.$action.'" method="post">';
-                      echo '<input type="submit" class="Publikacia btn" value="Опубликовать" name="opublikowat'.$dataMas[$ii][0][0][0][0].'">';
-                      if (!$this->vernutStati($dataMas[$ii][0][0][0][0]))
-                       {
-                          echo '<input type="text"  value="Причина возврата" name="pricina" class="pricina">';
-                          echo '<input type="submit" class="Publikacia btn" value="Вернуть" name="vernut'.$dataMas[$ii][0][0][0][0].'">';
-                       }
-                      else if ($this->vernutStati($dataMas[$ii][0][0][0][0]))
-                        {
-                          echo '<input type="submit" class="Publikacia btn" value="Отмена возврата" name="vernut'.$dataMas[$ii][0][0][0][0].'">';
-                          echo '<p>Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]).'</p>';
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////
+                    if (!$statusStatii)// Статья не проверена модератором
+                       if ($_SESSION['status']==4 || $_SESSION['status']==5) {
+                          echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0][0].'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';
+                          echo '<section class="container-fluid">';
+                          echo '<div class="row">';
+                          echo '<div class="col-12">';
+                          echo '<form action="'.$action.'" method="post">';
+                          echo '<input type="submit" class="Publikacia btn" value="Опубликовать" name="opublikowat'.$dataMas[$ii][0][0][0][0].'">';
+                          if (!$this->vernutStati($dataMas[$ii][0][0][0][0])) {
+                              echo '<input type="text"  value="Причина возврата" name="pricina" class="pricina">';
+                              echo '<input type="submit" class="Publikacia btn" value="Вернуть" name="vernut'.$dataMas[$ii][0][0][0][0].'">';
+                            }
+                          else if ($this->vernutStati($dataMas[$ii][0][0][0][0])) {
+                              echo '<input type="submit" class="Publikacia btn" value="Отмена возврата" name="vernut'.$dataMas[$ii][0][0][0][0].'">';
+                              echo '<p>Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]).'</p>';
+                            }
+                          echo '</form>';
+                          echo '</div>';
+                          echo '</div>';
+                          echo '</section>';
                         }
-                      echo '</form>';
-                      echo '</div>';
-                      echo '</div>';
-                      echo '</section>';
-                    }
-                  /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                if ($redaktorUser || $redaktorPodpis || $redaktorRedaktor) // если есть разрешение на редактирование статей для статусов 1,2 или 3
-                  if ($_SESSION['status']>0  && $_SESSION['status']<4) // Если статус автора 1,2 или 3
-                    if (($redaktorUser || $redaktorPodpis) && $statusStatii  || ($statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login'])) // ЕСЛИ СТАТУС 1 или 3 и статья не на проверке
-                     {
-                      $value='Добавить';
-                      if ($statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']) 
-                       {
-                        $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
-                        'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
-                        'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-"'.$action.'"-');
-                       } else
-                      $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-'.$value,'n1-dobawitNow', // Кнопка Добавить
-                      'кнопок-1','c1=-'.$classKill.' btn-','action=-"'.$action.'"-');
+                    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    if ($redaktorUser || $redaktorPodpis || $redaktorRedaktor) // если есть разрешение на редактирование статей для статусов 1,2 или 3
+                        if ($_SESSION['status']>0  && $_SESSION['status']<4) // Если статус автора 1,2 или 3
+                            if (($redaktorUser || $redaktorPodpis) && $statusStatii  || ($statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login'])) {// ЕСЛИ СТАТУС 1 или 3 и статья не на проверке
+                                $value='Добавить';
+                                if ($statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']) {
+                                    $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
+                                                            'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
+                                                            'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-"'.$action.'"-');
+                                  } else
+                                    $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-'.$value,'n1-dobawitNow', // Кнопка Добавить
+                                                            'кнопок-1','c1=-'.$classKill.' btn-','action=-"'.$action.'"-');
                       }
-                   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                  if ($statusStatii)   $pokazalStatej++;   // Если труе, то статья проверена модератором
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    if ($statusStatii)   $pokazalStatej++;   // Если труе, то статья проверена модератором
 
-                     ///////////////////////////////////Кнопки удаления, редактирования, добавления
+                    ///////////////////////////////////Кнопки удаления, редактирования, добавления
                     if ($nomerZagolowkaStati=='www' || $dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati) 
                      if ($_SESSION['status']==4 
                       || $_SESSION['status']==5 
                         )
                         $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
-                        'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
-                        'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-"'.$action.'"-');
-                   ///////////////////////////////////////////////////////////////////////////////////////////////
-                } // конец IF
-                   if ($_SESSION['redaktirowatId']==$dataMas[$ii][0][0][0][0]) // Сравнение ИД статьи, которую следует редактировать с ИД текущей статьи
-                      { 
+                                                'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
+                                                'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-"'.$action.'"-');
+                      ///////////////////////////////////////////////////////////////////////////////////////////////
+                  } // конец IF
+                   if ($_SESSION['redaktirowatId']==$dataMas[$ii][0][0][0][0]) {// Сравнение ИД статьи, которую следует редактировать с ИД текущей статьи
                         $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action);
                         $poleRedaktora=true; // Показывает было ли установлено поле редактора
                       }
