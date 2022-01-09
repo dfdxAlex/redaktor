@@ -285,10 +285,8 @@ class modul
                   $classPhp->killZapisTablicy('vernul_statii_dfdx','WHERE id='.$killStroka);
            }
          /////////////////////////////////////////////////////////////////////////////////////////////////////
-         /////////////////////////////////////// работаем с кнопкой редактировать ////////////////////////////////// row button_statia
-         
-         if ($classPhp->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Редактировать')
-            {
+         /////////////////////////////////////// работаем с кнопкой редактировать ////////////////////////////
+         if ($classPhp->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Редактировать') {
               $redaktirowat=$classPhp->hanterButton('rez=hant','nameStatic=statia','returnName');
               $redaktirowat=preg_replace('/statia/','',$redaktirowat); // Удалить лишнее
               $redaktirowat=preg_replace('/redakt/','',$redaktirowat); // Удалить лишнее
@@ -296,83 +294,78 @@ class modul
               $_SESSION['redaktirowatId']=$redaktirowat; //Получить id редактируемой статьи
             }
           /////////////////////////////////////////////Кнопка Опубликовать
-          if ($classPhp->hanterButton('rez=hant','nameStatic=opublikowat','returnNameDynamic',"false=www")!='www')
-          {
+         if ($classPhp->hanterButton('rez=hant','nameStatic=opublikowat','returnNameDynamic',"false=www")!='www') {
             $id=$classPhp->hanterButton('rez=hant','nameStatic=opublikowat','returnNameDynamic',"false=www"); // находим ИД статьи
             $classPhp->killZapisTablicy('status_statii_dfdx','where id='.$id); // удаляем ИД статьи из таблицы не проверенных статей
             $rez=$classPhp->zaprosSQL('select news from bd2 where  id='.$id);
             $stroka=mysqli_fetch_array($rez);
             $zaplatit=strlen($stroka[0]);
-
             $rez=$classPhp->zaprosSQL('select login_redaktora from bd2 where  id='.$id);
             $stroka=mysqli_fetch_array($rez);
             $this->money('login='.$stroka[0],'заплатить='.$zaplatit);
           }
 
           // Вернуть на доработку
-          if ($classPhp->hanterButton('rez=hant','nameStatic=vernut','returnNameDynamic',"false=www")!='www')
-          {
-            
+          if ($classPhp->hanterButton('rez=hant','nameStatic=vernut','returnNameDynamic',"false=www")!='www') {
             $id=$classPhp->hanterButton('rez=hant','nameStatic=vernut','returnNameDynamic',"false=www"); // находим ИД статьи
-            if ($_POST['vernut'.$id]=='Вернуть')
-             {
+            if ($_POST['vernut'.$id]=='Вернуть') {
                 $pricinaVozwrata=$_POST['pricina'];
-                if ($_POST['pricina']=='Причина возврата') $pricinaVozwrata="Причина не указана";
+                if ($_POST['pricina']=='Причина возврата') 
+                      $pricinaVozwrata="Причина не указана";
                 $rez=$classPhp->zaprosSQL("INSERT INTO vernul_statii_dfdx(id, komment) VALUES (".$id.",'".$pricinaVozwrata."')");// Добавить статью в базу возвращенных
              }
              if ($_POST['vernut'.$id]=='Отмена возврата' || $_POST['vernut'.$id]=='Отправить на проверку')
-              $rez=$classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$id);
-          }
-                /////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Начало прорисовки блока
-            // Проверим присутствует ли таблица блока, если нет, то создадим её
-            if ($nametablice!='' && !$classPhp->searcNameTablic($nametablice))
+                $rez=$classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$id);
+           }
+          /////////////////////////////////////////////////////////////////////////////////////////////////////
+          // Начало прорисовки блока
+          // Проверим присутствует ли таблица блока, если нет, то создадим её
+          if ($nametablice!='' && !$classPhp->searcNameTablic($nametablice))
                 $classPhp->zaprosSQL("CREATE TABLE ".$nametablice."(id INT, name VARCHAR(200), news VARCHAR(65000), login_redaktora VARCHAR(200), razdel VARCHAR(100))");
-            // проверим пустая ли таблица новостей, если да, то вывести кнопку добавления новости
-            if ($classPhp->kolVoZapisTablice($nametablice)==0 )//|| ) numberNews($kategori)
+          
+          // проверим пустая ли таблица новостей, если да, то вывести кнопку добавления новости
+          if ($classPhp->kolVoZapisTablice($nametablice)==0 ) 
               $netNowostej=true;
 
-              // Определяем какие именно статьи подгружать из таблицы
-              // Если есть имя автора, то подключаем в условие автора
-              // Если есть категория, то вычисляем в какие ещё категории входин нужная категория и все категории вставляем в условие
-             $zapros='';
-             // Загрузить все статьи, если нет логина редактора
-             if ($pokazarStatijRedaktora=='' && $razdel=='')
+          // Определяем какие именно статьи подгружать из таблицы
+          // Если есть имя автора, то подключаем в условие автора
+          // Если есть категория, то вычисляем в какие ещё категории входин нужная категория и все категории вставляем в условие
+          // Загрузить все статьи, если нет логина редактора
+          $zapros='';
+          if ($pokazarStatijRedaktora=='' && $razdel=='')
                $zapros="SELECT * FROM ".$nametablice." WHERE 1";
 
-             // загрузить статьи конкретного редактора
-             if ($pokazarStatijRedaktora!='' && $razdel=='') 
-              $zapros="SELECT * FROM ".$nametablice." WHERE login_redaktora='".$pokazarStatijRedaktora."'";
+          // загрузить статьи конкретного редактора
+          if ($pokazarStatijRedaktora!='' && $razdel=='') 
+               $zapros="SELECT * FROM ".$nametablice." WHERE login_redaktora='".$pokazarStatijRedaktora."'";
 
-             $razdelSumm = array();  // в массиве будут категории, в которые входит входная категория($razdel)
-             $razdelFoWhere='';  // В строке будет список категорий, в которые входит входная категория, если из 2 или больше, то добавится OR
-             if ($razdel!='' && $razdel!='Home' && $razdel!='home') 
-              {
-                 $lokalZapros='SELECT razdel FROM '.$nametablice.' WHERE 1';
-                 $lokalRez=$classPhp->zaprosSQL($lokalZapros);
-                 $i=0;
-                 while(!is_null($lokalStroka=mysqli_fetch_array($lokalRez)))
-                  {
-                    if (stripos($lokalStroka[0],$razdel)!==false)
+          $razdelSumm = array();  // в массиве будут категории, в которые входит входная категория($razdel)
+          $razdelFoWhere='';  // В строке будет список категорий, в которые входит входная категория, если из 2 или больше, то добавится OR
+          if ($razdel!='' && $razdel!='Home' && $razdel!='home') {
+               $lokalZapros='SELECT razdel FROM '.$nametablice.' WHERE 1';
+               $lokalRez=$classPhp->zaprosSQL($lokalZapros);
+               $i=0;
+               while(!is_null($lokalStroka=mysqli_fetch_array($lokalRez))) {
+                  if (stripos($lokalStroka[0],$razdel)!==false)
                       $razdelSumm[$i++]=$lokalStroka[0];
-                  }
-                  $razdelSumm=array_unique($razdelSumm); //убираем одинаковые значения массива
-                  $onePlus=false;
-                  foreach ($razdelSumm as $value)
-                   {
-                      if ($onePlus) $razdelFoWhere=$razdelFoWhere.' OR ';
-                      $razdelFoWhere=$razdelFoWhere.'razdel="'.$value.'" ';
-                      $onePlus=true;
-                   }
-              }
+                 }
+               $razdelSumm=array_unique($razdelSumm); //убираем одинаковые значения массива
+               $onePlus=false;
+               foreach ($razdelSumm as $value) {
+                   if ($onePlus) 
+                      $razdelFoWhere=$razdelFoWhere.' OR ';
+                   $razdelFoWhere=$razdelFoWhere.'razdel="'.$value.'" ';
+                   $onePlus=true;
+                 }
+            }
 
-              if ($pokazarStatijRedaktora=='' && $razdel!='') 
+          if ($pokazarStatijRedaktora=='' && $razdel!='') 
                $zapros="SELECT * FROM ".$nametablice." WHERE ".$razdelFoWhere;
 
-              if ($pokazarStatijRedaktora!='' && $razdel!='') 
-                $zapros="SELECT * FROM ".$nametablice." WHERE login_redaktora='".$pokazarStatijRedaktora."' AND (".$razdelFoWhere.")"; 
-/////////////////////////////////////Конец загрузки нужных статей из БД////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
+          if ($pokazarStatijRedaktora!='' && $razdel!='') 
+               $zapros="SELECT * FROM ".$nametablice." WHERE login_redaktora='".$pokazarStatijRedaktora."' AND (".$razdelFoWhere.")"; 
+       /////////////////////////////////////Конец загрузки нужных статей из БД////////////////////////////////////////////////////////////////////////////////////
+       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
              $dataMas = array(array(),array(),array(),array(),array());
              $rez=$classPhp->zaprosSQL($zapros);
 
@@ -382,24 +375,20 @@ class modul
 
              $i=0; //Загрузить таблицу в массив
              if ($classPhp->notFalseAndNULL($rez))
-             while(!is_null($stroka=mysqli_fetch_assoc($rez)))
-             {
-               $dataMas[$i][0][0][0][0]=$stroka['id'];
-               $dataMas[$i][1][0][0][0]=$stroka['name'];
-               $dataMas[$i][0][1][0][0]=$stroka['news'];//echo $dataMas[$i][0][1][0][0];
-               $dataMas[$i][0][0][1][0]=$stroka['login_redaktora'];
-               $dataMas[$i++][0][0][0][1]=$stroka['razdel'];
-             }
+                while(!is_null($stroka=mysqli_fetch_assoc($rez))) {
+                  $dataMas[$i][0][0][0][0]=$stroka['id'];
+                  $dataMas[$i][1][0][0][0]=$stroka['name'];
+                  $dataMas[$i][0][1][0][0]=$stroka['news']; 
+                  $dataMas[$i][0][0][1][0]=$stroka['login_redaktora'];
+                  $dataMas[$i++][0][0][0][1]=$stroka['razdel'];
+                }
              //проверим не была ли нажата кнопка заголовка статьи
              //строка находит ИД кнопки в обход входного параметра
              $nomerZagolowkaStati=$classPhp->hanterButton("rez=hant","nameStatic=statiaKorotka","returnNameDynamic",'false=www');
-
              if ($nomerZagolowkaStati!='www') $pokazatStatiuPoId=$nomerZagolowkaStati;
              $statusStatii=false;
              $pokazalStatej=0;
              // вывести статью согласно определенному шаблону.
-             // Шаблон 1 не доделан, необходимо скопировать все изменения из шаблона 2
-             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
              //запомнить число выводимых статей для будущего подсчёта страниц
              $nomerStatejStart=$nomerStatej; //число статей на странице
