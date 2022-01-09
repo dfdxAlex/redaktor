@@ -759,7 +759,7 @@ function urlPoIdPath($nameBd,$id)
     $stroka[0]=preg_filter('/news\//','',$stroka[0]);
     if (file_exists($stroka[0])) return $stroka[0]; // удалил из пути news/
    }
-   if (!file_exists($stroka[0])) 
+  if (!file_exists($stroka[0])) 
    {
     $stroka[0]=preg_filter('/\b.*\//','',$stroka[0]);
     if (file_exists($stroka[0])) return $stroka[0]; // удалил из пути news/
