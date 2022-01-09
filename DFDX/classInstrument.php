@@ -1,19 +1,16 @@
 <?php
+
 namespace redaktor;
 // Файл сложных классов - модулей. 
-
 
 include 'class.php';
 
 //класс готовых модулей
 class modul
     {
-
         public function __construct()
             {
-              
             }
-
 
         //новостной модуль
         public function news1(...$parametr)
