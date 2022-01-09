@@ -399,145 +399,132 @@ class modul
              $outBlokStranic=true;
              if ($pokazatStatiuPoId>-1) $outBlokStranic=false;// запретить показ модуля страниц
              
-if ($hablonNews==2)
- if (!isset($_POST['dobawitNow']))
-  for ($ii=$i-1; $ii>-1; $ii--)
-    {       
-      $nomerStatejSumm++; // считает число статей, которые можно было показать
+    if ($hablonNews==2)
+      if (!isset($_POST['dobawitNow']))
+        for ($ii=$i-1; $ii>-1; $ii--) {  
+            // считает число статей, которые можно было показать     
+            $nomerStatejSumm++; 
             
-                  if ($_SESSION['status']==1 || $_SESSION['status']==3)
-                    $statiaVozwrat=$this->vernutStati($dataMas[$ii][0][0][0][0]); // Проверяет не вернута ли статья на доработку
-                  else $statiaVozwrat=false;
+            if ($_SESSION['status']==1 || $_SESSION['status']==3)
+               // Проверяет не вернута ли статья на доработку
+               $statiaVozwrat=$this->vernutStati($dataMas[$ii][0][0][0][0]); 
+            else $statiaVozwrat=false;
 
-                  // проверяет статус статьи по ИД номеру, проверена она или ещё нет
-                  $statusStatii=$this->statusStati($dataMas[$ii][0][0][0][0]); 
+            // проверяет статус статьи по ИД номеру, проверена она или ещё нет
+            $statusStatii=$this->statusStati($dataMas[$ii][0][0][0][0]); 
                 
-                  //echo 'показал-'.$nomerStatej.'всего-'.$nomerStatejSumm;
-        //общие условия для показа всех статей, первых, коротких, по названию и так далее
-      if ($startOutNews<=$nomerStatejSumm) // Задает с какой по счёту статьи начинать выводить
-        if ($nomerStatej>0)     // Счётчик показа статей  
-          if ($pokazatStatiuPoId<0 || ($pokazatStatiuPoId==$dataMas[$ii][0][0][0][0] && $statusStatii))
-             if (stripos('sss'.$dataMas[$ii][0][0][0][1],$razdel) || $dataMas[$ii][0][0][0][1]=='-' || $razdel=='') // Если заданный раздел входит в категорию статьи
-              { 
-                  if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))      // Если труе, то статья проверена модератором
-                    if ($pokazalStatej==0 && $nomerZagolowkaStati=='www')  // первая статья не по клику по названию статьи
-                     {
-                        if (!$statiaVozwrat)  // показ первой статьи при обычных условиях
-                          {
-                                $class='statiaKrutka btn'; // класс заголовка по умолчанию
-                                // Условие сработает если задан какой-либо вид оформления статьи
-                                if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0)  // класс заголовка в зависимости от стиля тут
-                                      {
-                                          $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
-                                          $class='nazwanie'.$hablon.' btn'; // класс по шаблону
-                                          $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
-                                          $text=mb_substr($dataMas[$ii][0][1][0][0],1); // подготовить оставшийся текст
-                                          $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
-                          ////////////////////////////////////////////////////////////////////////////////////////////////////
-                                            $altTest=preg_match_all('/alt=\".+\"/u',$text, $alt);
-                                                              //--------------------------------------------
-                                                              // Находим содержимое URL
-                                            preg_match_all('/src="[^"]+/u',$text, $url);
-                                            if (!isset($url)) $url='image/logo.php';
-                                                          if (gettype($url)=='array')
-                                                           {
-                                                             $i=0;
-                                                             foreach($alt[0] as $value)
-                                                             {
-                                                               $altVstavki=$value;
-                                                               $altReg=preg_filter('/\s/','\s',$altVstavki,-1); // строка alt без пробелов, для регулярного выражения
-                                                               if (!isset($altReg)) $altReg=$altVstavki;
-                                                               $regularV='/img.*jpg.*'.$altReg.'/u';
-                                                               $replacement='div class="img-div-'.$hablon.'"><img class="img-'.$hablon.'" '.$url[0][$i].'" '.$altVstavki.'></div';
-                                                               $text=preg_filter($regularV,$replacement,$text,-1);
-                                                               $i++;
-                                                             }
-                                                           }
-                                                      $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
-                                                      $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
-                                              echo '<section class="container-fluid">';
-                                              echo '<div class="row">';
-                                              echo '<div class="col-12">';
-                                                if (file_exists($action))
-                                                  echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
-                                                else 
-                                                  echo '<p class="'.$class.'">'.$dataMas[$ii][1][0][0][0].'</p>';
-                                              echo '</div></div>';
-                                              echo '<div class="row">';
-                                              echo '<div class="col-12">';
-                                              echo '<div>'.$text.'</div>';
-                                              echo '</div></div>';
-                                              echo '<div class="row">';
-                                              echo '<div class="col-12">';
-                                              echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
-                                              echo '</div></div></section>';
-                                              $nomerStatej--;
-                                      }
-                                    else
-                                       {
-                                          echo '<section class="container-fluid">';
-                                          echo '<div class="row">';
-                                          echo '<div class="col-12">';
-                                          echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
-                                          echo '</div></div>';
-                                          echo '<div class="row">';
-                                          echo '<div class="col-12">';
-                                          echo '<div>'.$dataMas[$ii][0][1][0][0].'</div>';
-                                          echo '</div></div>';
-                                          echo '<div class="row">';
-                                          echo '<div class="col-12">';
-                                          echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
-                                          echo '</div></div></section>';
-                                          $nomerStatej--;
-                                        }
+            //общие условия для показа всех статей, первых, коротких, по названию и так далее
+            if ($startOutNews<=$nomerStatejSumm) // Задает с какой по счёту статьи начинать выводить
+              if ($nomerStatej>0)     // Счётчик показа статей  
+                if ($pokazatStatiuPoId<0 || ($pokazatStatiuPoId==$dataMas[$ii][0][0][0][0] && $statusStatii))
+                  if (stripos('sss'.$dataMas[$ii][0][0][0][1],$razdel) || $dataMas[$ii][0][0][0][1]=='-' || $razdel=='') {// Если заданный раздел входит в категорию статьи
+                    if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))      // Если труе, то статья проверена модератором
+                      if ($pokazalStatej==0 && $nomerZagolowkaStati=='www') {  // первая статья не по клику по названию статьи
+                        if (!$statiaVozwrat) { // показ первой статьи при обычных условиях
+                           $class='statiaKrutka btn'; // класс заголовка по умолчанию
+                           // Условие сработает если задан какой-либо вид оформления статьи
+                           if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0) { // класс заголовка в зависимости от стиля тут
+                             $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
+                             $class='nazwanie'.$hablon.' btn'; // класс по шаблону
+                             $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
+                             $text=mb_substr($dataMas[$ii][0][1][0][0],1); // подготовить оставшийся текст
+                             $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
+                             ////////////////////////////////////////////////////////////////////////////////////////////////////
+                             $altTest=preg_match_all('/alt=\".+\"/u',$text, $alt);
+                             // Находим содержимое URL
+                             preg_match_all('/src="[^"]+/u',$text, $url);
+                             if (!isset($url)) $url='image/logo.php';
+                                if (gettype($url)=='array') {
+                                   $i=0;
+                                   foreach($alt[0] as $value) {
+                                      $altVstavki=$value;
+                                      $altReg=preg_filter('/\s/','\s',$altVstavki,-1); // строка alt без пробелов, для регулярного выражения
+                                      if (!isset($altReg)) $altReg=$altVstavki;
+                                      $regularV='/img.*jpg.*'.$altReg.'/u';
+                                      $replacement='div class="img-div-'.$hablon.'"><img class="img-'.$hablon.'" '.$url[0][$i].'" '.$altVstavki.'></div';
+                                      $text=preg_filter($regularV,$replacement,$text,-1);
+                                      $i++;
+                                     }
+                               }
+                             $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
+                             $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
+                             echo '<section class="container-fluid">';
+                             echo '<div class="row">';
+                             echo '<div class="col-12">';
+                             if (file_exists($action))
+                                echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
+                             else 
+                                echo '<p class="'.$class.'">'.$dataMas[$ii][1][0][0][0].'</p>';
+                             echo '</div></div>';
+                             echo '<div class="row">';
+                             echo '<div class="col-12">';
+                             echo '<div>'.$text.'</div>';
+                             echo '</div></div>';
+                             echo '<div class="row">';
+                             echo '<div class="col-12">';
+                             echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
+                             echo '</div></div></section>';
+                             $nomerStatej--;
                         }
-                       
-                        if ($statiaVozwrat)  // Показ статьи в случае, если её запостил статус 1 или 3
-                          {
-                            $class='statiaKrutka btn'; // класс заголовка по умолчанию
-                            $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
-                            if ($hablon>0) // класс заголовка в зависимости от стиля
-                             {
-                               $class='nazwanie'.$hablon.' btn'; // класс по шаблону
-                               $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
-                               $text=mb_substr($dataMas[$ii][0][1][0][0],1,strlen($dataMas[$ii][0][1][0][0])-1); // подготовить оставшийся текст
-                               $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
-                               $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
-                               $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
+                        else {
+                                   echo '<section class="container-fluid">';
+                                   echo '<div class="row">';
+                                   echo '<div class="col-12">';
+                                   echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
+                                   echo '</div></div>';
+                                   echo '<div class="row">';
+                                   echo '<div class="col-12">';
+                                   echo '<div>'.$dataMas[$ii][0][1][0][0].'</div>';
+                                   echo '</div></div>';
+                                   echo '<div class="row">';
+                                   echo '<div class="col-12">';
+                                   echo '<small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
+                                   echo '</div></div></section>';
+                                   $nomerStatej--;
                               }
-                            echo '<form method="post" action="'.$classPhp->initsite().'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'-вернули на доработку">'.'<div>'.$text.'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small></form>';
-                            echo $otstupBr;
-                            echo 'Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]);
-                        }
-                      }
-                    ///////////////////////////Вторая и следующие статьи//////////////////////////////
-                  if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))     // Если труе, то статья проверена модератором
-                    if ($pokazalStatej>0 && $nomerZagolowkaStati=='www')   // вторая и дальше статья не по клику по названию статьи
-                     {
-                      $nomerStatej--;
-                          $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
-                          $text=$dataMas[$ii][0][1][0][0]; 
-                          //Находим содержимое свойства alt
-                          if (preg_match('/alt=\"\w+\"/u',$text, $alt))
-                            {
-                              $alt=preg_filter('/alt=/','',$alt[0],-1);
-                              $alt=preg_filter('/\"/','',$alt,-1);
-                          // Находим содержимое URL
-                              if (preg_match('/src.*alt/u',$text, $url))
-                                {
-                                  $url=preg_filter('/src=/','',$url[0],-1);
-                                  $url=preg_filter('/alt/','',$url,-1);
-                                  $url=preg_filter('/\"/','',$url,-1);
-                                } 
-                            echo '<div class="img-div-'.$hablon.'-next">';
-                            echo '<img class="img-'.$hablon.'-nextMesage" src="'.$url.'" alt="'.$alt.'">';
-                            echo '</div>';
-                            }
-                      $text=preg_filter('/<br>/','',$text);
-                      $text=preg_filter('/[<>]/','',$text);
-                      echo '<form method="post" action="'.$action.'"><input class="statiaKrutka btn" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>'.'<div>'.mb_substr($text,0,$prevju).'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
-                      echo $otstupBr; 
+                }
+                       
+                if ($statiaVozwrat)   {// Показ статьи в случае, если её запостил статус 1 или 3
+                       $class='statiaKrutka btn'; // класс заголовка по умолчанию
+                       $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
+                       if ($hablon>0) {// класс заголовка в зависимости от стиля
+                             $class='nazwanie'.$hablon.' btn'; // класс по шаблону
+                             $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
+                             $text=mb_substr($dataMas[$ii][0][1][0][0],1,strlen($dataMas[$ii][0][1][0][0])-1); // подготовить оставшийся текст
+                             $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
+                             $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
+                             $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
+                         }
+                        echo '<form method="post" action="'.$classPhp->initsite().'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'-вернули на доработку">'.'<div>'.$text.'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small></form>';
+                        echo $otstupBr;
+                        echo 'Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]);
+                 }
+           }
+           ///////////////////////////Вторая и следующие статьи//////////////////////////////
+           if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))     // Если труе, то статья проверена модератором
+               if ($pokazalStatej>0 && $nomerZagolowkaStati=='www')  { // вторая и дальше статья не по клику по названию статьи
+                  $nomerStatej--;
+                  $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
+                  $text=$dataMas[$ii][0][1][0][0]; 
+                  //Находим содержимое свойства alt
+                  if (preg_match('/alt=\"\w+\"/u',$text, $alt)) {
+                     $alt=preg_filter('/alt=/','',$alt[0],-1);
+                     $alt=preg_filter('/\"/','',$alt,-1);
+                     // Находим содержимое URL
+                     if (preg_match('/src.*alt/u',$text, $url)) {
+                        $url=preg_filter('/src=/','',$url[0],-1);
+                        $url=preg_filter('/alt/','',$url,-1);
+                        $url=preg_filter('/\"/','',$url,-1);
+                      } 
+                     echo '<div class="img-div-'.$hablon.'-next">';
+                     echo '<img class="img-'.$hablon.'-nextMesage" src="'.$url.'" alt="'.$alt.'">';
+                     echo '</div>';
                     }
+                 $text=preg_filter('/<br>/','',$text);
+                 $text=preg_filter('/[<>]/','',$text);
+                 echo '<form method="post" action="'.$action.'"><input class="statiaKrutka btn" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>'.'<div>'.mb_substr($text,0,$prevju).'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
+                 echo $otstupBr; 
+             }
 
             //////////////////////////////////// Блок выводит статью при нажатии на её заголовок-///////////////////////////////////////
             if ($statusStatii)// Если труе, то статья проверена модератором
