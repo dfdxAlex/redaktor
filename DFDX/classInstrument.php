@@ -787,7 +787,7 @@ function urlPoId($nameBd,$id)
 // Служебная функция записывает ссылку на статью по ID или false
 function urlPoIdSave($nameBd,$id,$url)
 {
-  $classPhp = new maty();
+   $classPhp = new maty();
    if ($this->urlPoId($nameBd,$id)) return false; // если запись уже есть то выходим с результатом Фалс
    $classPhp->zaprosSQL("INSERT INTO url_po_id_".$nameBd."(id, url) VALUES (".$id.",'".$url."')");
    return true;
