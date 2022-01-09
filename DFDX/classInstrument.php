@@ -525,57 +525,52 @@ class modul
                  echo '<form method="post" action="'.$action.'"><input class="statiaKrutka btn" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>'.'<div>'.mb_substr($text,0,$prevju).'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
                  echo $otstupBr; 
              }
-
             //////////////////////////////////// Блок выводит статью при нажатии на её заголовок-///////////////////////////////////////
             if ($statusStatii)// Если труе, то статья проверена модератором
-                    if ($dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati && $pokazalStatej==0) // Вывод по клику по заголовку статьи
-                    {
-                      
-                        ///////////////////////////////////////////создаем нужные папки ////////////////////////////
-                            if (!file_exists('../../'.$classPhp->initsite())) // Создаем папки только в том случае, если не находимся в уже созданных папках
-                                {
-                                  if ($dataMas[$ii][0][0][0][1]!='-')
-                                      $katalog2='news/'.$dataMas[$ii][0][0][0][1]; // Папка со статьями + текущая категория
-                                  else $katalog2='news/non-path';
-                                  if (!is_dir('news')) // Если нет главной папки со статьями, то создать её
-                                      mkdir('news',0777,1);
-                                  if (!is_dir($katalog2)) // Если нет папки соответствующей категории, то создать её
-                                      mkdir($katalog2,0777,1);
-                                }
-                        /////////////////////////////////////////////////////////////////////////////////////////////
-                        $fileNameNotPhp=translit($dataMas[$ii][1][0][0][0]); // создаем имя файла
-                        $fileName=$katalog2.'/'.$fileNameNotPhp.'.php';       // имя файла с каталогом
-                        if (!is_null(preg_filter('/-\./','.',$fileName))) $fileName=preg_filter('/-\./','.',$fileName);
-                        if (!is_null(preg_filter('/\/-/','/',$fileName))) $fileName=preg_filter('/\/-/','/',$fileName);
+                if ($dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati && $pokazalStatej==0)  {// Вывод по клику по заголовку статьи
+                   ///////////////////////////////////////////создаем нужные папки ////////////////////////////
+                   if (!file_exists('../../'.$classPhp->initsite()))  {// Создаем папки только в том случае, если не находимся в уже созданных папках
+                       if ($dataMas[$ii][0][0][0][1]!='-')
+                             $katalog2='news/'.$dataMas[$ii][0][0][0][1]; // Папка со статьями + текущая категория
+                       else $katalog2='news/non-path';
+                       if (!is_dir('news')) // Если нет главной папки со статьями, то создать её
+                             mkdir('news',0777,1);
+                       if (!is_dir($katalog2)) // Если нет папки соответствующей категории, то создать её
+                             mkdir($katalog2,0777,1);
+                     }
+                   /////////////////////////////////////////////////////////////////////////////////////////////
+                   $fileNameNotPhp=translit($dataMas[$ii][1][0][0][0]); // создаем имя файла
+                   $fileName=$katalog2.'/'.$fileNameNotPhp.'.php';       // имя файла с каталогом
+                   if (!is_null(preg_filter('/-\./','.',$fileName))) 
+                      $fileName=preg_filter('/-\./','.',$fileName);
+                   if (!is_null(preg_filter('/\/-/','/',$fileName))) 
+                      $fileName=preg_filter('/\/-/','/',$fileName);
 
-                        // Проверить существует ли статья с таким же названием
-                        $newsAlready=false;
-                        if (file_exists($fileName)) $newsAlready=true;
+                   // Проверить существует ли статья с таким же названием
+                   $newsAlready=false;
+                   if (file_exists($fileName)) $newsAlready=true;
                         $newsName=preg_filter('/news\/.+\//','',$fileName);
-                        if (file_exists($newsName)) $newsAlready=true;
-                        if ($newsAlready) $fileName=preg_filter('/\.php/','-double-'.time().'.php',$fileName);
+                   if (file_exists($newsName)) $newsAlready=true;
+                        if ($newsAlready) 
+                            $fileName=preg_filter('/\.php/','-double-'.time().'.php',$fileName);
 
-                        $urlNews=$this->urlPoId($nametablice,$nomerZagolowkaStati);
-
-                        if ($urlNews) // если для статьи есть свой файл, то просто перейти на него
-                         {
+                   $urlNews=$this->urlPoId($nametablice,$nomerZagolowkaStati);
+                   if ($urlNews) {// если для статьи есть свой файл, то просто перейти на него
                            $_SESSION['statiaPoId']=$classPhp->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
                            $action=$this->urlPoIdPath($nametablice,$nomerZagolowkaStati);
                            $_SESSION["runStrNews"]=true;
                            header('Location: '.$action);
-                         }
+                     }
 
-                         if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки)
-                          if ($_SESSION['status']<4 || $_SESSION['status']==9) // если жмёт не модератор или администратор
+                   if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки)
+                       if ($_SESSION['status']<4 || $_SESSION['status']==9) // если жмёт не модератор или администратор
                             header('Location: '.$classPhp->initsite());
 
-                        // если статусы 4 или 5 или смотрит статью её автор, то работаем
-                        if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
-                        if ($_SESSION['status']==4 || $_SESSION['status']==5 || ($_SESSION['login']==$dataMas[$i][0][0][1][0]))
-                         {  
+                   // если статусы 4 или 5 или смотрит статью её автор, то работаем
+                   if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
+                       if ($_SESSION['status']==4 || $_SESSION['status']==5 || ($_SESSION['login']==$dataMas[$i][0][0][1][0])) {  
                            $dfdx=file($classPhp->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
-                           foreach ($dfdx as &$value)
-                            {                                                                // fileName fileNameNotPhp
+                           foreach ($dfdx as &$value) { 
                               $valueTemp=preg_filter('/\$action.*php/u','\$action=\'action=#',$value); // Замена страниц обработчиков
                               if (!is_null($valueTemp)) $value=$valueTemp;
                               
@@ -607,7 +602,7 @@ class modul
                               $valueTemp=preg_filter('/tka=\'dfdx/u',"tka='".$fileNameNotPhp,$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
 
-                            } //title>dfdx</title
+                            } 
                             $this->urlPoIdSave($nametablice,$nomerZagolowkaStati,$fileName);
                             file_put_contents($fileName,$dfdx);
                             $_SESSION["runStrNews"]=true;
