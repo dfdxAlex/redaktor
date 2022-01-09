@@ -354,27 +354,54 @@ class modul
             // проверим пустая ли таблица новостей, если да, то вывести кнопку добавления новости
             if ($classPhp->kolVoZapisTablice($nametablice)==0 )//|| ) numberNews($kategori)
               $netNowostej=true;
-              
-            
 
-
-             // Воспроизводим статью от pokazarStatijRedaktora-здесь хранится имя автора, чьи статьи показать
+              // Определяем какие именно статьи подгружать из таблицы
+              // Если есть имя автора, то подключаем в условие автора
+              // Если есть категория, то вычисляем в какие ещё категории входин нужная категория и все категории вставляем в условие
              $zapros='';
              // Загрузить все статьи, если нет логина редактора
-             if ($pokazarStatijRedaktora=='')
+             if ($pokazarStatijRedaktora=='' && $razdel=='')
                $zapros="SELECT * FROM ".$nametablice." WHERE 1";
-             // загрузить статьи конкретного редактора
-             if ($pokazarStatijRedaktora!='') 
-               $zapros="SELECT * FROM ".$nametablice." WHERE login_redaktora='".$pokazarStatijRedaktora."'";
 
+             // загрузить статьи конкретного редактора
+             if ($pokazarStatijRedaktora!='' && $razdel=='') 
+              $zapros="SELECT * FROM ".$nametablice." WHERE login_redaktora='".$pokazarStatijRedaktora."'";
+
+             $razdelSumm = array();  // в массиве будут категории, в которые входит входная категория($razdel)
+             $razdelFoWhere='';  // В строке будет список категорий, в которые входит входная категория, если из 2 или больше, то добавится OR
+             if ($razdel!='' && $razdel!='Home' && $razdel!='home') 
+              {
+                 $lokalZapros='SELECT razdel FROM '.$nametablice.' WHERE 1';
+                 $lokalRez=$classPhp->zaprosSQL($lokalZapros);
+                 $i=0;
+                 while(!is_null($lokalStroka=mysqli_fetch_array($lokalRez)))
+                  {
+                    if (stripos($lokalStroka[0],$razdel)!==false)
+                      $razdelSumm[$i++]=$lokalStroka[0];
+                  }
+                  $razdelSumm=array_unique($razdelSumm); //убираем одинаковые значения массива
+                  $onePlus=false;
+                  foreach ($razdelSumm as $value)
+                   {
+                      if ($onePlus) $razdelFoWhere=$razdelFoWhere.' OR ';
+                      $razdelFoWhere=$razdelFoWhere.'razdel="'.$value.'" ';
+                      $onePlus=true;
+                   }
+              }
+
+              if ($pokazarStatijRedaktora=='' && $razdel!='') 
+               $zapros="SELECT * FROM ".$nametablice." WHERE ".$razdelFoWhere;
+
+              if ($pokazarStatijRedaktora!='' && $razdel!='') 
+                $zapros="SELECT * FROM ".$nametablice." WHERE login_redaktora='".$pokazarStatijRedaktora."' AND (".$razdelFoWhere.")"; 
+/////////////////////////////////////Конец загрузки нужных статей из БД////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
              $dataMas = array(array(),array(),array(),array(),array());
              $rez=$classPhp->zaprosSQL($zapros);
-
 
              // сформируем отступ между статьями
              $otstupBr='<br>';
              for ($j=0; $j<$otstup;$j++) $otstupBr=$otstupBr.'<br>';
-             
 
              $i=0; //Загрузить таблицу в массив
              if ($classPhp->notFalseAndNULL($rez))

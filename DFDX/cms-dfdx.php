@@ -108,18 +108,18 @@ if (isset($_POST['poisk']))
 ///////////////////////////////////////////////////
  if (!$bylPoisk)
  {
-    if (isset($_POST['menu_up_dfdx'])) // Если нажата кнопка главного верхнего меню
-    {// echo 'ловим кнопку';
+    //if (isset($_POST['menu_up_dfdx'])) // Если нажата кнопка главного верхнего меню
+    //{// echo 'ловим кнопку';
       $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
       if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
         $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=cmsdfdx');
       if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
         $redaktor->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=cmsdfdx');
-    } else // добавить if (false)   //маркер 
-       {
-        $id=$poisk->maxIdLubojTablicy($nameBD);$id--;
-        $redaktor->news1("id=".$id,$nameBD,"Заголовок=h3","Статус редактора=-s45","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=cmsdfdx');
-       }
+    //} else // добавить if (false)   //маркер 
+    //   {
+    //    $id=$poisk->maxIdLubojTablicy($nameBD);$id--;
+    //    $redaktor->news1("id=".$id,$nameBD,"Заголовок=h3","Статус редактора=-s45","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=cmsdfdx');
+    //   }
   }
 
 echo '</div>';
