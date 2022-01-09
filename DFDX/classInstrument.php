@@ -167,58 +167,60 @@ class modul
                    echo '<p></p>';
                 }
           } // конец перебора входных данных
-                //-------------------------------------------------------------------------------------------
-                             /////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////////////////////////////Нажали кнопку Запомнить Шаблон//////////////////////////////
-                         if (isset($_POST['vvv']))
-                         {
-                          $_SESSION['mas_time_name_news']=$_POST['zagolowok']; 
-                          $_SESSION['mas_time_news']=$_POST['statia'];
-                         }
-            // Запись статьи, если была нажата кнопка Сохранить
-            if ($nametablice!='' && $classPhp->searcNameTablic($nametablice) 
-              && ((isset($_POST[$nametablice.'_redaktor']) && $_POST[$nametablice.'_redaktor']=='Сохранить')
-                || (isset($_POST[$nametablice.'_redaktor2']) && $_POST[$nametablice.'_redaktor2']=='Сохранить'))
-               )
-                 {
+              /////////////////////////////////////////////////////////////////////////////////////////////////////////
+              ///////////////////////////////////////////Нажали кнопку Запомнить Шаблон//////////////////////////////
+              if (isset($_POST['vvv'])) {
+                   $_SESSION['mas_time_name_news']=$_POST['zagolowok']; 
+                   $_SESSION['mas_time_news']=$_POST['statia'];
+               }
+              // Запись статьи, если была нажата кнопка Сохранить
+              if ($nametablice!='' && $classPhp->searcNameTablic($nametablice) 
+                  && ((isset($_POST[$nametablice.'_redaktor']) && $_POST[$nametablice.'_redaktor']=='Сохранить')
+                    || (isset($_POST[$nametablice.'_redaktor2']) && $_POST[$nametablice.'_redaktor2']=='Сохранить'))
+                  ) {
                  $dlinaStati=0;
                  $loginAwtora='';
                  $id=-1;
-                 // Преобразовываем имя статьи и статью в нормальный вид и записываем. //&ltimg src="ссылка на картинку"&gt</p>';
-                 $imieNowosti=$classPhp->bezMatov(quotemeta($classPhp->clearCode($_POST['zagolowok']))); // удалить мат заголовка
+                 // Преобразовываем имя статьи и статью в нормальный вид и записываем.
+                 // удалить мат заголовка
+                 $imieNowosti=$classPhp->bezMatov(quotemeta($classPhp->clearCode($_POST['zagolowok']))); 
 
                  //Найти хештег Раздел
                  $mas=array();
                  $kluc=preg_match('/#[a-zA-Zа-яёА-ЯЁ0-9]+#?/',$_POST['statia'],$mas); // Поиск в текстк категории
+              
+                          // Если нет категории в тексте, то присвоить -
+                          if (!$kluc) $razdel='-';        
+                            else $razdel=preg_replace('/#/','',$mas[0]);  
+                          
+                            // удаляем маты и теги из статьи
+                          $news=$classPhp->bezMatov(quotemeta($classPhp->clearCode(nl2br($_POST['statia'])))); 
+                          
+                          // длина статьи из текстового окна сайта
+                          $dlinaStati=strlen($news); 
 
-                 if (!$kluc) $razdel='-';        // Если нет категории в тексте, то присвоить -
-                   else $razdel=preg_replace('/#/','',$mas[0]);   // Удалить лишнее
-
-                   $news=$classPhp->bezMatov(quotemeta($classPhp->clearCode(nl2br($_POST['statia'])))); // удаляем маты и теги из статьи
-
-                  $dlinaStati=strlen($news); // длина статьи из текстового окна сайта
-                   if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) // если есть Ид статьи
-                     { // Если Сохранить была нажата при редактировании существующей статьи
-                     // найти старую длину статьи
-                     $rez=$classPhp->zaprosSQL("select news FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
-                     $stroka=mysqli_fetch_array($rez);
-                     $dlinaStatiStara=strlen($stroka[0]); // -длина старой статьи
-                     $dlinaStati=$dlinaStati-$dlinaStatiStara; // разница длин старой и отредактированной статьи
-                     $classPhp->zaprosSQL("UPDATE ".$nametablice." SET name='".$imieNowosti."',news='".$news."',razdel='".$razdel."'  WHERE id=".$_SESSION['redaktirowatId']);
-                     if ($_SESSION['status']==1 || $_SESSION['status']==3) // Если статью публикует подписчик или просто пользователь, то закинуть в раздел не проверенных
-                        $classPhp->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$_SESSION['redaktirowatId'].")");
-                     } 
-                   else 
-                    { // Если сохраняем новую статью
-                      $id=$classPhp->maxIdLubojTablicy($nametablice);
-                      $classPhp->zaprosSQL("INSERT INTO ".$nametablice."(id, name,news,login_redaktora,razdel) VALUES (".$id.", '".$imieNowosti."','".$news."', '".$_SESSION['login']."','".$razdel."')");
-                      if ($_SESSION['status']==1 || $_SESSION['status']==3) // Если статью публикует подписчик или просто пользователь, то закинуть в раздел не проверенных
-                       { 
-                        $classPhp->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$id.")");
-                        echo '<meta http-equiv="refresh" content="125; URL=dfdx.php">';
-                        echo 'Статья отправлена на модерацию, страница вот-вот перезагрузится';
-                       }
-                    }
+                          // если есть Ид статьи
+                          // Если Сохранить была нажата при редактировании существующей статьи
+                          if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) { 
+                              // найти старую длину статьи
+                              $rez=$classPhp->zaprosSQL("select news FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
+                              $stroka=mysqli_fetch_array($rez);
+                              $dlinaStatiStara=strlen($stroka[0]); // -длина старой статьи
+                              $dlinaStati=$dlinaStati-$dlinaStatiStara; // разница длин старой и отредактированной статьи
+                              $classPhp->zaprosSQL("UPDATE ".$nametablice." SET name='".$imieNowosti."',news='".$news."',razdel='".$razdel."'  WHERE id=".$_SESSION['redaktirowatId']);
+                              if ($_SESSION['status']==1 || $_SESSION['status']==3) // Если статью публикует подписчик или просто пользователь, то закинуть в раздел не проверенных
+                                $classPhp->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$_SESSION['redaktirowatId'].")");
+                            } 
+                              else { // Если сохраняем новую статью
+                                     $id=$classPhp->maxIdLubojTablicy($nametablice);
+                                     $classPhp->zaprosSQL("INSERT INTO ".$nametablice."(id, name,news,login_redaktora,razdel) VALUES (".$id.", '".$imieNowosti."','".$news."', '".$_SESSION['login']."','".$razdel."')");
+                                     // Если статью публикует подписчик или просто пользователь, то закинуть в раздел не проверенных
+                                     if ($_SESSION['status']==1 || $_SESSION['status']==3) { 
+                                        $classPhp->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$id.")");
+                                        echo '<meta http-equiv="refresh" content="125; URL=dfdx.php">';
+                                        echo 'Статья отправлена на модерацию, страница вот-вот перезагрузится';
+                                      }
+                                    }
 
                     if ($_SESSION['status']==4 || $_SESSION['status']==5) // Если статью сохранили статусы 4 или 5 и её ИД есть в таблице возвращенных статей, то удалить этот ИД из данной таблицы
                       {
