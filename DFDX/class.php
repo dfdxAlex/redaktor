@@ -753,49 +753,35 @@ foreach($parametr as $value) {
    //$actionN - ссылка на страницу обработки
    //...$parametr дальше пошел список параметров
    // первым в параметре идёт тип кнопки или название тега:
-
    // Если br то после этого тега можно указать число данных тегов <br>, если не указать, то будет 1 тег
-
    // Если text, то будет текстовое поле, следующим параметром должно идти имя name=.. за ним текст по умолчанию для value 
    // class="$nameBlock+name+номер кнопки" , по умолчанию value будет пустая строка
-
    // Если text2, то будет текстовое поле, следующим параметром должно идти имя name=.. за ним текст по умолчанию для placeholder 
    // class="$nameBlock+name+номер кнопки", по умолчанию placeholder будет пустая строка
-
    // Если textarea то создаем текстовое поле как text, только большое
-
    // Если password, то будет текстовое поле для ввода пароля, следующим параметром должно идти имя name=.. за ним текст по умолчанию для value 
    // class="$nameBlock+name+номер кнопки" , по умолчанию value будет пустая строка
-
    // Если password2, то будет текстовое поле для ввода пароля, следующим параметром должно идти имя name=.. за ним текст по умолчанию для placeholder 
    // class="$nameBlock+name+номер кнопки", по умолчанию placeholder будет пустая строка
-
    // Если reset то будет кнопка очистки текстовых полей. После него следует ввести надпись на кнопке, если параметр пропустить, то на кнопке будет надпись Reset
    // class="$nameBlock+reset+номер кнопки"
-
    // Если submit то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
    // class="$nameBlock+name+номер кнопки", надпись на кнопке по умолчанию Ок
-
    // Если submit2 то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
    // class="$nameBlock+номер кнопки", надпись на кнопке по умолчанию Ок
-
    // Если submit3 то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
    // class кнопки задается 4-м параметром, надпись на кнопке по умолчанию Ок
    // Добавлен Div со своим классом для кнопки. Класс Дива равен классу кнопки + Div
-   
    // Если P или h1-h6, то создаем заголовок. Текст - это следующий параметр, класс - это второй параметр.
    // Добавлен див, класс Дива равен классу заголовка+PH
-
    // Если span то создаем строчный тег внутри дивов. Текст - это следующий параметр, класс - это второй параметр.
    // Добавлен див, класс Дива равен классу заголовка+PH
    // <div class="classPH"><span class="class">Текст</span></div>
-
    // Признаки form_not_open form_not_close не обязательны и управляют отсутствием открывающего тега form и закрывающего тега form соответственно.
    // Признак zero_style, если задать этот признак, то элементы будут без  бутстрапа
    // Стили
    // Класс общего Дива равен имени блока. <div class="$nameBlock">
    // Класс внутриформенного блока <div class="$nameBlock-div">
-
    // бутстрап
    // bootstrap-start - добавляет section, row, col-12
    // bootstrap-f-start - добавляет /col-12 /row row, col-12
@@ -805,57 +791,52 @@ foreach($parametr as $value) {
       $form_not_open=false;          // Управляет выводом открывающего тега Форм, если фалс, то выводим.
       $form_not_close=false;         // Управляет выводом закрывающего тега Форм, если фалс, то выводим.
       $zero_style=false;
-      foreach ($parametr as $value)  // поиск признаков $form_not_open и $form_not_close=false;
-       {
-        if ($value=='form_not_open') $form_not_open=true;
-        if ($value=='form_not_close') $form_not_close=true;
-        if ($value=='zero_style') $zero_style=true;
+      foreach ($parametr as $value) {// поиск признаков $form_not_open и $form_not_close=false;
+          if ($value=='form_not_open') $form_not_open=true;
+          if ($value=='form_not_close') $form_not_close=true;
+          if ($value=='zero_style') $zero_style=true;
        }
     
-    if (!$zero_style)
-     {
-      echo '<section class="container-fluid">';
-      echo '<div class="row">';
-     }
+      if (!$zero_style) {
+          echo '<section class="container-fluid">';
+          echo '<div class="row">';
+      }
       echo '<div class="'.$nameBlock.'">';
       if (!$form_not_open)
-        echo '<form action="'.$actionN.'" method="POST">';
+          echo '<form action="'.$actionN.'" method="POST">';
       echo '<div class="'.$nameBlock.'-div">';
       $i=0;
-      foreach ($parametr as $key => $value)
-       {
-         if ($value=='bootstrap-start')
-          {
+      foreach ($parametr as $key => $value) {
+         if ($value=='bootstrap-start') {
             echo '<section class="container-fluid">';
             echo '<div class="row">';
             echo '<div class="col-12">';
           }
-        if ($value=='bootstrap-f-start')
-          {
+         if ($value=='bootstrap-f-start') {
             echo '</div></div>';
             echo '<div class="row">';
             echo '<div class="col-12">';
           }
-        if ($value=='bootstrap-finish')
+         if ($value=='bootstrap-finish')
             echo '</div></div></section>';
 
-        if ($value=='br') 
-          {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]>1 && gettype($parametr[$i+1])=='integer') $kolWoBr=$parametr[$i+1]; else $kolWoBr=1;
+         if ($value=='br') {
+            if (isset($parametr[$i+1]) && $parametr[$i+1]>1 && gettype($parametr[$i+1])=='integer') 
+                $kolWoBr=$parametr[$i+1]; 
+            else 
+                $kolWoBr=1;
             for($j=0; $j<$kolWoBr; $j++)
-             echo '<br>';
+                echo '<br>';
           }
-        if ($value=='text') 
-          {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-            $class=$nameBlock.$name.$i;
-            echo '<input type="text" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
+         if ($value=='text') {
+              if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+                  if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
+              if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+                  if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+              $class=$nameBlock.$name.$i;
+              echo '<input type="text" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
           }
-        if ($value=='textarea') 
-          {
+        if ($value=='textarea') {
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
@@ -863,8 +844,7 @@ foreach($parametr as $value) {
             $class=$nameBlock.$name.$i;
             echo '<textarea name="'.$name.'" class="'.$class.'">'.$textValue.'</textarea>';
           }
-        if ($value=='text2') 
-          {
+        if ($value=='text2') {
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
@@ -872,8 +852,7 @@ foreach($parametr as $value) {
             $class=$nameBlock.$name.$i;
             echo '<input type="text" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
           }
-        if ($value=='password') 
-          {
+        if ($value=='password') {
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
@@ -881,8 +860,7 @@ foreach($parametr as $value) {
             $class=$nameBlock.$name.$i;
             echo '<input type="password" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
           }
-        if ($value=='password2') 
-          {
+        if ($value=='password2') {
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
@@ -890,17 +868,14 @@ foreach($parametr as $value) {
             $class=$nameBlock.$name.$i;
             echo '<input type="password" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
           }
-        if ($value=='reset') 
-          {
+        if ($value=='reset') {
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $textValue=$parametr[$i+1]; else $textValue='Reset'; else $textValue='Reset';
             $class=$nameBlock.'reset'.$i;
             if (!$zero_style) echo '<input type="reset" class="'.$class.' btn" value="'.$textValue.'">';
             if ($zero_style) echo '<input type="reset" class="'.$class.' " value="'.$textValue.'">';
           }
-        if ($value=='submit') 
-          {
-            //echo '<br>нашли submit';
+        if ($value=='submit') {
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
@@ -911,8 +886,7 @@ foreach($parametr as $value) {
             if (!$zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
             if ($zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' " formaction="'.$textWww.'">';
           }
-        if ($value=='submit2') 
-          {
+        if ($value=='submit2') {
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
@@ -923,8 +897,7 @@ foreach($parametr as $value) {
             if (!$zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
             if ($zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
           }
-        if ($value=='submit3') 
-          {
+        if ($value=='submit3') {
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
@@ -936,16 +909,14 @@ foreach($parametr as $value) {
             if (!$zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'"></div>';
             if ($zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'"></div>';
           }
-        if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') 
-          {
+        if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') {
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
             echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'">'.$text.'</'.$value.'></div>';
           }
-        if ($value=='span') 
-          {
+        if ($value=='span') {
             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
               if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
@@ -958,7 +929,8 @@ foreach($parametr as $value) {
        if (!$form_not_close)
           echo '</form>';
        echo '</div>';
-       if (!$zero_style) echo '</div></section>';
+       if (!$zero_style) 
+          echo '</div></section>';
    }
    // Служебная функция проверяет не является ли параметр кнопкой
    public function searcTegFormBlock($parametr)
@@ -985,8 +957,7 @@ foreach($parametr as $value) {
    // Преобразуем номер статуса в его значение
    public function statusNumerSlovo($status)
    {
-    switch ($status) 
-    {
+    switch ($status) {
       case 0:
         return 'Гость';
       case 1:
@@ -1019,7 +990,7 @@ foreach($parametr as $value) {
 class initBD extends instrument
 {
     ////////////////////////////////////////////////Настройка движка
-    //public $pokazFormDobableniaMataOtPolzovatela; // информация показывать ли на сайте форму сбора матов. 1-показать, 0-не показывать.
+    // информация показывать ли на сайте форму сбора матов. 1-показать, 0-не показывать.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function __construct()
     {
@@ -1051,18 +1022,37 @@ class initBD extends instrument
             if (!$this->searcNameTablic('blocked_list_dobavit_mat'))
               $this->zaprosSQL("CREATE TABLE blocked_list_dobavit_mat(id INT, login VARCHAR(50))");
       }
-    public function __destruct(){mysqli_close($this->con);}
-    public function initBdHost(){return $this->host;}
-    public function initBdLogin(){return $this->loginBD;}
-    public function initBdParol(){return $this->parol;}
-    public function initBdNameBD(){return $this->nameBD;}
-    public function initsite(){return $this->site;} // домашняя страница
+      public function __destruct()
+      {
+        mysqli_close($this->con);
+      }
+      public function initBdHost()
+      {
+        return $this->host;
+      }
+      public function initBdLogin()
+      {
+        return $this->loginBD;
+      }
+      public function initBdParol()
+      {
+        return $this->parol;
+      }
+      public function initBdNameBD()
+      {
+        return $this->nameBD;
+      }
+      public function initsite()
+      {
+        return $this->site;
+      } // домашняя страница
 
 
       public function sborMatov()  {
         $zapros="SELECT nastr FROM tablica_nastroer_dvigka_int WHERE id=1"; //настройка показа формы сбора данных
         $rez=$this->zaprosSQL($zapros);
-        if ($rez) $stroka=mysqli_fetch_array($rez);
+        if ($rez) 
+            $stroka=mysqli_fetch_array($rez);
         return $stroka[0];
       }
     // Инструментарий от родительского  
@@ -1091,25 +1081,20 @@ class initBD extends instrument
     // kolVoStolbovTablice($nameTablice)                 // считает число столбцов в таблице
     // id_tab_gl_searc($nameTablicy)                     // Проверяем относится ли таблица к главным таблицам
     // zapretUdaleniaTablicy($nameTablicy)               // запрет на удаление таблиц
-       
     // public function searcNamePath($nameFile)          //Функция возвращает имя и относительный путь к файлу при условии, что искомый файл находится выше текущего места.
-    
     //Функция проверяет статус в заданной таблице, выводит checked="checked" если статус есть или ''
-
     // Работа с матами
     // proverkaMata($slovo)                              // функция проверяет наличие оскорбительного слова мата проверка мата
-
     // Работа с массивами
     // proverkaMassiwa($mas,$slowo)                // Ищет слово $slowo в массиве $mas. Если нашли, то возврат true
-
     // printTab('fff',1);                                // отладочная функция создает таблицу debuger и что-то туда пишет
     // printTabEcho();       //не работает                            // выводит содержимое таблицы debuger
- 
     
     public function proverkaMassiwa($mas,$slowo)
     {
       foreach($mas as $value)
-        if ($value==$slowo) return true;
+        if ($value==$slowo) 
+            return true;
       return false;
     }
 
