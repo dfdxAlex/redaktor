@@ -48,6 +48,7 @@ class modul
 
            if (!isset($_SESSION['mas_time_name_news']))
               $_SESSION['mas_time_name_news']='';
+              
            if (!isset($_SESSION['mas_time_news']))  
               $_SESSION['mas_time_news']='';
 

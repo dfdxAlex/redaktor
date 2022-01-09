@@ -580,82 +580,86 @@ public function buttonPrefix(...$parametr)
     $masNameKnopok = array();
     $masValueKnopok = array();
     $masClassKnopok = array();
+    $help=false;
 
-foreach($parametr as $value)
- {
-    if (stripos('sss'.$value,'container'))
+foreach($parametr as $value) {
+    if (stripos($value,'помощь')!==false)
+      $help=true;
+    if (stripos($value,'Помощь')!==false)
+      $help=true;
+    if (stripos($value,'help')!==false)
+      $help=true;
+    if (stripos($value,'container')!==false)
       $container=true;
-    if (stripos('sss'.$value,'class=-row-'))
+    if (stripos($value,'class=-row-')!==false)
       $classB=preg_replace('/-/','"',$value);
-    if (stripos('sss'.$value,'class') && stripos('sss'.$value,'class=-row-')==false)
+    if (stripos($value,'class')!==false && stripos($value,'class=-row-')===false)
       $classDiv=preg_replace('/-/','"',$value);
-    if (stripos('sss'.$value,'action'))
+    if (stripos($value,'action')!==false)
       $action=preg_replace('/-/','"',$value);
-    if (stripos('sss'.$value,'method'))
+    if (stripos($value,'method')!==false)
       $method=preg_replace('/-/','"',$value);
-    if (stripos('sss'.$value,'classButton='))
-      {
+    if (stripos($value,'classButton=')!==false) {
        $classKnopok=preg_replace('/-/','"',$value);
        $classKnopok=preg_replace('/Button/','',$classKnopok);
-      }
-    if (stripos('sss'.$value,'кнопок-'))
+     }
+    if (stripos($value,'кнопок-')!==false)
       $knopok=preg_replace('/кнопок-/','',$value);
-  }
-    for ($i=1;$i<=$knopok;$i++) //объявить пустой массив
-     {
+}
+    for ($i=1;$i<=$knopok;$i++) {//объявить пустой массив
         $masNameKnopok[$i]='имя не задано';
         $masValueKnopok[$i]='название не задано';
         $masClassKnopok[$i]='';
      }
-    for ($i=1;$i<=$knopok;$i++)
-     {
-      foreach($parametr as $value)
-       {
-        $poisk='n'.$i.'-';
-        if (stripos('sss'.$value,$poisk))
-         {
-          $poisk='/'.$poisk.'/';
-          $masNameKnopok[$i]=preg_replace($poisk,'',$value);
-         }
-        $poisk='v'.$i.'-';
-        if (stripos('sss'.$value,$poisk))
-         {
-          $poisk='/'.$poisk.'/';
-          $masValueKnopok[$i]=preg_replace($poisk,'',$value);
-         }
-        $poisk='c'.$i.'=';
-        if (stripos('sss'.$value,$poisk))
-         { 
-          $poisk='/'.$poisk.'/';
-          $masClassKnopok[$i]=preg_replace($poisk,'class=',$value);
-          $masClassKnopok[$i]=preg_replace('/-/','"',$masClassKnopok[$i]);
-         } 
-       }
-     }
+    for ($i=1;$i<=$knopok;$i++) {
+        foreach($parametr as $value) {
+            $poisk='n'.$i.'-';
+            if (stripos($value,$poisk)!==false) {
+                $poisk='/'.$poisk.'/';
+                $masNameKnopok[$i]=preg_replace($poisk,'',$value);
+            }
+            $poisk='v'.$i.'-';
+            if (stripos($value,$poisk)!==false) {
+                $poisk='/'.$poisk.'/';
+                $masValueKnopok[$i]=preg_replace($poisk,'',$value);
+            }
+            $poisk='c'.$i.'=';
+            if (stripos($value,$poisk)!==false) { 
+                $poisk='/'.$poisk.'/';
+                $masClassKnopok[$i]=preg_replace($poisk,'class=',$value);
+                $masClassKnopok[$i]=preg_replace('/-/','"',$masClassKnopok[$i]);
+            } 
+          }
+      }
 
     //рисуем кнопку
-    if ($container) echo '<section class="container">';
-    if ($container && $classB!="") echo '<div '.$classB.'>';
-    if ($classDiv!="") echo '<div '.$classDiv.'>';
+    if ($container) 
+        echo '<section class="container">';
+    if ($container && $classB!="") 
+        echo '<div '.$classB.'>';
+    if ($classDiv!="") 
+        echo '<div '.$classDiv.'>';
     echo '<form '.$action.' '.$method.'>';
     $class=$classKnopok;
 
-    for ($i=1; $i<=$knopok;$i++)
-     {
+    for ($i=1; $i<=$knopok;$i++) {
       echo '<input ';
-      if ($masClassKnopok[$i]!='') echo $masClassKnopok[$i];
-      if ($masClassKnopok[$i]=='' && $class!='') echo $class;
+      if ($masClassKnopok[$i]!='') 
+          echo $masClassKnopok[$i];
+      if ($masClassKnopok[$i]=='' && $class!='') 
+          echo $class;
       echo ' type="submit" name="'.$masNameKnopok[$i].'" value="'.$masValueKnopok[$i].'">';
      }
 
     echo '</form>';
-    if ($classDiv!="") echo '</div>';
-    if ($container && $classB!="") echo '</div>';
-    if ($container) echo '</section>';
+    if ($classDiv!="") 
+        echo '</div>';
+    if ($container && $classB!="") 
+        echo '</div>';
+    if ($container) 
+        echo '</section>';
      //обработка параметра help
-     foreach($parametr as $value)
-      if ($value=='help' || $value=='Помощь' || $value=='помощь')
-       {
+    if ($help) {
          echo '<p class="mesage">Чтобы кнопка была в отдельном контейнере, то нужен параметр container. Пример:buttonPrefix("container");</p><br>';
          echo '<p class="mesage">Чтобы добавить CLASS=ROW от бутстрапа, то вводим параметр данного класса в параметр функции:<br>';
          echo 'Пример:buttonPrefix("class=-row-"); Знак "-" там, где нужны кавычки. В функцию передаем "-"<br>';
@@ -688,54 +692,60 @@ foreach($parametr as $value)
    // Функция выводит некое сообщение $mesaz, задает название кнопок, которым будет присвоено OK или Cansel ///проверка git 1-3
    // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
    // $classP - класс тегов Р - сообщения, $classButton - класс для кнопок
-   public function okCansel($mesaz,$nameKn,$classDiv,$classP,$classButton){
+   public function okCansel($mesaz,$nameKn,$classDiv,$classP,$classButton)
+   {
     echo '<section class="container">';
-    echo '<div class="row '.$classDiv.'">';
-    echo '<p class="'.$classP.'">'.$mesaz.'</p>';
-    echo '<form action="redaktor.php" method="POST">';
-    echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="OK">';
-    echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
-    echo '</form>';
-    echo '</div>';
+        echo '<div class="row '.$classDiv.'">';
+            echo '<p class="'.$classP.'">'.$mesaz.'</p>';
+            echo '<form action="redaktor.php" method="POST">';
+                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="OK">';
+                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
+            echo '</form>';
+        echo '</div>';
     echo '</section>';
    }
-   public function okSelect($mesaz,$nameKn,$classDiv,$classP,$classButton){
+   public function okSelect($mesaz,$nameKn,$classDiv,$classP,$classButton)
+   {
     echo '<section class="container">';
-    echo '<div class="row '.$classDiv.'">';
-    echo '<form action="redaktor.php" method="POST">';
-    echo '<input type="checkbox" checked name="'.$nameKn.'Select'.'" id="'.$nameKn.'Id" value="'.$nameKn.'Value">';
-    echo '<label for="'.$nameKn.'Id">'.$mesaz.'</label>';
-    echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="OK">';
-    echo '</form>';
-    echo '</div>';
+        echo '<div class="row '.$classDiv.'">';
+            echo '<form action="redaktor.php" method="POST">';
+                echo '<input type="checkbox" checked name="'.$nameKn.'Select'.'" id="'.$nameKn.'Id" value="'.$nameKn.'Value">';
+                echo '<label for="'.$nameKn.'Id">'.$mesaz.'</label>';
+                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="OK">';
+            echo '</form>';
+        echo '</div>';
     echo '</section>';
-    if (isset($_POST[$nameKn.'Select'])) return $_POST[$nameKn.'Select']; else return false;
+    if (isset($_POST[$nameKn.'Select'])) 
+        return $_POST[$nameKn.'Select']; 
+    else 
+        return false;
    }
    // Набор текстовое поле + кнопки Ok Cansel
-   public function poleInputokCansel($mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput){
+   public function poleInputokCansel($mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput)
+   {
     echo '<section class="container">';
-    echo '<div class="row '.$classDiv.'">';
-    //echo '<p class="'.$classP.'">'.$mesaz.'</p>';
-    echo '<form action="redaktor.php" method="POST">';
-    echo '<p class="'.$classP.'">'.$mesaz.'</p>';
-    echo '<input class="'.$classInput.'" type="text" name="'.$nameKn.'Text">';
-    echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Ok">';
-    echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
-    echo '</form>';
-    echo '</div>';
+        echo '<div class="row '.$classDiv.'">';
+            echo '<form action="redaktor.php" method="POST">';
+                echo '<p class="'.$classP.'">'.$mesaz.'</p>';
+                echo '<input class="'.$classInput.'" type="text" name="'.$nameKn.'Text">';
+                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Ok">';
+                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
+            echo '</form>';
+        echo '</div>';
     echo '</section>';
    }
    // Набор текстовое поле + кнопки Ok Cansel + указывает на страницу обработчик
-   public function poleInputokCanselPlusNameStr($nameStr,$mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput){
+   public function poleInputokCanselPlusNameStr($nameStr,$mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput)
+   {
     echo '<section class="container">';
-    echo '<div class="row '.$classDiv.'">';
-    echo '<form action="'.$nameStr.'" method="POST">';
-    echo '<p class="'.$classP.'">'.$mesaz.'</p>';
-    echo '<input class="'.$classInput.'" type="text" name="'.$nameKn.'Text">';
-    echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Ok">';
-    echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
-    echo '</form>';
-    echo '</div>';
+        echo '<div class="row '.$classDiv.'">';
+            echo '<form action="'.$nameStr.'" method="POST">';
+                echo '<p class="'.$classP.'">'.$mesaz.'</p>';
+                echo '<input class="'.$classInput.'" type="text" name="'.$nameKn.'Text">';
+                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Ok">';
+                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
+            echo '</form>';
+        echo '</div>';
     echo '</section>';
    }
    // Функция ставит блок кнопок и текстовых полей без использования базы данных.
