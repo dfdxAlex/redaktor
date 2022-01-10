@@ -1273,10 +1273,11 @@ class initBD extends instrument
      {
         $zapros="SELECT MAX(id) FROM ".$nameTablice;
         $rez=$this->zaprosSQL($zapros);
-        if (!$rez) return -1;
+        if ($rez===false) 
+            return -1;
         $stroka=mysqli_fetch_array($rez);
-        if (is_null($stroka[0])) $stroka[0]=-1;
-        //if ($stroka[0]==NULL) $stroka[0]=-1;
+        if (is_null($stroka[0])) 
+            $stroka[0]=-1;
         $rezId=$stroka[0]+1;
         return $rezId;
      }
@@ -1287,13 +1288,11 @@ class initBD extends instrument
         $zapros="DELETE FROM ".$nameTablice." ".$were;
         $rez=$this->zaprosSQL($zapros);
      }
-  public function zaprosSQL($zapros) // создать SQL запрос, условие согласно синтаксису SQL
+     public function zaprosSQL($zapros) // создать SQL запрос, условие согласно синтаксису SQL
      {
         $statistikTrueFalseRez=mysqli_query($this->con,'SELECT statik_true FROM statistik_dfdx WHERE 1');
         $statistikTrueFalse=mysqli_fetch_assoc($statistikTrueFalseRez);
-
-        if ($statistikTrueFalse['statik_true']==1)
-         {
+        if ($statistikTrueFalse['statik_true']==1) {
           $statistikTrueFalseRez=mysqli_query($this->con,'SELECT n_zapros FROM statistik_dfdx WHERE 1');
           $statistik_n_zapros=mysqli_fetch_assoc($statistikTrueFalseRez);
           $statistik_n_zapros['n_zapros']++;
@@ -1309,15 +1308,16 @@ class initBD extends instrument
         $boolRez=false;
         $zapros="SELECT ID FROM tablica_tablic WHERE NAME='".$nameTablice."'";
         $rez=$this->zaprosSQL($zapros);
-        if (!$rez) echo 'Проблема с таблицей "tablica_tablic"';
+        if ($rez===false) 
+            echo 'Проблема с таблицей "tablica_tablic"';
         $stroka=mysqli_fetch_array($rez);
-        if (isset($stroka[0]) && !is_null($stroka[0]) && $stroka[0]>-1)  $boolRez=true;
+        if (isset($stroka[0]) && !is_null($stroka[0]) && $stroka[0]>-1)  
+            $boolRez=true;
         return $boolRez;
      }
      public function kolVoZapisTablice($nameTablice) // считает число записей в таблицк
      {
-       if ($this->searcNameTablic($nameTablice))
-       {
+       if ($this->searcNameTablic($nameTablice)) {
         $zapros="SELECT COUNT(1) FROM ".$nameTablice;
         $rez=$this->zaprosSQL($zapros);
         $viv=mysqli_fetch_array($rez);
@@ -1341,105 +1341,96 @@ class initBD extends instrument
       $prosmotr=false;
       $zapros1='Таблица уже существует!';
       $zapros2='Стартовое значение уже задано!';
-
-      foreach($parametr as $value)
-      if (stripos('sss'.$value,'name='))
-      {
-         $nametablice=preg_replace('/name=/','',$value);
-         $nametablice=mb_strtolower($nametablice);
-         //echo '--'.$nametablice;
-      }
-
-      foreach($parametr as $value)
-      if (stripos('sss'.$value,'просмотр'))
-        $prosmotr=true;
-
-        $i=0;
-      foreach($parametr as $value)
-        if (stripos('sss'.$value,'poleN='))
-         $masN[$i++]=preg_replace('/poleN=/','',$value);
-
+      $i=0;
       $ii=0;
-      foreach($parametr as $value)
-        if (stripos('sss'.$value,'poleT='))
-         $masT[$ii++]=preg_replace('/poleT=/','',$value);
-
       $iii=0;
-      foreach($parametr as $value)
-        if (stripos('sss'.$value,'poleS='))
-         $masS[$iii++]=preg_replace('/poleS=/','',$value);
-      
-      //обработка параметра help
-      foreach($parametr as $value)
-      if ($value=='help' || $value=='Помощь')
-        {
-          echo '<p>Функция проверяет существует ли таблица, если нет, то создает её и присваивает начальные значения</p>';
-          echo '<p>Обязательный параметр "name=имя таблица"</p>';
-          echo '<p>Имя поля задается параметром "poleN=имя поля"</p>';
-          echo '<p>Тип поля задается параметром "poleT=тип поля"</p>';
-          echo '<p>Первичное значение поля задается параметром "poleS=значение"</p>';
-          echo '<p>Число полей poleN,poleT,poleS должно быть одинаково.</p>';
-          echo '<p>Если необходимо только посмотреть запроссы, то добавляем параметр "просмотр"</p>';
-          echo '<p></p>';
-          echo '<p></p>';
-          echo '<p></p>';
-          echo '<p></p>';
-        } 
+      foreach($parametr as $value) {
+          if (stripos('sss'.$value,'name=')) {
+              $nametablice=preg_replace('/name=/','',$value);
+              $nametablice=mb_strtolower($nametablice);
+          }
+          if (stripos('sss'.$value,'просмотр'))
+              $prosmotr=true;
+          
+          if (stripos('sss'.$value,'poleN='))
+              $masN[$i++]=preg_replace('/poleN=/','',$value);
+          
+          if (stripos('sss'.$value,'poleT='))
+              $masT[$ii++]=preg_replace('/poleT=/','',$value);
+          
+          if (stripos('sss'.$value,'poleS='))
+              $masS[$iii++]=preg_replace('/poleS=/','',$value);
+          //обработка параметра help
+          if ($value=='help' || $value=='Помощь') {
+              echo '<p>Функция проверяет существует ли таблица, если нет, то создает её и присваивает начальные значения</p>';
+              echo '<p>Обязательный параметр "name=имя таблица"</p>';
+              echo '<p>Имя поля задается параметром "poleN=имя поля"</p>';
+              echo '<p>Тип поля задается параметром "poleT=тип поля"</p>';
+              echo '<p>Первичное значение поля задается параметром "poleS=значение"</p>';
+              echo '<p>Число полей poleN,poleT,poleS должно быть одинаково.</p>';
+              echo '<p>Если необходимо только посмотреть запроссы, то добавляем параметр "просмотр"</p>';
+              echo '<p></p>';
+              echo '<p></p>';
+              echo '<p></p>';
+              echo '<p></p>';
+            } 
+        }
+      if ($nametablice=='' || $i!=$ii || $ii!=$iii) {
+          echo 'Не корректное имя таблицы';
+          return false;
+        } //если забыли задать имя таблицы, то выходим из функции
 
-      if ($nametablice=='' || $i!=$ii || $ii!=$iii) {echo 'Не корректное имя таблицы';return false;} //если забыли задать имя таблицы, то выходим из функции
-
-      if (!$this->searcNameTablic($nametablice))
-       {
+      if (!$this->searcNameTablic($nametablice)) {
          $zapros="CREATE TABLE ".$nametablice.' (';
          $z='';
-         for($j=0; $j<$i; $j++)
-           {
+         for($j=0; $j<$i; $j++) {
              if ($j+1<$i)
-            $z=$z.$masN[$j].' '.$masT[$j].', ';
-            else $z=$z.$masN[$j].' '.$masT[$j];
+                $z=$z.$masN[$j].' '.$masT[$j].', ';
+             else $z=$z.$masN[$j].' '.$masT[$j];
            }
-          $zapros=$zapros.$z.')';
-          $zapros1=$zapros;
-          if (!$prosmotr)
+        $zapros=$zapros.$z.')';
+        $zapros1=$zapros;
+        if (!$prosmotr)
            $this->zaprosSQL($zapros);
         } 
     
-    if (!$this->kolVoZapisTablice($nametablice)>0)
-      {
+    if (!$this->kolVoZapisTablice($nametablice)>0) {
         $zapros="INSERT INTO ".$nametablice.' (';
         $z='';
         $z1='';
 
-        for($j=0; $j<$i; $j++)
-        {
+        for($j=0; $j<$i; $j++) {
           if ($j+1<$i)
-          $z=$z.$masN[$j].', ';
-          else $z=$z.$masN[$j];
+              $z=$z.$masN[$j].', ';
+          else 
+              $z=$z.$masN[$j];
           $znak='';
 
-          if (stripos('sss'.$masT[$j],'VARCHAR') || stripos('sss'.$masT[$j],'varchar')
-           || ($masT[$j]=='TEXT' || $masT[$j]=='text')
-           || ($masT[$j]=='DATE' || $masT[$j]=='date')
-           || ($masT[$j]=='DATETIME' || $masT[$j]=='datetime')
-           || ($masT[$j]=='TIMESTAMP' || $masT[$j]=='timestamp')
-           || ($masT[$j]=='TIME' || $masT[$j]=='time')
-           || ($masT[$j]=='CHAR' || $masT[$j]=='char')
-           || ($masT[$j]=='TINYTEXT' || $masT[$j]=='tinytext')
-           || ($masT[$j]=='MEDIUMTEXT' || $masT[$j]=='mediumtext')
-           || ($masT[$j]=='LONGTEXT' || $masT[$j]=='longtext')
-           || ($masT[$j]=='BINARY' || $masT[$j]=='binary')
-           || ($masT[$j]=='VARBINARY' || $masT[$j]=='varbinary')
-           || ($masT[$j]=='TINYBLOB' || $masT[$j]=='tinyblob')
-           || ($masT[$j]=='MEDIUMBLOB' || $masT[$j]=='mediumblob')
-           || ($masT[$j]=='LONGBLOB' || $masT[$j]=='longblob')
-           || ($masT[$j]=='BLOB' || $masT[$j]=='blob')
-           || ($masT[$j]=='ENUM' || $masT[$j]=='enum')
-           || ($masT[$j]=='SET' || $masT[$j]=='set')
+          if (stripos('sss'.$masT[$j],'VARCHAR') 
+           || stripos('sss'.$masT[$j],'varchar')
+            || ($masT[$j]=='TEXT' || $masT[$j]=='text')
+              || ($masT[$j]=='DATE' || $masT[$j]=='date')
+                || ($masT[$j]=='DATETIME' || $masT[$j]=='datetime')
+                  || ($masT[$j]=='TIMESTAMP' || $masT[$j]=='timestamp')
+                    || ($masT[$j]=='TIME' || $masT[$j]=='time')
+                      || ($masT[$j]=='CHAR' || $masT[$j]=='char')
+                        || ($masT[$j]=='TINYTEXT' || $masT[$j]=='tinytext')
+                          || ($masT[$j]=='MEDIUMTEXT' || $masT[$j]=='mediumtext')
+                            || ($masT[$j]=='LONGTEXT' || $masT[$j]=='longtext')
+                              || ($masT[$j]=='BINARY' || $masT[$j]=='binary')
+                                || ($masT[$j]=='VARBINARY' || $masT[$j]=='varbinary')
+                                  || ($masT[$j]=='TINYBLOB' || $masT[$j]=='tinyblob')
+                                    || ($masT[$j]=='MEDIUMBLOB' || $masT[$j]=='mediumblob')
+                                      || ($masT[$j]=='LONGBLOB' || $masT[$j]=='longblob')
+                                        || ($masT[$j]=='BLOB' || $masT[$j]=='blob')
+                                          || ($masT[$j]=='ENUM' || $masT[$j]=='enum')
+                                            || ($masT[$j]=='SET' || $masT[$j]=='set')
            ) $znak="'";
             
           if ($j+1<$i)
-          $z1=$z1.$znak.$masS[$j].$znak.',';
-          else $z1=$z1.$znak.$masS[$j].$znak;
+              $z1=$z1.$znak.$masS[$j].$znak.',';
+          else 
+              $z1=$z1.$znak.$masS[$j].$znak;
          }
          $zapros=$zapros.$z.') VALUES ('.$z1.')';
          $zapros2=$zapros;
