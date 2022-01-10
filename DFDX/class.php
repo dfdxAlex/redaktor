@@ -1102,42 +1102,45 @@ class initBD extends instrument
     {
       $rez=$this->zaprosSQL("SELECT mat FROM maty WHERE 1");
       while(!is_null($stroka=mysqli_fetch_array($rez)))
-       {
          if ($slovo==$stroka[0]) return true;
-       }
       return false;
     }
     public function searcIdPoUsloviu($nameTablicy,$usl1,$usl2,$usl3,$usl4,$usl5)               //Проверяет есть ли запись по условиям, возвращает ID, записи 
     {
-      
       $zapros="SELECT MAX(id) FROM ".$nameTablicy;//."WHERE ";
       if ($usl1!="")
         $zapros=$zapros.' WHERE '.$usl1;
-        if ($usl2!="")
+      if ($usl2!="")
         $zapros=$zapros.' AND '.$usl2;
-        if ($usl3!="")
+      if ($usl3!="")
         $zapros=$zapros.' AND '.$usl3;
-        if ($usl4!="")
+      if ($usl4!="")
         $zapros=$zapros.' AND '.$usl4;
-        if ($usl5!="")
+      if ($usl5!="")
         $zapros=$zapros.' AND '.$usl5;
-        $rez=$this->zaprosSQL($zapros);
-        if (!$rez) return 0;
+      $rez=$this->zaprosSQL($zapros);
+      if (!$rez) return 0;
         $stroka=mysqli_fetch_array($rez);
-        if (is_null($stroka)) return 0;
-        if ($stroka[0]=='') return 0;
-        if ($stroka) return $stroka[0];
+      if (is_null($stroka)) 
         return 0;
+      if ($stroka[0]=='') 
+        return 0;
+      if ($stroka) 
+        return $stroka[0];
+      return 0;
     }
     //Функция проверяет статус в заданной таблице, выводит checked="checked" если статус есть или ''
     public function checkedStatus($pole,$str,$status,$nameTable)
     {
       $zapros="SELECT status FROM ".$nameTable."_status WHERE stolb=".$pole." AND str=".$str;
       $rez=$this->zaprosSQL($zapros);
-      if ($rez==false) return ' ';
+      if ($rez===false) 
+          return ' ';
       $stroka=mysqli_fetch_array($rez);
-      if ($stroka==false) return ' ';
-      if (stripos($stroka['0'],$status)>0) return 'checked';
+      if ($stroka===false) 
+          return ' ';
+      if (stripos($stroka['0'],$status)!==false) 
+          return 'checked';
       $rez=$this->zaprosSQL($zapros);
       $stroka=mysqli_fetch_array($rez);
       return ' ';
@@ -1146,17 +1149,21 @@ class initBD extends instrument
     {
       $zapros="SELECT ".$stolb." FROM ".$nameTablice." WHERE ".$stolb."='".$slovo."'";
       $rez=$this->zaprosSQL($zapros);
-      if (!$rez) return false;
+      if ($rez===false) 
+          return false;
       $stroka=mysqli_fetch_array($rez);
-      if (is_null($stroka)) return false;
+      if (is_null($stroka)) 
+          return false;
       $strr='--'.$stroka[0];
       $strVhod=stripos( $strr ,$slovo);
-      if ($strVhod>1) return true;
+      if ($strVhod>1) 
+          return true;
       return false;
     }
     public function printTab($mesadz,$kill)
     {
-      if ($kill) $this->zaprosSQL("DELETE FROM `debuger` WHERE 1");
+      if ($kill) 
+          $this->zaprosSQL("DELETE FROM `debuger` WHERE 1");
       $zapros="CREATE TABLE debuger (mesage VARCHAR(255))";
       $this->zaprosSQL($zapros);
       $zapros="INSERT INTO debuger(mesage) VALUES ('".$mesadz."')";
@@ -1166,17 +1173,14 @@ class initBD extends instrument
     {
       $zapros="SELECT * FROM debuger WRERE 1";
       $rez=$this->zaprosSQL($zapros);
-      if (!$rez) {
-          echo 'не получилось скачать данные из таблицы debuger'; return false;
+      if ($rez===false) {
+          echo 'не получилось скачать данные из таблицы debuger'; 
+          return false;
        }
       $stroka=mysqli_fetch_assoc($rez);
       while (!is_null($stroka=mysqli_fetch_assoc($rez)))
-      {
         foreach ($stroka as $key => $value)
-          {
            echo $key.'=>'.$value;
-          }
-      }
     }
     public function zapretUdaleniaTablicy($nameTablicy) // запрет на удаление таблиц
     {
@@ -1209,7 +1213,10 @@ class initBD extends instrument
         $vozvrat=false;
         $str=$this->kolVoZapisTablice($nameTablice);
         while (!is_null($stroka=(mysqli_fetch_assoc($rez))))
-           if ($stroka['radio'] || $stroka['checkbox']) {$vozvrat=true;break;}
+           if ($stroka['radio'] || $stroka['checkbox']) {
+                $vozvrat=true;
+                break;
+            }
         return $vozvrat;
     }
     public function id_tab_gl_searc($nameTablicy)
@@ -1217,7 +1224,8 @@ class initBD extends instrument
         $zapros="select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='".$nameTablicy."'";
         $rez=$this->zaprosSQL($zapros);
         $stroka=(mysqli_fetch_assoc($rez));
-        if ($stroka['COLUMN_NAME']=='id_tab_gl') {return true;}
+        if ($stroka['COLUMN_NAME']=='id_tab_gl') 
+            return true;
         return false;
      }
     public function searcNameTablic($nameTablicy) // Поиск таблицы в базе данных
@@ -1226,7 +1234,8 @@ class initBD extends instrument
         $zapros="SHOW TABLES";
         $rez=$this->zaprosSQL($zapros);
         while (!is_null($stroka=(mysqli_fetch_array($rez))))
-            if ($stroka[0]==$nameTablicy)   $result=true;            //
+            if ($stroka[0]==$nameTablicy)   
+                $result=true;           
         return $result;
      }
      public function killTab($nameTablicy)  //Удаление таблицы из БД
@@ -1242,18 +1251,18 @@ class initBD extends instrument
      public function killTabEtap1($nameTablicy)  //Удаление таблицы из БД если только она не служебная
      {      
                                             //Если таблица служебная, то подменяется имя кнопки "Согласен удалить" на "Невозможно удалить"
-        if ($this->searcNameTablic($nameTablicy) ) 
-        {
-        echo '<h4>Внимание!! Попытка удалить таблицу '.$nameTablicy.'</h4>'; 
-        echo '<div class="container">';
-        echo '<div class="row">';
-        echo '<form method="POST" action="redaktor.php">';
-        echo '<input class="btn btn-primary buttonStartNastrRedaktor" type="submit" value="'.$this->zapretUdaleniaTablicy($nameTablicy).'" name="killTabOk">';
-        echo '<input class="btn btn-primary buttonStartNastrRedaktor" type="submit" value="Отмена" name="killTabCancel">';
-        echo '</form>';
-        echo '</div>';
-        echo '</div>';
-        } else parent::okCansel('Такой таблицы нет и не важно на что нажать:). Пока-пока...','poka_poka','divTabUniwJestUge','pTabUniwJestUge','buttonTabUniwJestUge');
+        if ($this->searcNameTablic($nameTablicy)) {
+            echo '<h4>Внимание!! Попытка удалить таблицу '.$nameTablicy.'</h4>'; 
+            echo '<div class="container">';
+                echo '<div class="row">';
+                    echo '<form method="POST" action="redaktor.php">';
+                        echo '<input class="btn btn-primary buttonStartNastrRedaktor" type="submit" value="'.$this->zapretUdaleniaTablicy($nameTablicy).'" name="killTabOk">';
+                        echo '<input class="btn btn-primary buttonStartNastrRedaktor" type="submit" value="Отмена" name="killTabCancel">';
+                    echo '</form>';
+                echo '</div>';
+            echo '</div>';
+        } else 
+            parent::okCansel('Такой таблицы нет и не важно на что нажать:). Пока-пока...','poka_poka','divTabUniwJestUge','pTabUniwJestUge','buttonTabUniwJestUge');
      }       
      public function clearTab($nameTablicy)  //Очистка таблицы
      {
