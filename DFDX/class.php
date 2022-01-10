@@ -1459,31 +1459,33 @@ class htmlTeg extends initBD
     public function __construct($nameTeg)
         {
             parent::__construct();
-            if ($nameTeg=="") {$nameTeg="html"; echo("Задан пустой тег, знаете ли Вы, что можно делать с комментариями в html?<br>");}
+            if ($nameTeg=="") {
+                $nameTeg="html"; echo("Задан пустой тег, знаете ли Вы, что можно делать с комментариями в html?<br>");
+              }
             $con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд
             mysqli_set_charset ( $con , "utf8" ) ;
             $zapros="SELECT * FROM html_teg WHERE teg=".chr(39).$nameTeg.chr(39);
             $rez=parent::zaprosSQL($zapros) OR die ('Не удалось отправить запрос стр.17');
             $stroka=mysqli_fetch_assoc($rez) OR die ('Не удалось получить массив данных, скорее всего нет такой темы, ищите по ключевым словам или тексту.');
             if ($stroka!=false){
-            $this->id=$stroka['id'];
-            $this->teg=$stroka['teg'];
-            $this->info=$stroka['info'];
-            $this->infoVideo=$stroka['infoVideo'];
-            $this->leson_id=$stroka['leson_id'];
-            $this->atrib_id=$stroka['atrib_id'];
-            $this->sintax_id=$stroka['sintax_id'];
-            $this->kluc1=$stroka['kluc1'];
-            $this->kluc2=$stroka['kluc2'];
-            $this->kluc3=$stroka['kluc3'];
-            $this->kluc4=$stroka['kluc4'];
-            $this->kluc5=$stroka['kluc5'];
-            $this->kluc6=$stroka['kluc6'];
-            $this->kluc7=$stroka['kluc7'];
-            $this->kluc8=$stroka['kluc8'];
-            $this->kluc9=$stroka['kluc9'];
-            $this->kluc10=$stroka['kluc10'];
-            $this->htmlTegError=0;
+                $this->id=$stroka['id'];
+                $this->teg=$stroka['teg'];
+                $this->info=$stroka['info'];
+                $this->infoVideo=$stroka['infoVideo'];
+                $this->leson_id=$stroka['leson_id'];
+                $this->atrib_id=$stroka['atrib_id'];
+                $this->sintax_id=$stroka['sintax_id'];
+                $this->kluc1=$stroka['kluc1'];
+                $this->kluc2=$stroka['kluc2'];
+                $this->kluc3=$stroka['kluc3'];
+                $this->kluc4=$stroka['kluc4'];
+                $this->kluc5=$stroka['kluc5'];
+                $this->kluc6=$stroka['kluc6'];
+                $this->kluc7=$stroka['kluc7'];
+                $this->kluc8=$stroka['kluc8'];
+                $this->kluc9=$stroka['kluc9'];
+                $this->kluc10=$stroka['kluc10'];
+                $this->htmlTegError=0;
             }
             mysqli_close($con);
             $this->statikHtml();
@@ -1491,7 +1493,7 @@ class htmlTeg extends initBD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
         public function id(){               //читает id из защищённой переменной
               return $this->id;
-            }
+              }
         public function teg(){              //читает teg из защищённой переменной
                 return $this->teg;
               }
@@ -1513,29 +1515,31 @@ class htmlTeg extends initBD
         public function initTeg($nameTeg)   // Обновление значений свойст объекта
               {                             // Прочитать инфу о теге из бд
                   $ret=true;
-                  if ($nameTeg=="") {$nameTeg="html";}
+                  if ($nameTeg=="") {
+                      $nameTeg="html";
+                    }
                   $con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд                  mysqli_set_charset ( $con , "utf8" ) ;
                   $zapros="SELECT * FROM html_teg WHERE teg=".chr(39).$nameTeg.chr(39);
                   $rez=parent::zaprosSQL($zapros);// OR die ('Не удалось отправить запрос стр.17');
                   $stroka=mysqli_fetch_assoc($rez);// OR die ('Не удалось получить массив');
                   if ($stroka!=false){
-                  $this->id=$stroka['id'];
-                  $this->teg=$stroka['teg'];
-                  $this->info=$stroka['info'];
-                  $this->infoVideo=$stroka['infoVideo'];
-                  $this->leson_id=$stroka['leson_id'];
-                  $this->atrib_id=$stroka['atrib_id'];
-                  $this->sintax_id=$stroka['sintax_id'];
-                  $this->kluc1=$stroka['kluc1'];
-                  $this->kluc2=$stroka['kluc2'];
-                  $this->kluc3=$stroka['kluc3'];
-                  $this->kluc4=$stroka['kluc4'];
-                  $this->kluc5=$stroka['kluc5'];
-                  $this->kluc6=$stroka['kluc6'];
-                  $this->kluc7=$stroka['kluc7'];
-                  $this->kluc8=$stroka['kluc8'];
-                  $this->kluc9=$stroka['kluc9'];
-                  $this->kluc10=$stroka['kluc10'];
+                      $this->id=$stroka['id'];
+                      $this->teg=$stroka['teg'];
+                      $this->info=$stroka['info'];
+                      $this->infoVideo=$stroka['infoVideo'];
+                      $this->leson_id=$stroka['leson_id'];
+                      $this->atrib_id=$stroka['atrib_id'];
+                      $this->sintax_id=$stroka['sintax_id'];
+                      $this->kluc1=$stroka['kluc1'];
+                      $this->kluc2=$stroka['kluc2'];
+                      $this->kluc3=$stroka['kluc3'];
+                      $this->kluc4=$stroka['kluc4'];
+                      $this->kluc5=$stroka['kluc5'];
+                      $this->kluc6=$stroka['kluc6'];
+                      $this->kluc7=$stroka['kluc7'];
+                      $this->kluc8=$stroka['kluc8'];
+                      $this->kluc9=$stroka['kluc9'];
+                      $this->kluc10=$stroka['kluc10'];
                 } else $ret=false;
                   mysqli_close($con);
                   $this->statikHtml();
@@ -1549,22 +1553,35 @@ class htmlTeg extends initBD
             $con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд            mysqli_set_charset ( $con , "utf8" ) ;
             $zapros="SELECT MAX(id) FROM html_teg";
             $rez=parent::zaprosSQL($zapros);
-            if (!$rez) {mysqli_close($con);return -1;}
+            if (!$rez) {
+                mysqli_close($con);
+                return -1;
+              }
             $stroka=mysqli_fetch_array($rez);
-            if (!isset($stroka)) {mysqli_close($con);return -1;}
+            if (!isset($stroka)) {
+                mysqli_close($con);
+                return -1;
+              }
             mysqli_close($con);
             $this->statikHtml();
             return $stroka[0]+1;
         }
         public function idTega($teg)   // определяет id номер тега
         {
-            if ($teg=='') return -1;
+            if ($teg=='') 
+                return -1;
             $con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд            mysqli_set_charset ( $con , "utf8" ) ;
             $zapros="SELECT id FROM html_teg WHERE teg=".chr(39).$teg.chr(39);
             $rez=parent::zaprosSQL($zapros);
-            if (!$rez) {mysqli_close($con);return -1;}
+            if ($rez===false) {
+                mysqli_close($con);
+                return -1;
+              }
             $stroka=mysqli_fetch_array($rez);
-            if (!isset($stroka)) {mysqli_close($con);return -1;}
+            if (!isset($stroka)) {
+                mysqli_close($con);
+                return -1;
+              }
             mysqli_close($con);
             $this->statikHtml();
             return $stroka[0];
@@ -1574,11 +1591,12 @@ class htmlTeg extends initBD
             $start=true;
             $con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд            mysqli_set_charset ( $con , "utf8" ) ;           // установить кодировку
             if ($this->idTega($_POST['Teg'])==-1)
-             $zapros="INSERT INTO  ".$nameTablica."(`id`, `teg`, `info`, `infoVideo`, `leson_id`, `atrib_id`, `sintax_id`, `kluc1`, `kluc2`, `kluc3`, `kluc4`, `kluc5`, `kluc6`, `kluc7`, `kluc8`, `kluc9`, `kluc10`) VALUES (".$this->maxid($nameTablica).",'".$_POST['Teg']."','".$_POST['opisanie']."','".$_POST['opisanieVideo']."',".$_POST['idPrimer'].",".$_POST['idAtribut'].",".$_POST['idSintax'].",'".$_POST['kluc1']."','".$_POST['kluc2']."','".$_POST['kluc3']."','".$_POST['kluc4']."','".$_POST['kluc5']."','".$_POST['kluc6']."','".$_POST['kluc7']."','".$_POST['kluc8']."','".$_POST['kluc9']."','".$_POST['kluc10']."')";
+                $zapros="INSERT INTO  ".$nameTablica."(`id`, `teg`, `info`, `infoVideo`, `leson_id`, `atrib_id`, `sintax_id`, `kluc1`, `kluc2`, `kluc3`, `kluc4`, `kluc5`, `kluc6`, `kluc7`, `kluc8`, `kluc9`, `kluc10`) VALUES (".$this->maxid($nameTablica).",'".$_POST['Teg']."','".$_POST['opisanie']."','".$_POST['opisanieVideo']."',".$_POST['idPrimer'].",".$_POST['idAtribut'].",".$_POST['idSintax'].",'".$_POST['kluc1']."','".$_POST['kluc2']."','".$_POST['kluc3']."','".$_POST['kluc4']."','".$_POST['kluc5']."','".$_POST['kluc6']."','".$_POST['kluc7']."','".$_POST['kluc8']."','".$_POST['kluc9']."','".$_POST['kluc10']."')";
             if ($this->idTega($_POST['Teg'])>-1)
-             $zapros="UPDATE ".$nameTablica." SET `id`=".$_POST['idTeg'].",`teg`='".$_POST['Teg']."',`info`='".$_POST['opisanie']."',`infoVideo`='".$_POST['opisanieVideo']."',`leson_id`=".$_POST['idPrimer'].",`atrib_id`=".$_POST['idAtribut'].",`sintax_id`=".$_POST['idSintax'].",`kluc1`='".$_POST['kluc1']."',`kluc2`='".$_POST['kluc2']."',`kluc3`='".$_POST['kluc3']."',`kluc4`='".$_POST['kluc4']."',`kluc5`='".$_POST['kluc5']."',`kluc6`='".$_POST['kluc6']."',`kluc7`='".$_POST['kluc7']."',`kluc8`='".$_POST['kluc8']."',`kluc9`='".$_POST['kluc9']."',`kluc10`='".$_POST['kluc10']."' WHERE teg='".$_POST['Teg']."'";
-             $rez=parent::zaprosSQL($zapros);
-            if (!$rez) $start=false;
+                $zapros="UPDATE ".$nameTablica." SET `id`=".$_POST['idTeg'].",`teg`='".$_POST['Teg']."',`info`='".$_POST['opisanie']."',`infoVideo`='".$_POST['opisanieVideo']."',`leson_id`=".$_POST['idPrimer'].",`atrib_id`=".$_POST['idAtribut'].",`sintax_id`=".$_POST['idSintax'].",`kluc1`='".$_POST['kluc1']."',`kluc2`='".$_POST['kluc2']."',`kluc3`='".$_POST['kluc3']."',`kluc4`='".$_POST['kluc4']."',`kluc5`='".$_POST['kluc5']."',`kluc6`='".$_POST['kluc6']."',`kluc7`='".$_POST['kluc7']."',`kluc8`='".$_POST['kluc8']."',`kluc9`='".$_POST['kluc9']."',`kluc10`='".$_POST['kluc10']."' WHERE teg='".$_POST['Teg']."'";
+            $rez=parent::zaprosSQL($zapros);
+            if ($rez===false) 
+                $start=false;
             mysqli_close($con);
             $this->initTeg($_POST['Teg']);     // Освежить свойства объекта
             $this->statikHtml();
@@ -1606,18 +1624,9 @@ class htmlTeg extends initBD
 //////////////////////////////////////////////////////////// Конец класса htmlTeg ///////////////////////
 //////////////////////////////////////////////////////////// Конец класса htmlTeg ///////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class dataAktual  extends initBD
 {
-
     public function __construct()
         {
             parent::__construct();
@@ -1691,7 +1700,8 @@ class redaktor  extends menu
         $stroka=mysqli_fetch_assoc($rez);
         $poslednijZapros=$stroka['imiePosTabl'];
         $_SESSION['nameTablice']=$poslednijZapros;
-        if (!parent::searcNameTablic($poslednijZapros)) $poslednijZapros="";
+        if (!parent::searcNameTablic($poslednijZapros)) 
+            $poslednijZapros="";
         //Читаем последнее число выводимых таблиц и последнее имя выводимой таблицы
         echo '<h6 class="mesage">*поле слева предназначено для имени таблицы</h6>';
         echo '<h6 class="error">**Внимание!! Не использовать заглавные буквы в названии таблицы</h6>';
@@ -1713,23 +1723,19 @@ class redaktor  extends menu
       {
         $i=0;
         $j=0;
-       if (!parent::searcNameTablic($nameTable))
-        {
-        $zapros="CREATE TABLE ".$nameTable."(id_tab_gl INT, ";
-         for ($j=1; $j<=$_SESSION['col']; $j++)
-         {
-          $zapros=$zapros."poz".$j." VARCHAR(255)";
-          if ($j!=$_SESSION['col']) $zapros=$zapros.", ";
-         }
-        $zapros=$zapros.")";
-        $rez=parent::zaprosSQL($zapros);
+       if (!parent::searcNameTablic($nameTable)) {
+          $zapros="CREATE TABLE ".$nameTable."(id_tab_gl INT, ";
+              for ($j=1; $j<=$_SESSION['col']; $j++) {
+                  $zapros=$zapros."poz".$j." VARCHAR(255)";
+                  if ($j!=$_SESSION['col']) $zapros=$zapros.", ";
+              }
+          $zapros=$zapros.")";
+          $rez=parent::zaprosSQL($zapros);
         }
-        for ($j=1; $j<=$_SESSION['str']; $j++)
-        {
+       for ($j=1; $j<=$_SESSION['str']; $j++) {
          $zapros1="INSERT INTO `".$nameTable."` (`id_tab_gl`,";
          $zapros2=" VALUES (".$j.",";
-         for ($i=1; $i<=$_SESSION['col']; $i++)
-          {
+         for ($i=1; $i<=$_SESSION['col']; $i++) {
             $zapros1=$zapros1."`poz".$i."`";
             if ($i!=$_SESSION['col'])  $zapros1=$zapros1.",";
             $zapros2=$zapros2."'".$_POST['radio_'.$nameTable.'_'.$j.'_'.$i]."'";
@@ -1751,11 +1757,9 @@ class redaktor  extends menu
         echo '<div class="container-fluid">'."\n";
         echo '<div class="row">'."\n";
         echo '<form class="poleTablicyRedaktora" active="redaktor.php" method="POST">'."\n";
-        for ($j=1; $j<=$str; $j++)
-        {
+        for ($j=1; $j<=$str; $j++) {
         echo '<div class="poleTablicy1">'."\n";
-         for ($i=1; $i<=$col; $i++)
-          {
+         for ($i=1; $i<=$col; $i++) {
             echo '<div class="poleTablicy">'."\n";
              echo '<p class="mesage">Ряд:'.$j.' Позиция:'.$i.'</p>';
              echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="NULL" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'0" checked/><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'0">NULL</label>'."\n";
@@ -1773,16 +1777,9 @@ class redaktor  extends menu
              echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="input" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'12" /><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'12">input</label><br>'."\n";
              echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="audio" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'13" /><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'13">audio</label><br>'."\n";
              echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="embed" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'14" /><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'14">embed</label><br>'."\n";
-             //echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="video source" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'15" /><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'15">video source</label><br>'."\n";
              echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="video" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'16" /><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'16">video</label><br>'."\n";
              echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="произвольный" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'17" /><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'17">произвольный</label><br>'."\n";
-            // echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="audio source" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'18" /><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'18">audio source</label><br>'."\n";
-             //echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="object" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'19" /><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'19">object</label><br>'."\n";
-             //echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="canvas" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'20" /><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'20">canvas</label><br>'."\n";
-             //echo '<input type=radio name="radio_'.$nameTable.'_'.$j.'_'.$i.'" class="radio_class_'.$nameTable.'_'.$j.'_'.$i.'" value="iframe" id="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'21" /><label for="id_'.$nameTable.'_'.$j.'_'.$i.'_'.'21">iframe</label><br>'."\n";
-             
              echo '</div>'."\n";
-             
             }
             echo '</div><br>';
         }
@@ -1798,16 +1795,13 @@ class redaktor  extends menu
       public function createStyleTabUParametryTabliws() 
        {
         if (parent::searcNameTablic($_SESSION['nameTablice'])) 
-         {
           parent::killTab($_SESSION['nameTablice']);
-         }
         echo '<p class=mesage>В полях ниже введите число столбцов и строк соответственно</p>';
         parent::menu4('menu_parametr_tab','redaktor.php');   
        }
      public function createStyleTabUProwerkaImeni($nameTable) // 
      {
-        if (parent::zapretUdaleniaTablicy($nameTable)!="Невозможно удалить")
-        {
+        if (parent::zapretUdaleniaTablicy($nameTable)!="Невозможно удалить") {
          if (parent::searcNameTablic($nameTable)) {$nameTab='Таблица с именем:'.$nameTable.' существует. Для продолжения жмём ОК';}
          else {$nameTab='Создаём таблицу с именем:'.$nameTable.'. Для продолжения жмём ОК';}
          parent::okCansel($nameTab,'buttonTabUniwJestUge','divTabUniwJestUge','pTabUniwJestUge','buttonTabUniwJestUge');
@@ -1829,14 +1823,12 @@ class redaktor  extends menu
         echo '<div class="container-fluid">';
         echo '<div class="row spisokTablic">';
         echo'<form method="POST" active="redaktor.php">';
-        while (!is_null($stroka=(mysqli_fetch_array($rez))))
-         {
-         if ($_SESSION['status']==5 || ($_SESSION['status']!=5 && parent::zapretUdaleniaTablicy($stroka[0])!='Невозможно удалить'))
-         {
-         if (parent::zapretUdaleniaTablicy($stroka[0])=='Невозможно удалить') $dopClass="zapretNaUdalenie"; else $dopClass="";
-         if (parent::tablicaDlaMenu($stroka[0]))
-          echo '<input class="btn btn-primary buttonMenuSpisokTablic '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
-           else if (parent::id_tab_gl_searc($stroka[0]))
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
+          if ($_SESSION['status']==5 || ($_SESSION['status']!=5 && parent::zapretUdaleniaTablicy($stroka[0])!='Невозможно удалить')) {
+            if (parent::zapretUdaleniaTablicy($stroka[0])=='Невозможно удалить') $dopClass="zapretNaUdalenie"; else $dopClass="";
+            if (parent::tablicaDlaMenu($stroka[0]))
+                echo '<input class="btn btn-primary buttonMenuSpisokTablic '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
+            else if (parent::id_tab_gl_searc($stroka[0]))
             echo '<input class="btn btn-primary buttonMenuSpisokTablicGlav '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
             else if (parent::zaprosSQL('SELECT name_teg FROM '.$stroka[0].' WHERE 1'))
               echo '<input class="btn btn-primary buttonMenuSpisokTablicGlavTeg '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
@@ -1857,16 +1849,14 @@ class redaktor  extends menu
       }
    public function createNameMenu($nameTablic) // Нажали на Создать Меню
     {
-      if (parent::zapretUdaleniaTablicy($nameTablic)!="Невозможно удалить")
-      {
+      if (parent::zapretUdaleniaTablicy($nameTablic)!="Невозможно удалить") {
         $mesaz="Такая таблица уже есть, продолжить?";
         $nameKn='tablicaJest';
         $classDiv="buttonCreateNameMenuDiv";
         $classP="buttonCreateNameMenuP";
         $classButton="buttonCreateNameMenuButton";
         if (parent::searcNameTablic($nameTablic)) parent::okCansel($mesaz,$nameKn,$classDiv,$classP,$classButton);
-        if (!parent::searcNameTablic($nameTablic))
-         {
+        if (!parent::searcNameTablic($nameTablic)) {
             echo '<div class="container">';
             echo '<div class="row">';
             echo'<p>Название таблицы(меню)'.$nameTablic.'</p>';
@@ -1904,12 +1894,10 @@ class redaktor  extends menu
       if ($_POST['listStyle']=="У каждой кнопки свой стиль") $class=1;
       $zapros="INSERT INTO `tablica_tablic`(`ID`, `NAME`, `CLASS`) VALUES (".$rezId.",'".$nameTable."',".$class.")";
       $rez=parent::zaprosSQL($zapros);
-}
-public function loadTablic($nameTablic)  // загрузить главную таблицу загрузить шаблон нарисовать шаблон 
+  }
+  public function loadTablic($nameTablic)  // загрузить главную таблицу загрузить шаблон нарисовать шаблон 
     {
-       if (!parent::searcNameTablic($nameTablic) && !parent::id_tab_gl_searc($nameTablic)) //Не нашли таблицу 
-        {
-
+       if (!parent::searcNameTablic($nameTablic) && !parent::id_tab_gl_searc($nameTablic)) {//Не нашли таблицу 
            echo '<p class="error">В базе данных такой таблицы нет, создаёте?</p>';
            echo '<div class="container">';
            echo '<div class="row">';
@@ -1922,14 +1910,15 @@ public function loadTablic($nameTablic)  // загрузить главную т
            echo'</div>';
            echo'</div>';
         }
-        if (parent::searcNameTablic($nameTablic) && !parent::id_tab_gl_searc($nameTablic)) //Если нашли таблицу
-        {
+        if (parent::searcNameTablic($nameTablic) && !parent::id_tab_gl_searc($nameTablic)) {//Если нашли таблицу
             $zapros="SELECT kol_voKn FROM tablica_tablic WHERE NAME='".$nameTablic."'";  // Проверяем данные о числе записей в таблице таблиц
             $rez=parent::zaprosSQL($zapros);
             $kol_voZapisejTablicaTablic=array();
             $kol_voZapisejTablicaTablic[0]=2;
-            if ($rez!==false) $kol_voZapisejTablicaTablic=mysqli_fetch_array($rez);
-            if (!isset($kol_voZapisejTablicaTablic)) $kol_voZapisejTablicaTablic[0]='Число записей не известно';
+            if ($rez!==false) 
+                $kol_voZapisejTablicaTablic=mysqli_fetch_array($rez);
+            if (!isset($kol_voZapisejTablicaTablic)) 
+                $kol_voZapisejTablicaTablic[0]='Число записей не известно';
             echo '<p class="mesage">Число записей в таблице '.$nameTablic.' равно '.$kol_voZapisejTablicaTablic[0].'</p>';
             $mesaz="В поле ниже введите число позиций(кнопок) в создаваемом меню";
             $nameKn='kol_voKn';
@@ -1939,32 +1928,26 @@ public function loadTablic($nameTablic)  // загрузить главную т
             $classInput="inputCreateNameMenuButton";
             parent::poleInputokCansel($mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput);
         }
-   if (parent::id_tab_gl_searc($nameTablic)) //Редактирование таблицы главной. проверить есть ли радио и чекбоксы и если есть, то по сколько пунктов 
-        {
+   if (parent::id_tab_gl_searc($nameTablic)) {//Редактирование таблицы главной. проверить есть ли радио и чекбоксы и если есть, то по сколько пунктов 
           parent::okSelect("Показать нулевые кнопки",'pokazNULL','pokazNULLDiv','pokazNULLP','pokazNULLButton');
-           
-          //проверим есть ли вспомогательная таблица и если нет, то создадим её 
+           //проверим есть ли вспомогательная таблица и если нет, то создадим её 
            if (!parent::searcNameTablic($nameTablic.'_tegi'))
                 parent::zaprosSQL("CREATE TABLE ".$nameTablic."_tegi"."(stolb INT, str INT, name_teg VARCHAR(255), name_attrib VARCHAR(255), text VARCHAR(6000), string_ili_int INT)");
  
-            //проверим есть ли вспомогательная таблица и если нет, то создадим её 
-            if (!parent::searcNameTablic($nameTablic.'_status'))
-              parent::zaprosSQL("CREATE TABLE ".$nameTablic."_status"."(stolb INT, str INT, status VARCHAR(255))");
-
+           //проверим есть ли вспомогательная таблица и если нет, то создадим её 
+           if (!parent::searcNameTablic($nameTablic.'_status'))
+               parent::zaprosSQL("CREATE TABLE ".$nameTablic."_status"."(stolb INT, str INT, status VARCHAR(255))");
            $bylo=false; // несет информацию о том, что в очередной строке таблицы было что-то для вывода и следовательно после окончания строки следует перейти на новую строку.
            $rezBin=false; 
            echo '<section class="container-fluid">'; //
-           
            // Запись статусов
            if (isset($_POST['savePola0_0']))
            $this->saveStatusRazreshenia($nameTablic,'savePola0_0');
-           
            echo '<form action="redaktor.php" method="POST">';
            echo '<div class="row">';
            echo '<div class="col-5 poleRedaktGlawnTablTegDiv">';
            // Формируем поле редактирования
            echo '<p class=poleRedaktGlawnTablTegP>Главный тег Form</p>';
-
            //выпадающее меню задания основного аттрибута
            $this->attribTega('selectFormAttrib','form',$nameTablic);
            echo '<input type="text" name="formGlavnyAttrib0_0" class="poleRedaktGlawnTablTegText" value=""><br>';
@@ -1993,25 +1976,19 @@ public function loadTablic($nameTablic)  // загрузить главную т
            echo '<input type="reset" value="Стереть" class="poleRedaktGlawnTablTegSubmit">';
            echo '<div class="btn btn-outline-info redaktorHablonJakorHelp"><a href="#helpTegForm">Помощь</a></div>';
            echo '</div>'; 
-
            echo '<div class="col-7 poleRedaktRezultat">';
-
           //Запись основных аттрибутов и их свойств   ----------
            if (isset($_POST['selectFormAttrib'])  && isset($_POST['savePola0_0']) && $_POST['selectFormAttrib']!="----------")
            $this->saveAttribTega($nameTablic,'form',$_POST['selectFormAttrib'],'savePola0_0',$_POST['formGlavnyAttrib0_0'],$_POST['tegRadio0_0']);
-
            //Запись общих аттрибутов и их свойств
            if (isset($_POST['selectFormUniversalAttrib'])  && isset($_POST['savePola0_0']) && $_POST['selectFormUniversalAttrib']!="----------")
            $this->saveAttribTega($nameTablic,'form',$_POST['selectFormUniversalAttrib'],'savePola0_0',$_POST['formGlavnyAttribUniversalny0_0'],$_POST['tegRadio0_0']);
-
            //Запись событий и их свойств
            if (isset($_POST['selectFormSobytie'])  && isset($_POST['savePola0_0']) && $_POST['selectFormSobytie']!="----------")
            $this->saveAttribTega($nameTablic,'form',$_POST['selectFormSobytie'],'savePola0_0',$_POST['formGlavnySobytia0_0'],$_POST['tegRadio0_0']);
-
            //Запись произвольных аттрибутов и их свойств
            if (isset($_POST['swojAttribZnacenie0_0'])  && isset($_POST['savePola0_0']) && $_POST['swojAttrib0_0']!="----------")
            $this->saveAttribTega($nameTablic,'form',$_POST['swojAttrib0_0'],'savePola0_0',$_POST['swojAttribZnacenie0_0'],$_POST['tegRadio0_0']);
-
            echo $this->strokaAttrbutov($nameTablic,'form',0,0,'&lt','&gt');
            echo '<div class="col-12 statusy">'; // Вывод статусов в правый столбец
            if (parent::checkedStatus(0,0,"0",$nameTablic)=="checked") $klass='statusyTrue'; else $klass='statusyFalse';
@@ -2029,26 +2006,17 @@ public function loadTablic($nameTablic)  // загрузить главную т
            if (parent::checkedStatus(0,0,"9",$nameTablic)=="checked") $klass='statusyTrue'; else $klass='statusyFalse';
            echo '<div class="'.$klass.'"><p>Не проверен</p></div>';
            echo '</div>';
-
-
            echo '</div></div><br>';
-
            $this->strok=parent::kolVoZapisTablice($nameTablic);
            $this->stolb=parent::kolVoStolbovTablice($nameTablic);
-
-           for ($i=1; $i<=$this->strok; $i++) //перебираем столбцы начиная с первого. 
-             {
-              for ($j=1; $j<$this->stolb; $j++)  // перебираем строки с первойkolVoZapisTablice
-               {
-                
+           for ($i=1; $i<=$this->strok; $i++) {//перебираем столбцы начиная с первого. 
+              for ($j=1; $j<$this->stolb; $j++) { // перебираем строки с первойkolVoZapisTablice
                 $zapros="SELECT poz".$j." FROM ".$nameTablic." WHERE id_tab_gl=".$i;
                 $rez=parent::zaprosSQL($zapros);
                 $stroka=mysqli_fetch_array($rez);
-                if ($stroka[0]!="NULL" || $_SESSION['pokazNULL']) 
-                 {
-
+                if ($stroka[0]!="NULL" || $_SESSION['pokazNULL']) {
                  // Запись статусов
-                  if (isset($_POST['savePola'.$j."_".$i]))
+                 if (isset($_POST['savePola'.$j."_".$i]))
                     $this->saveStatusRazreshenia($nameTablic,'savePola'.$j."_".$i);
                    echo '<div class="row">';
                    echo '<div class="col-5 poleRedaktGlawnTablTegDiv">';
@@ -2065,7 +2033,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
                    echo '<input type="text" name="swojAttribZnacenie'.$j."_".$i.'" class="poleRedaktGlawnTablTegText"><br>';
                    echo '<input type="radio" name="tegRadio'.$j."_".$i.'" class="poleRedaktGlawnTablTegText" checked value="string" id="str"><label for="str">string</label> ';
                    echo '<input type="radio" name="tegRadio'.$j."_".$i.'" class="poleRedaktGlawnTablTegText" value="int"  id="int"><label for="int">int</label><br>';
-                              //Задание статуса шаблона
+                   //Задание статуса шаблона
                    echo '<input type="checkbox" name="status0'.$j.'_'.$i.'" value="s0"'.parent::checkedStatus($j,$i,"0",$nameTablic).'>0 ';
                    echo '<input type="checkbox" name="status1'.$j.'_'.$i.'" value="s1"'.parent::checkedStatus($j,$i,"1",$nameTablic).'>1 ';
                    echo '<input type="checkbox" name="status2'.$j.'_'.$i.'" value="s2"'.parent::checkedStatus($j,$i,"2",$nameTablic).'>2 ';
@@ -2073,79 +2041,73 @@ public function loadTablic($nameTablic)  // загрузить главную т
                    echo '<input type="checkbox" name="status4'.$j.'_'.$i.'" value="s4"'.parent::checkedStatus($j,$i,"4",$nameTablic).'>4 ';
                    echo '<input type="checkbox" name="status5'.$j.'_'.$i.'" value="s5"'.parent::checkedStatus($j,$i,"5",$nameTablic).'>5 ';
                    echo '<input type="checkbox" name="status9'.$j.'_'.$i.'" value="s9"'.parent::checkedStatus($j,$i,"9",$nameTablic).'>9 <br>';
-                   if ($stroka[0]=='video source' || $stroka[0]=='audio source')
-                   {
-                    if ($stroka[0]=='video source')
-                    {
+                   if ($stroka[0]=='video source' || $stroka[0]=='audio source') {
+                    if ($stroka[0]=='video source') {
                       echo '<input type="radio" name="tegVideoSourse'.$j."_".$i.'" class="poleRedaktGlawnTablTegText" checked value="src" id="src"><label for="src">src</label> ';
                       echo '<input type="radio" name="tegVideoSourse'.$j."_".$i.'" class="poleRedaktGlawnTablTegText" value="type"  id="type"><label for="type">type</label> <br>';
                       echo '<input type="radio" name="tegVideoSourse'.$j."_".$i.'" class="poleRedaktGlawnTablTegText" value="codex"  id="codecs"><label for="codecs">codecs</label> <br>';
                     }
-                    if ($stroka[0]=='audio source')
-                    {
+                    if ($stroka[0]=='audio source') {
                       echo '<input type="radio" name="tegAudioSourse'.$j."_".$i.'" class="poleRedaktGlawnTablTegText" checked value="audio" id="str"><label for="str">string</label> ';
                       echo '<input type="radio" name="tegAudioSourse'.$j."_".$i.'" class="poleRedaktGlawnTablTegText" value="source"  id="int"><label for="int">int</label> <br>';
                     }
                     } else echo '<br>';
-                   echo '<input type="submit" value="Запомнить" name="savePola'.$j."_".$i.'" class="poleRedaktGlawnTablTegSubmit">';
-                   echo '<input type="reset" value="Стереть" class="poleRedaktGlawnTablTegSubmit">';
-                   if ($stroka[0]=='p' || $stroka[0]=='h1' || $stroka[0]=='h2' || $stroka[0]=='h3' || $stroka[0]=='h4' || $stroka[0]=='h5' || $stroka[0]=='h6')
-                   echo '<div class="btn btn-outline-info redaktorHablonJakorHelp"><a href="#helpPH16Text">Помощь</a></div>';
-                   if ($stroka[0]=='img')
-                   echo '<div class="btn btn-outline-info redaktorHablonJakorHelp"><a href="#helpImgText">Помощь</a></div>';
-                   if ($stroka[0]=='checkbox' || $stroka[0]=='radio')
-                   echo '<div class="btn btn-outline-info redaktorHablonJakorHelp"><a href="#helpRadio">Помощь</a></div>';
-                   echo '<div class="btn btn-outline-info redaktorHablonJakor"><a href="#vverh">Вверх</a></div>';
-                 echo '</div>';
-                 
-                 echo '<div class="col-7 poleRedaktRezultat">';
-                //Запись основных аттрибутов и их свойств   ----------
+                    echo '<input type="submit" value="Запомнить" name="savePola'.$j."_".$i.'" class="poleRedaktGlawnTablTegSubmit">';
+                    echo '<input type="reset" value="Стереть" class="poleRedaktGlawnTablTegSubmit">';
+                    if ($stroka[0]=='p' || $stroka[0]=='h1' || $stroka[0]=='h2' || $stroka[0]=='h3' || $stroka[0]=='h4' || $stroka[0]=='h5' || $stroka[0]=='h6')
+                        echo '<div class="btn btn-outline-info redaktorHablonJakorHelp"><a href="#helpPH16Text">Помощь</a></div>';
+                    if ($stroka[0]=='img')
+                        echo '<div class="btn btn-outline-info redaktorHablonJakorHelp"><a href="#helpImgText">Помощь</a></div>';
+                    if ($stroka[0]=='checkbox' || $stroka[0]=='radio')
+                        echo '<div class="btn btn-outline-info redaktorHablonJakorHelp"><a href="#helpRadio">Помощь</a></div>';
+                    echo '<div class="btn btn-outline-info redaktorHablonJakor"><a href="#vverh">Вверх</a></div>';
+                    echo '</div>';
+                    echo '<div class="col-7 poleRedaktRezultat">';
+                    //Запись основных аттрибутов и их свойств   ----------
+                    if ((isset($_SESSION['obnovit']) && !$_SESSION['obnovit']) || (isset($_POST['selectTegAttrib'.$j."_".$i])  && isset($_POST['savePola'.$j."_".$i]) && $_POST['selectTegAttrib'.$j."_".$i]!="----------")) {
+                        $_SESSION['obnovit']=true;//переменная предотвращает циклические обновления страницы
+                        $this->saveAttribTega($nameTablic,$stroka[0],$_POST['selectTegAttrib'.$j."_".$i],'savePola'.$j."_".$i,$_POST['formGlavnyAttrib'.$j."_".$i],$_POST['tegRadio'.$j."_".$i]);
+                    }
                 
-                if ((isset($_SESSION['obnovit']) && !$_SESSION['obnovit']) || (isset($_POST['selectTegAttrib'.$j."_".$i])  && isset($_POST['savePola'.$j."_".$i]) && $_POST['selectTegAttrib'.$j."_".$i]!="----------"))
-                 {
-                  $_SESSION['obnovit']=true;//переменная предотвращает циклические обновления страницы
-                  $this->saveAttribTega($nameTablic,$stroka[0],$_POST['selectTegAttrib'.$j."_".$i],'savePola'.$j."_".$i,$_POST['formGlavnyAttrib'.$j."_".$i],$_POST['tegRadio'.$j."_".$i]);
-                }
-                
-                //Запись общих аттрибутов и их свойств
-                if (isset($_POST['selectTegUniversalAttrib'.$j."_".$i])  && isset($_POST['savePola'.$j."_".$i]) && $_POST['selectTegUniversalAttrib'.$j."_".$i]!="----------")
-                {
-                $this->saveAttribTega($nameTablic,$stroka[0],$_POST['selectTegUniversalAttrib'.$j."_".$i],'savePola'.$j."_".$i,$_POST['formGlavnyAttribUniversalny'.$j."_".$i],$_POST['tegRadio'.$j."_".$i]);
-                }
-                //Запись событий и их свойств
-                if (isset($_POST['selectTegSobytie'.$j."_".$i])  && isset($_POST['savePola'.$j."_".$i]) && $_POST['selectTegSobytie'.$j."_".$i]!="----------")
-                $this->saveAttribTega($nameTablic,$stroka[0],$_POST['selectTegSobytie'.$j."_".$i],'savePola'.$j."_".$i,$_POST['formGlavnySobytia'.$j."_".$i],$_POST['tegRadio'.$j."_".$i]);
+                  //Запись общих аттрибутов и их свойств
+                  if (isset($_POST['selectTegUniversalAttrib'.$j."_".$i])  && isset($_POST['savePola'.$j."_".$i]) && $_POST['selectTegUniversalAttrib'.$j."_".$i]!="----------")
+                      $this->saveAttribTega($nameTablic,$stroka[0],$_POST['selectTegUniversalAttrib'.$j."_".$i],'savePola'.$j."_".$i,$_POST['formGlavnyAttribUniversalny'.$j."_".$i],$_POST['tegRadio'.$j."_".$i]);
+                  
+                  //Запись событий и их свойств
+                  if (isset($_POST['selectTegSobytie'.$j."_".$i])  && isset($_POST['savePola'.$j."_".$i]) && $_POST['selectTegSobytie'.$j."_".$i]!="----------")
+                      $this->saveAttribTega($nameTablic,$stroka[0],$_POST['selectTegSobytie'.$j."_".$i],'savePola'.$j."_".$i,$_POST['formGlavnySobytia'.$j."_".$i],$_POST['tegRadio'.$j."_".$i]);
 
-                //Запись произвольных аттрибутов и их свойств
-                if (isset($_POST['swojAttribZnacenie'.$j."_".$i])  && isset($_POST['savePola'.$j."_".$i]) && $_POST['swojAttrib'.$j."_".$i]!="----------")
-                $this->saveAttribTega($nameTablic,$stroka[0],$_POST['swojAttrib'.$j."_".$i],'savePola'.$j."_".$i,$_POST['swojAttribZnacenie'.$j."_".$i],$_POST['tegRadio'.$j."_".$i]);
-                
-
+                  //Запись произвольных аттрибутов и их свойств
+                  if (isset($_POST['swojAttribZnacenie'.$j."_".$i])  && isset($_POST['savePola'.$j."_".$i]) && $_POST['swojAttrib'.$j."_".$i]!="----------")
+                      $this->saveAttribTega($nameTablic,$stroka[0],$_POST['swojAttrib'.$j."_".$i],'savePola'.$j."_".$i,$_POST['swojAttribZnacenie'.$j."_".$i],$_POST['tegRadio'.$j."_".$i]);
 
                   //подбираем размер шрифта
                   $fontSize=16;
                   $rezultat=$this->strokaAttrbutov($nameTablic,$stroka[0],$i,$j,'&lt','&gt');
                   $cisloVhodowBr=substr_count($rezultat, '<br>');
-                  if ($cisloVhodowBr>1) $fontSize=intdiv ( 180 , $cisloVhodowBr );
-                  if ($fontSize>16) $fontSize=16;
-                  if ($fontSize<7) $fontSize=7;
+                  if ($cisloVhodowBr>1) 
+                      $fontSize=intdiv(180,$cisloVhodowBr);
+                  if ($fontSize>16) 
+                      $fontSize=16;
+                  if ($fontSize<7) 
+                      $fontSize=7;
                   $rezultat='<div style="font-size: '.$fontSize.'px;">'.$rezultat.'</div>';
                   echo $rezultat; 
                   echo '<div class="col-12 statusy">'; // Вывод статусов в правый столбец
                   if (parent::checkedStatus($j,$i,"0",$nameTablic)=="checked") $klass='statusyTrue'; else $klass='statusyFalse';
-                  echo '<div class="'.$klass.'"><p>Гость</p></div>';
+                      echo '<div class="'.$klass.'"><p>Гость</p></div>';
                   if (parent::checkedStatus($j,$i,"1",$nameTablic)=="checked") $klass='statusyTrue'; else $klass='statusyFalse';
-                  echo '<div class="'.$klass.'"><p>Пользователь</p></div>';
+                      echo '<div class="'.$klass.'"><p>Пользователь</p></div>';
                   if (parent::checkedStatus($j,$i,"2",$nameTablic)=="checked") $klass='statusyTrue'; else $klass='statusyFalse';
-                  echo '<div class="'.$klass.'"><p>Редактор</p></div>';
+                      echo '<div class="'.$klass.'"><p>Редактор</p></div>';
                   if (parent::checkedStatus($j,$i,"3",$nameTablic)=="checked") $klass='statusyTrue'; else $klass='statusyFalse';
-                  echo '<div class="'.$klass.'"><p>Подписчик</p></div>';
+                      echo '<div class="'.$klass.'"><p>Подписчик</p></div>';
                   if (parent::checkedStatus($j,$i,"4",$nameTablic)=="checked") $klass='statusyTrue'; else $klass='statusyFalse';
-                  echo '<div class="'.$klass.'"><p>Администратор</p></div>';
+                      echo '<div class="'.$klass.'"><p>Администратор</p></div>';
                   if (parent::checkedStatus($j,$i,"5",$nameTablic)=="checked") $klass='statusyTrue'; else $klass='statusyFalse';
-                  echo '<div class="'.$klass.'"><p>Супер Администратор</p></div>';
+                      echo '<div class="'.$klass.'"><p>Супер Администратор</p></div>';
                   if (parent::checkedStatus($j,$i,"9",$nameTablic)=="checked") $klass='statusyTrue'; else $klass='statusyFalse';
-                  echo '<div class="'.$klass.'"><p>Не проверен</p></div>';
+                      echo '<div class="'.$klass.'"><p>Не проверен</p></div>';
                   echo '</div>';
                 echo '</div></div><br>';
                  }
@@ -2256,7 +2218,7 @@ public function loadTablic($nameTablic)  // загрузить главную т
          echo '</div>';
          echo '<div class="btn btn-outline-info vverhInfoPoleRedaktoraHablona"><a href="#vverh">Вверх</a></div>';
         }
-    }//helpPH16Text
+    }
 ///////////////////////////////////////////////работа в шаблоне////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function cisloUrovnejHablon($nameTablice)  // число уровней шаблона
