@@ -2225,10 +2225,13 @@ class redaktor  extends menu
     {
        $zapros="SELECT MAX(str) FROM ".$nameTablice.'_tegi';
        $rez=parent::zaprosSQL($zapros);
-       if (!$rez) return -1;
+       if ($rez===false) 
+          return -1;
        $stroka=mysqli_fetch_array($rez);
-       if (!isset($stroka)) return -1;
-       if ($stroka[0]==NULL) $stroka[0]=-1;
+       if (!isset($stroka)) 
+          return -1;
+       if (is_null($stroka[0])) 
+          $stroka[0]=-1;
        $rezId=$stroka[0];
        return $rezId;
     }
@@ -2236,10 +2239,13 @@ class redaktor  extends menu
     {
        $zapros="SELECT MAX(stolb) FROM ".$nameTablice.'_tegi';
        $rez=parent::zaprosSQL($zapros);
-       if (!$rez) return -1;
+       if ($rez===false) 
+          return -1;
        $stroka=mysqli_fetch_array($rez);
-       if (!isset($stroka)) return -1;
-       if ($stroka[0]==NULL) $stroka[0]=-1;
+       if (!isset($stroka)) 
+          return -1;
+       if (is_null($stroka[0])) 
+          $stroka[0]=-1;
        $rezId=$stroka[0];
        return $rezId;
     }
@@ -2248,10 +2254,13 @@ class redaktor  extends menu
     {
        $zapros="SELECT text FROM ".$nameTablice."_tegi"." WHERE name_attrib='".$nameAtrib."' AND stolb=".$stolb." AND str=".$str;
        $rez=parent::zaprosSQL($zapros);
-       if (!$rez) return -1;
+       if ($rez===false) 
+          return -1;
        $stroka=mysqli_fetch_array($rez);
-       if (!isset($stroka)) return -1;
-       if ($stroka[0]==NULL) $stroka[0]=-1;
+       if (!isset($stroka)) 
+          return -1;
+       if (is_null($stroka[0])) 
+          $stroka[0]=-1;
        $rezId=$stroka[0];
        return $rezId;
     }
@@ -2259,9 +2268,8 @@ class redaktor  extends menu
     {
       $zapros="SELECT status FROM ".$nameTablic."_status WHERE stolb=".$stolb." AND str=".$str;
       $rez=parent::zaprosSQL($zapros);
-      if (!$rez) return false;
+      if ($rez===false) return false;
       $stroka=mysqli_fetch_array($rez);
-      //if (!$stroka) return false;
       $st=$_SESSION['status'].'';
       if (stripos($stroka[0],$st)>0) return true;
       return false;
@@ -2273,7 +2281,6 @@ class redaktor  extends menu
     {
         $urovnejHablona=$this->cisloUrovnejHablon($nameTablic);
         $stolbovHablona=$this->cisloStolbovjHablon($nameTablic);
-
         ///////////////////////////////////////////// добываем параметры сетки bootstrap
         $stolpBootstrap=array();
         $razdelitBr=0;
@@ -2285,15 +2292,11 @@ class redaktor  extends menu
         $rez=parent::zaprosSQL("SELECT text FROM ".$nameTablic."_tegi WHERE str=0 AND stolb=0 AND name_attrib='ширина столбцов bootstrap'");
         if (!$rez)  // если нет данных, то сделать равные столбцы
           for ($i=1; $i<=$stolbovHablona; $i++)  // создаем фальш строку bootstrap
-          {
             $stolpBootstrap[$i]=12/$stolbovHablona;
-          } 
         $stolbec=mysqli_fetch_array($rez);
         $chars = preg_split('/(-)+?/',$stolbec[0], -1);
         for ($i=1; $i<=$stolbovHablona; $i++)  // достаем параметры столбов bootstrap
-        {
           $stolpBootstrap[$i]=(int)$chars[$i-1];
-        }
         
         echo '<section class="container-fluid section_'.$nameTablic.'">';
         echo '<h4>Редактирование профиля '.$_SESSION['login'].' ('.parent::statusNumerSlovo($_SESSION['status']).')</h4>';
@@ -2304,8 +2307,7 @@ class redaktor  extends menu
         $viv=' ';
         $vivteg='';
         $textPh1h6='0-0';
-        while ($stroka=mysqli_fetch_assoc($rez))
-        {
+        while ($stroka=mysqli_fetch_assoc($rez)) {
             if ($stroka['name_attrib']!='ширина столбцов bootstrap' && $stroka['name_attrib']!='разделение блоков с BR' && $stroka['name_attrib']!='разделение блоков с HR')
               if ($vivteg=='') $vivteg=$stroka['name_teg']; // запоминаем тег, пока он ещё есть
             if ($stroka['name_attrib']!='ширина столбцов bootstrap' && $stroka['name_attrib']!='разделение блоков с BR' && $stroka['name_attrib']!='разделение блоков с HR')
@@ -2317,19 +2319,17 @@ class redaktor  extends menu
             echo $viv;
           ////////////////////////////////////////////////////////////////////////////////////////////////
       
-        for ($stri=1; $stri<$urovnejHablona+1; $stri++)  //Цикл просмотра строк
-          {
+        for ($stri=1; $stri<$urovnejHablona+1; $stri++) { //Цикл просмотра строк
             echo '<div class="row">';
-            for ($stolbi=1; $stolbi<$stolbovHablona+1; $stolbi++) //Цикл просмотра ытолбцов
-              {
+            for ($stolbi=1; $stolbi<$stolbovHablona+1; $stolbi++) { //Цикл просмотра ытолбцов
                 //////////////////////////////////////рисуем поле////////////////////////////////////////////////
-                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                 if ($this->statusRegiHablon($nameTablic,$stolbi,$stri)) //Если всё в порядке со статусом
-                   {
-                     
+                 if ($this->statusRegiHablon($nameTablic,$stolbi,$stri)) {//Если всё в порядке со статусом
                       // вытягиваем все аттрибуты, которые зарегистрированы по рассматриваемой позиции
                       $rez=parent::zaprosSQL("SELECT * FROM ".$nameTablic."_tegi WHERE str=".$stri." AND stolb=".$stolbi);
-                      if (!$rez) {echo 'Не найдена таблица шаблона';break;}
+                      if ($rez===false) {
+                          echo 'Не найдена таблица шаблона';
+                          break;
+                       }
                       $viv=' ';
                       $textNaKnopke='';
                       $for='';
@@ -2340,25 +2340,20 @@ class redaktor  extends menu
                       $nameTega=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$stolbi." FROM ".$nameTablic." WHERE id_tab_gl=".$stri));
                       // обрабатываем чекбоксы и радио в случае, если они заданы блоком
                       $blockJest=false;
-                      if ($nameTega[0]=='checkbox' || $nameTega[0]=='radio')
-                      {
+                      if ($nameTega[0]=='checkbox' || $nameTega[0]=='radio') {
                         $poiskBloka=parent::zaprosSQL("SELECT text FROM ".$nameTablic."_tegi WHERE str=".$stri." AND stolb=".$stolbi." AND name_attrib='блок'" );
                         if (!$poiskBloka) $blockJest=false;    // Если нет данных, значит нет блока
                         $rezPoiskBlok=mysqli_fetch_array($poiskBloka);
                         if (!$rezPoiskBlok[0]) $blockJest=false;  //  Если нет данных, значит нет блока
-                        
-                        if (stripos($rezPoiskBlok[0],$nameTega[0])>0)  //Нашли блок, соответствующий заданному чекбоксу или радио
-                         {
+                        if (stripos($rezPoiskBlok[0],$nameTega[0])>0) { //Нашли блок, соответствующий заданному чекбоксу или радио
                            $blockJest=true; // Нашли блок для нужного чекбокса или радио
                            $strStatus=$this->loadInfoData($nameTablic,$stri,$stolbi);
                            $rezPoiskBlok[0]=preg_replace ("%(<br><label for=)%","<label for=",$rezPoiskBlok[0]); // убираем лишние <br>
                            $rezPoiskBlok[0]=preg_replace ("%(<br><label class=)%","<label class=",$rezPoiskBlok[0]); // убираем лишние <br>
-                           if (stripos($rezPoiskBlok[0],'statusStr'.$stri.'Stolb'.$stolbi)>0) // проверяем привязку к работе со статусами
-                           { 
+                           if (stripos($rezPoiskBlok[0],'statusStr'.$stri.'Stolb'.$stolbi)>0) {// проверяем привязку к работе со статусами
                            $poiskTeg=$nameTega[0]; 
                            $blockStroks=$rezPoiskBlok[0];  // копия строки-блока
                            $chars = preg_split('/((<input).+?(label>)?)/', $blockStroks, -1, PREG_SPLIT_DELIM_CAPTURE);
-
                             // разобрали блок на строки, одна строка = одному пункту
                            $str0=$chars[2].' '.$chars[3];
                            $str1=$chars[5].' '.$chars[6];
@@ -2367,7 +2362,6 @@ class redaktor  extends menu
                            $str4=$chars[14].' '.$chars[15];
                            $str5=$chars[17].' '.$chars[18];
                            $str9=$chars[20].' '.$chars[21];
-                           
                            // Статус 0
                            if (stripos($strStatus,'0')>0)   // Если в строке статусов есть нулевой статус
                             if (!stripos($str0,'checked')>0)   // Если в выводимой строке нет свойства checked то вставить его
@@ -2424,13 +2418,10 @@ class redaktor  extends menu
                       $textPoUmolcaniu="здесь фальш_аттрибута текста по умолчанию нет";
                       //$linkNaImg='здесь фальш_аттрибута источник ссылки нет';
                       //---------------------------------------------------------------------------------------------------
-                     
                       $info=$this->loadInfoData($nameTablic,$stri,$stolbi); //Получаем пользовательское значение из таблицы _data, если оно есть
                       if (!$blockJest) // Есть смысл создавать строку с аттрибутами только если чекбокс или радио не заданы блоком
-                      while ($stroka=mysqli_fetch_assoc($rez))
-                        { 
+                      while ($stroka=mysqli_fetch_assoc($rez)) { 
                          if ($stroka['name_attrib']=='источник текста') $textPh1h6=$stroka['text'];
-                         //if (stripos($stroka['name_attrib'],'ссылки')>0) $linkNaImg=$stroka['text'];
                          // Работаем со стандартным оформлением аттрибутов по схеме <тег аттрибут="значение"> //////////////////////
                          if ($nameTega[0]==$stroka['name_teg']) // отсеваем строки со старыми тегами, если они есть (с неактуальными)
                          if ($nameTega[0]=='img'  && $stroka['name_attrib']!='источник ссылки'
@@ -2446,8 +2437,7 @@ class redaktor  extends menu
                                             || ($nameTega[0]=='button' && $stroka['name_attrib']!='текст на кнопке')
                                               || ($nameTega[0]=='checkbox'  && $stroka['name_attrib']!='текст на кнопке' && $stroka['name_attrib']!='for' && $stroka['name_attrib']!='checked')
                                                 || ($nameTega[0]=='html' && $stroka['name_attrib']!='ввести код') 
-                                  )
-                                  {
+                                  ) {
                                     $text=$stroka['text']; // Значение аттрибута по умолчанию, из таблицы _tegi
                                     
                                     // Если на данный момент рассматривается тег value тега text, и в базе _data есть новое значение, то заменить значение стартовое из _tegi на значение из базы _data
@@ -2466,35 +2456,30 @@ class redaktor  extends menu
                                         else $viv=$viv.' '.$stroka['name_attrib'].'='.$text;
                                   }
                           //------------------------------------------------------------------------------------------------------
-                          if ($stroka['name_attrib']=='checked') $viv=$viv.' checked';  // простые аттрибуты
+                          if ($stroka['name_attrib']=='checked') 
+                              $viv=$viv.' checked';  // простые аттрибуты
                        
-                       //////////////////////////////////////////////////////////////////////////////////////////////////////////
-                       ////////////Работаем со значением Текст на кнопке
-                       if ($stroka['name_attrib']=='текст на кнопке')
-                         {
-                           if ($stroka['name_teg']=='button'                              //выдернуть(запомнить) текст на кнопке
-                             || $stroka['name_teg']=='checkbox'
-                              || $stroka['name_teg']=='radio'
-                               || $stroka['name_teg']=='textarea'
-                                )
-                            $textNaKnopke=$stroka['text'];
+                          //////////////////////////////////////////////////////////////////////////////////////////////////////////
+                          ////////////Работаем со значением Текст на кнопке
+                          if ($stroka['name_attrib']=='текст на кнопке') {
+                              if ($stroka['name_teg']=='button'                              //выдернуть(запомнить) текст на кнопке
+                                  || $stroka['name_teg']=='checkbox'
+                                    || $stroka['name_teg']=='radio'
+                                      || $stroka['name_teg']=='textarea'
+                                  )
+                                $textNaKnopke=$stroka['text'];
                             if ($stroka['name_teg']=='textarea' && $info) $textNaKnopke=$info; // Запоминаем текст в поле Текст ареа.
                           }
                         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        
                         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Работаем с For
                         if ($stroka['name_attrib']=='for')
                           $for=$stroka['text'];                            //выдернуть(запомнить) For
                           ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                           ////////////Работаем с html
-                         if ($nameTega[0]=='html' && $stroka['name_attrib']=='ввести код')// && !$info)
-                          {
+                         if ($nameTega[0]=='html' && $stroka['name_attrib']=='ввести код')
                                $kodHtml=$stroka['text'];                            //выдернуть(запомнить) html код
-                          }
                         ////////////Работаем с img
-                         if ($stroka['name_teg']=='img' && $stroka['name_attrib']=='источник ссылки')
-                           {
-                            //echo $stroka['name_teg'].'--'.$stroka['name_attrib'];
+                         if ($stroka['name_teg']=='img' && $stroka['name_attrib']=='источник ссылки') {
                             $strIstok=0;
                             $stolbIstok=0;
                             $rezult=preg_split("/-/",$stroka['text']);
@@ -2502,16 +2487,17 @@ class redaktor  extends menu
                             $stolbIstok=(int)$rezult[1];
                             $linkImg=$this->loadInfoData($nameTablic,$strIstok,$stolbIstok); //Получаем пользовательское значение из таблицы _data, если оно есть
                             $viv=$viv.' src="'.$linkImg.'"';
-                            if (preg_match("/(http.+)/",$linkImg)) $viv=preg_replace("/(src)?.+(jpg)?/",' src="'.$linkImg.'"',$viv);
+                            if (preg_match("/(http.+)/",$linkImg)) 
+                                $viv=preg_replace("/(src)?.+(jpg)?/",' src="'.$linkImg.'"',$viv);
                            }
                          ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         } ////////////////////////////////////////////////// крнец while
                          ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                          if ($nameTega[0]=='html') $viv='<div '.$viv.'>'.$kodHtml.'</div>';
                          
-                        if (!$blockJest) // Есть смысл создавать строку с аттрибутами только если чекбокс или радио не заданы блоком
-                         if ($nameTega[0]=='checkbox') // добавить текст на кнопке для тега checked и сформировать строку
-                           $viv='<input type="checkbox" '.$viv.'><label for="'.$for.'">'.$textNaKnopke.'</label>';
+                         if (!$blockJest) // Есть смысл создавать строку с аттрибутами только если чекбокс или радио не заданы блоком
+                            if ($nameTega[0]=='checkbox') // добавить текст на кнопке для тега checked и сформировать строку
+                                $viv='<input type="checkbox" '.$viv.'><label for="'.$for.'">'.$textNaKnopke.'</label>';
 
                          if ($nameTega[0]=='button') // добавить текст на кнопке для тега button и сформировать строку
                            $viv='<button '.$viv.'>'.$textNaKnopke.'</button>';
@@ -2520,14 +2506,11 @@ class redaktor  extends menu
                            $viv='<textarea '.$viv.'>'.$textNaKnopke.'</textarea>';
 
                          if ($nameTega[0]=='img')    
-                          $viv='<img '.$viv.'>';
+                           $viv='<img '.$viv.'>';
 
-                          //
-                          if ($nameTega[0]=='p' || $nameTega[0]=='h1' || $nameTega[0]=='h2' || $nameTega[0]=='h3' || $nameTega[0]=='h4' || $nameTega[0]=='h5' || $nameTega[0]=='h6')    
-                          {
+                         if ($nameTega[0]=='p' || $nameTega[0]=='h1' || $nameTega[0]=='h2' || $nameTega[0]=='h3' || $nameTega[0]=='h4' || $nameTega[0]=='h5' || $nameTega[0]=='h6') {
                             // прочитать значение текста из пользовательской таблицы _data
-                            if ($textPoUmolcaniu=="здесь фальш_аттрибута текста по умолчанию нет")
-                              {
+                            if ($textPoUmolcaniu=="здесь фальш_аттрибута текста по умолчанию нет") {
                                 $strIstok=0;
                                 $stolbIstok=0;
                                 $rezult=preg_split("/-/",$textPh1h6);
@@ -2536,17 +2519,16 @@ class redaktor  extends menu
                                 $textPh1h6=mysqli_fetch_array(parent::zaprosSQL("SELECT info FROM ".$nameTablic."_data WHERE str=".$strIstok." AND stolb=".$stolbIstok." AND login='".$_SESSION['login']."'" ));
                                 $viv='<'.$nameTega[0].' '.$viv.'>'.$textPh1h6[0].'</'.$nameTega[0].'>';
                               }
-
-                              if ($textPoUmolcaniu!="здесь фальш_аттрибута текста по умолчанию нет") 
+                            if ($textPoUmolcaniu!="здесь фальш_аттрибута текста по умолчанию нет") 
                                 $viv='<'.$nameTega[0].' '.$viv.'>'.$textPoUmolcaniu.'</'.$nameTega[0].'>';
                           }
 
                          if ($nameTega[0]=='text')
                            $viv='<input type="text" '.$viv.'>';
                          
-                           echo '<div class="col-'.$stolpBootstrap[$stolbi].' bootstrap_'.$stolbi.'_'.$nameTablic.'">';
-                           echo $viv; 
-                           echo '</div>';
+                          echo '<div class="col-'.$stolpBootstrap[$stolbi].' bootstrap_'.$stolbi.'_'.$nameTablic.'">';
+                          echo $viv; 
+                          echo '</div>';
 
                     } else {// конец if
                     echo '<div class="col-'.$stolpBootstrap[$stolbi].' bootstrap_'.$stolbi.'_'.$nameTablic.'">';
@@ -2554,8 +2536,12 @@ class redaktor  extends menu
               } // конец for stolb
               echo '<div class="row">';
               echo '<div class="col">';
-              if ($razdelitBr>0) for ($i=1;$i<=$razdelitBr;$i++) echo '<br>';
-              if ($razdelitHr>0) for ($i=1;$i<=$razdelitHr;$i++) echo '<hr class="Hr'.$nameTablic.'">';
+              if ($razdelitBr>0) 
+                  for ($i=1;$i<=$razdelitBr;$i++) 
+                      echo '<br>';
+              if ($razdelitHr>0) 
+                  for ($i=1;$i<=$razdelitHr;$i++) 
+                      echo '<hr class="Hr'.$nameTablic.'">';
               echo '</div>';
               echo '</div>';
             echo '</div>'; //закрыли тег класса row
@@ -2568,8 +2554,7 @@ class redaktor  extends menu
          //привязка с помощью классов будет в том случае, если нет привязки с помощью фальш-тега "источник ссылки"
          //функция должна вывести ссылку на картинку, используя ключевое слово - второй тег класса. (класс связи - у картинки и у строки, содержащей ссылку должен быть одинаковый второй класс)
          //$classKontakt - вторая часть класса, общая для картинки и поля с ссылкой на картинку, если параметр будет пустым, то функция найдёт картинку по координатам и выделит класс
-  public function searcUrlImage($nameTablic,$str,$stolb,$classKontakt)
-         {
+  public function searcUrlImage($nameTablic,$str,$stolb,$classKontakt) {
            /////////////////////////////////////////////работаем с фальш-тегом "источник ссылки"////////////////////////////////////
            // узнаем источник ссылки с помощью фальш тега, если он есть
            $z=parent::zaprosSQL("SELECT text FROM ".$nameTablic."_tegi WHERE name_attrib='источник ссылки' AND name_teg='img' AND str=".$str." AND stolb=".$stolb);
@@ -2578,35 +2563,35 @@ class redaktor  extends menu
            $strX=(int)$chars[0];
            $stolbX=(int)$chars[1];
            $z=parent::zaprosSQL("SELECT info FROM ".$nameTablic."_data WHERE str=".$strX." AND stolb=".$stolbX." AND  login='".$_SESSION['login']."'");
-           if ($z) $stroka=mysqli_fetch_array($z);
+           if (parent::notFalseAndNULL($z)) $stroka=mysqli_fetch_array($z);
            if (preg_match('/.+?\.(jpg|png|tiff|psd|bmp|gif|jp2)/i',$stroka[0], $matches, PREG_OFFSET_CAPTURE)==1) 
            return $stroka[0];
            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             $str2=0;
             $stolb2=0;
-            if ($classKontakt=='') // если маркировочный класс не задан в входящем параметре, то найдём его
-            {
+            if ($classKontakt=='') {// если маркировочный класс не задан в входящем параметре, то найдём его
               $z=parent::zaprosSQL("SELECT text FROM ".$nameTablic."_tegi WHERE name_attrib='class' AND name_teg='img' AND str=".$str." AND stolb=".$stolb);
-              $stroka=mysqli_fetch_array($z);
+              if (parent::notFalseAndNULL($z))
+                  $stroka=mysqli_fetch_array($z);
               $pozSpace=strripos($stroka[0],' ');
               $classKontakt=mb_substr($stroka[0],$pozSpace);
             }
 
             $z=parent::zaprosSQL("SELECT str,stolb,text FROM ".$nameTablic."_tegi WHERE name_attrib='class' AND name_teg!='img'");
-            while ($stroka=mysqli_fetch_assoc($z))
-            {
-              if (strpos($stroka['text'], $classKontakt)>0) {$str2=$stroka['str'];$stolb2=$stroka['stolb']; } // Если нашли вхождение, то запомнить координаты блока
-              if ($str2>0) Break 1;
-            }
+            if (parent::notFalseAndNULL($z))
+              while ($stroka=mysqli_fetch_assoc($z)) {
+                if (strpos($stroka['text'], $classKontakt)>0) {$str2=$stroka['str'];$stolb2=$stroka['stolb']; } // Если нашли вхождение, то запомнить координаты блока
+                if ($str2>0) break 1;
+              }
             $z=parent::zaprosSQL("SELECT info FROM ".$nameTablic."_data WHERE str=".$str2." AND stolb=".$stolb2." AND login='".$_SESSION['login']."'");
-            if (!$z) return false;
+            if ($z===false) return false;
             $stroka=mysqli_fetch_array($z);
             return $stroka[0];
          }
     public function loadInfoData($nameTablic,$str,$stolb) //Вывести значение столбцы инфо из базы по строке и столбцу
          {
           $z=parent::zaprosSQL("SELECT info FROM ".$nameTablic."_data WHERE str=".$str." AND login='".$_SESSION['login']."' AND stolb=".$stolb);
-          if (!$z) return false;
+          if ($z===false) return false;
           $stroka=(mysqli_fetch_array($z));
           if (!$stroka) return false;
           return $stroka[0];
@@ -2615,27 +2600,23 @@ class redaktor  extends menu
          {
           $id=0;
           $jestNol=false;
-           //проверим есть ли вспомогательная таблица _data если нет, то создадим её 
+          //проверим есть ли вспомогательная таблица _data если нет, то создадим её 
           if (!parent::searcNameTablic($nameTablic.'_data'))
-          parent::zaprosSQL("CREATE TABLE ".$nameTablic."_data"."(id INT, str INT, stolb INT, info VARCHAR(6000), login VARCHAR(100))");
-           
+              parent::zaprosSQL("CREATE TABLE ".$nameTablic."_data"."(id INT, str INT, stolb INT, info VARCHAR(6000), login VARCHAR(100))");
           //проверяем есть ли конкретная запись на нужном месте в таблице. Функция выводит максимальный ID для записей для конкретного места
-           //Если режим одной записи, то есть не дописываем а заменяем запись
-           $id=parent::searcIdPoUsloviu($nameTablic."_data",'str='.$str,'stolb='.$stolb,'login="'.$_SESSION['login'].'"','','');                                                     
-           
-           ///////Прочитать строку с найдеными ИД и логином. Полезно при ИД=0
-           if ($id==0)
-           {
+          //Если режим одной записи, то есть не дописываем а заменяем запись
+          $id=parent::searcIdPoUsloviu($nameTablic."_data",'str='.$str,'stolb='.$stolb,'login="'.$_SESSION['login'].'"','','');                                                     
+          ///////Прочитать строку с найдеными ИД и логином. Полезно при ИД=0
+          if ($id==0) {
             $login=$_SESSION['login'];
             $z=parent::zaprosSQL("SELECT * FROM ".$nameTablic."_data WHERE id=0 AND login='".$login."'");
             $stroka=(mysqli_fetch_assoc($z));
             if ($stroka['str']>0) $jestNol=true;
            }
-            $idMax=parent::maxIdLubojTablicy($nameTablic.'_data'); // поиск максимального id по всей таблице
-            if ($idMax<0) $idMax=0;
-            ////////////////////////////////////////////////////////////////////////////////////////////
-            if ((!$dopis && $id>0) || (!$dopis && $jestNol)) 
-             {
+          $idMax=parent::maxIdLubojTablicy($nameTablic.'_data'); // поиск максимального id по всей таблице
+          if ($idMax<0) $idMax=0;
+          ////////////////////////////////////////////////////////////////////////////////////////////
+          if ((!$dopis && $id>0) || (!$dopis && $jestNol)) {
               $zapros="DELETE FROM redakt_profil_data WHERE id=".$id." AND str=".$str." AND stolb=".$stolb." AND login='".$_SESSION['login']."'";
               parent::zaprosSQL($zapros);
              } 
@@ -2651,27 +2632,21 @@ class redaktor  extends menu
          {
           $urovnejHablona=$this->cisloUrovnejHablon($nameTablic);
           $stolbovHablona=$this->cisloStolbovjHablon($nameTablic);
-          for ($stri=1; $stri<$urovnejHablona+1; $stri++)  //Цикл просмотра строк
-          {
-            for ($stolbi=1; $stolbi<$stolbovHablona+1; $stolbi++) //Цикл просмотра ытолбцов
-              {
+          for ($stri=1; $stri<$urovnejHablona+1; $stri++) { //Цикл просмотра строк
+            for ($stolbi=1; $stolbi<$stolbovHablona+1; $stolbi++) {//Цикл просмотра ытолбцов
                 $nameTega[0]='';
                 $nameTega=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$stolbi." FROM ".$nameTablic." WHERE id_tab_gl=".$stri));
-                if ($nameTega[0]=='text' || $nameTega[0]=='textarea') 
-                 {
+                if ($nameTega[0]=='text' || $nameTega[0]=='textarea') {
                    $searcName=mysqli_fetch_array(parent::zaprosSQL("SELECT text FROM ".$nameTablic."_tegi WHERE str=".$stri.' AND stolb='.$stolbi.' AND name_attrib=\'name\''));
                    if (isset($_POST[$searcName[0]]))
                     $this->saveStrData($nameTablic,$stri,$stolbi,$_POST[$searcName[0]],false);
                  }
-                 if ($nameTega[0]=='radio' || $nameTega[0]=='checkbox') 
-                 {
+                 if ($nameTega[0]=='radio' || $nameTega[0]=='checkbox') {
                    $searcName=mysqli_fetch_array(parent::zaprosSQL("SELECT text FROM ".$nameTablic."_tegi WHERE str=".$stri.' AND stolb='.$stolbi.' AND name_attrib=\'id\''));
                     $this->saveStrData($nameTablic,$stri,$stolbi,$this->statusVStroku($searcName[0]),false);
                  }
-
               }
           }
-
          }
          // прикладная функция преобразовывает блок статусов в строку для БД
          // параметр $nameStatus - это общее имя чекбоксов, к которым прибавится номер порядковый
@@ -2699,133 +2674,109 @@ class redaktor  extends menu
                $attribDlaFor='';
                $zagolowok='';
                $stringSelect='';
-               if ($teg=='form')
-                { 
+               if ($teg=='form') { 
                   echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                   $strokaRez=$tegOpen.'form';
                 }
-               if ($teg=='text')
-                {
+               if ($teg=='text') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'input type="text"';
                 }
-               if ($teg=='password')
-                {
+               if ($teg=='password') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'input type="password"';
                 }
-               if ($teg=='button')
-                {
+               if ($teg=='button') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'button';
                 }
-               if ($teg=='input submit')
-                {
+               if ($teg=='input submit') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'input type="submit"';
                 }
-               if ($teg=='input reset')
-                {
+               if ($teg=='input reset')  {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'input type="reset"';
                 }
-               if ($teg=='img')
-                {
+               if ($teg=='img') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'img';
                 }
-               if ($teg=='textarea')
-                {
+               if ($teg=='textarea') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'textarea';
                 }
-               if ($teg=='radio')
-                {
+               if ($teg=='radio') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br>Колличество пунктов формируется во время создания таблицы.<br></p>';
                  $strokaRez=$tegOpen.'input type="radio"';
                 }
-               if ($teg=='checkbox')
-                {
+               if ($teg=='checkbox') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br>Колличество пунктов формируется во время создания таблицы.<br></p>';
                  $strokaRez=$tegOpen.'input type="checkbox"';
                 }
                 if ($teg=='заголовок')
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br>Колличество пунктов формируется во время создания таблицы.<br></p>';
-               if ($teg=='select')
-                {
+               if ($teg=='select') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br>
                          Для добавления пункта выбираем аттрибут "option", а в его значения вписываем имя_Валуе=имя_Пункта. Пример: name=Gena.<br>
                          Для удаления выбираем аттрибут "удалить option", в качестве значения указываем часть имени value, без первого символа.</p>';
                  $strokaRez=$tegOpen.'select';
                 }
-                if ($teg=='input')
-                {
+                if ($teg=='input') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'input ';
                 }
-                if ($teg=='audio')
-                {
+                if ($teg=='audio') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'audio ';
                 }
-                if ($teg=='embed')
-                {
+                if ($teg=='embed') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'embed ';
                 }
-                if ($teg=='video')
-                {
+                if ($teg=='video') {
                  echo '<p class="mesage strokaAttribP">Задаем необходимые аттрибуты из выпадающих списков.<br>Нижнее поле на случай, если нужного аттрибута нет.<br></p>';
                  $strokaRez=$tegOpen.'video ';
                 }
                 if ($teg=='произвольный')
                  echo '<p class="mesage strokaAttribP">Если нужно вставить тег, то выбираем "вставить тег" и в правом поле записываем имя тега.<br>Если нужно вставить код, то выбираем соответствующий код и в правое поле вставляем его.</p>';
-                if ($teg=='html')
-                 {
+                if ($teg=='html') {
                   echo '<p class="mesage strokaAttribP">Вписываем код html cо скобками тегов</p>';
                   $strokaRez=$tegOpen.'div ';
                  }      
                  if ($teg=='PHP')
                   echo '<p class="mesage strokaAttribP">В разработке</p>';
-                 if ($teg=='javaScript')
-                 {
+                 if ($teg=='javaScript') {
                   echo '<p class="mesage strokaAttribP">В разработке</p>';
                   $strokaRez=$tegOpen.'div ';
                  }   
-                 if ($teg=='VBScript')
-                 {
+                 if ($teg=='VBScript') {
                   echo '<p class="mesage strokaAttribP">В разработке</p>';
                   $strokaRez=$tegOpen.'div ';
                  }   
-                 if ($teg=='JScript')
-                 {
+                 if ($teg=='JScript') {
                   echo '<p class="mesage strokaAttribP">В разработке</p>';
                   $strokaRez=$tegOpen.'div ';
                  }   
-                 if ($teg=='Ruby')
-                 {
+                 if ($teg=='Ruby') {
                   echo '<p class="mesage strokaAttribP">В разработке</p>';
                   $strokaRez=$tegOpen.'div ';
                  }   
-                 if ($teg=='Python')
-                 {
+                 if ($teg=='Python') {
                   echo '<p class="mesage strokaAttribP">В разработке</p>';
                   $strokaRez=$tegOpen.'div ';
                  }     
-                 if ($teg=='Tcl')
-                 {
+                 if ($teg=='Tcl') {
                   echo '<p class="mesage strokaAttribP">В разработке</p>';
                   $strokaRez=$tegOpen.'div ';
                  }  
-                 if ($teg=='C++(bin)')
-                 {
+                 if ($teg=='C++(bin)') {
                   echo '<p class="mesage strokaAttribP">В разработке</p>';
                   $strokaRez=$tegOpen.'div ';
                  } 
               $classDlaLabel='';
               $z=parent::zaprosSQL("SELECT * FROM ".$nameTable."_tegi WHERE name_teg='".$teg."' AND str=".$str." AND stolb=".$pole);
-              while (!is_null($stroka=(mysqli_fetch_assoc($z))))
-               {
+              while (!is_null($stroka=(mysqli_fetch_assoc($z)))) {
                 // Общая переменная определяющая что аттрибут не для тегов, а служебный. Служит для отделения аттрибутов от служебной информации
                 $badAttrib=false; // по умолчанию любой атрибут считается аттрибутом
                 // Список не аттрибутов
@@ -2841,8 +2792,7 @@ class redaktor  extends menu
                 if ($stroka['name_attrib']=="разделение блоков с BR")  $badAttrib=true; //источник ссылки импорт ?-?
                 if ($stroka['name_attrib']=="разделение блоков с HR")  $badAttrib=true; //источник ссылки
                  //работаем с тегом Select
-               if ($teg=='select' && $stroka['name_attrib']=="option") 
-                 {
+               if ($teg=='select' && $stroka['name_attrib']=="option") {
                   $markerTut=strripos ($stroka['text'],'=', 0);
                   $valueName=mb_substr ($stroka['text'],0,$markerTut );
                   $valueZnacenie=mb_substr ($stroka['text'],$markerTut+1,strlen($stroka['text']));
@@ -2894,8 +2844,7 @@ class redaktor  extends menu
                if ($teg=='textarea') $strokaRez=$strokaRez.$nadpisNaButton.$tegOpen.'/textarea'.$tegClose;
                if ($teg=='заголовок') $strokaRez=$tegOpen.$zagolowok.' '.$strokaRez.$nadpisNaButton.$tegOpen.'/'.$zagolowok.$tegClose;
                
-               if ($teg=='radio' || $teg=='checkbox') 
-                                                     { // Проверяем сколько есть в таблице строк и дублируем
+               if ($teg=='radio' || $teg=='checkbox') { // Проверяем сколько есть в таблице строк и дублируем
                                                        $strokaRez=$strokaRez.'<br>'.$tegOpen.'label ';
                                                        if ($classDlaLabel!='') $strokaRez=$strokaRez.'class="'.$classDlaLabel.'" ';
                                                        $strokaRez=$strokaRez.'for="'.$attribDlaFor.'"'.$tegClose.$nadpisNaButton.$tegOpen.'/label'.$tegClose;
@@ -2903,11 +2852,9 @@ class redaktor  extends menu
                                                        $strokaTime=$strokaRez; 
                                                        $strokaHablon=$strokaRez;
                                                        $j=$this->nomerChecboxRadio($nameTable,$str,$pole);
-                                                       if ($j>1) 
-                                                       {
+                                                       if ($j>1)  {
                                                         $strokaRez='';
-                                                       for ($i=1; $i<=$j; $i++)
-                                                        {
+                                                       for ($i=1; $i<=$j; $i++) {
                                                           // работаем с id
                                                           $idNew=$this->nameAttibuta($nameTable,$str,$pole,'id');
                                                           $idNew='id="'.$idNew.'_'.$i.'"';
@@ -2929,8 +2876,7 @@ class redaktor  extends menu
                                                          // работаем с со строками
                                                          $texttext='Текст '.$i;
                                                          $idNew=$this->nameAttibuta($nameTable,$str,$pole,$texttext);
-                                                         if ($idNew)
-                                                         {
+                                                         if ($idNew) {
                                                          $idNew=$forRestor.$tegClose.$idNew.$tegOpen;
                                                          $poisk="%(for)\S+".$tegClose."\S+".$tegOpen."%";
                                                          $poisk2="%(for)\S+".$tegClose."\s+".$tegOpen."%";
@@ -2954,7 +2900,6 @@ class redaktor  extends menu
                if ($teg=='Python') $strokaRez=$strokaRez.$nadpisNaButton.$stringSelect.'<br>'.$tegOpen.'/div'.$tegClose;
                if ($teg=='Tcl') $strokaRez=$strokaRez.$nadpisNaButton.$stringSelect.'<br>'.$tegOpen.'/div'.$tegClose;
                if ($teg=='C++(bin)') $strokaRez=$strokaRez.$nadpisNaButton.$stringSelect.'<br>'.$tegOpen.'/div'.$tegClose;
-              
                return $strokaRez;
              }
         // добыть значение аттрибута для размножения checkbox radio
@@ -3030,11 +2975,9 @@ class redaktor  extends menu
          ///////////////////////////////////////////////
          
          //Ищем в аттрибуте слово "текст" для работы с надписями на чекбоксах
-         if (preg_match('/(текст)/', $attrib, $matches, PREG_OFFSET_CAPTURE)==1) 
-         {
+         if (preg_match('/(текст)/', $attrib, $matches, PREG_OFFSET_CAPTURE)==1) {
          $poiskText=$matches[0];
-         if ($poiskText[0]=='text')
-          {
+         if ($poiskText[0]=='text') {
            parent::zaprosSQL("DELETE FROM `".$nameTable."_tegi` WHERE stolb=".$pole." AND str=".$str." AND name_attrib='".$attrib."'");
            $stroka="INSERT INTO ".$nameTable."_tegi(stolb, str, name_teg, name_attrib, text) VALUES (".$pole.",".$str.",'".$teg."','".$attrib."','".$strokaTime."')";
            parent::zaprosSQL($stroka);  
@@ -3042,8 +2985,7 @@ class redaktor  extends menu
           }
          }
 
-         if ($attrib=='сохранить блок' && isset($_SESSION['text_checkbox_'.$str.'_'.$pole]))
-         {
+         if ($attrib=='сохранить блок' && isset($_SESSION['text_checkbox_'.$str.'_'.$pole])) {
            $strokaTime=preg_replace('%\&lt%','<',$_SESSION['text_checkbox_'.$str.'_'.$pole]);
            $strokaTime=preg_replace('%\&gt%','>',$strokaTime);
            $stroka="INSERT INTO ".$nameTable."_tegi(stolb, str, name_teg, name_attrib, text) VALUES (".$pole.",".$str.",'".$teg."','блок','".$strokaTime."')";
@@ -3052,19 +2994,15 @@ class redaktor  extends menu
          }
          //очистить аттрибуты
          if ($attrib=='очистить аттрибуты')
-         {
           parent::zaprosSQL("DELETE FROM `".$nameTable."_tegi` WHERE stolb=".$pole." AND str=".$str);
-         }
          // импорт аттрибутов
-         if ($attrib=='импорт из клетки ?-?')
-         {
+         if ($attrib=='импорт из клетки ?-?') {
            $pozicii=preg_split("/-/",$text);  // находим позицию - источник импорта
            $strP=(int)$pozicii[0];                 // находим позицию - источник импорта
            $stolpP=(int)$pozicii[1];               // находим позицию - источник импорта
            $strokaImport=parent::zaprosSQL("SELECT * FROM ".$nameTable."_tegi WHERE stolb=".$stolpP." AND str=".$strP);
            
-           while (!is_null($zCopy=mysqli_fetch_assoc($strokaImport)))
-           {
+           while (!is_null($zCopy=mysqli_fetch_assoc($strokaImport))) {
                   $strokaTime=preg_replace('%(Str)[0-9]+?%','Str'.$str,$zCopy['text']);
                   $strokaTime2=preg_replace('%(Stolb)[0-9]+?%','Stolb'.$pole,$strokaTime);
                   $zCopy['text']=$strokaTime2;
@@ -3073,22 +3011,19 @@ class redaktor  extends menu
                   //parent::printTab ($stroka,1);
             }
          }
-         if ($attrib=='удалить блок' && isset($_SESSION['text_checkbox_'.$str.'_'.$pole]))
-         {
+         if ($attrib=='удалить блок' && isset($_SESSION['text_checkbox_'.$str.'_'.$pole])) {
            parent::zaprosSQL("DELETE FROM `".$nameTable."_tegi` WHERE stolb=".$pole." AND str=".$str." AND name_attrib='блок'");
            return true;
          }
          ////////////////////////////////////////////////////
-         if ($teg=='произвольный' && $attrib=='задать тег' || $teg=='заголовок' && $attrib=='задать тег') 
-          {
+         if ($teg=='произвольный' && $attrib=='задать тег' || $teg=='заголовок' && $attrib=='задать тег') {
           $stroka="UPDATE ".$nameTable." SET poz".$pole."='".$text."' WHERE id_tab_gl=".$str;// WHERE 1
           parent::zaprosSQL($stroka);   
           return true;
           }
 
         // вставить html код
-     if (($teg=='html' || $teg=='PHP' || $teg=='javaScript' || $teg=='VBScript' || $teg=='JScript' || $teg=='Ruby' || $teg=='Python' || $teg=='Tcl' || $teg=='C++(bin)') && $attrib=='ввести код') 
-        {
+     if (($teg=='html' || $teg=='PHP' || $teg=='javaScript' || $teg=='VBScript' || $teg=='JScript' || $teg=='Ruby' || $teg=='Python' || $teg=='Tcl' || $teg=='C++(bin)') && $attrib=='ввести код') {
          $stroka=mysqli_fetch_array($z);
          if ($text!="-")
            $kodVpis=$stroka[0].$text; 
@@ -3101,99 +3036,85 @@ class redaktor  extends menu
                 }
       }
         // вставить html код
-         if ($attrib=='вставить HTML код') 
-           {
+         if ($attrib=='вставить HTML код') {
             $z=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$pole." FROM ".$nameTable." WHERE id_tab_gl=".$str));
             if ($z[0]=="html") return true;
 
              $stroka="UPDATE ".$nameTable." SET poz".$pole."='html' WHERE id_tab_gl=".$str;
              parent::zaprosSQL($stroka);
-             if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-                {
+             if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
                   $_SESSION['obnovit']=false;
                   $_SESSION['pokazNULL']=false;
                   echo '<script>location.reload();</script>';
                 }
          }
           // вставить php код
-           if ($attrib=='вставить PHP код') 
-             {
+           if ($attrib=='вставить PHP код') {
               $z=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$pole." FROM ".$nameTable." WHERE id_tab_gl=".$str));
               if ($z[0]=="PHP") return true;
                  $stroka="UPDATE ".$nameTable." SET poz".$pole."='PHP' WHERE id_tab_gl=".$str;
                  parent::zaprosSQL($stroka);
-                  if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-                    {
+                  if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
                       $_SESSION['obnovit']=false;
                       $_SESSION['pokazNULL']=false;
                       echo '<script>location.reload();</script>';
                     }
              }
           // вставить javaScript код
-          if ($attrib=='вставить javaScript код') 
-          {
+          if ($attrib=='вставить javaScript код') {
            $z=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$pole." FROM ".$nameTable." WHERE id_tab_gl=".$str));
            if ($z[0]=="javaScript") return true;
               $stroka="UPDATE ".$nameTable." SET poz".$pole."='javaScript' WHERE id_tab_gl=".$str;
               parent::zaprosSQL($stroka);
-               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-                 {
+               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
                    $_SESSION['obnovit']=false;
                    $_SESSION['pokazNULL']=false;
                    echo '<script>location.reload();</script>';
                  }
           }
           // вставить VBScript код
-          if ($attrib=='вставить VBScript код') 
-          {
+          if ($attrib=='вставить VBScript код') {
            $z=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$pole." FROM ".$nameTable." WHERE id_tab_gl=".$str));
            if ($z[0]=="VBScript") return true;
               $stroka="UPDATE ".$nameTable." SET poz".$pole."='VBScript' WHERE id_tab_gl=".$str;
               parent::zaprosSQL($stroka);
-               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-                 {
+               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
                    $_SESSION['obnovit']=false;
                    $_SESSION['pokazNULL']=false;
                    echo '<script>location.reload();</script>';
                  }
           }
           // вставить JScript код
-          if ($attrib=='вставить JScript код') 
-          {
+          if ($attrib=='вставить JScript код') {
            $z=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$pole." FROM ".$nameTable." WHERE id_tab_gl=".$str));
            if ($z[0]=="JScript") return true;
               $stroka="UPDATE ".$nameTable." SET poz".$pole."='JScript' WHERE id_tab_gl=".$str;
               parent::zaprosSQL($stroka);
-               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-                 {
+               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
                    $_SESSION['obnovit']=false;
                    $_SESSION['pokazNULL']=false;
                    echo '<script>location.reload();</script>';
                  }
           }
           // вставить Ruby код
-          if ($attrib=='вставить Ruby код') 
-          {
+          if ($attrib=='вставить Ruby код') {
            $z=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$pole." FROM ".$nameTable." WHERE id_tab_gl=".$str));
            if ($z[0]=="Ruby") return true;
               $stroka="UPDATE ".$nameTable." SET poz".$pole."='Ruby' WHERE id_tab_gl=".$str;
               parent::zaprosSQL($stroka);
-               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-                 {
+               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
                    $_SESSION['obnovit']=false;
                    $_SESSION['pokazNULL']=false;
                    echo '<script>location.reload();</script>';
                  }
           }      
           // вставить Python код
-          if ($attrib=='вставить Python код') 
-          {
+          if ($attrib=='вставить Python код') {
            $z=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$pole." FROM ".$nameTable." WHERE id_tab_gl=".$str));
            if ($z[0]=="Python") return true;
               $stroka="UPDATE ".$nameTable." SET poz".$pole."='Python' WHERE id_tab_gl=".$str;
               parent::zaprosSQL($stroka);
-               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-                 {
+               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
                    $_SESSION['obnovit']=false;
                    $_SESSION['pokazNULL']=false;
                    echo '<script>location.reload();</script>';
@@ -3201,61 +3122,51 @@ class redaktor  extends menu
           }     
           
           // вставить Tcl код
-          if ($attrib=='вставить Tcl код') 
-          {
+          if ($attrib=='вставить Tcl код') {
            $z=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$pole." FROM ".$nameTable." WHERE id_tab_gl=".$str));
            if ($z[0]=="Tcl") return true;
               $stroka="UPDATE ".$nameTable." SET poz".$pole."='Tcl' WHERE id_tab_gl=".$str;
               parent::zaprosSQL($stroka);
-               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-                 {
+               if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
                    $_SESSION['obnovit']=false;
                    $_SESSION['pokazNULL']=false;
                    echo '<script>location.reload();</script>';
                  }
           }  
            // вставить C++(bin) код
-           if ($attrib=='вставить C++(bin) код') 
-           {
+           if ($attrib=='вставить C++(bin) код') {
             $z=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$pole." FROM ".$nameTable." WHERE id_tab_gl=".$str));
             if ($z[0]=="C++(bin)") return true;
                $stroka="UPDATE ".$nameTable." SET poz".$pole."='C++(bin)' WHERE id_tab_gl=".$str;
                parent::zaprosSQL($stroka);
-                if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-                  {
+                if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
                     $_SESSION['obnovit']=false;
                     $_SESSION['pokazNULL']=false;
                     echo '<script>location.reload();</script>';
                   }
            }           
 
-         if ($teg=='select' && $attrib=="удалить option") 
-            {
+         if ($teg=='select' && $attrib=="удалить option") {
               $zz="SELECT * FROM ".$nameTable."_tegi WHERE stolb=".$pole." AND str=".$str." AND name_teg='".$teg."'";
               $rezz=parent::zaprosSQL($zz);
-              while (!is_null($stroka1=(mysqli_fetch_array($rezz))))
-               {
+              while (!is_null($stroka1=(mysqli_fetch_array($rezz)))) {
                 if (strripos($stroka1['text'], $text ,0))
                 parent::zaprosSQL("DELETE FROM `".$nameTable."_tegi` WHERE stolb=".$pole." AND str=".$str." AND text='".$stroka1['text']."'");
                }  
             }
             /////////////////////////////
-          if ($text!="-" && $attrib!='задать тег' &&  $attrib!='удалить' && $attrib!='удалить option' && $attrib!='вставить HTML код' && $attrib!='ввести код')
-            {
+          if ($text!="-" && $attrib!='задать тег' &&  $attrib!='удалить' && $attrib!='удалить option' && $attrib!='вставить HTML код' && $attrib!='ввести код') {
             $z=parent::zaprosSQL("INSERT INTO ".$nameTable."_tegi (`stolb`, `str`, `name_teg`, `name_attrib`, `text`, `string_ili_int`) VALUES (".$pole.",".$str.",'".$teg."','".$attrib."','".$text."' ,".$stringIliInt.")");
             return true;
             }
           //////////////////////////////////////////////
 
-          if ($attrib=='задать тег' && $text!="" && $z['id_tab_gl']==$str && $attrib!='удалить option') 
-           {
+          if ($attrib=='задать тег' && $text!="" && $z['id_tab_gl']==$str && $attrib!='удалить option') {
            $z=mysqli_fetch_assoc(parent::zaprosSQL("SELECT * FROM ".$nameTable." WHERE poz".$pole."='произвольный'"));
-           if ($z["poz".$pole]=='произвольный')
-            {
+           if ($z["poz".$pole]=='произвольный') {
              $stroka="UPDATE ".$nameTable." SET poz".$pole."='".$text."' WHERE id_tab_gl=".$str;
              parent::zaprosSQL($stroka);
-             if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-             {
+             if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
               $_SESSION['obnovit']=false;
              echo '<script>location.reload();</script>';
              return true;
@@ -3263,15 +3174,12 @@ class redaktor  extends menu
             }
            }
           //////////////////////////////////////
-          if ($attrib=='задать тег' && $text!="" && $z['id_tab_gl']==$str) 
-           {
+          if ($attrib=='задать тег' && $text!="" && $z['id_tab_gl']==$str) {
             $z=mysqli_fetch_assoc(parent::zaprosSQL("SELECT * FROM ".$nameTable." WHERE poz".$pole."='NULL'"));
-             if ($z["poz".$pole]=='NULL' || $z["poz".$pole]=='произвольный')
-             {
+             if ($z["poz".$pole]=='NULL' || $z["poz".$pole]=='произвольный') {
              $stroka="UPDATE ".$nameTable." SET poz".$pole."='".$text."' WHERE id_tab_gl=".$str;
              parent::zaprosSQL($stroka);
-             if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-             {
+             if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
               $_SESSION['obnovit']=false;
               $_SESSION['pokazNULL']=false;
              echo '<script>location.reload();</script>';
@@ -3279,8 +3187,7 @@ class redaktor  extends menu
             }
            }
          //////////////////////////////////////
-          if ($attrib=='задать тег' && $text!="") 
-          {
+          if ($attrib=='задать тег' && $text!="") {
             // для блокировки циклических обновлений проверяем отработала ли функция, если да, то обновление страницы произошло
             $z=mysqli_fetch_array(parent::zaprosSQL("SELECT poz".$pole." FROM ".$nameTable." WHERE id_tab_gl=".$str));
             // выполняем задачу по смене значения NULL на нужный тег
@@ -3291,12 +3198,10 @@ class redaktor  extends menu
             echo '<script>location.reload();</script>';
           }
            /////////////////
-           if ($attrib=='удалить' && $attrib!='удалить option') 
-            {
+           if ($attrib=='удалить' && $attrib!='удалить option') {
               $stroka="UPDATE ".$nameTable." SET poz".$pole."='NULL' WHERE id_tab_gl=".$str;
               parent::zaprosSQL($stroka);
-              if (isset($_SESSION['obnovit']) && $_SESSION['obnovit'])
-              {
+              if (isset($_SESSION['obnovit']) && $_SESSION['obnovit']) {
                $_SESSION['obnovit']=false;
                $_SESSION['pokazNULL']=false;
               echo '<script>location.reload();</script>';
@@ -3315,20 +3220,14 @@ class redaktor  extends menu
         public function poiskButtonName() // поиск названия кнопки, которая была нажата
         {
           $i=1;$j=1;
-          if (isset($_SESSION['nameTablice']))
-          {
+          if (isset($_SESSION['nameTablice'])) {
           $this->strok=parent::kolVoZapisTablice($_SESSION['nameTablice']);
            $this->stolb=parent::kolVoStolbovTablice($_SESSION['nameTablice']);
           }
-          if (isset($_SESSION['clickButtonGlawnPole']) && $_SESSION['clickButtonGlawnPole'])
-          { 
+          if (isset($_SESSION['clickButtonGlawnPole']) && $_SESSION['clickButtonGlawnPole']) { 
             for ($i=1; $i<=$this->strok; $i++) //перебираем столбцы начиная с первого.
-            {
              for ($j=1; $j<$this->stolb; $j++)  // перебираем строки с первойkolVoZapisTablice
-              {
                 if (isset($_POST['savePola'.$j."_".$i])) return $j."_".$i;
-              }
-            }
           }
           $j=0;
           $i=0;
