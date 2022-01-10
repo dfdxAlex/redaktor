@@ -3244,23 +3244,18 @@ class redaktor  extends menu
           $zz=mysqli_fetch_array(parent::zaprosSQL("SELECT text FROM ".$nameTablic."_tegi WHERE stolb=".$poz." AND str=".$str." AND name_attrib='число строк'"));
           $vivod='';
           for ($i=1; $i<=$zz[0]; $i++) $vivod=$vivod.'<option>Текст '.$i.'</option>';
-          
           return $vivod;
         }
         public function attribTega($nameSelect,$teg,$nameTablic)
         {
-          
           echo '<select name="'.$nameSelect.'" class="poleRedaktGlawnTablTegSelect">';
           echo '<optgroup label="Основные атрибуты">';
           echo '<option>----------</option>';
           echo '<option>удалить</option>';
           if ($teg=='html'  || $teg=='PHP' || $teg=='javaScript' || $teg=='VBScript' || $teg=='JScript' || $teg=='Ruby' || $teg=='Python' || $teg=='Tcl' || $teg=='C++(bin)')
-          {
             echo '<option>ввести код</option>';
-          }
           
-          if ($teg=='произвольный' || $teg=='NULL')
-          {
+          if ($teg=='произвольный' || $teg=='NULL') {
             echo '<option>вставить HTML код</option>';
             echo '<option>вставить PHP код</option>';
             echo '<option>вставить javaScript код</option>';
@@ -3273,47 +3268,39 @@ class redaktor  extends menu
             echo '<option>задать тег</option>';
           }
          
-          if ($teg=='заголовок')
-        {
-          echo '<option>h1</option>';
-          echo '<option>h2</option>';
-          echo '<option>h3</option>';
-          echo '<option>h4</option>';
-          echo '<option>h5</option>';
-          echo '<option>h6</option>';
-          echo '<option>p</option>';
-        }
+          if ($teg=='заголовок') {
+              echo '<option>h1</option>';
+              echo '<option>h2</option>';
+              echo '<option>h3</option>';
+              echo '<option>h4</option>';
+              echo '<option>h5</option>';
+              echo '<option>h6</option>';
+              echo '<option>p</option>';
+            }
 
-        if ($teg=='select')
-        {
+        if ($teg=='select') {
         echo '<option>удалить option</option>';
         echo '<option>option</option>';
         }
 
         if ($teg=='img')
-        {
-        echo '<option>источник ссылки</option>';
-        }
-        if ($teg=='p' || $teg=='h1' || $teg=='h2' || $teg=='h3' || $teg=='h4' || $teg=='h5' || $teg=='h6')
-        {
+            echo '<option>источник ссылки</option>';
+        if ($teg=='p' || $teg=='h1' || $teg=='h2' || $teg=='h3' || $teg=='h4' || $teg=='h5' || $teg=='h6') {
         echo '<option>текст по умолчанию</option>';
         echo '<option>источник текста</option>';
         }
-        if ($teg=='form')
-        {
+        if ($teg=='form') {
         echo '<option>ширина столбцов bootstrap</option>';
         echo '<option>разделение блоков с BR</option>';
         echo '<option>разделение блоков с HR</option>';
         }
 
-        if ($teg=='video source')
-        {
+        if ($teg=='video source') {
         echo '<option>удалить source</option>';
         echo '<option>source</option>';
         }
 
-        if ($teg=='radio' || $teg=='checkbox')
-        {
+        if ($teg=='radio' || $teg=='checkbox') {
          echo '<option>сохранить блок</option>';
          echo '<option>удалить блок</option>';
          echo '<option>импорт из клетки ?-?</option>';
@@ -3322,39 +3309,39 @@ class redaktor  extends menu
         }
         echo '<option>очистить аттрибуты</option>';
         if ($teg=='radio' || $teg=='checkbox')
-        echo '<option>число строк</option>';
+            echo '<option>число строк</option>';
         if ($teg=='button' || $teg=='textarea' || ($teg=='radio' && $this->nomerStrokRadio($nameSelect,$nameTablic)=='') || ($teg=='checkbox' && $this->nomerStrokRadio($nameSelect,$nameTablic)=='') || $teg=='заголовок')
-          echo '<option>текст на кнопке</option>';
+            echo '<option>текст на кнопке</option>';
         if ($teg=='input submit' || $teg=='input reset' || $teg=='input')
-          echo '<option>accept</option>';
+            echo '<option>accept</option>';
         if ($teg=='text' || $teg=='password' || $teg=='button' || $teg=='input submit' || $teg=='input reset' || $teg=='input' || $teg=='select')
-          echo '<option>accesskey</option>';
+            echo '<option>accesskey</option>';
         if ($teg=='button'  || $teg=='img' || $teg=='input' || $teg=='embed' || $teg=='html'  || $teg=='PHP' || $teg=='javaScript' || $teg=='VBScript' || $teg=='JScript' || $teg=='Ruby' || $teg=='Python' || $teg=='Tcl' || $teg=='C++(bin)')
-          echo '<option>align</option>';
+            echo '<option>align</option>';
         if ($teg=='button'  || $teg=='img' || $teg=='input')
-          echo '<option>alt</option>';
+            echo '<option>alt</option>';
         if ($teg=='text' || $teg=='password' || $teg=='textarea' || $teg=='input')
-          echo '<option>autocomplete</option>';
+            echo '<option>autocomplete</option>';
         if ($teg=='text' || $teg=='password' || $teg=='button' || $teg=='input submit' || $teg=='input reset' || $teg=='textarea' || $teg=='select' || $teg=='input')
-          echo '<option>autofocus</option>';
+            echo '<option>autofocus</option>';
         if ($teg=='form' || $teg=='password' || $teg=='button' || $teg=='input')
-          echo '<option>accept-charset</option>';
+            echo '<option>accept-charset</option>';
         if ($teg=='textarea' || $teg=='input' || $teg=='form')
-          echo '<option>action</option>';
+            echo '<option>action</option>';
         if ($teg=='form' || $teg=='input')
-          echo '<option>autocapitalize</option>';
+            echo '<option>autocapitalize</option>';
         if ($teg=='textarea' || $teg=='input')
-          echo '<option>autocorrect</option>';
+            echo '<option>autocorrect</option>';
         if ($teg=='audio' || $teg=='audio source' || $teg=='video' || $teg=='video source')
-          echo '<option>autoplay</option>';
+            echo '<option>autoplay</option>';
         if ($teg=='img' || $teg=='input')
-          echo '<option>border</option>';
+            echo '<option>border</option>';
         if ($teg=='radio' || $teg=='checkbox' || $teg=='input')
-          echo '<option>checked</option>';
+            echo '<option>checked</option>';
         if ($teg=='img')
-          echo '<option>crossorigin</option>';
+            echo '<option>crossorigin</option>';
         if ($teg=='textarea' || $teg=='input')
-          echo '<option>cols</option>';
+            echo '<option>cols</option>';
         if ($teg=='audio' || $teg=='audio source' || $teg=='video' || $teg=='video source')
           echo '<option>controls</option>';
         if ($teg=='text' || $teg=='password' || $teg=='button' || $teg=='input submit' || $teg=='input reset' || $teg=='textarea' || $teg=='select' || $teg=='input')
@@ -3471,7 +3458,6 @@ class redaktor  extends menu
         }
         public function attribUniwersalnye($nameSelect)
         {
-
           echo '<select name="'.$nameSelect.'" class="poleRedaktGlawnTablTegSelect">';
           echo '<optgroup label="Универсальные атрибуты">';
           echo '<option>----------</option>';
@@ -3509,7 +3495,6 @@ class redaktor  extends menu
         public function sobytia($nameSelect)
         {
           echo '<select name="'.$nameSelect.'" class="poleRedaktGlawnTablTegSelect">';
-          
           echo '<optgroup label="События">';
           echo '<option>----------</option>';
           echo '<option>onblur</option>';
@@ -3539,7 +3524,6 @@ class redaktor  extends menu
           $stroka=mysqli_fetch_assoc($z);
           return $stroka['text'];
         }
-      
 
         public function createFormTablicyMenu($nameTablic,$kol_voStrokVvod)
         {
@@ -3560,15 +3544,12 @@ class redaktor  extends menu
             $kol_voStrok=$kol_voZapisejTablicaTablic['kol_voKn'];
             //Находим максимальное значение из трёх источников: из таблицы таблиц, из введенного и из фактического
             if ($kol_voStrokVvod>=$kol_voZapisej) $maxKnopok=$kol_voStrokVvod; else $maxKnopok=$kol_voZapisej;
-            if ($maxKnopok>$kol_voStrok)
-            {
+            if ($maxKnopok>$kol_voStrok) {
                 $kol_voStrok=$maxKnopok;
                 $zapros="UPDATE tablica_tablic SET `kol_voKn`=".$kol_voStrok." WHERE NAME='".$nameTablic."'";
                 parent::zaprosSQL($zapros);
             }
-            //parent::printMas($kol_voZapisejTablicaTablic['kol_voKn']);
-            if ($kol_voZapisej>$kol_voZapisejTablicaTablic['kol_voKn'])
-              {
+            if ($kol_voZapisej>$kol_voZapisejTablicaTablic['kol_voKn']) {
                 $zapros="UPDATE tablica_tablic SET `kol_voKn`=".$kol_voStrok." WHERE NAME='".$nameTablic."'";
                 parent::zaprosSQL($zapros);
               } else $kol_voZapisej=$kol_voZapisejTablicaTablic['kol_voKn'];
@@ -3582,10 +3563,8 @@ class redaktor  extends menu
             $url="";
             $class="";
             $status="";
-            for ($i=0; $i<$kol_voStrok; $i++)
-            {
-                if (!is_null($kol_voZapisej) && $kol_voZapisej>$i)
-                 {
+            for ($i=0; $i<$kol_voStrok; $i++) {
+                if (!is_null($kol_voZapisej) && $kol_voZapisej>$i) {
                   $stroka=mysqli_fetch_assoc($rez);
                   $id=$stroka['ID'];
                   $name=preg_quote($stroka['NAME']);
@@ -3620,8 +3599,7 @@ class redaktor  extends menu
         public function infoMenu($nameTablic)
         {
            $typeMenu=parent::typMenu($nameTablic);
-           if ($typeMenu==1 || $typeMenu==3 || $typeMenu==4 || $typeMenu==5 || $typeMenu==6 || $typeMenu==7 || $typeMenu==8 || $typeMenu==9)
-            {
+           if ($typeMenu==1 || $typeMenu==3 || $typeMenu==4 || $typeMenu==5 || $typeMenu==6 || $typeMenu==7 || $typeMenu==8 || $typeMenu==9) {
               echo '<section class="container">';
               echo '<dl class="row help_menu_row">';
               ////////////////////////////////////////////////////////////////
@@ -3763,8 +3741,7 @@ class redaktor  extends menu
                 echo '<p>Если в третьем столбце будет слово text, а имя кнопки будет отличаться от слова br, то меню поставит текстовое <br>поле для ввода информации.</p>';
                 echo '<p>Данную возможность следует использовать с магическим методом, и в массиве магического метода перечислить надписи <br>внутри текстовых полей.</p>';
                 echo '<p>Если в третьем столбце будет слово text, а в столбце имени слово br, то меню установит тег BR и переведёт строку вниз.</p>';
-                if ($typeMenu==9)
-                {
+              if ($typeMenu==9) {
                 echo '<p>Если в третьем столбце будет слово "hr", то меню поставит горизонтальную линию.</p>';
                 echo '<p>Если в третьем столбце будет слово "col1", то меню выведет текст, написанный в поле URL на всю ширину страницы <br>в контейнере Bootstrap на 1 столбец.<br><b><i>NAME=col1 --- URL=Текст на всю ширину страницы</i></b></p>';
                 echo '<p>Если в третьем столбце будет слово "col2", то меню выведет текст, написанный в поле URL на всю ширину страницы <br>в двух одинаковых контейнерах Bootstrap на 2 равных столбеца. Выводимый текст должен быть разделен знаком "&" на два столбца.<br><b><i>NAME=col2 --- URL=Текст первого столбца&Текст второго столбца.</i></b></p>';
@@ -3886,8 +3863,7 @@ class redaktor  extends menu
               echo '</dl>';
               echo'</section>';
             }
-          if ($typeMenu==2)
-            {
+          if ($typeMenu==2) {
               echo '<section class="container">';
               echo '<dl class="row help_menu_row">';
 
@@ -3952,11 +3928,9 @@ class redaktor  extends menu
               echo '<code> }</code><br>';
               echo '<p>где поле NAME - это имя нужной, для перехвата, кнопки</p>';
               echo '</dd>';
-
               echo '</dl>';
               echo'</section>';
             } 
-
         }
      // простая функция, выводит из базы меню все кнопки подряд
      // $nameTablic - имя таблицы менюшки
@@ -3981,14 +3955,12 @@ class redaktor  extends menu
             $url="URL".$i;
             $class="CLASS".$i;
             $status="STATUS".$i;
-            while (isset($_POST[$id]))
-             {
+            while (isset($_POST[$id])) {
                 if ($_POST[$name]!="") {
                   if ($typeMenu==34)
                     $zapros="INSERT INTO ".$nameTablic."(`ID`, `NAME`, `URL`, `CLASS`) VALUES (".$_POST[$id].",'".$_POST[$name]."','".$_POST[$url]."','".$_POST[$class]."')";
                     if ($typeMenu==5) 
                     $zapros="INSERT INTO ".$nameTablic."(`ID`, `NAME`, `URL`, `CLASS`, `STATUS`) VALUES (".$_POST[$id].",'".$_POST[$name]."','".$_POST[$url]."','".$_POST[$class]."','".$_POST[$status]."')";
-
                     $rez=parent::zaprosSQL($zapros);
                 }
                 $i++;
@@ -4015,8 +3987,7 @@ class redaktor  extends menu
 
 class menu extends initBD
  {
-     public function __construct()
-     {
+     public function __construct() {
         parent::__construct();
         $this->zapuskMenuMagiceski=false;
          $this->kn[0]=false;
@@ -4037,18 +4008,15 @@ class menu extends initBD
          $this->kn[15]=false;
          $this->con = mysqli_connect($this->initBdHost(),$this->initBdLogin(),$this->initBdParol(),$this->initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд
      
-         if (!parent::searcNameTablic('type_menu_po_imeni'))   // Проверяем есть ли таблица с названия-типами меню
-         {
+         if (!parent::searcNameTablic('type_menu_po_imeni')) {  // Проверяем есть ли таблица с названия-типами меню
            $zapros="CREATE TABLE type_menu_po_imeni(
                                                      name_menu    VARCHAR (100),
                                                      type_menu    INT 
                                                    )  ";
            parent::zaprosSQL($zapros);
          } 
-     
         }
-     public function __destruct()
-     {
+     public function __destruct() {
         mysqli_close($this->con);
      }
      // Служебные функции
@@ -4088,12 +4056,9 @@ class menu extends initBD
      // параметр ссылки default отправляет пользователя на главную страницу сайта
      public function menu($nameTablic) // Это меню типа 1
      {
-
              // Регистрируем либо изменяем тип меню
-             if ($this->typMenu($nameTablic)!=1)
-             {
-              if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) 
-               {
+             if ($this->typMenu($nameTablic)!=1) {
+              if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
                  parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
                  $this->saveTypMenu($nameTablic,1); 
                }
@@ -4106,8 +4071,8 @@ class menu extends initBD
         echo'<section class="'.$nameTablic.'">';
         if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
         $i=0;
-        while (!is_null($stroka=(mysqli_fetch_array($rez))))
-        {
+        if (parent::notFalseAndNULL($rez))
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
           if ($stroka['URL']!='default')
             echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
           if ($stroka['URL']=='default')
@@ -4129,10 +4094,8 @@ class menu extends initBD
      public function menu2($nameTablic,$kod)
      {
              // Регистрируем либо изменяем тип меню
-             if ($this->typMenu($nameTablic)!=2)
-             {
-              if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) 
-               {
+             if ($this->typMenu($nameTablic)!=2) {
+              if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
                  parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
                  $this->saveTypMenu($nameTablic,2); 
                }
@@ -4190,12 +4153,10 @@ class menu extends initBD
         $rez=parent::zaprosSQL($zapros);
         echo'<section class="'.$nameTablic.'">';
         $i=0;
-        while (!is_null($stroka=(mysqli_fetch_array($rez))))
-        {
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
             if ($this->kn[$i])
             if ($stroka['URL']!='default')
             echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
-            
             if ($this->kn[$i])
             if ($stroka['URL']=='default')
             echo '<form class="form_'.$stroka['CLASS'].'" action="'.parent::initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
@@ -4225,8 +4186,7 @@ class menu extends initBD
             //////////////////////////////////////
         echo'<section class="'.$nameTablic.'">';
         if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
-        foreach ($this->masKn as $value)
-         {
+        foreach ($this->masKn as $value) {
             $zapros="SELECT * FROM ".$nameTablic." WHERE NAME='".$value."'";
             $rez=parent::zaprosSQL($zapros);
             $stroka=mysqli_fetch_array($rez);
@@ -4247,11 +4207,9 @@ class menu extends initBD
       $nameTablic=$data[1];
       //echo $nameMenu.'--'.$nameTablic.'--'.$data[2];
         $this->zapuskMenuMagiceski=true;
-    if ($nameMenu=='menu3')
-        {
+    if ($nameMenu=='menu3') {
          $i=0;
-         foreach ($data as $value)
-          {
+         foreach ($data as $value) {
             if ($i>1) // блокируем проверку первых двух элементов массива, которые содержат в себе значения переменных $nameMenu и $nameTablic
             $this->masKn[$i-2] = $value;
             $i++;
@@ -4259,11 +4217,9 @@ class menu extends initBD
           //unset($value);
          $this->menu3($nameTablic);
         }
-    if ($nameMenu=='menu4' || $nameMenu=='menu5' || $nameMenu=='menu6' || $nameMenu=='menu7' || $nameMenu=='menu8' || $nameMenu=='menu9')
-        {
+    if ($nameMenu=='menu4' || $nameMenu=='menu5' || $nameMenu=='menu6' || $nameMenu=='menu7' || $nameMenu=='menu8' || $nameMenu=='menu9') {
          $i=0;
-         foreach ($data as $value)
-          {
+         foreach ($data as $value) {
             if ($i>1) // блокируем проверку первых двух элементов массива, которые содержат в себе значения переменных $nameMenu и $nameTablic
             $this->masKn[$i-2] = $value;
             //echo '<br>'.$i.'--'.$value;
@@ -4323,16 +4279,14 @@ class menu extends initBD
         if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
         $ii=1;
         $i=0;
-        while (!is_null($stroka=(mysqli_fetch_array($rez))))
-        {
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
             if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && $stroka['URL']!='default')
               echo '<button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
             if ($stroka['URL']=='reset')
               echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
            
           if ($stroka['URL']=='text')
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4340,8 +4294,7 @@ class menu extends initBD
               } else echo '<br>';
 
           if ($stroka['URL']=='text2')
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4349,8 +4302,7 @@ class menu extends initBD
               } else echo '<br>';
 
           if ($stroka['URL']=='textP')
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4358,8 +4310,7 @@ class menu extends initBD
               } else echo '<br>';
 
           if ($stroka['URL']=='text2P' || $stroka['URL']=='textP2')
-                 if ($stroka['NAME']!='br')
-                       {
+                 if ($stroka['NAME']!='br') {
                          $textStart="";
                           if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
                           echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4399,10 +4350,8 @@ class menu extends initBD
      public function menu5($nameTablic,$url)
      {
                     // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=5)
-                    {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) 
-                      {
+                    if ($this->typMenu($nameTablic)!=5) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
                         parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
                         $this->saveTypMenu($nameTablic,5); 
                       }
@@ -4418,8 +4367,7 @@ class menu extends initBD
         $i=0;
         $status=(string)$_SESSION['status'];
         
-        while (!is_null($stroka=(mysqli_fetch_array($rez))))
-        {
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
             if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
             if ($stroka['URL']!='text2'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
               echo '<button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
@@ -4427,8 +4375,7 @@ class menu extends initBD
               echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
             
             if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4436,8 +4383,7 @@ class menu extends initBD
               } else echo '<br>';
 
             if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4445,8 +4391,7 @@ class menu extends initBD
               } else echo '<br>';
              
           if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4454,8 +4399,7 @@ class menu extends initBD
               } else echo '<br>';
 
           if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
-                 if ($stroka['NAME']!='br')
-                       {
+                 if ($stroka['NAME']!='br') {
                          $textStart="";
                           if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
                           echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4496,10 +4440,8 @@ class menu extends initBD
      public function menu6($nameTablic,$url)
      {
                     // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=6)
-                    {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) 
-                      {
+                    if ($this->typMenu($nameTablic)!=6) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
                         parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
                         $this->saveTypMenu($nameTablic,6); 
                       }
@@ -4514,13 +4456,9 @@ class menu extends initBD
         $ii=1;
         $status=(string)$_SESSION['status'];
         if ($rez===false) return false;
-        while (!is_null($stroka=(mysqli_fetch_assoc($rez))))
-        {
-
-
+        while (!is_null($stroka=(mysqli_fetch_assoc($rez)))) {
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
-          if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP'  && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
-          {   
+          if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP'  && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
             $linkButton=$stroka['URL'];
             if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'"/>';
@@ -4530,8 +4468,7 @@ class menu extends initBD
               echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
           
           if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-             if ($stroka['NAME']!='br')
-              {
+             if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4539,8 +4476,7 @@ class menu extends initBD
               } else echo '<br>';
 
           if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br')
-               {
+              if ($stroka['NAME']!='br') {
                $textStart="";
                if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
                echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4548,8 +4484,7 @@ class menu extends initBD
                } else echo '<br>';
 
            if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
-            if ($stroka['NAME']!='br')
-              {
+            if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4558,8 +4493,7 @@ class menu extends initBD
 
           //if ($stroka['ID']==$idPoz)
               if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
-                 if ($stroka['NAME']!='br')
-                       {
+                 if ($stroka['NAME']!='br') {
                          $textStart="";
                           if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
                           echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4598,10 +4532,8 @@ class menu extends initBD
      public function menu7($nameTablic,$url)
      {
                     // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=7)
-                    {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) 
-                      {
+                    if ($this->typMenu($nameTablic)!=7) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
                         parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
                         $this->saveTypMenu($nameTablic,7); 
                       }
@@ -4618,16 +4550,11 @@ class menu extends initBD
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
         $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
         $idMax=$stroka[0];
-       for ($idPoz=0; $idPoz<=$idMax; $idPoz++)
-       { 
-        while (!is_null($stroka=(mysqli_fetch_array($rez))))
-        {
-
+       for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
-          
           if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
-            {   
+            if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
               $linkButton=$stroka['URL'];
               if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
               echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
@@ -4639,8 +4566,7 @@ class menu extends initBD
           
           if ($stroka['ID']==$idPoz)
              if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-                if ($stroka['NAME']!='br')
-                  {
+                if ($stroka['NAME']!='br') {
                     $textStart="";
                      if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
                      echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4649,8 +4575,7 @@ class menu extends initBD
 
            if ($stroka['ID']==$idPoz)
               if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
-                 if ($stroka['NAME']!='br')
-                       {
+                 if ($stroka['NAME']!='br') {
                          $textStart="";
                           if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
                           echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4659,8 +4584,7 @@ class menu extends initBD
 
         if ($stroka['ID']==$idPoz)
            if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4669,8 +4593,7 @@ class menu extends initBD
 
         if ($stroka['ID']==$idPoz)
           if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4714,10 +4637,8 @@ class menu extends initBD
      public function menu8($nameTablic,$url)
      {
                     // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=8)
-                    {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) 
-                      {
+                    if ($this->typMenu($nameTablic)!=8) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
                         parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
                         $this->saveTypMenu($nameTablic,8); 
                       }
@@ -4734,16 +4655,11 @@ class menu extends initBD
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
         $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
         $idMax=$stroka[0];
-       for ($idPoz=0; $idPoz<=$idMax; $idPoz++)
-       { 
-        while (!is_null($stroka=(mysqli_fetch_array($rez))))
-        {
-
-
+       for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
-            {   
+            if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
               $linkButton=$stroka['URL'];
               if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];  
               echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
@@ -4755,8 +4671,7 @@ class menu extends initBD
          
           if ($stroka['ID']==$idPoz)
            if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4765,8 +4680,7 @@ class menu extends initBD
 
           if ($stroka['ID']==$idPoz)
              if ($stroka['URL']=='textP')
-                 if ($stroka['NAME']!='br')
-                 {
+                 if ($stroka['NAME']!='br') {
                  $textStart="";
                  if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
                  echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4775,8 +4689,7 @@ class menu extends initBD
                         
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4784,8 +4697,7 @@ class menu extends initBD
               } else echo '<br>';
 
           if ($stroka['ID']==$idPoz)
-           if ($stroka['URL']=='textarea' &&  strrpos($stroka['STATUS'],$status)!=false)
-            {
+           if ($stroka['URL']=='textarea' &&  strrpos($stroka['STATUS'],$status)!=false) {
              $textStart="";
              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
              echo '<textarea class="textarea_'.$stroka['CLASS'].'" name="'.$stroka['NAME'].'"/>'.$textStart.'</textarea>';
@@ -4793,8 +4705,7 @@ class menu extends initBD
             }
           if ($stroka['ID']==$idPoz)
             if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
-               if ($stroka['NAME']!='br')
-                     {
+               if ($stroka['NAME']!='br') {
                        $textStart="";
                         if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
                         echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4804,7 +4715,6 @@ class menu extends initBD
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
-     
         }
         $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
         $rez=parent::zaprosSQL($zapros);
@@ -4848,10 +4758,8 @@ class menu extends initBD
      {
       
                     // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=9)
-                    {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) 
-                      {
+                    if ($this->typMenu($nameTablic)!=9) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
                         parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
                         $this->saveTypMenu($nameTablic,9); 
                       }
@@ -4868,22 +4776,13 @@ class menu extends initBD
         $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
         $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
         $idMax=$stroka[0];
-        
-       
-
-       for ($idPoz=0; $idPoz<=$idMax; $idPoz++)
-       { 
-        while (!is_null($stroka=(mysqli_fetch_array($rez))))
-        {
-
-          
-
+       for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
           if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default' && $stroka['URL']!='p'  
               && $stroka['URL']!='h1' && $stroka['URL']!='h2' && $stroka['URL']!='h3' && $stroka['URL']!='h4' && $stroka['URL']!='h5' && $stroka['URL']!='h6' && $stroka['URL']!='div' && $stroka['NAME']!='img' 
-               && $stroka['NAME']!='hr'  && $stroka['NAME']!='col1' && (!stripos('-'.$stroka['NAME'],'col2') && !stripos($stroka['NAME'],'&') && !stripos ('-'.$stroka['NAME'],'col3')) )
-               {   
+               && $stroka['NAME']!='hr'  && $stroka['NAME']!='col1' && (!stripos('-'.$stroka['NAME'],'col2') && !stripos($stroka['NAME'],'&') && !stripos ('-'.$stroka['NAME'],'col3')) ) {   
                 $linkButton=$stroka['URL'];
                 if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
                 echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
@@ -4895,8 +4794,7 @@ class menu extends initBD
           
           if ($stroka['ID']==$idPoz)
            if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4905,8 +4803,7 @@ class menu extends initBD
 
           if ($stroka['ID']==$idPoz)
              if ($stroka['URL']=='textP')
-                 if ($stroka['NAME']!='br')
-                 {
+                 if ($stroka['NAME']!='br') {
                  $textStart="";
                  if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
                  echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4915,8 +4812,7 @@ class menu extends initBD
                  
           if ($stroka['ID']==$idPoz)
             if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br')
-              {
+              if ($stroka['NAME']!='br') {
               $textStart="";
               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
@@ -4924,8 +4820,7 @@ class menu extends initBD
               } else echo '<br>';
 
           if ($stroka['ID']==$idPoz)
-           if ($stroka['URL']=='textarea' &&  strrpos($stroka['STATUS'],$status)!=false)
-            {
+           if ($stroka['URL']=='textarea' &&  strrpos($stroka['STATUS'],$status)!=false) {
              $textStart="";
              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
              echo '<textarea class="textarea_'.$stroka['CLASS'].'" name="'.$stroka['NAME'].'"/>'.$textStart.'</textarea>';
@@ -4933,8 +4828,7 @@ class menu extends initBD
             }
           if ($stroka['ID']==$idPoz)
             if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
-               if ($stroka['NAME']!='br')
-                     {
+               if ($stroka['NAME']!='br') {
                        $textStart="";
                         if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
                         echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
@@ -4963,12 +4857,10 @@ class menu extends initBD
         if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
           if ($stroka['NAME']=='col2' || $stroka['NAME']=='col2_1/11' || $stroka['NAME']=='col2_2/10' || $stroka['NAME']=='col2_3/9' 
              || $stroka['NAME']=='col2_4/8' || $stroka['NAME']=='col2_5/7' || $stroka['NAME']=='col2_7/5' || $stroka['NAME']=='col2_8/4' || $stroka['NAME']=='col2_9/3' 
-               || $stroka['NAME']=='col2_10/2' || $stroka['NAME']=='col2_11/1' || $stroka['NAME']=='col2_6/6')
-             {
+               || $stroka['NAME']=='col2_10/2' || $stroka['NAME']=='col2_11/1' || $stroka['NAME']=='col2_6/6') {
                 $box1=6;
                 $box2=6;
-               if ($stroka['NAME']!='col2')
-               {
+               if ($stroka['NAME']!='col2') {
                 $vhod=strrpos($stroka['NAME'],'/');
                 $box2=(int)mb_substr($stroka['NAME'],$vhod+1);
                 $box1=12-$box2;
@@ -4980,13 +4872,11 @@ class menu extends initBD
              }
 
           if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
-             if (stripos ('-'.$stroka['NAME'],'col3'))
-             {
+             if (stripos ('-'.$stroka['NAME'],'col3')) {
                 $box1=4;
                 $box2=4;
                 $box3=4;
-               if ($stroka['NAME']!='col3')
-               {
+               if ($stroka['NAME']!='col3') {
                 $vhod=strrpos($stroka['NAME'],'/');
                 $box2=(int)mb_substr($stroka['NAME'],$vhod+1); //нашли третью цифру для столбца бутстрапа
                 $box1=(int)mb_substr($stroka['NAME'],5,$vhod-5);                
@@ -5024,8 +4914,7 @@ class login extends initBd  // Работа с регистрациями
    {
     parent::__construct();
     $this->milisek=time();
-    if (!parent::searcNameTablic('status_klienta')) // если таблицы нет, то создать её
-     {
+    if (!parent::searcNameTablic('status_klienta')) {// если таблицы нет, то создать её
       $zapros="CREATE TABLE status_klienta(login VARCHAR(30), parol VARCHAR(30), mail VARCHAR(50), status INT , time INT)";
       parent::zaprosSQL($zapros);
      }
@@ -5054,53 +4943,44 @@ class login extends initBd  // Работа с регистрациями
    public function capcha()
    {
      $randcislo=rand(0,9);
-     if ($randcislo==0) 
-     {
+     
+     if ($randcislo==0) {
        $this->varianty($randcislo);
        return "Сколько ног у таракана?";
      }
-     if ($randcislo==1) 
-     {
+     if ($randcislo==1) {
        $this->varianty($randcislo);
        return "Летом тепло...";
      }
-     if ($randcislo==2) 
-     {
+     if ($randcislo==2) {
        $this->varianty($randcislo);
        return "Ночью темно...";
      }
-     if ($randcislo==3) 
-     {
+     if ($randcislo==3) {
        $this->varianty($randcislo);
        return "Трижды по половине";
      }
-     if ($randcislo==4) 
-     {
+     if ($randcislo==4) {
        $this->varianty($randcislo);
        return "Музыку еле слышно";
      }
-     if ($randcislo==5) 
-     {
+     if ($randcislo==5) {
        $this->varianty($randcislo);
        return "Капли текли по крыше";
      }
-     if ($randcislo==6) 
-     {
+     if ($randcislo==6) {
        $this->varianty($randcislo);
        return "Ваньку валяли в полдень";
      }
-     if ($randcislo==7) 
-     {
+     if ($randcislo==7) {
        $this->varianty($randcislo);
        return "Ветер срывает крышу";
      }
-     if ($randcislo==8) 
-     {
+     if ($randcislo==8) {
        $this->varianty($randcislo);
        return "Вирус пришел внезапно";
      }
-     if ($randcislo==9) 
-     {
+     if ($randcislo==9) {
        $this->varianty($randcislo);
        return "Кто-нибудь видел Жору?";
      }
@@ -5108,8 +4988,7 @@ class login extends initBd  // Работа с регистрациями
 
    public function varianty($nomer)
    {
-    if ($nomer==0) 
-    {
+    if ($nomer==0) {
      parent::zaprosSQL("UPDATE registracia SET NAME='4' WHERE ID=11");
      parent::zaprosSQL("UPDATE registracia SET NAME='6' WHERE ID=12");
      parent::zaprosSQL("UPDATE registracia SET NAME='8' WHERE ID=13");
@@ -5117,24 +4996,21 @@ class login extends initBd  // Работа с регистрациями
      return '6';
     }
 
-     if ($nomer==1) 
-     {
+     if ($nomer==1) {
       parent::zaprosSQL("UPDATE registracia SET NAME='Колесо круглое' WHERE ID=11");
       parent::zaprosSQL("UPDATE registracia SET NAME='Пи=3,1415...' WHERE ID=12");
       parent::zaprosSQL("UPDATE registracia SET NAME='Ночью темно' WHERE ID=13");
       parent::zaprosSQL("UPDATE registracia SET NAME='Зимой холодно' WHERE ID=14");
       return 'Зимой холодно';
      }
-     if ($nomer==2) 
-     {
+     if ($nomer==2) {
       parent::zaprosSQL("UPDATE registracia SET NAME='Летом тепло' WHERE ID=11");
       parent::zaprosSQL("UPDATE registracia SET NAME='Джинсы тесны' WHERE ID=12");
       parent::zaprosSQL("UPDATE registracia SET NAME='Ахалай Махалай' WHERE ID=13");
       parent::zaprosSQL("UPDATE registracia SET NAME='Днем светло' WHERE ID=14");
       return 'Днем светло';
      }
-     if ($nomer==3) // трижды по половине
-     {
+     if ($nomer==3) {// трижды по половине
       parent::zaprosSQL("UPDATE registracia SET NAME='Дважды по три бутылки' WHERE ID=11");
       parent::zaprosSQL("UPDATE registracia SET NAME='Конь на холме пасётся' WHERE ID=12");
       parent::zaprosSQL("UPDATE registracia SET NAME='Больше чем два поллитра' WHERE ID=13");
@@ -5142,32 +5018,28 @@ class login extends initBd  // Работа с регистрациями
       return 'Больше чем два поллитра';
      }
 
-     if ($nomer==4) //Музыку еле слышно
-     {
+     if ($nomer==4) {//Музыку еле слышно
       parent::zaprosSQL("UPDATE registracia SET NAME='Боком толкали бочку' WHERE ID=11");
       parent::zaprosSQL("UPDATE registracia SET NAME='Видно, но хуже слышно' WHERE ID=12");
       parent::zaprosSQL("UPDATE registracia SET NAME='Вода попала в уши' WHERE ID=13");
       parent::zaprosSQL("UPDATE registracia SET NAME='Холодно, но не жарко' WHERE ID=14");
       return 'Вода попала в уши';
      }
-     if ($nomer==5) // Капли текли по крыше
-     {
+     if ($nomer==5) {// Капли текли по крыше
       parent::zaprosSQL("UPDATE registracia SET NAME='Больше не буду плакать' WHERE ID=11");
       parent::zaprosSQL("UPDATE registracia SET NAME='Звёзды спадают на пол' WHERE ID=12");
       parent::zaprosSQL("UPDATE registracia SET NAME='Кот шурудит на крыше' WHERE ID=13");
       parent::zaprosSQL("UPDATE registracia SET NAME='Дождь уже слабо падал' WHERE ID=14");
       return 'Дождь уже слабо падал';
      }
-     if ($nomer==6)  // Ваньку валяли в полдень
-     {
+     if ($nomer==6) { // Ваньку валяли в полдень
       parent::zaprosSQL("UPDATE registracia SET NAME='Круглое часто носят' WHERE ID=11");
       parent::zaprosSQL("UPDATE registracia SET NAME='Зеньки раскрой зараза' WHERE ID=12");
       parent::zaprosSQL("UPDATE registracia SET NAME='Ваньку валяли в полдень' WHERE ID=13");
       parent::zaprosSQL("UPDATE registracia SET NAME='Больше не буду плакать' WHERE ID=14");
       return 'Ваньку валяли в полдень';
      }
-     if ($nomer==7)  // Ветер срывает крышу
-     {
+     if ($nomer==7) { // Ветер срывает крышу
       parent::zaprosSQL("UPDATE registracia SET NAME='Новую нужно ставить' WHERE ID=11");
       parent::zaprosSQL("UPDATE registracia SET NAME='Кошка кричит весною' WHERE ID=12");
       parent::zaprosSQL("UPDATE registracia SET NAME='Жизнь оживает снова' WHERE ID=13");
@@ -5175,16 +5047,14 @@ class login extends initBd  // Работа с регистрациями
       return 'Новую нужно ставить';
      }
 
-     if ($nomer==8)  // Вирус пришел внезапно
-     {
+     if ($nomer==8) { // Вирус пришел внезапно
       parent::zaprosSQL("UPDATE registracia SET NAME='Галоши надеть забыл он' WHERE ID=11");
       parent::zaprosSQL("UPDATE registracia SET NAME='Весь мир ошарашил вскоре' WHERE ID=12");
       parent::zaprosSQL("UPDATE registracia SET NAME='Лечили его всем миром' WHERE ID=13");
       parent::zaprosSQL("UPDATE registracia SET NAME='Намедни катался на лыжах' WHERE ID=14");
       return 'Лечили его всем миром';
      }
-     if ($nomer==9) //Кто-нибудь видел Жору
-     {
+     if ($nomer==9) {//Кто-нибудь видел Жору
       parent::zaprosSQL("UPDATE registracia SET NAME='Жора играет в спальне' WHERE ID=11");
       parent::zaprosSQL("UPDATE registracia SET NAME='Гена сидит на крыше' WHERE ID=12");
       parent::zaprosSQL("UPDATE registracia SET NAME='Миша ломает гвозди' WHERE ID=13");
@@ -5256,10 +5126,8 @@ public function listKlientow()
 {
   if ($_SESSION['status']==5 || $_SESSION['status']==4)
    $rez=parent::zaprosSQL("SELECT * FROM status_klienta WHERE 1");
-   if ($_SESSION['status']==4)
-   {
+   if ($_SESSION['status']==4) {
      echo '<section class="container-fluid status">';
- 
      echo '<div class="row">';
      echo '<div class="col">';
      echo '<p class="mesage">Login</p>';
@@ -5269,10 +5137,8 @@ public function listKlientow()
      echo '</div>';
      echo '</div>';
  
-   while (!is_null($stroka=(mysqli_fetch_array($rez))))
-   {
-     if ($stroka['status']<5)
-     {
+   while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
+     if ($stroka['status']<5) {
      echo '<form method="POST" active="redaktor.php">';
      echo '<div class="row">';
      echo '<div class="col">'; 
@@ -5287,10 +5153,8 @@ public function listKlientow()
    }
      echo '</section>';
    }
-  if ($_SESSION['status']==5)
-  {
+  if ($_SESSION['status']==5) {
     echo '<section class="container-fluid status">';
-
     echo '<div class="row">';
     echo '<div class="col">';
     echo '<p class="mesage">Login</p>';
@@ -5318,8 +5182,7 @@ public function listKlientow()
     echo '</div>';
     echo '</div>';
 
-  while (!is_null($stroka=(mysqli_fetch_array($rez))))
-  {
+  while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
     echo '<form method="POST" active="redaktor.php">';
     echo '<div class="row">';
     echo '<div class="col">'; //login
@@ -5398,10 +5261,6 @@ if ($_SESSION['status']==3) return 'Подписчик.';
 if ($_SESSION['status']==4) return 'Администратор.';
 if ($_SESSION['status']==5) return 'Супер Администратор.';
 }
-//public function redaktProfil()
-//{
-      
-//}
 } // конец класса login
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5431,21 +5290,18 @@ class maty extends menu  // Работа с матами и нецензурно
 
           $i=0;
          //Читаем таблицу ы массив mat_polsovat
-         while(!is_null($stroka=mysqli_fetch_array($rez)))
-          {
+         while(!is_null($stroka=mysqli_fetch_array($rez))) {
             $this->mas_mat[$i]=$stroka[0];
             $i++;
           }
           $i=0;
          //Читаем таблицу ы массив
-         while(!is_null($stroka=mysqli_fetch_array($rez_nieMat)))
-          {
+         while(!is_null($stroka=mysqli_fetch_array($rez_nieMat))) {
            $this->nie_mat[$i]=$stroka[0];
            $i++;
            }
          $i=0;
-         while(!is_null($stroka=mysqli_fetch_array($rez_mat_polsovat)))
-           {
+         while(!is_null($stroka=mysqli_fetch_array($rez_mat_polsovat))) {
             $this->mat_polsovat[$i]=$stroka[0];
             $i++;
             }
@@ -5457,8 +5313,7 @@ class maty extends menu  // Работа с матами и нецензурно
          $rezultat=$text;
          echo $text.'<br>';
          $mas_rezult=$masRezult[0];
-         foreach($mas_rezult as $value)
-              { 
+         foreach($mas_rezult as $value) { 
                  $hablon=$this->createRegularNotRegistr($value);  // сделать матюк регистронезависимым
                  $vyragenie='/\s('.$hablon.')\s?/';
                  $rezultat=preg_replace($vyragenie,' ** ',$rezultat);
@@ -5468,8 +5323,7 @@ class maty extends menu  // Работа с матами и нецензурно
           {
             $rezultat=$text;
             if (isset($this->mas_mat[0]))
-             foreach($this->mas_mat as $value)
-              {  
+             foreach($this->mas_mat as $value) {  
                 $hablon=$this->createRegularNotRegistr($value);  // сделать матюк регистронезависимым
                 $vyragenie='/(^|\s|\W|\d)'.$hablon.'($|\s|(\W)|\d+)?/uUmi';
                 $rezultat=preg_replace($vyragenie,'**',$rezultat);
@@ -5480,8 +5334,7 @@ class maty extends menu  // Работа с матами и нецензурно
           {
             $rezultat=$text;
             if (isset($this->mas_mat[0]))
-             foreach($this->mas_mat as $value)
-              {  
+             foreach($this->mas_mat as $value) {  
                 $hablon=$this->createRegularNotRegistr($value);  // сделать матюк регистронезависимым
                 $vyragenie='/(^|\s|\W|\d)'.$hablon.'($|\s|(\W)|\d+)?/uUmi';
                 $rezultat=preg_replace($vyragenie,'**',$rezultat);
@@ -5559,10 +5412,8 @@ class maty extends menu  // Работа с матами и нецензурно
          public function list_block_save()  // Функция блокировки пользователя для добавления матов.
          {
             $rez=parent::zaprosSQL("SELECT login FROM status_klienta WHERE status>0 AND status<6"); // получаем все логины со статусами от 1 до 5
-            while(!is_null($stroka=mysqli_fetch_array($rez)))
-             {
-               if (isset($_POST['blok_user_mat_ot_polzovatelej_'.$stroka[0]])) // Если была нажата кнопка, блокировки пользователя
-                { 
+            while(!is_null($stroka=mysqli_fetch_array($rez))) {
+               if (isset($_POST['blok_user_mat_ot_polzovatelej_'.$stroka[0]])) {// Если была нажата кнопка, блокировки пользователя
                   $id=parent::maxIdLubojTablicy('blocked_list_dobavit_mat');
                   if ($id<1) $id=1;
                   parent::zaprosSQL("INSERT INTO blocked_list_dobavit_mat(id, login) VALUES (".$id.", '".$stroka[0]."')");
@@ -5596,32 +5447,28 @@ class maty extends menu  // Работа с матами и нецензурно
          {
            if (isset($this->mat_polsovat[0]))
              foreach($this->mat_polsovat as $value)
-               if (isset($_POST['save_mat_ot_polzovatelej_'.$value])) // Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
-                {
+               if (isset($_POST['save_mat_ot_polzovatelej_'.$value])) {// Если была нажата кнопка, сформированная по правилам name="maty_матюк'"
                    parent::zaprosSQL("DELETE FROM mat_ot_polzovatelej WHERE mat='".$value."'"); 
                    parent::zaprosSQL("INSERT INTO maty(mat) VALUES ('".$value."')");
                 }
          }
       public function redactMaty() // Работа с меню ретактирования таблицы матов
        {
-          
           $this->razblokirovka_polsovatelej();  // Функция разблокировка пользователя
           $this->list_block_save(); // функция проверяет не была ли нажата кнопка блокировки пользователя, если была, то заносит логин в таблицу банов
           $this->kill_mat(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова
           $this->kill_nie_mat(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова
           $this->kill_ot_polsovatelej(); // функция просматривает не была ли нажата одна из кнопок быстрого удаления матерного слова пользователей
           $this->save_ot_polsovatelej(); // функция просматривает не была ли нажата одна из кнопок быстрого переноса слова из временной таблицы пользователей в постоянную
-          
           parent::menu4('menu_maty','redaktor.php');
-
           ///////////////////////////////////////начало работы и обработки кнопки включения и отключения сбора нецензурных слов от пользователей///////////////////////////////////////////////////////////////////////
           echo '<br>';
          if (isset($_POST['vklSborMatov']))
           parent::zaprosSQL("UPDATE tablica_nastroer_dvigka_int SET nastr=1 WHERE id=1");
          if (isset($_POST['vyklSborMatov']))
           parent::zaprosSQL("UPDATE tablica_nastroer_dvigka_int SET nastr=0 WHERE id=1");
-         if (parent::sborMatov()==1) // Значит сбор матов включен, поставить кнопку выключения
-           {
+         if (parent::sborMatov()==1) {// Значит сбор матов включен, поставить кнопку выключения
+           
             echo '<div class="vklSborMatovDiv">';
             echo '<form method="POST" action="redaktor.php">';
             echo '<input type="submit" class="vyklSborMatov" name="vyklSborMatov" value="Выключить форму сбора нецензурных слов от пользователей">';
@@ -5641,13 +5488,11 @@ class maty extends menu  // Работа с матами и нецензурно
             }
            ///////////////////////////////////////конец работы и обработки кнопки включения и отключения сбора нецензурных слов от пользователей///////////////////////////////////////////////////////////////////////
           ////////// Показать список заблокированных пользователей
-         if (isset($_POST['buttonListBocked'])) //&& $_POST['menu_maty']=='Список заблокированных пользователей')
-           {
+         if (isset($_POST['buttonListBocked'])) {//&& $_POST['menu_maty']=='Список заблокированных пользователей')
              $rez=parent::zaprosSQL("SELECT login FROM blocked_list_dobavit_mat WHERE 1");
              echo '<section class="container-fluid">';
              echo '<form action="redaktor.php" method="post">';
-             while(!is_null($stroka=mysqli_fetch_array($rez)))
-              {
+             while(!is_null($stroka=mysqli_fetch_array($rez))) {
                 echo '<div class="row">';
                 echo '<div class="col">';
                 echo '<input class="buttonListBocked" type="submit" name="buttonListBocked'.$stroka[0].'" value="Разблокировать ('.$stroka[0].')">';
@@ -5657,11 +5502,9 @@ class maty extends menu  // Работа с матами и нецензурно
              echo '</section>';
              echo 'Конец списка';
             }
-          if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Удалить мат' && $_POST['mat_text']!='')
-            {
+          if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Удалить мат' && $_POST['mat_text']!='') {
              // Если слово есть, то удаляем
-             if ($this->searcMata($_POST['mat_text'])) 
-              {
+             if ($this->searcMata($_POST['mat_text'])) {
                parent::zaprosSQL("DELETE FROM maty WHERE mat='".$_POST['mat_text']."'");
                //Снова проверяем наличие слова в БД
                if ($this->searcMata($_POST['mat_text'])) echo 'Не удалось удалить';
@@ -5670,11 +5513,9 @@ class maty extends menu  // Работа с матами и нецензурно
            // если слова нет, то заносим его в базу данных
            if (!$this->searcMata($_POST['mat_text'])) echo 'Слова в базе отсутствует';
           }
-        if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Удалить не мат' && $_POST['mat_text']!='')
-          {
+        if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Удалить не мат' && $_POST['mat_text']!='') {
            // Если слово есть, то удаляем
-           if ($this->searcNieMata($_POST['mat_text'])) 
-            {
+           if ($this->searcNieMata($_POST['mat_text'])) {
              parent::zaprosSQL("DELETE FROM nie_maty WHERE nie_mat='".$_POST['mat_text']."'");
              //Снова проверяем наличие слова в БД
              if ($this->searcNieMata($_POST['mat_text'])) echo 'Не удалось удалить';
@@ -5684,13 +5525,11 @@ class maty extends menu  // Работа с матами и нецензурно
          if (!$this->searcNieMata($_POST['mat_text'])) echo 'Слова в базе отсутствует';
         }
 
-      if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Показать')
-        {
+      if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Показать') {
           $rez=parent::zaprosSQL("SELECT mat FROM maty WHERE 1");
           echo '<section class="container-fluid">';
           echo '<form action="redaktor.php" method="post">';
-          while(!is_null($stroka=mysqli_fetch_array($rez)))
-           {
+          while(!is_null($stroka=mysqli_fetch_array($rez))) {
              echo '<div class="row">';
              echo '<div class="col">';
              echo '<input class="button_maty" type="submit" name="maty_'.$stroka[0].'" value="Удалить ('.$stroka[0].')">';
@@ -5700,13 +5539,11 @@ class maty extends menu  // Работа с матами и нецензурно
           echo '</section>';
           echo 'Конец списка';
          }
-        if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Показать не маты') // Рисуем кнопки нематов
-         {
+        if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Показать не маты') {// Рисуем кнопки нематов
            $rez=parent::zaprosSQL("SELECT nie_mat FROM nie_maty WHERE 1");
            echo '<section class="container-fluid">';
            echo '<form action="redaktor.php" method="post">';
-           while(!is_null($stroka=mysqli_fetch_array($rez)))
-            {
+           while(!is_null($stroka=mysqli_fetch_array($rez))) {
               echo '<div class="row">';
               echo '<div class="col">';
               echo '<input class="button_nie_maty" type="submit" name="nie_maty_'.$stroka[0].'" value="Удалить ('.$stroka[0].')">';
@@ -5717,13 +5554,11 @@ class maty extends menu  // Работа с матами и нецензурно
            echo 'Конец списка';
           }
 
-       if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='От пользователей') // Рисуем кнопки матов от пользователей
-          {
+       if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='От пользователей') {// Рисуем кнопки матов от пользователей
             $rez=parent::zaprosSQL("SELECT * FROM mat_ot_polzovatelej WHERE 1");
             echo '<section class="container-fluid">';
             echo '<form action="redaktor.php" method="post">';
-            while(!is_null($stroka=mysqli_fetch_assoc($rez)))
-             {
+            while(!is_null($stroka=mysqli_fetch_assoc($rez))) {
                echo '<div class="row">';
                echo '<div class="col">';
                echo '<input class="button_mat_ot_polzovatelej_list" type="submit" name="kill_mat_ot_polzovatelej_'.$stroka['mat'].'" value="Пользователь '.$stroka['login'].' добавил мат ('.$stroka['mat'].'). Удалить!">';
@@ -5736,40 +5571,34 @@ class maty extends menu  // Работа с матами и нецензурно
             echo 'Конец списка';
            }
 
-  if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Проверить слово' && $_POST['mat_text']!='')
-      {
+  if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Проверить слово' && $_POST['mat_text']!='') {
         $rez=parent::zaprosSQL("SELECT mat FROM maty WHERE mat='".$_POST['mat_text']."'");
         $stroka=mysqli_fetch_array($rez);
         if (!$stroka[0]) echo 'Слово не найдено в БД матов<br>';
         if ($stroka[0]) echo 'Слово присутствует в БД матов<br>';
       }
-  if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Проверить слово' && $_POST['mat_text']!='')
-      {
+  if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Проверить слово' && $_POST['mat_text']!='') {
         $rez=parent::zaprosSQL("SELECT nie_mat FROM nie_maty WHERE nie_mat='".$_POST['mat_text']."'");
         $stroka=mysqli_fetch_array($rez);
         if (!$stroka[0]) echo 'Слово не найдено в БД НЕ матов<br>';
         if ($stroka[0]) echo 'Слово присутствует в БД НЕ матов<br>';
       }
-  if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Добавить' && $_POST['mat_text']!='')
-      {
+  if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Добавить' && $_POST['mat_text']!='') {
         // сначала проверим наличие слова
         if ($this->searcMata($_POST['mat_text'])) echo 'Слово уже присутствует в справочнике матов!<br>';
         // если слова нет, то заносим его в базу данных
-        if (!$this->searcMata($_POST['mat_text'])) 
-        {
+        if (!$this->searcMata($_POST['mat_text'])) {
           parent::zaprosSQL("INSERT INTO maty(mat) VALUES ('".$_POST['mat_text']."')");
         //Снова проверяем наличие слова в БД
         if ($this->searcMata($_POST['mat_text'])) echo 'Слово успешно добавлено в справочник матов!<br>';
         if (!$this->searcMata($_POST['mat_text'])) echo 'Слово не удалось добавить в справочник матов!<br>';
         }
       }
-    if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Добавить не мат' && $_POST['mat_text']!='')
-      {
+    if (isset($_POST['menu_maty']) && $_POST['menu_maty']=='Добавить не мат' && $_POST['mat_text']!='') {
         // сначала проверим наличие слова
         if ($this->searcNieMata($_POST['mat_text'])) echo 'Слово уже присутствует в справочнике НЕ матов!<br>';
         // если слова нет, то заносим его в базу данных
-        if (!$this->searcNieMata($_POST['mat_text'])) 
-        {
+        if (!$this->searcNieMata($_POST['mat_text'])) {
           parent::zaprosSQL("INSERT INTO nie_maty(nie_mat) VALUES ('".$_POST['mat_text']."')");
         //Снова проверяем наличие слова в БД
         if ($this->searcNieMata($_POST['mat_text'])) echo 'Слово успешно добавлено в справочник НЕ матов!<br>';
@@ -5780,8 +5609,7 @@ class maty extends menu  // Работа с матами и нецензурно
       // работаем с заполнением базы матов от пользователей на главной странице сайта
   public function dobavilMat($text) //mat_ot_polzovatelej
        {
-        if (isset($_POST['otkazDobawleniaMatow'])) //Самозаблокироваться от показа окна добавления матов
-         {
+        if (isset($_POST['otkazDobawleniaMatow'])) {//Самозаблокироваться от показа окна добавления матов
           $id=parent::maxIdLubojTablicy('blocked_list_dobavit_mat');
           if ($id<1) $id=1;
           parent::zaprosSQL("INSERT INTO blocked_list_dobavit_mat(id, login) VALUES (".$id.", '".$_SESSION['login']."')");
@@ -5813,8 +5641,8 @@ class maty extends menu  // Работа с матами и нецензурно
                   $cisloMatov--;
             } 
         }
-        if ($cisloMatov<1) $text=='Лимит ввода нецензурных слов исчерпан, подождите пока модератор одобрит предыдущие Ваши предложения.';
-            {
+        if ($cisloMatov<1) $text='Лимит ввода нецензурных слов исчерпан, подождите пока модератор одобрит предыдущие Ваши предложения.';
+         else   {
               $text=$text.' Лимит матов-'.$cisloMatov;
               parent::formBlock('formaSborMata',parent::initsite(),
                                 'p', $text, 'dobawilMatP',
@@ -5869,8 +5697,7 @@ class futter  extends maty //dataAktual  // Класс выводит инфор
         $classPole=preg_replace('/pole=/','',$value); // Выделяем логин редактора/ов
 
       foreach($parametr as $value)
-      if ($value=='help' || $value=='Помощь')
-       {
+      if ($value=='help' || $value=='Помощь') {
            echo '<p>Функция выводит нижний блок</p>';
            echo '<p>Параметры функции произвольные и задаются как обычно!</p>';
            echo '<p>Функция проверяет все параметры и по ключевым словам определяет с каким параметром, что следует делать.</p>';
@@ -5886,7 +5713,6 @@ class futter  extends maty //dataAktual  // Класс выводит инфор
            echo '<p>Задать имя класса главного поля можно через параметр "pole=имя класса"</p>';
            echo '<p>По умолчанию есть класс futter заданный в стилях движка, после него идёт класс заданный с помощью pole=</p>';
            echo '<p></p>';
-           
         }
 
         // Выводим футтер
@@ -5894,14 +5720,10 @@ class futter  extends maty //dataAktual  // Класс выводит инфор
       if ($bootStrap) echo '<div class="row">';
       if ($classPole=='') echo '<div class="futtrer">';
       if ($classPole!='') echo '<div class='.$classPole.'>';
-      
       if ($dataSozdania!='') echo '<p>Дата создания сайта:'.$dataSozdania.'</p>';
-
-      //if ($classPole!='') echo '</div>';
       echo '</div>';
       if ($bootStrap) echo '</div>';
       if ($bootStrap) echo '</section>';
-
      }
      public function dataRedaktSite()
      {
@@ -5942,7 +5764,6 @@ class statistic  extends futter // // Класс работа со статис�
   public function __construct()
   {
      parent::__construct();
-
      parent::createTab(
        'name=statistik_dfdx',
        'poleN=statik_true',
@@ -5967,13 +5788,10 @@ class statistic  extends futter // // Класс работа со статис�
       'poleT=int',
       'poleS=0'//,'просмотр'
     );
-
   }
-  
   public function statistikOnOff()
   {
-      if (isset($_POST['buttonStatistik']))
-      {
+      if (isset($_POST['buttonStatistik'])) {
         if ($_POST['buttonStatistik']=='Включить статистику запроссов к БД (функция zaprosSQL)')
            parent::zaprosSQL("UPDATE statistik_dfdx SET statik_true=1 WHERE 1");
         if ($_POST['buttonStatistik']=='Выключить статистику запроссов к БД (функция zaprosSQL)')
@@ -6025,11 +5843,8 @@ class statistic  extends futter // // Класс работа со статис�
   public function getMetkaStatistik($metka) // чтение числа запроссов к метке
   {
     $rez=parent::zaprosSQL("SELECT zaprosov FROM slegka_dfdx WHERE metka='".$metka."'");
-    
     $stroka=mysqli_fetch_assoc($rez); 
-
-    if (!$stroka || is_null($stroka)) return 0;
-
+    if (!parent::notFalseAndNULL($stroka)) return 0;
     return $stroka['zaprosov'];
   }
 }
@@ -6066,17 +5881,14 @@ class poisk extends statistic // // Класс работа со статист�
        $rezPoiska=2;
 
     foreach($data as $value) 
-      if (stripos('sss'.$value,'автор'))
-      {
+      if (stripos('sss'.$value,'автор')) {
        $autor=true;
        $autor_login=preg_replace('/автор-/','',$value);
       }
 
       foreach($data as $value) 
       if (stripos('sss'.$value,'категория'))
-      {
        $razdel=true;
-      }
 
 
     $smegnyeKategorii = array(); // массив со смежными категориями
@@ -6092,25 +5904,19 @@ class poisk extends statistic // // Класс работа со статист�
    if ($razdel && $rez!==false) // Если нашли заданные разделы, то найти комбинированные разделы например html3 входит в html3html5
     while(!is_null($stroka=mysqli_fetch_array($rez))) 
       if (!parent::proverkaMassiwa($smegnyeKategorii,$stroka[0])) // если такой категории в массиве нет
-       {
         foreach($data as $value) 
-         if (stripos('sss'.$value,'категория-'))       // Если проверяемая категория входит в перечень тех категорий, которые есть на входе функции
-          {
+         if (stripos('sss'.$value,'категория-')) {      // Если проверяемая категория входит в перечень тех категорий, которые есть на входе функции
            $razdelTest=preg_replace('/категория-/','',$value); // Удалить лишнее
-            if (stripos('sss'.$stroka[0],$razdelTest))
-             {
+           if (stripos('sss'.$stroka[0],$razdelTest)) {
               $smegnyeKategorii[$iSmegKat++]=$stroka[0];
               $razdel=true;
              }
           }
-       }
-    if ($razdel)   // 
-     {
+    if ($razdel) {
       // если задан логин, то добавить его в запрос
       if ($razdel) $uslovie='';
       if ($autor) $uslovie='login_redaktora="'.$autor_login.'" AND ';
-        foreach($smegnyeKategorii as $value) 
-         {
+        foreach($smegnyeKategorii as $value) {
             $uslovie=$uslovie.'razdel="'.$value.'"';
             $masWhere[$masWhereI++]=$uslovie;
             $uslovie='';
@@ -6123,28 +5929,24 @@ class poisk extends statistic // // Класс работа со статист�
          
       $i=0;
       if ($razdel) //если разделы были заданы, то перебираем статьи по каждому разделу
-       foreach($masWhere as $value) // перебираем массив с условиями запросов, зависящими от логинов и категорий
-        {
+       foreach($masWhere as $value) {// перебираем массив с условиями запросов, зависящими от логинов и категорий
           if ($rezPoiska==0) $zapros="SELECT id,name,news FROM ".$nametablic." WHERE ".$value;
           if ($rezPoiska==1) $zapros="SELECT id,name FROM ".$nametablic." WHERE ".$value;
           if ($rezPoiska==2) $zapros="SELECT id,news FROM ".$nametablic." WHERE ".$value;
           $rez=parent::zaprosSQL($zapros);
-          while(!is_null($stroka=mysqli_fetch_assoc($rez))) 
-          {
+          while(!is_null($stroka=mysqli_fetch_assoc($rez))) {
             if ($rezPoiska==0 && (stripos('sss'.$stroka['name'],$slowo) || stripos('sss'.$stroka['news'],$slowo))) $masRezult[$i++]=$stroka['id'];
             if ($rezPoiska==1 && stripos('sss'.$stroka['name'],$slowo)) $masRezult[$i++]=$stroka['id'];
             if ($rezPoiska==2 && stripos('sss'.$stroka['news'],$slowo)) $masRezult[$i++]=$stroka['id'];
           }
         }
        
-      if (!$razdel) //если разделы не были заданы, то перебираем все статьи 
-       {
+      if (!$razdel) {//если разделы не были заданы, то перебираем все статьи 
         if ($rezPoiska==0) $zapros="SELECT id,name,news FROM ".$nametablic." WHERE ".$uslovie;
         if ($rezPoiska==1) $zapros="SELECT id,name FROM ".$nametablic." WHERE ".$uslovie;
         if ($rezPoiska==2) $zapros="SELECT id,news FROM ".$nametablic." WHERE ".$uslovie;
         $rez=parent::zaprosSQL($zapros);
-        while (!is_null($stroka=mysqli_fetch_assoc($rez))) 
-        {
+        while (!is_null($stroka=mysqli_fetch_assoc($rez))) {
          if ($rezPoiska==0 && (stripos('sss'.$stroka['name'],$slowo) || stripos('sss'.$stroka['news'],$slowo))) $masRezult[$i++]=$stroka['id'];
          if ($rezPoiska==1 && stripos('sss'.$stroka['name'],$slowo)) $masRezult[$i++]=$stroka['id'];
          if ($rezPoiska==2 && stripos('sss'.$stroka['news'],$slowo)) $masRezult[$i++]=$stroka['id'];
@@ -6158,11 +5960,8 @@ class poisk extends statistic // // Класс работа со статист�
       $i++;
      foreach($mas as $value)
       $masRezult[$i--]=$value;
-     
 
-
-    if ($help)
-    {
+    if ($help) {
       echo '<p class="mesage">Функция совершает поиск статьи по слову.</p>';
       echo '<p class="mesage">Первый параметр - это имя таблицы, в которой производим поиск</p>';
       echo '<p class="mesage">Второй параметр - это искомое слово.</p>';
@@ -6179,9 +5978,7 @@ class poisk extends statistic // // Класс работа со статист�
       echo '<p class="mesage"></p>';
       $masRezult[0]=-1;
     }
-
   }
-  
 }
 
 ?>
