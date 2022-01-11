@@ -1,982 +1,8 @@
 <?php
 namespace redaktor;
-// класс с общими функциями 
-class instrument
-{
-    public function __construct()
-    {
-    }  
-   // функция возвращает труе, если входящее значение не равно Фальс и не равно NULL и существует class instrument
-   public function notFalseAndNULL($data)
-   {
-     if ($data===false) return false;
-     if (is_null($data)) return false;
-     if (!isset($data)) return false;
-     return true;
-   }
-   // функция выводит на экран массив неизвестного уровня - главная задача
-   // функция выводит тип переменной и её значение если это не массив
-   // функция просматривает до 9-ти мерные массивы включительно
-   public function printMas($mas)
-   {
-      if (!isset($mas)) {
-            echo 'Переменная не существует';
-            return;
-       }
-      if ($this->trueFalseNull($mas)!==false) 
-            echo $this->trueFalseNull($mas);
-      if (gettype($mas)=='unknown type') {
-            echo 'Неопределенный тип переменной';
-            return;
-       }
-      if (gettype($mas)=='object') {
-            echo 'Входной параметр тира "object"';
-            return;
-       }
-      if (gettype($mas)=='resource') {
-            echo 'Входной параметр тира "resource"';
-            return;
-       }
-      if (gettype($mas)=='string') {
-            echo 'Тип "string": '.$mas;
-            return;
-       }
-      if (gettype($mas)=='double') {
-            echo 'Тип "double или float": '.$mas;
-            return;
-       }
-      if (gettype($mas)=='integer') {
-            echo 'Тип "integer": '.$mas;
-            return;
-       }
-      $masZero=true; // если не будет ни одного входа, то считать массив пустым
-      if (gettype($mas)=='array') { 
-          foreach ($mas as $index2 => $mas2) {
-             $masZero=false;
-             if ($this->trueFalseNull($mas2)!==false) 
-                echo '['.$index2.']='.$this->trueFalseNull($mas2);
-             if (gettype($mas2)=='string' || gettype($mas2)=='double' || gettype($mas2)=='integer') 
-                echo '['.$index2.']='.$mas2;
 
-             if (gettype($mas2)=='array')
-              foreach ($mas2 as $index3 => $mas3) {
-                  if ($this->trueFalseNull($mas3)!==false) 
-                      echo '['.$index2.']['.$index3.']='.$this->trueFalseNull($mas3);
-                  if (gettype($mas3)=='string' || gettype($mas3)=='double' || gettype($mas3)=='integer') 
-                      echo '['.$index2.']['.$index3.']='.$mas3;
+  include "class".DIRECTORY_SEPARATOR."instrument.php";
 
-                  if (gettype($mas3)=='array')
-                    foreach ($mas3 as $index4 => $mas4) {
-                       if ($this->trueFalseNull($mas4)!==false) 
-                          echo '['.$index2.']['.$index3.']['.$index4.']='.$this->trueFalseNull($mas4);
-                       if (gettype($mas4)=='string' || gettype($mas4)=='double' || gettype($mas4)=='integer') 
-                          echo '['.$index2.']['.$index3.']['.$index4.']='.$mas4;
-
-                       if (gettype($mas4)=='array')
-                        foreach ($mas4 as $index5 => $mas5) {
-                          if ($this->trueFalseNull($mas5)!==false) 
-                              echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']='.$this->trueFalseNull($mas5);
-                          if (gettype($mas5)=='string' || gettype($mas5)=='double' || gettype($mas5)=='integer') 
-                              echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']='.$mas5;
-
-                          if (gettype($mas5)=='array')
-                            foreach ($mas5 as $index6 => $mas6)  {
-                              if ($this->trueFalseNull($mas6)!==false) 
-                                  echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']['.$index6.']='.$this->trueFalseNull($mas6);
-                              if (gettype($mas6)=='string' || gettype($mas6)=='double' || gettype($mas6)=='integer') 
-                                  echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']['.$index6.']='.$mas6;
-                              
-                              if (gettype($mas6)=='array')
-                                foreach ($mas6 as $index7 => $mas7) {
-                                  if ($this->trueFalseNull($mas7)!==false) 
-                                      echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']['.$index6.']['.$index7.']='.$this->trueFalseNull($mas7);
-                                  if (gettype($mas7)=='string' || gettype($mas7)=='double' || gettype($mas7)=='integer') 
-                                      echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']['.$index6.']['.$index7.']='.$mas7;
-
-                                  if (gettype($mas7)=='array')
-                                    foreach ($mas7 as $index8 => $mas8) {
-                                        if ($this->trueFalseNull($mas8)!==false) 
-                                            echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']['.$index6.']['.$index7.']['.$index8.']='.$this->trueFalseNull($mas8);
-                                        if (gettype($mas8)=='string' || gettype($mas8)=='double' || gettype($mas8)=='integer') 
-                                            echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']['.$index6.']['.$index7.']['.$index8.']='.$mas8;
-
-                                        if (gettype($mas8)=='array')
-                                          foreach ($mas8 as $index9 => $mas9) {
-                                              if ($this->trueFalseNull($mas9)!==false) 
-                                                  echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']['.$index6.']['.$index7.']['.$index8.']['.$index9.']='.$this->trueFalseNull($mas9);
-                                              if (gettype($mas9)=='string' || gettype($mas9)=='double' || gettype($mas9)=='integer') 
-                                                  echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']['.$index6.']['.$index7.']['.$index8.']['.$index9.']='.$mas9;
-
-                                              if (gettype($mas9)=='array')
-                                                 foreach ($mas9 as $index10 => $mas10) {
-                                                    if ($this->trueFalseNull($mas10)!==false) 
-                                                        echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']['.$index6.']['.$index7.']['.$index8.']['.$index9.']['.$index10.']='.$this->trueFalseNull($mas10);
-                                                    if (gettype($mas10)=='string' || gettype($mas10)=='double' || gettype($mas10)=='integer') 
-                                                        echo '['.$index2.']['.$index3.']['.$index4.']['.$index5.']['.$index6.']['.$index7.']['.$index8.']['.$index9.']['.$index10.']='.$mas10;
-
-                                                    if (gettype($mas10)=='array') 
-                                                        echo 'Массив глубже 9-ти мерного';
-                                                    echo '<br>';
-                                                  }
-                                             echo '<br>';
-                                            }
-                                        echo '<br>';
-                                      }
-                                      echo '<br>';
-                                  }
-                                  echo '<br>';
-                             }
-                             echo '<br>';
-                         }
-                         echo '<br>';
-                     }
-                     echo '<br>';
-                }
-                echo '<br>';
-           }
-           echo '<br>';
-       }
-      echo '<br>';
-      if (gettype($mas)=='array' && $masZero) 
-          echo 'Массив пуст';
-   }
-   // функция возвращает текстовое значение переданного параметра булеан или нулл или false, если параметр не соответствует этим типам
-   public function trueFalseNull($param)
-    {
-      if ($param===true) 
-          return 'True';
-      if ($param===false) 
-          return 'False';
-      if (is_null($param)) 
-          return 'NULL';
-      return false;
-    }
-   //Функция очищает код от вредных тегов оставляя разрешенные
-   public function clearCode($cod,...$parametr) 
-   {
-        //разрешенные теги
-        //Функция выводит очищенную строку с кодом, либо список допустимых тегов
-        //Если есть входящий параметр список_тегов_строка, то список вернется одной строкой (значение по умолчанию)
-        //Если есть входящий параметр список_тегов_столбец, то список вернется одной строкой разделенное тегами <br>
-        //Чтобы функция вернула преобразованный текст, следует задать параметр 'текст' (по умолчанию)
-        //Чтобы получить список разрешенных тегов, необходимо задать параметр 'список'
-        //Чтобы удалить ВСЕ теги нужен параметр удалить_все
-
-        $spisokPlusBr=false;
-        $listTegow='';
-        $vivod=true;
-        $udalitVse=false;
-      
-        foreach($parametr as $value) {
-          if ($value=='список_тегов_столбец')
-            $spisokPlusBr=true;
-
-        //foreach($parametr as $value)
-          if ($value=='список')
-            $vivod=false;
-
-        //foreach($parametr as $value)
-          if ($value=='удалить_все')
-            $udalitVse=true;
-        }
-
-        if ($udalitVse) // Если команда Удалить Все теги
-            $cod=preg_replace('/>|</','',$cod); // Удалить лишнее
-
-        if (!$udalitVse) {// Если нет команды Удалить Все теги
-         
-            $cod=preg_replace('/</','&lt',$cod); // Удалить лишнее
-            $cod=preg_replace('/<\?php/','&lt?php',$cod); // Заменить открывающий тег php на нарисованный
-            $cod=preg_replace('/>/','&gt',$cod); // 
-            $cod=preg_replace('/class/','',$cod); // Удалить лишнее
-            $cod=preg_replace('/"&gt/','">',$cod); // вернуть кавычку с закрытым тегом
-            $cod=preg_replace('/&ltp&gt/','<p>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/p&gt/','</p>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&ltp&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&lth1&gt/','<h1>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/h1&gt/','</h1>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&lth1&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&lth2&gt/','<h2>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/h2&gt/','</h2>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&lth2&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&lth3&gt/','<h3>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/h3&gt/','</h3>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&lth3&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&lth4&gt/','<h4>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/h4&gt/','</h4>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&lth4&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&lth5&gt/','<h5>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/h5&gt/','</h5>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&lth5&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&lth6&gt/','<h6>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/h6&gt/','</h6>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&lth6&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&lti&gt/','<i>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/i&gt/','</i>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&lti&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltfont&gt/','<font>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/font&gt/','</font>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&ltfont&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltbr&gt/','<br>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/br&gt/','</br>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&ltbr&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltacronym&gt/','<acronym>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/acronym&gt/','</acronym>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&ltacronym&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltabbr&gt/','<abbr>',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/abbr&gt/','</abbr>',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&ltabbr&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&lta\s/','<a ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/a&gt/','</a>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&lta&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltu&gt/','<u> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/u&gt/','</u>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltu&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&lttt&gt/','<tt> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/tt&gt/','</tt>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&lttt&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltsup&gt/','<sup> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/sup&gt/','</sup>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltsup&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltstrong&gt/','<strong> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/strong&gt/','</strong>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltstrong&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltstrike&gt/','<strike> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/strike&gt/','</strike>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltstrike&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltspan&gt/','<span> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/span&gt/','</span>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltspan&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltsmall&gt/','<small> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/small&gt/','</small>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltsmall&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltsamp&gt/','<samp> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/samp&gt/','</samp>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltsamp&gt ';
-            
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&lts&gt/','<s> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/s&gt/','</s>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&lts&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltq&gt/','<q> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/q&gt/','</q>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltq&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltkbd&gt/','<kbd> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/kbd&gt/','</kbd>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltkbd&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltem&gt/','<em> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/em&gt/','</em>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltem&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltdfn&gt/','<dfn> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/dfn&gt/','</dfn>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltdfn&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltcode&gt/','<code> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/code&gt/','</code>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltcode&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltcite&gt/','<cite> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/cite&gt/','</cite>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltcite&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltbig&gt/','<big> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/big&gt/','</big>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltbig&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltb&gt/','<b> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/b&gt/','</b>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltb&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltiframe/','<iframe',$cod); // Удалить лишнее
-            $cod=preg_replace('/&gt&lt\/iframe&gt/','></iframe>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltiframe&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';  // переработка и разрешение тегов <br /> в <br>
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltbr/','<br',$cod); // Удалить лишнее
-            $cod=preg_replace('/\s\/&gt/','>',$cod); // Вернуть закрытый тег
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltdiv&gt/','<div> ',$cod); // Удалить лишнее
-            $cod=preg_replace('/&lt\/div&gt/','</div>',$cod); // Вернуть закрытый тег
-            $listTegow=$listTegow.'&ltdiv&gt ';
-
-            if (!$spisokPlusBr) 
-                $listTegow=$listTegow.',';
-            if ($spisokPlusBr) 
-                $listTegow=$listTegow.'<br>';
-            $cod=preg_replace('/&ltimg/','<img ',$cod); // Удалить лишнее
-            $listTegow=$listTegow.'&ltimg&gt ';
-         }
-
-        if ($vivod) 
-            return $cod;
-        if (!$vivod) 
-            return $listTegow;
-   }
-   // ловим кнопку
-   public function hanterButton(...$parametr)
-    {
-      $falseRez=false;
-      // просматриваем входящие параметры
-      foreach($parametr as $value) {
-          $reztrue=false;
-          $rezhant=false;
-          $valueButton='';
-          $returnNameDinamik=false;
-          $returnName=false;
-          $returnValue=false;
-          $nameStatic='';
-
-          if (stripos($value,'false=')!==false) // определяет значение, которое функция вернет в случае неудачного поиска
-              $falseRez=preg_replace('/false=/','',$value);
-
-          if (stripos($value,'rez=hant')!==false) // если необходимо поймать нажатую динамическую кнопку
-              foreach($parametr as $value)  {
-
-                  if (stripos($value,'nameStatic=')!==false)                // ищем имя кнопки
-                      $nameStatic=preg_replace('/nameStatic=/','',$value);  // выделяем имя кнопки
-
-                  if (stripos($value,'returnNameDynamic')!==false)          // ищем имя кнопки
-                      $returnNameDinamik=true;                              // вернуть динамическую часть имени кнопки если труе
-
-                  if (stripos($value,'returnName')!==false)                 // ищем имя кнопки
-                      $returnName=true;                                     // вернуть полное имя кнопки если труе
-
-                  if (stripos($value,'returnValue')!==false)                // ищем имя кнопки
-                      $returnValue=true;                                    // вернуть надпись на кнопке если труе
-                }
-
-          if ($nameStatic!='')       // Если передали параметр nameStatic=
-            if (isset($_POST))       // Если есть любой массив POST
-                foreach($_POST as $key=>$value)             // перебераем массив POST
-                    if (stripos($key,$nameStatic)!==false) {//найти нажатую кнопку по статичной части её имени
-                        if ($returnValue) 
-                            return $value;
-                        if ($returnNameDinamik) 
-                            return preg_replace('/'.$nameStatic.'/','',$key);
-                        if ($returnName) 
-                            return $key;
-                    }
-                    
-           // Если массив Пост удалили, то выйти из функции
-           if (stripos($value,'rez=true')!==false) // если необходимо проверить была ли нажата кнопка
-              foreach($parametr as $value)  {
-                  $reztrue=true;
-                  if (stripos($value,'name=')!==false)                     // ищем имя кнопки
-                  $nameButton=preg_replace('/name=/','',$value);     // выделяем имя кнопки
-                  if (stripos($value,'value=')!==false)                    // ищем имя кнопки
-                  $valueButton=preg_replace('/value=/','',$value);   // выделяем надпись на кнопке
-                }
-
-           if (stripos($value,'rez=info')!==false) // если необходимо вернуть название нажатой кнопки
-              foreach($parametr as $value)
-                 if (stripos($value,'name=')!==false) {             // ищем имя кнопки
-                   $nameButton=preg_replace('/name=/','',$value);   // выделяем имя кнопки
-                   if (isset($_POST[$nameButton])) 
-                      return $_POST[$nameButton];
-                   else false;
-                 }
-                 
-           if ($reztrue)
-              if (isset($_POST[$nameButton]) && ($valueButton=='' || $valueButton==$_POST[$nameButton])) 
-                  return true; 
-              else return false;       // если она нажата, то вернуть труе
-        }
-        
-     //обработка параметра help
-  foreach($parametr as $value)
-     if ($value=='help' || $value=='Помощь' || $value=='помощь')
-      {
-        echo '<p class="mesage">Функция проверяет была ли нажата некоторая кнопка и результат выдает в нужном виде.</p><br>';
-        echo '<p class="mesage">Узнать была ли нажата некотороя кнопка:</p><br>';
-        echo '<p class="mesage">Нужно задать в кавычках "rez=true"</p><br>';
-        echo '<p class="mesage">Нужно задать в кавычках "name=имя кнопки"</p><br>';
-        echo '<p class="mesage">Если задать "value=надпись на кнопке", проверяется так-же параметр value</p><br>';
-        echo '<p class="mesage"></p><br>';
-        echo '<p class="mesage">Узнать какая кнопка была нажата</p><br>';
-        echo '<p class="mesage">Нужно задать в кавычках "rez=info"</p><br>';
-        echo '<p class="mesage">Нужно задать в кавычках "name=имя кнопки"</p><br>';
-        echo '<p class="mesage"></p><br>';
-        
-        echo '<p class="mesage">Поймать динамическую кнопку</p><br>';
-        echo '<p class="mesage">Здесь можно узнать какая из динамически созданных кнопок была нажата</p><br>';
-        echo '<p class="mesage">Нужно задать в кавычках "rez=hant" (активировать режим)</p><br>';
-        echo '<p class="mesage">Необходимо задать неизменяемую часть имени кнопок "nameStatic=имя кнопки"</p><br>';
-        echo '<p class="mesage">Необходимо задать возвращаемый параметр:</p><br>';
-        echo '<p class="mesage"> "returnNameDynamic" - вернуть динамическую часть имени нажатой кнопки</p><br>';
-        echo '<p class="mesage"> "returnName" - Вернуть полное имя нажатой кнопки</p><br>';
-        echo '<p class="mesage"> "returnValue" - Вернуть надпись на нажатой кнопке</p><br>';
-        echo '<p class="mesage"></p><br>';
-        echo '<p class="mesage">Определить false. Определить значение, которое выведется вместо false можно параметром "false=значение"</p><br>';
-        echo '<p class="mesage"></p><br>';
-        echo '<p class="mesage"></p><br>';
-        echo '<p class="mesage"></p><br>';
-        echo '<p class="mesage"></p><br>';
-        echo '<p class="mesage"></p><br>';
-      }
-     return $falseRez;
-    }
-
-
-// функция рисует кнопку с использованием параметров префикса и переменной. Работает с функцией buttonHanter()
-public function buttonPrefix(...$parametr)
-   {
-    $container=false;
-    $classB="";
-    $action="#";
-    $method='method="POST"';
-    $classDiv="";
-    $knopok=1;
-    $classKnopok='';
-    $masNameKnopok = array();
-    $masValueKnopok = array();
-    $masClassKnopok = array();
-    $help=false;
-
-foreach($parametr as $value) {
-    if (stripos($value,'помощь')!==false)
-      $help=true;
-    if (stripos($value,'Помощь')!==false)
-      $help=true;
-    if (stripos($value,'help')!==false)
-      $help=true;
-    if (stripos($value,'container')!==false)
-      $container=true;
-    if (stripos($value,'class=-row-')!==false)
-      $classB=preg_replace('/-/','"',$value);
-    if (stripos($value,'class')!==false && stripos($value,'class=-row-')===false)
-      $classDiv=preg_replace('/-/','"',$value);
-    if (stripos($value,'action')!==false)
-      $action=preg_replace('/-/','"',$value);
-    if (stripos($value,'method')!==false)
-      $method=preg_replace('/-/','"',$value);
-    if (stripos($value,'classButton=')!==false) {
-       $classKnopok=preg_replace('/-/','"',$value);
-       $classKnopok=preg_replace('/Button/','',$classKnopok);
-     }
-    if (stripos($value,'кнопок-')!==false)
-      $knopok=preg_replace('/кнопок-/','',$value);
-}
-    for ($i=1;$i<=$knopok;$i++) {//объявить пустой массив
-        $masNameKnopok[$i]='имя не задано';
-        $masValueKnopok[$i]='название не задано';
-        $masClassKnopok[$i]='';
-     }
-    for ($i=1;$i<=$knopok;$i++) {
-        foreach($parametr as $value) {
-            $poisk='n'.$i.'-';
-            if (stripos($value,$poisk)!==false) {
-                $poisk='/'.$poisk.'/';
-                $masNameKnopok[$i]=preg_replace($poisk,'',$value);
-            }
-            $poisk='v'.$i.'-';
-            if (stripos($value,$poisk)!==false) {
-                $poisk='/'.$poisk.'/';
-                $masValueKnopok[$i]=preg_replace($poisk,'',$value);
-            }
-            $poisk='c'.$i.'=';
-            if (stripos($value,$poisk)!==false) { 
-                $poisk='/'.$poisk.'/';
-                $masClassKnopok[$i]=preg_replace($poisk,'class=',$value);
-                $masClassKnopok[$i]=preg_replace('/-/','"',$masClassKnopok[$i]);
-            } 
-          }
-      }
-
-    //рисуем кнопку
-    if ($container) 
-        echo '<section class="container">';
-    if ($container && $classB!="") 
-        echo '<div '.$classB.'>';
-    if ($classDiv!="") 
-        echo '<div '.$classDiv.'>';
-    echo '<form '.$action.' '.$method.'>';
-    $class=$classKnopok;
-
-    for ($i=1; $i<=$knopok;$i++) {
-      echo '<input ';
-      if ($masClassKnopok[$i]!='') 
-          echo $masClassKnopok[$i];
-      if ($masClassKnopok[$i]=='' && $class!='') 
-          echo $class;
-      echo ' type="submit" name="'.$masNameKnopok[$i].'" value="'.$masValueKnopok[$i].'">';
-     }
-
-    echo '</form>';
-    if ($classDiv!="") 
-        echo '</div>';
-    if ($container && $classB!="") 
-        echo '</div>';
-    if ($container) 
-        echo '</section>';
-     //обработка параметра help
-    if ($help) {
-         echo '<p class="mesage">Чтобы кнопка была в отдельном контейнере, то нужен параметр container. Пример:buttonPrefix("container");</p><br>';
-         echo '<p class="mesage">Чтобы добавить CLASS=ROW от бутстрапа, то вводим параметр данного класса в параметр функции:<br>';
-         echo 'Пример:buttonPrefix("class=-row-"); Знак "-" там, где нужны кавычки. В функцию передаем "-"<br>';
-         echo 'Для добавления произвольного класса вместе с дивом вводим параметр<br>';
-         echo 'Пример:buttonPrefix("class=-имя произвольного класса-"); Знак "-" там, где нужны кавычки. В функцию передаем "-"</p><br>';
-         echo '<p class="mesage"></p><br>';
-         echo '<p class="mesage">Далее параметры кнопки<br>';
-         echo 'Для указания ссылки на страницу обработки вводим параметр buttonPrefix("action=-ссылка-")<br>';
-         echo 'Для указания метода передачи параметров вводим параметр buttonPrefix("method=-post или get-"), по умолчанию POST уже есть.</p><br>';
-         echo '<p class="mesage">Число кнопок задается словом "кнопок-5" buttonPrefix("кнопок-5");</p><br>';
-         echo '<p class="mesage">Имена кнопок задаются с помощью символа n+номер кнопки. buttonPrefix("n1-nameButton");</p><br>';
-         echo '<p class="mesage">Название на кнопке задается с помощью символа v+номер кнопки. buttonPrefix("v1-имя первой кнопки");</p><br>';
-         echo '<p class="mesage"></p><br>';
-         echo '<p class="mesage">Далее работа с классами кнопок</p><br>';
-         echo '<p class="mesage">Для назначения класса по умолчанию для тех кнопок, у которых нет своего класса используется слово classButton;<br>';
-         echo 'buttonPrefix("classButton=-имя общего класса-");</p><br>';
-         echo '<p class="mesage">Чтобы задать персональный класс кнопке, передаем параметр с1=-новый класс- buttonPrefix("с1=-bottonClass-")</p><br>';
-         echo '<p class="mesage">Для использования стилей Бутстрапа добавляем класс btn ...</p><br>';
-       }
-   }
-
-   //Функция возвращает имя и относительный путь к файлу при условии, что искомый файл находится выше текущего места.
-   public function searcNamePath($nameFile)
-    {
-      while (!file_exists($nameFile))
-        $nameFile='../'.$nameFile;
-      return $nameFile;
-    }
-
-   // Функция выводит некое сообщение $mesaz, задает название кнопок, которым будет присвоено OK или Cansel ///проверка git 1-3
-   // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
-   // $classP - класс тегов Р - сообщения, $classButton - класс для кнопок
-   public function okCansel($mesaz,$nameKn,$classDiv,$classP,$classButton)
-   {
-    echo '<section class="container">';
-        echo '<div class="row '.$classDiv.'">';
-            echo '<p class="'.$classP.'">'.$mesaz.'</p>';
-            echo '<form action="redaktor.php" method="POST">';
-                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="OK">';
-                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
-            echo '</form>';
-        echo '</div>';
-    echo '</section>';
-   }
-   public function okSelect($mesaz,$nameKn,$classDiv,$classP,$classButton)
-   {
-    echo '<section class="container">';
-        echo '<div class="row '.$classDiv.'">';
-            echo '<form action="redaktor.php" method="POST">';
-                echo '<input type="checkbox" checked name="'.$nameKn.'Select'.'" id="'.$nameKn.'Id" value="'.$nameKn.'Value">';
-                echo '<label for="'.$nameKn.'Id">'.$mesaz.'</label>';
-                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="OK">';
-            echo '</form>';
-        echo '</div>';
-    echo '</section>';
-    if (isset($_POST[$nameKn.'Select'])) 
-        return $_POST[$nameKn.'Select']; 
-    else 
-        return false;
-   }
-   // Набор текстовое поле + кнопки Ok Cansel
-   public function poleInputokCansel($mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput)
-   {
-    echo '<section class="container">';
-        echo '<div class="row '.$classDiv.'">';
-            echo '<form action="redaktor.php" method="POST">';
-                echo '<p class="'.$classP.'">'.$mesaz.'</p>';
-                echo '<input class="'.$classInput.'" type="text" name="'.$nameKn.'Text">';
-                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Ok">';
-                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
-            echo '</form>';
-        echo '</div>';
-    echo '</section>';
-   }
-   // Набор текстовое поле + кнопки Ok Cansel + указывает на страницу обработчик
-   public function poleInputokCanselPlusNameStr($nameStr,$mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput)
-   {
-    echo '<section class="container">';
-        echo '<div class="row '.$classDiv.'">';
-            echo '<form action="'.$nameStr.'" method="POST">';
-                echo '<p class="'.$classP.'">'.$mesaz.'</p>';
-                echo '<input class="'.$classInput.'" type="text" name="'.$nameKn.'Text">';
-                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Ok">';
-                echo '<input class="'.$classButton.'" type="submit" name="'.$nameKn.'" value="Cancel">';
-            echo '</form>';
-        echo '</div>';
-    echo '</section>';
-   }
-   // Функция ставит блок кнопок и текстовых полей без использования базы данных.
-   //$nameBlock - имя блока кнопок 
-   //$actionN - ссылка на страницу обработки
-   //...$parametr дальше пошел список параметров
-   // первым в параметре идёт тип кнопки или название тега:
-   // Если br то после этого тега можно указать число данных тегов <br>, если не указать, то будет 1 тег
-   // Если text, то будет текстовое поле, следующим параметром должно идти имя name=.. за ним текст по умолчанию для value 
-   // class="$nameBlock+name+номер кнопки" , по умолчанию value будет пустая строка
-   // Если text2, то будет текстовое поле, следующим параметром должно идти имя name=.. за ним текст по умолчанию для placeholder 
-   // class="$nameBlock+name+номер кнопки", по умолчанию placeholder будет пустая строка
-   // Если textarea то создаем текстовое поле как text, только большое
-   // Если password, то будет текстовое поле для ввода пароля, следующим параметром должно идти имя name=.. за ним текст по умолчанию для value 
-   // class="$nameBlock+name+номер кнопки" , по умолчанию value будет пустая строка
-   // Если password2, то будет текстовое поле для ввода пароля, следующим параметром должно идти имя name=.. за ним текст по умолчанию для placeholder 
-   // class="$nameBlock+name+номер кнопки", по умолчанию placeholder будет пустая строка
-   // Если reset то будет кнопка очистки текстовых полей. После него следует ввести надпись на кнопке, если параметр пропустить, то на кнопке будет надпись Reset
-   // class="$nameBlock+reset+номер кнопки"
-   // Если submit то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
-   // class="$nameBlock+name+номер кнопки", надпись на кнопке по умолчанию Ок
-   // Если submit2 то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
-   // class="$nameBlock+номер кнопки", надпись на кнопке по умолчанию Ок
-   // Если submit3 то рисуется кнопка, после 3 параметра, имя кнопки, надпись на ней и Третий параметр может быть ссылка на другую страницу обработки формы.
-   // class кнопки задается 4-м параметром, надпись на кнопке по умолчанию Ок
-   // Добавлен Div со своим классом для кнопки. Класс Дива равен классу кнопки + Div
-   // Если P или h1-h6, то создаем заголовок. Текст - это следующий параметр, класс - это второй параметр.
-   // Добавлен див, класс Дива равен классу заголовка+PH
-   // Если span то создаем строчный тег внутри дивов. Текст - это следующий параметр, класс - это второй параметр.
-   // Добавлен див, класс Дива равен классу заголовка+PH
-   // <div class="classPH"><span class="class">Текст</span></div>
-   // Признаки form_not_open form_not_close не обязательны и управляют отсутствием открывающего тега form и закрывающего тега form соответственно.
-   // Признак zero_style, если задать этот признак, то элементы будут без  бутстрапа
-   // Стили
-   // Класс общего Дива равен имени блока. <div class="$nameBlock">
-   // Класс внутриформенного блока <div class="$nameBlock-div">
-   // бутстрап
-   // bootstrap-start - добавляет section, row, col-12
-   // bootstrap-f-start - добавляет /col-12 /row row, col-12
-   // bootstrap-finish - добавляет /col-12 /row /section
-   public function formBlock($nameBlock, $actionN,...$parametr)
-   {
-      $form_not_open=false;          // Управляет выводом открывающего тега Форм, если фалс, то выводим.
-      $form_not_close=false;         // Управляет выводом закрывающего тега Форм, если фалс, то выводим.
-      $zero_style=false;
-      foreach ($parametr as $value) {// поиск признаков $form_not_open и $form_not_close=false;
-          if ($value=='form_not_open') $form_not_open=true;
-          if ($value=='form_not_close') $form_not_close=true;
-          if ($value=='zero_style') $zero_style=true;
-       }
-    
-      if (!$zero_style) {
-          echo '<section class="container-fluid">';
-          echo '<div class="row">';
-      }
-      echo '<div class="'.$nameBlock.'">';
-      if (!$form_not_open)
-          echo '<form action="'.$actionN.'" method="POST">';
-      echo '<div class="'.$nameBlock.'-div">';
-      $i=0;
-      foreach ($parametr as $key => $value) {
-         if ($value=='bootstrap-start') {
-            echo '<section class="container-fluid">';
-            echo '<div class="row">';
-            echo '<div class="col-12">';
-          }
-         if ($value=='bootstrap-f-start') {
-            echo '</div></div>';
-            echo '<div class="row">';
-            echo '<div class="col-12">';
-          }
-         if ($value=='bootstrap-finish')
-            echo '</div></div></section>';
-
-         if ($value=='br') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]>1 && gettype($parametr[$i+1])=='integer') 
-                $kolWoBr=$parametr[$i+1]; 
-            else 
-                $kolWoBr=1;
-            for($j=0; $j<$kolWoBr; $j++)
-                echo '<br>';
-          }
-         if ($value=='text') {
-              if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-                  if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-              if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-                  if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-              $class=$nameBlock.$name.$i;
-              echo '<input type="text" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
-          }
-        if ($value=='textarea') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-            $class=$nameBlock.$name.$i;
-            echo '<textarea name="'.$name.'" class="'.$class.'">'.$textValue.'</textarea>';
-          }
-        if ($value=='text2') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-            $class=$nameBlock.$name.$i;
-            echo '<input type="text" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
-          }
-        if ($value=='password') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-            $class=$nameBlock.$name.$i;
-            echo '<input type="password" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
-          }
-        if ($value=='password2') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-            $class=$nameBlock.$name.$i;
-            echo '<input type="password" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
-          }
-        if ($value=='reset') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $textValue=$parametr[$i+1]; else $textValue='Reset'; else $textValue='Reset';
-            $class=$nameBlock.'reset'.$i;
-            if (!$zero_style) echo '<input type="reset" class="'.$class.' btn" value="'.$textValue.'">';
-            if ($zero_style) echo '<input type="reset" class="'.$class.' " value="'.$textValue.'">';
-          }
-        if ($value=='submit') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-            if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
-            $class=$nameBlock.$name.$i;
-            if (!$zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
-            if ($zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' " formaction="'.$textWww.'">';
-          }
-        if ($value=='submit2') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-            if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
-            $class=$nameBlock.$i;
-            if (!$zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
-            if ($zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
-          }
-        if ($value=='submit3') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-            if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
-            if (isset($parametr[$i+4]) && $parametr[$i+4]!='bootstrap-start' && $parametr[$i+4]!='bootstrap-f-start' && $parametr[$i+4]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3]) && !$this->searcTegFormBlock($parametr[$i+4])) $class=$parametr[$i+4]; else $class=''; else $textWww='';
-            if (!$zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'"></div>';
-            if ($zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'"></div>';
-          }
-        if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
-            echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'">'.$text.'</'.$value.'></div>';
-          }
-        if ($value=='span') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
-            echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'">'.$text.'</'.$value.'></div>';
-          }
-          $i++; 
-       }
-       echo '</div>'; // конец внутреннего блока
-       if (!$form_not_close)
-          echo '</form>';
-       echo '</div>';
-       if (!$zero_style) 
-          echo '</div></section>';
-   }
-   // Служебная функция проверяет не является ли параметр кнопкой
-   public function searcTegFormBlock($parametr)
-    {
-        if ($parametr=='br') return true;
-        if ($parametr=='text') return true;
-        if ($parametr=='text2') return true;
-        if ($parametr=='password') return true;
-        if ($parametr=='password2') return true;
-        if ($parametr=='reset') return true;
-        if ($parametr=='p') return true;
-        if ($parametr=='h1') return true;
-        if ($parametr=='h2') return true;
-        if ($parametr=='h3') return true;
-        if ($parametr=='h4') return true;
-        if ($parametr=='h5') return true;
-        if ($parametr=='h6') return true;
-        if ($parametr=='submit') return true;
-        if ($parametr=='submit2') return true;
-        if ($parametr=='submit3') return true;
-        if ($parametr=='span') return true;
-        return false;
-    }
-   // Преобразуем номер статуса в его значение
-   public function statusNumerSlovo($status)
-   {
-    switch ($status) {
-      case 0:
-        return 'Гость';
-      case 1:
-        return 'Пользователь';
-      case 2:
-        return 'Редактор';
-      case 3:
-        return 'Подписчик';
-      case 4:
-        return 'Администратор';
-      case 5:
-        return 'Супер Администратор';
-      case 9:
-        return 'Не подтвердивший регистрацию';
-      default:
-        return 'Статус не известен';
-    }
-   }
-}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1452,6 +478,7 @@ class initBD extends instrument
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
 class htmlTeg extends initBD
 {
 
@@ -1618,7 +645,7 @@ class htmlTeg extends initBD
         }
         //////////////////////////////////////////////////////////////////////////////////////////
 }
-
+*/
 //////////////////////////////////////////////////////////// Конец класса htmlTeg ///////////////////////
 //////////////////////////////////////////////////////////// Конец класса htmlTeg ///////////////////////
 //////////////////////////////////////////////////////////// Конец класса htmlTeg ///////////////////////
@@ -1673,6 +700,926 @@ class dataAktual  extends initBD
         }
 } // Конец класса dataAktual
 
+
+
+class menu extends initBD
+ {
+     public function __construct() {
+        parent::__construct();
+        $this->zapuskMenuMagiceski=false;
+         $this->kn[0]=false;
+         $this->kn[1]=false;
+         $this->kn[2]=false;
+         $this->kn[3]=false;
+         $this->kn[4]=false;
+         $this->kn[5]=false;
+         $this->kn[6]=false;
+         $this->kn[7]=false;
+         $this->kn[8]=false;
+         $this->kn[9]=false;
+         $this->kn[10]=false;
+         $this->kn[11]=false;
+         $this->kn[12]=false;
+         $this->kn[13]=false;
+         $this->kn[14]=false;
+         $this->kn[15]=false;
+         $this->con = mysqli_connect($this->initBdHost(),$this->initBdLogin(),$this->initBdParol(),$this->initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд
+     
+         if (!parent::searcNameTablic('type_menu_po_imeni')) {  // Проверяем есть ли таблица с названия-типами меню
+           $zapros="CREATE TABLE type_menu_po_imeni(
+                                                     name_menu    VARCHAR (100),
+                                                     type_menu    INT 
+                                                   )  ";
+           parent::zaprosSQL($zapros);
+         } 
+        }
+     public function __destruct() {
+        mysqli_close($this->con);
+     }
+     // Служебные функции
+     // Функция возвращает имя кнопки из таблицы менюшки по ID
+     public function getNamepoId($tab,$id) 
+     {
+        $zapros="SELECT NAME FROM ".$tab." WHERE ID=".$id;
+        $rez=parent::zaprosSQL($zapros);
+        $stroka=mysqli_fetch_array($rez);
+        return $stroka['NAME'];
+     }
+     public function typMenu($nameTablic) // Функция возвращает тип менюшки с заданным именем
+     {
+      $zapros="SELECT type_menu FROM type_menu_po_imeni WHERE name_menu='".$nameTablic."'";
+      $rez=parent::zaprosSQL($zapros);
+      if ($rez) $stroka=mysqli_fetch_array($rez); else return 0;
+      if ($stroka[0]>0) return $stroka[0]; else return 0;
+     }
+     public function saveTypMenu($nameTablic,$typ) // Функция исправляет или изменяет тип уже существующей менюшки
+     {
+      $zapros="UPDATE type_menu_po_imeni SET `type_menu`=".$typ." WHERE name_menu='".$nameTablic."'";
+      $rez=parent::zaprosSQL($zapros);
+      return $rez;
+     }
+     public function createTypMenu($nameTablic,$typ) // Функция создает запись о новой менюшке
+     {
+      $zapros="INSERT INTO type_menu_po_imeni(`name_menu`, `type_menu`) VALUES ('".$nameTablic."',".$typ.")";
+      $rez=parent::zaprosSQL($zapros);
+      return $rez;
+     }
+     // простая функция, выводит из базы меню все кнопки подряд
+     // $nameTablic - имя таблицы менюшки
+     // Общий класс '<section class="'.$nameTablic.'">
+     // Класс для формы с приставкой form_+$nameTablic
+     // Класс для кнопки с приставкой  button_+$nameTablic
+     // В таблице может быть определен для каждой кнопки свой класс.
+     // параметр ссылки default отправляет пользователя на главную страницу сайта
+     public function menu($nameTablic) // Это меню типа 1
+     {
+             // Регистрируем либо изменяем тип меню
+             if ($this->typMenu($nameTablic)!=1) {
+              if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
+                 parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
+                 $this->saveTypMenu($nameTablic,1); 
+               }
+              if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,1);
+             }
+            //////////////////////////////////////
+        
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+        echo'<section class="'.$nameTablic.'">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
+        $i=0;
+        if (parent::notFalseAndNULL($rez))
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
+          if ($stroka['URL']!='default')
+            echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+          if ($stroka['URL']=='default')
+            echo '<form class="form_'.$stroka['CLASS'].'" action="'.parent::initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+            $i++;
+        }
+        echo'</section>';
+     }
+     // простая функция, выводит из базы меню все кнопки подряд
+     // $nameTablic - имя таблицы менюшки
+     // Общий класс '<section class="'.$nameTablic.'">
+     // Класс для формы с приставкой form_+$nameTablic
+     // Класс для кнопки с приставкой  button_+$nameTablic
+     // В таблице может быть определен для каждой кнопки свой класс.
+     // Добавлена возможность управлять выводом кнопок с помощью двоичного кода. $kod=1(1) - будет выведена первая кнопка,
+     // $kod=2(10) - будет выведена вторая кнопка, $kod=3(11) - будет выведена первая и вторая кнопка.
+     // Максимальное значение $kod=32768(1111111111111111) - 2 байта или 16 единиц.
+     // параметр ссылки default отправляет пользователя на главную страницу сайта
+     public function menu2($nameTablic,$kod)
+     {
+             // Регистрируем либо изменяем тип меню
+             if ($this->typMenu($nameTablic)!=2) {
+              if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
+                 parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
+                 $this->saveTypMenu($nameTablic,2); 
+               }
+              if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,2);
+             }
+            //////////////////////////////////////
+            if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
+       if ($kod>=32768) $this->kn[15]=true; else $this->kn[15]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[14]=true; else $this->kn[14]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[13]=true; else $this->kn[13]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[12]=true; else $this->kn[12]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[11]=true; else $this->kn[11]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[10]=true; else $this->kn[10]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[9]=true; else $this->kn[9]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[8]=true; else $this->kn[8]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[7]=true; else $this->kn[7]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[6]=true; else $this->kn[6]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[5]=true; else $this->kn[5]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[4]=true; else $this->kn[4]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[3]=true; else $this->kn[3]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[2]=true; else $this->kn[2]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[1]=true; else $this->kn[1]=false;
+       while ($kod>=32768) {$kod=$kod-32768;}
+       $kod=$kod << 1;
+       if ($kod>=32768) $this->kn[0]=true; else $this->kn[0]=false;
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+        echo'<section class="'.$nameTablic.'">';
+        $i=0;
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
+            if ($this->kn[$i])
+            if ($stroka['URL']!='default')
+            echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+            if ($this->kn[$i])
+            if ($stroka['URL']=='default')
+            echo '<form class="form_'.$stroka['CLASS'].'" action="'.parent::initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+            $i++;
+        }
+        echo'</section>';
+     }
+
+     // Запускаем через магический метод __unserialize(nameTablic,array('Редактор','Аматор'));
+     // первый параметр - это имя таблицы, второй - это массив названий кнопок. Массив безразмерный, пишем то название кнопок, которое отображается на сайте.
+     // простая функция, выводит из базы меню все кнопки согласно очереди в массиве
+     // $nameTablic - имя таблицы менюшки
+     // Общий класс '<section class="'.$nameTablic.'">
+     // Класс для формы с приставкой form_+$nameTablic
+     // Класс для кнопки с приставкой  button_+$nameTablic
+     // В таблице может быть определен для каждой кнопки свой класс.
+     // Внимание!! Название кнопки при вызове магическим методом должно совпадать с названием кнопки в базе данных
+     // параметр ссылки default отправляет пользователя на главную страницу сайта
+    public function menu3($nameTablic)
+     {
+             // Регистрируем либо изменяем тип меню
+             if ($this->typMenu($nameTablic)!=3) {
+              if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic))  {
+                 parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
+                 $this->saveTypMenu($nameTablic,3); }
+              if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,3);}
+            //////////////////////////////////////
+        echo'<section class="'.$nameTablic.'">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
+        foreach ($this->masKn as $value) {
+            $zapros="SELECT * FROM ".$nameTablic." WHERE NAME='".$value."'";
+            $rez=parent::zaprosSQL($zapros);
+            $stroka=mysqli_fetch_array($rez);
+            if ($stroka['URL']!='default')
+            echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+            if ($stroka['URL']=='default')
+            echo '<form class="form_'.$stroka['CLASS'].'" action="'.parent::initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+          }
+        unset($value);
+        echo'</section>';
+     }
+
+     //public function __unserialize($nameMenu,$nameTablic,array $data):void
+     // переделал параметры входящие функции, по какой-то причине функция стала принимать только массив на входе, после перехода на php8
+     public function __unserialize(array $data):void
+     {
+      $nameMenu=$data[0];
+      $nameTablic=$data[1];
+      //echo $nameMenu.'--'.$nameTablic.'--'.$data[2];
+        $this->zapuskMenuMagiceski=true;
+    if ($nameMenu=='menu3') {
+         $i=0;
+         foreach ($data as $value) {
+            if ($i>1) // блокируем проверку первых двух элементов массива, которые содержат в себе значения переменных $nameMenu и $nameTablic
+            $this->masKn[$i-2] = $value;
+            $i++;
+          }
+          //unset($value);
+         $this->menu3($nameTablic);
+        }
+    if ($nameMenu=='menu4' || $nameMenu=='menu5' || $nameMenu=='menu6' || $nameMenu=='menu7' || $nameMenu=='menu8' || $nameMenu=='menu9') {
+         $i=0;
+         foreach ($data as $value) {
+            if ($i>1) // блокируем проверку первых двух элементов массива, которые содержат в себе значения переменных $nameMenu и $nameTablic
+            $this->masKn[$i-2] = $value;
+            //echo '<br>'.$i.'--'.$value;
+            $i++;
+          }
+          //unset($value);
+          //echo $this->masKn[0];
+          if ($nameMenu=='menu4')
+            $this->menu4($nameTablic,$this->masKn[0]);
+          if ($nameMenu=='menu5')
+            $this->menu5($nameTablic,$this->masKn[0]);
+          if ($nameMenu=='menu6')
+            $this->menu6($nameTablic,$this->masKn[0]);
+          if ($nameMenu=='menu7')
+            $this->menu7($nameTablic,$this->masKn[0]);
+          if ($nameMenu=='menu8')
+            $this->menu8($nameTablic,$this->masKn[0]);
+          if ($nameMenu=='menu9')
+            $this->menu9($nameTablic,$this->masKn[0]);
+        }
+        $this->zapuskMenuMagiceski=false;
+     }
+
+     // Внимание!!! Меню как ссылочное не использовать!!
+     // простая функция, выводит из базы меню все кнопки подряд
+     // $nameTablic - имя таблицы менюшки
+     // Общий класс '<section class="'.$nameTablic.'">
+     // Класс для формы с приставкой form_+$nameTablic
+     // Класс для кнопки с приставкой  button_+$nameTablic
+     // В таблице может быть определен для каждой кнопки свой класс.
+     // имя стилевых классов text.$nameTablic.номер
+     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
+     // Если поле ссылки в БД не text и не reset, то буттон типа submit
+     // Если поле ссылки в БД  text , то рисуем поле ввода
+     // Если поле ссылки в БД  reset , то рисуем кнопку reset
+     //При запуске через Магический метод:
+     //parent::__unserialize('menu4','redaktor_nastr',array('redaktor.php',$poslednijZapros));
+     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
+     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
+     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
+     //  br в базе на месте NAME работает как в html коде если URL=text
+     // параметр ссылки default отправляет пользователя на главную страницу сайта
+     public function menu4($nameTablic,$url)
+     {
+                    // Регистрируем либо изменяем тип меню
+                    if ($this->typMenu($nameTablic)!=4) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
+                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
+                        $this->saveTypMenu($nameTablic,4); }
+                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,4);   }
+                   //////////////////////////////////////
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+        if (!$rez) echo'Не удалось загрузить таблицу для menu4';
+        echo'<section class="'.$nameTablic.'">';
+        echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
+        $ii=1;
+        $i=0;
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
+            if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && $stroka['URL']!='default')
+              echo '<button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
+            if ($stroka['URL']=='reset')
+              echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
+           
+          if ($stroka['URL']=='text')
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['URL']=='text2')
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['URL']=='textP')
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['URL']=='text2P' || $stroka['URL']=='textP2')
+                 if ($stroka['NAME']!='br') {
+                         $textStart="";
+                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                          $ii++;
+                       } else echo '<br>';           
+
+
+            if ($stroka['URL']=='default')
+            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
+            $i++;
+        }
+        echo '</form>';
+        echo'</section>';
+     }
+     // Внимание!!! Меню как ссылочное не использовать!!
+     // простая функция, выводит из базы меню все кнопки подряд
+     // $nameTablic - имя таблицы менюшки
+     // Общий класс '<section class="'.$nameTablic.'">
+     // Класс для формы с приставкой form_+$nameTablic
+     // Класс для кнопки с приставкой  button_+$nameTablic
+     // В таблице может быть определен для каждой кнопки свой класс.
+     // имя стилевых классов text.$nameTablic.номер
+     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
+     // Если поле ссылки в БД не text и не reset, то буттон типа submit
+     // Если поле ссылки в БД  text , то рисуем поле ввода
+     // Если поле ссылки в БД  reset , то рисуем кнопку reset
+     //При запуске через Магический метод:
+     //parent::__unserialize('menu5','redaktor_nastr',array('redaktor.php',$poslednijZapros));
+     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
+     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
+     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
+     //  br в базе на месте NAME работает как в html коде если URL=text
+     // В меню5 добавлена возвожность проверять принадлежность кнопок к статусу пользователя
+     // В дополнительное поле STATUS записывается перечень статусов, в которых работает кнопка, перед ними следует поставить 
+     // любой мисвол, к примеру "-". Пример -012345 - это значит кнопка видна при всех статусах
+     // параметр ссылки default отправляет пользователя на главную страницу сайта
+     public function menu5($nameTablic,$url)
+     {
+                    // Регистрируем либо изменяем тип меню
+                    if ($this->typMenu($nameTablic)!=5) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
+                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
+                        $this->saveTypMenu($nameTablic,5); 
+                      }
+                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,5);
+                    }
+                   //////////////////////////////////////
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+        echo'<section class="'.$nameTablic.'">';
+        echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
+        $ii=1;
+        $i=0;
+        $status=(string)$_SESSION['status'];
+        
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
+            if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
+            if ($stroka['URL']!='text2'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
+              echo '<button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
+            if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
+              echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
+            
+            if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+            if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+             
+          if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
+                 if ($stroka['NAME']!='br') {
+                         $textStart="";
+                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                          $ii++;
+                       } else echo '<br>';    
+             
+             if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
+              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
+            $i++;
+        }
+        echo '</form>';
+        echo'</section>';
+     }
+     // То же самое, как и меню 5, только можно использовать как ссылочное
+     // Внимание!!! Меню можно использовать как ссылочное!!
+     // простая функция, выводит из базы меню все кнопки подряд
+     // $nameTablic - имя таблицы менюшки
+     // Общий класс '<section class="'.$nameTablic.'">
+     // Класс для формы с приставкой form_+$nameTablic
+     // Класс для кнопки с приставкой  button_+$nameTablic
+     // В таблице может быть определен для каждой кнопки свой класс.
+     // имя стилевых классов text.$nameTablic.номер
+     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
+     // Если поле ссылки в БД не text и не reset, то буттон типа submit
+     // Если поле ссылки в БД  text , то рисуем поле ввода
+     // Если поле ссылки в БД  reset , то рисуем кнопку reset
+     // Внимание!!! Меню как ссылочное не использовать!!
+     //При запуске через Магический метод:
+     //parent::__unserialize('menu4','redaktor_nastr',array('redaktor.php',$poslednijZapros));
+     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
+     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
+     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
+     //  br в базе на месте NAME работает как в html коде если URL=text
+     // В меню5 добавлена возвожность проверять принадлежность кнопок к статусу пользователя
+     // В дополнительное поле STATUS записывается перечень статусов, в которых работает кнопка, перед ними следует поставить 
+     // любой символ, к примеру "-". Пример -012345 - это значит кнопка видна при всех статусах
+     // параметр ссылки default отправляет пользователя на главную страницу сайта
+     public function menu6($nameTablic,$url)
+     {
+                    // Регистрируем либо изменяем тип меню
+                    if ($this->typMenu($nameTablic)!=6) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
+                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
+                        $this->saveTypMenu($nameTablic,6); 
+                      }
+                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,6);
+                    }
+                   //////////////////////////////////////
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+        echo'<section class="'.$nameTablic.'">';
+        echo '<form class="form_'.$nameTablic.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
+        $ii=1;
+        $status=(string)$_SESSION['status'];
+        if ($rez===false) return false;
+        while (!is_null($stroka=(mysqli_fetch_assoc($rez)))) {
+          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
+          if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP'  && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
+            $linkButton=$stroka['URL'];
+            if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
+            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'"/>';
+            if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
+          }
+         if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
+              echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
+          
+          if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
+             if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br') {
+               $textStart="";
+               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+               $ii++;
+               } else echo '<br>';
+
+           if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
+            if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          //if ($stroka['ID']==$idPoz)
+              if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
+                 if ($stroka['NAME']!='br') {
+                         $textStart="";
+                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                          $ii++;
+                       } else echo '<br>';    
+            if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
+             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
+         }
+        echo '</form>';
+        echo'</section>';
+     }
+ 
+     // Внимание!!! Меню можно использовать как ссылочное!!
+     // $nameTablic - имя таблицы менюшки
+     // Общий класс '<section class="'.$nameTablic.'">
+     // Класс для формы с приставкой form_+$nameTablic
+     // Класс для кнопки с приставкой  button_+$nameTablic
+     // В таблице может быть определен для каждой кнопки свой класс.
+     // имя стилевых классов text.$nameTablic.номер
+     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
+     // Если поле ссылки в БД не text и не reset, то буттон типа submit
+     // Если поле ссылки в БД  text , то рисуем поле ввода
+     // Если поле ссылки в БД  reset , то рисуем кнопку reset
+     // Внимание!!! Меню как ссылочное не использовать!!
+     //При запуске через Магический метод:
+     //parent::__unserialize('menu4','redaktor_nastr',array('redaktor.php',$poslednijZapros));
+     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
+     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
+     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
+     //  br в базе на месте NAME работает как в html коде если URL=text
+     // В меню5 добавлена возвожность проверять принадлежность кнопок к статусу пользователя
+     // В дополнительное поле STATUS записывается перечень статусов, в которых работает кнопка, перед ними следует поставить 
+     // любой мисвол, к примеру "-". Пример -012345 - это значит кнопка видна при всех статусах
+     // То же самое, что и меню 6, только объекты выводятся согласно номерам ID
+     // параметр ссылки default отправляет пользователя на главную страницу сайта
+     public function menu7($nameTablic,$url)
+     {
+                    // Регистрируем либо изменяем тип меню
+                    if ($this->typMenu($nameTablic)!=7) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
+                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
+                        $this->saveTypMenu($nameTablic,7); 
+                      }
+                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,7);
+                    }
+                   //////////////////////////////////////
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+        echo'<section class="'.$nameTablic.'">';
+        echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
+        $ii=1;
+        $status=(string)$_SESSION['status'];
+        $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
+        $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
+        $idMax=$stroka[0];
+       for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
+          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
+          if ($stroka['ID']==$idPoz)
+            if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
+              $linkButton=$stroka['URL'];
+              if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
+              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
+              if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
+            }
+          if ($stroka['ID']==$idPoz)
+              if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
+              echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';
+          
+          if ($stroka['ID']==$idPoz)
+             if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
+                if ($stroka['NAME']!='br') {
+                    $textStart="";
+                     if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                     echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                     $ii++;
+                  } else echo '<br>';
+
+           if ($stroka['ID']==$idPoz)
+              if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
+                 if ($stroka['NAME']!='br') {
+                         $textStart="";
+                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                          $ii++;
+                       } else echo '<br>';                  
+
+        if ($stroka['ID']==$idPoz)
+           if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+        if ($stroka['ID']==$idPoz)
+          if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
+           if ($stroka['URL']=='default')
+            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
+    
+        }
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+      }
+        echo '</form>';
+        echo'</section>';
+     }
+      // Внимание!!! Меню можно использовать как ссылочное!!
+     // $nameTablic - имя таблицы менюшки
+     // Общий класс '<section class="'.$nameTablic.'">
+     // Класс для формы с приставкой form_+$nameTablic
+     // Класс для кнопки с приставкой  button_+$nameTablic
+     // В таблице может быть определен для каждой кнопки свой класс.
+     // имя стилевых классов text.$nameTablic.номер
+     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
+     // Если поле ссылки в БД не text и не reset, то буттон типа submit
+     // Если поле ссылки в БД  text , то рисуем поле ввода
+     // Если поле ссылки в БД  reset , то рисуем кнопку reset
+     // Внимание!!! Меню как ссылочное не использовать!!
+     //При запуске через Магический метод:
+     //parent::__unserialize('menu4','redaktor_nastr',array('redaktor.php',$poslednijZapros));
+     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
+     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
+     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
+     //  br в базе на месте NAME работает как в html коде если URL=text
+     // В меню5 добавлена возвожность проверять принадлежность кнопок к статусу пользователя
+     // В дополнительное поле STATUS записывается перечень статусов, в которых работает кнопка, перед ними следует поставить 
+     // любой мисвол, к примеру "-". Пример -012345 - это значит кнопка видна при всех статусах
+     // То же самое, что и меню 7, только добавлен объект textarea
+     // параметр ссылки default отправляет пользователя на главную страницу сайта
+     public function menu8($nameTablic,$url)
+     {
+                    // Регистрируем либо изменяем тип меню
+                    if ($this->typMenu($nameTablic)!=8) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
+                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
+                        $this->saveTypMenu($nameTablic,8); 
+                      }
+                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,8);
+                    }
+                   //////////////////////////////////////
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+        echo'<section class="'.$nameTablic.'">';
+        echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
+        $ii=1;
+        $status=(string)$_SESSION['status'];
+        $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
+        $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
+        $idMax=$stroka[0];
+       for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
+          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
+          if ($stroka['ID']==$idPoz)
+            if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
+              $linkButton=$stroka['URL'];
+              if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];  
+              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
+              if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
+            }
+          if ($stroka['ID']==$idPoz)
+              if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
+              echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';
+         
+          if ($stroka['ID']==$idPoz)
+           if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['ID']==$idPoz)
+             if ($stroka['URL']=='textP')
+                 if ($stroka['NAME']!='br') {
+                 $textStart="";
+                 if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                 echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+                 $ii++;
+                 } else echo '<br>';
+                        
+          if ($stroka['ID']==$idPoz)
+            if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['ID']==$idPoz)
+           if ($stroka['URL']=='textarea' &&  strrpos($stroka['STATUS'],$status)!=false) {
+             $textStart="";
+             if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+             echo '<textarea class="textarea_'.$stroka['CLASS'].'" name="'.$stroka['NAME'].'"/>'.$textStart.'</textarea>';
+             $ii++;
+            }
+          if ($stroka['ID']==$idPoz)
+            if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
+               if ($stroka['NAME']!='br') {
+                       $textStart="";
+                        if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                        echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                        $ii++;
+                     } else echo '<br>';   
+
+          if ($stroka['ID']==$idPoz)
+            if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
+             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
+        }
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+      }
+        echo '</form>';
+        echo'</section>';
+     }
+           // Внимание!!! Меню можно использовать как ссылочное!!
+     // $nameTablic - имя таблицы менюшки
+     // Общий класс '<section class="'.$nameTablic.'">
+     // Класс для формы с приставкой form_+$nameTablic
+     // Класс для кнопки с приставкой  button_+$nameTablic
+     // В таблице может быть определен для каждой кнопки свой класс.
+     // имя стилевых классов text.$nameTablic.номер
+     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
+     // Если поле ссылки в БД не text и не reset, то буттон типа submit
+     // Если поле ссылки в БД  text , то рисуем поле ввода
+     // Если поле ссылки в БД  reset , то рисуем кнопку reset
+     // Внимание!!! Меню как ссылочное не использовать!!
+     //При запуске через Магический метод:
+     //parent::__unserialize('menu4','redaktor_nastr',array('redaktor.php',$poslednijZapros));
+     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
+     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
+     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
+     //  br в базе на месте NAME работает как в html коде если URL=text
+     // В меню5 добавлена возвожность проверять принадлежность кнопок к статусу пользователя
+     // В дополнительное поле STATUS записывается перечень статусов, в которых работает кнопка, перед ними следует поставить 
+     // любой мисвол, к примеру "-". Пример -012345 - это значит кнопка видна при всех статусах
+     // новое------------------------------------------------------------------------------------
+     // То же самое, что и меню 8, только добавлены объекты p,h1-h6, div, img
+     // Класс стиля будет равен p(h1,h2,h3,h4,h5,h6,div)_имя класса в таблице
+     // Класс для картинки. Класс для дива imgDiv_имя класса, класс для img img_имя класса
+     // горизонтальная полоса, имя hr
+     // строка col1 поделенная бутстрапом, NAME=col1, url="строка1"
+     // строка col2 поделенная бутстрапом, NAME=col2, url="строка1&строка2"
+     // строка col2_4/8 поделенная бутстрапом, NAME=col2_4/8, url="строка1&строка2" // добавив _4/8 можно регулировать ширину столбцов. Сумма должна быть равна 12. 
+     // строка col3 поделенная бутстрапом, NAME=col2, url="строка1&строка2&строка3"
+     // Принцип задания столбцов аналогичен с той лиш разницей, что на третий столбец пойдёт остаток. col3_4/4 - это равносильно col-4-4-4 Сумма должна быть равна 12. 
+     // параметр ссылки default отправляет пользователя на главную страницу сайта
+     public function menu9($nameTablic,$url)
+     {
+      
+                    // Регистрируем либо изменяем тип меню
+                    if ($this->typMenu($nameTablic)!=9) {
+                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
+                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
+                        $this->saveTypMenu($nameTablic,9); 
+                      }
+                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,9);
+                    }
+                   //////////////////////////////////////
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+        echo'<section class="'.$nameTablic.'">';
+        echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
+        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
+        $ii=1;
+        $status=(string)$_SESSION['status'];
+        $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
+        $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
+        $idMax=$stroka[0];
+       for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
+        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
+          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
+          if ($stroka['ID']==$idPoz)
+            if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default' && $stroka['URL']!='p'  
+              && $stroka['URL']!='h1' && $stroka['URL']!='h2' && $stroka['URL']!='h3' && $stroka['URL']!='h4' && $stroka['URL']!='h5' && $stroka['URL']!='h6' && $stroka['URL']!='div' && $stroka['NAME']!='img' 
+               && $stroka['NAME']!='hr'  && $stroka['NAME']!='col1' && (!stripos('-'.$stroka['NAME'],'col2') && !stripos($stroka['NAME'],'&') && !stripos ('-'.$stroka['NAME'],'col3')) ) {   
+                $linkButton=$stroka['URL'];
+                if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
+                echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
+                if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
+              }
+          if ($stroka['ID']==$idPoz)
+              if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
+              echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';
+          
+          if ($stroka['ID']==$idPoz)
+           if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['ID']==$idPoz)
+             if ($stroka['URL']=='textP')
+                 if ($stroka['NAME']!='br') {
+                 $textStart="";
+                 if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                 echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+                 $ii++;
+                 } else echo '<br>';
+                 
+          if ($stroka['ID']==$idPoz)
+            if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
+              if ($stroka['NAME']!='br') {
+              $textStart="";
+              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
+              $ii++;
+              } else echo '<br>';
+
+          if ($stroka['ID']==$idPoz)
+           if ($stroka['URL']=='textarea' &&  strrpos($stroka['STATUS'],$status)!=false) {
+             $textStart="";
+             if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+             echo '<textarea class="textarea_'.$stroka['CLASS'].'" name="'.$stroka['NAME'].'"/>'.$textStart.'</textarea>';
+             $ii++;
+            }
+          if ($stroka['ID']==$idPoz)
+            if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
+               if ($stroka['NAME']!='br') {
+                       $textStart="";
+                        if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
+                        echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
+                        $ii++;
+                     } else echo '<br>';    
+         if ($stroka['ID']==$idPoz)
+            if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
+             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
+          
+         if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
+            if ($stroka['URL']=='p' || $stroka['URL']=='h1' || $stroka['URL']=='h2' || $stroka['URL']=='h3' || $stroka['URL']=='h4' || $stroka['URL']=='h5' || $stroka['URL']=='h6' || $stroka['URL']=='div')
+              echo '<'.$stroka['URL'].' class="'.$stroka['URL'].'_'.$stroka['CLASS'].'">'.$stroka['NAME'].'</'.$stroka['URL'].'>';
+          
+        if ($stroka['ID']==$idPoz)
+          if ($stroka['NAME']=='img' &&  strrpos($stroka['STATUS'],$status)!=false)
+            echo '<div class="imgDiv_'.$stroka['CLASS'].'"><img src="'.$stroka['URL'].'" alt="название и путь к файлу:'.$stroka['URL'].'"></div>';
+        
+            if ($stroka['ID']==$idPoz)
+          if ($stroka['NAME']=='hr' &&  strrpos($stroka['STATUS'],$status)!=false)
+            echo '<hr class="hr_'.$stroka['CLASS'].'">';
+
+        if ($stroka['ID']==$idPoz)
+          if ($stroka['NAME']=='col1' &&  strrpos($stroka['STATUS'],$status)!=false)
+            echo '<div class="container-fluid"><div class="row"><div class="col-12"><div class=col1_'.$stroka['CLASS'].'">'.$stroka['URL'].'</div></div></div></div>';
+         
+        if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
+          if ($stroka['NAME']=='col2' || $stroka['NAME']=='col2_1/11' || $stroka['NAME']=='col2_2/10' || $stroka['NAME']=='col2_3/9' 
+             || $stroka['NAME']=='col2_4/8' || $stroka['NAME']=='col2_5/7' || $stroka['NAME']=='col2_7/5' || $stroka['NAME']=='col2_8/4' || $stroka['NAME']=='col2_9/3' 
+               || $stroka['NAME']=='col2_10/2' || $stroka['NAME']=='col2_11/1' || $stroka['NAME']=='col2_6/6') {
+                $box1=6;
+                $box2=6;
+               if ($stroka['NAME']!='col2') {
+                $vhod=strrpos($stroka['NAME'],'/');
+                $box2=(int)mb_substr($stroka['NAME'],$vhod+1);
+                $box1=12-$box2;
+               }
+                $vhod=strrpos($stroka['URL'],'&');
+                $stroka2=mb_substr ($stroka['URL'],$vhod+1);
+                $stroka1=mb_substr ($stroka['URL'],-strlen($stroka['URL']),$vhod);
+                echo '<div class="container-fluid"><div class="row"><div class="col-'.$box1.'"><div class="col2_'.$stroka['CLASS'].'">'.$stroka1.'</div></div><div class="col-'.$box2.'"><div class="col2_'.$stroka['CLASS'].'">'.$stroka2.'</div></div></div></div>';
+             }
+
+          if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
+             if (stripos ('-'.$stroka['NAME'],'col3')) {
+                $box1=4;
+                $box2=4;
+                $box3=4;
+               if ($stroka['NAME']!='col3') {
+                $vhod=strrpos($stroka['NAME'],'/');
+                $box2=(int)mb_substr($stroka['NAME'],$vhod+1); //нашли третью цифру для столбца бутстрапа
+                $box1=(int)mb_substr($stroka['NAME'],5,$vhod-5);                
+                $box3=12-$box2-$box1;
+               }
+                $dlinaStr=strlen ( $stroka['URL'] );
+                $vhod2=strrpos($stroka['URL'],'&');   // нашли последнее вхождение
+                $vhod1=strrpos($stroka['URL'],'&',-($dlinaStr-$vhod2+1));   // нашли предпоследнее вхождение
+                $stroka3=mb_substr ($stroka['URL'],$vhod2+1);
+                $stroka2=mb_substr ($stroka['URL'],$vhod1+1,$vhod2-$vhod1-1);
+                $stroka1=mb_substr ($stroka['URL'],0,$vhod1);
+                echo '<div class="container-fluid"><div class="row"><div class="col-'.$box1.'"><div class="col3_'.$stroka['CLASS'].'">'.$stroka1.'</div></div><div class="col-'.$box2.'"><div class="col3_'.$stroka['CLASS'].'">'.$stroka2.'</div></div><div class="col-'.$box3.'"><div class="col3_'.$stroka['CLASS'].'">'.$stroka3.'</div></div></div></div>';
+             }
+        }
+        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
+        $rez=parent::zaprosSQL($zapros);
+      }
+        echo '</form>';
+        echo'</section>';
+     }
+
+ }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3980,925 +3927,6 @@ class redaktor  extends menu
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class menu extends initBD
- {
-     public function __construct() {
-        parent::__construct();
-        $this->zapuskMenuMagiceski=false;
-         $this->kn[0]=false;
-         $this->kn[1]=false;
-         $this->kn[2]=false;
-         $this->kn[3]=false;
-         $this->kn[4]=false;
-         $this->kn[5]=false;
-         $this->kn[6]=false;
-         $this->kn[7]=false;
-         $this->kn[8]=false;
-         $this->kn[9]=false;
-         $this->kn[10]=false;
-         $this->kn[11]=false;
-         $this->kn[12]=false;
-         $this->kn[13]=false;
-         $this->kn[14]=false;
-         $this->kn[15]=false;
-         $this->con = mysqli_connect($this->initBdHost(),$this->initBdLogin(),$this->initBdParol(),$this->initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд
-     
-         if (!parent::searcNameTablic('type_menu_po_imeni')) {  // Проверяем есть ли таблица с названия-типами меню
-           $zapros="CREATE TABLE type_menu_po_imeni(
-                                                     name_menu    VARCHAR (100),
-                                                     type_menu    INT 
-                                                   )  ";
-           parent::zaprosSQL($zapros);
-         } 
-        }
-     public function __destruct() {
-        mysqli_close($this->con);
-     }
-     // Служебные функции
-     // Функция возвращает имя кнопки из таблицы менюшки по ID
-     public function getNamepoId($tab,$id) 
-     {
-        $zapros="SELECT NAME FROM ".$tab." WHERE ID=".$id;
-        $rez=parent::zaprosSQL($zapros);
-        $stroka=mysqli_fetch_array($rez);
-        return $stroka['NAME'];
-     }
-     public function typMenu($nameTablic) // Функция возвращает тип менюшки с заданным именем
-     {
-      $zapros="SELECT type_menu FROM type_menu_po_imeni WHERE name_menu='".$nameTablic."'";
-      $rez=parent::zaprosSQL($zapros);
-      if ($rez) $stroka=mysqli_fetch_array($rez); else return 0;
-      if ($stroka[0]>0) return $stroka[0]; else return 0;
-     }
-     public function saveTypMenu($nameTablic,$typ) // Функция исправляет или изменяет тип уже существующей менюшки
-     {
-      $zapros="UPDATE type_menu_po_imeni SET `type_menu`=".$typ." WHERE name_menu='".$nameTablic."'";
-      $rez=parent::zaprosSQL($zapros);
-      return $rez;
-     }
-     public function createTypMenu($nameTablic,$typ) // Функция создает запись о новой менюшке
-     {
-      $zapros="INSERT INTO type_menu_po_imeni(`name_menu`, `type_menu`) VALUES ('".$nameTablic."',".$typ.")";
-      $rez=parent::zaprosSQL($zapros);
-      return $rez;
-     }
-     // простая функция, выводит из базы меню все кнопки подряд
-     // $nameTablic - имя таблицы менюшки
-     // Общий класс '<section class="'.$nameTablic.'">
-     // Класс для формы с приставкой form_+$nameTablic
-     // Класс для кнопки с приставкой  button_+$nameTablic
-     // В таблице может быть определен для каждой кнопки свой класс.
-     // параметр ссылки default отправляет пользователя на главную страницу сайта
-     public function menu($nameTablic) // Это меню типа 1
-     {
-             // Регистрируем либо изменяем тип меню
-             if ($this->typMenu($nameTablic)!=1) {
-              if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
-                 parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
-                 $this->saveTypMenu($nameTablic,1); 
-               }
-              if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,1);
-             }
-            //////////////////////////////////////
-        
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-        echo'<section class="'.$nameTablic.'">';
-        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
-        $i=0;
-        if (parent::notFalseAndNULL($rez))
-        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
-          if ($stroka['URL']!='default')
-            echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
-          if ($stroka['URL']=='default')
-            echo '<form class="form_'.$stroka['CLASS'].'" action="'.parent::initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
-            $i++;
-        }
-        echo'</section>';
-     }
-     // простая функция, выводит из базы меню все кнопки подряд
-     // $nameTablic - имя таблицы менюшки
-     // Общий класс '<section class="'.$nameTablic.'">
-     // Класс для формы с приставкой form_+$nameTablic
-     // Класс для кнопки с приставкой  button_+$nameTablic
-     // В таблице может быть определен для каждой кнопки свой класс.
-     // Добавлена возможность управлять выводом кнопок с помощью двоичного кода. $kod=1(1) - будет выведена первая кнопка,
-     // $kod=2(10) - будет выведена вторая кнопка, $kod=3(11) - будет выведена первая и вторая кнопка.
-     // Максимальное значение $kod=32768(1111111111111111) - 2 байта или 16 единиц.
-     // параметр ссылки default отправляет пользователя на главную страницу сайта
-     public function menu2($nameTablic,$kod)
-     {
-             // Регистрируем либо изменяем тип меню
-             if ($this->typMenu($nameTablic)!=2) {
-              if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
-                 parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
-                 $this->saveTypMenu($nameTablic,2); 
-               }
-              if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,2);
-             }
-            //////////////////////////////////////
-            if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
-       if ($kod>=32768) $this->kn[15]=true; else $this->kn[15]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[14]=true; else $this->kn[14]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[13]=true; else $this->kn[13]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[12]=true; else $this->kn[12]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[11]=true; else $this->kn[11]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[10]=true; else $this->kn[10]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[9]=true; else $this->kn[9]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[8]=true; else $this->kn[8]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[7]=true; else $this->kn[7]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[6]=true; else $this->kn[6]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[5]=true; else $this->kn[5]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[4]=true; else $this->kn[4]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[3]=true; else $this->kn[3]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[2]=true; else $this->kn[2]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[1]=true; else $this->kn[1]=false;
-       while ($kod>=32768) {$kod=$kod-32768;}
-       $kod=$kod << 1;
-       if ($kod>=32768) $this->kn[0]=true; else $this->kn[0]=false;
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-        echo'<section class="'.$nameTablic.'">';
-        $i=0;
-        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
-            if ($this->kn[$i])
-            if ($stroka['URL']!='default')
-            echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
-            if ($this->kn[$i])
-            if ($stroka['URL']=='default')
-            echo '<form class="form_'.$stroka['CLASS'].'" action="'.parent::initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
-            $i++;
-        }
-        echo'</section>';
-     }
-
-     // Запускаем через магический метод __unserialize(nameTablic,array('Редактор','Аматор'));
-     // первый параметр - это имя таблицы, второй - это массив названий кнопок. Массив безразмерный, пишем то название кнопок, которое отображается на сайте.
-     // простая функция, выводит из базы меню все кнопки согласно очереди в массиве
-     // $nameTablic - имя таблицы менюшки
-     // Общий класс '<section class="'.$nameTablic.'">
-     // Класс для формы с приставкой form_+$nameTablic
-     // Класс для кнопки с приставкой  button_+$nameTablic
-     // В таблице может быть определен для каждой кнопки свой класс.
-     // Внимание!! Название кнопки при вызове магическим методом должно совпадать с названием кнопки в базе данных
-     // параметр ссылки default отправляет пользователя на главную страницу сайта
-    public function menu3($nameTablic)
-     {
-             // Регистрируем либо изменяем тип меню
-             if ($this->typMenu($nameTablic)!=3) {
-              if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic))  {
-                 parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
-                 $this->saveTypMenu($nameTablic,3); }
-              if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,3);}
-            //////////////////////////////////////
-        echo'<section class="'.$nameTablic.'">';
-        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
-        foreach ($this->masKn as $value) {
-            $zapros="SELECT * FROM ".$nameTablic." WHERE NAME='".$value."'";
-            $rez=parent::zaprosSQL($zapros);
-            $stroka=mysqli_fetch_array($rez);
-            if ($stroka['URL']!='default')
-            echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
-            if ($stroka['URL']=='default')
-            echo '<form class="form_'.$stroka['CLASS'].'" action="'.parent::initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
-          }
-        unset($value);
-        echo'</section>';
-     }
-
-     //public function __unserialize($nameMenu,$nameTablic,array $data):void
-     // переделал параметры входящие функции, по какой-то причине функция стала принимать только массив на входе, после перехода на php8
-     public function __unserialize(array $data):void
-     {
-      $nameMenu=$data[0];
-      $nameTablic=$data[1];
-      //echo $nameMenu.'--'.$nameTablic.'--'.$data[2];
-        $this->zapuskMenuMagiceski=true;
-    if ($nameMenu=='menu3') {
-         $i=0;
-         foreach ($data as $value) {
-            if ($i>1) // блокируем проверку первых двух элементов массива, которые содержат в себе значения переменных $nameMenu и $nameTablic
-            $this->masKn[$i-2] = $value;
-            $i++;
-          }
-          //unset($value);
-         $this->menu3($nameTablic);
-        }
-    if ($nameMenu=='menu4' || $nameMenu=='menu5' || $nameMenu=='menu6' || $nameMenu=='menu7' || $nameMenu=='menu8' || $nameMenu=='menu9') {
-         $i=0;
-         foreach ($data as $value) {
-            if ($i>1) // блокируем проверку первых двух элементов массива, которые содержат в себе значения переменных $nameMenu и $nameTablic
-            $this->masKn[$i-2] = $value;
-            //echo '<br>'.$i.'--'.$value;
-            $i++;
-          }
-          //unset($value);
-          //echo $this->masKn[0];
-          if ($nameMenu=='menu4')
-            $this->menu4($nameTablic,$this->masKn[0]);
-          if ($nameMenu=='menu5')
-            $this->menu5($nameTablic,$this->masKn[0]);
-          if ($nameMenu=='menu6')
-            $this->menu6($nameTablic,$this->masKn[0]);
-          if ($nameMenu=='menu7')
-            $this->menu7($nameTablic,$this->masKn[0]);
-          if ($nameMenu=='menu8')
-            $this->menu8($nameTablic,$this->masKn[0]);
-          if ($nameMenu=='menu9')
-            $this->menu9($nameTablic,$this->masKn[0]);
-        }
-        $this->zapuskMenuMagiceski=false;
-     }
-
-     // Внимание!!! Меню как ссылочное не использовать!!
-     // простая функция, выводит из базы меню все кнопки подряд
-     // $nameTablic - имя таблицы менюшки
-     // Общий класс '<section class="'.$nameTablic.'">
-     // Класс для формы с приставкой form_+$nameTablic
-     // Класс для кнопки с приставкой  button_+$nameTablic
-     // В таблице может быть определен для каждой кнопки свой класс.
-     // имя стилевых классов text.$nameTablic.номер
-     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
-     // Если поле ссылки в БД не text и не reset, то буттон типа submit
-     // Если поле ссылки в БД  text , то рисуем поле ввода
-     // Если поле ссылки в БД  reset , то рисуем кнопку reset
-     //При запуске через Магический метод:
-     //parent::__unserialize('menu4','redaktor_nastr',array('redaktor.php',$poslednijZapros));
-     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
-     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
-     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
-     //  br в базе на месте NAME работает как в html коде если URL=text
-     // параметр ссылки default отправляет пользователя на главную страницу сайта
-     public function menu4($nameTablic,$url)
-     {
-                    // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=4) {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
-                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
-                        $this->saveTypMenu($nameTablic,4); }
-                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,4);   }
-                   //////////////////////////////////////
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-        if (!$rez) echo'Не удалось загрузить таблицу для menu4';
-        echo'<section class="'.$nameTablic.'">';
-        echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
-        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
-        $ii=1;
-        $i=0;
-        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
-            if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && $stroka['URL']!='default')
-              echo '<button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
-            if ($stroka['URL']=='reset')
-              echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
-           
-          if ($stroka['URL']=='text')
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          if ($stroka['URL']=='text2')
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          if ($stroka['URL']=='textP')
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          if ($stroka['URL']=='text2P' || $stroka['URL']=='textP2')
-                 if ($stroka['NAME']!='br') {
-                         $textStart="";
-                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-                          $ii++;
-                       } else echo '<br>';           
-
-
-            if ($stroka['URL']=='default')
-            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
-            $i++;
-        }
-        echo '</form>';
-        echo'</section>';
-     }
-     // Внимание!!! Меню как ссылочное не использовать!!
-     // простая функция, выводит из базы меню все кнопки подряд
-     // $nameTablic - имя таблицы менюшки
-     // Общий класс '<section class="'.$nameTablic.'">
-     // Класс для формы с приставкой form_+$nameTablic
-     // Класс для кнопки с приставкой  button_+$nameTablic
-     // В таблице может быть определен для каждой кнопки свой класс.
-     // имя стилевых классов text.$nameTablic.номер
-     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
-     // Если поле ссылки в БД не text и не reset, то буттон типа submit
-     // Если поле ссылки в БД  text , то рисуем поле ввода
-     // Если поле ссылки в БД  reset , то рисуем кнопку reset
-     //При запуске через Магический метод:
-     //parent::__unserialize('menu5','redaktor_nastr',array('redaktor.php',$poslednijZapros));
-     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
-     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
-     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
-     //  br в базе на месте NAME работает как в html коде если URL=text
-     // В меню5 добавлена возвожность проверять принадлежность кнопок к статусу пользователя
-     // В дополнительное поле STATUS записывается перечень статусов, в которых работает кнопка, перед ними следует поставить 
-     // любой мисвол, к примеру "-". Пример -012345 - это значит кнопка видна при всех статусах
-     // параметр ссылки default отправляет пользователя на главную страницу сайта
-     public function menu5($nameTablic,$url)
-     {
-                    // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=5) {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
-                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
-                        $this->saveTypMenu($nameTablic,5); 
-                      }
-                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,5);
-                    }
-                   //////////////////////////////////////
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-        echo'<section class="'.$nameTablic.'">';
-        echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
-        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
-        $ii=1;
-        $i=0;
-        $status=(string)$_SESSION['status'];
-        
-        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
-            if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
-            if ($stroka['URL']!='text2'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default')
-              echo '<button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
-            if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
-              echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
-            
-            if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-            if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-             
-          if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
-                 if ($stroka['NAME']!='br') {
-                         $textStart="";
-                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-                          $ii++;
-                       } else echo '<br>';    
-             
-             if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
-            $i++;
-        }
-        echo '</form>';
-        echo'</section>';
-     }
-     // То же самое, как и меню 5, только можно использовать как ссылочное
-     // Внимание!!! Меню можно использовать как ссылочное!!
-     // простая функция, выводит из базы меню все кнопки подряд
-     // $nameTablic - имя таблицы менюшки
-     // Общий класс '<section class="'.$nameTablic.'">
-     // Класс для формы с приставкой form_+$nameTablic
-     // Класс для кнопки с приставкой  button_+$nameTablic
-     // В таблице может быть определен для каждой кнопки свой класс.
-     // имя стилевых классов text.$nameTablic.номер
-     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
-     // Если поле ссылки в БД не text и не reset, то буттон типа submit
-     // Если поле ссылки в БД  text , то рисуем поле ввода
-     // Если поле ссылки в БД  reset , то рисуем кнопку reset
-     // Внимание!!! Меню как ссылочное не использовать!!
-     //При запуске через Магический метод:
-     //parent::__unserialize('menu4','redaktor_nastr',array('redaktor.php',$poslednijZapros));
-     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
-     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
-     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
-     //  br в базе на месте NAME работает как в html коде если URL=text
-     // В меню5 добавлена возвожность проверять принадлежность кнопок к статусу пользователя
-     // В дополнительное поле STATUS записывается перечень статусов, в которых работает кнопка, перед ними следует поставить 
-     // любой символ, к примеру "-". Пример -012345 - это значит кнопка видна при всех статусах
-     // параметр ссылки default отправляет пользователя на главную страницу сайта
-     public function menu6($nameTablic,$url)
-     {
-                    // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=6) {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
-                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
-                        $this->saveTypMenu($nameTablic,6); 
-                      }
-                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,6);
-                    }
-                   //////////////////////////////////////
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-        echo'<section class="'.$nameTablic.'">';
-        echo '<form class="form_'.$nameTablic.'" method="POST">';
-        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
-        $ii=1;
-        $status=(string)$_SESSION['status'];
-        if ($rez===false) return false;
-        while (!is_null($stroka=(mysqli_fetch_assoc($rez)))) {
-          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
-          if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP'  && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
-            $linkButton=$stroka['URL'];
-            if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
-            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'"/>';
-            if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
-          }
-         if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
-              echo '<button class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button>';
-          
-          if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-             if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br') {
-               $textStart="";
-               if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-               echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-               $ii++;
-               } else echo '<br>';
-
-           if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
-            if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          //if ($stroka['ID']==$idPoz)
-              if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
-                 if ($stroka['NAME']!='br') {
-                         $textStart="";
-                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-                          $ii++;
-                       } else echo '<br>';    
-            if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
-         }
-        echo '</form>';
-        echo'</section>';
-     }
- 
-     // Внимание!!! Меню можно использовать как ссылочное!!
-     // $nameTablic - имя таблицы менюшки
-     // Общий класс '<section class="'.$nameTablic.'">
-     // Класс для формы с приставкой form_+$nameTablic
-     // Класс для кнопки с приставкой  button_+$nameTablic
-     // В таблице может быть определен для каждой кнопки свой класс.
-     // имя стилевых классов text.$nameTablic.номер
-     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
-     // Если поле ссылки в БД не text и не reset, то буттон типа submit
-     // Если поле ссылки в БД  text , то рисуем поле ввода
-     // Если поле ссылки в БД  reset , то рисуем кнопку reset
-     // Внимание!!! Меню как ссылочное не использовать!!
-     //При запуске через Магический метод:
-     //parent::__unserialize('menu4','redaktor_nastr',array('redaktor.php',$poslednijZapros));
-     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
-     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
-     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
-     //  br в базе на месте NAME работает как в html коде если URL=text
-     // В меню5 добавлена возвожность проверять принадлежность кнопок к статусу пользователя
-     // В дополнительное поле STATUS записывается перечень статусов, в которых работает кнопка, перед ними следует поставить 
-     // любой мисвол, к примеру "-". Пример -012345 - это значит кнопка видна при всех статусах
-     // То же самое, что и меню 6, только объекты выводятся согласно номерам ID
-     // параметр ссылки default отправляет пользователя на главную страницу сайта
-     public function menu7($nameTablic,$url)
-     {
-                    // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=7) {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
-                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
-                        $this->saveTypMenu($nameTablic,7); 
-                      }
-                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,7);
-                    }
-                   //////////////////////////////////////
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-        echo'<section class="'.$nameTablic.'">';
-        echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
-        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
-        $ii=1;
-        $status=(string)$_SESSION['status'];
-        $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
-        $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
-        $idMax=$stroka[0];
-       for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
-        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
-          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
-          if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
-              $linkButton=$stroka['URL'];
-              if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
-              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
-              if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
-            }
-          if ($stroka['ID']==$idPoz)
-              if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
-              echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';
-          
-          if ($stroka['ID']==$idPoz)
-             if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-                if ($stroka['NAME']!='br') {
-                    $textStart="";
-                     if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-                     echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-                     $ii++;
-                  } else echo '<br>';
-
-           if ($stroka['ID']==$idPoz)
-              if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
-                 if ($stroka['NAME']!='br') {
-                         $textStart="";
-                          if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-                          echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-                          $ii++;
-                       } else echo '<br>';                  
-
-        if ($stroka['ID']==$idPoz)
-           if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-        if ($stroka['ID']==$idPoz)
-          if ($stroka['URL']=='textP' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
-           if ($stroka['URL']=='default')
-            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
-    
-        }
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-      }
-        echo '</form>';
-        echo'</section>';
-     }
-      // Внимание!!! Меню можно использовать как ссылочное!!
-     // $nameTablic - имя таблицы менюшки
-     // Общий класс '<section class="'.$nameTablic.'">
-     // Класс для формы с приставкой form_+$nameTablic
-     // Класс для кнопки с приставкой  button_+$nameTablic
-     // В таблице может быть определен для каждой кнопки свой класс.
-     // имя стилевых классов text.$nameTablic.номер
-     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
-     // Если поле ссылки в БД не text и не reset, то буттон типа submit
-     // Если поле ссылки в БД  text , то рисуем поле ввода
-     // Если поле ссылки в БД  reset , то рисуем кнопку reset
-     // Внимание!!! Меню как ссылочное не использовать!!
-     //При запуске через Магический метод:
-     //parent::__unserialize('menu4','redaktor_nastr',array('redaktor.php',$poslednijZapros));
-     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
-     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
-     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
-     //  br в базе на месте NAME работает как в html коде если URL=text
-     // В меню5 добавлена возвожность проверять принадлежность кнопок к статусу пользователя
-     // В дополнительное поле STATUS записывается перечень статусов, в которых работает кнопка, перед ними следует поставить 
-     // любой мисвол, к примеру "-". Пример -012345 - это значит кнопка видна при всех статусах
-     // То же самое, что и меню 7, только добавлен объект textarea
-     // параметр ссылки default отправляет пользователя на главную страницу сайта
-     public function menu8($nameTablic,$url)
-     {
-                    // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=8) {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
-                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
-                        $this->saveTypMenu($nameTablic,8); 
-                      }
-                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,8);
-                    }
-                   //////////////////////////////////////
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-        echo'<section class="'.$nameTablic.'">';
-        echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
-        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
-        $ii=1;
-        $status=(string)$_SESSION['status'];
-        $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
-        $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
-        $idMax=$stroka[0];
-       for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
-        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
-          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
-          if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
-              $linkButton=$stroka['URL'];
-              if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];  
-              echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
-              if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
-            }
-          if ($stroka['ID']==$idPoz)
-              if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
-              echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';
-         
-          if ($stroka['ID']==$idPoz)
-           if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          if ($stroka['ID']==$idPoz)
-             if ($stroka['URL']=='textP')
-                 if ($stroka['NAME']!='br') {
-                 $textStart="";
-                 if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-                 echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-                 $ii++;
-                 } else echo '<br>';
-                        
-          if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          if ($stroka['ID']==$idPoz)
-           if ($stroka['URL']=='textarea' &&  strrpos($stroka['STATUS'],$status)!=false) {
-             $textStart="";
-             if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-             echo '<textarea class="textarea_'.$stroka['CLASS'].'" name="'.$stroka['NAME'].'"/>'.$textStart.'</textarea>';
-             $ii++;
-            }
-          if ($stroka['ID']==$idPoz)
-            if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
-               if ($stroka['NAME']!='br') {
-                       $textStart="";
-                        if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-                        echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-                        $ii++;
-                     } else echo '<br>';   
-
-          if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
-        }
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-      }
-        echo '</form>';
-        echo'</section>';
-     }
-           // Внимание!!! Меню можно использовать как ссылочное!!
-     // $nameTablic - имя таблицы менюшки
-     // Общий класс '<section class="'.$nameTablic.'">
-     // Класс для формы с приставкой form_+$nameTablic
-     // Класс для кнопки с приставкой  button_+$nameTablic
-     // В таблице может быть определен для каждой кнопки свой класс.
-     // имя стилевых классов text.$nameTablic.номер
-     // $url задает ссылку, куда переходим при нажатии на одну из кнопок
-     // Если поле ссылки в БД не text и не reset, то буттон типа submit
-     // Если поле ссылки в БД  text , то рисуем поле ввода
-     // Если поле ссылки в БД  reset , то рисуем кнопку reset
-     // Внимание!!! Меню как ссылочное не использовать!!
-     //При запуске через Магический метод:
-     //parent::__unserialize('menu4','redaktor_nastr',array('redaktor.php',$poslednijZapros));
-     //Первый параметр - это название функции, второй параметр - это название таблицы меню.
-     //Параметры в массиве, первый элемент - это ссылка active"redaktor.php"
-     //Следующие элементы по порядку надписи внутри текстового тега type=text, value=$poslednijZapros и так далее
-     //  br в базе на месте NAME работает как в html коде если URL=text
-     // В меню5 добавлена возвожность проверять принадлежность кнопок к статусу пользователя
-     // В дополнительное поле STATUS записывается перечень статусов, в которых работает кнопка, перед ними следует поставить 
-     // любой мисвол, к примеру "-". Пример -012345 - это значит кнопка видна при всех статусах
-     // новое------------------------------------------------------------------------------------
-     // То же самое, что и меню 8, только добавлены объекты p,h1-h6, div, img
-     // Класс стиля будет равен p(h1,h2,h3,h4,h5,h6,div)_имя класса в таблице
-     // Класс для картинки. Класс для дива imgDiv_имя класса, класс для img img_имя класса
-     // горизонтальная полоса, имя hr
-     // строка col1 поделенная бутстрапом, NAME=col1, url="строка1"
-     // строка col2 поделенная бутстрапом, NAME=col2, url="строка1&строка2"
-     // строка col2_4/8 поделенная бутстрапом, NAME=col2_4/8, url="строка1&строка2" // добавив _4/8 можно регулировать ширину столбцов. Сумма должна быть равна 12. 
-     // строка col3 поделенная бутстрапом, NAME=col2, url="строка1&строка2&строка3"
-     // Принцип задания столбцов аналогичен с той лиш разницей, что на третий столбец пойдёт остаток. col3_4/4 - это равносильно col-4-4-4 Сумма должна быть равна 12. 
-     // параметр ссылки default отправляет пользователя на главную страницу сайта
-     public function menu9($nameTablic,$url)
-     {
-      
-                    // Регистрируем либо изменяем тип меню
-                    if ($this->typMenu($nameTablic)!=9) {
-                     if (parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) {
-                        parent::killZapisTablicy('type_menu_po_imeni',"WHERE name_menu='".$nameTablic."'");
-                        $this->saveTypMenu($nameTablic,9); 
-                      }
-                     if (!parent::siearcSlova('type_menu_po_imeni','name_menu',$nameTablic)) $this->createTypMenu($nameTablic,9);
-                    }
-                   //////////////////////////////////////
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-        echo'<section class="'.$nameTablic.'">';
-        echo '<form class="form_'.$nameTablic.'" action="'.$url.'" method="POST">';
-        if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Подсветить меню') echo $nameTablic.'<br>';
-        $ii=1;
-        $status=(string)$_SESSION['status'];
-        $zapros="SELECT MAX(ID) FROM ".$nameTablic." WHERE 1";
-        $stroka=mysqli_fetch_array(parent::zaprosSQL($zapros));
-        $idMax=$stroka[0];
-       for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
-        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
-          if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
-          if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default' && $stroka['URL']!='p'  
-              && $stroka['URL']!='h1' && $stroka['URL']!='h2' && $stroka['URL']!='h3' && $stroka['URL']!='h4' && $stroka['URL']!='h5' && $stroka['URL']!='h6' && $stroka['URL']!='div' && $stroka['NAME']!='img' 
-               && $stroka['NAME']!='hr'  && $stroka['NAME']!='col1' && (!stripos('-'.$stroka['NAME'],'col2') && !stripos($stroka['NAME'],'&') && !stripos ('-'.$stroka['NAME'],'col3')) ) {   
-                $linkButton=$stroka['URL'];
-                if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
-                echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
-                if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
-              }
-          if ($stroka['ID']==$idPoz)
-              if ($stroka['URL']=='reset' &&  strrpos($stroka['STATUS'],$status)!=false)
-              echo '<input class="button_'.$stroka['CLASS'].'" type="reset" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">';
-          
-          if ($stroka['ID']==$idPoz)
-           if ($stroka['URL']=='text2' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          if ($stroka['ID']==$idPoz)
-             if ($stroka['URL']=='textP')
-                 if ($stroka['NAME']!='br') {
-                 $textStart="";
-                 if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-                 echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-                 $ii++;
-                 } else echo '<br>';
-                 
-          if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']=='text' &&  strrpos($stroka['STATUS'],$status)!=false)
-              if ($stroka['NAME']!='br') {
-              $textStart="";
-              if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-              echo '<input class="text_'.$stroka['CLASS'].'" type="text" name="'.$stroka['NAME'].'" value="'.$textStart.'"/>';
-              $ii++;
-              } else echo '<br>';
-
-          if ($stroka['ID']==$idPoz)
-           if ($stroka['URL']=='textarea' &&  strrpos($stroka['STATUS'],$status)!=false) {
-             $textStart="";
-             if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-             echo '<textarea class="textarea_'.$stroka['CLASS'].'" name="'.$stroka['NAME'].'"/>'.$textStart.'</textarea>';
-             $ii++;
-            }
-          if ($stroka['ID']==$idPoz)
-            if (($stroka['URL']=='text2P' || $stroka['URL']=='textP2') &&  strrpos($stroka['STATUS'],$status)!=false)
-               if ($stroka['NAME']!='br') {
-                       $textStart="";
-                        if ($this->zapuskMenuMagiceski && isset($this->masKn[$ii])) $textStart=$this->masKn[$ii];
-                        echo '<input class="text_'.$stroka['CLASS'].'" type="password" name="'.$stroka['NAME'].'" placeholder="'.$textStart.'"/>';
-                        $ii++;
-                     } else echo '<br>';    
-         if ($stroka['ID']==$idPoz)
-            if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-             echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.parent::initsite().'"/>';
-          
-         if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
-            if ($stroka['URL']=='p' || $stroka['URL']=='h1' || $stroka['URL']=='h2' || $stroka['URL']=='h3' || $stroka['URL']=='h4' || $stroka['URL']=='h5' || $stroka['URL']=='h6' || $stroka['URL']=='div')
-              echo '<'.$stroka['URL'].' class="'.$stroka['URL'].'_'.$stroka['CLASS'].'">'.$stroka['NAME'].'</'.$stroka['URL'].'>';
-          
-        if ($stroka['ID']==$idPoz)
-          if ($stroka['NAME']=='img' &&  strrpos($stroka['STATUS'],$status)!=false)
-            echo '<div class="imgDiv_'.$stroka['CLASS'].'"><img src="'.$stroka['URL'].'" alt="название и путь к файлу:'.$stroka['URL'].'"></div>';
-        
-            if ($stroka['ID']==$idPoz)
-          if ($stroka['NAME']=='hr' &&  strrpos($stroka['STATUS'],$status)!=false)
-            echo '<hr class="hr_'.$stroka['CLASS'].'">';
-
-        if ($stroka['ID']==$idPoz)
-          if ($stroka['NAME']=='col1' &&  strrpos($stroka['STATUS'],$status)!=false)
-            echo '<div class="container-fluid"><div class="row"><div class="col-12"><div class=col1_'.$stroka['CLASS'].'">'.$stroka['URL'].'</div></div></div></div>';
-         
-        if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
-          if ($stroka['NAME']=='col2' || $stroka['NAME']=='col2_1/11' || $stroka['NAME']=='col2_2/10' || $stroka['NAME']=='col2_3/9' 
-             || $stroka['NAME']=='col2_4/8' || $stroka['NAME']=='col2_5/7' || $stroka['NAME']=='col2_7/5' || $stroka['NAME']=='col2_8/4' || $stroka['NAME']=='col2_9/3' 
-               || $stroka['NAME']=='col2_10/2' || $stroka['NAME']=='col2_11/1' || $stroka['NAME']=='col2_6/6') {
-                $box1=6;
-                $box2=6;
-               if ($stroka['NAME']!='col2') {
-                $vhod=strrpos($stroka['NAME'],'/');
-                $box2=(int)mb_substr($stroka['NAME'],$vhod+1);
-                $box1=12-$box2;
-               }
-                $vhod=strrpos($stroka['URL'],'&');
-                $stroka2=mb_substr ($stroka['URL'],$vhod+1);
-                $stroka1=mb_substr ($stroka['URL'],-strlen($stroka['URL']),$vhod);
-                echo '<div class="container-fluid"><div class="row"><div class="col-'.$box1.'"><div class="col2_'.$stroka['CLASS'].'">'.$stroka1.'</div></div><div class="col-'.$box2.'"><div class="col2_'.$stroka['CLASS'].'">'.$stroka2.'</div></div></div></div>';
-             }
-
-          if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
-             if (stripos ('-'.$stroka['NAME'],'col3')) {
-                $box1=4;
-                $box2=4;
-                $box3=4;
-               if ($stroka['NAME']!='col3') {
-                $vhod=strrpos($stroka['NAME'],'/');
-                $box2=(int)mb_substr($stroka['NAME'],$vhod+1); //нашли третью цифру для столбца бутстрапа
-                $box1=(int)mb_substr($stroka['NAME'],5,$vhod-5);                
-                $box3=12-$box2-$box1;
-               }
-                $dlinaStr=strlen ( $stroka['URL'] );
-                $vhod2=strrpos($stroka['URL'],'&');   // нашли последнее вхождение
-                $vhod1=strrpos($stroka['URL'],'&',-($dlinaStr-$vhod2+1));   // нашли предпоследнее вхождение
-                $stroka3=mb_substr ($stroka['URL'],$vhod2+1);
-                $stroka2=mb_substr ($stroka['URL'],$vhod1+1,$vhod2-$vhod1-1);
-                $stroka1=mb_substr ($stroka['URL'],0,$vhod1);
-                echo '<div class="container-fluid"><div class="row"><div class="col-'.$box1.'"><div class="col3_'.$stroka['CLASS'].'">'.$stroka1.'</div></div><div class="col-'.$box2.'"><div class="col3_'.$stroka['CLASS'].'">'.$stroka2.'</div></div><div class="col-'.$box3.'"><div class="col3_'.$stroka['CLASS'].'">'.$stroka3.'</div></div></div></div>';
-             }
-        }
-        $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
-        $rez=parent::zaprosSQL($zapros);
-      }
-        echo '</form>';
-        echo'</section>';
-     }
-
- }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

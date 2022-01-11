@@ -2,8 +2,9 @@
 
 namespace redaktor;
 // Файл сложных классов - модулей. 
-
+//include "class".DIRECTORY_SEPARATOR."instrument.php";
 include 'class.php';
+
 
 //класс готовых модулей
 class modul
