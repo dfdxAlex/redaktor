@@ -4,8 +4,6 @@ include "funcii.php";
 include "functionDfdx.php";
 include "image/swapImages.php";
 include "classInstrument.php";
-//include "class".DIRECTORY_SEPARATOR."instrument.php";
-
 
 ?>
 <!DOCTYPE html>

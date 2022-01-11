@@ -32,6 +32,7 @@ if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
 include "funcii.php";
 include "functionDfdx.php";
+include "classInstrument.php";
 
 $status = new redaktor\login();
 $maty = new redaktor\maty();

@@ -30,6 +30,7 @@ if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
 include "funcii.php";
 include "functionDfdx.php";
 include "image/swapImages.php";
+include "classInstrument.php";
 
 $status = new redaktor\login();
 $maty = new redaktor\maty();
