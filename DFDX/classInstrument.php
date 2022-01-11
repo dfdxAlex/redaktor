@@ -82,7 +82,7 @@ class modul
 
               // Статус редактора
               if (stripos('sss'.$value,'Статус редактора=')) {
-                 $statusRedaktora=preg_replace('/Статус редактора=/','',$value);
+                 $statusRedaktora=preg_replace('/Статус\sредактора=/','',$value);
                  if (stripos('sss'.$value,'1')) $redaktorUser=true;
                  if (stripos('sss'.$value,'3')) $redaktorPodpis=true;
                  if (stripos('sss'.$value,'2')) $redaktorRedaktor=true;
@@ -90,7 +90,7 @@ class modul
 
               //проверяем логин
               if (stripos('---'.$value,'Логин редактора=')) {
-                  $loginRedaktora=preg_replace('/Логин редактора=/','',$value); 
+                  $loginRedaktora=preg_replace('/Логин\sредактора=/','',$value); 
                   if (stripos('---'.$loginRedaktora,$_SESSION['login'])>0) 
                   // Если в списке логинов присутствует текущий логин, то разрешаем запуск открытого меню
                     $razresheniePoLoginu=true; 
@@ -98,7 +98,7 @@ class modul
 
               //ищем чьи статьи показать
               if (stripos('sss'.$value,'Статьи редактора='))
-                  $pokazarStatijRedaktora=preg_replace('/Статьи редактора=/','',$value); 
+                  $pokazarStatijRedaktora=preg_replace('/Статьи\sредактора=/','',$value); 
 
               if (stripos('sss'.$value,'Шаблон='))
                   $hablonNews=preg_replace('/Шаблон=/','',$value); 
@@ -357,7 +357,7 @@ class modul
                    $onePlus=true;
                  }
             }
-
+          if ($razdelFoWhere=='') $razdelFoWhere='razdel="'.$razdel.'"';
           if ($pokazarStatijRedaktora=='' && $razdel!='') 
                $zapros="SELECT * FROM ".$nametablice." WHERE ".$razdelFoWhere;
 

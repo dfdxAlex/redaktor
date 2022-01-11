@@ -110,7 +110,7 @@ echo '</div>';
 //////////////////////////////////////////////////////////////////////////////////////
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 $bylPoisk=false;
-$poisk = new \redaktor\poisk();
+$poisk = new redaktor\poisk();
 $redaktor=new redaktor\modul();
 $action='action=apidfdx.php';  //страница обработки кнопок в модуле news()
 $nameBD='bd2';
