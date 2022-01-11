@@ -548,9 +548,10 @@ class modul
                    // Проверить существует ли статья с таким же названием
                    $newsAlready=false;
                    if (file_exists($fileName)) $newsAlready=true;
-                        $newsName=preg_filter('/news\/.+\//','',$fileName);
+                   $newsName=preg_filter('/news\/.+\//','',$fileName);
+                    
                    if (file_exists($newsName)) $newsAlready=true;
-                        if ($newsAlready) 
+                   if ($newsAlready) 
                             $fileName=preg_filter('/\.php/','-double-'.time().'.php',$fileName);
 
                    $urlNews=$this->urlPoId($nametablice,$nomerZagolowkaStati);
@@ -558,6 +559,7 @@ class modul
                            $_SESSION['statiaPoId']=$classPhp->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
                            $action=$this->urlPoIdPath($nametablice,$nomerZagolowkaStati);
                            $_SESSION["runStrNews"]=true;
+                           echo $urlNews;
                            header('Location: '.$action);
                      }
 

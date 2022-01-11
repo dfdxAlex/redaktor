@@ -6,6 +6,7 @@ include "image/swapImages.php";
 include "classInstrument.php";
 //include "class".DIRECTORY_SEPARATOR."instrument.php";
 
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -117,13 +118,13 @@ echo '<section class="container-fluid pole">';
 
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
         $bylPoisk=false;
-        $poisk = new \redaktor\poisk();
+        $poisk = new redaktor\poisk();
         $redaktor = new redaktor\modul();
-        $action = 'action=dfdx.php';  //страница обработки кнопок в модуле news()
-        $runNewsIsNews1 = -1;
-        $metka = 'dfdx'; //метка для счётчика статистики посещения конкретной страницы
-        $nomerNewsPoisk = 'Число_статей=5';
-        $nomerNewsGlawn = 'Число_статей=5';
+        $action='action=dfdx.php';  //страница обработки кнопок в модуле news()
+        $runNewsIsNews1=-1;
+        $metka='dfdx'; //метка для счётчика статистики посещения конкретной страницы
+        $nomerNewsPoisk='Число_статей=5';
+        $nomerNewsGlawn='Число_статей=5';
         //if (!file_exists($action)) $action=basename(__FILE__);
 
         ////////////////////////////////////////////////////поиск
