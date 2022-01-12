@@ -2,7 +2,7 @@
 namespace redaktor;
 
 //function my_autoloader($class){
-
+/*
 $nameClass="class/instrument.php";
 while (!file_exists($nameClass)) 
  $nameClass='../'.$nameClass;
@@ -55,5 +55,5 @@ $nameClass="class/initBD.php";
 //}
  //spl_autoload_register('my_autoloader');
 
-
+*/
 ?>
