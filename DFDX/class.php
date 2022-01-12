@@ -1,12 +1,14 @@
 <?php
 namespace redaktor;
 
- $nameClass="class/instrument.php";
- while (!file_exists($nameClass)) 
-  $nameClass='../'.$nameClass;
- include $nameClass;
+//function my_autoloader($class){
 
- $nameClass="class/initBD.php";
+$nameClass="class/instrument.php";
+while (!file_exists($nameClass)) 
+ $nameClass='../'.$nameClass;
+include $nameClass;
+
+$nameClass="class/initBD.php";
  while (!file_exists($nameClass)) 
   $nameClass='../'.$nameClass;
  include $nameClass;
@@ -50,8 +52,8 @@ namespace redaktor;
  while (!file_exists($nameClass)) 
   $nameClass='../'.$nameClass;
  include $nameClass;
-
-
+//}
+ //spl_autoload_register('my_autoloader');
 
 
 ?>

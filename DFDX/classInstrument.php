@@ -3,8 +3,10 @@
 namespace redaktor;
 // Файл сложных классов - модулей. 
 //include "class".DIRECTORY_SEPARATOR."instrument.php";
-include 'class.php';
-
+//include 'class.php';
+spl_autoload_register(function ($class_name) {
+  include 'class/'.$class_name . '.php';
+});
 
 //класс готовых модулей
 class modul
@@ -16,6 +18,7 @@ class modul
         //новостной модуль
         public function news1(...$parametr)
         {
+
            $classPhp = new maty();
            $classInstr = new instrument();
            $nametablice=''; // по умолчанию
