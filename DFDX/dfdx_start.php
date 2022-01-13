@@ -1,5 +1,21 @@
 <?php
 session_start();
+require "funcii.php";
+require "functionDfdx.php";
+require "image/swapImages.php";
+require "class.php";
+  use redaktor\instrument as instrument;
+  use redaktor\Modul as modul;
+  use redaktor\login as login;
+  use redaktor\maty as maty;
+  use redaktor\poisk as poisk;
+
+  $b=new instrument();
+  $redaktor=new Modul();
+  $status = new login();
+  $maty = new maty();
+  $poisk = new poisk();
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -28,13 +44,6 @@ if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
-include "funcii.php";
-include "functionDfdx.php";
-include "image/swapImages.php";
-include "classInstrument.php";
-
-$status = new redaktor\login();
-$maty = new redaktor\maty();
 
 if ($_SESSION["status"]>99) $_SESSION["status"]=9;
 
@@ -96,22 +105,17 @@ echo '</div>';
 echo '</section>';
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////ловим кнопку правой панели///////////////////////////////////////////////////////////////
-$redaktor=new redaktor\modul();
 $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 echo '<section class="container-fluid">';
 echo '<div class="row">';
-
 echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';  // Левое меню
 levoeMenu();
 echo '</div>';
-
 ////////////////////////////////////////////Центр//////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 $bylPoisk=false;
-$poisk = new \redaktor\poisk();
-$redaktor=new redaktor\modul();
 $action='action=dfdx.php';  //страница обработки кнопок в модуле news()
 $nameBD='bd2';
 $nameBD='nameTD='.$nameBD;

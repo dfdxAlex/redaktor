@@ -27,8 +27,8 @@ if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
 if (!isset($_SESSION['sSajta'])) $_SESSION['sSajta']=false;
 include 'funcii.php';
-//include 'class.php';
-include "classInstrument.php";
+include 'class.php';
+//include "classInstrument.php";
 
 $class = new redaktor\statistic();
 $status = new redaktor\login();
