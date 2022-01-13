@@ -7,6 +7,10 @@ class instrument
     public function __construct()
     {
     }  
+   public function instrumetTest()
+   {
+       echo 'instrument';
+   }
    // функция возвращает труе, если входящее значение не равно Фальс и не равно NULL и существует class instrument
    public function notFalseAndNULL($data)
    {

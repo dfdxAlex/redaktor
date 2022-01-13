@@ -571,7 +571,7 @@ class modul
                               $valueTemp=preg_filter('/\$action.*php/u','\$action=\'action=#',$value); // Замена страниц обработчиков
                               if (!is_null($valueTemp)) $value=$valueTemp;
                               
-                              $valueTemp=preg_filter('/include "/u','include "../../',$value); // Замена пути для Инклудов
+                              $valueTemp=preg_filter('/require\s"/u','include "../../',$value); // Замена пути для Инклудов
                               if (!is_null($valueTemp)) $value=$valueTemp;
                               
                               $valueTemp=preg_filter('/\$maty.*огин.*роль.*/u','echo \'<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>\';',$value);

@@ -3,10 +3,16 @@ session_start();
 include "../../funcii.php";
 include "../../functionDfdx.php";
 include "../../image/swapImages.php";
-include "../../classInstrument.php";
-//include "../../class".DIRECTORY_SEPARATOR."instrument.php";
+include "../../class.php";
+  use redaktor\instrument as instrument;
+  use redaktor\Modul as modul;
+  use redaktor\login as login;
+  use redaktor\maty as maty;
 
-
+  $b=new instrument();
+  $redaktor=new Modul();
+  $status = new login();
+  $maty = new maty();
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -25,7 +31,6 @@ include "../../classInstrument.php";
 <title>Генерация SSH ключа и добавление его в GitHab.</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <?php 
-$b=new redaktor\instrument();
 echo '<link rel="stylesheet" href="'.$b->searcNamePath('styli.css').'">';
 echo '<link rel="stylesheet" href="'.$b->searcNamePath('dfdx.css').'"> ';
 ?>
@@ -39,9 +44,7 @@ if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
 if (!isset($_SESSION["runStrNews"])) $_SESSION["runStrNews"]=false; // если страницу загрузили из модуля news, то значение true, если по прямой ссылке, то остается false
 if (!isset($_SESSION['redaktiruem'])) $_SESSION['redaktiruem']='';
-$redaktor=new redaktor\modul();
-$status = new redaktor\login();
-$maty = new redaktor\maty();
+
 if ($_SESSION["status"]>99) $_SESSION["status"]=9;
 if (isset($_POST['redaktor_up'])) $_SESSION["regimRaboty"]=0; // Если пришли из редактора движка, то абнулить режим работы
 ////////////////////////////////////////////Верхнее меню///////////////////////////////////////////////////////   
