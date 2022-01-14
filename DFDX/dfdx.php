@@ -1,18 +1,24 @@
 <?php
+namespace redaktor;
 session_start();
 require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
+  //use instrument;
   use redaktor\instrument as instrument;
-  use redaktor\Modul as modul;
+  use redaktor\Modul as Modul;
   use redaktor\login as login;
   use redaktor\maty as maty;
+  use redaktor\poisk as poisk;
+  use redaktor\statistic as statistic;
 
   $b=new instrument();
   $redaktor=new Modul();
   $status = new login();
   $maty = new maty();
+  $poisk = new poisk();
+  $statistik = new statistic();
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -121,8 +127,6 @@ echo '<section class="container-fluid pole">';
 
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
         $bylPoisk=false;
-        $poisk = new redaktor\poisk();
-        $redaktor = new redaktor\modul();
         $action='action=dfdx.php';  //страница обработки кнопок в модуле news()
         $runNewsIsNews1=-1;
         $metka='dfdx'; //метка для счётчика статистики посещения конкретной страницы
@@ -177,7 +181,6 @@ echo '</section>';
 ////////////////////////////Конец основного кода страницы////////////////////////// 
 /// Статистика///////////////////////////////////////
 echo '<footer class="container-fluid futter">';
-$statistik = new redaktor\statistic();
 if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
     $statistik->statistikOnOff();
 
