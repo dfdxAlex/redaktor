@@ -1,5 +1,23 @@
 <?php
 session_start();
+require "funcii.php";
+require "functionDfdx.php";
+require "image/swapImages.php";
+require "class.php";
+  use redaktor\instrument as instrument;
+  use redaktor\Modul as modul;
+  use redaktor\login as login;
+  use redaktor\maty as maty;
+  use redaktor\poisk as poisk;
+  use redaktor\statistic as statistic;
+
+  $b=new instrument();
+  $instrum=new instrument();
+  $redaktor=new Modul();
+  $status = new login();
+  $maty = new maty();
+  $poisk = new poisk();
+  $statistik = new statistic();
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -20,47 +38,29 @@ session_start();
 <link rel="stylesheet" href="styli.css">
 <link rel="stylesheet" href="dfdx.css">
 <meta name="Cache-Control" content="no-store">
-
 </head>
- 
- 
 <body>
 <?php
-//session_start();
 if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
-include "funcii.php";
-include "functionDfdx.php";
-include "classInstrument.php";
-
-$status = new redaktor\login();
-$maty = new redaktor\maty();
-
-if ($_SESSION["status"]>99) $_SESSION["status"]=9;
-
+//if ($_SESSION["status"]>99) $_SESSION["status"]=9;
 ////////////////////////////////////////////Верхнее меню///////////////////////////////////////////////////////   
-
 ///////////////////////////////////////////Обработка верхнего меню
 if ($_SESSION["status"]>0)             // если есть какой-то статух входа на сайт
  if (isset($_POST['menu_up_dfdx']))    // если было нажатие любой кнопки верхнего меню
-  if ($_POST['menu_up_dfdx']=='Выход') // Если была нажата кнопка Выход верхнего меню
-   {
+  if ($_POST['menu_up_dfdx']=='Выход') {// Если была нажата кнопка Выход верхнего меню
     $_SESSION["status"]=0;              // Обнуляем статус пользователя (выходим)
     $_SESSION["login"]='';
    }
-
 if ($_SESSION["status"]==0)             // если пользователь не вошел
   if (isset($_POST['menu_up_dfdx']))    // если было нажатие любой кнопки верхнего меню
-    if ($_POST['menu_up_dfdx']=='Вход') // Если была нажата кнопка Вход верхнего меню
-      {
+    if ($_POST['menu_up_dfdx']=='Вход') {// Если была нажата кнопка Вход верхнего меню
         $_SESSION["login"]=$_POST['login'];
         $_SESSION["parol"]=$_POST['parol'];
       }
-
 if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
-
 $_SESSION['redaktiruem']="regular_expressions.php";
 $maty->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Пароль'));
 ////////////////////////////Начало основного кода страницы//////////////////////////  
@@ -80,23 +80,19 @@ echo '</div>';
 echo '</section>';
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////ловим кнопку правой панели///////////////////////////////////////////////////////////////
-$redaktor=new redaktor\modul();
+
 $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 echo '<section class="container-fluid">';
 echo '<div class="row">';
-
 echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';  // Левое меню
 levoeMenu();
 echo '</div>';
-
 ////////////////////////////////////////////Центр//////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12 display-block">';
 if ($statiaPoId=='netKnopki') // если не было нажато правое меню
-if (!isset($_POST['poisk']) || isset($_POST['selectFunctionPhp'])) // Выводим работу с регулярными выражениями только если не было нажатой кнопки Поиск
- {
-    
+if (!isset($_POST['poisk']) || isset($_POST['selectFunctionPhp'])) {// Выводим работу с регулярными выражениями только если не было нажатой кнопки Поиск
   if (!isset($_SESSION['name_function_test'])) $_SESSION['name_function_test']='preg_filter()';
 //////////////////////////////////////форма выбора функции////////////////////////////////
 echo '<section class="container-fluid">';
@@ -104,9 +100,7 @@ echo '<div class="row">';
 echo '<div class="col-12">';
    echo '<div class="regular-form-select-function">';
     echo '<form action="regular_expressions.php" method="post" >';
-
     echo '<p class="regular-select-p">На примере функций php</p>';
-
      echo '<div class="regular-select-select">';
       echo '<select name="functionPhp">';
         echo '<optgroup label="Выберите функцию php">';
@@ -122,19 +116,16 @@ echo '<div class="col-12">';
         echo '</optgroup>';
         echo '</select>';
       echo '</div>';
-
     echo '<button name="selectFunctionPhp" class="select-function-php-button btn" value="Выбрать функцию">Выбрать</button>';
-
     echo '</form>';
     echo '</div>';
 echo '</div>';
 echo '</div>';
 ///////////////////////////////////////////////////////////////////////////
-if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isset($_POST['buttonPregQuote'])) || (isset($_POST['buttonPregGrep']))  ) //если нажимали кнопку выбора функции и есть выбранная функция, то заходим в раздел работы с конкретной функцией
-  {
+if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) 
+  || (isset($_POST['buttonPregQuote'])) || (isset($_POST['buttonPregGrep']))) {//если нажимали кнопку выбора функции и есть выбранная функция, то заходим в раздел работы с конкретной функцией
            ////////////////////////////////////////////// работа с preg_replace_callback_array ////////////////////////////////////////////////
-        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_replace_callback_array()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_replace_callback_array()')  ) // preg_replace_callback_array()
-           {
+        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_replace_callback_array()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_replace_callback_array()')) {// preg_replace_callback_array()
              if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
              echo '<div class="row">';
                echo '<div class="col-12">';
@@ -233,7 +224,6 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
              $subject=NULL;
              $limit=-1;
              $flag=0;
-             $instrum = new redaktor\instrument();
                 $mas[0]='~'.$_SESSION['pattern1'].'~u'.' => function ($match) {return '.$_SESSION['retur1'].';}';
                 $mas[1]='~'.$_SESSION['pattern2'].'~u'.' => function ($match) {return '.$_SESSION['retur2'].';}';
                 $mas[2]='~'.$_SESSION['pattern3'].'~u'.' => function ($match) {return '.$_SESSION['retur3'].';}';
@@ -266,9 +256,9 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
               echo 'Результат:<br><br>';
               $rez=preg_replace_callback_array(
                 [
-                  '~'.$_SESSION['pattern1'].'~u' => function ($match) {$instrum = new redaktor\instrument();echo 'Входной массив:<br>';$instrum->printMas($match).'<br>'; return $_SESSION['retur1'];},
-                  '~'.$_SESSION['pattern2'].'~u' => function ($match) {$instrum = new redaktor\instrument();echo 'Входной массив:<br>';$instrum->printMas($match).'<br>'; return $_SESSION['retur2'];},
-                  '~'.$_SESSION['pattern3'].'~u' => function ($match) {$instrum = new redaktor\instrument();echo 'Входной массив:<br>';$instrum->printMas($match).'<br>'; return $_SESSION['retur3'];}
+                  '~'.$_SESSION['pattern1'].'~u' => function ($match) {echo 'Входной массив:<br>';$instrum->printMas($match).'<br>'; return $_SESSION['retur1'];},
+                  '~'.$_SESSION['pattern2'].'~u' => function ($match) {echo 'Входной массив:<br>';$instrum->printMas($match).'<br>'; return $_SESSION['retur2'];},
+                  '~'.$_SESSION['pattern3'].'~u' => function ($match) {echo 'Входной массив:<br>';$instrum->printMas($match).'<br>'; return $_SESSION['retur3'];}
                 ] ,$subject3,$limit,$count,$flag);
               echo $instrum->printMas($rez).'<br><br>';
               echo 'Произведено замен:'.$count;
@@ -277,8 +267,8 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
            echo '</div>';
          }// конец работы с preg_replace_callback
           ////////////////////////////////////////////// работа с preg_replace_callback ////////////////////////////////////////////////
-    if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_replace_callback()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_replace_callback()')  ) // preg_replace_callback()
-          {
+    if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_replace_callback()') 
+      || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_replace_callback()')) {// preg_replace_callback()
             if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
             echo '<div class="row">';
               echo '<div class="col-12">';
@@ -312,13 +302,11 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
             if (!isset($_SESSION['flags'])) $_SESSION['flags']=0;
             if (isset($_POST['flags']) && $_POST['flags']!='') $_SESSION['flags']=$_POST['flags']; 
   
-            for ($i=1;$i<10;$i++)
-             {
+            for ($i=1;$i<10;$i++) {
                if (isset($_POST['patternMas'.$i])) $_SESSION['patternMas'.$i]=$_POST['patternMas'.$i];
                else $_SESSION['patternMas'.$i]='';
              }
-            for ($i=1;$i<10;$i++)
-             {
+            for ($i=1;$i<10;$i++) {
                if (isset($_POST['subject'.$i])) $_SESSION['subject'.$i]=$_POST['subject'.$i];
                else $_SESSION['subject'.$i]='';
              }
@@ -347,7 +335,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
                'bootstrap-f-start',
                'p','{','regular-block-name-function-preg_match-pattern-poz1',
                'bootstrap-f-start',
-               'p','$instrum = new redaktor\instrument();//создание объекта с необходимыми методами','regular-block-name-function-preg_match-pattern-poz2',
+               'p','$instrum = new instrument();//создание объекта с необходимыми методами','regular-block-name-function-preg_match-pattern-poz2',
                 'bootstrap-f-start',
                'p','echo \'переданы параметры в функцию:\';// сообщение вызов функции callback','regular-block-name-function-preg_match-pattern-poz2',
                 'bootstrap-f-start',
@@ -427,7 +415,6 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
               if (stripos('sss'.$_SESSION['flags'],'PREG_UNMATCHED_AS_NULL')>1)
               $flags=$flags+512;
 
-             $instrum = new redaktor\instrument();
              echo 'Регулярное выражение:<br>';
              echo $instrum->printMas($pattern);
   
@@ -436,17 +423,13 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
 
              echo 'используемые флаги:'.'<br>';
              $flagTest=$flags;
-             if ($flagTest>511) 
-              {
+             if ($flagTest>511) {
                 echo 'PREG_UNMATCHED_AS_NULL'.'<br><br>';
                 $flagTest=$flagTest-512;
               }
              if ($flagTest>255) echo 'PREG_OFFSET_CAPTURE'.'<br>';
-  
              $rezpreg_replace=preg_replace_callback($pattern,
-                                                      function ($match) 
-                                                      {
-                                                        $instrum = new redaktor\instrument();
+                                                      function ($match) {
                                                         echo '<br>переданы параметры в функцию:<br>';
                                                         echo $instrum->printMas($match);
                                                         $index=preg_match('/[0-9]/u',$_SESSION['callBack'],$matches);
@@ -460,12 +443,9 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
              if (gettype($rezpreg_replace)=='boolean' && $rezPreg_match==true) echo 'Функция вернула:True';
              if (gettype($rezpreg_replace)=='boolean' && $rezPreg_match==false) echo 'Функция вернула:False';
              if (is_null($rezpreg_replace)) echo 'Функция вернула:NULL';
-  
              echo '<br><br>Переменная: count='.$count.'<br><br>';
-  
              echo 'Вывод через foreach<br><br>';
              $instrum->printMas($rezpreg_replace); echo '<br><br><br>';
-              
               echo 'Вывод массива через print_r';
               echo '<br>';
               print_r($rezpreg_replace);
@@ -475,8 +455,8 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
           echo '</div>';
         }// конец работы с preg_replace_callback
         ////////////////////////////////////////////// работа с preg_replace ////////////////////////////////////////////////
-    if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_replace()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_replace()')  ) // preg_replace()
-        {
+    if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_replace()') 
+      || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_replace()')) {
           if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
           echo '<div class="row">';
             echo '<div class="col-12">';
@@ -507,22 +487,18 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
           if (!isset($_SESSION['limit'])) $_SESSION['limit']='-1';
           if (isset($_POST['limit']) && $_POST['limit']!='') $_SESSION['limit']=$_POST['limit']; 
 
-          for ($i=1;$i<10;$i++)
-           {
+          for ($i=1;$i<10;$i++) {
              if (isset($_POST['patternMas'.$i])) $_SESSION['patternMas'.$i]=$_POST['patternMas'.$i];
              else $_SESSION['patternMas'.$i]='';
            }
-          for ($i=1;$i<10;$i++)
-           {
+          for ($i=1;$i<10;$i++) {
              if (isset($_POST['replacement'.$i])) $_SESSION['replacement'.$i]=$_POST['replacement'.$i];
              else $_SESSION['replacement'.$i]='';
            }
-          for ($i=1;$i<10;$i++)
-           {
+          for ($i=1;$i<10;$i++) {
              if (isset($_POST['subject'.$i])) $_SESSION['subject'.$i]=$_POST['subject'.$i];
              else $_SESSION['subject'.$i]='';
            }
-      
       ///////////////////////////////////////////////////////////////////////////////////
       $maty->formBlock('block_function_test_preg_replace','regular_expressions.php','bootstrap-start',
              'p','preg_replace(','regular-block-name-function-preg_split-p',
@@ -611,7 +587,6 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
               else for ($i=1;$i<10;$i++)
                   $subject[$i]=$_SESSION['subject'.$i];
 
-           $instrum = new redaktor\instrument();
            echo 'Регулярное выражение:<br>';
            echo $instrum->printMas($pattern);
 
@@ -641,8 +616,8 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
         echo '</div>';
       }// конец работы с preg_replace
      ////////////////////////////////////////////// работа с preg_split ////////////////////////////////////////////////
-     if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_split()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_split()')  ) // preg_split()
-     {
+     if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_split()') 
+        || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_split()')) {
        if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
        echo '<div class="row">';
          echo '<div class="col-12">';
@@ -733,7 +708,6 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
         if ($flag2) echo 'PREG_SPLIT_DELIM_CAPTURE<br>';
         if ($flag3) echo 'PREG_SPLIT_OFFSET_CAPTURE<br>';
   
-        $instrum = new redaktor\instrument();
         echo '<br><br><br>';
   
         if (gettype($rezPreg_match)=='boolean' && $rezPreg_match==true) echo 'Функция вернула:True';
@@ -758,8 +732,8 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
   
    //////////////////////////////---------------------------------------------------------------------
    ////////////////////////////////////////////// работа с preg_match_all ////////////////////////////////////////////////
-  if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_match_all()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_match_all()')  ) // preg_match_all()
-   {
+  if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_match_all()') 
+    || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_match_all()')) {
      if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
      echo '<div class="row">';
        echo '<div class="col-12">';
@@ -864,7 +838,6 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
       if ($flag3) echo 'PREG_OFFSET_CAPTURE<br>';
       if ($flag4) echo 'PREG_UNMATCHED_AS_NULL<br>';
 
-      $instrum = new redaktor\instrument();
       echo '<br><br><br>';
 
       if (gettype($rezPreg_match)=='integer') echo 'Функция вернула:'.$rezPreg_match;
@@ -874,16 +847,13 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
       echo '<br><br>';
       
       echo 'Вывод через foreach<br><br>';
-      $instrum->printMas($matches); echo '<br><br><br>';
+      $instrum->printMas($matches); 
+      echo '<br><br><br>';
        
        echo 'Вывод массива через print_r';
        echo '<br>';
        print_r($matches);
-
-       echo '<br><br>';
-       
-       echo '<br>';
-
+       echo '<br><br><br>';
      echo '</div></code>';
    echo '</div>';
    echo '</div>';
@@ -891,8 +861,8 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
 
  //////////////////////////////---------------------------------------------------------------------
          ////////////////////////////////////////////// работа с preg_match ////////////////////////////////////////////////
-        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_match()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_match()')  ) // preg_match()
-         {
+        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_match()') 
+          || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_match()')) {
            if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
            echo '<div class="row">';
              echo '<div class="col-12">';
@@ -961,8 +931,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
                  $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches);
 
              if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0 || stripos('sss'.$_SESSION['flags'],'PREG_UNMATCHED_AS_NULL')>0)
-                 if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0)
-                  {
+                 if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0) {
                     if (stripos('sss'.$_SESSION['flags'],'PREG_UNMATCHED_AS_NULL')>0)
                      $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches,PREG_OFFSET_CAPTURE | PREG_UNMATCHED_AS_NULL,$offset);   
                     else $rezPreg_match=preg_match($pattern,$_SESSION['subject'],$matches,PREG_OFFSET_CAPTURE,$offset);
@@ -971,24 +940,20 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
              if ($rezPreg_match===0) echo 'Вернули 0 - Осторожно! У данной функции 0 и False - это одно и то же! Используйте ===';
              if ($rezPreg_match) echo 'Вернули '.$rezPreg_match.'<br><br>';
 
-          if ($rezPreg_match)
-            {
+          if ($rezPreg_match) {
              echo '<br><br>var_dump()<br>';
              var_dump($matches);
              echo '<br><br>print_r()<br>';
              print_r($matches);
              echo '<br><br>echo()<br>';
-             if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0)
-              {
+             if (stripos('sss'.$_SESSION['flags'],'PREG_OFFSET_CAPTURE')>0) {
                foreach ($matches as $mat => $matches2)
-                foreach ($matches2 as $mat2 => $value)
-                  {
+                foreach ($matches2 as $mat2 => $value) {
                    if (!is_null($value))
                       echo 'echo $matches['.$mat.']['.$mat2.']='.$value.'<br>';
                    else echo 'echo $matches['.$mat.']['.$mat2.']=null:-)<br>';
                   }
-              } else 
-                      {
+              } else  {
                         foreach ($matches as $mat=>$value)
                          if (!is_null($value))
                           echo 'echo $matches['.$mat.']='.$value.'<br>';
@@ -996,16 +961,13 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
                       }
             }
            echo '</div></code>';
-
-
          echo '</div>';
          echo '</div>';
-         
        }// конец работы с preg_match
        //////////////////////////////---------------------------------------------------------------------
      ////////////////////////////////////////////// работа с preg_filter ////////////////////////////////////////////////
-        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_grep()') || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_grep()')  ) // preg_grep()
-         {
+        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_grep()') 
+          || (isset($_POST['buttonPregGrep']) && $_SESSION['name_function_test']=='preg_grep()')  ) {
            if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
            echo '<div class="row">';
              echo '<div class="col-12">';
@@ -1018,7 +980,6 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
              echo '</div>';
             echo '</div>';
            echo '</div>';
-
            echo '<div class="row">';
             echo '<div class="col-12">';
               // запоминаем данные с формы
@@ -1028,18 +989,15 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
               if (!isset($_SESSION['flag'])) $_SESSION['flag']='flag';
               if (isset($_POST['flag']) && $_POST['flag']!='') $_SESSION['flag']=$_POST['flag']; 
        
-              for ($i=1;$i<11;$i++) // объявляются или инициализируются 10 пар переменных, работающих со значениями массива
-               {
+              for ($i=1;$i<11;$i++) {// объявляются или инициализируются 10 пар переменных, работающих со значениями массива
                  if (!isset($_SESSION['array_poz_'.$i])) $_SESSION['array_poz_'.$i]='Poz-'.$i;
                  if (isset($_POST['array_poz_'.$i]) && $_POST['array_poz_'.$i]!='') $_SESSION['array_poz_'.$i]=$_POST['array_poz_'.$i]; 
                  if (!isset($_SESSION['array_'.$i])) $_SESSION['array_'.$i]='meaning-'.$i;
                  if (isset($_POST['array_'.$i]) && $_POST['array_'.$i]!='') $_SESSION['array_'.$i]=$_POST['array_'.$i]; 
                }
             $masResult=array();
-              if (isset($_POST['buttonPregGrep']) && $_POST['buttonPregGrep']=='Отработать')
-                {
-                 for ($i=1; $i<11;$i++)
-                   {
+              if (isset($_POST['buttonPregGrep']) && $_POST['buttonPregGrep']=='Отработать') {
+                 for ($i=1; $i<11;$i++) {
                      if ($_SESSION['array_poz_'.$i]=='') $_SESSION['array_poz_'.$i]='Poz-'.$i;
                      if ($_SESSION['array_'.$i]=='') $_SESSION['array_'.$i]='meaning-'.$i;
                     }
@@ -1060,8 +1018,6 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
               $masResult=preg_grep($pattern,$masStart);
           else $masResult=preg_grep($pattern,$masStart,PREG_GREP_INVERT);
         }
-
-
        
        ///////////////////////////////////////////////////////////////////////////////////
        $maty->formBlock('block_function_test_grep','regular_expressions.php','bootstrap-start',
@@ -1114,8 +1070,8 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
        }// конец работы с preg_filter
        //////////////////////////////---------------------------------------------------------------------
    ////////////////////////////////////////////// работа с preg_filter ////////////////////////////////////////////////
-      if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_filter()') || (isset($_POST['buttonPregQuote']) && $_SESSION['name_function_test']=='preg_filter()')  ) // preg_filter()
-        {
+      if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_filter()') 
+        || (isset($_POST['buttonPregQuote']) && $_SESSION['name_function_test']=='preg_filter()')  ) {
           if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
           echo '<div class="row">';
           echo '<div class="col-12">';
@@ -1145,8 +1101,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
           $_SESSION['substitutions']=preg_replace('/[a-zA-Zа-яёА-Яё]/u','',$_SESSION['substitutions']); // Удалить все нецифры
           if ($_SESSION['substitutions']=='' || $_SESSION['substitutions']==' ')  $_SESSION['substitutions']=-1;
           if (!isset($_SESSION['substitutions_rez'])) $_SESSION['substitutions_rez']='0';
-          if (isset($_POST['buttonPregQuote'])) // если была нажата кнопка Отработать
-          {
+          if (isset($_POST['buttonPregQuote'])) {// если была нажата кнопка Отработать
            $pattern='/'.$_SESSION['pattern'].'/u';
            $_SESSION['result_regular_function']=preg_filter($pattern,$_SESSION['replacement'],$_SESSION['subjekt'],$_SESSION['substitutions'],$_SESSION['substitutions_rez']);
           }
@@ -1179,8 +1134,8 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
             echo '</div>';
           }// конец работы с preg_filter
           //////////////////////////////---------------------------------------------------------------------
-        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_quote()') || (isset($_POST['buttonPregQuote']) && $_SESSION['name_function_test']=='preg_quote()')  ) // preg_quote()
-          {
+        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_quote()') 
+          || (isset($_POST['buttonPregQuote']) && $_SESSION['name_function_test']=='preg_quote()')) {// preg_quote()
             if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
             echo '<div class="row">';
             echo '<div class="col-12">';
@@ -1230,10 +1185,8 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp']) || (isse
   }// Конец работы с регулярными выражениями
  //////////////////////////////////////////работа с выводом статей
 $bylPoisk=false;
-$poisk = new \redaktor\poisk();
-$redaktor=new redaktor\modul();
-if (isset($_POST['poisk']))
- { 
+
+if (isset($_POST['poisk'])) { 
   $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati,'категория-regular') ;
   if ($idStati[0]>-1)
     foreach($idStati as $value) 
@@ -1241,41 +1194,31 @@ if (isset($_POST['poisk']))
   $bylPoisk=true;
  }
 
-  if (!$bylPoisk)
-    {
+  if (!$bylPoisk) {
       if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
       $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Шаблон=2","Отступ=1",'action=regular_expressions.php','Раздел=regular');
     }
-
  buttonTwitter('Тестирование функции (php) '.$_SESSION['name_function_test'].'http://dfdx.uxp.ru/regular_expressions.php');
-
  echo '</div>';
-
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
-
  echo '<div class="poiskDiv">';
   poiskDfdx('regular_expressions.php');
  echo '</div>';
-
 pravoePole('regular');
 echo '</div>';
-
 echo '</div>';
 echo '</section>';
 ////////////////////////////////////////////////////////////////////////////////////////////////// 
 ////////////////////////////Конец основного кода страницы////////////////////////// 
 /// Статистика///////////////////////////////////////
 echo '<footer class="container-fluid futter">';
-$statistik = new redaktor\statistic();
+
 if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
 $statistik->statistikOnOff();
-
 if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
 $maty->redactMaty();
-
-
 // Вывод статистики Футтер
 $statistik->metkaStatistika('regular_expressions');
 echo '<div class="futterDivDfdx">';
@@ -1284,10 +1227,8 @@ echo '<p class="footerMarginTop">Число запросов к БД: '.$statist
 echo '<p class="footerMarginTop">Начало верстки сайта 2021-09-19</p>';
 echo '<p class="footerMarginTop">CMS-DFDX</p>';
 echo '</div>';
-
 $maty->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
 ?>
-
 </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

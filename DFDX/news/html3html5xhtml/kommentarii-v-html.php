@@ -1,9 +1,9 @@
 <?php
 session_start();
-require "funcii.php";
-require "functionDfdx.php";
-require "image/swapImages.php";
-require "class.php";
+include "../../funcii.php";
+include "../../functionDfdx.php";
+include "../../image/swapImages.php";
+include "../../class.php";
   use redaktor\instrument as instrument;
   use redaktor\Modul as modul;
   use redaktor\login as login;
@@ -28,7 +28,7 @@ require "class.php";
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<title>dfdx</title>
+<title>Комментарии в html.</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <?php 
 echo '<link rel="stylesheet" href="'.$b->searcNamePath('styli.css').'">';
@@ -76,7 +76,7 @@ echo '<section class="container-fluid">';
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">';
         if ($_SESSION["status"]>99) 
             $_SESSION["status"]=9;
-        $maty->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Пароль'));
+        echo '<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>';
         echo '</div>';
     echo '</div>';
 echo '</section>';
@@ -116,16 +116,16 @@ echo '</section>';
 echo '<section class="container-fluid pole">';
     echo '<div class="row">';
         echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';  // Левое меню
-        levoeMenu();
+        //levoeMenu();
         echo '</div>';
 
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
         $bylPoisk=false;
         $poisk = new redaktor\poisk();
         $redaktor = new redaktor\modul();
-        $action='action=dfdx.php';  //страница обработки кнопок в модуле news()
-        $runNewsIsNews1=-1;
-        $metka='dfdx'; //метка для счётчика статистики посещения конкретной страницы
+        $action='action=#';  //страница обработки кнопок в модуле news()
+        $runNewsIsNews1=0;
+        $metka='kommentarii-v-html-'; //метка для счётчика статистики посещения конкретной страницы
         $nomerNewsPoisk='Число_статей=5';
         $nomerNewsGlawn='Число_статей=5';
         //if (!file_exists($action)) $action=basename(__FILE__);
@@ -155,19 +155,19 @@ echo '<section class="container-fluid pole">';
                $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
 
             //НЕ УДАЛЯТЬ, ИСПОЛЬЗУЕТСЯ в персональных ссылках
-            //if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
+            if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
 
             if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']) && $statiaPoId!='netKnopki')
                $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
           }
-          //buttonTwitter
+          buttonTwitter("Комментарии в html. http://dfdx.uxp.ru/news/html3html5xhtml/kommentarii-v-html.php");
           $_SESSION["runStrNews"]=false; // обнуление переменной
           echo '</div>';
           /////////////////////////////////////////////////////////////////////////////////////
           //////////////////////////////////////////////////////////////////////////////////////
           echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
               echo '<div class="poiskDiv">';
-              poiskDfdx('dfdx.php');
+              //poiskDfdx('dfdx.php');
           echo '</div>';
           pravoePole("home");   // категория статей, которые должны быть показаны в правом меню 
         echo '</div>';

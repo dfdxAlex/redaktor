@@ -33,4 +33,12 @@ function apidfdx()
 {
    echo '<p class="swap-images"><span>API DFDX<span></p>';
 }
+function html3()
+{
+   echo '<p class="swap-images"><span>HTML3<span></p>';
+}
+function html5()
+{
+   echo '<p class="swap-images"><span>HTML5<span></p>';
+}
 ?>
