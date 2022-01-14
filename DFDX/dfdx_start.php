@@ -31,7 +31,6 @@ require "class.php";
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<!--<title>regular_expressions</title>-->
 #title#
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <link rel="stylesheet" href="styli.css">
@@ -131,18 +130,11 @@ if (isset($_POST['poisk']))
 ///////////////////////////////////////////////////
  if (!$bylPoisk)
  {
-   // if (isset($_POST['menu_up_dfdx'])) // Если нажата кнопка главного верхнего меню
-   /// {// echo 'ловим кнопку';
       $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
       if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
         $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=regular_expressions');
       if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
         $redaktor->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=regular_expressions');
-   // } else // добавить if (false)   //маркер 
-    //   {
-     //   $id=$poisk->maxIdLubojTablicy($nameBD);$id--;
-     //   $redaktor->news1("id=".$id,$nameBD,"Заголовок=h3","Статус редактора=-s45","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=regular_expressions');
-     //  }
   }
 
 echo '</div>';

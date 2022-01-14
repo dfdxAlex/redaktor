@@ -122,7 +122,7 @@ if (!$errorName)
                                               '/Раздел=regular_expressions/' => function ($machh) {return 'Раздел='.$_POST['kategoria-news-rdNovaStr'];},
                                               '/#таблица\sдля\sпоиска#/' => function ($machh) {return 'bd2';},
                                               '/#категория\sдля\sпоиска#/' => function ($machh) {return 'категория-'.$_POST['kategoria-news-rdNovaStr'];},
-                                              '/#страница\sобработки\sправого\sменю#/' => function ($machh) {return $_SESSION['nameFilePreg'];},
+                                              //'/#страница\sобработки\sправого\sменю#/' => function ($machh) {return $_SESSION['nameFilePreg'];},
                                               '/#title#/' => function ($machh) {return '<title>'.$_SESSION['nameNotPhp'].'</title>';},
                                               ]
                                               ,$fileStart);
