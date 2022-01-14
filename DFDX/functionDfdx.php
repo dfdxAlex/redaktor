@@ -166,7 +166,7 @@ function pravoePole($kluc)
     $zapros="SELECT razdel FROM bd2 WHERE 1";
     $rez=$clas->zaprosSQL($zapros);
     $connectOR=false; // определяет добавлять ли к строке OR
-    $redaktor=new redaktor\modul();
+    $redaktor=new redaktor\Modul();
     //Перебираем все категории из таблицы bd2 и добавляем в условия WHERE те, в которых есть подстрока $kluc
     while (!is_null($stroka=(mysqli_fetch_array($rez))))
      if (stripos($strSummRazdel,$stroka[0])===false)

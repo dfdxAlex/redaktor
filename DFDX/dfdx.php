@@ -1,11 +1,11 @@
 <?php
-namespace redaktor;
+
 session_start();
 require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
-  //use instrument;
+
   use redaktor\instrument as instrument;
   use redaktor\Modul as Modul;
   use redaktor\login as login;
