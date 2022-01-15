@@ -1,5 +1,6 @@
 <?php
 namespace redaktor;
+
 session_start();
 require "funcii.php";
 require "functionDfdx.php";

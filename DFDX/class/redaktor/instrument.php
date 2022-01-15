@@ -989,4 +989,3 @@ foreach($parametr as $value) {
     }
    }
 }
-?>

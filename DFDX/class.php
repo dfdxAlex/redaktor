@@ -6,4 +6,3 @@ spl_autoload_register(function ($class_name) {
     $rez=require 'class/'.$class_name . '.php';
   } 
   );
-?>
