@@ -10,7 +10,8 @@ class initBd extends instrument
     public function __construct()
     {
         parent::__construct();
-        $fd = fopen(parent::searcNamePath('initBD.ini'), 'r') or die("не удалось открыть файл");
+        //$fd = fopen(parent::searcNamePath('initBD.ini'), 'r') or die("не удалось открыть файл");
+        $fd = fopen('../../../tmp/initBD.ini', 'r') or die("не удалось открыть файл");
         $this->host=stristr(fgets($fd),';',true); 
         $this->loginBD=stristr(fgets($fd),';',true); 
         $this->parol=stristr(fgets($fd),';',true); 
