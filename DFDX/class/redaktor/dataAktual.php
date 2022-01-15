@@ -1,7 +1,7 @@
 <?php
 namespace redaktor;
 
-class dataAktual  extends initBD
+class dataAktual  extends initBd
 {
     public function __construct()
         {

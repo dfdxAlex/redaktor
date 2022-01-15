@@ -2,7 +2,7 @@
 
 namespace redaktor;
 //класс готовых модулей
-class modul
+class Modul
     {
         public function __construct()
             {

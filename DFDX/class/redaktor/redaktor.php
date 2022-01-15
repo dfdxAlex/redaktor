@@ -3,7 +3,6 @@ namespace redaktor;
 
 class redaktor  extends menu
 {
- 
     public function __construct()
      {
         $this->colVn=0; // для хранения информации о размере поля редактирования главной таблицы

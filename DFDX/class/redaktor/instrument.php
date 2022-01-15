@@ -460,6 +460,13 @@ class instrument
                 $listTegow=$listTegow.'<br>';
             $cod=preg_replace('/&ltimg/','<img ',$cod); // Удалить лишнее
             $listTegow=$listTegow.'&ltimg&gt ';
+
+            if (!$spisokPlusBr) 
+                $listTegow=$listTegow.',';
+            if ($spisokPlusBr) 
+                $listTegow=$listTegow.'<br>';
+            $cod=preg_replace('/&ltpre/','<pre ',$cod); // Удалить лишнее
+            $listTegow=$listTegow.'&ltpre&gt ';
          }
 
         if ($vivod) 

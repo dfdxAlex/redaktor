@@ -41,4 +41,8 @@ function html5()
 {
    echo '<p class="swap-images"><span>HTML5<span></p>';
 }
+function psr()
+{
+   echo '<p class="swap-images"><span>Рекомендации PSR<span></p>';
+}
 ?>

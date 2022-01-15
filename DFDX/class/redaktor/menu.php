@@ -1,7 +1,7 @@
 <?php
 namespace redaktor;
 
-class menu extends initBD
+class menu extends initBd
  {
      public function __construct() {
         parent::__construct();

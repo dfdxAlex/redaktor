@@ -1,5 +1,6 @@
 <?php
 namespace redaktor;
+
 class futter  extends maty //dataAktual  // Класс выводит информацию в низ сайта
 {
     public function __construct()
