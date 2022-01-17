@@ -2,6 +2,10 @@
 // Класс содержит базовые методы, которые используются в других классах
 namespace redaktor;
 
+// API
+//function notFalseAndNULL($data):true/false  If the variable exists, is not equal to false and is not equal to NULL then return true
+//function printMas($mas)                     Displays the contents of a variable with a hint of what type it is.
+
 class instrument
 {
     public function __construct()
@@ -989,3 +993,10 @@ foreach($parametr as $value) {
     }
    }
 }
+
+
+
+
+// API
+// function notFalseAndNULL($data):true/false Если переменная существует, не равна false и не равна NULL то вернуть true
+// function printMas($mas)                    Выводит содержимое переменной с подскажкой какого она типа

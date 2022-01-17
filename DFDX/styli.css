@@ -1080,7 +1080,7 @@ float: left;
 }
 .load-img-form-text,.load-img-form-submit{
   border: 1px solid rgb(0, 0, 0);
-  margin-right: 10px;
+  margin-right: 3px;
   margin-left: 10px;
   background: rgb(255, 255, 255);
   border-radius: 5px;
@@ -1088,5 +1088,8 @@ float: left;
 }
 .load-img-form-submit{
   background-image: url("image/background22.png");
+}
+.name-local-file-fo-redaktor{
+  margin-left: 10px;
 }
 /**********************************************************************************************************************/

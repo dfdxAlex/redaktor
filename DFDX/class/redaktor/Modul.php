@@ -416,18 +416,19 @@ class Modul
                     if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))      // Если труе, то статья проверена модератором
                       if ($pokazalStatej==0 && $nomerZagolowkaStati=='www') {  // первая статья не по клику по названию статьи
                         if (!$statiaVozwrat) { // показ первой статьи при обычных условиях
+                           $this->imgBbToUrl($dataMas[$ii][0][1][0][0]);
                            $class='statiaKrutka btn'; // класс заголовка по умолчанию
                            // Условие сработает если задан какой-либо вид оформления статьи
                            if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0) { // класс заголовка в зависимости от стиля тут
-                             $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
-                             $class='nazwanie'.$hablon.' btn'; // класс по шаблону
-                             $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
-                             $text=mb_substr($dataMas[$ii][0][1][0][0],1); // подготовить оставшийся текст
-                             $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
-                             ////////////////////////////////////////////////////////////////////////////////////////////////////
-                             $altTest=preg_match_all('/alt=\".+\"/u',$text, $alt);
-                             // Находим содержимое URL
-                             preg_match_all('/src="[^"]+/u',$text, $url);
+                               $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
+                               $class='nazwanie'.$hablon.' btn'; // класс по шаблону
+                               $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
+                               $text=mb_substr($dataMas[$ii][0][1][0][0],1); // подготовить оставшийся текст
+                               $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
+                               ////////////////////////////////////////////////////////////////////////////////////////////////////
+                               $altTest=preg_match_all('/alt=\".+\"/u',$text, $alt);
+                               // Находим содержимое URL
+                               preg_match_all('/src="[^"]+/u',$text, $url);
                              if (!isset($url)) $url='image/logo.php';
                                 if (gettype($url)=='array') {
                                    $i=0;
@@ -1058,33 +1059,50 @@ class Modul
           }
         }
 
+// вспомогательная функция для news1
+// функция ставит форму для загрузки картинок, закачивает картинки, помещает их в специальную папку
+// после закачивания картинки функция помещает данные о картинке в соответствующую таблицу load_img
+// функция проверяет дубликаты по ссылке источнику картинки.
 public function loadImgForm()
 {
   $classPhp = new initBd();
 
   if (!isset($_SESSION['loadImgFormTextUrl'])) $_SESSION['loadImgFormTextUrl']='url';
   if (!isset($_SESSION['loadImgFormTextAlt'])) $_SESSION['loadImgFormTextAlt']='alt';
+  if (!isset($_SESSION['loadImgFormTextWidth'])) $_SESSION['loadImgFormTextWidth']='Width';
+  if (!isset($_SESSION['loadImgFormTextHeight'])) $_SESSION['loadImgFormTextHeight']='Height';
 
   $classPhp->createTab(
                        "name=load_img",
                        "poleN=id",
                        "poleT=int",
                        "poleS=-1",
+                       "poleN=name",
+                       "poleT=varchar(50)",
+                       "poleS= ",
                        "poleN=url",
                        "poleT=varchar(500)",
-                       "poleS=url"
+                       "poleS=url",
+                       "poleN=alt",
+                       "poleT=VARCHAR (100)",
+                       "poleS= ",
+                       "poleN=width",
+                       "poleT=int",
+                       "poleS=-1",
+                       "poleN=height",
+                       "poleT=int",
+                       "poleS=-1"
     );
 
   if (isset($_POST['loadImageLink'])) {
-       $_SESSION['loadImgFormTextUrl']=$_POST['linkImageText'];
-       $_SESSION['loadImgFormTextAlt']=$_POST['altImageText'];
+       if ($_POST['linkImageText']!='') $_SESSION['loadImgFormTextUrl']=$_POST['linkImageText'];
+       if ($_POST['altImageText']!='') $_SESSION['loadImgFormTextAlt']=$_POST['altImageText'];
+       if ($_POST['linkImageTextWidth']!='') $_SESSION['loadImgFormTextWidth']=$_POST['linkImageTextWidth'];
+       if ($_POST['linkImageTextHeight']!='') $_SESSION['loadImgFormTextHeight']=$_POST['linkImageTextHeight'];
+       //echo 'линк-'.$_POST['linkImageText'];
        if (preg_match('/(.+\.jpg$)|(.+\.png$)|(.+\.bmp$)|(.+\.gif$)|(.+\.tif$)/', $_POST['linkImageText'])) {
-           if ($fileImagesInput=file_get_contents($_SESSION['loadImgFormTextUrl'])){
-               if ($fileSize=getimagesize($_SESSION['loadImgFormTextUrl'])) {
-                   $classPhp->printMas($fileSize);
-                   // вычислить память картинки
-                   $memoryImg=strlen($fileImagesInput);
-                   //echo 'размер картинки - '.($memoryStart-$memoryEnd);
+           if ($fileImagesInput=file_get_contents($_SESSION['loadImgFormTextUrl'])) {
+               if ($fileSize=strlen($fileImagesInput)<50000) { // вычислить память картинки
                    // проверяем есть ли папка для картинок, если нет, то создаем её.
                    // сначала находим нужный путь к корню папки, то есть сколько раз вернуться назад нужно ../
                    $nameFileStart='index.php'; // поиск расположение главного файла, там есть корень
@@ -1096,40 +1114,98 @@ public function loadImgForm()
                    $nameFileImage='';
                    for ($i=0; $i<10; $i++) 
                      $nameFileImage.=chr(rand(97,122));
-                   //Выдернуть разрешение входящего файла
-                   //preg_match('/\..+$/',$_SESSION['loadImgFormTextUrl'],$masTypImage);
+                   //Выдернуть разрешение(тип) входящего файла
                    $indexEndInput=strripos($_SESSION['loadImgFormTextUrl'],'.');
                    $masTypImage=mb_strcut($_SESSION['loadImgFormTextUrl'],$indexEndInput);
-                   //сохраняем файл на диске
-                   file_put_contents($pathFileStart.'imagesUser/'.$nameFileImage.$masTypImage,$fileImagesInput);
-                   //echo $nameFileImage.$masTypImage;
+                   //Находим ширину и высоту картинки и запоминаем
+                   $masSizeImages=getimagesize($_SESSION['loadImgFormTextUrl']);
+                   $_SESSION['loadImgFormTextWidth']=$masSizeImages[0];
+                   $_SESSION['loadImgFormTextHeight']=$masSizeImages[1];
 
-                   $nomer=$classPhp->maxIdLubojTablicy("load_img");
-                }
-                else echo 'Файл слишком большой:'.$fileSize.' байт, допускается 5 000 байт';    
+                   //сохраняем файл на диске
+                   if ($_POST['loadImageLink']=='Сохранить') {
+                       $nameFileLocal=$nameFileImage.$masTypImage;   // локальное имя файла
+                       $id=$classPhp->maxIdLubojTablicy('load_img'); // нашли свободный ИД
+                       $actualWidth=$_POST['linkImageTextWidth'];    // ширина из формы
+                       $actualHeight=$_POST['linkImageTextHeight'];  // высота из формы
+                       $actualAlt=$_POST['altImageText'];            // alt из формы
+                       $zapros='';
+                       // проверка нет ли данной ссылки источника картинки уже в базе данных
+                       if (!$classPhp->siearcSlova('load_img','url',$_SESSION['loadImgFormTextUrl'])) {
+                           // сохраняем файл на диске
+                           file_put_contents($pathFileStart.'imagesUser/'.$nameFileLocal,$fileImagesInput);
+                           // записываем информацию в таблицу
+                           $zapros="INSERT INTO load_img(id, name, url, alt, width, height) 
+                                    VALUES (".$id.",'".$nameFileLocal."','".$_SESSION['loadImgFormTextUrl']."',
+                                            '".$actualAlt."',".$actualWidth.",".$actualHeight.")";
+                       }
+                       //если есть ссылка файла источника картинки
+                       if ($classPhp->siearcSlova('load_img','url',$_SESSION['loadImgFormTextUrl'])) 
+                           $zapros="UPDATE load_img SET alt='".$actualAlt."',width=".$actualWidth.",height=".$actualHeight." WHERE url='".$_SESSION['loadImgFormTextUrl']."'";
+                       $classPhp->zaprosSQL($zapros); // записываем новый файл в БД или изменяем старый
+                       $zapros="SELECT name,alt,width,height FROM load_img WHERE  url='".$_SESSION['loadImgFormTextUrl']."'";
+                       $rez=$classPhp->zaprosSQL($zapros); // читаем локальное имя файла из таблицы
+                       if ($classPhp->notFalseAndNULL($rez)) {
+                           $stroka=mysqli_fetch_assoc($rez);
+                           if ($classPhp->notFalseAndNULL($stroka)) {
+                               echo '<div class="name-local-file-fo-redaktor"><p>[IMG]'.$stroka['name'].'[IMG]</p></div>';
+                               $_SESSION['loadImgFormTextAlt']=$stroka['alt'];
+                               $_SESSION['loadImgFormTextWidth']=$stroka['width'];
+                               $_SESSION['loadImgFormTextHeight']=$stroka['height'];
+                           }
+                       }
+                   }
+                } else echo 'Файл слишком большой:'.$fileSize.' байт, допускается 50 000 байт';    
            } else echo 'Файла не существует';
        } else echo 'Не верный формат картинки';
    }
-
 
    echo '<section class="load-img-form-section">';
    echo '<div class="row">';
    echo '<div class="col-12 btn">';
    echo '<div class="load-img-form-div">';
-       echo '<form method="post" action="#" class="load-img-form-form">';
-           echo '<input class="load-img-form-text" type="text" placeholder="'.$_SESSION['loadImgFormTextUrl'].'" name="linkImageText">';
-           echo '<input class="load-img-form-text" type="text" placeholder="'.$_SESSION['loadImgFormTextAlt'].'" name="altImageText">';
+           if ($_SESSION['loadImgFormTextUrl']!='') $linkNaImagesPoleText=$_SESSION['loadImgFormTextUrl']; else $linkNaImagesPoleText='ссылка на картинку';
+           if ($_SESSION['loadImgFormTextAlt']!='') $altNaImagesPoleText=$_SESSION['loadImgFormTextAlt']; else $altNaImagesPoleText='alt';
+           if ($_SESSION['loadImgFormTextWidth']!='') $widthNaImagesPoleText=$_SESSION['loadImgFormTextWidth']; else $widthNaImagesPoleText='alt';
+           if ($_SESSION['loadImgFormTextHeight']!='') $heightNaImagesPoleText=$_SESSION['loadImgFormTextHeight']; else $heightNaImagesPoleText='alt';
+           echo '<input title="'.$linkNaImagesPoleText.'" class="load-img-form-text" type="text" value="'.$_SESSION['loadImgFormTextUrl'].'" name="linkImageText">';
+           echo '<input title="'.$altNaImagesPoleText.'" class="load-img-form-text" type="text" value="'.$_SESSION['loadImgFormTextAlt'].'" name="altImageText">';
+           echo '<input title="'.$widthNaImagesPoleText.'" class="load-img-form-text" type="text" value="'.$_SESSION['loadImgFormTextWidth'].'" name="linkImageTextWidth">';
+           echo '<input title="'.$heightNaImagesPoleText.'" class="load-img-form-text" type="text" value="'.$_SESSION['loadImgFormTextHeight'].'" name="linkImageTextHeight">';
            echo '<input class="load-img-form-submit" type="submit" value="Загрузить" name="loadImageLink">';
-       echo '</form>';
+           echo '<input class="load-img-form-submit" type="submit" value="Сохранить" name="loadImageLink">';
    echo '</div>';
    echo '</div>';
    echo '</div>';
    echo '</section>';
-
-   
-
-
 }
 
+
+function imgBbToUrl(&$stringBB)
+{
+   $classPhp = new initBd();
+   // создаем массив с БиБи кодами
+   preg_match_all('/\[IMG\].+\..+\[IMG\]?/',$stringBB,$masBB);
+   
+   $masBBone=$masBB[0];
+   $classPhp->printMas($masBBone);
+
+   foreach ($masBBone as $value) {
+       
+       
+
+       $hablon='/'.preg_quote($value).'/';
+       $stringBB=preg_replace($hablon,'нашли ВВ',$stringBB);
+   }
+
+
+   //$stringBB=preg_replace('/\[IMG\].+\..+\[IMG\]?/','нашли ВВ',$stringBB);
+
+
+
+
+   //$classPhp->printMas($masBB);
+   //$stringBB=preg_replace('/\[IMG\].+\..+\[IMG\]?/','нашли ВВ',$stringBB);
+}
 
     } // конец класса modul
