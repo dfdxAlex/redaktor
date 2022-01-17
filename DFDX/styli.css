@@ -977,11 +977,7 @@ float: left;
     }
   }
   .img-div-3{
-    /*float: left;*/
-    /*border-radius: 10px;*/
     height: 300px;
-    /*text-align:left;*/
-
   }
   .img-div-3-next{
     float: left;
@@ -1070,5 +1066,27 @@ float: left;
 .block-stranic-down /*нижний блок кнопок страниц*/
 {
   margin-top: 30px;
+  width: 100%;
+  color:black;
+  font-size: 14px;
+  line-height: 20px;
+}
+/***********************************форма добавления картинок в news***************************************************/
+.load-img-form-section{
+  margin-top: 20px;
+}
+.load-img-form-div{
+  float: left;
+}
+.load-img-form-text,.load-img-form-submit{
+  border: 1px solid rgb(0, 0, 0);
+  margin-right: 10px;
+  margin-left: 10px;
+  background: rgb(255, 255, 255);
+  border-radius: 5px;
+  width: 100px;
+}
+.load-img-form-submit{
+  background-image: url("image/background22.png");
 }
 /**********************************************************************************************************************/

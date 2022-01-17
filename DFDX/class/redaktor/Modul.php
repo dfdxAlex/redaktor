@@ -970,6 +970,7 @@ class Modul
                                             'p',$awtor,'br',
                                             'submit3',$nametablice.'_redaktor','Сохранить',$action,'myZoneSave','form_not_close'
                                             );
+                  $this->loadImgForm();
                   echo '<div class="container-fluid">';
                       echo '<div class="row">';
                           echo '<div class="col-12">'; 
@@ -1022,6 +1023,7 @@ class Modul
                                   'textarea', 'statia',$statia,'br','p',$awtor,'br',
                                   'submit3',$nametablice.'_redaktor2','Сохранить',$action,'myZoneSave','form_not_close'
                                   );
+              $this->loadImgForm();
               echo '<div class="container-fluid">';
                   echo '<div class="row">';
                       echo '<div class="col-12">'; 
@@ -1055,5 +1057,79 @@ class Modul
             }
           }
         }
-    } // конец класса modul
 
+public function loadImgForm()
+{
+  $classPhp = new initBd();
+
+  if (!isset($_SESSION['loadImgFormTextUrl'])) $_SESSION['loadImgFormTextUrl']='url';
+  if (!isset($_SESSION['loadImgFormTextAlt'])) $_SESSION['loadImgFormTextAlt']='alt';
+
+  $classPhp->createTab(
+                       "name=load_img",
+                       "poleN=id",
+                       "poleT=int",
+                       "poleS=-1",
+                       "poleN=url",
+                       "poleT=varchar(500)",
+                       "poleS=url"
+    );
+
+  if (isset($_POST['loadImageLink'])) {
+       $_SESSION['loadImgFormTextUrl']=$_POST['linkImageText'];
+       $_SESSION['loadImgFormTextAlt']=$_POST['altImageText'];
+       if (preg_match('/(.+\.jpg$)|(.+\.png$)|(.+\.bmp$)|(.+\.gif$)|(.+\.tif$)/', $_POST['linkImageText'])) {
+           if ($fileImagesInput=file_get_contents($_SESSION['loadImgFormTextUrl'])){
+               if ($fileSize=getimagesize($_SESSION['loadImgFormTextUrl'])) {
+                   $classPhp->printMas($fileSize);
+                   // вычислить память картинки
+                   $memoryImg=strlen($fileImagesInput);
+                   //echo 'размер картинки - '.($memoryStart-$memoryEnd);
+                   // проверяем есть ли папка для картинок, если нет, то создаем её.
+                   // сначала находим нужный путь к корню папки, то есть сколько раз вернуться назад нужно ../
+                   $nameFileStart='index.php'; // поиск расположение главного файла, там есть корень
+                   $pathFileStart='';
+                   while (!file_exists($pathFileStart.$nameFileStart)) 
+                       $pathFileStart.='../';
+                   if (!is_dir($pathFileStart.'imagesUser')) mkdir($pathFileStart.'imagesUser');
+                   //Сгенерировать новое имя файла
+                   $nameFileImage='';
+                   for ($i=0; $i<10; $i++) 
+                     $nameFileImage.=chr(rand(97,122));
+                   //Выдернуть разрешение входящего файла
+                   //preg_match('/\..+$/',$_SESSION['loadImgFormTextUrl'],$masTypImage);
+                   $indexEndInput=strripos($_SESSION['loadImgFormTextUrl'],'.');
+                   $masTypImage=mb_strcut($_SESSION['loadImgFormTextUrl'],$indexEndInput);
+                   //сохраняем файл на диске
+                   file_put_contents($pathFileStart.'imagesUser/'.$nameFileImage.$masTypImage,$fileImagesInput);
+                   //echo $nameFileImage.$masTypImage;
+
+                   $nomer=$classPhp->maxIdLubojTablicy("load_img");
+                }
+                else echo 'Файл слишком большой:'.$fileSize.' байт, допускается 5 000 байт';    
+           } else echo 'Файла не существует';
+       } else echo 'Не верный формат картинки';
+   }
+
+
+   echo '<section class="load-img-form-section">';
+   echo '<div class="row">';
+   echo '<div class="col-12 btn">';
+   echo '<div class="load-img-form-div">';
+       echo '<form method="post" action="#" class="load-img-form-form">';
+           echo '<input class="load-img-form-text" type="text" placeholder="'.$_SESSION['loadImgFormTextUrl'].'" name="linkImageText">';
+           echo '<input class="load-img-form-text" type="text" placeholder="'.$_SESSION['loadImgFormTextAlt'].'" name="altImageText">';
+           echo '<input class="load-img-form-submit" type="submit" value="Загрузить" name="loadImageLink">';
+       echo '</form>';
+   echo '</div>';
+   echo '</div>';
+   echo '</div>';
+   echo '</section>';
+
+   
+
+
+}
+
+
+    } // конец класса modul
