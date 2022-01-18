@@ -416,7 +416,8 @@ class Modul
                     if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))      // Если труе, то статья проверена модератором
                       if ($pokazalStatej==0 && $nomerZagolowkaStati=='www') {  // первая статья не по клику по названию статьи
                         if (!$statiaVozwrat) { // показ первой статьи при обычных условиях
-                           $this->imgBbToUrl($dataMas[$ii][0][1][0][0]);
+                           //$this->imgBbToUrl($dataMas[$ii][0][1][0][0]);
+                           //echo $dataMas[$ii][0][1][0][0];
                            $class='statiaKrutka btn'; // класс заголовка по умолчанию
                            // Условие сработает если задан какой-либо вид оформления статьи
                            if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0) { // класс заголовка в зависимости от стиля тут
@@ -429,8 +430,8 @@ class Modul
                                $altTest=preg_match_all('/alt=\".+\"/u',$text, $alt);
                                // Находим содержимое URL
                                preg_match_all('/src="[^"]+/u',$text, $url);
-                             if (!isset($url)) $url='image/logo.php';
-                                if (gettype($url)=='array') {
+                               if (!isset($url)) $url='image/logo.php';
+                               if (gettype($url)=='array') {
                                    $i=0;
                                    foreach($alt[0] as $value) {
                                       $altVstavki=$value;
@@ -442,6 +443,7 @@ class Modul
                                       $i++;
                                      }
                                }
+                             $this->imgBbToUrl($text,$hablon);
                              $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
                              $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
                              echo '<section class="container-fluid">';
@@ -1181,31 +1183,39 @@ public function loadImgForm()
 }
 
 
-function imgBbToUrl(&$stringBB)
+function imgBbToUrl(&$stringBB,$hablonStyle)
 {
    $classPhp = new initBd();
    // создаем массив с БиБи кодами
    preg_match_all('/\[IMG\].+\..+\[IMG\]?/',$stringBB,$masBB);
    
    $masBBone=$masBB[0];
-   $classPhp->printMas($masBBone);
+   //$classPhp->printMas($masBBone);
 
    foreach ($masBBone as $value) {
-       
-       
-
-       $hablon='/'.preg_quote($value).'/';
-       $stringBB=preg_replace($hablon,'нашли ВВ',$stringBB);
+       $timeValue=$value;
+       $timeValue=preg_replace('/(\[IMG\])/','',$timeValue); // чистое имя файла без пути
+       $pathFileStart=''; 
+       while (!file_exists($pathFileStart.'imagesUser/'.$timeValue)) 
+          $pathFileStart.='../';
+       $pathFileStart.='imagesUser/'.$timeValue; // ссылка для генерации на сайт
+       $alt=''; 
+       $width=0;
+       $height=0;
+       $zapros="SELECT alt,width,height FROM load_img WHERE  name='".$timeValue."'";
+       $rez=$classPhp->zaprosSQL($zapros); // читаем локальное имя файла из таблицы
+       if ($classPhp->notFalseAndNULL($rez)) {
+           $stroka=mysqli_fetch_assoc($rez);
+           if ($classPhp->notFalseAndNULL($stroka)) {
+               $alt=$stroka['alt'];
+               $width=$stroka['width'];
+               $height=$stroka['height'];
+           }
+       }
+       $replac='<div class="img-div-'.$hablonStyle.'"><img class="img-'.$hablonStyle.'" src="'.$pathFileStart.'" alt="'.$alt.'" width="'.$width.'" height="'.$height.'"></div>';
+       $hablon='/'.preg_quote($value).'?/';
+       $stringBB=preg_replace($hablon,$replac,$stringBB);
    }
-
-
-   //$stringBB=preg_replace('/\[IMG\].+\..+\[IMG\]?/','нашли ВВ',$stringBB);
-
-
-
-
-   //$classPhp->printMas($masBB);
-   //$stringBB=preg_replace('/\[IMG\].+\..+\[IMG\]?/','нашли ВВ',$stringBB);
 }
 
     } // конец класса modul

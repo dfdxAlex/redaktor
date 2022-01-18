@@ -5,6 +5,8 @@ namespace redaktor;
 // API
 //function notFalseAndNULL($data):true/false  If the variable exists, is not equal to false and is not equal to NULL then return true
 //function printMas($mas)                     Displays the contents of a variable with a hint of what type it is.
+//function clearCode($cod,...$parametr)       the function cleans the code from dangerous tags
+//
 
 class instrument
 {
@@ -1000,3 +1002,4 @@ foreach($parametr as $value) {
 // API
 // function notFalseAndNULL($data):true/false Если переменная существует, не равна false и не равна NULL то вернуть true
 // function printMas($mas)                    Выводит содержимое переменной с подскажкой какого она типа
+//function clearCode($cod,...$parametr)       функция очищает код от опасных тегов
