@@ -1068,6 +1068,7 @@ class Modul
 public function loadImgForm()
 {
   $classPhp = new initBd();
+  $fileSize=0;
 
   if (!isset($_SESSION['loadImgFormTextUrl'])) $_SESSION['loadImgFormTextUrl']='url';
   if (!isset($_SESSION['loadImgFormTextAlt'])) $_SESSION['loadImgFormTextAlt']='alt';
@@ -1101,10 +1102,10 @@ public function loadImgForm()
        if ($_POST['altImageText']!='') $_SESSION['loadImgFormTextAlt']=$_POST['altImageText'];
        if ($_POST['linkImageTextWidth']!='') $_SESSION['loadImgFormTextWidth']=$_POST['linkImageTextWidth'];
        if ($_POST['linkImageTextHeight']!='') $_SESSION['loadImgFormTextHeight']=$_POST['linkImageTextHeight'];
-       //echo 'линк-'.$_POST['linkImageText'];
        if (preg_match('/(.+\.jpg$)|(.+\.png$)|(.+\.bmp$)|(.+\.gif$)|(.+\.tif$)/', $_POST['linkImageText'])) {
            if ($fileImagesInput=file_get_contents($_SESSION['loadImgFormTextUrl'])) {
-               if ($fileSize=strlen($fileImagesInput)<50000) { // вычислить память картинки
+               $fileSize=strlen($fileImagesInput);
+               if ($fileSize<90000) { // вычислить память картинки
                    // проверяем есть ли папка для картинок, если нет, то создаем её.
                    // сначала находим нужный путь к корню папки, то есть сколько раз вернуться назад нужно ../
                    $nameFileStart='index.php'; // поиск расположение главного файла, там есть корень
@@ -1124,6 +1125,7 @@ public function loadImgForm()
                    $_SESSION['loadImgFormTextWidth']=$masSizeImages[0];
                    $_SESSION['loadImgFormTextHeight']=$masSizeImages[1];
 
+                   $fileIsAlreadiTrue=$classPhp->siearcSlova('load_img','url',$_SESSION['loadImgFormTextUrl']);
                    //сохраняем файл на диске
                    if ($_POST['loadImageLink']=='Сохранить') {
                        $nameFileLocal=$nameFileImage.$masTypImage;   // локальное имя файла
@@ -1133,7 +1135,7 @@ public function loadImgForm()
                        $actualAlt=$_POST['altImageText'];            // alt из формы
                        $zapros='';
                        // проверка нет ли данной ссылки источника картинки уже в базе данных
-                       if (!$classPhp->siearcSlova('load_img','url',$_SESSION['loadImgFormTextUrl'])) {
+                       if (!$fileIsAlreadiTrue) {
                            // сохраняем файл на диске
                            file_put_contents($pathFileStart.'imagesUser/'.$nameFileLocal,$fileImagesInput);
                            // записываем информацию в таблицу
@@ -1142,21 +1144,23 @@ public function loadImgForm()
                                             '".$actualAlt."',".$actualWidth.",".$actualHeight.")";
                        }
                        //если есть ссылка файла источника картинки
-                       if ($classPhp->siearcSlova('load_img','url',$_SESSION['loadImgFormTextUrl'])) 
+                       if ($fileIsAlreadiTrue) 
                            $zapros="UPDATE load_img SET alt='".$actualAlt."',width=".$actualWidth.",height=".$actualHeight." WHERE url='".$_SESSION['loadImgFormTextUrl']."'";
                        $classPhp->zaprosSQL($zapros); // записываем новый файл в БД или изменяем старый
+                    } // От Сохранить
+                       // читаем из БД параметры файла, который заливается из вне
                        $zapros="SELECT name,alt,width,height FROM load_img WHERE  url='".$_SESSION['loadImgFormTextUrl']."'";
                        $rez=$classPhp->zaprosSQL($zapros); // читаем локальное имя файла из таблицы
-                       if ($classPhp->notFalseAndNULL($rez)) {
+                       if ($classPhp->notFalseAndNULL($rez)) { 
                            $stroka=mysqli_fetch_assoc($rez);
-                           if ($classPhp->notFalseAndNULL($stroka)) {
+                           if ($classPhp->notFalseAndNULL($stroka)) { 
                                echo '<div class="name-local-file-fo-redaktor"><p>[IMG]'.$stroka['name'].'[IMG]</p></div>';
                                $_SESSION['loadImgFormTextAlt']=$stroka['alt'];
                                $_SESSION['loadImgFormTextWidth']=$stroka['width'];
                                $_SESSION['loadImgFormTextHeight']=$stroka['height'];
-                           }
-                       }
-                   }
+                            }
+                        }
+                     
                 } else echo 'Файл слишком большой:'.$fileSize.' байт, допускается 50 000 байт';    
            } else echo 'Файла не существует';
        } else echo 'Не верный формат картинки';
