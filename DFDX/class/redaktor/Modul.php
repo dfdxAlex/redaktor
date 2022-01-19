@@ -52,6 +52,8 @@ class Modul
            if (!isset($_SESSION['nomerStylaStatii']))
               $_SESSION['nomerStylaStatii']=1;
 
+           if (!isset($_SESSION['status']))
+              $_SESSION['status']=0;
     // перебираем все параметры и выдергиваем данные, которые пришли на вход
     // Ищем имя таблицы
     //-------------------------------------------------------------------------------------------
@@ -185,11 +187,9 @@ class Modul
       if ($_POST['loadImageLink']=='Загрузить') $buttonLoadImages=true;
       if ($_POST['loadImageLink']=='Сохранить') $buttonSaveImages=true;
    }
-  if (isset($_SESSION['status'])) {
-      if  ($_SESSION['status']==1 || $_SESSION['status']==3) $status_1_3=true;
-      if  ($_SESSION['status']==4 || $_SESSION['status']==5) $status_4_5=true;
-      if  ($status_1_3 || $_SESSION['status']==2) $status_1_2_3=true;
-   }
+  if  ($_SESSION['status']==1 || $_SESSION['status']==3) $status_1_3=true;
+  if  ($_SESSION['status']==4 || $_SESSION['status']==5) $status_4_5=true;
+  if  ($status_1_3 || $_SESSION['status']==2) $status_1_2_3=true;
 
   // условие входа в блок сохранения информации (кнопки Сохранить, Выбрать, Загрузить, Сохранить--Картинку)
   $condition=$tablicaOk & ($buttonBaveRedaktor | $buttonBaveRedaktor2) // Нажата одна из кнопок Сохранить статью
