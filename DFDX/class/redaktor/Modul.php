@@ -169,15 +169,35 @@ class Modul
                    $_SESSION['mas_time_news']=$_POST['statia'];
                }
               // Запись статьи, если была нажата кнопка Сохранить
-              if ($nametablice!='' && $classPhp->searcNameTablic($nametablice) 
-                  && ((isset($_POST[$nametablice.'_redaktor']) && $_POST[$nametablice.'_redaktor']=='Сохранить')
-                    || (isset($_POST[$nametablice.'_redaktor2']) && $_POST[$nametablice.'_redaktor2']=='Сохранить'))
-                  ) {
+              $tablicaOk=false;            // табличка не пустая и присутствует в БД
+              $buttonBaveRedaktor=false;   // нажата кнопка Сохранить от блока $nametablice.'_redaktor'
+              $buttonBaveRedaktor2=false;  // нажата кнопка Сохранить от блока $nametablice.'_redaktor2'
+              $buttonSelectHablon=false;   // нажата кнопка выбора шаблона оформления статьи
+              $buttonLoadImages=false;     // нажата кнопка загрузить картинку из интернета
+              $buttonSaveImages=false;     // нажата кнопка сохранить картинку на сервере
+
+              // Блок с условиями - нажатиями различных кнопок в редакторе статей
+              if ($nametablice!='' && $classPhp->searcNameTablic($nametablice)) $tablicaOk=true;
+              if (isset($_POST[$nametablice.'_redaktor']) && $_POST[$nametablice.'_redaktor']=='Сохранить') $buttonBaveRedaktor=true;
+              if (isset($_POST[$nametablice.'_redaktor2']) && $_POST[$nametablice.'_redaktor2']=='Сохранить') $buttonBaveRedaktor2=true;
+              if (isset($_POST['vvv'])) $buttonSelectHablon=true;
+              if (isset($_POST['loadImageLink'])) {
+                  if ($_POST['loadImageLink']=='Загрузить') $buttonLoadImages=true;
+                  if ($_POST['loadImageLink']=='Сохранить') $buttonSaveImages=true;
+              }
+
+              // условие входа в блок сохранения информации (кнопки Сохранить, Выбрать, Загрузить, Сохранить--Картинку)
+              $condition=$tablicaOk & ($buttonBaveRedaktor | $buttonBaveRedaktor2) // Нажата одна из кнопок Сохранить статью
+                                    | $buttonSelectHablon                          // Нажата Запомнить шаблон
+                                    | $buttonLoadImages                            // Нажата Загрузить Картинку
+                                    | $buttonSaveImages;                           // Нажата Сохранить Картинку
+
+              // условие сохранения с записью статьи
+              if ($condition) {// Вошли в блок Сохранить статью
                  $dlinaStati=0;
                  $loginAwtora='';
                  $id=-1;
-                 // Преобразовываем имя статьи и статью в нормальный вид и записываем.
-                 // удалить мат заголовка
+                 // Преобразовываем имя статьи и статью в нормальный вид и записываем. // удалить мат заголовка
                  $imieNowosti=$classPhp->bezMatov(quotemeta($classPhp->clearCode($_POST['zagolowok']))); 
 
                  //Найти хештег Раздел
