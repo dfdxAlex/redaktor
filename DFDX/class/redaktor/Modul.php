@@ -1135,7 +1135,7 @@ public function loadImgForm()
        if (preg_match('/(.+\.jpg$)|(.+\.png$)|(.+\.bmp$)|(.+\.gif$)|(.+\.tif$)/', $_POST['linkImageText'])) {
            if ($fileImagesInput=file_get_contents($_SESSION['loadImgFormTextUrl'])) {
                $fileSize=strlen($fileImagesInput);
-               if ($fileSize<90000) { // вычислить память картинки
+               if ($fileSize<100000) { // вычислить память картинки
                    // проверяем есть ли папка для картинок, если нет, то создаем её.
                    // сначала находим нужный путь к корню папки, то есть сколько раз вернуться назад нужно ../
                    $nameFileStart='index.php'; // поиск расположение главного файла, там есть корень
@@ -1191,7 +1191,7 @@ public function loadImgForm()
                             }
                         }
                      
-                } else echo 'Файл слишком большой:'.$fileSize.' байт, допускается 50 000 байт';    
+                } else echo 'Файл слишком большой:'.$fileSize.' байт, допускается 90 000 байт';    
            } else echo 'Файла не существует';
        } else echo 'Не верный формат картинки';
    }
