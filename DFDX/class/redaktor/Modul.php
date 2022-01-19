@@ -163,104 +163,116 @@ class Modul
                 }
           } // конец перебора входных данных
               /////////////////////////////////////////////////////////////////////////////////////////////////////////
-              ///////////////////////////////////////////Нажали кнопку Запомнить Шаблон//////////////////////////////
-              if (isset($_POST['vvv'])) {
-                   $_SESSION['mas_time_name_news']=$_POST['zagolowok']; 
-                   $_SESSION['mas_time_news']=$_POST['statia'];
-               }
-              // Запись статьи, если была нажата кнопка Сохранить
-              $tablicaOk=false;            // табличка не пустая и присутствует в БД
-              $buttonBaveRedaktor=false;   // нажата кнопка Сохранить от блока $nametablice.'_redaktor'
-              $buttonBaveRedaktor2=false;  // нажата кнопка Сохранить от блока $nametablice.'_redaktor2'
-              $buttonSelectHablon=false;   // нажата кнопка выбора шаблона оформления статьи
-              $buttonLoadImages=false;     // нажата кнопка загрузить картинку из интернета
-              $buttonSaveImages=false;     // нажата кнопка сохранить картинку на сервере
 
-              // Блок с условиями - нажатиями различных кнопок в редакторе статей
-              if ($nametablice!='' && $classPhp->searcNameTablic($nametablice)) $tablicaOk=true;
-              if (isset($_POST[$nametablice.'_redaktor']) && $_POST[$nametablice.'_redaktor']=='Сохранить') $buttonBaveRedaktor=true;
-              if (isset($_POST[$nametablice.'_redaktor2']) && $_POST[$nametablice.'_redaktor2']=='Сохранить') $buttonBaveRedaktor2=true;
-              if (isset($_POST['vvv'])) $buttonSelectHablon=true;
-              if (isset($_POST['loadImageLink'])) {
-                  if ($_POST['loadImageLink']=='Загрузить') $buttonLoadImages=true;
-                  if ($_POST['loadImageLink']=='Сохранить') $buttonSaveImages=true;
-              }
+  // Запись статьи, если была нажата кнопка Сохранить
+  $tablicaOk=false;            // табличка не пустая и присутствует в БД
+  $buttonBaveRedaktor=false;   // нажата кнопка Сохранить от блока $nametablice.'_redaktor'
+  $buttonBaveRedaktor2=false;  // нажата кнопка Сохранить от блока $nametablice.'_redaktor2'
+  $buttonSelectHablon=false;   // нажата кнопка выбора шаблона оформления статьи
+  $buttonLoadImages=false;     // нажата кнопка загрузить картинку из интернета
+  $buttonSaveImages=false;     // нажата кнопка сохранить картинку на сервере
 
-              // условие входа в блок сохранения информации (кнопки Сохранить, Выбрать, Загрузить, Сохранить--Картинку)
-              $condition=$tablicaOk & ($buttonBaveRedaktor | $buttonBaveRedaktor2) // Нажата одна из кнопок Сохранить статью
-                                    | $buttonSelectHablon                          // Нажата Запомнить шаблон
-                                    | $buttonLoadImages                            // Нажата Загрузить Картинку
-                                    | $buttonSaveImages;                           // Нажата Сохранить Картинку
+  $status_1_3=false;           // true если редактор статусом 1 или 3
+  $status_4_5=false;           // true если редактор статусом 4 или 5
+  $status_1_2_3=false;         // true если редактор статусом 1 или 2 или 3
 
-              // условие сохранения с записью статьи
-              if ($condition) {// Вошли в блок Сохранить статью
-                 $dlinaStati=0;
-                 $loginAwtora='';
-                 $id=-1;
-                 // Преобразовываем имя статьи и статью в нормальный вид и записываем. // удалить мат заголовка
-                 $imieNowosti=$classPhp->bezMatov(quotemeta($classPhp->clearCode($_POST['zagolowok']))); 
+  // Блок с условиями - нажатиями различных кнопок в редакторе статей
+  if ($nametablice!='' && $classPhp->searcNameTablic($nametablice)) $tablicaOk=true;
+  if (isset($_POST[$nametablice.'_redaktor']) && $_POST[$nametablice.'_redaktor']=='Сохранить') $buttonBaveRedaktor=true;
+  if (isset($_POST[$nametablice.'_redaktor2']) && $_POST[$nametablice.'_redaktor2']=='Сохранить') $buttonBaveRedaktor2=true;
+  if (isset($_POST['vvv'])) $buttonSelectHablon=true;
+  if (isset($_POST['loadImageLink'])) {
+      if ($_POST['loadImageLink']=='Загрузить') $buttonLoadImages=true;
+      if ($_POST['loadImageLink']=='Сохранить') $buttonSaveImages=true;
+   }
+  if (isset($_SESSION['status'])) {
+      if  ($_SESSION['status']==1 || $_SESSION['status']==3) $status_1_3=true;
+      if  ($_SESSION['status']==4 || $_SESSION['status']==5) $status_4_5=true;
+      if  ($status_1_3 || $_SESSION['status']==2) $status_1_2_3=true;
+   }
 
-                 //Найти хештег Раздел
-                 $mas=array();
-                 $kluc=preg_match('/#[a-zA-Zа-яёА-ЯЁ0-9]+#?/',$_POST['statia'],$mas); // Поиск в текстк категории
+  // условие входа в блок сохранения информации (кнопки Сохранить, Выбрать, Загрузить, Сохранить--Картинку)
+  $condition=$tablicaOk & ($buttonBaveRedaktor | $buttonBaveRedaktor2) // Нажата одна из кнопок Сохранить статью
+                        | $buttonSelectHablon                          // Нажата Запомнить шаблон
+                        | $buttonLoadImages                            // Нажата Загрузить Картинку
+                        | $buttonSaveImages;                           // Нажата Сохранить Картинку
+
+  ///////////////////////////////////////////Нажали кнопку Запомнить Шаблон//////////////////////////////
+  if ($buttonSelectHablon) {
+    $_SESSION['mas_time_name_news']=$_POST['zagolowok']; 
+    $_SESSION['mas_time_news']=$_POST['statia'];
+   }  
+
+  // условие сохранения с записью статьи
+  if ($condition) {                                                    // Вошли в блок Сохранить статью
+      $dlinaStati=0;
+      $loginAwtora='';
+      $id=-1;
+      // Преобразовываем имя статьи и статью в нормальный вид и записываем + удалить мат заголовка
+      $imieNowosti=$classPhp->bezMatov(quotemeta($classPhp->clearCode($_POST['zagolowok']))); 
+
+      //Найти хештег Раздел
+      $mas=array();
+      $kluc=preg_match('/#[a-zA-Zа-яёА-ЯЁ0-9]+#?/',$_POST['statia'],$mas); // Поиск в текстк категории
               
-                          // Если нет категории в тексте, то присвоить -
-                          if (!$kluc) $razdel='-';        
-                            else $razdel=preg_replace('/#/','',$mas[0]);  
+      // Если нет категории в тексте, то присвоить -
+      if (!$kluc) $razdel='-';        
+      else $razdel=preg_replace('/#/','',$mas[0]);  
                           
-                            // удаляем маты и теги из статьи
-                          $news=$classPhp->bezMatov(quotemeta($classPhp->clearCode(nl2br($_POST['statia'])))); 
+      // удаляем маты и теги из статьи
+      $news=$classPhp->bezMatov(quotemeta($classPhp->clearCode(nl2br($_POST['statia'])))); 
                           
-                          // длина статьи из текстового окна сайта
-                          $dlinaStati=strlen($news); 
+      // длина статьи из текстового окна сайта
+      $dlinaStati=strlen($news); 
 
-                          // если есть Ид статьи
-                          // Если Сохранить была нажата при редактировании существующей статьи
-                          if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) { 
-                              // найти старую длину статьи
-                              $rez=$classPhp->zaprosSQL("select news FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
-                              $stroka=mysqli_fetch_array($rez);
-                              $dlinaStatiStara=strlen($stroka[0]); // -длина старой статьи
-                              $dlinaStati=$dlinaStati-$dlinaStatiStara; // разница длин старой и отредактированной статьи
-                              $classPhp->zaprosSQL("UPDATE ".$nametablice." SET name='".$imieNowosti."',news='".$news."',razdel='".$razdel."'  WHERE id=".$_SESSION['redaktirowatId']);
-                              if ($_SESSION['status']==1 || $_SESSION['status']==3) // Если статью публикует подписчик или просто пользователь, то закинуть в раздел не проверенных
-                                $classPhp->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$_SESSION['redaktirowatId'].")");
-                            } 
-                              else { // Если сохраняем новую статью
-                                     $id=$classPhp->maxIdLubojTablicy($nametablice);
-                                     $classPhp->zaprosSQL("INSERT INTO ".$nametablice."(id, name,news,login_redaktora,razdel) VALUES (".$id.", '".$imieNowosti."','".$news."', '".$_SESSION['login']."','".$razdel."')");
-                                     // Если статью публикует подписчик или просто пользователь, то закинуть в раздел не проверенных
-                                     if ($_SESSION['status']==1 || $_SESSION['status']==3) { 
-                                        $classPhp->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$id.")");
-                                        echo '<meta http-equiv="refresh" content="125; URL=dfdx.php">';
-                                        echo 'Статья отправлена на модерацию, страница вот-вот перезагрузится';
-                                      }
-                                    }
-                          // Если статью сохранили статусы 4 или 5 и её ИД есть в таблице возвращенных статей, то удалить этот ИД из данной таблицы
-                          if ($_SESSION['status']==4 || $_SESSION['status']==5) {
-                              $classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
-                              // поиск автора редактируемой или создаваемой статьи
-                              if (!isset($_SESSION['redaktirowatId']) || $_SESSION['redaktirowatId']<0) // признак того, что создается новая статья
-                                  $loginAwtora=$_SESSION['login'];
-                              if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) {
-                                  $rez=$classPhp->zaprosSQL("select login_redaktora FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
-                                  $stroka=mysqli_fetch_array($rez);
-                                  $loginAwtora=$stroka[0];
-                                }
-                              $this->money('login='.$loginAwtora,'заплатить='.$dlinaStati); // добавить или отнять монеты
-                            }
+      // если есть Ид статьи
+      // Если Сохранить была нажата при редактировании существующей статьи
+      if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) { 
+          // найти старую длину статьи
+          $rez=$classPhp->zaprosSQL("select news FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
+          $stroka=mysqli_fetch_array($rez);
+          $dlinaStatiStara=strlen($stroka[0]); // -длина старой статьи
+          $dlinaStati=$dlinaStati-$dlinaStatiStara; // разница длин старой и отредактированной статьи
+          $classPhp->zaprosSQL("UPDATE ".$nametablice." SET name='".$imieNowosti."',news='".$news."',razdel='".$razdel."'  WHERE id=".$_SESSION['redaktirowatId']);
+          if ($status_1_3) // Если статью публикует подписчик или просто пользователь, то закинуть в раздел не проверенных
+              $classPhp->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$_SESSION['redaktirowatId'].")");
+       } else {   // Если сохраняем новую статью
+                  $id=$classPhp->maxIdLubojTablicy($nametablice);
+                  $classPhp->zaprosSQL("INSERT INTO ".$nametablice."(id, name,news,login_redaktora,razdel) VALUES (".$id.", '".$imieNowosti."','".$news."', '".$_SESSION['login']."','".$razdel."')");
+                  // Если статью публикует подписчик или просто пользователь, то закинуть в раздел не проверенных
+                  if ($status_1_3) { 
+                      $classPhp->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$id.")");
+                      echo '<meta http-equiv="refresh" content="125; URL=dfdx.php">';
+                      echo 'Статья отправлена на модерацию, страница вот-вот перезагрузится';
+                    }
+               }
+       // Если статью сохранили статусы 4 или 5 и её ИД есть в таблице возвращенных статей, то удалить этот ИД из данной таблицы
+       if ($status_4_5) {
+           $classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
+           // поиск автора редактируемой или создаваемой статьи
+           if (!isset($_SESSION['redaktirowatId']) || $_SESSION['redaktirowatId']<0) // признак того, что создается новая статья
+               $loginAwtora=$_SESSION['login'];
+           if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) {
+               $rez=$classPhp->zaprosSQL("select login_redaktora FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
+               $stroka=mysqli_fetch_array($rez);
+               $loginAwtora=$stroka[0];
+            }
+           $this->money('login='.$loginAwtora,'заплатить='.$dlinaStati); // добавить или отнять монеты
+         }
 
-                          if ($_SESSION['status']==1 || $_SESSION['status']==3) // Если статью сохранили статусы 1 или 3 то удалить статью из таблицы возвратов
-                              $classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
+      if ($status_1_3) // Если статью сохранили статусы 1 или 3 то удалить статью из таблицы возвратов
+          $classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
                  
-                          $_SESSION['mas_time_name_news']='';
-                          $_SESSION['mas_time_news']='';
-               }
-              ///////////////////////////////////////////////////////////////////////////////
-              if ((isset($_POST[$nametablice.'_redaktor']) || isset($_POST[$nametablice.'_redaktor2']))  && !isset($_POST['vvv'])) {
-                    $_SESSION['redaktirowatId']=-1;
-                    echo '<meta http-equiv="refresh" content="0; URL='.$action.'">';
-               }
+      $_SESSION['mas_time_name_news']='';
+      $_SESSION['mas_time_news']='';
+  } // Конец блока записи
+
+  //////////////////////Выход из режима редактирования////////////////////////////
+  $condition=$buttonBaveRedaktor | $buttonBaveRedaktor2;   // Была нажата одна из кнопок Сохранить статью
+  if ($condition) {
+      $_SESSION['redaktirowatId']=-1;
+      echo '<meta http-equiv="refresh" content="0; URL='.$action.'">';
+   }
               
               ////////////////////////////////////// работаем с кнопкой удалить //////////////////////////////////
               if ($classPhp->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Удалить') {
@@ -285,7 +297,7 @@ class Modul
                       unlink($classPhp->searcNamePath($killName));
                   $classPhp->killZapisTablicy('url_po_id_'.$nametablice,'WHERE id='.$killStroka);
 
-                  if (($_SESSION['status']==4 || $_SESSION['status']==5) && $this->statusStati($killStroka)) {
+                  if (($status_4_5) && $this->statusStati($killStroka)) {
                     $rez=$classPhp->zaprosSQL("select login_redaktora, news from ".$nametablice." where id=".$killStroka); // логин редактора и статья
                     $stroka=mysqli_fetch_assoc($rez);
                     if ($classPhp->notFalseAndNULL($stroka)) {
@@ -420,7 +432,7 @@ class Modul
             // считает число статей, которые можно было показать     
             $nomerStatejSumm++; 
             
-            if ($_SESSION['status']==1 || $_SESSION['status']==3)
+            if ($status_1_3)
                // Проверяет не вернута ли статья на доработку
                $statiaVozwrat=$this->vernutStati($dataMas[$ii][0][0][0][0]); 
             else $statiaVozwrat=false;
@@ -588,7 +600,7 @@ class Modul
 
                    // если статусы 4 или 5 или смотрит статью её автор, то работаем
                    if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
-                       if ($_SESSION['status']==4 || $_SESSION['status']==5 || ($_SESSION['login']==$dataMas[$i][0][0][1][0])) {  
+                       if ($status_4_5 || $_SESSION['login']==$dataMas[$i][0][0][1][0]) {  
                            $dfdx=file($classPhp->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
                            foreach ($dfdx as &$value) { 
                               $valueTemp=preg_filter('/\$action.*php/u','\$action=\'action=#',$value); // Замена страниц обработчиков
@@ -634,7 +646,7 @@ class Modul
 
                     //////////////////////////////////////////////////////////////////////////////////////////////////////
                     if (!$statusStatii)// Статья не проверена модератором
-                       if ($_SESSION['status']==4 || $_SESSION['status']==5) {
+                       if ($status_4_5) {
                           echo '<'.$zagolowok.'>'.$dataMas[$ii][1][0][0][0].'</'.$zagolowok.'>'.'<div>'.$dataMas[$ii][0][1][0][0].'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';
                           echo '<section class="container-fluid">';
                           echo '<div class="row">';
@@ -656,7 +668,7 @@ class Modul
                         }
                     /////////////////////////////////////////////////////////////////////////////////////////////////////////
                     if ($redaktorUser || $redaktorPodpis || $redaktorRedaktor) // если есть разрешение на редактирование статей для статусов 1,2 или 3
-                        if ($_SESSION['status']>0  && $_SESSION['status']<4) // Если статус автора 1,2 или 3
+                        if ($status_1_2_3) // Если статус автора 1,2 или 3
                             if (($redaktorUser || $redaktorPodpis) && $statusStatii  || ($statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login'])) {// ЕСЛИ СТАТУС 1 или 3 и статья не на проверке
                                 $value='Добавить';
                                 if ($statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']) {
@@ -672,9 +684,7 @@ class Modul
 
                     ///////////////////////////////////Кнопки удаления, редактирования, добавления
                     if ($nomerZagolowkaStati=='www' || $dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati) 
-                     if ($_SESSION['status']==4 
-                      || $_SESSION['status']==5 
-                        )
+                     if ($status_4_5)
                         $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
                                                 'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
                                                 'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-"'.$action.'"-');
