@@ -1,20 +1,21 @@
 <?php
+namespace redaktor;
+
+#файл сгенерировать#
+#file generated#
 session_start();
 require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
-  use redaktor\instrument as instrument;
-  use redaktor\Modul as modul;
-  use redaktor\login as login;
-  use redaktor\maty as maty;
-  use redaktor\poisk as poisk;
   $b=new instrument();
   $redaktor=new Modul();
   $status = new login();
   $maty = new maty();
   $poisk = new poisk();
+  $statistik = new statistic();
 ?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -41,7 +42,6 @@ if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
-//if ($_SESSION["status"]>99) $_SESSION["status"]=9;
 ////////////////////////////////////////////Верхнее меню///////////////////////////////////////////////////////   
 ///////////////////////////////////////////Обработка верхнего меню
 if ($_SESSION["status"]>0)             // если есть какой-то статух входа на сайт
@@ -107,6 +107,8 @@ $bylPoisk=false;
 $action='action=dfdx.php';  //страница обработки кнопок в модуле news()
 $nameBD='bd2';
 $nameBD='nameTD='.$nameBD;
+$nomerNewsPoisk='Число_статей=5';
+$nomerNewsGlawn='Число_статей=5';
 ////////////////////////////////////////////////////поиск
 if (isset($_POST['poisk'])) {
   $poisk->poiskStati('#таблица для поиска#',$_POST['strPoisk'],$idStati,'#категория для поиска#') ;
@@ -119,7 +121,7 @@ if (isset($_POST['poisk'])) {
  if (!$bylPoisk) {
       $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
       if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
-        $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=regular_expressions');
+        $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=regular_expressions',$nomerNewsGlawn);
       if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
         $redaktor->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=regular_expressions');
   }
@@ -138,7 +140,7 @@ echo '</section>';
 ////////////////////////////Конец основного кода страницы////////////////////////// 
 /// Статистика///////////////////////////////////////
 echo '<footer class="container-fluid futter">';
-$statistik = new redaktor\statistic();
+
 if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
 $statistik->statistikOnOff();
 if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты

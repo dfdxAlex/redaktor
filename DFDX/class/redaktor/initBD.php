@@ -238,10 +238,11 @@ class initBd extends instrument
     public function id_tab_gl_searc($nameTablicy)
      {
         $zapros="select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='".$nameTablicy."'";
+        $stroka='';
         $rez=$this->zaprosSQL($zapros);
-        $stroka=(mysqli_fetch_assoc($rez));
-        if ($stroka['COLUMN_NAME']=='id_tab_gl') 
-            return true;
+        if (parent::notFalseAndNULL($rez))
+            $stroka=(mysqli_fetch_assoc($rez));
+        if ($stroka['COLUMN_NAME']=='id_tab_gl') return true;
         return false;
      }
     public function searcNameTablic($nameTablicy) // Поиск таблицы в базе данных
@@ -324,12 +325,15 @@ class initBd extends instrument
         $boolRez=false;
         $zapros="SELECT ID FROM tablica_tablic WHERE NAME='".$nameTablice."'";
         $rez=$this->zaprosSQL($zapros);
-        if ($rez===false) 
-            echo 'Проблема с таблицей "tablica_tablic"';
-        $stroka=mysqli_fetch_array($rez);
-        if (isset($stroka[0]) && !is_null($stroka[0]) && $stroka[0]>-1)  
-            $boolRez=true;
-        return $boolRez;
+
+        if (parent::notFalseAndNULL($rez)!==true) echo 'Проблема с таблицей "tablica_tablic"';
+
+        if (parent::notFalseAndNULL($rez)) $stroka=mysqli_fetch_array($rez);
+        
+        if (parent::notFalseAndNULL($stroka))   
+            if ($stroka[0]>-1) $boolRez=true;
+        
+        return $boolRez; 
      }
      public function kolVoZapisTablice($nameTablice) // считает число записей в таблицк
      {

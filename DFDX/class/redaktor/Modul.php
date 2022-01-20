@@ -634,6 +634,12 @@ class Modul
                               $valueTemp=preg_filter('/tka=\'dfdx/u',"tka='".$fileNameNotPhp,$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
 
+                              $valueTemp=preg_filter('/#файл\sсгенерирован#/u',"//файл сгенерирован CMS-DFDX ".date('Y-m-d H:i:s'),$value);
+                              if (!is_null($valueTemp)) $value=$valueTemp;
+
+                              $valueTemp=preg_filter('/#file\sgenerated#/u',"//file generated CMS-DFDX ".date('Y-m-d H:i:s'),$value);
+                              if (!is_null($valueTemp)) $value=$valueTemp;
+
                             } 
                             $this->urlPoIdSave($nametablice,$nomerZagolowkaStati,$fileName);
                             file_put_contents($fileName,$dfdx);
@@ -1140,8 +1146,12 @@ public function loadImgForm()
                    // сначала находим нужный путь к корню папки, то есть сколько раз вернуться назад нужно ../
                    $nameFileStart='index.php'; // поиск расположение главного файла, там есть корень
                    $pathFileStart='';
-                   while (!file_exists($pathFileStart.$nameFileStart)) 
+                   $i=0;
+                   while (!file_exists($pathFileStart.$nameFileStart)) {
                        $pathFileStart.='../';
+                       $i++;
+                       if ($i>100) return false;
+                    }
                    if (!is_dir($pathFileStart.'imagesUser')) mkdir($pathFileStart.'imagesUser');
                    //Сгенерировать новое имя файла
                    $nameFileImage='';
@@ -1230,8 +1240,12 @@ function imgBbToUrl(&$stringBB,$hablonStyle)
        $timeValue=$value;
        $timeValue=preg_replace('/(\[IMG\])/','',$timeValue); // чистое имя файла без пути
        $pathFileStart=''; 
-       while (!file_exists($pathFileStart.'imagesUser/'.$timeValue)) 
+       $i=0;
+       while (!file_exists($pathFileStart.'imagesUser/'.$timeValue)) {
           $pathFileStart.='../';
+          $i++;
+          if ($i>100) return false;
+       }
        $pathFileStart.='imagesUser/'.$timeValue; // ссылка для генерации на сайт
        $alt=''; 
        $width=0;

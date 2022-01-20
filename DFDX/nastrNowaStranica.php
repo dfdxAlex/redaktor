@@ -124,6 +124,8 @@ if (!$errorName)
                                               '/#категория\sдля\sпоиска#/' => function ($machh) {return 'категория-'.$_POST['kategoria-news-rdNovaStr'];},
                                               //'/#страница\sобработки\sправого\sменю#/' => function ($machh) {return $_SESSION['nameFilePreg'];},
                                               '/#title#/' => function ($machh) {return '<title>'.$_SESSION['nameNotPhp'].'</title>';},
+                                              '/#файл\sсгенерировать#/' => function ($machh) {return '//файл сгенерирован CMS-DFDX '.date('Y-m-d H:i:s');},
+                                              '/#file\sgenerated#/' => function ($machh) {return '//file generated CMS-DFDX '.date('Y-m-d H:i:s');},
                                               ]
                                               ,$fileStart);
       //////////////////////

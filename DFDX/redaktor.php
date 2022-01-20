@@ -1,5 +1,16 @@
 <?php
+namespace redaktor;
+
 session_start();
+include 'funcii.php';
+include 'class.php';
+
+$red = new  redaktor();
+$status = new  login();
+$maty = new  maty();
+$menuUp = new  menu(); 
+$data=new  dataAktual();
+$statistik = new  statistic();
 ?>
 
 <!DOCTYPE html>
@@ -23,19 +34,15 @@ session_start();
 </head>
 <body>
 <?php
-//session_start();
 if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
 if (!isset($_SESSION['sSajta'])) $_SESSION['sSajta']=false;
-include 'funcii.php';
-include 'class.php';
+
 $redaktor=false;        // Признак нажатия кнопки настройки редактора
 $spisokTablic=false;    // Признак нажатия кнопки Список таблиц
 
-$red = new redaktor\redaktor();
-$status = new redaktor\login();
-$maty = new redaktor\maty();
+
 
 
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
@@ -45,7 +52,7 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
    
       <?php 
       //$_SESSION['status']=5;
-      $menuUp = new redaktor\menu(); 
+
       if ($_SESSION['status']>99 || $_SESSION['status']==9)
        $menuUp->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
 
@@ -354,7 +361,7 @@ if ($_SESSION['regimRaboty']==2 || $_SESSION['regimRaboty']==18)
          }
 }
 
- $data=new redaktor\dataAktual();
+ 
 
 echo '<div class="container-fluid">'."\n";
 echo '<div class="row menu_redaktor_down">'."\n";
@@ -373,7 +380,7 @@ echo '<div class="row menu_redaktor_down">'."\n";
 /// Статистика///////////////////////////////////////
 if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
 {
-  $statistik = new redaktor\statistic();
+
   $statistik->statistikOnOff();
 }
 

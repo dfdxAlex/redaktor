@@ -1,7 +1,21 @@
-<?php session_start(); ?>
+<?php 
+namespace redaktor;
+
+session_start(); 
+require "funcii.php";
+require "functionDfdx.php";
+require "image/swapImages.php";
+require "class.php";
+  $status = new login();
+  $maty = new maty();
+  $statistik = new statistic();
+  $menuUp = new menu();
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+
    <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>
 <script>
@@ -10,6 +24,7 @@
   gtag('js', new Date());
   gtag('config', 'G-MF3F7YTKCQ');
 </script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
@@ -19,52 +34,46 @@
 <meta name="Cache-Control" content="no-store">
 </head>
  
- 
 <body>
 <?php
 if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
-include "funcii.php";
-include "class.php";
-$class = new redaktor\statistic();
-$status = new redaktor\login();
-$maty = new redaktor\maty();
-if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
+
+if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) 
+    $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
 if ($_SESSION["status"]>99) $_SESSION["status"]=9;
- $menuUp = new redaktor\menu();
-  if ($_SESSION["status"]>99 || $_SESSION["status"]==9)
+
+
+
+if ($_SESSION["status"]>99 || $_SESSION["status"]==9)
    $menuUp->__unserialize(array("menu6","podtverdit","redaktor.php","Введите код"));
- if ($_SESSION["status"]==5 || $_SESSION["status"]==4)
-    $menuUp->__unserialize(array("menu3","redaktor_up","Редактор","Сайт","Выйти","Создать страницу"));
- if ($_SESSION["status"]==0)
-  $menuUp->__unserialize(array("menu4","login","redaktor.php","Логин","Пароль","Вход","Регистрация"));
- if ($_SESSION["status"]==1 || $_SESSION["status"]==2 || $_SESSION["status"]==3)
-    $menuUp->menu("dla_statusob_123");
+if ($_SESSION["status"]==5 || $_SESSION["status"]==4)
+   $menuUp->__unserialize(array("menu3","redaktor_up","Редактор","Сайт","Выйти","Создать страницу"));
+if ($_SESSION["status"]==0)
+   $menuUp->__unserialize(array("menu4","login","redaktor.php","Логин","Пароль","Вход","Регистрация"));
+if ($_SESSION["status"]==1 || $_SESSION["status"]==2 || $_SESSION["status"]==3)
+   $menuUp->menu("dla_statusob_123");
 if (isset($_SESSION["status"]) && $_SESSION["status"]>0)
   echo "<h6>Вы вошли под логином: ".$_SESSION["login"]."</h6>";
-   else {
+else {
       echo '<h6 class="mesage">Доброго времени суток. Вы попали в админ. панель движка dfdx. Выберите продолжение регистрации или войдите под своим логином и паролем.</h6>';
       echo '<h6 class="mesage">Так-же Вы всегда можете вернуться на сайт нажав на кнопку "На сайт"</h6>';
   }
 ////////////////////////////Начало основного кода страницы////////////////////////// 
 ////////////////////////////////////////////////////////////////////////////////////////////////// 
- 
 ?>
- 
 <section class="container-fluid">
 <div class="row">
 <div class="col-12">  
 <p>Шаблоны обрабатывают автоматически заголовок, текст статьи, первый символ первого абзаца и код в тегах code.</p>
 </div> 
-
 <div class="row">
 <div class="col-12">  
 <p class="nazwanie1">Шаблон №1.</p> 
 </div>
 </div>
-
 <div class="row">
 <div class="col-12">  
 <span class="perwaLitera1">К</span><p class="osnownojText1">омментарии в html используются, как и в других языках программирования, хотя оный им не
@@ -93,14 +102,11 @@ for($j=0; $j<$i; $j++)
 </code>
 </div>
 </div>
-
-
 <div class="row">
 <div class="col-12">  
 <p class="nazwanie2">Шаблон №2.</p> 
 </div>
 </div>
-
 <div class="row">
 <div class="col-12">  
 <span class="perwaLitera2">К</span><p class="osnownojText2">омментарии в html используются, как и в других языках программирования, хотя оный им не
@@ -129,14 +135,11 @@ for($j=0; $j<$i; $j++)
 </code>
 </div>
 </div>
-
-
 <div class="row">
 <div class="col-12">  
 <p class="nazwanie1">Шаблон №3.</p> 
 </div>
 </div>
-
 <div class="row">
 <div class="col-12">  
 <span class="perwaLitera3">К</span><p class="osnownojText3">омментарии в html используются, как и в других языках программирования, хотя оный им не
@@ -165,11 +168,6 @@ for($j=0; $j<$i; $j++)
 </code>
 </div>
 </div>
-
-
- 
- 
- 
 </div> 
 </div> 
 </section>
@@ -178,17 +176,15 @@ for($j=0; $j<$i; $j++)
 ////////////////////////////Конец основного кода страницы////////////////////////// 
 /// Статистика///////////////////////////////////////
 if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
-{
-$statistik = new redaktor\statistic();
-$statistik->statistikOnOff();
-}
+    $statistik->statistikOnOff();
+
 if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
-$maty->redactMaty();
+    $maty->redactMaty();
 ?>
 </div>
 </div>
 <?php
-$class->metkaStatistika('obrazec');
+    $statistik->metkaStatistika('obrazec');
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

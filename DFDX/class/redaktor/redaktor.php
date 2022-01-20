@@ -137,21 +137,31 @@ class redaktor  extends menu
         echo '<p class="zapretNaUdalenieP">Таблицу невозможно удалить</p>';
         echo '</div>';
         $zapros="SHOW TABLES";
-        $rez=parent::zaprosSQL($zapros);
+        $rez=parent::zaprosSQL($zapros);  
         echo '<div class="container-fluid">';
         echo '<div class="row spisokTablic">';
         echo'<form method="POST" active="redaktor.php">';
-        while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
-          if ($_SESSION['status']==5 || ($_SESSION['status']!=5 && parent::zapretUdaleniaTablicy($stroka[0])!='Невозможно удалить')) {
-            if (parent::zapretUdaleniaTablicy($stroka[0])=='Невозможно удалить') $dopClass="zapretNaUdalenie"; else $dopClass="";
-            if (parent::tablicaDlaMenu($stroka[0]))
-                echo '<input class="btn btn-primary buttonMenuSpisokTablic '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
-            else if (parent::id_tab_gl_searc($stroka[0]))
-            echo '<input class="btn btn-primary buttonMenuSpisokTablicGlav '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
-            else if (parent::zaprosSQL('SELECT name_teg FROM '.$stroka[0].' WHERE 1'))
-              echo '<input class="btn btn-primary buttonMenuSpisokTablicGlavTeg '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
-              else 
-               echo '<input class="btn btn-primary '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
+        if (parent::notFalseAndNULL($rez))                                     // Если нашли список таблиц в БД то идём дальше
+          while ($stroka=mysqli_fetch_array($rez)) {                           // перебираем все найденные таблицы
+          if ($_SESSION['status']==5                                           // Если список просматривает администратор или если нет, то не должно быть запрета на удаление таблицы
+              || ($_SESSION['status']!=5 && parent::zapretUdaleniaTablicy($stroka[0])!='Невозможно удалить')) {
+                  if (parent::zapretUdaleniaTablicy($stroka[0])=='Невозможно удалить')   // Раскрашиваем запрещенные к удалению таблицы
+                      $dopClass="zapretNaUdalenie";
+                      else $dopClass="";
+            
+            $name_teg=false;
+            $rezLocal=parent::zaprosSQL("SHOW COLUMNS FROM ".$stroka[0]);    //- список столбцов в таблице
+            while ($strokaLocal=mysqli_fetch_array($rezLocal) && !$name_teg) // перебор списка полей и поиск поля name_teg
+                if (gettype($strokaLocal)=='string')
+                    if ($strokaLocal[0]=='name_teg') $name_teg=true;
+
+            if (parent::tablicaDlaMenu($stroka[0]))  //Проверяем принадлежит ли таблица кнопкам-менюшкам
+                  echo '<input class="btn btn-primary buttonMenuSpisokTablic '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
+            else if (parent::id_tab_gl_searc($stroka[0]))   // проверяем относится ли таблица к главным таблицам
+                     echo '<input class="btn btn-primary buttonMenuSpisokTablicGlav '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
+            else if ($name_teg)  
+                      echo '<input class="btn btn-primary buttonMenuSpisokTablicGlavTeg '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
+              else  echo '<input class="btn btn-primary '.$dopClass.'" type="submit" name="bottonListTablic" value="'.$stroka[0].'">';
             }
          }
         echo'</form>';
