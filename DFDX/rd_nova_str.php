@@ -8,7 +8,7 @@ include 'class.php';
 $status = new login();
 $maty = new maty();
 $menuUp = new menu(); 
-$instrum = new modul();  
+$instrum = new Modul();  
 $stat = new  statistic();
 
 echo '<!DOCTYPE html>';
@@ -163,6 +163,7 @@ if ($_SESSION['variantNowaStr']==1) {// Нажата кнопка ...Пуста�
        $maty->redactMaty();
        echo '</div>';
        echo '</div>';
+
  $stat->metkaStatistika('rdNowaStr');
 
 echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';

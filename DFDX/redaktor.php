@@ -17,7 +17,7 @@ echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
 echo '<head>';
 
-echo '<!-- Global site tag (gtag.js) - Google Analytics -->';
+// Global site tag (gtag.js) - Google Analytics -->';
 echo '<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>';
 echo '<script>';
 echo '  window.dataLayer = window.dataLayer || [];';
