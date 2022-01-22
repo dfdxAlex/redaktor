@@ -1,9 +1,8 @@
 <?php
 namespace redaktor;
+
 class htmlTeg extends initBd
 {
-
-///////////////////////////////////////////////Конструктор///////////////////////////////////////////////
     public function __construct($nameTeg)
         {
             parent::__construct();
@@ -164,6 +163,4 @@ class htmlTeg extends initBd
             mysqli_close($con);
             return $chet;
         }
-        //////////////////////////////////////////////////////////////////////////////////////////
 }
-?>

@@ -9,31 +9,32 @@ $red = new  redaktor();
 $status = new  login();
 $maty = new  maty();
 $menuUp = new  menu(); 
-$data=new  dataAktual();
+$data= new  dataAktual();
 $statistik = new  statistic();
-?>
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MF3F7YTKCQ');
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-    <title>RedaktorBD</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="styli.css">
-    <meta name="Cache-Control" content="no-store">
-</head>
-<body>
-<?php
+
+echo '<!DOCTYPE html>';
+echo '<html lang="ru">';
+echo '<head>';
+
+echo '<!-- Global site tag (gtag.js) - Google Analytics -->';
+echo '<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>';
+echo '<script>';
+echo '  window.dataLayer = window.dataLayer || [];';
+echo '  function gtag(){dataLayer.push(arguments);}';
+echo "  gtag('js', new Date());";
+echo "  gtag('config', 'G-MF3F7YTKCQ');";
+echo '</script>';
+echo '    <meta charset="UTF-8">';
+echo '    <meta name="viewport" content="width=device-width, initial-scale=1.0">';
+echo '    <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">';
+echo '    <title>RedaktorBD</title>';
+echo '   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">';
+echo '    <link rel="stylesheet" href="styli.css">';
+echo '   <meta name="Cache-Control" content="no-store">';
+echo '</head>';
+echo '<body>';
+
 if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
@@ -42,15 +43,11 @@ if (!isset($_SESSION['sSajta'])) $_SESSION['sSajta']=false;
 $redaktor=false;        // Признак нажатия кнопки настройки редактора
 $spisokTablic=false;    // Признак нажатия кнопки Список таблиц
 
-
-
-
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
 if ($_SESSION['status']>99) $_SESSION['status']=9;
-?>
-<a name="vverh">
+
+echo '<a name="vverh">';
    
-      <?php 
       //$_SESSION['status']=5;
 
       if ($_SESSION['status']>99 || $_SESSION['status']==9)
@@ -72,20 +69,18 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
             echo '<h6 class="mesage">Так-же Вы всегда можете вернуться на сайт нажав на кнопку "На сайт"</h6>';
         }
         //$_SESSION['status']=5;
-      ?>
     
-<!------------------------------------------Шапка------------------------------------------------------------------------->
-<section class="container-fluid">
-<div class="row">
-  <div class="col-12">
- <div class="kartinkaHapki"> 
-  <!--<img class="kartinkaHapkiImg" width="300px" height="300px" src="image/hapka2.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>-->
-</div>
-</div>
-</div>
-</section>
+//------------------------------------------Шапка------------------------------------------------------------------------->
+echo '<section class="container-fluid">';
+echo '<div class="row">';
+echo '  <div class="col-12">';
+echo ' <div class="kartinkaHapki"> ';
+//<img class="kartinkaHapkiImg" width="300px" height="300px" src="image/hapka2.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>-->';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '</section>';
 
-<?php
 
 if ($_SESSION['status']==5 || $_SESSION['status']==4) $red->startMenuRedaktora();
 /////////////////////////////////////Кнопки настройки редактора//////////////////////////////////////////////
@@ -325,8 +320,6 @@ if (isset($_POST['redaktor_down']) && $_POST['redaktor_down']=='Настроит
   $_SESSION['resetNameTable']=false;
 }
 
-
-
 //Если была нажата кнопка, соответствующая некоторой таблице, обрабатываем тут
 if (isset($_POST['bottonListTablic'])){
   $redaktor=true;
@@ -336,11 +329,9 @@ if (isset($_POST['bottonListTablic'])){
   header("Refresh:0");
 }
 
-
-
-if ($redaktor && $spisokTablic) {  // Нажата кнопка в редакторе менюшек Показать список таблиц
+//if ($redaktor && $spisokTablic) {  // Нажата кнопка в редакторе менюшек Показать список таблиц
  // $red->nazataPokazatSpisokTablic();
-}
+//}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -386,44 +377,42 @@ if ($_SESSION['regimRaboty']==22) // исполнение нажатия кно�
 
 if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
    $maty->redactMaty();
-?>
-
-
-</div>
-</div>
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-</body>
-</html>
+   echo '</div>';
+   echo '</div>';
 
-<!--
-$_SESSION['nameTablice'] // Здесь имя создаваемой таблицы
 
-$_SESSION['regimRaboty']=1 // режим редактирования базы данных
-$_SESSION['regimRaboty']=2 // создать меню
-$_SESSION['regimRaboty']=3 // В редакторе нажата кнопка Список Таблиц
-$_SESSION['regimRaboty']=4 // В редакторе нажата кнопка ОК после предупреждения о том, что такая таблица уже есть Создаем меню
-$_SESSION['regimRaboty']=5 // В редакторе нажата кнопка Cancel после предупреждения о том, что такая таблица уже есть Создаем меню
-$_SESSION['regimRaboty']=6 // Нажата кнопка Создать таблицу для меню
-$_SESSION['regimRaboty']=7 // Нажата кнопка Удалить таблицу 
-$_SESSION['regimRaboty']=8 // Спросить согласие на Удалить таблицу 
-$_SESSION['regimRaboty']=9 // Отменили удаление таблицы
-$_SESSION['regimRaboty']=10 // Нажата кнопка Загрузить таблицу
-$_SESSION['regimRaboty']=11 // Нажата кнопка Создать общую таблицу
-$_SESSION['regimRaboty']=12 // Отказ от удаления или создания новой таблицы с именем защищенной от удаления таблицы
-$_SESSION['regimRaboty']=13 // Регистрация
-$_SESSION['regimRaboty']=14 // Ошибочно заполнена форма регистрации
-$_SESSION['regimRaboty']=15 // Правильно заполнена форма регистрации
-$_SESSION['regimRaboty']=16 // Нажата кнопка входа
-$_SESSION['regimRaboty']=17 // Нажата кнопка Подтвердить запись
-$_SESSION['regimRaboty']=18 // Создание меню типа 5
-$_SESSION['regimRaboty']=19 // Редактирование учётных записей
-$_SESSION['regimRaboty']=20 // найти письмо
-$_SESSION['regimRaboty']=21 // маты
-$_SESSION['regimRaboty']=22 // статистика
-  -->
+
+   echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';
+   echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>';
+   echo '<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>';
+   echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>';
+   echo '</body>';
+   echo '</html>';
+
+//$_SESSION['nameTablice'] // Здесь имя создаваемой таблицы
+
+//$_SESSION['regimRaboty']=1 // режим редактирования базы данных
+//$_SESSION['regimRaboty']=2 // создать меню
+//$_SESSION['regimRaboty']=3 // В редакторе нажата кнопка Список Таблиц
+//$_SESSION['regimRaboty']=4 // В редакторе нажата кнопка ОК после предупреждения о том, что такая таблица уже есть Создаем меню
+//$_SESSION['regimRaboty']=5 // В редакторе нажата кнопка Cancel после предупреждения о том, что такая таблица уже есть Создаем меню
+//$_SESSION['regimRaboty']=6 // Нажата кнопка Создать таблицу для меню
+//$_SESSION['regimRaboty']=7 // Нажата кнопка Удалить таблицу 
+//$_SESSION['regimRaboty']=8 // Спросить согласие на Удалить таблицу 
+//$_SESSION['regimRaboty']=9 // Отменили удаление таблицы
+//$_SESSION['regimRaboty']=10 // Нажата кнопка Загрузить таблицу
+//$_SESSION['regimRaboty']=11 // Нажата кнопка Создать общую таблицу
+//$_SESSION['regimRaboty']=12 // Отказ от удаления или создания новой таблицы с именем защищенной от удаления таблицы
+//$_SESSION['regimRaboty']=13 // Регистрация
+//$_SESSION['regimRaboty']=14 // Ошибочно заполнена форма регистрации
+//$_SESSION['regimRaboty']=15 // Правильно заполнена форма регистрации
+//$_SESSION['regimRaboty']=16 // Нажата кнопка входа
+//$_SESSION['regimRaboty']=17 // Нажата кнопка Подтвердить запись
+//$_SESSION['regimRaboty']=18 // Создание меню типа 5
+//$_SESSION['regimRaboty']=19 // Редактирование учётных записей
+//$_SESSION['regimRaboty']=20 // найти письмо
+//$_SESSION['regimRaboty']=21 // маты
+//$_SESSION['regimRaboty']=22 // статистика

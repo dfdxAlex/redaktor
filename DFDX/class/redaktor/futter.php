@@ -87,4 +87,3 @@ class futter  extends maty //dataAktual  // Класс выводит инфор
        // echo '<h6>Используемые языки: HTML,CSS,PHP,MySQL</h6>';
      }
 }   // Конец класса футтер
-?>

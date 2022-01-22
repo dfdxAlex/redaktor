@@ -381,8 +381,6 @@ class maty extends menu  // Работа с матами и нецензурно
                                 'submit','dobawilMat',
                                 'reset',
                                 'submit','otkazDobawleniaMatow','Заблокировать данную функцию');
-
             }
     }
 }// конец класса maty
-?>

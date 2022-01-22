@@ -913,6 +913,4 @@ class menu extends initBd
         echo '</form>';
         echo'</section>';
      }
-
  }
-?>

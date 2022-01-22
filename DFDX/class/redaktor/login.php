@@ -3,7 +3,7 @@ namespace redaktor;
 
 class login extends initBd  // Работа с регистрациями
 {
-   public function __construct()
+   public function __construct() 
    {
     parent::__construct();
     $this->milisek=time();
@@ -355,4 +355,3 @@ if ($_SESSION['status']==4) return 'Администратор.';
 if ($_SESSION['status']==5) return 'Супер Администратор.';
 }
 } // конец класса login
-?>

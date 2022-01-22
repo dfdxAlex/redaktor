@@ -48,5 +48,3 @@ class dataAktual  extends initBd
             $rez=parent::zaprosSQL($zapros);// OR die ('Не удалось отправить запрос стр.17');
         }
 } // Конец класса dataAktual
-
-?>

@@ -42,10 +42,8 @@ class statistic  extends futter // // Класс работа со статис�
       //echo 'нажата кнопка статистики';
       $rez=parent::zaprosSQL("SELECT statik_true FROM statistik_dfdx WHERE 1");
       $stroka=mysqli_fetch_assoc($rez);
-
       if ($stroka['statik_true']==0) {$classButtonStatik='classButtonStatikFalse'; $valueButtonStatik="Включить статистику запроссов к БД (функция zaprosSQL)";}
       else {$classButtonStatik='classButtonStatikTrue';$valueButtonStatik="Выключить статистику запроссов к БД (функция zaprosSQL)";}
-
       //кнока включить-выключить статистику запросов в БД
       echo '<section class="container-fluid">';
       echo '<div class="row">';
@@ -56,7 +54,6 @@ class statistic  extends futter // // Класс работа со статис�
       echo '</div>';
       echo '</div>';
       echo '</section>';
-
   }
   public function dataObnov()
   {
@@ -90,7 +87,3 @@ class statistic  extends futter // // Класс работа со статис�
     return $stroka['zaprosov'];
   }
 }
-
-
-
-?>
