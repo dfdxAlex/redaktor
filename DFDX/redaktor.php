@@ -47,29 +47,20 @@ if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=
 if ($_SESSION['status']>99) $_SESSION['status']=9;
 
 echo '<a name="vverh">';
-   
-      //$_SESSION['status']=5;
-
       if ($_SESSION['status']>99 || $_SESSION['status']==9)
-       $menuUp->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
-
+          $menuUp->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
       if ($_SESSION['status']==5 || $_SESSION['status']==4)
-         $menuUp->__unserialize(array('menu3','redaktor_up','Редактор','Сайт','Выйти','Создать страницу','Подсветить меню'));
-
+          $menuUp->__unserialize(array('menu3','redaktor_up','Редактор','Сайт','Выйти','Создать страницу','Подсветить меню'));
       if ($_SESSION['status']==0)
-       $menuUp->__unserialize(array('menu4','login','redaktor.php','Логин','Пароль','Вход','Регистрация'));
-
-       if ($_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3)
-         $menuUp->menu('dla_statusob_123');
-      
+          $menuUp->__unserialize(array('menu4','login','redaktor.php','Логин','Пароль','Вход','Регистрация'));
+      if ($_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3)
+           $menuUp->menu('dla_statusob_123');
       if (isset($_SESSION['status']) && $_SESSION['status']>0)
-        echo '<h6>Вы вошли под логином: '.$_SESSION['login'].'</h6>';
-        else {
+          echo '<h6>Вы вошли под логином: '.$_SESSION['login'].'</h6>';
+      else {
             echo '<h6 class="mesage">Доброго времени суток. Вы попали в админ. панель движка dfdx. Выберите продолжение регистрации или войдите под своим логином и паролем.</h6>';
             echo '<h6 class="mesage">Так-же Вы всегда можете вернуться на сайт нажав на кнопку "На сайт"</h6>';
-        }
-        //$_SESSION['status']=5;
-    
+           }
 //------------------------------------------Шапка------------------------------------------------------------------------->
 echo '<section class="container-fluid">';
 echo '<div class="row">';
@@ -81,36 +72,28 @@ echo '</div>';
 echo '</div>';
 echo '</section>';
 
-
 if ($_SESSION['status']==5 || $_SESSION['status']==4) $red->startMenuRedaktora();
 /////////////////////////////////////Кнопки настройки редактора//////////////////////////////////////////////
-/////////////////////////////////////Кнопки настройки редактора//////////////////////////////////////////////
-/////////////////////////////////////Кнопки настройки редактора//////////////////////////////////////////////
-/////////////////////////////////////Кнопки настройки редактора//////////////////////////////////////////////stolbcov
 
 /////////////////////////////////////////////Работа со входом и регистрацией////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Если не нажата кнопка Список таблиц zaprosSQL($zapros)
-if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',4)))// || $_SESSION['regimRaboty']==3)  
-{ 
-$redaktor=true;
-$spisokTablic=true;
-$_SESSION['regimRaboty']=3;
-$red->nazataPokazatSpisokTablic();
-}
-if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit']=='На сайт') //Переход на главную страницу
-{
-  $_SESSION['regimRaboty']=0;
-  $status->naGlavnuStranicu();
-}
-if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit']=='Выйти')  //Выйти из учётки
-{
-  $_SESSION['login']='';
-  $_SESSION['parol']='';
-  $_SESSION['status']=0;
-  $_SESSION['regimRaboty']=0;
-  $status->naGlavnuStranicu();
-}
+if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',4)))  { 
+    $redaktor=true;
+    $spisokTablic=true;
+    $_SESSION['regimRaboty']=3;
+    $red->nazataPokazatSpisokTablic();
+  }
+if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit']=='На сайт') {//Переход на главную страницу
+    $_SESSION['regimRaboty']=0;
+    $status->naGlavnuStranicu();
+ }
+if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit']=='Выйти')  {//Выйти из учётки
+    $_SESSION['login']='';
+    $_SESSION['parol']='';
+    $_SESSION['status']=0;
+    $_SESSION['regimRaboty']=0;
+    $status->naGlavnuStranicu();
+ }
 if ($_SESSION['status']==9 && isset($_POST['podtverdit'])  &&  $_POST['podtverdit']=='Найти письмо')  { //Если нажата кнопка Найти письмо
   $_SESSION['regimRaboty']=20;
   $mailText='Доброго времени суток. Была запрошена повторная отправка письма с кодом регистрации с сайта '.$status->nameGlawnogoSite().' Код для подтверждения регистрации:';
