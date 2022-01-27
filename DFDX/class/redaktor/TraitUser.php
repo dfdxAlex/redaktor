@@ -1,10 +1,10 @@
 <?php
 namespace redaktor;
 
-trait TraitInstrument
+trait TraitUser
 {
     public function traitEcho()
     {
-        return 'traitEchoInstrument';
+        return 'traitEchoUser';
     }
 }

@@ -4,7 +4,10 @@ namespace redaktor;
 
 class User 
 {
-use TraitInstrument;
+use TraitInstrument{
+    TraitInstrument::traitEcho insteadOf TraitUser;
+}
+use TraitUser;
 public $year;
 public $mes;
 public static $day;
@@ -13,7 +16,10 @@ public function __construct(int $year = null, int $mes = null)
     $this->year=$year;
     $this->mes=$mes;
 }
-
+public function otTrait()
+{
+    return self::traitEcho();
+}
 public function userName(initBd $initBd) 
 {
     return $initBd->initsite();

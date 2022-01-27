@@ -21,4 +21,4 @@ echo $user->userMail($instrument).'<br>';
 echo $user->userYear().'<br>';
 echo $user->getDay().'<br>';
 echo $user2->getDay().'<br>';
-echo $user->traitEcho().'<br>';
+echo $user->otTrait().'<br>';
