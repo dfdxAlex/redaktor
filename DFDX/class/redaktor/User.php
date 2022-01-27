@@ -4,8 +4,10 @@ namespace redaktor;
 
 class User 
 {
+use TraitInstrument;
 public $year;
 public $mes;
+public static $day;
 public function __construct(int $year = null, int $mes = null) 
 {
     $this->year=$year;
@@ -30,5 +32,13 @@ public function userYear()
 public function setYear()
 {
     $this->year=$year;
+}
+public static function setDay($day)
+{
+    self::$day=$day;
+}
+public function getDay()
+{
+    return self::$day;
 }
 } // конец класса
