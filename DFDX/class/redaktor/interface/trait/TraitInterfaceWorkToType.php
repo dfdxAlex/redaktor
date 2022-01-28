@@ -3,6 +3,15 @@ namespace class\redaktor\interface\trait;
 
 trait TraitInterfaceWorkToType
 {
+  //interface InterfaceWorkToType
+  public function trueFalseNull($param)
+  {
+    if ($param===true) return 'True';
+    if ($param===false) return 'False';
+    if (is_null($param)) return 'NULL';
+    return false;
+  }
+
    //interface InterfaceWorkToType
    public function notFalseAndNULL($data):bool
    {
@@ -11,6 +20,7 @@ trait TraitInterfaceWorkToType
      if (!isset($data)) return false;
      return true;
    }
+   
    //interface InterfaceWorkToType
    public function printMas($mas)
    {

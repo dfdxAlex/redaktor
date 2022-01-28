@@ -157,7 +157,9 @@ class instrument implements interface\interface\InterfaceWorkToType
           echo 'Массив пуст';
    }
    */
-   // функция возвращает текстовое значение переданного параметра булеан или нулл или false, если параметр не соответствует этим типам
+   // функция возвращает текстовое значение переданного параметра булеан или нулл или false, 
+   // если параметр не соответствует этим типам
+   /*
    public function trueFalseNull($param)
     {
       if ($param===true) 
@@ -168,6 +170,7 @@ class instrument implements interface\interface\InterfaceWorkToType
           return 'NULL';
       return false;
     }
+    */
    //Функция очищает код от вредных тегов оставляя разрешенные
    public function clearCode($cod,...$parametr) 
    {
