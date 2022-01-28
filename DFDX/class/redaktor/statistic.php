@@ -1,5 +1,5 @@
 <?php
-namespace redaktor;
+namespace class\redaktor;
 
 class statistic  extends futter // // Класс работа со статистикой
 {

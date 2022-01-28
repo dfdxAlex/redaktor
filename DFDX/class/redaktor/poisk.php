@@ -1,6 +1,6 @@
 <?php
 
-namespace redaktor;
+namespace class\redaktor;
 
 class poisk extends statistic // // Класс работа со статистикой
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace redaktor;
+namespace class\redaktor;
 //класс готовых модулей
 class Modul
     {

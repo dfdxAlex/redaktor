@@ -1,5 +1,5 @@
 <?php
-namespace redaktor;
+namespace class\redaktor;
 
 trait TraitUser
 {

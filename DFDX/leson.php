@@ -4,11 +4,11 @@ require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
-  use redaktor\instrument as instrument;
-  use redaktor\Modul as modul;
-  use redaktor\login as login;
-  use redaktor\maty as maty;
-  use redaktor\poisk as poisk;
+  use \class\redaktor\instrument as instrument;
+  use \class\redaktor\Modul as modul;
+  use \class\redaktor\login as login;
+  use \class\redaktor\maty as maty;
+  use \class\redaktor\poisk as poisk;
   $b=new instrument();
   $redaktor=new Modul();
   $status = new login();
@@ -138,7 +138,7 @@ echo '</section>';
 ////////////////////////////Конец основного кода страницы////////////////////////// 
 /// Статистика///////////////////////////////////////
 echo '<footer class="container-fluid futter">';
-$statistik = new redaktor\statistic();
+$statistik = new \class\redaktor\statistic();
 if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
 $statistik->statistikOnOff();
 if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты

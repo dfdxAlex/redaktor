@@ -4,12 +4,13 @@ function regaAdministratora($kod)
 {
   if ($_SESSION['login']=='admin' || $_SESSION['login']=='Admin' || $_SESSION['login']=='Administrator' || $_SESSION['login']=='administrator') 
    {
-     $status = new redaktor\login();
+     $status = new \class\redaktor\login();
      $kodFile=file_get_contents('kod.txt');
      if ($kodFile==$kod)
       {
         echo '<p class="mesage">Код администратора верен.</p>';
-        $_SESSION['status']=5;$status->saveStatus(5);
+        $_SESSION['status']=5;
+        $status->saveStatus(5);
         if ($status->statusRegi($_SESSION['login'],$_SESSION['parol'])==5)
          {
             echo '<p class="mesage">Учётная запись администратора создана.</p>';
@@ -24,7 +25,7 @@ function regaAdministratora($kod)
 }
 function genericKodAdmina($login)
 {
-  $status = new redaktor\login();
+  $status = new \class\redaktor\login();
   if ($login=='admin' || $login=='Admin' || $login=='Administrator' || $login=='administrator') 
    if (!$status->prowerkaLogin('admin') || !$status->prowerkaLogin('Admin') || !$status->prowerkaLogin('Administrator') || !$status->prowerkaLogin('administrator')) 
     file_put_contents('kod.txt',mt_rand(1000000,9999999));
@@ -129,12 +130,12 @@ function formaPoisk() { // форма для поиска на сайте
 
 function poisk($zapros)  // форма для поиска на сайте
   {
-    $tegPoisk = new htmlTeg($zapros);
+    $tegPoisk = new \class\redaktor\htmlTeg($zapros);
     if ($tegPoisk->teg=="<!--") $tegPoisk->teg="&lt!-- здесь любой текст --&gt";
-    if (!$tegPoisk) {ops();echo ("ошибка при создании объекта<br>");}
+    if (!$tegPoisk) {
+        ops();
+        echo ("ошибка при создании объекта<br>");
+    }
      else echo "<h1>".$tegPoisk->teg."</h1>";
   }
-  
-
-
 ?>

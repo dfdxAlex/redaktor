@@ -1,5 +1,5 @@
 <?php
-namespace redaktor;
+namespace class\redaktor;
 
 //файл сгенерирован CMS-DFDX 2022-01-20 18:51:07
 //file generated CMS-DFDX 2022-01-20 18:51:07

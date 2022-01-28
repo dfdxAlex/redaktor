@@ -1,5 +1,5 @@
 <?php 
-namespace redaktor;
+namespace class\redaktor;
 
 session_start();
 
@@ -73,7 +73,7 @@ if (isset($_POST['variantNowaStr'])
 if ($_SESSION['variantNowaStr']==0)
     $maty->formBlock(
         'nastrNovStranic',
-        'rdNovaStr.php',
+        'rd_nova_str.php',
         'text',                           
         'nameFile', 
         'Введите имя файла страницы.',

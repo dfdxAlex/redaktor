@@ -37,7 +37,7 @@ function translit($string) // функция транслитерации
 
 function listKategorijNews1($nameBd) //Функция выводит список имеющихся в базе категорий
 {
-    $clas=new redaktor\statistic();
+    $clas=new \class\redaktor\statistic();
     $masRez=array();
     $rez=$clas->zaprosSQL("SELECT razdel FROM ".$nameBd." WHERE 1");
     $i=0;
@@ -57,7 +57,7 @@ function listKategorijNews1($nameBd) //Функция выводит списо�
 }
 function poiskDfdx($strObrabotki) //Выводит кнопки поиска
 {
-    $clas=new redaktor\statistic();
+    $clas=new \class\redaktor\statistic();
     $clas->formBlock('poisk',
                     $strObrabotki,
                     'text',
@@ -72,7 +72,7 @@ function poiskDfdx($strObrabotki) //Выводит кнопки поиска
 }
 function contentLeson() //Выводит содержание для LESON
 {
-    $clas=new redaktor\statistic();
+    $clas=new \class\redaktor\statistic();
     $clas->formBlock('levBlock','leson.php',
                     'submit',
                     'contentLeson',
@@ -85,7 +85,7 @@ function contentLeson() //Выводит содержание для LESON
 }
 function levoeMenu() //Выводит левое меню
 {
-    $clas=new redaktor\statistic();
+    $clas=new \class\redaktor\statistic();
     $clas->formBlock('levBlock','dfdx.php',
                     'submit',
                     'levBlock',
@@ -161,12 +161,12 @@ function pravoePole($kluc)
 {
     echo '<section class="container-fluid">';
     echo '<div class="pravoe-pole-div">';
-    $clas=new redaktor\statistic();
+    $clas=new \class\redaktor\statistic();
     $strSummRazdel='WHERE ('; // переменная с условием запроса
     $zapros="SELECT razdel FROM bd2 WHERE 1";
     $rez=$clas->zaprosSQL($zapros);
     $connectOR=false; // определяет добавлять ли к строке OR
-    $redaktor=new redaktor\Modul();
+    $redaktor=new \class\redaktor\Modul();
     //Перебираем все категории из таблицы bd2 и добавляем в условия WHERE те, в которых есть подстрока $kluc
     while (!is_null($stroka=(mysqli_fetch_array($rez))))
      if (stripos($strSummRazdel,$stroka[0])===false)
@@ -205,8 +205,7 @@ function pravoePole($kluc)
              }
          
          if ($knopkaYes)
-            echo '<button class="prawBlock btn"  name="panelPrawa'.$stroka['id'].'" formaction="'.$strokaUrl.'">'.$nameSmall.'</button>';
-         //echo '<input class="prawBlock btn" type="submit" name="panelPrawa'.$stroka['id'].'" value="'.$stroka['name'].'">';
+             echo '<button class="prawBlock btn"  name="panelPrawa'.$stroka['id'].'" formaction="'.$strokaUrl.'">'.$nameSmall.'</button>';
          echo '</div>';
          echo '</div>';
        }

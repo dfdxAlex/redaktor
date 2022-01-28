@@ -30,9 +30,9 @@ include 'funcii.php';
 include 'class.php';
 //include "classInstrument.php";
 
-$class = new redaktor\statistic();
-$status = new redaktor\login();
-$maty = new redaktor\maty();
+$class = new \class\redaktor\statistic();
+$status = new \class\redaktor\login();
+$maty = new \class\redaktor\maty();
 
 
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
@@ -41,7 +41,7 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
 <a name="vverh">
    
       <?php 
-      $menuUp = new redaktor\menu(); 
+      $menuUp = new \class\redaktor\menu(); 
       if ($_SESSION['status']>99 || $_SESSION['status']==9)
        $menuUp->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
 
@@ -243,7 +243,7 @@ if (!$errorName)
 /// Статистика///////////////////////////////////////
   if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
     {
-      $statistik = new redaktor\statistic();
+      $statistik = new \class\redaktor\statistic();
       $statistik->statistikOnOff();
     }
 

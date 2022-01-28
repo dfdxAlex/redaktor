@@ -1,5 +1,5 @@
 <?php
-namespace redaktor;
+namespace class\redaktor;
 // ////////////////Считываем параметры инициализации базы данных////////////////////////////
 
 class initBd extends instrument

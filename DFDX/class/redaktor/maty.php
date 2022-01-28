@@ -1,5 +1,5 @@
 <?php
-namespace redaktor;
+namespace class\redaktor;
 
 class maty extends menu  // Работа с матами и нецензурной лексикой
 {

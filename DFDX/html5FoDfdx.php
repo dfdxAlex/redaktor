@@ -1,8 +1,8 @@
 <?php
 namespace class\redaktor;
 
-#файл сгенерировать#
-#file generated#
+//файл сгенерирован CMS-DFDX 2022-01-28 20:35:53
+//file generated CMS-DFDX 2022-01-28 20:35:53
 session_start();
 require "funcii.php";
 require "functionDfdx.php";
@@ -30,7 +30,7 @@ require "class.php";
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-#title#
+<title>html5</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <link rel="stylesheet" href="styli.css">
 <link rel="stylesheet" href="dfdx.css">
@@ -71,9 +71,9 @@ echo '<div class="col-12">';
 echo '<div class="logoHtml">';
 // Блок работает тогда, когда данный файл вызывается не из персональных ссылок для статей
 if (stripos($_SERVER['REQUEST_URI'],'news')===false) { 
-    if (file_exists('image/regular_expressions.png'))
-        echo '<img src="image/regular_expressions.png" alt="regular_expressions">';
-    else #pagetitleimages#
+    if (file_exists('image/html5.png'))
+        echo '<img src="image/html5.png" alt="html5">';
+    else html5();
 }
 // Блок работает тогда, когда данный файл вызывается из персональных ссылок для статей
 if (stripos($_SERVER['REQUEST_URI'],'news')!==false) {
@@ -104,14 +104,14 @@ echo '</div>';
 //////////////////////////////////////////////////////////////////////////////////////
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 $bylPoisk=false;
-$action='action=dfdx.php';  //страница обработки кнопок в модуле news()
+$action='action=html5FoDfdx.php';  //страница обработки кнопок в модуле news()
 $nameBD='bd2';
 $nameBD='nameTD='.$nameBD;
 $nomerNewsPoisk='Число_статей=5';
 $nomerNewsGlawn='Число_статей=5';
 ////////////////////////////////////////////////////поиск
 if (isset($_POST['poisk'])) {
-  $poisk->poiskStati('#таблица для поиска#',$_POST['strPoisk'],$idStati,'#категория для поиска#') ;
+  $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati,'категория-html5') ;
   if ($idStati[0]>-1)
     foreach($idStati as $value) 
      $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
@@ -121,18 +121,18 @@ if (isset($_POST['poisk'])) {
  if (!$bylPoisk) {
       $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
       if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
-        $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=regular_expressions',$nomerNewsGlawn);
+        $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=html5',$nomerNewsGlawn);
       if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
-        $redaktor->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=regular_expressions');
+        $redaktor->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=html5');
   }
 echo '</div>';
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
  echo '<div class="poiskDiv">';
-  poiskDfdx('cms_dfdx.php'); // кнопка Поиск, ссылка на обработчик
+  poiskDfdx("html5FoDfdx.php"); // кнопка Поиск, ссылка на обработчик
  echo '</div>';
-pravoePole('cms-dfdx');   // категория статей, которые должны быть показаны в правом меню 
+pravoePole("html5");   // категория статей, которые должны быть показаны в правом меню 
 echo '</div>';
 echo '</div>';
 echo '</section>';
@@ -146,9 +146,9 @@ $statistik->statistikOnOff();
 if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
 $maty->redactMaty();
 // Вывод статистики Футтер
-$statistik->metkaStatistika('cms-dfdx');   // метка для подсчёта загрузки страницы, пишется в БД
+$statistik->metkaStatistika("html5");   // метка для подсчёта загрузки страницы, пишется в БД
 echo '<div class="futterDivDfdx">';
-echo '<p class="footerMarginTop">Просмотров:'.$statistik->getMetkaStatistik('cms-dfdx').'</p>'; // метка для подсчёта загрузки страницы, пишется в БД
+echo '<p class="footerMarginTop">Просмотров:'.$statistik->getMetkaStatistik("html5").'</p>'; // метка для подсчёта загрузки страницы, пишется в БД
 echo '<p class="footerMarginTop">Число запросов к БД: '.$statistik->kolZaprosow().'</p>';
 echo '<p class="footerMarginTop">Начало верстки сайта 2021-09-19</p>';
 echo '<p class="footerMarginTop">CMS-DFDX</p>';

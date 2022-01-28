@@ -1,5 +1,5 @@
 <?php 
-namespace redaktor;
+namespace class\redaktor;
 
 session_start(); 
 require "funcii.php";

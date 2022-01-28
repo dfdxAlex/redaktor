@@ -1,6 +1,6 @@
 <?php
 // Класс содержит базовые методы, которые используются в других классах
-namespace redaktor;
+namespace class\redaktor;
 
 // API
 //function notFalseAndNULL($data):true/false  If the variable exists, is not equal to false and is not equal to NULL then return true

@@ -4,10 +4,10 @@ include "../../funcii.php";
 include "../../functionDfdx.php";
 include "../../image/swapImages.php";
 include "../../class.php";
-  use redaktor\instrument as instrument;
-  use redaktor\Modul as modul;
-  use redaktor\login as login;
-  use redaktor\maty as maty;
+  use \class\redaktor\instrument as instrument;
+  use \class\redaktor\Modul as modul;
+  use \class\redaktor\login as login;
+  use \class\redaktor\maty as maty;
 
   $b=new instrument();
   $redaktor=new Modul();
