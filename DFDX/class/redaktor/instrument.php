@@ -2,13 +2,15 @@
 // Класс содержит базовые методы, которые используются в других классах
 namespace class\redaktor;
 
+
+
 // API
 //function notFalseAndNULL($data):true/false  If the variable exists, is not equal to false and is not equal to NULL then return true
 //function printMas($mas)                     Displays the contents of a variable with a hint of what type it is.
 //function clearCode($cod,...$parametr)       the function cleans the code from dangerous tags
 //
 
-class instrument
+class instrument implements interface\interface\InterfaceWorkToType
 {
     public function __construct()
     {
@@ -17,17 +19,20 @@ class instrument
    {
        echo 'instrument';
    }
-   // функция возвращает труе, если входящее значение не равно Фальс и не равно NULL и существует class instrument
-   public function notFalseAndNULL($data)
-   {
-     if ($data===false) return false;
-     if (is_null($data)) return false;
-     if (!isset($data)) return false;
-     return true;
-   }
+   use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
+   
+   //interface InterfaceWorkToType
+   //public function notFalseAndNULL($data)
+   //{
+   //  if ($data===false) return false;
+   //  if (is_null($data)) return false;
+   //  if (!isset($data)) return false;
+   //  return true;
+  // }
    // функция выводит на экран массив неизвестного уровня - главная задача
    // функция выводит тип переменной и её значение если это не массив
    // функция просматривает до 9-ти мерные массивы включительно
+   /*
    public function printMas($mas)
    {
       if (!isset($mas)) {
@@ -151,6 +156,7 @@ class instrument
       if (gettype($mas)=='array' && $masZero) 
           echo 'Массив пуст';
    }
+   */
    // функция возвращает текстовое значение переданного параметра булеан или нулл или false, если параметр не соответствует этим типам
    public function trueFalseNull($param)
     {

@@ -11,13 +11,14 @@ require "class.php";
   use \class\redaktor\poisk as poisk;
   use \class\redaktor\statistic as statistic;
 
-  $b=new instrument();
-  $instrum=new instrument();
-  $redaktor=new Modul();
+  $b= new instrument();
+  $instrum= new instrument();
+  $redaktor= new Modul();
   $status = new login();
   $maty = new maty();
   $poisk = new poisk();
   $statistik = new statistic();
+  //echo $instrum->printMas(25);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -256,9 +257,24 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
               echo 'Результат:<br><br>';
               $rez=preg_replace_callback_array(
                 [
-                  '~'.$_SESSION['pattern1'].'~u' => function ($match) {echo 'Входной массив:<br>';$instrum->printMas($match).'<br>'; return $_SESSION['retur1'];},
-                  '~'.$_SESSION['pattern2'].'~u' => function ($match) {echo 'Входной массив:<br>';$instrum->printMas($match).'<br>'; return $_SESSION['retur2'];},
-                  '~'.$_SESSION['pattern3'].'~u' => function ($match) {echo 'Входной массив:<br>';$instrum->printMas($match).'<br>'; return $_SESSION['retur3'];}
+                  '~'.$_SESSION['pattern1'].'~u' => function ($match) {
+                        echo 'Входной массив:<br>';
+                        $instrum= new instrument();
+                        $instrum->printMas($match).'<br>';
+                        return $_SESSION['retur1'];
+                      },
+                  '~'.$_SESSION['pattern2'].'~u' => function ($match) {
+                        $instrum= new instrument();
+                        echo 'Входной массив:<br>';
+                        $instrum->printMas($match).'<br>';
+                        return $_SESSION['retur2'];
+                      },
+                  '~'.$_SESSION['pattern3'].'~u' => function ($match) {
+                        $instrum= new instrument();
+                        echo 'Входной массив:<br>';
+                        $instrum->printMas($match).'<br>';
+                        return $_SESSION['retur3'];
+                      }
                 ] ,$subject3,$limit,$count,$flag);
               echo $instrum->printMas($rez).'<br><br>';
               echo 'Произведено замен:'.$count;
