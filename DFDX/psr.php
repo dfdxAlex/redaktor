@@ -9,11 +9,13 @@ require "class.php";
   use \class\redaktor\login as login;
   use \class\redaktor\maty as maty;
   use \class\redaktor\poisk as poisk;
+  use \class\redaktor\statistic as statistic;
   $b=new instrument();
   $redaktor=new Modul();
   $status = new login();
   $maty = new maty();
   $poisk = new poisk();
+  $statistik = new statistic();
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -138,7 +140,6 @@ echo '</section>';
 ////////////////////////////Конец основного кода страницы////////////////////////// 
 /// Статистика///////////////////////////////////////
 echo '<footer class="container-fluid futter">';
-$statistik = new redaktor\statistic();
 if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
 $statistik->statistikOnOff();
 if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты

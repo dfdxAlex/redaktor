@@ -18,7 +18,6 @@ require "class.php";
   $maty = new maty();
   $poisk = new poisk();
   $statistik = new statistic();
-  //echo $instrum->printMas(25);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -1230,7 +1229,6 @@ echo '</section>';
 ////////////////////////////Конец основного кода страницы////////////////////////// 
 /// Статистика///////////////////////////////////////
 echo '<footer class="container-fluid futter">';
-
 if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
 $statistik->statistikOnOff();
 if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты

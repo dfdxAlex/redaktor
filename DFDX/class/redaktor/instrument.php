@@ -10,7 +10,7 @@ namespace class\redaktor;
 //function clearCode($cod,...$parametr)       the function cleans the code from dangerous tags
 //
 
-class instrument implements interface\interface\InterfaceWorkToType
+class instrument implements interface\interface\InterfaceWorkToType, interface\interface\InterfaceButton
 {
     public function __construct()
     {
@@ -20,6 +20,7 @@ class instrument implements interface\interface\InterfaceWorkToType
    //    echo 'instrument';
    //}
    use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
+   use \class\redaktor\interface\trait\TraitInterfaceButton;
    
    //interface InterfaceWorkToType
    //public function notFalseAndNULL($data)
