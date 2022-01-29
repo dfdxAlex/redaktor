@@ -15,10 +15,10 @@ class instrument implements interface\interface\InterfaceWorkToType
     public function __construct()
     {
     }  
-   public function instrumetTest()
-   {
-       echo 'instrument';
-   }
+   //public function instrumetTest()
+   //{
+   //    echo 'instrument';
+   //}
    use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
    
    //interface InterfaceWorkToType
@@ -172,6 +172,7 @@ class instrument implements interface\interface\InterfaceWorkToType
     }
     */
    //Функция очищает код от вредных тегов оставляя разрешенные
+   /*
    public function clearCode($cod,...$parametr) 
    {
         //разрешенные теги
@@ -489,6 +490,7 @@ class instrument implements interface\interface\InterfaceWorkToType
         if (!$vivod) 
             return $listTegow;
    }
+   */
    // ловим кнопку
    public function hanterButton(...$parametr)
     {

@@ -1,6 +1,14 @@
 <?php
 namespace class\redaktor\interface\interface;
 
+// интерфейс для класса работы с типами переменных
+// interfejs dla klasy do pracy z typami zmiennych
+// interface for the class for working with variable types
+
+// описание функций в TraitInterfaceWorkToType
+// opis funkcji w TraitInterfaceWorkToType
+// description of functions in TraitInterfaceWorkToType
+
 interface InterfaceWorkToType
 {
     // функция возвращает труе, если входящее значение не равно Фальс и не равно NULL и существует
@@ -20,4 +28,9 @@ interface InterfaceWorkToType
     // the function returns the text value of the passed parameter boolean or null or false,
     // if the parameter does not match these types
     public function trueFalseNull($param);
+
+    //Функция очищает код от вредных тегов оставляя только разрешенные
+    //Funkcja czyści kod ze szkodliwych tagów, pozostawiając tylko dozwolone
+    //The function cleans the code from harmful tags, leaving only allowed ones
+    public function clearCode($cod,...$parametr);
 }
