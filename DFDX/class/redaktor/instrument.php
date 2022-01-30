@@ -968,7 +968,7 @@ foreach($parametr as $value) {
        if (!$zero_style) 
           echo '</div></section>';
    }
-   */
+   
    // Служебная функция проверяет не является ли параметр кнопкой
    public function searcTegFormBlock($parametr)
     {
@@ -990,7 +990,7 @@ foreach($parametr as $value) {
         if ($parametr=='submit3') return true;
         if ($parametr=='span') return true;
         return false;
-    }
+    }*/
    // Преобразуем номер статуса в его значение
    public function statusNumerSlovo($status)
    {

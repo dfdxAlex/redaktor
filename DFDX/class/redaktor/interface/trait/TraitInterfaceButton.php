@@ -418,4 +418,26 @@ foreach($parametr as $value) {
         if (!$zero_style) 
            echo '</div></section>';
     }
+       // Служебная функция проверяет не является ли параметр кнопкой
+   public function searcTegFormBlock($parametr)
+   {
+       if ($parametr=='br') return true;
+       if ($parametr=='text') return true;
+       if ($parametr=='text2') return true;
+       if ($parametr=='password') return true;
+       if ($parametr=='password2') return true;
+       if ($parametr=='reset') return true;
+       if ($parametr=='p') return true;
+       if ($parametr=='h1') return true;
+       if ($parametr=='h2') return true;
+       if ($parametr=='h3') return true;
+       if ($parametr=='h4') return true;
+       if ($parametr=='h5') return true;
+       if ($parametr=='h6') return true;
+       if ($parametr=='submit') return true;
+       if ($parametr=='submit2') return true;
+       if ($parametr=='submit3') return true;
+       if ($parametr=='span') return true;
+       return false;
+   }
 }
