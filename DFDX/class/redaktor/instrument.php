@@ -10,7 +10,10 @@ namespace class\redaktor;
 //function clearCode($cod,...$parametr)       the function cleans the code from dangerous tags
 //
 
-class instrument implements interface\interface\InterfaceWorkToType, interface\interface\InterfaceButton
+class instrument implements interface\interface\InterfaceWorkToType, 
+                            interface\interface\InterfaceButton, 
+                            interface\interface\InterfaceWorkToFiles,
+                            interface\interface\InterfaceFoUser
 {
     public function __construct()
     {
@@ -21,6 +24,8 @@ class instrument implements interface\interface\InterfaceWorkToType, interface\i
    //}
    use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
    use \class\redaktor\interface\trait\TraitInterfaceButton;
+   use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
+   use \class\redaktor\interface\trait\TraitInterfaceFoUser;
    
    //interface InterfaceWorkToType
    //public function notFalseAndNULL($data)
@@ -711,7 +716,7 @@ foreach($parametr as $value) {
          echo '<p class="mesage">Для использования стилей Бутстрапа добавляем класс btn ...</p><br>';
        }
    }
-*/
+
    //Функция возвращает имя и относительный путь к файлу при условии, что искомый файл находится выше текущего места.
    public function searcNamePath($nameFile)
     {
@@ -990,7 +995,7 @@ foreach($parametr as $value) {
         if ($parametr=='submit3') return true;
         if ($parametr=='span') return true;
         return false;
-    }*/
+    }
    // Преобразуем номер статуса в его значение
    public function statusNumerSlovo($status)
    {
@@ -1012,7 +1017,7 @@ foreach($parametr as $value) {
       default:
         return 'Статус не известен';
     }
-   }
+   }*/
 }
 
 
