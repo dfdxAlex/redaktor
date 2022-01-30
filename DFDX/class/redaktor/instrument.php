@@ -493,6 +493,7 @@ class instrument implements interface\interface\InterfaceWorkToType, interface\i
    }
    */
    // ловим кнопку
+   /*
    public function hanterButton(...$parametr)
     {
       $falseRez=false;
@@ -710,7 +711,7 @@ foreach($parametr as $value) {
          echo '<p class="mesage">Для использования стилей Бутстрапа добавляем класс btn ...</p><br>';
        }
    }
-
+*/
    //Функция возвращает имя и относительный путь к файлу при условии, что искомый файл находится выше текущего места.
    public function searcNamePath($nameFile)
     {
@@ -722,6 +723,7 @@ foreach($parametr as $value) {
    // Функция выводит некое сообщение $mesaz, задает название кнопок, которым будет присвоено OK или Cansel ///проверка git 1-3
    // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
    // $classP - класс тегов Р - сообщения, $classButton - класс для кнопок
+   /*
    public function okCansel($mesaz,$nameKn,$classDiv,$classP,$classButton)
    {
     echo '<section class="container">';
@@ -734,6 +736,7 @@ foreach($parametr as $value) {
         echo '</div>';
     echo '</section>';
    }
+   
    public function okSelect($mesaz,$nameKn,$classDiv,$classP,$classButton)
    {
     echo '<section class="container">';
@@ -750,6 +753,7 @@ foreach($parametr as $value) {
     else 
         return false;
    }
+   
    // Набор текстовое поле + кнопки Ok Cansel
    public function poleInputokCansel($mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput)
    {
@@ -764,6 +768,7 @@ foreach($parametr as $value) {
         echo '</div>';
     echo '</section>';
    }
+   
    // Набор текстовое поле + кнопки Ok Cansel + указывает на страницу обработчик
    public function poleInputokCanselPlusNameStr($nameStr,$mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput)
    {
@@ -778,6 +783,7 @@ foreach($parametr as $value) {
         echo '</div>';
     echo '</section>';
    }
+   
    // Функция ставит блок кнопок и текстовых полей без использования базы данных.
    //$nameBlock - имя блока кнопок 
    //$actionN - ссылка на страницу обработки
@@ -962,6 +968,7 @@ foreach($parametr as $value) {
        if (!$zero_style) 
           echo '</div></section>';
    }
+   */
    // Служебная функция проверяет не является ли параметр кнопкой
    public function searcTegFormBlock($parametr)
     {

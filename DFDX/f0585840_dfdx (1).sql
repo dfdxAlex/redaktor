@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 10.0.0.57
--- Время создания: Янв 25 2022 г., 23:45
+-- Время создания: Янв 29 2022 г., 16:42
 -- Версия сервера: 5.7.35-38
 -- Версия PHP: 7.2.34
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- База данных: `f0585840_dfdx`
 --
-CREATE DATABASE IF NOT EXISTS `f0585840_dfdx` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-USE `f0585840_dfdx`;
 
 -- --------------------------------------------------------
 
@@ -69,7 +67,9 @@ INSERT INTO `bd2` (`id`, `name`, `news`, `login_redaktora`, `razdel`) VALUES
 (25, 'PSR-1. Стандарт оформления кода PHP.', 'Данный формат является весьма простым к исполнению, более того, частично его скорее всего исполняют многие.<br>\r\n<b>  Первый пункт стандарта</b> относится к тегам, обозначающим PHP код. По стандарту рекомендуется использовать только такие:<br>\r\n<br>\r\n<img      src=\"https://a.radikal.ru/a19/2201/9a/27c07c4c86b4.jpg\" alt=\"теги\" &gt<br>\r\n<br>\r\n<b>  Второй пункт</b> относится к кодировке файлов с кодом, должна быть кодировка UTF-8.<br>\r\n<br>\r\n<b>  Третий пункт</b> относится к разделению файлов. По сути объявления и описания всех классов, функций, констант должно производиться в отдельном от файла, использование этих классов, функций или констант – отдельно. То есть описываете методы и классы, а затем, в других файлах подключаете их и используете. Также работает и в другую сторону, если в файле программируется логика, то там не должно быть описание методов, классов или констант.<br>\r\nНиже пример оформления кода не по правилам. Здесь одновременно код программы с описанием функций. <b>  Логика + описание = Плохо.</b><br>\r\n<br>\r\n<img      src=\"https://a.radikal.ru/a42/2201/03/129bb0a4b809.jpg\" alt=\"структура грязная\" &gt<br>\r\n<br>\r\nНиже показан код только с описанием функций. <b>  Только описание или только логика – это хорошо.</b><br>\r\n<br>\r\n<img      src=\"https://d.radikal.ru/d33/2201/ab/afe4a39cfd1b.jpg\" alt=\"структура чистая\" &gt<br>\r\n<br>\r\n<b>  Четвертый пункт</b> – это пространство имен, оно должно быть создано по правилам PSR-0 или PSR-4. Имена классов объявляются по принципу StudlyCaps, то есть начинается с большой буквы и каждое новое слово также с большой буквы.  MyClass <br>\r\n<br>\r\n<b>  Следующее </b>– это термина класс относится к классам, интерфейсам и трейтам.<br>\r\nКонстанты классов объявляются большими буквами со знаками нижнего подчеркивания как разделителями. CONST_COLOR=’Red’<br>\r\nМетоды объявляются по принципу camelCase(), то есть начинаем писать с прописной буквы и каждое следующее слово с большой буквы. myMethod();<br>\r\n<br>\r\nНу вот, собственно, и всё.<br>\r\n<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/nlGgdoMOq3g\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#psr#<br>\r\n', 'alfa54', 'psr'),
 (26, 'Доработка редактора News. CMS-DFDX.', 'Доброго времени суток. Коротенькая статья, касается доработки текстового редактора CMS-DFDX.<br>\r\n<br>\r\nДоработка относится к загрузке картинок в статью. Старый метод, остался рабочим, заключается в прописывании тегов HTML, либо простого копирования образцы. Образец находится под полем редактирования статьи.<br>\r\nВ последнем обновлении загружать картинку можно с помощью формы, она попадает в отдельную папку на сервере. Итак, по шагам.<br>\r\n[IMG]qzovofbudx.gif[IMG]<br>\r\nПод полем редактирования статьи находятся формы, в которые следует вписать ссылку на картинку из интернет-ресурса – это первое поле. Второе поле для атрибута alt, третье и четвертое поле для ширины и высоты картинки.<br>\r\n[IMG]smmbwsddmv.gif[IMG]<br>\r\nДля загрузки картинки достаточно поместить ссылку на картинку в первое поле и нажать на кнопку «Загрузить». Если картинка существует и подходит по типу и параметрам, то в полях ширины и высоты появятся реальные параметры картинки, на этом этапе их можно редактировать, они пропишутся в соответствующие атрибуты. Если необходимо вписать alt, то вписываем и жмём «Сохранить». <br>\r\n<br>\r\nПосле этого появится строка с BB кодом, который следует скопировать и вставить в нужное место текста. Всё.<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/jBPFzPyAuuE\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#cmsdfdx#', 'alfa54', 'cmsdfdx'),
 (27, 'Работа с редактором DFDX (news1). Загрузка изображений.', 'Редактор новостей, обновление от 19.01.2022.<br>\r\nВ модуле news1 доработан функционал загрузки картинок на сервер сайта.<br>\r\nПошаговая инструкция о том, как пользоваться последним обновлением редактора будет в видеоролике в конце статьи. Здесь же только описание правок, которые были внесены. <br>\r\n[IMG]ctnjxbahzz.gif[IMG]<br>\r\n<br>\r\nПункт 1. Модуль остался совместимым с предыдущими его версиями.<br>\r\nПункт 2. Доработан функционал загрузки картинок на сервер сайта или хостинга. <br>\r\n<br>\r\nЗагрузка происходит в 2 этапа. Сначала вносите ссылку на картинку в соответствующее поле и жмёте кнопку «Загрузить». При этом картинка загружается в оперативную память и проверяется. <br>\r\n<br>\r\nЕсли загрузка прошла неудачно, будет соответствующее сообщение с причиной неудачи. К таким причинам можно отнести некорректный тип файла, допускаются только файлы типов (jpg,png,bmp,gif,tif). Файл может быть слишком большой, по умолчанию максимальный размер установлен около 90 кбайт, и др. <br>\r\n<br>\r\nЕсли загрузка прошла нормально, Вы получите параметры высоты и ширины загруженной картинки в соответствующих полях. После удачной загрузки можно прописать атрибут alt и задать новые параметры высоты и ширины, они пропишутся в атрибуты width и height. <br>\r\n<br>\r\nПосле обновления данных жмём кнопку «Загрузить». На этом этапе картинка сохраняется на сервере и делается запись в базу данных. Если всё прошло удачно, то над формой загрузок появится код, который необходимо вставить в нужное место в тексте статьи, там и будет картинка.<br>\r\n<br>\r\nЕсли Вы по какой-то причине потеряли данный код, то можно повторно загрузить картинку по ссылке, если картинка загружалась ранее, то уже на этапе загрузки Вы получите тот же самый код, он будет взят из базы данных, где был сохранен ранее, повторной записи или добавления второго такого же файла не будет даже после нажатия на кнопку «Сохранить».<br>\r\n<br>\r\nТак же следует отметить, что старый способ добавления картинок по ссылке остается актуальным. Если нет необходимости загружать картинку на свой хостинг, то лучше всего скопировать образец тега img  из подсказок и вставить в него свою ссылку. Напоминаю, что в данном варианте необходимо для каждой картинки прописать оригинальный alt.<br>\r\n<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZsAeOFUJ_Es\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#cmsdfdx#<br>\r\n<br>\r\n<br>\r\n', 'alfa54', 'cmsdfdx'),
-(28, 'Структура HTML страницы.', 'Страница  HTML состоит из нескольких блоков или частей. В самом верху, первой строкой располагается название типа документа или тип документа. В случае, если у Вас документ является HTML5, то в первой строке у Вас должно быть слово <br>\r\n<br>\r\n<code>     <br>\r\n&ltDOCTYPE html&gt <br>\r\n</code><br>\r\n<br>\r\nПосле этого весь документ HTML должен быть заключен в теги:<br>\r\n<br>\r\n<code>     <br>\r\n&lthtml&gt <br>\r\n<br>\r\n&lt/html&gt <br>\r\n</code><br>\r\n<br>\r\nЭти теги ограничивают главный контейнер HTML документа, то есть просто весь документ. Контейнер означает, что в него можно что-то положить.<br>\r\n<br>\r\nСледующей структурой HTML странички является блок заголовка, он обрамлен тегами:<br>\r\n<br>\r\n<code>     <br>\r\n&lthead&gt <br>\r\n<br>\r\n&lt/head&gt <br>\r\n</code><br>\r\n<br>\r\nЗдесь располагаются настройки документа, язык к примеру, так же здесь осуществляется подключение стилей, к примеру и много другой служебной информации.<br>\r\n<br>\r\nСодержимое, которое должен увидеть, пользователь обрамляется тегами:<br>\r\n<br>\r\n<code>     <br>\r\n&ltbody&gt <br>\r\n<br>\r\n&lt/body&gt <br>\r\n</code><br>\r\n<br>\r\nВ итоге получаем такую структуру документа:<br>\r\n<br>\r\n<code>     <br>\r\n&ltDOCTYPE html&gt <br>\r\n<br>\r\n&lthtml&gt <br>\r\n    &lthead&gt <br>\r\n<br>\r\n    &lt/head&gt <br>\r\n<br>\r\n    &ltbody&gt <br>\r\n<br>\r\n    &lt/body&gt <br>\r\n<br>\r\n&lt/html&gt <br>\r\n</code><br>\r\n<br>\r\nПримерно так выглядит HTML страничка.<br>\r\n<br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml');
+(28, 'Структура HTML страницы.', 'Страница  HTML состоит из нескольких блоков или частей. В самом верху, первой строкой располагается название типа документа или тип документа. В случае, если у Вас документ является HTML5, то в первой строке у Вас должно быть слово <br>\r\n<br>\r\n<code>      <br>\r\n&ltDOCTYPE html&gt <br>\r\n</code><br>\r\n<br>\r\nПосле этого весь документ HTML должен быть заключен в теги:<br>\r\n<br>\r\n<code>      <br>\r\n&lthtml&gt <br>\r\n<br>\r\n&lt/html&gt <br>\r\n</code><br>\r\n<br>\r\nЭти теги ограничивают главный контейнер HTML документа, то есть просто весь документ. Контейнер означает, что в него можно что-то положить.<br>\r\n<br>\r\nСледующей структурой HTML странички является блок заголовка, он обрамлен тегами:<br>\r\n<br>\r\n<code>      <br>\r\n&lthead&gt <br>\r\n<br>\r\n&lt/head&gt <br>\r\n</code><br>\r\n<br>\r\nЗдесь располагаются настройки документа, язык к примеру, так же здесь осуществляется подключение стилей, к примеру и много другой служебной информации.<br>\r\n<br>\r\nСодержимое, которое должен увидеть, пользователь обрамляется тегами:<br>\r\n<br>\r\n<code>      <br>\r\n&ltbody&gt <br>\r\n<br>\r\n&lt/body&gt <br>\r\n</code><br>\r\n<br>\r\nВ итоге получаем такую структуру документа:<br>\r\n<br>\r\n<code>      <br>\r\n&ltDOCTYPE html&gt <br>\r\n<br>\r\n&lthtml&gt <br>\r\n    &lthead&gt <br>\r\n<br>\r\n    &lt/head&gt <br>\r\n<br>\r\n    &ltbody&gt <br>\r\n<br>\r\n    &lt/body&gt <br>\r\n<br>\r\n&lt/html&gt <br>\r\n</code><br>\r\n<br>\r\nПримерно так выглядит HTML страничка.<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ok4GjaFf6Io\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml'),
+(29, 'Заголовки h1-h6', 'Для разметки документов или страниц html существует 6 заголовков, соответственно от h1 до h6. Отличаются они размером шрифта. Заголовок h1 – это самый крупный шрифт, заголовок h6 является самым мелким шрифтом.<br>\r\n<br>\r\n<h1>Заголовок h1</h1><br>\r\n<h2>Заголовок h2</h2><br>\r\n<h3>Заголовок h3</h3><br>\r\n<h4>Заголовок h4</h4><br>\r\n<h5>Заголовок h5</h5><br>\r\n<h6>Заголовок h6</h6><br>\r\n<br>\r\nСледовательно, в начале любого документа, заголовке, располагается тег h1 или h2, дальше используются более мелкие заголовки. На пример название статьи заголовком h1, а название пунктов заголовками h2 или h3 и так далее. В видео под текстом производится разметка текста с помощью заголовков.<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/mnNPfLHN2pM\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml'),
+(30, 'Абзацы HTML', 'Понятие абзацев в HTML соответствует понятиям абзацев в обычных текстах. Абзац – это некий блок текста, написанный с новой строки. Для разметки абзаца на странице HTML существует тег &lt;p&gt;. Имеется закрывающий тег, как у всех блочных контейнеров. Текст, помещенный между открывающимся &lt;p&gt;  и закрывающимся &lt;/p&gt;  тегами p и будет помещен в абзац.<br>\r\n<code> <br>\r\n&lt;p&gt;  <br>\r\nНекий текст.<br>\r\n&lt;/p&gt;  <br>\r\n</code><br>\r\nТеги не обязаны располагаться в отдельных строках и могут быть размещены внутри текста. Важно лишь соответствие числа закрывающих тегов числу открывающих.<br>\r\nВ ролике ниже форматируется текст с помощью тегов &lt;p&gt;  &lt;/p&gt;  <br>\r\n<br>\r\n<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cJeSmJDUhA8\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml');
 
 -- --------------------------------------------------------
 
@@ -351,7 +351,7 @@ CREATE TABLE `monety_dfdx` (
 
 INSERT INTO `monety_dfdx` (`login`, `monet`) VALUES
 ('login', 0),
-('alfa54', 141157),
+('alfa54', 144317),
 ('test123', 0),
 ('test124', 0),
 ('admin', 0),
@@ -1126,14 +1126,14 @@ CREATE TABLE `slegka_dfdx` (
 
 INSERT INTO `slegka_dfdx` (`id`, `metka`, `zaprosov`) VALUES
 (0, '-', 4),
-(2, 'rdNowaStr', 90),
-(3, 'nastrNowaStranica', 40),
-(7, 'dfdx', 2851),
+(2, 'rdNowaStr', 95),
+(3, 'nastrNowaStranica', 41),
+(7, 'dfdx', 2898),
 (8, 'html', 838),
-(9, 'html5', 264),
-(10, 'regular_expressions', 502),
-(11, 'xhtml', 9),
-(12, 'cmsdfdx', 130),
+(9, 'html5', 267),
+(10, 'regular_expressions', 507),
+(11, 'xhtml', 10),
+(12, 'cmsdfdx', 132),
 (13, 'obrazec', 2),
 (14, 'git', 67),
 (15, 'kommentarii-v-html-', 4),
@@ -1162,12 +1162,14 @@ INSERT INTO `slegka_dfdx` (`id`, `metka`, `zaprosov`) VALUES
 (38, 'avtomatizaciya-raboty-s-github', 21),
 (39, 'generaciya-nomera-pe-el-', 1),
 (40, 'psr', 22),
-(41, 'standart-psrpomechen-kak-ustarevshiy-', 25),
-(42, 'standart-oformleniya-koda-php-psr', 20),
-(43, 'dorabotka-redaktora-new-cms-dfdx-', 15),
-(44, 'rabota-s-redaktorom-dfdxnew-zagruzka-izobrazheniy-', 36),
-(45, 'html3', 2),
-(46, 'struktura-html-stranicy-', 8);
+(41, 'standart-psrpomechen-kak-ustarevshiy-', 27),
+(42, 'standart-oformleniya-koda-php-psr', 21),
+(43, 'dorabotka-redaktora-new-cms-dfdx-', 16),
+(44, 'rabota-s-redaktorom-dfdxnew-zagruzka-izobrazheniy-', 37),
+(45, 'html3', 4),
+(46, 'struktura-html-stranicy-', 13),
+(47, 'zagolovki-hh-', 12),
+(48, 'abzacy-html', 29);
 
 -- --------------------------------------------------------
 
@@ -1225,7 +1227,7 @@ CREATE TABLE `statistik_dfdx` (
 --
 
 INSERT INTO `statistik_dfdx` (`statik_true`, `n_zapros`, `d_zapros`) VALUES
-(1, 1569773, '2022-01-25');
+(1, 1658461, '2022-01-29');
 
 -- --------------------------------------------------------
 
@@ -1320,7 +1322,9 @@ INSERT INTO `styl_statii_dfdx` (`id`, `nomer_styla`) VALUES
 (25, 3),
 (26, 3),
 (27, 3),
-(28, 3);
+(28, 3),
+(29, 3),
+(30, 3);
 
 -- --------------------------------------------------------
 
@@ -1464,7 +1468,9 @@ INSERT INTO `url_po_id_bd2` (`id`, `url`) VALUES
 (25, 'news/psr/standart-oformleniya-koda-php-psr.php'),
 (26, 'news/cmsdfdx/dorabotka-redaktora-new-cms-dfdx.php'),
 (27, 'news/cmsdfdx/rabota-s-redaktorom-dfdxnew-zagruzka-izobrazheniy.php'),
-(28, 'news/html3html5xhtml/struktura-html-stranicy.php');
+(28, 'news/html3html5xhtml/struktura-html-stranicy.php'),
+(29, 'news/html3html5xhtml/zagolovki-hh.php'),
+(30, 'news/non-path/abzacy-html.php');
 
 -- --------------------------------------------------------
 

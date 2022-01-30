@@ -1,6 +1,9 @@
 <?php
+declare(strict_types=1);
 namespace class\redaktor;
 
+//файл сгенерирован CMS-DFDX 2022-01-29 17:22:17
+//file generated CMS-DFDX 2022-01-29 17:22:17
 session_start();
 include "../../funcii.php";
 include "../../functionDfdx.php";
@@ -27,7 +30,7 @@ include "../../class.php";
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<title>Скачивание и настройка GitHub.</title>
+<title>Абзацы HTML</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <?php 
 echo '<link rel="stylesheet" href="'.$b->searcNamePath('styli.css').'">';
@@ -121,8 +124,8 @@ echo '<section class="container-fluid pole">';
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
         $bylPoisk=false;
         $action='action=#';  //страница обработки кнопок в модуле news()
-        $runNewsIsNews1=17;
-        $metka='skachivanie-i-nastroyka-github-'; //метка для счётчика статистики посещения конкретной страницы
+        $runNewsIsNews1=30;
+        $metka='abzacy-html'; //метка для счётчика статистики посещения конкретной страницы
         $nomerNewsPoisk='Число_статей=5';
         $nomerNewsGlawn='Число_статей=5';
         //if (!file_exists($action)) $action=basename(__FILE__);
@@ -132,7 +135,7 @@ echo '<section class="container-fluid pole">';
             $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati) ;
             if ($idStati[0]>-1)
                 foreach($idStati as $value) 
-                    $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
+                    $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value,$nomerNewsPoisk);
                 $bylPoisk=true;
          }
         ///////////////////////////////////////////////////
@@ -157,7 +160,7 @@ echo '<section class="container-fluid pole">';
             if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']) && $statiaPoId!='netKnopki')
                $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
           }
-          buttonTwitter("Скачивание и настройка GitHub. http://dfdx.uxp.ru/news/git/skachivanie-i-nastroyka-github.php");
+          buttonTwitter("Абзацы HTML http://dfdx.uxp.ru/news/html3html5xhtml/abzacy-html.php");
           $_SESSION["runStrNews"]=false; // обнуление переменной
           echo '</div>';
           /////////////////////////////////////////////////////////////////////////////////////
