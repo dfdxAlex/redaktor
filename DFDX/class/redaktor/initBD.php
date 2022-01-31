@@ -2,8 +2,10 @@
 namespace class\redaktor;
 // ////////////////Считываем параметры инициализации базы данных////////////////////////////
 
-class initBd extends instrument
+class initBd extends instrument implements interface\interface\InterfaceWorkToBd
 {
+    
+    use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
     ////////////////////////////////////////////////Настройка движка
     // информация показывать ли на сайте форму сбора матов. 1-показать, 0-не показывать.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,7 +13,6 @@ class initBd extends instrument
     {
         parent::__construct();
         $fd = fopen(parent::searcNamePath('tmp/initBD.ini'), 'r') or die("не удалось открыть файл");
-        //$fd = fopen('../../../tmp/initBD.ini', 'r') or die("не удалось открыть файл");
         $this->host=stristr(fgets($fd),';',true); 
         $this->loginBD=stristr(fgets($fd),';',true); 
         $this->parol=stristr(fgets($fd),';',true); 
@@ -42,29 +43,9 @@ class initBd extends instrument
       {
         mysqli_close($this->con);
       }
-      public function initBdHost()
-      {
-        return $this->host;
-      }
-      public function initBdLogin()
-      {
-        return $this->loginBD;
-      }
-      public function initBdParol()
-      {
-        return $this->parol;
-      }
-      public function initBdNameBD()
-      {
-        return $this->nameBD;
-      }
-      public function initsite()
-      {
-        return $this->site;
-      } // домашняя страница
 
 
-      public function sborMatov()  {
+      public function sborMatov() {
         $zapros="SELECT nastr FROM tablica_nastroer_dvigka_int WHERE id=1"; //настройка показа формы сбора данных
         $rez=$this->zaprosSQL($zapros);
         if ($rez) 

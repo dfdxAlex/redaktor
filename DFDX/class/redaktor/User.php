@@ -8,6 +8,7 @@ use TraitInstrument{
     TraitInstrument::traitEcho insteadOf TraitUser;
 }
 use TraitUser;
+
 public $year;
 public $mes;
 public static $day;

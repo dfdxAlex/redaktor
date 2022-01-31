@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace redaktor;
+namespace class\redaktor;
 
 include 'class.php';
 
-use redaktor\User;
+use class\redaktor\User;
 
 
 
