@@ -2,10 +2,12 @@
 namespace class\redaktor;
 // ////////////////Считываем параметры инициализации базы данных////////////////////////////
 
-class initBd extends instrument implements interface\interface\InterfaceWorkToBd
+class initBd extends instrument implements interface\interface\InterfaceWorkToBd,
+                                           interface\interface\InterfaceCollectScolding
 {
     
     use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
+    use \class\redaktor\interface\trait\TraitInterfaceCollectScolding;
     ////////////////////////////////////////////////Настройка движка
     // информация показывать ли на сайте форму сбора матов. 1-показать, 0-не показывать.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,13 +47,6 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
       }
 
 
-      public function sborMatov() {
-        $zapros="SELECT nastr FROM tablica_nastroer_dvigka_int WHERE id=1"; //настройка показа формы сбора данных
-        $rez=$this->zaprosSQL($zapros);
-        if ($rez) 
-            $stroka=mysqli_fetch_array($rez);
-        return $stroka[0];
-      }
     // Инструментарий от родительского  
          // Функция выводит некое сообщение $mesaz, задает название кнопок, которым будет присвоено OK или Cansel
          // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
