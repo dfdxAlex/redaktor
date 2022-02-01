@@ -33,4 +33,9 @@ interface InterfaceWorkToType
     //Funkcja czyści kod ze szkodliwych tagów, pozostawiając tylko dozwolone
     //The function cleans the code from harmful tags, leaving only allowed ones
     public function clearCode($cod,...$parametr);
+
+    // проверяет есть ли значение переменной $slowo в массиве $mas. Можно заменить на использование регулярных выражений
+    // sprawdza, czy wartość zmiennej $slowo znajduje się w tablicy $mas. Można zastąpić wyrażeniami regularnymi
+    // checks if the value of the $slowo variable is in the $mas array. Can be replaced with regular expressions
+    public function proverkaMassiwa($mas,$slowo);
 }

@@ -12,4 +12,9 @@ interface InterfaceCollectScolding
     // funkcja sprawdza w bazie danych, czy blok przycisków do zbierania nieprzyzwoitych słów jest włączony
     // the function checks in the database whether the block of buttons for collecting obscene words is enabled
     public function sborMatov();
+
+    // проверяет входной параметр на соответствие мату из базы данных. Проверяется одно слово за 1 закачку данных из БД
+    // porównuje parametr wejściowy z matą z bazy danych. Jedno słowo jest sprawdzane dla 1 pobrania danych z bazy danych
+    // checks the input parameter against the mat from the database. One word is checked for 1 download of data from the database
+    public function proverkaMata($slovo):bool;
 }

@@ -4,6 +4,15 @@ namespace class\redaktor\interface\trait;
 trait TraitInterfaceWorkToType
 {
     //interface InterfaceWorkToType
+
+    public function proverkaMassiwa($mas,$slowo)
+    {
+      foreach($mas as $value)
+        if ($value==$slowo) 
+            return true;
+      return false;
+    }
+
     public function clearCode($cod,...$parametr) 
     {
          //разрешенные теги

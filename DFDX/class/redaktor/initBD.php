@@ -46,57 +46,11 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
         mysqli_close($this->con);
       }
 
-
-    // Инструментарий от родительского  
-         // Функция выводит некое сообщение $mesaz, задает название кнопок, которым будет присвоено OK или Cansel
-         // $mesaz - сообщение, $nameKn - имя кнопки, отправляемой в массив $_POST, $classDiv - дополнительный класс для общего контейнера
-         // $classP - класс тегов Р - сообщения, $classButton - класс для кнопок
-         // statusNumerSlovo($status) Преобразуем номер статуса в его значение
-    // okCansel($mesaz,$nameKn,$classDiv,$classP,$classButton)  // отправляет на страницу редактора
-    // poleInputokCansel($mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput) выводит дополнительную строку для ввода текста -- параметры. Имя кнопки задается. Имя кнопки может быть Ok или Cancel. Имя текстового поля - это имя кнопки + "Text"
-    // poleInputokCanselPlusNameStr($nameStr,$mesaz,$nameKn,$classDiv,$classP,$classButton,$classInput) как и верх, только плюс имя страницы обработчика
-    // okSelect($mesaz,$nameKn,$classDiv,$classP,$classButton) выводит переключатель select и кнопку ок. 
-
-    // Инструментарий
-    // База данных
-    // searcNameTablic($nameTablicy)                     // Поиск таблицы в базе данных
-    // siearcSlova($nameTablice,$stolb,$slovo)           // проверяем есть ли слово в некотором столбце (вывод труе или фальш)
-    // killTab($nameTablicy)                             //Удаление таблицы из БД
-    // killTabEtap1($nameTablicy)                        //Удаление таблицы из БД
-    // clearTab($nameTablicy)                            //Очистка таблицы
-    // maxIdLubojTablicy($nameTablice)                   // поиск максимального ID таблицы +1
-    // searcIdPoUsloviu($nameTablicy,$usl1,$usl2,$usl3,$usl4,$usl5)               //Проверяет есть ли запись по условиям, возвращает ID, записи 
-    // killZapisTablicy($nameTablice,$were) //           // Удалить строку в таблице $were-условие для удаления включая ключевое слово WHERE
-    // zaprosSQL($zapros)                                // создать SQL запрос, условие согласно синтаксису SQL// false если ошибка
-    // tablicaDlaMenu($nameTablice)                      // проверяет принадлежность таблицы к кнопкам, возвращает ID имени таблицы в "tablice_tablic"
-    // kolVoZapisTablice($nameTablice)                   // считает число записей в таблице
-    // kolVoStolbovTablice($nameTablice)                 // считает число столбцов в таблице
-    // id_tab_gl_searc($nameTablicy)                     // Проверяем относится ли таблица к главным таблицам
-    // zapretUdaleniaTablicy($nameTablicy)               // запрет на удаление таблиц
-    // public function searcNamePath($nameFile)          //Функция возвращает имя и относительный путь к файлу при условии, что искомый файл находится выше текущего места.
-    //Функция проверяет статус в заданной таблице, выводит checked="checked" если статус есть или ''
-    // Работа с матами
-    // proverkaMata($slovo)                              // функция проверяет наличие оскорбительного слова мата проверка мата
-    // Работа с массивами
-    // proverkaMassiwa($mas,$slowo)                // Ищет слово $slowo в массиве $mas. Если нашли, то возврат true
-    // printTab('fff',1);                                // отладочная функция создает таблицу debuger и что-то туда пишет
-    // printTabEcho();       //не работает                            // выводит содержимое таблицы debuger
     
-    public function proverkaMassiwa($mas,$slowo)
-    {
-      foreach($mas as $value)
-        if ($value==$slowo) 
-            return true;
-      return false;
-    }
 
-    public function proverkaMata($slovo) // проверяет входной параметр на соответствие мату из базы данных
-    {
-      $rez=$this->zaprosSQL("SELECT mat FROM maty WHERE 1");
-      while(!is_null($stroka=mysqli_fetch_array($rez)))
-         if ($slovo==$stroka[0]) return true;
-      return false;
-    }
+
+
+
     public function searcIdPoUsloviu($nameTablicy,$usl1,$usl2,$usl3,$usl4,$usl5)               //Проверяет есть ли запись по условиям, возвращает ID, записи 
     {
       $zapros="SELECT MAX(id) FROM ".$nameTablicy;//."WHERE ";
@@ -137,30 +91,33 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
       $stroka=mysqli_fetch_array($rez);
       return ' ';
     }
+
+    // Функция проверяет есть ли слово в заданном столбце заданной таблицы. 
     public function siearcSlova($nameTablice,$stolb,$slovo)
     {
       $zapros="SELECT ".$stolb." FROM ".$nameTablice." WHERE ".$stolb."='".$slovo."'";
       $rez=$this->zaprosSQL($zapros);
-      if ($rez===false) 
-          return false;
+      if ($rez===false) return false;
       $stroka=mysqli_fetch_array($rez);
-      if (is_null($stroka)) 
-          return false;
+      if (is_null($stroka)) return false;
       $strr='--'.$stroka[0];
       $strVhod=stripos( $strr ,$slovo);
-      if ($strVhod>1) 
-          return true;
+      if ($strVhod>1) return true;
       return false;
     }
+
+    // Функция записывает некоторое сообщение в таблицу `debuger`. Если $kill=true, запись будет одна, если false, то будут добавляться
     public function printTab($mesadz,$kill)
     {
       if ($kill) 
-          $this->zaprosSQL("DELETE FROM `debuger` WHERE 1");
+          $this->zaprosSQL("DELETE FROM debuger WHERE 1");
       $zapros="CREATE TABLE debuger (mesage VARCHAR(255))";
       $this->zaprosSQL($zapros);
       $zapros="INSERT INTO debuger(mesage) VALUES ('".$mesadz."')";
       $this->zaprosSQL($zapros);
     }
+
+    // Выводит данные из таблицы debuger
     public function printTabEcho()
     {
       $zapros="SELECT * FROM debuger WRERE 1";
@@ -174,6 +131,8 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
         foreach ($stroka as $key => $value)
            echo $key.'=>'.$value;
     }
+
+
     public function zapretUdaleniaTablicy($nameTablicy) // запрет на удаление таблиц
     {
         if ($nameTablicy=='menu_parametr_tab') return 'Невозможно удалить';
@@ -198,7 +157,8 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
         return 'Согласен удалить';
     }
     
-    public function radioAndChekboxSearc($nameTablicy) // 
+    // Функция ищет в таблице $nameTablicy поля radio и checkbox со значением True, если находит, то возвращает True
+    public function radioAndChekboxSearc($nameTablicy)
     {
         $zapros="select  from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='".$nameTablicy."'";
         $rez=$this->zaprosSQL($zapros);
@@ -211,16 +171,23 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
             }
         return $vozvrat;
     }
+
+    // Функция ищет в таблице столбец 'id_tab_gl', если находит, то возвращает True
     public function id_tab_gl_searc($nameTablicy)
      {
         $zapros="select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='".$nameTablicy."'";
         $stroka='';
         $rez=$this->zaprosSQL($zapros);
-        if (parent::notFalseAndNULL($rez))
-            $stroka=(mysqli_fetch_assoc($rez));
+        if (parent::notFalseAndNULL($rez)) 
+            {
+              $stroka=(mysqli_fetch_assoc($rez));
+              return false;
+            }
         if ($stroka['COLUMN_NAME']=='id_tab_gl') return true;
         return false;
      }
+
+    // Функция ищет в Базе Данных нужную таблицу. Возвращает true или false
     public function searcNameTablic($nameTablicy) // Поиск таблицы в базе данных
     {
         $result=false;
@@ -231,19 +198,22 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
                 $result=true;           
         return $result;
      }
-     public function killTab($nameTablicy)  //Удаление таблицы из БД
+
+     public function killTab($nameTablicy)  //Удаление таблицы из БД через переменную сессии
        {
           $zapros="DROP TABLE ".$_SESSION['nameTablice'];
           $rez=$this->zaprosSQL($zapros);
        }
+
      public function killTab2($nameTablicy)  //Удаление таблицы из БД через входящий параметр
        {
           $zapros="DROP TABLE ".$nameTablicy;
           $rez=$this->zaprosSQL($zapros);
        }
+     
      public function killTabEtap1($nameTablicy)  //Удаление таблицы из БД если только она не служебная
      {      
-                                            //Если таблица служебная, то подменяется имя кнопки "Согласен удалить" на "Невозможно удалить"
+       //Если таблица служебная, то подменяется имя кнопки "Согласен удалить" на "Невозможно удалить"
         if ($this->searcNameTablic($nameTablicy)) {
             echo '<h4>Внимание!! Попытка удалить таблицу '.$nameTablicy.'</h4>'; 
             echo '<div class="container">';
@@ -256,24 +226,25 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
             echo '</div>';
         } else 
             parent::okCansel('Такой таблицы нет и не важно на что нажать:). Пока-пока...','poka_poka','divTabUniwJestUge','pTabUniwJestUge','buttonTabUniwJestUge');
-     }       
+     }   
+
      public function clearTab($nameTablicy)  //Очистка таблицы
      {
       $zapros="TRUNCATE TABLE ".$nameTablicy;
       $rez=$this->zaprosSQL($zapros);
      }
+
      public function maxIdLubojTablicy($nameTablice)  // поиск максимального ID таблицы +1
      {
         $zapros="SELECT MAX(id) FROM ".$nameTablice;
         $rez=$this->zaprosSQL($zapros);
-        if ($rez===false) 
-            return -1;
+        if ($rez===false) return -1;
         $stroka=mysqli_fetch_array($rez);
-        if (is_null($stroka[0])) 
-            $stroka[0]=-1;
+        if (is_null($stroka[0])) $stroka[0]=-1;
         $rezId=$stroka[0]+1;
         return $rezId;
      }
+
      // Удалить строку в таблице
      // $nameTablice - имя таблицы $were-условие для удаления включая ключевое слово WHERE
      public function killZapisTablicy($nameTablice,$were) //// Удалить строку в таблице
@@ -281,6 +252,7 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
         $zapros="DELETE FROM ".$nameTablice." ".$were;
         $rez=$this->zaprosSQL($zapros);
      }
+
      public function zaprosSQL($zapros) // создать SQL запрос, условие согласно синтаксису SQL
      {
         $statistikTrueFalseRez=mysqli_query($this->con,'SELECT statik_true FROM statistik_dfdx WHERE 1');
@@ -301,16 +273,13 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
         $boolRez=false;
         $zapros="SELECT ID FROM tablica_tablic WHERE NAME='".$nameTablice."'";
         $rez=$this->zaprosSQL($zapros);
-
         if (parent::notFalseAndNULL($rez)!==true) echo 'Проблема с таблицей "tablica_tablic"';
-
         if (parent::notFalseAndNULL($rez)) $stroka=mysqli_fetch_array($rez);
-        
         if (parent::notFalseAndNULL($stroka))   
             if ($stroka[0]>-1) $boolRez=true;
-        
         return $boolRez; 
      }
+
      public function kolVoZapisTablice($nameTablice) // считает число записей в таблицк
      {
        if ($this->searcNameTablic($nameTablice)) {
@@ -320,6 +289,7 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
         return $viv[0];
        } else return 0;
      }
+
      public function kolVoStolbovTablice($nameTablice) //число столбцов в таблице
      {
      $zapros="SELECT MAX(ORDINAL_POSITION) FROM INFORMATION_SCHEMA.columns WHERE TABLE_NAME='".$nameTablice."'";
@@ -347,16 +317,12 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
           }
           if (stripos('sss'.$value,'просмотр'))
               $prosmotr=true;
-          
           if (stripos('sss'.$value,'poleN='))
               $masN[$i++]=preg_replace('/poleN=/','',$value);
-          
           if (stripos('sss'.$value,'poleT='))
               $masT[$ii++]=preg_replace('/poleT=/','',$value);
-          
           if (stripos('sss'.$value,'poleS='))
               $masS[$iii++]=preg_replace('/poleS=/','',$value);
-          //обработка параметра help
           if ($value=='help' || $value=='Помощь') {
               echo '<p>Функция проверяет существует ли таблица, если нет, то создает её и присваивает начальные значения</p>';
               echo '<p>Обязательный параметр "name=имя таблица"</p>';
