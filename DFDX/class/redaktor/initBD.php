@@ -4,10 +4,13 @@ namespace class\redaktor;
 
 class initBd extends instrument implements interface\interface\InterfaceWorkToBd,
                                            interface\interface\InterfaceCollectScolding
+                                           //interface\interface\InterfaceWorkToType
 {
     
     use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
     use \class\redaktor\interface\trait\TraitInterfaceCollectScolding;
+    use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
+    use \class\redaktor\interface\trait\TraitInterfaceButton;
     ////////////////////////////////////////////////Настройка движка
     // информация показывать ли на сайте форму сбора матов. 1-показать, 0-не показывать.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,50 +95,13 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
 
 
 
-     public function zaprosSQL($zapros) // создать SQL запрос, условие согласно синтаксису SQL
-     {
-        $statistikTrueFalseRez=mysqli_query($this->con,'SELECT statik_true FROM statistik_dfdx WHERE 1');
-        $statistikTrueFalse=mysqli_fetch_assoc($statistikTrueFalseRez);
-        if ($statistikTrueFalse['statik_true']==1) {
-          $statistikTrueFalseRez=mysqli_query($this->con,'SELECT n_zapros FROM statistik_dfdx WHERE 1');
-          $statistik_n_zapros=mysqli_fetch_assoc($statistikTrueFalseRez);
-          $statistik_n_zapros['n_zapros']++;
-          mysqli_query($this->con,'UPDATE statistik_dfdx SET n_zapros='.$statistik_n_zapros['n_zapros'].' WHERE 1');
-          mysqli_query($this->con,'UPDATE statistik_dfdx SET d_zapros="'.date("y.m.d").'" WHERE 1');
-         }
-        $rez=mysqli_query($this->con,$zapros);
-        return $rez;
-     }
 
-     public function tablicaDlaMenu($nameTablice) // проверяет принадлежность таблицы к кнопкам, возвращает ID имени таблицы в "tablice_tablic"
-     {
-        $boolRez=false;
-        $zapros="SELECT ID FROM tablica_tablic WHERE NAME='".$nameTablice."'";
-        $rez=$this->zaprosSQL($zapros);
-        if (parent::notFalseAndNULL($rez)!==true) echo 'Проблема с таблицей "tablica_tablic"';
-        if (parent::notFalseAndNULL($rez)) $stroka=mysqli_fetch_array($rez);
-        if (parent::notFalseAndNULL($stroka))   
-            if ($stroka[0]>-1) $boolRez=true;
-        return $boolRez; 
-     }
 
-     public function kolVoZapisTablice($nameTablice) // считает число записей в таблицк
-     {
-       if ($this->searcNameTablic($nameTablice)) {
-        $zapros="SELECT COUNT(1) FROM ".$nameTablice;
-        $rez=$this->zaprosSQL($zapros);
-        $viv=mysqli_fetch_array($rez);
-        return $viv[0];
-       } else return 0;
-     }
 
-     public function kolVoStolbovTablice($nameTablice) //число столбцов в таблице
-     {
-     $zapros="SELECT MAX(ORDINAL_POSITION) FROM INFORMATION_SCHEMA.columns WHERE TABLE_NAME='".$nameTablice."'";
-     $query=$this->zaprosSQL($zapros);   
-     $viv=mysqli_fetch_array($query);
-     return $viv[0];
-     }
+
+
+
+
 
      public function createTab(...$parametr) //функция проверяет есть ли таблица и если нет, то создает её
      {

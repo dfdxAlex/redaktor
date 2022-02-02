@@ -5,7 +5,8 @@ namespace class\redaktor\interface\interface;
 // interfejs dla funkcji pracujących z bazą danych
 // interface for functions working with the database
 
-interface InterfaceWorkToBd
+interface InterfaceWorkToBd extends InterfaceWorkToType, InterfaceButton
+//extends InterfaceWorkToType
 {
     // функция возвращает параметр host для подключения к базе данных.
     // funkcja zwraca parametr hosta do połączenia z bazą danych.
@@ -95,6 +96,30 @@ interface InterfaceWorkToBd
     // $nameTable - the name of the table $were the condition to delete, including the WHERE keyword
     public function killZapisTablicy($nameTablice,$were);
 
+    // создать SQL запрос, условие согласно синтаксису SQL, 
+    // в административном меню можно включить или выключить статистику запросов в базу данных через данную функцию.
+    // utwórz zapytanie SQL, warunek zgodnie ze składnią SQL,
+    // w menu administracyjnym możesz włączyć lub wyłączyć statystyki zapytań do bazy danych za pomocą tej funkcji.
+    // create SQL query, condition according to SQL syntax,
+    // in the administrative menu, you can enable or disable the statistics of requests to the database through this function.
+    public function zaprosSQL($zapros);
+
+    // проверяет принадлежит ли таблица какому-нибудь меню, возвращает ID имени таблицы в "tablice_tablic"
+    // данные берутся из служебной таблицы "tablica_tablic"
+    // данные в "tablica_tablic" помещаются при создании таблицы для меню через административную панель 
+    // sprawdza, czy tabela należy do jakiegoś menu, zwraca identyfikator nazwy tabeli w "table_tablic"
+    // dane są pobierane z tabeli usług "table_tablic"
+    // dane w "table_tablic" są umieszczane podczas tworzenia tabeli dla menu za pomocą panelu administracyjnego
+    // checks if the table belongs to some menu, returns the ID of the table name in "table_tablic"
+    // data is taken from the service table "table_tablic"
+    // data in "table_tablic" is placed when creating a table for the menu through the admin panel
+    public function tablicaDlaMenu($nameTablice);
+
+    // считает число записей в таблице
+    // zlicza liczbę rekordów w tabeli
+    // counts the number of records in the table
+    public function kolVoZapisTablice($nameTablice);
+
 
     // Старая функция
     //Функция проверяет статус в заданной таблице, выводит checked="checked" если статус есть или ''
@@ -106,4 +131,9 @@ interface InterfaceWorkToBd
     //function from long forgotten times
     //funkcja z dawno zapomnianych czasów
     public function checkedStatus($pole,$str,$status,$nameTable);
+
+    // подсчёт числа столбцов в таблице
+    // liczenie ilości kolumn w tabeli
+    // counting the number of columns in the table
+    public function kolVoStolbovTablice($nameTablice);
 }

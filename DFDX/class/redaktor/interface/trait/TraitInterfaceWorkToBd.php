@@ -3,11 +3,56 @@ namespace class\redaktor\interface\trait;
 
 trait TraitInterfaceWorkToBd
 {
+     public function kolVoStolbovTablice($nameTablice)  
+     {
+         $zapros="SELECT MAX(ORDINAL_POSITION) FROM INFORMATION_SCHEMA.columns WHERE TABLE_NAME='".$nameTablice."'";
+         $query=$this->zaprosSQL($zapros);   
+         $viv=mysqli_fetch_array($query);
+         return $viv[0];
+      }
+     public function kolVoZapisTablice($nameTablice)  
+     {
+         if ($this->searcNameTablic($nameTablice)) {
+             $zapros="SELECT COUNT(1) FROM ".$nameTablice;
+             $rez=$this->zaprosSQL($zapros);
+             $viv=mysqli_fetch_array($rez);
+             return $viv[0];
+          } else return 0;
+     }
+
+     public function tablicaDlaMenu($nameTablice)
+     {
+         $boolRez=false;
+         $zapros="SELECT ID FROM tablica_tablic WHERE NAME='".$nameTablice."'";
+         $rez=$this->zaprosSQL($zapros);
+         if (notFalseAndNULL($rez)!==true) echo 'Проблема с таблицей "tablica_tablic"';
+         if (notFalseAndNULL($rez)) $stroka=mysqli_fetch_array($rez);
+         if (notFalseAndNULL($stroka))   
+         if ($stroka[0]>-1) $boolRez=true;
+         return $boolRez; 
+      }
+      
+     public function zaprosSQL($zapros)
+     {
+         $statistikTrueFalseRez=mysqli_query($this->con,'SELECT statik_true FROM statistik_dfdx WHERE 1');
+         $statistikTrueFalse=mysqli_fetch_assoc($statistikTrueFalseRez);
+         if ($statistikTrueFalse['statik_true']==1) {
+             $statistikTrueFalseRez=mysqli_query($this->con,'SELECT n_zapros FROM statistik_dfdx WHERE 1');
+             $statistik_n_zapros=mysqli_fetch_assoc($statistikTrueFalseRez);
+             $statistik_n_zapros['n_zapros']++;
+             mysqli_query($this->con,'UPDATE statistik_dfdx SET n_zapros='.$statistik_n_zapros['n_zapros'].' WHERE 1');
+             mysqli_query($this->con,'UPDATE statistik_dfdx SET d_zapros="'.date("y.m.d").'" WHERE 1');
+          }
+         $rez=mysqli_query($this->con,$zapros);
+         return $rez;
+     }
+
      public function killZapisTablicy($nameTablice,$were) 
      {
         $zapros="DELETE FROM ".$nameTablice." ".$were;
         $rez=$this->zaprosSQL($zapros);
      }
+
      public function maxIdLubojTablicy($nameTablice)  // поиск максимального ID таблицы +1
      {
          $zapros="SELECT MAX(id) FROM ".$nameTablice;
@@ -38,7 +83,7 @@ trait TraitInterfaceWorkToBd
                       echo '</div>';
                   echo '</div>';
             } else 
-            parent::okCansel('Такой таблицы нет и не важно на что нажать:). Пока-пока...','poka_poka','divTabUniwJestUge','pTabUniwJestUge','buttonTabUniwJestUge');
+            okCansel('Такой таблицы нет и не важно на что нажать:). Пока-пока...','poka_poka','divTabUniwJestUge','pTabUniwJestUge','buttonTabUniwJestUge');
        }
 
       public function killTab($nameTablicy)
@@ -67,7 +112,7 @@ trait TraitInterfaceWorkToBd
          $zapros="select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='".$nameTablicy."'";
          $stroka='';
          $rez=$this->zaprosSQL($zapros);
-         if (parent::notFalseAndNULL($rez)) {
+         if (notFalseAndNULL($rez)) {
                $stroka=(mysqli_fetch_assoc($rez));
                return false;
              }
