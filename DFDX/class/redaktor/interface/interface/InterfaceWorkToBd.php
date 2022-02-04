@@ -8,6 +8,11 @@ namespace class\redaktor\interface\interface;
 interface InterfaceWorkToBd extends InterfaceWorkToType, InterfaceButton
 //extends InterfaceWorkToType
 {
+    //Подключение к базе данных. Параметры подключения находятся в файле initBD.ini
+    //Połączenie z bazą danych. Ustawienia połączenia znajdują się w pliku initBD.ini
+    //Database connection. The connection settings are in the file initBD.ini
+    public function connectToBd();
+
     // функция возвращает параметр host для подключения к базе данных.
     // funkcja zwraca parametr hosta do połączenia z bazą danych.
     // the function returns the host parameter for connecting to the database.
@@ -141,4 +146,9 @@ interface InterfaceWorkToBd extends InterfaceWorkToType, InterfaceButton
     //funkcja sprawdza, czy istnieje tabela, a jeśli nie, to ją tworzy
     //the function checks if there is a table and if not, then creates it
     public function createTab(...$parametr); 
+
+    //функция проверяет существуют ли служебные таблицы, если нет, то создает их.
+    //funkcja sprawdza, czy istnieją tabele usług, jeśli nie, a następnie je tworzy.
+    //the function checks whether service tables exist, if not, then creates them.
+    public function tableValidationCMS();
 }
