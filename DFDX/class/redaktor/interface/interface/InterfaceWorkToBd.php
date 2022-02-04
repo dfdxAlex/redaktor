@@ -136,4 +136,9 @@ interface InterfaceWorkToBd extends InterfaceWorkToType, InterfaceButton
     // liczenie ilości kolumn w tabeli
     // counting the number of columns in the table
     public function kolVoStolbovTablice($nameTablice);
+
+    //функция проверяет есть ли таблица и если нет, то создает её
+    //funkcja sprawdza, czy istnieje tabela, a jeśli nie, to ją tworzy
+    //the function checks if there is a table and if not, then creates it
+    public function createTab(...$parametr); 
 }
