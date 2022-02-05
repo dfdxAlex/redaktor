@@ -4,14 +4,14 @@ require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
-  use \class\redaktor\instrument as instrument;
+  //use \class\redaktor\instrument as instrument;
   use \class\redaktor\Modul as modul;
   use \class\redaktor\login as login;
   use \class\redaktor\maty as maty;
   use \class\redaktor\poisk as poisk;
   use \class\redaktor\statistic as statistic;
 
-  $b= new instrument();
+  //$b= new instrument();
   $instrum= new instrument();
   $redaktor= new Modul();
   $status = new login();

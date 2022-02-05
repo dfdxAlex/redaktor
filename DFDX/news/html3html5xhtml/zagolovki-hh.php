@@ -9,7 +9,7 @@ include "../../funcii.php";
 include "../../functionDfdx.php";
 include "../../image/swapImages.php";
 include "../../class.php";
-  $b=new instrument();
+  //$b=new instrument();
   $redaktor=new Modul();
   $status = new login();
   $maty = new maty();
@@ -33,8 +33,8 @@ include "../../class.php";
 <title>Заголовки h1-h6</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <?php 
-echo '<link rel="stylesheet" href="'.$b->searcNamePath('styli.css').'">';
-echo '<link rel="stylesheet" href="'.$b->searcNamePath('dfdx.css').'"> ';
+echo '<link rel="stylesheet" href="'.$poisk->searcNamePath('styli.css').'">';
+echo '<link rel="stylesheet" href="'.$poisk->searcNamePath('dfdx.css').'"> ';
 ?>
 <meta name="Cache-Control" content="no-store">
 </head>
@@ -71,7 +71,7 @@ echo '<section class="container-fluid">';
     echo '<div class="row">';
         echo '<div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-12">';
             if (isset($_SESSION["login"])) {
-                echo '<div class="monetki"><img src="'.$b->searcNamePath('image/pngwingmal.png').'" class="img-fluid" alt="монет"></div>';
+                echo '<div class="monetki"><img src="'.$poisk->searcNamePath('image/pngwingmal.png').'" class="img-fluid" alt="монет"></div>';
                 echo $redaktor->money('login='.$_SESSION["login"]);
             }
         echo '</div>';
@@ -85,7 +85,7 @@ echo '</section>';
 //$_SESSION['redaktiruem']="dfdx.php";
 ////////////////////////////Начало основного кода страницы//////////////////////////  
 ///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
-echo '  <img src="'.$b->searcNamePath('image/logo.png').'" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
+echo '  <img src="'.$poisk->searcNamePath('image/logo.png').'" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
  //////////////////////////////////////////////////////////////////////////////////////////////////
  // Раздел сайта показать
 echo '<section class="container-fluid">';
@@ -103,7 +103,7 @@ echo '<section class="container-fluid">';
                 $pathFile='news'.$pathMas[1];
                 $zapros="SELECT bd2.name FROM bd2, url_po_id_bd2 WHERE bd2.id=url_po_id_bd2.id AND url_po_id_bd2.url='".$pathFile."'";
                 $rez=$maty->zaprosSQL($zapros);
-                if ($b->notFalseAndNULL($rez)) {
+                if ($poisk->notFalseAndNULL($rez)) {
                     $stroka=mysqli_fetch_array($rez);
                     zagolowkaBeg($stroka[0]);
                 }

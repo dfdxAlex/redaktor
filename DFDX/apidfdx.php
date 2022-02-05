@@ -4,13 +4,13 @@ require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
-  use \class\redaktor\instrument as instrument;
+  //use \class\redaktor\instrument as instrument;
   use \class\redaktor\Modul as modul;
   use \class\redaktor\login as login;
   use \class\redaktor\maty as maty;
   use \class\redaktor\poisk as poisk;
   use \class\redaktor\statistic as statistic;
-  $b=new instrument();
+  //$b=new instrument();
   $redaktor=new Modul();
   $status = new login();
   $maty = new maty();
@@ -83,7 +83,7 @@ if (stripos($_SERVER['REQUEST_URI'],'news')!==false) {
   $pathFile='news'.$pathMas[1];
   $zapros="SELECT bd2.name FROM bd2, url_po_id_bd2 WHERE bd2.id=url_po_id_bd2.id AND url_po_id_bd2.url='".$pathFile."'";
   $rez=$maty->zaprosSQL($zapros);
-  if ($b->notFalseAndNULL($rez)) {
+  if ($poisk->notFalseAndNULL($rez)) {
         $stroka=mysqli_fetch_array($rez);
         zagolowkaBeg($stroka[0]);
     }

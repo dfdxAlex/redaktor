@@ -13,7 +13,7 @@ class Modul
         {
 
            $classPhp = new maty();
-           $classInstr = new instrument();
+           $classInstr = new poisk();
            $nametablice=''; // по умолчанию
            $zagolowok='p';  // по умолчанию
            $statusRedaktora='-s12345'; // Определяет статус пользователя, для которого открывается меню редактирования
@@ -817,7 +817,7 @@ class Modul
     function styliStati(...$parametr) // тут
       {
         $classPhp = new maty();
-        $instrum = new instrument();
+        $instrum = new poisk();
         $classPhp->createTab(
                               "name=styl_statii_dfdx",
                               "poleN=id",   // будет соответствовать ИД статьи
@@ -1029,7 +1029,7 @@ class Modul
                               echo $this->styliStati('вариантов=3','form_not_open');
                           echo '</div>';
                           echo '<div class="col-12">'; 
-                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">Список существующих категорий:</h6>';
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">Список существующих разделов:</h6>';
                               echo '<h6 class="mesage helpPodRedaktoromStatejH6">'.listKategorijNews1($nametablice).'</h6>';
                           echo '</div>';
                       echo '</div>';
@@ -1037,7 +1037,8 @@ class Modul
                           echo '<div class="col-12">';       
                               echo '<div class="helpPodRedaktoromStatej">';           
                                   echo '<h6 class="mesage helpPodRedaktoromStatejH6">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
-                                  echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
+                                  //echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
+                                  echo '<h6 class="mesage helpPodRedaktoromStatejH6">&lt&ltтег&gt&gt - отобразить тег в тексте</h6>';
                                   echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку" alt="текст к картинке" &gt</h6>'; 
                                   echo '<h6 class="mesage helpPodRedaktoromStatejH6">Внимание!! Аттрибут alt="текст" обязателет и если картинок много, должен НЕ ПОВТОРЯТЬСЯ!!</h6>'; 
                                   echo '<h6 class="mesage helpPodRedaktoromStatejH6">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</h6>';
@@ -1082,7 +1083,7 @@ class Modul
                           echo $this->styliStati('вариантов=3','form_not_open');
                       echo '</div>';
                       echo '<div class="col-12">'; 
-                          echo '<h6 class="mesage helpPodRedaktoromStatejH6">Список существующих категорий:</h6>';
+                          echo '<h6 class="mesage helpPodRedaktoromStatejH6">Список существующих разделов:</h6>';
                           echo '<h6 class="mesage helpPodRedaktoromStatejH6">'.listKategorijNews1($nametablice).'</h6>';
                       echo '</div>';
                   echo '</div>';
@@ -1090,7 +1091,8 @@ class Modul
                       echo '<div class="col-12">';       
                           echo '<div class="helpPodRedaktoromStatej">';           
                               echo '<h6 class="mesage helpPodRedaktoromStatejH6">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
-                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
+                              //echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">&lt&ltтег&gt&gt - отобразить тег в тексте</h6>';
                               echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку"&gt</h6>'; 
                               echo '<h6 class="mesage helpPodRedaktoromStatejH6">Внимание!! Аттрибут alt="текст" обязателет и если картинок много, должен НЕ ПОВТОРЯТЬСЯ!!</h6>'; 
                               echo '<h6 class="mesage helpPodRedaktoromStatejH6">Для видео ютуб дает готовую ссылку: поделиться/встроить и копируем ссылку, вставляем в текст статьи.</h6>';

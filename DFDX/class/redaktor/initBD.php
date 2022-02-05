@@ -2,9 +2,13 @@
 namespace class\redaktor;
 // ////////////////Считываем параметры инициализации базы данных////////////////////////////
 
-class initBd extends instrument implements interface\interface\InterfaceWorkToBd,
+class initBd /*extends instrument*/ implements interface\interface\InterfaceWorkToBd,
                                            interface\interface\InterfaceCollectScolding,
-                                           interface\interface\InterfaceDebug
+                                           interface\interface\InterfaceDebug,
+                                           interface\interface\InterfaceWorkToType, 
+                                           interface\interface\InterfaceButton, 
+                                           interface\interface\InterfaceWorkToFiles,
+                                           interface\interface\InterfaceFoUser
 {
     
     use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
@@ -13,9 +17,14 @@ class initBd extends instrument implements interface\interface\InterfaceWorkToBd
     use \class\redaktor\interface\trait\TraitInterfaceButton;
     use \class\redaktor\interface\trait\TraitInterfaceDebug;
 
+    //use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
+    //use \class\redaktor\interface\trait\TraitInterfaceButton;
+    use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
+    use \class\redaktor\interface\trait\TraitInterfaceFoUser;
+
     public function __construct()
     {
-        parent::__construct();
+        //parent::__construct();
         $this->connectToBd();
         $this->tableValidationCMS();
     }

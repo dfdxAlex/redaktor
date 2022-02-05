@@ -6,7 +6,7 @@ trait TraitInterfaceWorkToBd
 
   public function connectToBd()
   {
-      $fd = fopen(parent::searcNamePath('tmp/initBD.ini'), 'r') or die("не удалось открыть файл");
+      $fd = fopen($this->searcNamePath('tmp/initBD.ini'), 'r') or die("не удалось открыть файл");
       $this->host=stristr(fgets($fd),';',true); 
       $this->loginBD=stristr(fgets($fd),';',true); 
       $this->parol=stristr(fgets($fd),';',true); 
