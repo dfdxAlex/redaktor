@@ -11,6 +11,12 @@ namespace class\redaktor\interface\interface;
 
 interface InterfaceWorkToType
 {
+
+    //функция возвращает описание разрешенного тега по его имени, если тег не разрешен, то возвращает false
+    //funkcja zwraca opis dozwolonego tagu po nazwie, jeśli tag nie jest dozwolony, to zwraca false
+    //function returns a description of the allowed tag by its name, if the tag is not allowed, then returns false
+    public function tegAllowed($teg);
+
     // функция возвращает труе, если входящее значение не равно Фальс и не равно NULL и существует
     // function returns true if input value is neither False nor NULL and exists
     public function notFalseAndNULL($data):bool;

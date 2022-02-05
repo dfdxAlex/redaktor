@@ -448,8 +448,6 @@ class Modul
                     if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))      // Если труе, то статья проверена модератором
                       if ($pokazalStatej==0 && $nomerZagolowkaStati=='www') {  // первая статья не по клику по названию статьи
                         if (!$statiaVozwrat) { // показ первой статьи при обычных условиях
-                           //$this->imgBbToUrl($dataMas[$ii][0][1][0][0]);
-                           //echo $dataMas[$ii][0][1][0][0];
                            $class='statiaKrutka btn'; // класс заголовка по умолчанию
                            // Условие сработает если задан какой-либо вид оформления статьи
                            if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0) { // класс заголовка в зависимости от стиля тут
@@ -478,6 +476,20 @@ class Modul
                              $this->imgBbToUrl($text,$hablon);
                              $text=preg_replace('/<code>/','<section class="container-fluid"><div class="row"><div class="col-12"><code><div class="kod'.$hablon.'">',$text); // вставить класс в теги code
                              $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
+                             // вставим прорисовки знаком тегов вместо бибикодов [less] и [more]
+                             // найдём сначала массив всех тегов в тексте, заключённых в бибитеги [less] и [more]
+                             preg_match_all('/\[less\]\w*\[more\]?/u',$text,$masLessMore);
+                             // удалить из текста неразрешенные теги, в базе они остаются.
+                             foreach ($masLessMore[0] as $value) {
+                              $value=preg_replace('/(\[less\])|(\[more\])/','',$value);
+                              if ($classInstr->tegAllowed($value)===false) {
+                                  $text=preg_replace('/\[less\]'.$value.'\[more\]?/u','',$text);
+                                  $text=preg_replace('/\[less\]\/'.$value.'\[more\]?/u','',$text);
+                              }
+                             }
+                             // заменяем   [less] и [more] на &lt; и &gt;
+                             $text=preg_replace('/\[less\]?/u','&lt;',$text);
+                             $text=preg_replace('/\[more\]?/u','&gt;',$text);
                              echo '<section class="container-fluid">';
                              echo '<div class="row">';
                              echo '<div class="col-12">';
