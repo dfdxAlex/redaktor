@@ -1,8 +1,10 @@
 <?php
 namespace class\redaktor;
 
-class menu extends initBd
+class menu extends initBd implements interface\interface\InterfaceWorkToBd
  {
+   use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
+
      public function __construct() {
         parent::__construct();
         $this->zapuskMenuMagiceski=false;
@@ -22,15 +24,10 @@ class menu extends initBd
          $this->kn[13]=false;
          $this->kn[14]=false;
          $this->kn[15]=false;
-         $this->con = mysqli_connect($this->initBdHost(),$this->initBdLogin(),$this->initBdParol(),$this->initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд
-     
-         if (!parent::searcNameTablic('type_menu_po_imeni')) {  // Проверяем есть ли таблица с названия-типами меню
-           $zapros="CREATE TABLE type_menu_po_imeni(
-                                                     name_menu    VARCHAR (100),
-                                                     type_menu    INT 
-                                                   )  ";
-           parent::zaprosSQL($zapros);
-         } 
+
+         $this->connectToBd();
+         $this->tableValidationCMS();
+
         }
      public function __destruct() {
         mysqli_close($this->con);

@@ -5,7 +5,7 @@ namespace class\redaktor\interface\interface;
 //Interfejs funkcji przycisków
 //button functions interface
 
-interface InterfaceButton
+interface InterfaceButton extends InterfaceWorkToBd
 {
    //Функция ловит нажатую кнопку по её имени, части имени или названию перебирая массив POST
    //Funkcja przechwytuje wciśnięty przycisk według jego nazwy, części nazwy lub nazwy, przeglądając tablicę POST

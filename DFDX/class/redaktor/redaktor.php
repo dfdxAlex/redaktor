@@ -8,7 +8,7 @@ class redaktor  extends menu
         $this->colVn=0; // для хранения информации о размере поля редактирования главной таблицы
         $this->strVn=0; // для хранения информации о размере поля редактирования главной таблицы
         parent::__construct();
-        $this->con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд        mysqli_set_charset ( $con , "utf8" ) ;
+        $this->con = mysqli_connect(parent::initBdHost(),parent::initBdLogin(),parent::initBdParol(),parent::initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд
       }
      
      public function startMenuRedaktora(){

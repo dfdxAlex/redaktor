@@ -35,6 +35,21 @@ trait TraitInterfaceWorkToBd
             //проверка существует ли таблица блокировки пользователей для добавления мата blocked_list_dobavit_mat
             if (!$this->searcNameTablic('blocked_list_dobavit_mat'))
               $this->zaprosSQL("CREATE TABLE blocked_list_dobavit_mat(id INT, login VARCHAR(50))");
+
+            // проверка таблицы status_klienta
+            if (!$this->searcNameTablic('status_klienta')) {
+                $zapros="CREATE TABLE status_klienta(login VARCHAR(30), parol VARCHAR(30), mail VARCHAR(50), status INT , time INT)";
+                $this->zaprosSQL($zapros);
+               }
+
+            //Проверка существования таблицы type_menu_po_imeni
+            if (!$this->searcNameTablic('type_menu_po_imeni')) {  // Проверяем есть ли таблица с названия-типами меню
+              $zapros="CREATE TABLE type_menu_po_imeni(
+                                                        name_menu    VARCHAR (100),
+                                                        type_menu    INT 
+                                                      )  ";
+              $this->zaprosSQL($zapros);
+            } 
       }
 
   public function createTab(...$parametr) //функция проверяет есть ли таблица и если нет, то создает её
@@ -363,5 +378,20 @@ trait TraitInterfaceWorkToBd
       $rez=$this->zaprosSQL($zapros);
       $stroka=mysqli_fetch_array($rez);
       return ' ';
+    }
+
+    public function naGlavnuStranicu()
+    {
+      exit("<meta http-equiv='refresh' content='0; url= ".$this->initsite()."'>");
+    }
+
+    public function tutObnovit()
+    {
+      exit("<meta http-equiv='refresh' content='0; url= 'redaktor.php'>");
+    }
+
+    public function nameGlawnogoSite()
+    {
+      return $this->initsite();
     }
 }

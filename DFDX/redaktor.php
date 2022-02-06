@@ -9,7 +9,7 @@ $red = new  redaktor();
 $status = new  login();
 $maty = new  maty();
 $menuUp = new  menu(); 
-$data= new  dataAktual();
+//$data= new  dataAktual();
 $statistik = new  statistic();
 
 
@@ -351,11 +351,11 @@ if ($_SESSION['regimRaboty']==2 || $_SESSION['regimRaboty']==18)
 echo '<div class="container-fluid">'."\n";
 echo '<div class="row menu_redaktor_down">'."\n";
 if (isset($_POST['redaktor_down']) && $_POST['redaktor_down']=='Обновить дату изменения сайта' && !$redaktor) {
-    $data->saveDataSite();
+    //$data->saveDataSite();
     echo("Актуализация даты изменения сайта проведена");
 }
 if (isset($_POST['redaktor_down']) && $_POST['redaktor_down']=='Обновить дату изменения базы данных' && !$redaktor) {
-    $data->saveDataBd();
+    //$data->saveDataBd();
     echo("Актуализация даты изменения Базы Данных проведена");
 }
 

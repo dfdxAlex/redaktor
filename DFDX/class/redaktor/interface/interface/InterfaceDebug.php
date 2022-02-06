@@ -6,7 +6,8 @@ namespace class\redaktor\interface\interface;
 // interface for utility functions, for debugging
 
 
-interface InterfaceDebug extends InterfaceWorkToBd
+interface InterfaceDebug
+//extends InterfaceWorkToBd
 {
     // Функция записывает некоторое сообщение в таблицу `debuger`. Если $kill=true, запись будет одна, если false, то будут добавляться
     // Funkcja zapisuje komunikat do tabeli `debuger`. Jeśli $kill=true, wpis będzie jeden, jeśli false, wpisy zostaną dodane

@@ -9,7 +9,6 @@ require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
-  //$b=new instrument();
   $redaktor=new Modul();
   $status = new login();
   $maty = new maty();

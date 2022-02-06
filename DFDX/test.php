@@ -5,4 +5,4 @@ namespace class\redaktor;
 
 include 'class.php';
 
-$www = new User();
+$www = new htmlTeg('b');

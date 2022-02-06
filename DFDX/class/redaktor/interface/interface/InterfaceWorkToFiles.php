@@ -5,7 +5,7 @@ namespace class\redaktor\interface\interface;
 //interfejs funkcji plików
 //file functions interface
 
-interface InterfaceWorkToFiles
+interface InterfaceWorkToFiles extends InterfaceWorkToType, InterfaceDebug
 {
    //Функция возвращает имя и относительный путь к файлу при условии, что искомый файл находится выше текущего места.
    //Funkcja zwraca nazwę i ścieżkę względną do pliku, pod warunkiem, że wyszukiwany plik znajduje się powyżej bieżącej lokalizacji.

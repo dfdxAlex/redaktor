@@ -5,8 +5,7 @@ namespace class\redaktor\interface\interface;
 // interfejs dla funkcji pracujących z bazą danych
 // interface for functions working with the database
 
-interface InterfaceWorkToBd extends InterfaceWorkToType, InterfaceButton
-//extends InterfaceWorkToType
+interface InterfaceWorkToBd extends InterfaceWorkToFiles
 {
     //Подключение к базе данных. Параметры подключения находятся в файле initBD.ini
     //Połączenie z bazą danych. Ustawienia połączenia znajdują się w pliku initBD.ini
@@ -37,6 +36,11 @@ interface InterfaceWorkToBd extends InterfaceWorkToType, InterfaceButton
     //funkcja zwraca stronę główną serwisu
     //function returns the main page of the site
     public function initsite();
+
+    //функция возвращает главную страницу сайта. Точный аналог функции initsite();
+    //funkcja zwraca stronę główną serwisu. Dokładny odpowiednik funkcji initsite();
+    //function returns the main page of the site. The exact analogue of the initsite() function;
+    public function nameGlawnogoSite();
 
     // функция проверяет существует ли запись с условиями, входящими во входной параметр. Максимальное число условий 5. Возвращает ID найденной записи
     // funkcja sprawdza, czy istnieje rekord z warunkami zawartymi w parametrze wejściowym. Maksymalna liczba warunków to 5. Zwraca identyfikator znalezionego rekordu
@@ -151,4 +155,14 @@ interface InterfaceWorkToBd extends InterfaceWorkToType, InterfaceButton
     //funkcja sprawdza, czy istnieją tabele usług, jeśli nie, a następnie je tworzy.
     //the function checks whether service tables exist, if not, then creates them.
     public function tableValidationCMS();
+
+    // Переходит на главную страницу сайта, страница берется из файли initBd.ini
+    // Przechodzi do strony głównej serwisu, strona jest pobierana z plików initBd.ini
+    // Goes to the main page of the site, the page is taken from the initBd.ini files
+    public function naGlavnuStranicu();
+
+    // Обновить страницу redaktor.php
+    // Odśwież stronę redaktor.php
+    // Refresh page redaktor.php
+    public function tutObnovit();
 }

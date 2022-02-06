@@ -6,7 +6,7 @@ namespace class\redaktor\interface\interface;
 // interface for functions that work with the profanity processing system
 
 
-interface InterfaceCollectScolding
+interface InterfaceCollectScolding extends InterfaceFoUser
 {
     // функция проверяет в базе данных включён ли блок кнопок сбора слов нецензурной лексики
     // funkcja sprawdza w bazie danych, czy blok przycisków do zbierania nieprzyzwoitych słów jest włączony
