@@ -9,7 +9,6 @@ $red = new  redaktor();
 $status = new  login();
 $maty = new  maty();
 $menuUp = new  menu(); 
-//$data= new  dataAktual();
 $statistik = new  statistic();
 
 
@@ -259,10 +258,13 @@ if (isset($_POST['savePola'.$red->poiskButtonName()]) && $_POST['savePola'.$red-
 }
 if (isset($_POST['saweTabOb']) && $_POST['saweTabOb']=='Сохранить')   //Кнопка Сохранить при записи таблицы главной 
     $red->createTablicySawe($_SESSION['nameTablice']);
+
 if (isset($_POST['menu_parametr_tab']) && $_POST['menu_parametr_tab']=='Ок' )    //Кнопка ок после ввода параметров поля 
     $red->createPoleTablicy($_SESSION['nameTablice'],$_POST['stolbcov'],$_POST['strok']);
+    
 if (isset($_POST['buttonTabUniwJestUge']) && $_POST['buttonTabUniwJestUge']=='OK' )    //Если нажата кнопка ОК или имя новой общей таблицы свободно
     $red->createStyleTabUParametryTabliws();
+
 //Если нажата кнопка Создать таблицу для меню
 if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',2)) { 
     $red->createStyleTabUProwerkaImeni($_POST['text_redaktor_nastr']);
