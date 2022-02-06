@@ -179,9 +179,9 @@ trait TraitInterfaceWorkToBd
          $boolRez=false;
          $zapros="SELECT ID FROM tablica_tablic WHERE NAME='".$nameTablice."'";
          $rez=$this->zaprosSQL($zapros);
-         if (notFalseAndNULL($rez)!==true) echo 'Проблема с таблицей "tablica_tablic"';
-         if (notFalseAndNULL($rez)) $stroka=mysqli_fetch_array($rez);
-         if (notFalseAndNULL($stroka))   
+         if ($this->notFalseAndNULL($rez)!==true) echo 'Проблема с таблицей "tablica_tablic"';
+         if ($this->notFalseAndNULL($rez)) $stroka=mysqli_fetch_array($rez);
+         if ($this->notFalseAndNULL($stroka))   
          if ($stroka[0]>-1) $boolRez=true;
          return $boolRez; 
       }
@@ -266,7 +266,7 @@ trait TraitInterfaceWorkToBd
          $zapros="select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='".$nameTablicy."'";
          $stroka='';
          $rez=$this->zaprosSQL($zapros);
-         if (notFalseAndNULL($rez)) {
+         if ($this->notFalseAndNULL($rez)) {
                $stroka=(mysqli_fetch_assoc($rez));
                return false;
              }
