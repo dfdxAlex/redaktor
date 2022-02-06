@@ -5,7 +5,7 @@ namespace class\redaktor\interface\interface;
 // interfejs funkcji menu
 // interface for menu functions
 
-interface InterfaceWorkToMenu extends interface\interface\InterfaceCollingScolding
+interface InterfaceWorkToMenu extends InterfaceCollectScolding
 {
      
      // Служебные функции. Функция возвращает имя кнопки из таблицы менюшки по ID

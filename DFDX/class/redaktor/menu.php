@@ -1,7 +1,7 @@
 <?php
 namespace class\redaktor;
 
-class menu implements interface\interface\InterfaceWorkToBd
+class menu implements interface\interface\InterfaceWorkToMenu
  {
   use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
   use \class\redaktor\interface\trait\TraitInterfaceCollectScolding;
@@ -36,7 +36,6 @@ class menu implements interface\interface\InterfaceWorkToBd
          $this->connectToBd();
          $this->tableValidationCMS();
      }
-      
 
      public function __destruct() {
         mysqli_close($this->con);
