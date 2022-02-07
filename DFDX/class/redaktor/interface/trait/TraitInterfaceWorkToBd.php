@@ -59,6 +59,33 @@ trait TraitInterfaceWorkToBd
             //проверим есть ли вспомогательная таблица для матов от пользователей
             if (!$this->searcNameTablic('mat_ot_polzovatelej'))
                  $this->zaprosSQL("CREATE TABLE mat_ot_polzovatelej(mat VARCHAR(15), login VARCHAR(15))");
+
+              // проверка присутствия таблиц для модуля работы со статистикой
+                $this->createTab(
+                  'name=statistik_dfdx',
+                  'poleN=statik_true',
+                  'poleT=int',
+                  'poleS=0',
+                  'poleN=n_zapros',
+                  'poleT=int',
+                  'poleS=0',
+                  'poleN=d_zapros',
+                  'poleT=DATE',
+                  'poleS=1000-01-01'
+                );
+                // проверка присутствия таблиц для модуля работы со статистикой
+                $this->createTab(
+                 'name=slegka_dfdx',
+                 'poleN=id',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=metka',
+                 'poleT=VARCHAR(500)',
+                 'poleS=-',
+                 'poleN=zaprosov',
+                 'poleT=int',
+                 'poleS=0'//,'просмотр'
+               );
       }
 
   public function createTab(...$parametr) //функция проверяет есть ли таблица и если нет, то создает её
