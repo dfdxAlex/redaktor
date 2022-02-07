@@ -50,6 +50,15 @@ trait TraitInterfaceWorkToBd
                                                       )  ";
               $this->zaprosSQL($zapros);
             } 
+            //проверим есть ли вспомогательная таблица и матов
+            if (!$this->searcNameTablic('maty'))
+                 $this->zaprosSQL("CREATE TABLE maty(mat VARCHAR(15))");
+            //проверим есть ли вспомогательная таблица и Не матов
+            if (!$this->searcNameTablic('nie_maty'))
+                 $this->zaprosSQL("CREATE TABLE nie_maty(nie_mat VARCHAR(15))");
+            //проверим есть ли вспомогательная таблица для матов от пользователей
+            if (!$this->searcNameTablic('mat_ot_polzovatelej'))
+                 $this->zaprosSQL("CREATE TABLE mat_ot_polzovatelej(mat VARCHAR(15), login VARCHAR(15))");
       }
 
   public function createTab(...$parametr) //функция проверяет есть ли таблица и если нет, то создает её
