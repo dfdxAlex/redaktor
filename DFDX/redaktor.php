@@ -366,7 +366,8 @@ if ($_SESSION['regimRaboty']==22) // исполнение нажатия кно�
     $statistik->statistikOnOff();
 
 if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
-    $maty->redactMaty();
+    //$maty->redactMaty();
+    $menuUp->redactMaty();
 
    echo '</div>';
    echo '</div>';

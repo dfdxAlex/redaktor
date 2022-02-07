@@ -86,4 +86,24 @@ interface InterfaceCollectScolding extends InterfaceFoUser
     // Funkcja odblokowania użytkownika
     // User unlock function
     public function razblokirovka_polsovatelej();
+
+    // Функция блокировка пользователя
+    // Funkcja blokady użytkownika
+    // User lock function
+    public function zablokirovanMaty();
+
+    // Функция переноса мата из временной таблицы в постоянную
+    // Funkcja przeniesienia maty ze stołu tymczasowego na stały
+    // The function of transferring a mat from a temporary table to a permanent one
+    public function save_ot_polsovatelej();  
+
+    // Работа с меню ретактирования таблицы матов
+    // Praca z menu do edycji tabeli mat
+    // Working with the menu for editing the table of mats
+    public function redactMaty();
+
+    // работаем с заполнением базы матов от пользователей на главной странице сайта
+    // pracujemy z wypełnieniem bazy mat od użytkowników na stronie głównej serwisu
+    // we work with filling the base of mats from users on the main page of the site
+    public function dobavilMat($text);
 }
