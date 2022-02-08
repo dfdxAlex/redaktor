@@ -1,34 +1,38 @@
-<?php session_start(); ?>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-
 <?php
-$statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-?>
+declare(strict_types=1);
+namespace class\redaktor;
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-    <title>RedaktorBD</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="styli.css">
-    <meta name="Cache-Control" content="no-store">
-</head>
-<body>
-<?php
-//session_start();
+session_start();
+require "funcii.php";
+require "functionDfdx.php";
+require "image/swapImages.php";
+require "class.php";
+
+$class = new statistic();
+$status = new login();
+$maty = new maty();
+$redaktor=new Modul();
+$poisk = new poisk();
+$header = new Header();
+
+echo '<!DOCTYPE html>';
+echo '<html lang="ru">';
+echo '<head>';
+
+  $class->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+  $header->headStart('<title>Генерация новой страницы</title>');
+  $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
+
+echo '</head>';
+echo '<body>';
+
+
 if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
 if (!isset($_SESSION['sSajta'])) $_SESSION['sSajta']=false;
-include 'funcii.php';
-include 'class.php';
-//include "classInstrument.php";
 
-$class = new \class\redaktor\statistic();
-$status = new \class\redaktor\login();
-$maty = new \class\redaktor\maty();
+
 
 
 if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
@@ -56,10 +60,7 @@ if ($_SESSION['status']>99) $_SESSION['status']=9;
             echo '<h6 class="mesage">Доброго времени суток. Вы попали в админ. панель движка dfdx. Выберите продолжение регистрации или войдите под своим логином и паролем.</h6>';
             echo '<h6 class="mesage">Так-же Вы всегда можете вернуться на сайт нажав на кнопку "На сайт"</h6>';
         }
-      ?>
-    
 
-<?php
 
 $errorName=true;
 $nameFile='';
@@ -238,19 +239,16 @@ if (!$errorName)
 
 /// Статистика///////////////////////////////////////
   if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
-    {
-      $statistik = new \class\redaktor\statistic();
-      $statistik->statistikOnOff();
-    }
+      $class->statistikOnOff();
 
   if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
        $maty->redactMaty();
-?>
 
-</div>
-</div>
 
-<?php
+echo '</div>';
+echo '</div>';
+
+
  $class->metkaStatistika('nastrNowaStranica');
 ?>
 

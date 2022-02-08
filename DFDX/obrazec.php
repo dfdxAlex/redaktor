@@ -10,27 +10,20 @@ require "class.php";
   $maty = new maty();
   $statistik = new statistic();
   $menuUp = new menu();
-?>
+  $poisk = new poisk();
+  $header = new Header();
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
+  echo '<!DOCTYPE html>';
+  echo '<html lang="ru">';
+  echo '<head>';
+  
+    $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+    $header->headStart('<title>образец стилей</title>');
+    $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
+  
+  echo '</head>';
+  echo '<body>';
 
-<?php
-$statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-?>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<title>obrazec</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-<link rel="stylesheet" href="styli.css">
-<meta name="Cache-Control" content="no-store">
-</head>
- 
-<body>
-<?php
 if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;

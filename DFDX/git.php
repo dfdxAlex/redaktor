@@ -1,45 +1,35 @@
 <?php
+namespace class\redaktor;
+
+//файл сгенерирован CMS-DFDX 2022-02-08 19:44:56
+//file generated CMS-DFDX 2022-02-08 19:44:56
 session_start();
 require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
-  //use \class\redaktor\instrument as instrument;
-  use \class\redaktor\Modul as modul;
-  use \class\redaktor\login as login;
-  use \class\redaktor\maty as maty;
-  use \class\redaktor\poisk as poisk;
-  use \class\redaktor\statistic as statistic;
-   $redaktor=new Modul();
+  $redaktor=new Modul();
   $status = new login();
   $maty = new maty();
   $poisk = new poisk();
   $statistik = new statistic();
-?>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
+  $header = new Header();
 
-<?php
-$statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-?>
+echo '<!DOCTYPE html>';
+echo '<html lang="ru">';
+echo '<head>';
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<title>git</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-<link rel="stylesheet" href="styli.css">
-<link rel="stylesheet" href="dfdx.css">
-<meta name="Cache-Control" content="no-store">
-</head>
-<body>
-<?php
+  $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+  $header->headStart('<title>git</title>');
+  $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
+
+echo '</head>';
+echo '<body>';
+
 if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
-//if ($_SESSION["status"]>99) $_SESSION["status"]=9;
 ////////////////////////////////////////////Верхнее меню///////////////////////////////////////////////////////   
 ///////////////////////////////////////////Обработка верхнего меню
 if ($_SESSION["status"]>0)             // если есть какой-то статух входа на сайт
@@ -67,11 +57,11 @@ echo '<section class="container-fluid">';
 echo '<div class="row">';
 echo '<div class="col-12">';
 echo '<div class="logoHtml">';
-//Если в пути к файлу не существует слово news
-if (stripos('sss'.$_SERVER['REQUEST_URI'],'news')===false) { 
+// Блок работает тогда, когда данный файл вызывается не из персональных ссылок для статей
+if (stripos($_SERVER['REQUEST_URI'],'news')===false) { 
     if (file_exists('image/git.png'))
         echo '<img src="image/git.png" alt="git">';
- else git();
+    else git();
 }
 // Блок работает тогда, когда данный файл вызывается из персональных ссылок для статей
 if (stripos($_SERVER['REQUEST_URI'],'news')!==false) {
@@ -105,6 +95,8 @@ $bylPoisk=false;
 $action='action=git.php';  //страница обработки кнопок в модуле news()
 $nameBD='bd2';
 $nameBD='nameTD='.$nameBD;
+$nomerNewsPoisk='Число_статей=5';
+$nomerNewsGlawn='Число_статей=5';
 ////////////////////////////////////////////////////поиск
 if (isset($_POST['poisk'])) {
   $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati,'категория-git') ;
@@ -117,7 +109,7 @@ if (isset($_POST['poisk'])) {
  if (!$bylPoisk) {
       $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
       if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
-        $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=git');
+        $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=git',$nomerNewsGlawn);
       if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
         $redaktor->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=git');
   }
@@ -150,8 +142,9 @@ echo '<p class="footerMarginTop">Начало верстки сайта 2021-09-
 echo '<p class="footerMarginTop">CMS-DFDX</p>';
 echo '</div>';
 $maty->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
+
+echo '</footer>';
 ?>
-</footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>

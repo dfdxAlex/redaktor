@@ -15,31 +15,24 @@ require "class.php";
   $maty = new maty();
   $poisk = new poisk();
   $statistik = new statistic();
-?>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
+  $header = new Header();
 
-<?php
-$statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-?>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<title>regular_expressions</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-<link rel="stylesheet" href="styli.css">
-<link rel="stylesheet" href="dfdx.css">
-<meta name="Cache-Control" content="no-store">
-</head>
-<body>
-<?php
+  echo '<!DOCTYPE html>';
+  echo '<html lang="ru">';
+  echo '<head>';
+  
+    $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+    $header->headStart('<title>Регулярные выражения</title>');
+    $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
+  
+  echo '</head>';
+  echo '<body>';
+  
+  
 if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
-//if ($_SESSION["status"]>99) $_SESSION["status"]=9;
 ////////////////////////////////////////////Верхнее меню///////////////////////////////////////////////////////   
 ///////////////////////////////////////////Обработка верхнего меню
 if ($_SESSION["status"]>0)             // если есть какой-то статух входа на сайт

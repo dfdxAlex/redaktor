@@ -10,22 +10,20 @@ $maty = new maty();
 $menuUp = new menu(); 
 $instrum = new Modul();  
 $stat = new  statistic();
+$poisk = new poisk();
+$header = new Header();
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
 echo '<head>';
 
-$statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+  $stat->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+  $header->headStart('<title>Редактор новой страницы</title>');
+  $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
 
-  echo '  <meta charset="UTF-8">';
-  echo '  <meta name="viewport" content="width=device-width, initial-scale=1.0">';
-  echo '  <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">';
-  echo '  <title>RedaktorBD</title>';
-  echo '  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">';
-  echo ' <link rel="stylesheet" href="styli.css">';
-  echo '  <meta name="Cache-Control" content="no-store">';
-  echo '</head>';
-  echo '<body>';
+echo '</head>';
+echo '<body>';
+
 
 if (!isset($_SESSION['resetNameTable'])) $_SESSION['resetNameTable']=false;
 if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;

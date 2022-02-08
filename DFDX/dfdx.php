@@ -9,37 +9,25 @@ require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
+
   $redaktor=new Modul();
   $status = new login();
   $maty = new maty();
   $poisk = new poisk();
   $statistik = new statistic();
   $header = new Header();
-?>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
 
-<?php
-$statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+echo '<!DOCTYPE html>';
+echo '<html lang="ru">';
+echo '<head>';
 
-?>
+  $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+  $header->headStart('<title>dfdx</title>');
+  $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<title>dfdx</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-<?php 
+echo '</head>';
+echo '<body>';
 
-
-echo '<link rel="stylesheet" href="'.$poisk->searcNamePath('styli.css').'">';
-echo '<link rel="stylesheet" href="'.$poisk->searcNamePath('dfdx.css').'"> ';
-?>
-<meta name="Cache-Control" content="no-store">
-</head>
-<body>
-<?php
 if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
@@ -191,10 +179,10 @@ echo '<p class="footerMarginTop">Число запросов к БД: '.$statist
 echo '<p class="footerMarginTop">Начало верстки сайта 2021-09-19</p>';
 echo '<p class="footerMarginTop">CMS-DFDX</p>';
 echo '</div>';
-
 $maty->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
+echo '</footer>';
+
 ?>
-</footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
