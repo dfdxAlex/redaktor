@@ -14,13 +14,15 @@ require "class.php";
   $maty = new maty();
   $poisk = new poisk();
   $statistik = new statistic();
+  $header = new Header();
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    
+
 <?php
 $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+
 ?>
 
 <meta charset="UTF-8">

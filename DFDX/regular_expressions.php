@@ -9,7 +9,7 @@ require "class.php";
   use \class\redaktor\maty as maty;
   use \class\redaktor\poisk as poisk;
   use \class\redaktor\statistic as statistic;
-  $instrum= new instrument();
+  $instrum= new initBd();
   $redaktor= new Modul();
   $status = new login();
   $maty = new maty();
