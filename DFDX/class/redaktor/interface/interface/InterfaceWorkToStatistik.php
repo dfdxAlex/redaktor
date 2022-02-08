@@ -31,4 +31,17 @@ interface InterfaceWorkToStatistik extends InterfaceWorkToMenu
     // odczytaj liczbę żądań do etykiety
     // read the number of requests to the label
     public function getMetkaStatistik($metka);
+
+    // Статистика от Google Analytics (выводит данную функцию на страницу)
+    // Statystyka Google Analytics (выводит данную функцию на страницу)
+    // Statistics from Google Analytics (brings this function to the page)
+    // Global site tag (gtag.js) - Google Analytics -->
+
+    // Входящий параметр - это ссылка, сгенерированная на сайте Google Analytics, для загрузки скрипта счётчика
+    // пример https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ
+    // Parametr wejściowy to link wygenerowany w witrynie Google Analytics do pobrania skryptu licznika
+     // przykład https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ
+    // Input parameter is a link generated on the Google Analytics site to download the counter script
+     // example https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ
+    public function googleAnalitic($src);
 }

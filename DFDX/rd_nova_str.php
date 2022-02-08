@@ -14,14 +14,9 @@ $stat = new  statistic();
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
 echo '<head>';
-  //Global site tag (gtag.js) - Google Analytics -->
-  echo '<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>';
-  echo '<script>';
-  echo '  window.dataLayer = window.dataLayer || [];';
-  echo '  function gtag(){dataLayer.push(arguments);}';
-  echo "  gtag('js', new Date());";
-  echo "  gtag('config', 'G-MF3F7YTKCQ');";
-  echo '</script>';
+
+$statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+
   echo '  <meta charset="UTF-8">';
   echo '  <meta name="viewport" content="width=device-width, initial-scale=1.0">';
   echo '  <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">';

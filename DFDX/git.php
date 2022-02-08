@@ -10,8 +10,7 @@ require "class.php";
   use \class\redaktor\maty as maty;
   use \class\redaktor\poisk as poisk;
   use \class\redaktor\statistic as statistic;
-  //$b=new instrument();
-  $redaktor=new Modul();
+   $redaktor=new Modul();
   $status = new login();
   $maty = new maty();
   $poisk = new poisk();
@@ -20,14 +19,11 @@ require "class.php";
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MF3F7YTKCQ');
-</script>
+
+<?php
+$statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+?>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
