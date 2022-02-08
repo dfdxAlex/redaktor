@@ -21,4 +21,25 @@ class futter implements interface\interface\InterfaceWorkToFutter
       $this->tableValidationCMS();
      }
     
+     // функция имплементируется тут, потому, что не получается в трейде указать на интерфейс
+     public function futterGeneral(interface\interface\InterfaceWorkToStatistik $interfaceStatistik, string $metka)
+     {
+      echo '<footer class="container-fluid futter">';
+      if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
+          $interfaceStatistik->statistikOnOff();
+      
+      if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
+          $interfaceStatistik->redactMaty();
+      
+      // Вывод статистики Футтер
+      $interfaceStatistik->metkaStatistika($metka);
+      echo '<div class="futterDivDfdx">';
+      echo '<p class="footerMarginTop">Просмотров:'.$interfaceStatistik->getMetkaStatistik($metka).'</p>';
+      echo '<p class="footerMarginTop">Число запросов к БД: '.$interfaceStatistik->kolZaprosow().'</p>';
+      echo '<p class="footerMarginTop">Начало верстки сайта 2021-09-19</p>';
+      echo '<p class="footerMarginTop">CMS-DFDX</p>';
+      echo '</div>';
+      $interfaceStatistik->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
+      echo '</footer>';
+     }
 }
