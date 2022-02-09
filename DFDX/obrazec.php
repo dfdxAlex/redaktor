@@ -163,15 +163,5 @@ for($j=0; $j<$i; $j++)
  <?php
 ////////////////////////////////////////////////////////////////////////////////////////////////// 
 ////////////////////////////Конец основного кода страницы////////////////////////// 
-/// Статистика///////////////////////////////////////
-if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
-    $statistik->statistikOnOff();
-
-if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
-    $maty->redactMaty();
-?>
-</div>
-</div>
-<?php
-    $statistik->metkaStatistika('obrazec');
+    $futter->futterGeneral($statistik,'obrazec');
     $futter->closeHtmlDok();

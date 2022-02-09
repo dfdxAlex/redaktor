@@ -149,16 +149,7 @@ if ($_SESSION['variantNowaStr']==1) {// Нажата кнопка ...Пуста�
    echo '</div>'; 
 }
 
-/// Статистика///////////////////////////////////////
-  if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
-      $stat->statistikOnOff();
 
-  if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
-       $maty->redactMaty();
-       echo '</div>';
-       echo '</div>';
-
- $stat->metkaStatistika('rdNowaStr');
-
+ $futter->futterGeneral($stat,'rdNowaStr');
  $futter->closeHtmlDok();
 

@@ -17,6 +17,7 @@ require "class.php";
   $statistik = new statistic();
   $header = new Header();
   $futter = new futter();
+  $nonTemplates = new NonTemplates();
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
@@ -130,7 +131,6 @@ echo '<section class="container-fluid pole">';
         ///////////////////////////////////////////////////
         //маркер
         if (!$bylPoisk) {
-            // echo 'ловим кнопку';
             $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
 
             if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели проверяем нажатие заголовков статей
@@ -149,22 +149,20 @@ echo '<section class="container-fluid pole">';
             if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']) && $statiaPoId!='netKnopki')
                $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
           }
+
+
           //buttonTwitter
           $_SESSION["runStrNews"]=false; // обнуление переменной
           echo '</div>';
-          /////////////////////////////////////////////////////////////////////////////////////
-          //////////////////////////////////////////////////////////////////////////////////////
-          echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
-              echo '<div class="poiskDiv">';
-              poiskDfdx('dfdx.php');
-          echo '</div>';
-          pravoePole("home");   // категория статей, которые должны быть показаны в правом меню 
-        echo '</div>';
+
+          // функция отображает правое меню вместа со своей частью разметки Бутстрапа
+          $nonTemplates->rightMenu($statistik,"home");
     echo '</div>';
 echo '</section>';
-////////////////////////////////////////////////////////////////////////////////////////////////// 
-////////////////////////////Конец основного кода страницы////////////////////////// 
-/// Статистика///////////////////////////////////////
 
+// Функция выводит нижнюю часть сайта
+// The function displays the bottom of the site
 $futter->futterGeneral($statistik,$metka);
+// функция подключает вторую часть бутстрапа и закрывает документ html
+// the function connects the second part of the bootstrap and closes the html document
 $futter->closeHtmlDok();

@@ -96,6 +96,7 @@ $bylPoisk=false;
 $action='action=dfdx.php';  //страница обработки кнопок в модуле news()
 $nameBD='bd2';
 $nameBD='nameTD='.$nameBD;
+$metka='dfdx'; //метка для счётчика статистики посещения конкретной страницы
 $nomerNewsPoisk='Число_статей=5';
 $nomerNewsGlawn='Число_статей=5';
 ////////////////////////////////////////////////////поиск
@@ -128,21 +129,5 @@ echo '</section>';
 ////////////////////////////////////////////////////////////////////////////////////////////////// 
 ////////////////////////////Конец основного кода страницы////////////////////////// 
 /// Статистика///////////////////////////////////////
-echo '<footer class="container-fluid futter">';
-
-if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
-$statistik->statistikOnOff();
-if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
-$maty->redactMaty();
-// Вывод статистики Футтер
-$statistik->metkaStatistika('cms-dfdx');   // метка для подсчёта загрузки страницы, пишется в БД
-echo '<div class="futterDivDfdx">';
-echo '<p class="footerMarginTop">Просмотров:'.$statistik->getMetkaStatistik('cms-dfdx').'</p>'; // метка для подсчёта загрузки страницы, пишется в БД
-echo '<p class="footerMarginTop">Число запросов к БД: '.$statistik->kolZaprosow().'</p>';
-echo '<p class="footerMarginTop">Начало верстки сайта 2021-09-19</p>';
-echo '<p class="footerMarginTop">CMS-DFDX</p>';
-echo '</div>';
-$maty->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
-
-echo '</footer>';
+$futter->futterGeneral($statistik,$metka);
 $futter->closeHtmlDok();

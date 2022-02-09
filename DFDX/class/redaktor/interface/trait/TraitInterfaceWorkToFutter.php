@@ -3,13 +3,6 @@ namespace class\redaktor\interface\trait;
 
 trait TraitInterfaceWorkToFutter
 {
-    //use class\redaktor\interface\interface\InterfaceWorkToStatistik;
-
-   // public function futterGeneral(InterfaceWorkToStatistik $interfaceStatistik)
-   // {
-
-   // }
-
     public function closeHtmlDok()
     {
       echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

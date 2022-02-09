@@ -352,17 +352,11 @@ if (isset($_POST['redaktor_down']) && $_POST['redaktor_down']=='Обновить
     //$data->saveDataBd();
     echo("Актуализация даты изменения Базы Данных проведена");
 }
+echo '</div>';
+echo '</div>';
 
 /// Статистика///////////////////////////////////////
-if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
-    $statistik->statistikOnOff();
-
-if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
-    //$maty->redactMaty();
-    $menuUp->redactMaty();
-
-   echo '</div>';
-   echo '</div>';
+   $futter->futterGeneral($statistik,'PanelAdministratora');
    $futter->closeHtmlDok();
 
 //$_SESSION['nameTablice'] // Здесь имя создаваемой таблицы

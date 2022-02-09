@@ -106,8 +106,9 @@ if (!$errorName)
                                               '/alt=\"regular_expressions/' => function ($machh) {return 'alt="'.$_SESSION['nameNotPhp'];},
                                               '/poiskDfdx\(\'cms_dfdx\.php\'\)/' => function ($machh) {return 'poiskDfdx("'.$_SESSION['nameFilePreg'].'")';},
                                               '/pravoePole\(\'cms-dfdx\'\)/' => function ($machh) {return 'pravoePole("'.$_POST['kategoria-news-rdNovaStr'].'")';},
-                                              '/metkaStatistika\(\'cms-dfdx\'\)/' => function ($machh) {return 'metkaStatistika("'.$_POST['metka-rdNovaStr'].'")';},
-                                              '/getMetkaStatistik\(\'cms-dfdx\'\)/' => function ($machh) {return 'getMetkaStatistik("'.$_POST['metka-rdNovaStr'].'")';},
+                                              //'/metkaStatistika\(\'cms-dfdx\'\)/' => function ($machh) {return 'metkaStatistika("'.$_POST['metka-rdNovaStr'].'")';},
+                                              //'/getMetkaStatistik\(\'cms-dfdx\'\)/' => function ($machh) {return 'getMetkaStatistik("'.$_POST['metka-rdNovaStr'].'")';},
+                                              '/\$metka=\'dfdx\'/' => function ($machh) {return '$metka="'.$_POST['metka-rdNovaStr'].'"';},
                                               '/action=dfdx\.php/' => function ($machh) {return 'action='.$_SESSION['nameFilePreg'];},
                                               '/bd2/' => function ($machh) {return $_SESSION['newsTab'];},
                                               '/\#pagetitleimages\#/' => function ($machh) {return $_POST['kategoria-news-rdNovaStr'].'();';},
@@ -223,6 +224,6 @@ if (!$errorName)
 echo '</div>';
 echo '</div>';
 
- $class->metkaStatistika('nastrNowaStranica');
+ $futter->futterGeneral($class,'nastrNowaStranica');
  $futter->closeHtmlDok();
 
