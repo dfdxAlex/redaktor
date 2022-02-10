@@ -6,9 +6,6 @@ include 'funcii.php';
 include 'class.php';
 
 $red = new  redaktor();
-$status = new  login();
-$maty = new  maty();
-$menuUp = new  menu(); 
 $poisk = new poisk();
 $statistik = new  statistic();
 $header = new Header();
@@ -40,18 +37,18 @@ if ($_SESSION['status']==5 || $_SESSION['status']==4) $status45=true;
 $redaktor=false;        // Признак нажатия кнопки настройки редактора
 $spisokTablic=false;    // Признак нажатия кнопки Список таблиц
 
-if ($loginParol) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
+if ($loginParol) $_SESSION['status']=$red->statusRegi($_SESSION['login'],$_SESSION['parol']);
 if ($_SESSION['status']>99) $_SESSION['status']=9;
 
 echo '<a name="vverh">';
       if ($_SESSION['status']>99 || $_SESSION['status']==9)
-          $menuUp->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
+          $red->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
       if ($status45)
-          $menuUp->__unserialize(array('menu3','redaktor_up','Редактор','Сайт','Выйти','Создать страницу','Подсветить меню'));
+          $red->__unserialize(array('menu3','redaktor_up','Редактор','Сайт','Выйти','Создать страницу','Подсветить меню'));
       if ($_SESSION['status']==0)
-          $menuUp->__unserialize(array('menu4','login','redaktor.php','Логин','Пароль','Вход','Регистрация'));
+          $red->__unserialize(array('menu4','login','redaktor.php','Логин','Пароль','Вход','Регистрация'));
       if ($_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3)
-           $menuUp->menu('dla_statusob_123');
+           $red->menu('dla_statusob_123');
       if (isset($_SESSION['status']) && $_SESSION['status']>0)
           echo '<h6>Вы вошли под логином: '.$_SESSION['login'].'</h6>';
       else {
@@ -74,7 +71,7 @@ if ($status45) $red->startMenuRedaktora();
 
 /////////////////////////////////////////////Работа со входом и регистрацией////////////////////////////////////////
 //Если не нажата кнопка Список таблиц zaprosSQL($zapros)
-if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',4))) { 
+if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$red->getNamepoId('redaktor_nastr7',4))) { 
     $redaktor=true;
     $spisokTablic=true;
     $_SESSION['regimRaboty']=3;
@@ -82,19 +79,19 @@ if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->get
   }
 if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit']=='На сайт') {//Переход на главную страницу
     $_SESSION['regimRaboty']=0;
-    $status->naGlavnuStranicu();
+    $red->naGlavnuStranicu();
  }
 if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit']=='Выйти') {//Выйти из учётки
     $_SESSION['login']='';
     $_SESSION['parol']='';
     $_SESSION['status']=0;
     $_SESSION['regimRaboty']=0;
-    $status->naGlavnuStranicu();
+    $red->naGlavnuStranicu();
  }
 if ($_SESSION['status']==9 && isset($_POST['podtverdit'])  &&  $_POST['podtverdit']=='Найти письмо') { //Если нажата кнопка Найти письмо
     $_SESSION['regimRaboty']=20;
-    $mailText='Доброго времени суток. Была запрошена повторная отправка письма с кодом регистрации с сайта '.$status->nameGlawnogoSite().' Код для подтверждения регистрации:';
-    $status->siearcMail($_SESSION['login'],$mailText);
+    $mailText='Доброго времени суток. Была запрошена повторная отправка письма с кодом регистрации с сайта '.$red->nameGlawnogoSite().' Код для подтверждения регистрации:';
+    $red->siearcMail($_SESSION['login'],$mailText);
     echo '<p class="mesage">Письмо отправлено</p>';
 }
 
@@ -102,21 +99,21 @@ if (isset($_POST['podtverdit'])  &&  $_POST['podtverdit']=='Подтвердит
     $_SESSION['regimRaboty']=17;
     $admin=regaAdministratora($_POST['kod']); // проверяет регистрировался ли администратор, если нет, то вернет Фальс, если да, то Труе и зарегит админгистратора по коду из файла
     if (!$admin) {// Если регистрируется не администратор
-        if ($status->statusRegi($_SESSION['login'],$_SESSION['parol'])==$_POST['kod']) {
+        if ($red->statusRegi($_SESSION['login'],$_SESSION['parol'])==$_POST['kod']) {
             $_SESSION['status']=1;
-            $status->saveStatus(1);
+            $red->saveStatus(1);
             echo '<p class="mesage">Код верный, приятного серфинга!</p>';
         }
         else echo '<p class="error">Код не верен!!</p>';
-        if ($_SESSION['status']!=4 && $_SESSION['status']!=5 && $_SESSION['status']!=9) $status->naGlavnuStranicu();
+        if ($_SESSION['status']!=4 && $_SESSION['status']!=5 && $_SESSION['status']!=9) $red->naGlavnuStranicu();
     }
     if ($admin===2) header("Refresh:0");
 }
 
 if (isset($_POST['login'])  &&  $_POST['login']=='Вход'  
-    && $status->statusRegi($_POST['login_status'],$_POST['parol_status'])) { //Если нажата кнопка Вход
+    && $red->statusRegi($_POST['login_status'],$_POST['parol_status'])) { //Если нажата кнопка Вход
         $_SESSION['regimRaboty']=16;
-        $_SESSION['status']=$status->statusRegi(quotemeta($_POST['login_status']),quotemeta($_POST['parol_status']));
+        $_SESSION['status']=$red->statusRegi(quotemeta($_POST['login_status']),quotemeta($_POST['parol_status']));
         if ($_SESSION['status']>99 
             || $_SESSION['status']==9 
               || ($status45) 
@@ -128,28 +125,28 @@ if (isset($_POST['login'])  &&  $_POST['login']=='Вход'
  }
 
 if (isset($_POST['login'])  &&  $_POST['login']=='На сайт')  //Если нажата кнопка На сайт
-    $status->naGlavnuStranicu();
+    $red->naGlavnuStranicu();
 
-if (isset($_POST['registracia']) && $status->lovimOtvetNaCapcu($_POST['registracia'])) { //Нажата кнопка выбора варианта ответа на капчу
+if (isset($_POST['registracia']) && $red->lovimOtvetNaCapcu($_POST['registracia'])) { //Нажата кнопка выбора варианта ответа на капчу
     $_SESSION['regimRaboty']=13;
     $mailQ=quotemeta($_POST['Почта']);
     $mailQ=preg_replace('/\\\./','.',$mailQ);
-    if ($status->capcaRez($_POST['Capcha'],$_POST['registracia']) && !$status->prowerkaLogin() 
-        && !$status->prowerkaMail() && $_POST['parol']==$_POST['parol2'] && $_POST['parol']!="" 
+    if ($red->capcaRez($_POST['Capcha'],$_POST['registracia']) && !$red->prowerkaLogin() 
+        && !$red->prowerkaMail() && $_POST['parol']==$_POST['parol2'] && $_POST['parol']!="" 
           && $_POST['parol']!="Пароль") {
              $_SESSION['regimRaboty']=15;
-             $mailText='Доброго времени суток. Данная почта используется для регистрации на сайте '.$status->nameGlawnogoSite().' . Код для подтверждения регистрации:';
+             $mailText='Доброго времени суток. Данная почта используется для регистрации на сайте '.$red->nameGlawnogoSite().' . Код для подтверждения регистрации:';
              genericKodAdmina(quotemeta($_POST['Логин']));// Сгенерировать пароль в файл, если регится администратор
-             $status->zapisGostia(quotemeta($_POST['Логин']),quotemeta($_POST['parol']),$mailQ,'CMS-DFDX Подтверждение учётной записи.',$mailText); //Первая запись в базу данных
+             $red->zapisGostia(quotemeta($_POST['Логин']),quotemeta($_POST['parol']),$mailQ,'CMS-DFDX Подтверждение учётной записи.',$mailText); //Первая запись в базу данных
              echo '<p class="mesage">Регистрация почти завершена. На почту '.$mailQ.' отправлен одноразовый пароль.<p>';
              echo '<p class="mesage">Для завершения регистрации войдите на сайт используя логин и пароль.<p>';
              echo '<p class="mesage">После этого в меню вврху введите код, отправленный на электронную почту.<p>';
     } else {
              $_SESSION['regimRaboty']=14;
-             $menuUp->__unserialize(array('menu4','registracia','redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),$mailQ,$status->capcha()));
-             if ($status->prowerkaLogin()) 
+             $red->__unserialize(array('menu4','registracia','redaktor.php',quotemeta($_POST['Логин']),quotemeta($_POST['parol']),quotemeta($_POST['parol2']),$mailQ,$red->capcha()));
+             if ($red->prowerkaLogin()) 
                  echo '<p class="error">Такой логин уже существует или не соответствует правилам.</p>';
-             if ($status->prowerkaMail()) 
+             if ($red->prowerkaMail()) 
                  echo '<p class="error">Такая почта уже существует или не соответствует правилам.</p>';
              if ($_POST['parol']!=$_POST['parol2']) 
                  echo '<p class="error">Разные пароли</p>';
@@ -162,71 +159,71 @@ if (isset($_POST['registracia'])  &&  $_POST['registracia']=='Проверить
     $_SESSION['regimRaboty']=13;
     $mailQ=quotemeta($_POST['Почта']);
     $mailQ=preg_replace('/\\\./','.',$mailQ);
-    $menuUp->__unserialize(array('menu4','registracia',
+    $red->__unserialize(array('menu4','registracia',
                                  'redaktor.php',
                                  quotemeta($_POST['Логин']),
                                  quotemeta($_POST['parol']),
                                  quotemeta($_POST['parol2']),
                                  $mailQ,
-                                 $status->capcha()));
-    if ($status->prowerkaLogin()) 
+                                 $red->capcha()));
+    if ($red->prowerkaLogin()) 
         echo '<p class="error">Такой логин уже существует или не соответствует правилам.</p>'; 
     else  echo '<p class="mesage">Логин свободен.</p>';
-    if ($status->prowerkaMail()) 
+    if ($red->prowerkaMail()) 
         echo '<p class="error">Такая почта уже существует или не соответствует правилам.</p>'; 
     else  echo '<p class="mesage">Почта свободна.</p>';
 }
 if (isset($_POST['registracia']) && $_POST['registracia']=='Очистить') { //Если нажата кнопка Очистить
     $_SESSION['regimRaboty']=13;
-    $menuUp->__unserialize(array('menu4','registracia','redaktor.php','Логин','Пароль','Повторить','Почта',$status->capcha()));
+    $red->__unserialize(array('menu4','registracia','redaktor.php','Логин','Пароль','Повторить','Почта',$red->capcha()));
 }
 if (isset($_POST['registracia']) && $_POST['registracia']=='Сменить капчу') { //Если нажата кнопка Сменить капчу
     $_SESSION['regimRaboty']=13;
     $mailQ=quotemeta($_POST['Почта']);
     $mailQ=preg_replace('/\\\./','.',$mailQ);
-    $menuUp->__unserialize(array('menu4','registracia',
+    $red->__unserialize(array('menu4','registracia',
                                  'redaktor.php',
                                  quotemeta($_POST['Логин']),
                                  quotemeta($_POST['parol']),
                                  quotemeta($_POST['parol2']),
                                  $mailQ,
-                                 $status->capcha()));
+                                 $red->capcha()));
 }
 if (isset($_POST['login'])  &&  $_POST['login']=='Регистрация') { //Если нажата кнопка Регистрация
-    $menuUp->__unserialize(array('menu4','registracia',
+    $red->__unserialize(array('menu4','registracia',
                                  'redaktor.php',
                                  'Логин',
                                  'Пароль',
                                  'Повторить',
                                  'Почта',
-                                 $status->capcha()));
+                                 $red->capcha()));
     $_SESSION['regimRaboty']=13;
 }
 ///////////////////////////////////////////////////////////Конец работы с регистрацией///////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Кнопка Удалить учётной записи
 if (isset($_POST['redaktirowanieStatusa']) && $_POST['redaktirowanieStatusa']=='Удалить')   
-    $status->killGosc();
+    $red->killGosc();
 // Кнопка сохранение учётной записи
 if (isset($_POST['redaktirowanieStatusa']) && $_POST['redaktirowanieStatusa']=='Сохранить')   
-    $status->saveStatusR();
+    $red->saveStatusR();
 // Кнопка сбросить пароль учётной записи
 if (isset($_POST['redaktirowanieStatusa']) && $_POST['redaktirowanieStatusa']=='Сбр.пароль')   
-    $status->resetParol();
+    $red->resetParol();
 //Если нажата 7 кнопка Статус
-if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',7)) 
+if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$red->getNamepoId('redaktor_nastr7',7)) 
    || $_SESSION['regimRaboty']==19) { 
           $_SESSION['regimRaboty']=19;
-          $status->listKlientow();
+          $red->listKlientow();
 }
 //Если нажата  кнопка Маты
 if ((isset($_POST['redaktor_nastr7']) 
-   && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',8)) 
+   && $_POST['redaktor_nastr7']==$red->getNamepoId('redaktor_nastr7',8)) 
       || $_SESSION['regimRaboty']==21)  
           $_SESSION['regimRaboty']=21;
 
 if ((isset($_POST['redaktor_nastr7']) 
-   && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',9)) 
+   && $_POST['redaktor_nastr7']==$red->getNamepoId('redaktor_nastr7',9)) 
       || $_SESSION['regimRaboty']==22)    // нажата кнопка Статистика
           $_SESSION['regimRaboty']=22;
 
@@ -259,7 +256,7 @@ if (isset($_POST['buttonTabUniwJestUge']) && $_POST['buttonTabUniwJestUge']=='OK
     $red->createStyleTabUParametryTabliws();
 
 //Если нажата кнопка Создать таблицу для меню
-if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',2)) { 
+if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$red->getNamepoId('redaktor_nastr7',2)) { 
     $red->createStyleTabUProwerkaImeni($_POST['text_redaktor_nastr']);
     $_SESSION['nameTablice']=$_POST['text_redaktor_nastr'];
     $_SESSION['regimRaboty']=11;
@@ -273,7 +270,7 @@ if (isset($_POST['redaktor_up']) && $_POST['redaktor_up']=='Выйти') { //Е�
     session_destroy();
     $_SESSION['status']=0;
     $_SESSION['obnovit']=true;
-    $status->tutObnovit();
+    $red->tutObnovit();
 }
 if (isset($_POST['saveTabeMenu']) && $_POST['saveTabeMenu']=='Сохранить')  //Если не нажата кнопка Создать таблицу для меню
     $red->saveFormTablicyMenu($_SESSION['nameTablice']);
@@ -288,14 +285,14 @@ if (isset($_POST['killTabOk']) && $_POST['killTabOk']=='Согласен уда�
     $red->killZapisTablicy("tablica_tablic",$where);
     $_SESSION['nameTablice']='';
 }
-if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',1)) { //Если нажата кнопка Загрузить таблицу для меню
+if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$red->getNamepoId('redaktor_nastr7',1)) { //Если нажата кнопка Загрузить таблицу для меню
     $_SESSION['regimRaboty']=10;
     $_SESSION['nameTablice']=$_POST['text_redaktor_nastr'];
     $red->saveNameTable($_SESSION['nameTablice']);
     $red->loadTablic($_SESSION['nameTablice']);
     $_SESSION['pokazNULL']=false;
 }
-if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',5)) { //Если не нажата кнопка Создать таблицу для меню
+if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$red->getNamepoId('redaktor_nastr7',5)) { //Если не нажата кнопка Создать таблицу для меню
     $_SESSION['regimRaboty']=8;
     $red->killTabEtap1($_SESSION['nameTablice']);
 }
@@ -314,9 +311,9 @@ if (isset($_POST['tablicaJest']) && $_POST['tablicaJest']=='Cancel') { //Есл�
     $_SESSION['regimRaboty']=5;
     echo('Cansel');
 }
-if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',3))   //Создать меню
+if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$red->getNamepoId('redaktor_nastr7',3))   //Создать меню
     $_SESSION['regimRaboty']=2;
-if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$menuUp->getNamepoId('redaktor_nastr7',6))   //Создать меню 5
+if (isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$red->getNamepoId('redaktor_nastr7',6))   //Создать меню 5
     $_SESSION['regimRaboty']=18;
 if (isset($_POST['menuUp']) && $_POST['menuUp']=='Home')   //Если не нажата кнопка 
     $_SESSION['regimRaboty']=1;

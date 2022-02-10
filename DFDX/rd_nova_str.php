@@ -5,15 +5,11 @@ session_start();
 
 include 'funcii.php';
 include 'class.php';
-$status = new login();
-$maty = new maty();
-$menuUp = new menu(); 
 $class = new Modul();  
 $stat = new  statistic();
 $poisk = new poisk();
 $header = new Header();
 $futter = new futter();
-$nonTemplates = new NonTemplates();
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
@@ -32,20 +28,20 @@ if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
 if (!isset($_SESSION['sSajta'])) $_SESSION['sSajta']=false;
 
-if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
+if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$poisk->statusRegi($_SESSION['login'],$_SESSION['parol']);
 if ($_SESSION['status']>99) $_SESSION['status']=9;
 echo '<a name="vverh">';
       if ($_SESSION['status']>99 || $_SESSION['status']==9)
-         $menuUp->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
+         $poisk->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
 
       if ($_SESSION['status']==5 || $_SESSION['status']==4)
-         $menuUp->__unserialize(array('menu3','redaktor_up','Редактор','Сайт','Выйти','Создать страницу','Подсветить меню'));
+         $poisk->__unserialize(array('menu3','redaktor_up','Редактор','Сайт','Выйти','Создать страницу','Подсветить меню'));
 
       if ($_SESSION['status']==0)
-         $menuUp->__unserialize(array('menu4','login','redaktor.php','Логин','Пароль','Вход','Регистрация'));
+         $poisk->__unserialize(array('menu4','login','redaktor.php','Логин','Пароль','Вход','Регистрация'));
 
        if ($_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3)
-         $menuUp->menu('dla_statusob_123');
+         $poisk->menu('dla_statusob_123');
       
       if (isset($_SESSION['status']) && $_SESSION['status']>0)
         echo '<h6>Вы вошли под логином: '.$_SESSION['login'].'</h6>';
@@ -66,7 +62,7 @@ if (isset($_POST['variantNowaStr'])
 
 // меню выбора типа страницы nastrNowaStranica.php
 if ($_SESSION['variantNowaStr']==0)
-    $maty->formBlock(
+    $poisk->formBlock(
         'nastrNovStranic',
         'rd_nova_str.php',
         'text',                           

@@ -8,9 +8,8 @@ require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
+
   $redaktor=new Modul();
-  $status = new login();
-  $maty = new maty();
   $poisk = new poisk();
   $statistik = new statistic();
   $header = new Header();
@@ -46,9 +45,9 @@ if ($_SESSION["status"]==0)             // если пользователь н�
         $_SESSION["login"]=$_POST['login'];
         $_SESSION["parol"]=$_POST['parol'];
       }
-if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
+if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$poisk->statusRegi($_SESSION["login"],$_SESSION["parol"]);
 if ($_SESSION["status"]>99) $_SESSION["status"]=9;
-$maty->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Пароль'));
+$poisk->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Пароль'));
 //$_SESSION['redaktiruem']="#страница обработки правого меню#";
 ////////////////////////////Начало основного кода страницы//////////////////////////  
 ///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
@@ -70,7 +69,7 @@ if (stripos($_SERVER['REQUEST_URI'],'news')!==false) {
   $pathMas=preg_split('/news/',$_SERVER['REQUEST_URI']);
   $pathFile='news'.$pathMas[1];
   $zapros="SELECT bd2.name FROM bd2, url_po_id_bd2 WHERE bd2.id=url_po_id_bd2.id AND url_po_id_bd2.url='".$pathFile."'";
-  $rez=$maty->zaprosSQL($zapros);
+  $rez=$poisk->zaprosSQL($zapros);
   if ($poisk->notFalseAndNULL($rez)) {
         $stroka=mysqli_fetch_array($rez);
         zagolowkaBeg($stroka[0]);
@@ -83,7 +82,7 @@ echo '</div>';
 echo '</section>';
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////ловим кнопку правой панели///////////////////////////////////////////////////////////////
-$statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
+$statiaPoId=$poisk->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 echo '<section class="container-fluid">';
 echo '<div class="row">';

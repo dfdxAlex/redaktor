@@ -349,7 +349,7 @@ trait TraitInterfaceWorkToMenu
             if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP'  && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
                 $linkButton=$stroka['URL'];
             if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
-            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'"/>';
+            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($linkButton).'"/>';
             if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
           }
 
@@ -422,7 +422,7 @@ trait TraitInterfaceWorkToMenu
                     if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
                         $linkButton=$stroka['URL'];
                         if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
-                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
+                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($linkButton).'">';
                         if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
                     }
                 if ($stroka['ID']==$idPoz)
@@ -503,7 +503,7 @@ trait TraitInterfaceWorkToMenu
                     if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
                         $linkButton=$stroka['URL'];
                         if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];  
-                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
+                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($linkButton).'">';
                         if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
                     }
                     if ($stroka['ID']==$idPoz)
@@ -592,7 +592,7 @@ trait TraitInterfaceWorkToMenu
                         && $stroka['NAME']!='hr'  && $stroka['NAME']!='col1' && (!stripos('-'.$stroka['NAME'],'col2') && !stripos($stroka['NAME'],'&') && !stripos ('-'.$stroka['NAME'],'col3')) ) {   
                            $linkButton=$stroka['URL'];
                            if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
-                           echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$linkButton.'">';
+                           echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($linkButton).'">';
                            if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
                      }
                 if ($stroka['ID']==$idPoz)

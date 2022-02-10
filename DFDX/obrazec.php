@@ -6,10 +6,8 @@ require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
-  $status = new login();
-  $maty = new maty();
+
   $statistik = new statistic();
-  $menuUp = new menu();
   $poisk = new poisk();
   $header = new Header();
   $futter = new futter();
@@ -32,19 +30,19 @@ if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
 if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
 
 if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) 
-    $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
+    $_SESSION["status"]=$poisk->statusRegi($_SESSION["login"],$_SESSION["parol"]);
 if ($_SESSION["status"]>99) $_SESSION["status"]=9;
 
 
 
 if ($_SESSION["status"]>99 || $_SESSION["status"]==9)
-   $menuUp->__unserialize(array("menu6","podtverdit","redaktor.php","Введите код"));
+   $poisk->__unserialize(array("menu6","podtverdit","redaktor.php","Введите код"));
 if ($_SESSION["status"]==5 || $_SESSION["status"]==4)
-   $menuUp->__unserialize(array("menu3","redaktor_up","Редактор","Сайт","Выйти","Создать страницу"));
+   $poisk->__unserialize(array("menu3","redaktor_up","Редактор","Сайт","Выйти","Создать страницу"));
 if ($_SESSION["status"]==0)
-   $menuUp->__unserialize(array("menu4","login","redaktor.php","Логин","Пароль","Вход","Регистрация"));
+   $poisk->__unserialize(array("menu4","login","redaktor.php","Логин","Пароль","Вход","Регистрация"));
 if ($_SESSION["status"]==1 || $_SESSION["status"]==2 || $_SESSION["status"]==3)
-   $menuUp->menu("dla_statusob_123");
+   $poisk->menu("dla_statusob_123");
 if (isset($_SESSION["status"]) && $_SESSION["status"]>0)
   echo "<h6>Вы вошли под логином: ".$_SESSION["login"]."</h6>";
 else {

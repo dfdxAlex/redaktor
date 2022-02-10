@@ -9,13 +9,10 @@ require "image/swapImages.php";
 require "class.php";
 
 $class = new statistic();
-$status = new login();
-$maty = new maty();
 $redaktor=new Modul();
 $poisk = new poisk();
 $header = new Header();
 $futter = new futter();
-$nonTemplates = new NonTemplates();
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
@@ -33,7 +30,7 @@ if (!isset($_SESSION['regimRaboty'])) $_SESSION['regimRaboty']=0;
 if (!isset($_SESSION['status'])) $_SESSION['status']=0;
 if (!isset($_SESSION['sSajta'])) $_SESSION['sSajta']=false;
 
-if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$status->statusRegi($_SESSION['login'],$_SESSION['parol']);
+if (isset($_SESSION['login']) && isset($_SESSION['parol'])) $_SESSION['status']=$poisk->statusRegi($_SESSION['login'],$_SESSION['parol']);
 if ($_SESSION['status']>99) $_SESSION['status']=9;
 
 echo '<a name="vverh">';
@@ -220,7 +217,7 @@ if (!$errorName)
       $class->statistikOnOff();
 
   if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
-       $maty->redactMaty();
+       $poisk->redactMaty();
 
 echo '</div>';
 echo '</div>';
