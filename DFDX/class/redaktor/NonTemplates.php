@@ -34,10 +34,10 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
                 $bylPoisk=true;
          }
         if (!$bylPoisk) {
-            $statiaPoId=$$modul->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
+            $statiaPoId=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
 
             if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели проверяем нажатие заголовков статей
-                $statiaPoId=$$modul->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
+                $statiaPoId=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
 
             if (isset($_SESSION['statiaPoId']))
                if ($statiaPoId=='netKnopki') 
