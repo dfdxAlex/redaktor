@@ -92,7 +92,7 @@ trait TraitInterfaceWorkToMenu
                 if ($stroka['URL']!='default')
                     echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
                 if ($stroka['URL']=='default')
-                    echo '<form class="form_'.$stroka['CLASS'].'" action="'.$this->initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+                    echo '<form class="form_'.$stroka['CLASS'].'" action="'.$this->searcNamePath($this->initsite()).'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
             $i++;
         }
         echo'</section>';
@@ -166,7 +166,7 @@ trait TraitInterfaceWorkToMenu
                    echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
            if ($this->kn[$i])
                if ($stroka['URL']=='default')
-                   echo '<form class="form_'.$stroka['CLASS'].'" action="'.$this->initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+                   echo '<form class="form_'.$stroka['CLASS'].'" action="'.$this->searcNamePath($this->initsite()).'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
         $i++;
         }
         echo'</section>';
@@ -190,7 +190,7 @@ trait TraitInterfaceWorkToMenu
            if ($stroka['URL']!='default')
            echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
            if ($stroka['URL']=='default')
-           echo '<form class="form_'.$stroka['CLASS'].'" action="'.$this->initsite().'" method="POST"><button class="button_'.$stroka['CLASS'].'" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+           echo '<form class="form_'.$stroka['CLASS'].'" action="'.$this->searcNamePath($this->initsite()).'" method="POST"><button class="button_'.$stroka['CLASS'].'" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
          }
         unset($value);
         echo'</section>';
@@ -252,7 +252,7 @@ trait TraitInterfaceWorkToMenu
                 } else echo '<br>';           
 
             if ($stroka['URL']=='default')
-                echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->initsite().'"/>';
+                echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
             $i++;
         }
         echo '</form>';
@@ -318,7 +318,7 @@ trait TraitInterfaceWorkToMenu
                   } else echo '<br>';    
              
              if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-                 echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->initsite().'"/>';
+                 echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
              $i++;
         }
         echo '</form>';
@@ -389,7 +389,7 @@ trait TraitInterfaceWorkToMenu
                     } else echo '<br>';  
 
               if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-                  echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->initsite().'"/>';
+                  echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
          }
         echo '</form>';
         echo'</section>';
@@ -467,7 +467,7 @@ trait TraitInterfaceWorkToMenu
 
                 if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
                     if ($stroka['URL']=='default')
-                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->initsite().'"/>';
+                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
     
              }
              $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
@@ -555,7 +555,7 @@ trait TraitInterfaceWorkToMenu
 
                     if ($stroka['ID']==$idPoz)
                         if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-                            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->initsite().'"/>';
+                            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
                  }
               $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
               $rez=$this->zaprosSQL($zapros);
@@ -643,7 +643,7 @@ trait TraitInterfaceWorkToMenu
                         } else echo '<br>';    
                 if ($stroka['ID']==$idPoz)
                     if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->initsite().'"/>';
+                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
           
                 if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
                     if ($stroka['URL']=='p' || $stroka['URL']=='h1' || $stroka['URL']=='h2' || $stroka['URL']=='h3' || $stroka['URL']=='h4' || $stroka['URL']=='h5' || $stroka['URL']=='h6' || $stroka['URL']=='div')

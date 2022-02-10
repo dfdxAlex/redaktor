@@ -2,8 +2,8 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-//файл сгенерирован CMS-DFDX 2022-02-09 18:20:33
-//file generated CMS-DFDX 2022-02-09 18:20:33
+//файл сгенерирован CMS-DFDX 2022-02-10 21:33:10
+//file generated CMS-DFDX 2022-02-10 21:33:10
 session_start();
 include "../../funcii.php";
 include "../../functionDfdx.php";
@@ -11,8 +11,6 @@ include "../../image/swapImages.php";
 include "../../class.php";
 
   $redaktor=new Modul();
-  $status = new login();
-  $maty = new maty();
   $poisk = new poisk();
   $statistik = new statistic();
   $header = new Header();
@@ -56,7 +54,7 @@ if ($_SESSION["status"]==0)             // если пользователь н�
         $_SESSION["parol"]=$_POST['parol'];
   }
 if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) 
-    $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
+    $_SESSION["status"]=$poisk->statusRegi($_SESSION["login"],$_SESSION["parol"]);
 echo '<section class="container-fluid">';
     echo '<div class="row">';
         echo '<div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-12">';
@@ -68,11 +66,10 @@ echo '<section class="container-fluid">';
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">';
         if ($_SESSION["status"]>99) 
             $_SESSION["status"]=9;
-        echo '<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>';
+        $poisk->__unserialize(array('menu9','menu_up_dfdx',$poisk->searcNamePath('dfdx.php'),'Логин','Пароль'));
         echo '</div>';
     echo '</div>';
 echo '</section>';
-//$_SESSION['redaktiruem']="dfdx.php";
 ////////////////////////////Начало основного кода страницы//////////////////////////  
 ///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
 echo '  <img src="'.$poisk->searcNamePath('image/logo.png').'" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
@@ -92,7 +89,7 @@ echo '<section class="container-fluid">';
                 $pathMas=preg_split('/news/',$_SERVER['REQUEST_URI']);
                 $pathFile='news'.$pathMas[1];
                 $zapros="SELECT bd2.name FROM bd2, url_po_id_bd2 WHERE bd2.id=url_po_id_bd2.id AND url_po_id_bd2.url='".$pathFile."'";
-                $rez=$maty->zaprosSQL($zapros);
+                $rez=$poisk->zaprosSQL($zapros);
                 if ($poisk->notFalseAndNULL($rez)) {
                     $stroka=mysqli_fetch_array($rez);
                     zagolowkaBeg($stroka[0]);
@@ -111,52 +108,25 @@ echo '<section class="container-fluid pole">';
         //levoeMenu();
         echo '</div>';
 
-        echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
-        $bylPoisk=false;
-        $action='action=#';  //страница обработки кнопок в модуле news()
-        $runNewsIsNews1=30;
-        $metka='abzacy-html'; //метка для счётчика статистики посещения конкретной страницы
-        $nomerNewsPoisk='Число_статей=5';
-        $nomerNewsGlawn='Число_статей=5';
-        //if (!file_exists($action)) $action=basename(__FILE__);
+echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 
-        ////////////////////////////////////////////////////поиск
-        if (isset($_POST['poisk'])) {
-            $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati) ;
-            if ($idStati[0]>-1)
-                foreach($idStati as $value) 
-                    $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value,$nomerNewsPoisk);
-                $bylPoisk=true;
-         }
-        ///////////////////////////////////////////////////
-        //маркер
-        if (!$bylPoisk) {
-            $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
+//метка для счётчика статистики посещения конкретной страницы
+//etykieta licznika statystyk odwiedzin na określonej stronie
+//label for the statistics counter of visits to a specific page
+$metka='abzacy-html'; 
 
-            if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели проверяем нажатие заголовков статей
-                $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
-
-            if (isset($_SESSION['statiaPoId']))
-               if ($statiaPoId=='netKnopki') 
-                  $statiaPoId=$_SESSION['statiaPoId'];
-
-            if ($statiaPoId=='netKnopki' || isset($_POST['menu_up_dfdx']))  // Если не была нажата кнопка правой панели
-               $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
-
-// Комментарий внизу снимается в сгенерированных автоматически новостях от модуля news1      
-// The comment below is removed from the automatically generated news from the news1 module    
-//НЕ УДАЛЯТЬ, ИСПОЛЬЗУЕТСЯ в персональных ссылках
-if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
-
-            if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']) && $statiaPoId!='netKnopki')
-               $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
-          }
+// функция управляет выводом статей в разных режимах используя функцию news1
+// funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
+// the function controls the output of articles in different modes using the news1 function
+$nonTemplates->publishNews($redaktor,'action=#','Число_статей=5',30);
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
 buttonTwitter("Абзацы HTML http://dfdx.uxp.ru/news/non-path/abzacy-html.php");
 
+//Служебная переменная
 $_SESSION["runStrNews"]=false; // обнуление переменной
+
 echo '</div>';
 
 // функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту

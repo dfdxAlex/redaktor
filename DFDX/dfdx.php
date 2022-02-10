@@ -11,8 +11,6 @@ require "image/swapImages.php";
 require "class.php";
 
   $redaktor=new Modul();
-  $status = new login();
-  //$maty = new maty();
   $poisk = new poisk();
   $statistik = new statistic();
   $header = new Header();
@@ -56,7 +54,7 @@ if ($_SESSION["status"]==0)             // если пользователь н�
         $_SESSION["parol"]=$_POST['parol'];
   }
 if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) 
-    $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
+    $_SESSION["status"]=$poisk->statusRegi($_SESSION["login"],$_SESSION["parol"]);
 echo '<section class="container-fluid">';
     echo '<div class="row">';
         echo '<div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-12">';
@@ -112,15 +110,23 @@ echo '<section class="container-fluid pole">';
 
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 
-$metka='dfdx'; //метка для счётчика статистики посещения конкретной страницы
+//метка для счётчика статистики посещения конкретной страницы
+//etykieta licznika statystyk odwiedzin na określonej stronie
+//label for the statistics counter of visits to a specific page
+$metka='dfdx'; 
 
+// функция управляет выводом статей в разных режимах используя функцию news1
+// funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
+// the function controls the output of articles in different modes using the news1 function
 $nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=5',-1);
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
 //buttonTwitter
 
+//Служебная переменная
 $_SESSION["runStrNews"]=false; // обнуление переменной
+
 echo '</div>';
 
 // функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
