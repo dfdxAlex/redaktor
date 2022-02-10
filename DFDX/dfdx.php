@@ -103,10 +103,12 @@ echo '<section class="container-fluid">';
 echo '</section>';
 //////////////////////////////////////////////////////////////////////////////
 echo '<section class="container-fluid pole">';
-    echo '<div class="row">';
-        echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';  // Левое меню
-        levoeMenu();
-        echo '</div>';
+echo '<div class="row">';
+
+// блок для вывода левого меню
+echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';
+$nonTemplates->leftMenu();
+echo '</div>';
 
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 
@@ -133,7 +135,7 @@ $nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=
 //Служебная переменная
 $_SESSION["runStrNews"]=false; // обнуление переменной
 
-echo '</div>';
+echo '</div>'; // Центр
 
 // функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
 // the function displays the right menu along with its part of the Bootstrap markup and the site search function

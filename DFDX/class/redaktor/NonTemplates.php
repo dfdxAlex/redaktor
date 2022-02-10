@@ -15,6 +15,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
   use \class\redaktor\interface\trait\TraitInterfaceWorkToMenu;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToNonTemplates;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToSearch;
+  use \class\redaktor\interface\trait\TraitInterfaceWorkToStatistik;
 
     public function __construct()
      {
@@ -22,6 +23,78 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
       $this->tableValidationCMS();
      }
     
+     public function leftMenu()
+     {
+        $this->formBlock('levBlock','dfdx.php',
+        'submit',
+        'levBlock',
+        'API DFDX',
+        'apidfdx.php',
+        'br',
+        'submit',
+        'levBlock',
+        'CMS DFDX',
+        'cms-dfdx.php',
+        'br',
+        'submit',
+        'levBlock',
+        'GIT',
+        'git.php',
+        'br',
+        'submit',
+        'levBlock',
+        'HTML',
+        'htmlFoDfdx.php',
+        'br',
+        'submit',
+        'levBlock',
+        'XHTML',
+        'xhtml.php',
+        'br',
+        'submit',
+        'levBlock',
+        'HTML5',
+        'html5FoDfdx.php',
+        'br',
+        'submit',
+        'levBlock',
+        'CSS3',
+        '#',
+        'br',
+        'submit',
+        'levBlock',
+        'Bootstrap 5',
+        '#',
+        'br',
+        'submit',
+        'levBlock',
+        'jQuery',
+        '#',
+        'br',
+        'submit',
+        'levBlock',
+        'Регулярные в...',
+        'regular_expressions.php',
+        'br',
+        'submit',
+        'levBlock',
+        'PHP8',
+        '#',
+        'br',
+        'submit',
+        'levBlock',
+        'PSR',
+        'psr.php',
+        'br',
+        '3',
+        'submit',
+        'levBlock',
+        'Задачи',
+        'leson.php'
+            );
+
+     }
+
      public function publishNews(\class\redaktor\Modul $modul, string $action, string $nomerNewsGlawn, int $runNewsIsNews1, string $nameBD, string $searchСategory, string $articleSection)
      {
         $bylPoisk=false;

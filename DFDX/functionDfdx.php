@@ -83,6 +83,7 @@ function contentLeson() //Выводит содержание для LESON
 
 
 }
+
 function levoeMenu() //Выводит левое меню
 {
     $clas=new \class\redaktor\statistic();

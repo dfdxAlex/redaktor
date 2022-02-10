@@ -60,4 +60,7 @@ interface InterfaceWorkToNonTemplates extends InterfaceWorkToMenu
     // string parameter $searchCategory determines which categories the poiskStati() function will work with.
     // string parameter $articleSection determines which categories the news1() function will work with.
     public function publishNews(\class\redaktor\Modul $modul,string $action,string $nomerNewsGlawn, int $runNewsIsNews1, string $nameBD, string $searchСategory, string $articleSection);
+
+    // функция выводит левое меню на странице сайта
+    public function leftMenu();
 }
