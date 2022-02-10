@@ -62,5 +62,7 @@ interface InterfaceWorkToNonTemplates extends InterfaceWorkToMenu
     public function publishNews(\class\redaktor\Modul $modul,string $action,string $nomerNewsGlawn, int $runNewsIsNews1, string $nameBD, string $searchСategory, string $articleSection);
 
     // функция выводит левое меню на странице сайта
+    // funkcja wyświetla lewe menu na stronie serwisu
+    // function displays the left menu on the site page
     public function leftMenu();
 }
