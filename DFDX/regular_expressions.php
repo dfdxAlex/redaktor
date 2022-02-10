@@ -1,30 +1,25 @@
 <?php
+namespace class\redaktor;
+
 session_start();
 require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
-  use \class\redaktor\Modul as modul;
-  use \class\redaktor\login as login;
-  use \class\redaktor\maty as maty;
-  use \class\redaktor\poisk as poisk;
-  use \class\redaktor\statistic as statistic;
-  $instrum= new initBd();
+
+  $class = new statistic();
   $redaktor= new Modul();
-  $status = new login();
-  $maty = new maty();
-  $poisk = new poisk();
-  $statistik = new statistic();
   $header = new Header();
   $futter = new futter();
+  $nonTemplates = new NonTemplates();
 
   echo '<!DOCTYPE html>';
   echo '<html lang="ru">';
   echo '<head>';
   
-    $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+    $class->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
     $header->headStart('<title>Регулярные выражения</title>');
-    $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
+    $header->headBootStrap5([$class->searcNamePath('styli.css'),$class->searcNamePath('dfdx.css')]);
   
   echo '</head>';
   echo '<body>';
@@ -48,9 +43,9 @@ if ($_SESSION["status"]==0)             // если пользователь н�
         $_SESSION["login"]=$_POST['login'];
         $_SESSION["parol"]=$_POST['parol'];
       }
-if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
+if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$class->statusRegi($_SESSION["login"],$_SESSION["parol"]);
 $_SESSION['redaktiruem']="regular_expressions.php";
-$maty->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Пароль'));
+$class->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Пароль'));
 ////////////////////////////Начало основного кода страницы//////////////////////////  
 ///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
 echo '  <img src="image/logo.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
@@ -69,7 +64,7 @@ echo '</section>';
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////ловим кнопку правой панели///////////////////////////////////////////////////////////////
 
-$statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
+$statiaPoId=$class->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 echo '<section class="container-fluid">';
 echo '<div class="row">';
@@ -156,7 +151,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
              if (isset($_POST['flags']) && $_POST['flags']!='') $_SESSION['flags']=$_POST['flags']; 
    
          ///////////////////////////////////////////////////////////////////////////////////
-         $maty->formBlock('block_function_test_preg_replace_callback_array','regular_expressions.php','bootstrap-start',
+         $class->formBlock('block_function_test_preg_replace_callback_array','regular_expressions.php','bootstrap-start',
                 'p','preg_replace_callback_array(','regular-block-name-function-preg_replace_callback_array',
                 'bootstrap-f-start',
                 'text','pattern1',$_SESSION['pattern1'],
@@ -227,9 +222,9 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
                          }
                  ////////////////////////////////////////////////////////////////////////////////////////////// 
               echo 'Массив регулярных выражений вместе с callback-функцией:<br>';
-              echo $instrum->printMas($mas).'<br><br>';
+              echo $class->printMas($mas).'<br><br>';
               echo 'Субъект, с которым проводятся манипуляции:<br>';
-              echo $instrum->printMas($subject3).'<br><br>';
+              echo $class->printMas($subject3).'<br><br>';
               if (gettype($_SESSION['limit'])!='integer') $limit=-1;
                else $limit=$_SESSION['limit']+0;
               if ($limit<-1) $limit=-1;
@@ -246,24 +241,24 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
                 [
                   '~'.$_SESSION['pattern1'].'~u' => function ($match) {
                         echo 'Входной массив:<br>';
-                        $instrum= new instrument();
-                        $instrum->printMas($match).'<br>';
+                        $class= new instrument();
+                        $class->printMas($match).'<br>';
                         return $_SESSION['retur1'];
                       },
                   '~'.$_SESSION['pattern2'].'~u' => function ($match) {
-                        $instrum= new instrument();
+                        $class= new instrument();
                         echo 'Входной массив:<br>';
-                        $instrum->printMas($match).'<br>';
+                        $class->printMas($match).'<br>';
                         return $_SESSION['retur2'];
                       },
                   '~'.$_SESSION['pattern3'].'~u' => function ($match) {
-                        $instrum= new instrument();
+                        $class= new instrument();
                         echo 'Входной массив:<br>';
-                        $instrum->printMas($match).'<br>';
+                        $class->printMas($match).'<br>';
                         return $_SESSION['retur3'];
                       }
                 ] ,$subject3,$limit,$count,$flag);
-              echo $instrum->printMas($rez).'<br><br>';
+              echo $class->printMas($rez).'<br><br>';
               echo 'Произведено замен:'.$count;
              echo '</div></code>';
            echo '</div>';
@@ -315,7 +310,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
              }
         
         ///////////////////////////////////////////////////////////////////////////////////
-        $maty->formBlock('block_function_test_preg_replace_callback','regular_expressions.php','bootstrap-start',
+        $class->formBlock('block_function_test_preg_replace_callback','regular_expressions.php','bootstrap-start',
                'p','preg_replace_callback(','regular-block-name-function-preg_split-p',
                'bootstrap-f-start',
                'p','string $pattern=>','regular-block-name-function-preg_match-pattern',
@@ -338,11 +333,11 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
                'bootstrap-f-start',
                'p','{','regular-block-name-function-preg_match-pattern-poz1',
                'bootstrap-f-start',
-               'p','$instrum = new instrument();//создание объекта с необходимыми методами','regular-block-name-function-preg_match-pattern-poz2',
+               'p','$class = new instrument();//создание объекта с необходимыми методами','regular-block-name-function-preg_match-pattern-poz2',
                 'bootstrap-f-start',
                'p','echo \'переданы параметры в функцию:\';// сообщение вызов функции callback','regular-block-name-function-preg_match-pattern-poz2',
                 'bootstrap-f-start',
-               'p','echo $instrum->printMas($match);// показать содержимое массива $match','regular-block-name-function-preg_match-pattern-poz2',
+               'p','echo $class->printMas($match);// показать содержимое массива $match','regular-block-name-function-preg_match-pattern-poz2',
                 'bootstrap-f-start',
                'text','callBack',$_SESSION['callBack'],
                'p','// значение для замены, помещено в массив $matches','regular-block-name-function-preg_match-pattern',
@@ -419,10 +414,10 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
               $flags=$flags+512;
 
              echo 'Регулярное выражение:<br>';
-             echo $instrum->printMas($pattern);
+             echo $class->printMas($pattern);
   
              echo '<br><br>Строка или массив для манипуляций:<br>';
-             echo $instrum->printMas($subject).'<br><br>';
+             echo $class->printMas($subject).'<br><br>';
 
              echo 'используемые флаги:'.'<br>';
              $flagTest=$flags;
@@ -434,7 +429,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
              $rezpreg_replace=preg_replace_callback($pattern,
                                                       function ($match) {
                                                         echo '<br>переданы параметры в функцию:<br>';
-                                                        echo $instrum->printMas($match);
+                                                        echo $class->printMas($match);
                                                         $index=preg_match('/[0-9]/u',$_SESSION['callBack'],$matches);
                                                         return $matches[0];
                                                       },
@@ -448,7 +443,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
              if (is_null($rezpreg_replace)) echo 'Функция вернула:NULL';
              echo '<br><br>Переменная: count='.$count.'<br><br>';
              echo 'Вывод через foreach<br><br>';
-             $instrum->printMas($rezpreg_replace); echo '<br><br><br>';
+             $class->printMas($rezpreg_replace); echo '<br><br><br>';
               echo 'Вывод массива через print_r';
               echo '<br>';
               print_r($rezpreg_replace);
@@ -503,7 +498,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
              else $_SESSION['subject'.$i]='';
            }
       ///////////////////////////////////////////////////////////////////////////////////
-      $maty->formBlock('block_function_test_preg_replace','regular_expressions.php','bootstrap-start',
+      $class->formBlock('block_function_test_preg_replace','regular_expressions.php','bootstrap-start',
              'p','preg_replace(','regular-block-name-function-preg_split-p',
              'bootstrap-f-start',
              'p','string $pattern=>','regular-block-name-function-preg_match-pattern',
@@ -591,13 +586,13 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
                   $subject[$i]=$_SESSION['subject'.$i];
 
            echo 'Регулярное выражение:<br>';
-           echo $instrum->printMas($pattern);
+           echo $class->printMas($pattern);
 
            echo '<br><br>Выражение для замены:<br>';
-           echo $instrum->printMas($replacement);
+           echo $class->printMas($replacement);
 
            echo '<br><br>Строка или массив для манипуляций:<br>';
-           echo $instrum->printMas($subject);
+           echo $class->printMas($subject);
 
            $rezpreg_replace=preg_replace($pattern,$replacement,$subject,$_SESSION['limit'],$count);
      
@@ -608,7 +603,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
            echo '<br><br>Переменная: count='.$count.'<br><br>';
 
            echo 'Вывод через foreach<br><br>';
-           $instrum->printMas($rezpreg_replace); echo '<br><br><br>';
+           $class->printMas($rezpreg_replace); echo '<br><br><br>';
             
             echo 'Вывод массива через print_r';
             echo '<br>';
@@ -649,7 +644,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
        if (isset($_POST['limit']) && $_POST['limit']!='') $_SESSION['limit']=$_POST['limit']; 
    
    ///////////////////////////////////////////////////////////////////////////////////
-   $maty->formBlock('block_function_test_preg_split','regular_expressions.php','bootstrap-start',
+   $class->formBlock('block_function_test_preg_split','regular_expressions.php','bootstrap-start',
           'p','preg_split(','regular-block-name-function-preg_split-p',
           'bootstrap-f-start',
           'p','string $pattern=>','regular-block-name-function-preg_match-pattern',
@@ -718,7 +713,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
         echo '<br><br>';
         
         echo 'Вывод через foreach<br><br>';
-        $instrum->printMas($rezPreg_match); echo '<br><br><br>';
+        $class->printMas($rezPreg_match); echo '<br><br><br>';
          
          echo 'Вывод массива через print_r';
          echo '<br>';
@@ -765,7 +760,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
      if (isset($_POST['offset']) && $_POST['offset']!='') $_SESSION['offset']=$_POST['offset']; 
  
  ///////////////////////////////////////////////////////////////////////////////////
- $maty->formBlock('block_function_test_preg_match_all','regular_expressions.php','bootstrap-start',
+ $class->formBlock('block_function_test_preg_match_all','regular_expressions.php','bootstrap-start',
         'p','preg_match_all(','regular-block-name-function-preg_match-all-p',
         'bootstrap-f-start',
         'p','string $pattern=>','regular-block-name-function-preg_match-pattern',
@@ -850,7 +845,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
       echo '<br><br>';
       
       echo 'Вывод через foreach<br><br>';
-      $instrum->printMas($matches); 
+      $class->printMas($matches); 
       echo '<br><br><br>';
        
        echo 'Вывод массива через print_r';
@@ -894,7 +889,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
            if (isset($_POST['offset']) && $_POST['offset']!='') $_SESSION['offset']=$_POST['offset']; 
        
        ///////////////////////////////////////////////////////////////////////////////////
-       $maty->formBlock('block_function_test_preg_match','regular_expressions.php','bootstrap-start',
+       $class->formBlock('block_function_test_preg_match','regular_expressions.php','bootstrap-start',
               'p','preg_match(','regular-block-name-function-preg_match-p',
               'p','string $pattern=>','regular-block-name-function-preg_match-pattern',
               'text','pattern',$_SESSION['pattern'],
@@ -1023,7 +1018,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
         }
        
        ///////////////////////////////////////////////////////////////////////////////////
-       $maty->formBlock('block_function_test_grep','regular_expressions.php','bootstrap-start',
+       $class->formBlock('block_function_test_grep','regular_expressions.php','bootstrap-start',
              'p','array=','regular-block-name-function-filter-p',
              'text2','array_poz_1',$_SESSION['array_poz_1'],'span','=>','vektor-mas','text2','array_1',$_SESSION['array_1'],
              'bootstrap-f-start',
@@ -1109,7 +1104,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
            $_SESSION['result_regular_function']=preg_filter($pattern,$_SESSION['replacement'],$_SESSION['subjekt'],$_SESSION['substitutions'],$_SESSION['substitutions_rez']);
           }
           ///////////////////////////////////////////////////////////////////////////////////
-          $maty->formBlock('block_function_test_filter','regular_expressions.php','bootstrap-start',
+          $class->formBlock('block_function_test_filter','regular_expressions.php','bootstrap-start',
                 'p','preg_filter(','regular-block-name-function-filter-p',
                 'text2','pattern',$_SESSION['pattern'],
                 'p',' ,','zapiataja','bootstrap-f-start',
@@ -1159,7 +1154,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
             if (isset($_POST['stringFunctionDelimiter']) && $_POST['stringFunctionDelimiter']=='') $_SESSION['textValueDelimiter']='Delimiter';
             if (isset($_POST['stringFunctionDelimiter']) && $_POST['stringFunctionDelimiter']!='') $_SESSION['textValueDelimiter']=$_POST['stringFunctionDelimiter']; 
             
-            $maty->formBlock('block_function_test','regular_expressions.php','bootstrap-start',
+            $class->formBlock('block_function_test','regular_expressions.php','bootstrap-start',
                   'p','preg_quote(','regular-block-name-function',
                   'text2','stringFunctionBegin',$_SESSION['textValue'],
                   'p',',','bootstrap-f-start',
@@ -1190,7 +1185,7 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
 $bylPoisk=false;
 
 if (isset($_POST['poisk'])) { 
-  $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati,'категория-regular') ;
+  $class->poiskStati('bd2',$_POST['strPoisk'],$idStati,'категория-regular') ;
   if ($idStati[0]>-1)
     foreach($idStati as $value) 
      $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s45","Шаблон=2","Отступ=1",'action=regular_expressions.php','id='.$value);
@@ -1204,16 +1199,17 @@ if (isset($_POST['poisk'])) {
  buttonTwitter('Тестирование функции (php) '.$_SESSION['name_function_test'].'http://dfdx.uxp.ru/regular_expressions.php');
  echo '</div>';
 //////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
- echo '<div class="poiskDiv">';
-  poiskDfdx('regular_expressions.php');
- echo '</div>';
-pravoePole('regular');
-echo '</div>';
+
+// функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
+// the function displays the right menu along with its part of the Bootstrap markup and the site search function
+$nonTemplates->rightMenu($class,'regular');
 echo '</div>';
 echo '</section>';
-////////////////////////////////////////////////////////////////////////////////////////////////// 
-////////////////////////////Конец основного кода страницы////////////////////////// 
+
+// Функция выводит нижнюю часть сайта
+// The function displays the bottom of the site
 $futter->futterGeneral($class,'regular');
+
+// функция подключает вторую часть бутстрапа и закрывает документ html
+// the function connects the second part of the bootstrap and closes the html document
 $futter->closeHtmlDok();

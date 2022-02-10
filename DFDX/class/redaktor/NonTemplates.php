@@ -14,6 +14,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
   use \class\redaktor\interface\trait\TraitInterfaceFoUser;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToMenu;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToNonTemplates;
+  use \class\redaktor\interface\trait\TraitInterfaceWorkToSearch;
 
     public function __construct()
      {
@@ -21,6 +22,38 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
       $this->tableValidationCMS();
      }
     
+     public function publishNews(\class\redaktor\Modul $modul, string $action, string $nomerNewsGlawn, int $runNewsIsNews1)
+     {
+        $bylPoisk=false;
+
+        if (isset($_POST['poisk'])) {
+            $this->poiskStati('bd2',$_POST['strPoisk'],$idStati);
+            if ($idStati[0]>-1)
+                foreach($idStati as $value) 
+                    $modul->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
+                $bylPoisk=true;
+         }
+        if (!$bylPoisk) {
+            $statiaPoId=$$modul->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
+
+            if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели проверяем нажатие заголовков статей
+                $statiaPoId=$$modul->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
+
+            if (isset($_SESSION['statiaPoId']))
+               if ($statiaPoId=='netKnopki') 
+                  $statiaPoId=$_SESSION['statiaPoId'];
+
+            if ($statiaPoId=='netKnopki' || isset($_POST['menu_up_dfdx']))  // Если не была нажата кнопка правой панели
+               $modul->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
+
+            if ($action!='action=dfdx.php')
+                if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
+
+            if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']) && $statiaPoId!='netKnopki')
+               $modul->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
+          }
+     }
+
      public function rightMenu(interface\interface\InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc)
      {
          echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню

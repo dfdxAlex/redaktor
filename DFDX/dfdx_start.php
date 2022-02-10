@@ -15,6 +15,7 @@ require "class.php";
   $statistik = new statistic();
   $header = new Header();
   $futter = new futter();
+  $nonTemplates = new NonTemplates();
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
@@ -97,8 +98,11 @@ $action='action=dfdx.php';  //страница обработки кнопок �
 $nameBD='bd2';
 $nameBD='nameTD='.$nameBD;
 $metka='dfdx'; //метка для счётчика статистики посещения конкретной страницы
-$nomerNewsPoisk='Число_статей=5';
-$nomerNewsGlawn='Число_статей=5';
+//$nomerNewsPoisk='Число_статей=5';
+//$nomerNewsGlawn='Число_статей=5';
+
+$nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=5',-1);
+
 ////////////////////////////////////////////////////поиск
 if (isset($_POST['poisk'])) {
   $poisk->poiskStati('#таблица для поиска#',$_POST['strPoisk'],$idStati,'#категория для поиска#') ;
@@ -115,19 +119,22 @@ if (isset($_POST['poisk'])) {
       if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
         $redaktor->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=regular_expressions');
   }
+
+//Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
+//The commented out line at the bottom is replaced with a twitter button in generated articles 
+//buttonTwitter
+
 echo '</div>';
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
- echo '<div class="poiskDiv">';
-  poiskDfdx('cms_dfdx.php'); // кнопка Поиск, ссылка на обработчик
- echo '</div>';
-pravoePole('cms-dfdx');   // категория статей, которые должны быть показаны в правом меню 
-echo '</div>';
+
+// функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
+// the function displays the right menu along with its part of the Bootstrap markup and the site search function
+$nonTemplates->rightMenu($statistik,"home");
 echo '</div>';
 echo '</section>';
-////////////////////////////////////////////////////////////////////////////////////////////////// 
-////////////////////////////Конец основного кода страницы////////////////////////// 
-/// Статистика///////////////////////////////////////
+// Функция выводит нижнюю часть сайта
+// The function displays the bottom of the site
 $futter->futterGeneral($statistik,$metka);
+
+// функция подключает вторую часть бутстрапа и закрывает документ html
+// the function connects the second part of the bootstrap and closes the html document
 $futter->closeHtmlDok();

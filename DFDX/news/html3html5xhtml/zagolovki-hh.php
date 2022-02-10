@@ -2,44 +2,34 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-//файл сгенерирован CMS-DFDX 2022-01-30 12:04:34
-//file generated CMS-DFDX 2022-01-30 12:04:34
+//файл сгенерирован CMS-DFDX 2022-02-09 23:01:25
+//file generated CMS-DFDX 2022-02-09 23:01:25
 session_start();
 include "../../funcii.php";
 include "../../functionDfdx.php";
 include "../../image/swapImages.php";
 include "../../class.php";
-  //$b=new instrument();
+
   $redaktor=new Modul();
   $status = new login();
   $maty = new maty();
   $poisk = new poisk();
   $statistik = new statistic();
-?>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MF3F7YTKCQ');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<title>Заголовки h1-h6</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-<?php 
-echo '<link rel="stylesheet" href="'.$poisk->searcNamePath('styli.css').'">';
-echo '<link rel="stylesheet" href="'.$poisk->searcNamePath('dfdx.css').'"> ';
-?>
-<meta name="Cache-Control" content="no-store">
-</head>
-<body>
-<?php
+  $header = new Header();
+  $futter = new futter();
+  $nonTemplates = new NonTemplates();
+
+echo '<!DOCTYPE html>';
+echo '<html lang="ru">';
+echo '<head>';
+
+  $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+  $header->headStart('<title>Заголовки h1-h6</title>');
+  $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
+
+echo '</head>';
+echo '<body>';
+
 if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
 if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
 if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
@@ -82,7 +72,6 @@ echo '<section class="container-fluid">';
         echo '</div>';
     echo '</div>';
 echo '</section>';
-//$_SESSION['redaktiruem']="dfdx.php";
 ////////////////////////////Начало основного кода страницы//////////////////////////  
 ///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
 echo '  <img src="'.$poisk->searcNamePath('image/logo.png').'" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
@@ -122,14 +111,16 @@ echo '<section class="container-fluid pole">';
         echo '</div>';
 
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
-        $bylPoisk=false;
-        $action='action=#';  //страница обработки кнопок в модуле news()
+        //$bylPoisk=false;
+        //$action='action=#';  //страница обработки кнопок в модуле news()
         $runNewsIsNews1=29;
         $metka='zagolovki-hh-'; //метка для счётчика статистики посещения конкретной страницы
-        $nomerNewsPoisk='Число_статей=5';
-        $nomerNewsGlawn='Число_статей=5';
-        //if (!file_exists($action)) $action=basename(__FILE__);
+        //$nomerNewsPoisk='Число_статей=5';
+        //$nomerNewsGlawn='Число_статей=5';
 
+        $nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=5');
+
+/*
         ////////////////////////////////////////////////////поиск
         if (isset($_POST['poisk'])) {
             $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati) ;
@@ -139,9 +130,7 @@ echo '<section class="container-fluid pole">';
                 $bylPoisk=true;
          }
         ///////////////////////////////////////////////////
-        //маркер
         if (!$bylPoisk) {
-            // echo 'ловим кнопку';
             $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
 
             if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели проверяем нажатие заголовков статей
@@ -154,50 +143,33 @@ echo '<section class="container-fluid pole">';
             if ($statiaPoId=='netKnopki' || isset($_POST['menu_up_dfdx']))  // Если не была нажата кнопка правой панели
                $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
 
+            // Комментарий внизу снимается в сгенерированных автоматически новостях от модуля news1      
+            // The comment below is removed from the automatically generated news from the news1 module    
             //НЕ УДАЛЯТЬ, ИСПОЛЬЗУЕТСЯ в персональных ссылках
             if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
 
             if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']) && $statiaPoId!='netKnopki')
                $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
           }
-          buttonTwitter("Заголовки h1-h6 http://dfdx.uxp.ru/news/html3html5xhtml/zagolovki-hh.php");
-          $_SESSION["runStrNews"]=false; // обнуление переменной
-          echo '</div>';
-          /////////////////////////////////////////////////////////////////////////////////////
-          //////////////////////////////////////////////////////////////////////////////////////
-          echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
-              echo '<div class="poiskDiv">';
-              //poiskDfdx('dfdx.php');
-          echo '</div>';
-          pravoePole("home");   // категория статей, которые должны быть показаны в правом меню 
-        echo '</div>';
-    echo '</div>';
-echo '</section>';
-////////////////////////////////////////////////////////////////////////////////////////////////// 
-////////////////////////////Конец основного кода страницы////////////////////////// 
-/// Статистика///////////////////////////////////////
-echo '<footer class="container-fluid futter">';
-if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
-    $statistik->statistikOnOff();
+*/
 
-if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
-    $maty->redactMaty();
+//Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
+//The commented out line at the bottom is replaced with a twitter button in generated articles 
+buttonTwitter("Заголовки h1-h6 http://dfdx.uxp.ru/news/html3html5xhtml/zagolovki-hh.php");
 
-// Вывод статистики Футтер
-$statistik->metkaStatistika($metka);
-echo '<div class="futterDivDfdx">';
-echo '<p class="footerMarginTop">Просмотров:'.$statistik->getMetkaStatistik($metka).'</p>';
-echo '<p class="footerMarginTop">Число запросов к БД: '.$statistik->kolZaprosow().'</p>';
-echo '<p class="footerMarginTop">Начало верстки сайта 2021-09-19</p>';
-echo '<p class="footerMarginTop">CMS-DFDX</p>';
+$_SESSION["runStrNews"]=false; // обнуление переменной
 echo '</div>';
 
-$maty->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
-?>
-</footer>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-</body>
-</html>
+// функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
+// the function displays the right menu along with its part of the Bootstrap markup and the site search function
+$nonTemplates->rightMenu($statistik,"home");
+echo '</div>';
+echo '</section>';
+
+// Функция выводит нижнюю часть сайта
+// The function displays the bottom of the site
+$futter->futterGeneral($statistik,$metka);
+
+// функция подключает вторую часть бутстрапа и закрывает документ html
+// the function connects the second part of the bootstrap and closes the html document
+$futter->closeHtmlDok();

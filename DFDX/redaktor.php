@@ -13,6 +13,7 @@ $poisk = new poisk();
 $statistik = new  statistic();
 $header = new Header();
 $futter = new futter();
+$nonTemplates = new NonTemplates();
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';

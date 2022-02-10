@@ -2,8 +2,8 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-//файл сгенерирован CMS-DFDX 2022-02-09 23:17:06
-//file generated CMS-DFDX 2022-02-09 23:17:06
+//файл сгенерирован CMS-DFDX 2022-02-09 23:18:46
+//file generated CMS-DFDX 2022-02-09 23:18:46
 session_start();
 include "../../funcii.php";
 include "../../functionDfdx.php";
@@ -24,7 +24,7 @@ echo '<html lang="ru">';
 echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-  $header->headStart('<title>Доработка редактора News. CMS-DFDX.</title>');
+  $header->headStart('<title>PSR-1. Стандарт оформления кода PHP.</title>');
   $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
 
 echo '</head>';
@@ -114,7 +114,7 @@ echo '<section class="container-fluid pole">';
         //$bylPoisk=false;
         //$action=#';  //страница обработки кнопок в модуле news()
         //$runNewsIsNews1=-1;
-        $metka='dorabotka-redaktora-new-cms-dfdx-'; //метка для счётчика статистики посещения конкретной страницы
+        $metka='psrstandart-oformleniya-koda-php-'; //метка для счётчика статистики посещения конкретной страницы
         //$nomerNewsPoisk='Число_статей=5';
         //$nomerNewsGlawn='Число_статей=5';
 
@@ -155,7 +155,7 @@ echo '<section class="container-fluid pole">';
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
-buttonTwitter("Доработка редактора News. CMS-DFDX. http://dfdx.uxp.ru/news/cmsdfdx/dorabotka-redaktora-new-cms-dfdx.php");
+buttonTwitter("PSR-1. Стандарт оформления кода PHP. http://dfdx.uxp.ru/news/psr/psrstandart-oformleniya-koda-php.php");
 
 $_SESSION["runStrNews"]=false; // обнуление переменной
 echo '</div>';

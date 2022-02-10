@@ -8,11 +8,12 @@ include 'class.php';
 $status = new login();
 $maty = new maty();
 $menuUp = new menu(); 
-$instrum = new Modul();  
+$class = new Modul();  
 $stat = new  statistic();
 $poisk = new poisk();
 $header = new Header();
 $futter = new futter();
+$nonTemplates = new NonTemplates();
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
@@ -90,7 +91,7 @@ if ($_SESSION['variantNowaStr']==2) {// Нажата кнопка ...Пуста�
 
 
      
-  if ($instrum->numberNews($nameCategori)>0) $nameCategori='Задайте категорию вручную';
+  if ($class->numberNews($nameCategori)>0) $nameCategori='Задайте категорию вручную';
   if ($stat->getMetkaStatistik($nameMetka)>0) $nameMetka='Задайте метку счётчика для страницы';
 
      // проверим есть ли в названии файла .php, если нет, то добавить

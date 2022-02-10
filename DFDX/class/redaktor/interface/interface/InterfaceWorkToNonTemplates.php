@@ -32,4 +32,11 @@ interface InterfaceWorkToNonTemplates extends InterfaceWorkToMenu
     // parametr InterfaceWorkToStatistik to dowolny obiekt tego typu
     // InterfaceWorkToStatistik parameter is any object of this type
     function pravoePole(InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc);
+
+    // Функция выводит статью с помощью функции news1
+    // параметр Modul $modul необходим для передачи в функцию объекта класса Modul, в котором и живёт news1()
+    // параметр $action - это страница обработки news1, передается в функцию news1
+    // параметр $nomerNewsGlawn определяет сколько статей будет показано на одной странице
+    // параметр $runNewsIsNews1 принимает значение ИД статьи, которую нужно показать на странице персональной ссылки
+    public function publishNews(\class\redaktor\Modul $modul,string $action,string $nomerNewsGlawn, int $runNewsIsNews1);
 }

@@ -2,8 +2,8 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-//файл сгенерирован CMS-DFDX 2022-02-09 23:17:06
-//file generated CMS-DFDX 2022-02-09 23:17:06
+//файл сгенерирован CMS-DFDX 2022-02-09 18:36:32
+//file generated CMS-DFDX 2022-02-09 18:36:32
 session_start();
 include "../../funcii.php";
 include "../../functionDfdx.php";
@@ -24,7 +24,7 @@ echo '<html lang="ru">';
 echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-  $header->headStart('<title>Доработка редактора News. CMS-DFDX.</title>');
+  $header->headStart('<title>Функция preg_replace_callback().</title>');
   $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
 
 echo '</head>';
@@ -72,6 +72,7 @@ echo '<section class="container-fluid">';
         echo '</div>';
     echo '</div>';
 echo '</section>';
+//$_SESSION['redaktiruem']="dfdx.php";
 ////////////////////////////Начало основного кода страницы//////////////////////////  
 ///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
 echo '  <img src="'.$poisk->searcNamePath('image/logo.png').'" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
@@ -111,16 +112,14 @@ echo '<section class="container-fluid pole">';
         echo '</div>';
 
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
-        //$bylPoisk=false;
-        //$action=#';  //страница обработки кнопок в модуле news()
-        //$runNewsIsNews1=-1;
-        $metka='dorabotka-redaktora-new-cms-dfdx-'; //метка для счётчика статистики посещения конкретной страницы
-        //$nomerNewsPoisk='Число_статей=5';
-        //$nomerNewsGlawn='Число_статей=5';
+        $bylPoisk=false;
+        $action='action=#';  //страница обработки кнопок в модуле news()
+        $runNewsIsNews1=11;
+        $metka='funkciya-preg_replace_callback-'; //метка для счётчика статистики посещения конкретной страницы
+        $nomerNewsPoisk='Число_статей=5';
+        $nomerNewsGlawn='Число_статей=5';
+        //if (!file_exists($action)) $action=basename(__FILE__);
 
-        $nonTemplates->publishNews($redaktor,'action=#','Число_статей=5',-1);
-
-/*
         ////////////////////////////////////////////////////поиск
         if (isset($_POST['poisk'])) {
             $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati) ;
@@ -130,6 +129,7 @@ echo '<section class="container-fluid pole">';
                 $bylPoisk=true;
          }
         ///////////////////////////////////////////////////
+        //маркер
         if (!$bylPoisk) {
             $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
 
@@ -143,19 +143,18 @@ echo '<section class="container-fluid pole">';
             if ($statiaPoId=='netKnopki' || isset($_POST['menu_up_dfdx']))  // Если не была нажата кнопка правой панели
                $redaktor->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
 
-            // Комментарий внизу снимается в сгенерированных автоматически новостях от модуля news1      
-            // The comment below is removed from the automatically generated news from the news1 module    
-            //НЕ УДАЛЯТЬ, ИСПОЛЬЗУЕТСЯ в персональных ссылках
-            if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
+// Комментарий внизу снимается в сгенерированных автоматически новостях от модуля news1      
+// The comment below is removed from the automatically generated news from the news1 module    
+//НЕ УДАЛЯТЬ, ИСПОЛЬЗУЕТСЯ в персональных ссылках
+if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
 
             if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']) && $statiaPoId!='netKnopki')
                $redaktor->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
           }
-*/
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
-buttonTwitter("Доработка редактора News. CMS-DFDX. http://dfdx.uxp.ru/news/cmsdfdx/dorabotka-redaktora-new-cms-dfdx.php");
+buttonTwitter("Функция preg_replace_callback(). http://dfdx.uxp.ru/news/phpregular/funkciya-preg_replace_callback.php");
 
 $_SESSION["runStrNews"]=false; // обнуление переменной
 echo '</div>';

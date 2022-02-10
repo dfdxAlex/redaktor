@@ -615,7 +615,7 @@ class Modul
                        if ($status_4_5 || $_SESSION['login']==$dataMas[$i][0][0][1][0]) {  
                            $dfdx=file($classPhp->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
                            foreach ($dfdx as &$value) { 
-                              $valueTemp=preg_filter('/\$action.*php/u','\$action=\'action=#',$value); // Замена страниц обработчиков
+                              $valueTemp=preg_filter('/action.*php/u','action=#',$value); // Замена страниц обработчиков
                               if (!is_null($valueTemp)) $value=$valueTemp;
                               
                               $valueTemp=preg_filter('/require\s"/u','include "../../',$value); // Замена пути для Инклудов
@@ -630,7 +630,8 @@ class Modul
                               $valueTemp=preg_filter('/poiskDfdx/u','//poiskDfdx',$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
                               
-                              $valueTemp=preg_filter('/\$runNewsIsNews1=-1/','$runNewsIsNews1='.$nomerZagolowkaStati,$value);
+                              //$valueTemp=preg_filter('/\$runNewsIsNews1=-1/','$runNewsIsNews1='.$nomerZagolowkaStati,$value);
+                              $valueTemp=preg_filter('/\-1\)/',$nomerZagolowkaStati.')',$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
                               
                               $valueTemp=preg_filter('/\/\/if\s\(!\$/','if (!$',$value);
