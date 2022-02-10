@@ -2,13 +2,13 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-#файл сгенерирован#
-#file generated#
+//файл сгенерирован CMS-DFDX 2022-02-10 22:05:52
+//file generated CMS-DFDX 2022-02-10 22:05:52
 session_start();
-require "funcii.php";
-require "functionDfdx.php";
-require "image/swapImages.php";
-require "class.php";
+include "../../funcii.php";
+include "../../functionDfdx.php";
+include "../../image/swapImages.php";
+include "../../class.php";
 
   $redaktor=new Modul();
   $poisk = new poisk();
@@ -22,7 +22,7 @@ echo '<html lang="ru">';
 echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-  $header->headStart('<title>dfdx</title>');
+  $header->headStart('<title>Заголовки h1-h6</title>');
   $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
 
 echo '</head>';
@@ -105,7 +105,7 @@ echo '</section>';
 echo '<section class="container-fluid pole">';
     echo '<div class="row">';
         echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';  // Левое меню
-        levoeMenu();
+        //levoeMenu();
         echo '</div>';
 
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
@@ -113,22 +113,21 @@ echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 //метка для счётчика статистики посещения конкретной страницы
 //etykieta licznika statystyk odwiedzin na określonej stronie
 //label for the statistics counter of visits to a specific page
-$metka='dfdx'; 
+$metka='zagolovki-hh-'; 
 
 // имя таблица со статьями для функции news1
 // nazwa tabeli z artykułami dla funkcji news1
 // table name with articles for news1 function
 $nameBD='bd2';
 $nameBD='nameTD='.$nameBD;
-
 // функция управляет выводом статей в разных режимах используя функцию news1
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function
-$nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=5',-1,$nameBD,'#категория для поиска#','Раздел=regular_expressions');
+$nonTemplates->publishNews($redaktor,'action=#','Число_статей=5',-1,$nameBD);
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
-//buttonTwitter
+buttonTwitter("Заголовки h1-h6 http://dfdx.uxp.ru/news/html3html5xhtml/zagolovki-hh.php");
 
 //Служебная переменная
 $_SESSION["runStrNews"]=false; // обнуление переменной

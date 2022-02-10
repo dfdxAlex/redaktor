@@ -22,18 +22,19 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
       $this->tableValidationCMS();
      }
     
-     public function publishNews(\class\redaktor\Modul $modul, string $action, string $nomerNewsGlawn, int $runNewsIsNews1)
+     public function publishNews(\class\redaktor\Modul $modul, string $action, string $nomerNewsGlawn, int $runNewsIsNews1, string $nameBD, string $searchСategory, string $articleSection)
      {
         $bylPoisk=false;
 
-        if (isset($_POST['poisk'])) {
+        // часть кода работает с главной страницей и со страницами генерации персональных файлов для статей и их просмотр и поиск
+        if (isset($_POST['poisk']) && $searchСategory=='#категория для поиска#') {
             $this->poiskStati('bd2',$_POST['strPoisk'],$idStati);
             if ($idStati[0]>-1)
                 foreach($idStati as $value) 
-                    $modul->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
+                    $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
                 $bylPoisk=true;
          }
-        if (!$bylPoisk) {
+        if (!$bylPoisk && $searchСategory=='#категория для поиска#') {
             $statiaPoId=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
 
             if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели проверяем нажатие заголовков статей
@@ -44,14 +45,31 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
                   $statiaPoId=$_SESSION['statiaPoId'];
 
             if ($statiaPoId=='netKnopki' || isset($_POST['menu_up_dfdx']))  // Если не была нажата кнопка правой панели
-               $modul->news1("nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
+               $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
 
-            if ($action!='action=dfdx.php')
+            if ($action!='action=dfdx.php' && $statiaPoId==-1)
                 if (!$_SESSION["runStrNews"]) $statiaPoId=$runNewsIsNews1; 
 
             if ($statiaPoId>-1 && !isset($_POST['menu_up_dfdx']) && $statiaPoId!='netKnopki')
-               $modul->news1("id=".$statiaPoId,"nameTD=bd2","Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
+               $modul->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
           }
+
+          // часть кода работает с системой генерации новых страниц общих. rd_nova_str.php
+          if (isset($_POST['poisk']) && $searchСategory!='#категория для поиска#') {
+            $this->poiskStati('#таблица для поиска#',$_POST['strPoisk'],$idStati,'#категория для поиска#') ;
+            if ($idStati[0]>-1)
+              foreach($idStati as $value) 
+               $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
+             $bylPoisk=true;
+           }
+           if (!$bylPoisk && $searchСategory!='#категория для поиска#') {
+                $statiaPoId=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
+                if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
+                  $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$articleSection,$nomerNewsGlawn);
+                if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
+                  $modul->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$articleSection);
+            }
+
      }
 
      public function rightMenu(interface\interface\InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc)

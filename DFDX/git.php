@@ -1,8 +1,8 @@
 <?php
 namespace class\redaktor;
 
-#файл сгенерировать#
-#file generated#
+//файл сгенерирован CMS-DFDX 2022-02-10 23:09:32
+//file generated CMS-DFDX 2022-02-10 23:09:32
 session_start();
 require "funcii.php";
 require "functionDfdx.php";
@@ -22,7 +22,7 @@ echo '<html lang="ru">';
 echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-  $header->headStart('#title#');
+  $header->headStart('<title>git</title>');
   $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
 
 echo '</head>';
@@ -61,9 +61,9 @@ echo '<div class="col-12">';
 echo '<div class="logoHtml">';
 // Блок работает тогда, когда данный файл вызывается не из персональных ссылок для статей
 if (stripos($_SERVER['REQUEST_URI'],'news')===false) { 
-    if (file_exists('image/regular_expressions.png'))
-        echo '<img src="image/regular_expressions.png" alt="regular_expressions">';
-    else #pagetitleimages#
+    if (file_exists('image/git.png'))
+        echo '<img src="image/git.png" alt="git">';
+    else git();
 }
 // Блок работает тогда, когда данный файл вызывается из персональных ссылок для статей
 if (stripos($_SERVER['REQUEST_URI'],'news')!==false) {
@@ -93,22 +93,32 @@ echo '</div>';
 ////////////////////////////////////////////Центр//////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
-
-// имя таблица со статьями для функции news1
-// nazwa tabeli z artykułami dla funkcji news1
-// table name with articles for news1 function
-$nameBD='#таблица для поиска#';
+$bylPoisk=false;
+//$action='action=git.php';  //страница обработки кнопок в модуле news()
+$nameBD='bd2';
 $nameBD='nameTD='.$nameBD;
+$metka="git"; //метка для счётчика статистики посещения конкретной страницы
 
-//метка для счётчика статистики посещения конкретной страницы
-//etykieta licznika statystyk odwiedzin na określonej stronie
-//label for the statistics counter of visits to a specific page
-$metka='dfdx'; //метка для счётчика статистики посещения конкретной страницы
 
-// функция управляет выводом статей в разных режимах используя функцию news1
-// funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
-// the function controls the output of articles in different modes using the news1 function
-$nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=5',-1,$nameBD,'#категория для поиска#','Раздел=regular_expressions');
+$nonTemplates->publishNews($redaktor,'action=git.php','Число_статей=5',-1,$nameBD,'категория-git','Раздел=git');
+/*
+////////////////////////////////////////////////////поиск
+if (isset($_POST['poisk'])) {
+  $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati,'категория-git') ;
+  if ($idStati[0]>-1)
+    foreach($idStati as $value) 
+     $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
+   $bylPoisk=true;
+ }
+///////////////////////////////////////////////////
+ if (!$bylPoisk) {
+      $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
+      if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
+        $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=git',$nomerNewsGlawn);
+      if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
+        $redaktor->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=git');
+  }
+*/
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
