@@ -2,8 +2,8 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-//файл сгенерирован CMS-DFDX 2022-02-10 22:05:52
-//file generated CMS-DFDX 2022-02-10 22:05:52
+//файл сгенерирован CMS-DFDX 2022-02-13 19:38:24
+//file generated CMS-DFDX 2022-02-13 19:38:24
 session_start();
 include "../../funcii.php";
 include "../../functionDfdx.php";
@@ -70,43 +70,28 @@ echo '<section class="container-fluid">';
         echo '</div>';
     echo '</div>';
 echo '</section>';
-////////////////////////////Начало основного кода страницы//////////////////////////  
-///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
+
+// Функция выводит картинку шапки
+// Funkcja wyświetla obraz nagłówka
+// The function displays the header image
 echo '  <img src="'.$poisk->searcNamePath('image/logo.png').'" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
- //////////////////////////////////////////////////////////////////////////////////////////////////
- // Раздел сайта показать
-echo '<section class="container-fluid">';
-    echo '<div class="row">';
-        echo '<div class="col-12">';
-            echo '<div class="logoHtml">';
-            if (stripos($_SERVER['REQUEST_URI'],'news')===false) { 
-                if (file_exists('image/home.png'))
-                    echo '<img src="image/home.png" alt="home">';
-                else home();
-            }
-            // Блок работает тогда, когда данный файл вызывается из персональных ссылок для статей
-            if (stripos($_SERVER['REQUEST_URI'],'news')!==false) {
-                $pathMas=preg_split('/news/',$_SERVER['REQUEST_URI']);
-                $pathFile='news'.$pathMas[1];
-                $zapros="SELECT bd2.name FROM bd2, url_po_id_bd2 WHERE bd2.id=url_po_id_bd2.id AND url_po_id_bd2.url='".$pathFile."'";
-                $rez=$poisk->zaprosSQL($zapros);
-                if ($poisk->notFalseAndNULL($rez)) {
-                    $stroka=mysqli_fetch_array($rez);
-                    zagolowkaBeg($stroka[0]);
-                }
-            }
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-            echo '<hr>';
-            echo '</div>';
-        echo '</div>';
-    echo '</div>';
-echo '</section>';
-//////////////////////////////////////////////////////////////////////////////
+ 
+ // Функция показывает раздел сайта под шапкой, либо, если это статья по персональной ссылке, то бегущую строку названия статьи
+ // Если картинки нет для раздела, то так-же будет выведена бегущая строка раздела сайта
+ // Funkcja wyświetla sekcję witryny pod nagłówkiem lub, jeśli jest to artykuł za pośrednictwem osobistego linku, przewijany wiersz tytułu artykułu
+ // Jeśli nie ma obrazu dla sekcji, zostanie również wyświetlony bieżący wiersz sekcji witryny
+ // The function shows the section of the site under the header, or, if this is an article via a personal link, then the scrolling line of the article title
+ // If there is no picture for the section, then the running line of the site section will also be displayed
+$header->showSiteSection(new initBd,'image/home.png','home');   
+
 echo '<section class="container-fluid pole">';
-    echo '<div class="row">';
-        echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';  // Левое меню
-        //levoeMenu();
-        echo '</div>';
+echo '<div class="row">';
+// блок для вывода левого меню
+// blok wyświetlania lewego menu
+// block for displaying the left menu
+echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';
+$nonTemplates->leftMenu();
+echo '</div>';
 
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 
@@ -120,10 +105,11 @@ $metka='zagolovki-hh-';
 // table name with articles for news1 function
 $nameBD='bd2';
 $nameBD='nameTD='.$nameBD;
+
 // функция управляет выводом статей в разных режимах используя функцию news1
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function
-$nonTemplates->publishNews($redaktor,'action=#','Число_статей=5',-1,$nameBD);
+$nonTemplates->publishNews($redaktor,'action=#','Число_статей=5',-1,$nameBD,'#категория для поиска#','Раздел=regular_expressions');
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
@@ -132,7 +118,7 @@ buttonTwitter("Заголовки h1-h6 http://dfdx.uxp.ru/news/html3html5xhtml/
 //Служебная переменная
 $_SESSION["runStrNews"]=false; // обнуление переменной
 
-echo '</div>';
+echo '</div>'; // Центр
 
 // функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
 // the function displays the right menu along with its part of the Bootstrap markup and the site search function

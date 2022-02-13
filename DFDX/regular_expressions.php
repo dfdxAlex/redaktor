@@ -50,17 +50,13 @@ $class->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Па
 ///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
 echo '  <img src="image/logo.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
  //////////////////////////////////////////////////////////////////////////////////////////////////
-// Раздел сайта показать
-echo '<section class="container-fluid">';
-echo '<div class="row">';
-echo '<div class="col-12">';
-echo '<div class="logoHtml">';
-echo '<img src="image/regular_expressions.png" alt="regular_expressions">';
-echo '<hr>';
-echo '</div>';
-echo '</div>';
-echo '</div>';
-echo '</section>';
+ // Функция показывает раздел сайта под шапкой, либо, если это статья по персональной ссылке, то бегущую строку названия статьи
+ // Если картинки нет для раздела, то так-же будет выведена бегущая строка раздела сайта
+ // Funkcja wyświetla sekcję witryny pod nagłówkiem lub, jeśli jest to artykuł za pośrednictwem osobistego linku, przewijany wiersz tytułu artykułu
+ // Jeśli nie ma obrazu dla sekcji, zostanie również wyświetlony bieżący wiersz sekcji witryny
+ // The function shows the section of the site under the header, or, if this is an article via a personal link, then the scrolling line of the article title
+ // If there is no picture for the section, then the running line of the site section will also be displayed
+ $header->showSiteSection(new initBd,'image/regular_expressions.png','regular_expressions');   
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////ловим кнопку правой панели///////////////////////////////////////////////////////////////
 

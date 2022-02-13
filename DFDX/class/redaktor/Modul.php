@@ -614,6 +614,7 @@ class Modul
                    if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
                        if ($status_4_5 || $_SESSION['login']==$dataMas[$i][0][0][1][0]) {  
                            $dfdx=file($classPhp->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
+                           
                            foreach ($dfdx as &$value) { 
                               $valueTemp=preg_filter('/action.*php/u','action=#',$value); // Замена страниц обработчиков
                               if (!is_null($valueTemp)) $value=$valueTemp;

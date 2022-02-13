@@ -109,7 +109,7 @@ if (!$errorName)
                                               '/\$metka=\'dfdx\'/' => function ($machh) {return '$metka="'.$_POST['metka-rdNovaStr'].'"';},
                                               '/action=dfdx\.php/' => function ($machh) {return 'action='.$_SESSION['nameFilePreg'];},
                                               '/bd2/' => function ($machh) {return $_SESSION['newsTab'];},
-                                              '/\#pagetitleimages\#/' => function ($machh) {return $_POST['kategoria-news-rdNovaStr'].'();';},
+                                              '/\#pagetitleimages\#/' => function ($machh) {return $_POST['kategoria-news-rdNovaStr'];},
                                               '/Раздел=regular_expressions/' => function ($machh) {return 'Раздел='.$_POST['kategoria-news-rdNovaStr'];},
                                               '/#таблица\sдля\sпоиска#/' => function ($machh) {return 'bd2';},
                                               '/#категория\sдля\sпоиска#/' => function ($machh) {return 'категория-'.$_POST['kategoria-news-rdNovaStr'];},

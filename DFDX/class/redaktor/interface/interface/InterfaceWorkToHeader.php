@@ -5,7 +5,7 @@ namespace class\redaktor\interface\interface;
 // interfejs dla funkcji współpracujących z górą strony
 // interface for functions that work with the top of the site
 
-interface InterfaceWorkToHeader
+interface InterfaceWorkToHeader extends InterfaceWorkToMenu
 {
     // функция прописывает основные настройки заголовка head для страницы
     // funkcja ustawia główne ustawienia nagłówka strony
@@ -27,4 +27,22 @@ interface InterfaceWorkToHeader
     // pliki ze stylami CSS muszą być przekazane do tablicy, tablicy typu [string,string,...]
     // files with CSS styles must be passed to the array, an array of type [string,string,...]
     public function headBootStrap5(array $listFileStyle);
+
+    // Функция выводит картинку с названием активного раздела сайта, если картинки нет, то запускает функцию бегущей строки
+    // InterfaceWorkToBd $InterfaceWorkToMenu - параметр передает в функцию сигнатуру соответствующего объекта, для использования методов
+    // string $pathFileSection - переменная содержит путь и имя файла шапки, который нужно найти и загрузить
+    // string $functionAnalogSectionImages - задает имя функции, которая будет запускаться в случае отсутствия картинки для раздела сайта
+
+    // Funkcja wyświetla obrazek z nazwą aktywnej sekcji serwisu, jeśli nie ma obrazka uruchamia funkcję tickera
+    // InterfaceWorkToBd $InterfaceWorkToMenu - parametr przekazuje sygnaturę odpowiedniego obiektu do funkcji, w celu użycia metod
+    // string $pathFileSection - zmienna zawiera ścieżkę i nazwę pliku nagłówkowego do wyszukania i załadowania
+    // string $functionAnalogSectionImages - ustawia nazwę funkcji, która zostanie uruchomiona w przypadku braku obrazu dla sekcji strony
+
+    // The function displays a picture with the name of the active section of the site, if there is no picture, it starts the ticker function
+    // string $pathFileSection - the variable contains the path and name of the header file to be found and loaded
+    // string $functionAnalogSectionImages - sets the name of the function that will be run if there is no image for the site section
+    public function showSiteSection(string $pathFileSection, string $functionAnalogSectionImages);
+
+    // функция обслуживает верхнее меню сайта.
+    public function topMenuProcessing();
 }
