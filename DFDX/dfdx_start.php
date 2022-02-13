@@ -67,13 +67,14 @@ echo '  <img src="image/logo.png" alt="Картинка должна назыв�
 
 echo '<section class="container-fluid">';
 echo '<div class="row">';
+
 // блок для вывода левого меню
-echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';
+// blok wyświetlania lewego menu
+// block for displaying the left menu
 $nonTemplates->leftMenu();
-echo '</div>';
 ////////////////////////////////////////////Центр//////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
-echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
+
 
 // имя таблица со статьями для функции news1
 // nazwa tabeli z artykułami dla funkcji news1
@@ -94,8 +95,6 @@ $nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
 //buttonTwitter
-
-echo '</div>';
 
 // функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
 // the function displays the right menu along with its part of the Bootstrap markup and the site search function

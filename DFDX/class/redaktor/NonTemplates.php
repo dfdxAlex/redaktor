@@ -25,6 +25,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
     
      public function leftMenu()
      {
+        echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';
         $this->formBlock('levBlock','dfdx.php',
         'submit',
         'levBlock',
@@ -92,13 +93,13 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
         'Задачи',
         'leson.php'
             );
-
+echo '</div>';
      }
 
      public function publishNews(\class\redaktor\Modul $modul, string $action, string $nomerNewsGlawn, int $runNewsIsNews1, string $nameBD, string $searchСategory, string $articleSection)
      {
         $bylPoisk=false;
-
+        echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
         // часть кода работает с главной страницей и со страницами генерации персональных файлов для статей и их просмотр и поиск
         if (isset($_POST['poisk']) && $searchСategory=='#категория для поиска#') {
             $this->poiskStati('bd2',$_POST['strPoisk'],$idStati);
@@ -143,7 +144,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
                 if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
                     $modul->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$articleSection);
             }
-
+            echo '</div>';
      }
 
      public function rightMenu(interface\interface\InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc)

@@ -53,7 +53,7 @@ if ($_SESSION["status"]==0)             // если пользователь н�
         $_SESSION["login"]=$_POST['login'];
         $_SESSION["parol"]=$_POST['parol'];
   }
-  
+
 if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) 
     $_SESSION["status"]=$poisk->statusRegi($_SESSION["login"],$_SESSION["parol"]);
 
@@ -89,14 +89,11 @@ $header->showSiteSection('image/home.png','home');
 
 echo '<section class="container-fluid pole">';
 echo '<div class="row">';
+
 // блок для вывода левого меню
 // blok wyświetlania lewego menu
 // block for displaying the left menu
-echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';
 $nonTemplates->leftMenu();
-echo '</div>';
-
-echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 
 //метка для счётчика статистики посещения конкретной страницы
 //etykieta licznika statystyk odwiedzin na określonej stronie
@@ -120,8 +117,6 @@ $nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=
 
 //Служебная переменная
 $_SESSION["runStrNews"]=false; // обнуление переменной
-
-echo '</div>'; // Центр
 
 // функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
 // the function displays the right menu along with its part of the Bootstrap markup and the site search function
