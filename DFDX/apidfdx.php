@@ -1,159 +1,112 @@
 <?php
+namespace class\redaktor;
+
+//файл сгенерирован CMS-DFDX 2022-02-13 23:41:47
+//file generated CMS-DFDX 2022-02-13 23:41:47
 session_start();
 require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
-  use \class\redaktor\Modul as modul;
-  use \class\redaktor\login as login;
-  use \class\redaktor\maty as maty;
-  use \class\redaktor\poisk as poisk;
-  use \class\redaktor\statistic as statistic;
+
   $redaktor=new Modul();
-  $status = new login();
-  $maty = new maty();
-  $poisk = new poisk();
   $statistik = new statistic();
-?>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
+  $header = new Header();
+  $futter = new futter();
+  $nonTemplates = new NonTemplates();
 
-<?php
-$statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-?>
+echo '<!DOCTYPE html>';
+echo '<html lang="ru">';
+echo '<head>';
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="image/favicon2.ico" type="image/x-icon">
-<title>apidfdx</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-<link rel="stylesheet" href="styli.css">
-<link rel="stylesheet" href="dfdx.css">
-<meta name="Cache-Control" content="no-store">
-</head>
-<body>
-<?php
-if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
-if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
-if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
-if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
-//if ($_SESSION["status"]>99) $_SESSION["status"]=9;
-////////////////////////////////////////////Верхнее меню///////////////////////////////////////////////////////   
-///////////////////////////////////////////Обработка верхнего меню
-if ($_SESSION["status"]>0)             // если есть какой-то статух входа на сайт
-  if (isset($_POST['menu_up_dfdx']))    // если было нажатие любой кнопки верхнего меню
-    if ($_POST['menu_up_dfdx']=='Выход') {// Если была нажата кнопка Выход верхнего меню
-        $_SESSION["status"]=0;              // Обнуляем статус пользователя (выходим)
-        $_SESSION["login"]='';
-      }
-if ($_SESSION["status"]==0)             // если пользователь не вошел
-  if (isset($_POST['menu_up_dfdx']))    // если было нажатие любой кнопки верхнего меню
-    if ($_POST['menu_up_dfdx']=='Вход') {// Если была нажата кнопка Вход верхнего меню
-        $_SESSION["login"]=$_POST['login'];
-        $_SESSION["parol"]=$_POST['parol'];
-      }
-if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$status->statusRegi($_SESSION["login"],$_SESSION["parol"]);
-if ($_SESSION["status"]>99) $_SESSION["status"]=9;
-$maty->__unserialize(array('menu9','menu_up_dfdx','dfdx.php','Логин','Пароль'));
-//$_SESSION['redaktiruem']="#страница обработки правого меню#";
-////////////////////////////Начало основного кода страницы//////////////////////////  
-///////////////////////////////////////////////////////////////////////////////////////////////////// Шапка
-echo '  <img src="image/logo.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
- //////////////////////////////////////////////////////////////////////////////////////////////////
-// Раздел сайта показать
+  $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+  $header->headStart('<title>apidfdx</title>');
+  $header->headBootStrap5([$header->searcNamePath('styli.css'),$header->searcNamePath('dfdx.css')]);
+
+echo '</head>';
+echo '<body>';
+
+// функция создает переменные сессий при первом посещении страницы
+// funkcja tworzy zmienne sesji przy pierwszej wizycie na stronie
+// function creates session variables on first visit to the page
+$header->firstCreationSessionVariables();
+
+// Функция проверяет поля логина и пароля, если они заполнены, то вытягивает из базы статус 
+// пользователя и заносит его в переменную $_SESSION["status"]
+// Также функция обрабатывает нажатие кнопки Вход и Выход
+   
+// Funkcja sprawdza pola login i hasło, czy są wypełnione, a następnie pobiera status 
+// użytkownika z bazy danych i wpisuje go do zmiennej $_SESSION["status"]
+// Funkcja obsługuje również naciśnięcie klawisza Enter i Exit
+
+// The function checks the login and password fields, if they are filled, then pulls the user status 
+// from the database and enters it into the $_SESSION["status"] variable
+// Also, the function handles the button press Enter and Exit
+$header->checkUserStatus();
+
+// функция скачивает и показывает колличество монет у пользователя
+// Modul $redaktor сигнатура класса работы с админкой
+// funkcja pobiera i pokazuje liczbę monet, które posiada użytkownik
+// Podpis klasy administratora modułu $redaktor
+// the function downloads and shows the number of coins the user has
+// Modul $redaktor admin class signature
+$header->showNumberOfCoins($redaktor);
+
+// Функция реализует установку и обработку верхнего главного меню
+// Funkcja realizuje ustawienia i przetwarzanie w górnym menu głównym
+// The function implements the setting and processing of the top main menu
+$header->topMenuProcessing();
+
+// Функция выводит картинку шапки
+// Funkcja wyświetla obraz nagłówka
+// The function displays the header image
+$header->showSiteHeader('image/logo.png');
+
+ // Функция показывает раздел сайта под шапкой, либо, если это статья по персональной ссылке, то бегущую строку названия статьи
+ // Если картинки нет для раздела, то так-же будет выведена бегущая строка раздела сайта
+ // Funkcja wyświetla sekcję witryny pod nagłówkiem lub, jeśli jest to artykuł za pośrednictwem osobistego linku, przewijany wiersz tytułu artykułu
+ // Jeśli nie ma obrazu dla sekcji, zostanie również wyświetlony bieżący wiersz sekcji witryny
+ // The function shows the section of the site under the header, or, if this is an article via a personal link, then the scrolling line of the article title
+ // If there is no picture for the section, then the running line of the site section will also be displayed
+ $header->showSiteSection('image/home.png','apidfdx');   
+
 echo '<section class="container-fluid">';
 echo '<div class="row">';
-echo '<div class="col-12">';
-echo '<div class="logoHtml">';
-// Блок работает тогда, когда данный файл вызывается не из персональных ссылок для статей
-if (stripos($_SERVER['REQUEST_URI'],'news')===false) { 
-    if (file_exists('image/apidfdx.png'))
-        echo '<img src="image/apidfdx.png" alt="apidfdx">';
-    else apidfdx();
-}
-// Блок работает тогда, когда данный файл вызывается из персональных ссылок для статей
-if (stripos($_SERVER['REQUEST_URI'],'news')!==false) {
-  $pathMas=preg_split('/news/',$_SERVER['REQUEST_URI']);
-  $pathFile='news'.$pathMas[1];
-  $zapros="SELECT bd2.name FROM bd2, url_po_id_bd2 WHERE bd2.id=url_po_id_bd2.id AND url_po_id_bd2.url='".$pathFile."'";
-  $rez=$maty->zaprosSQL($zapros);
-  if ($poisk->notFalseAndNULL($rez)) {
-        $stroka=mysqli_fetch_array($rez);
-        zagolowkaBeg($stroka[0]);
-    }
-}
-echo '<hr>';
-echo '</div>';
-echo '</div>';
-echo '</div>';
-echo '</section>';
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////ловим кнопку правой панели///////////////////////////////////////////////////////////////
-$statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-echo '<section class="container-fluid">';
-echo '<div class="row">';
-echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';  // Левое меню
-levoeMenu();
-echo '</div>';
-////////////////////////////////////////////Центр//////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
-$bylPoisk=false;
-$action='action=apidfdx.php';  //страница обработки кнопок в модуле news()
+
+// блок для вывода левого меню
+// blok wyświetlania lewego menu
+// block for displaying the left menu
+$nonTemplates->leftMenu();
+
+// имя таблица со статьями для функции news1
+// nazwa tabeli z artykułami dla funkcji news1
+// table name with articles for news1 function
 $nameBD='bd2';
 $nameBD='nameTD='.$nameBD;
-////////////////////////////////////////////////////поиск
-if (isset($_POST['poisk'])) {
-  $poisk->poiskStati('bd2',$_POST['strPoisk'],$idStati,'категория-apidfdx') ;
-  if ($idStati[0]>-1)
-    foreach($idStati as $value) 
-     $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
-   $bylPoisk=true;
- }
-///////////////////////////////////////////////////
- if (!$bylPoisk) {
-      $statiaPoId=$maty->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
-      if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
-        $redaktor->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=apidfdx');
-      if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
-        $redaktor->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'Раздел=apidfdx');
-  }
-echo '</div>';
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
- echo '<div class="poiskDiv">';
-  poiskDfdx("apidfdx.php"); // кнопка Поиск, ссылка на обработчик
- echo '</div>';
-pravoePole("apidfdx");   // категория статей, которые должны быть показаны в правом меню 
-echo '</div>';
+
+//метка для счётчика статистики посещения конкретной страницы
+//etykieta licznika statystyk odwiedzin na określonej stronie
+//label for the statistics counter of visits to a specific page
+$metka="apidfdx"; //метка для счётчика статистики посещения конкретной страницы
+
+// функция управляет выводом статей в разных режимах используя функцию news1
+// funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
+// the function controls the output of articles in different modes using the news1 function
+$nonTemplates->publishNews($redaktor,'action=apidfdx.php','Число_статей=5',-1,$nameBD,'категория-apidfdx','Раздел=apidfdx');
+
+//Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
+//The commented out line at the bottom is replaced with a twitter button in generated articles 
+//buttonTwitter
+
+// функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
+// the function displays the right menu along with its part of the Bootstrap markup and the site search function
+$nonTemplates->rightMenu($statistik,"home");
 echo '</div>';
 echo '</section>';
-////////////////////////////////////////////////////////////////////////////////////////////////// 
-////////////////////////////Конец основного кода страницы////////////////////////// 
-/// Статистика///////////////////////////////////////
-echo '<footer class="container-fluid futter">';
+// Функция выводит нижнюю часть сайта
+// The function displays the bottom of the site
+$futter->futterGeneral($statistik,$metka);
 
-if ($_SESSION['regimRaboty']==22) // исполнение нажатия кнопки Статистика
-$statistik->statistikOnOff();
-if ($_SESSION['regimRaboty']==21) //исполнение нажатия Маты
-$maty->redactMaty();
-// Вывод статистики Футтер
-$statistik->metkaStatistika("apidfdx");   // метка для подсчёта загрузки страницы, пишется в БД
-echo '<div class="futterDivDfdx">';
-echo '<p class="footerMarginTop">Просмотров:'.$statistik->getMetkaStatistik("apidfdx").'</p>'; // метка для подсчёта загрузки страницы, пишется в БД
-echo '<p class="footerMarginTop">Число запросов к БД: '.$statistik->kolZaprosow().'</p>';
-echo '<p class="footerMarginTop">Начало верстки сайта 2021-09-19</p>';
-echo '<p class="footerMarginTop">CMS-DFDX</p>';
-echo '</div>';
-$maty->dobavilMat('Здесь можно пополнить справочник нецензурных слов. Слово попадет в базу после проверки модератором.');
-?>
-</footer>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-</body>
-</html>
+// функция подключает вторую часть бутстрапа и закрывает документ html
+// the function connects the second part of the bootstrap and closes the html document
+$futter->closeHtmlDok();

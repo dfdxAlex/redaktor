@@ -3,6 +3,23 @@ namespace class\redaktor\interface\trait;
 
 trait TraitInterfaceWorkToHeader
 {
+
+    public function firstCreationSessionVariables()
+    {
+        if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
+        if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
+        if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
+        if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
+        if (!isset($_SESSION["runStrNews"])) $_SESSION["runStrNews"]=false; // если страницу загрузили из модуля news, то значение true, если по прямой ссылке, то остается false
+        if (!isset($_SESSION['redaktiruem'])) $_SESSION['redaktiruem']='';
+    }
+
+    public function resetOperatingMode()
+    {
+        if ($_SESSION["status"]>99) $_SESSION["status"]=9;
+        if (isset($_POST['redaktor_up'])) $_SESSION["regimRaboty"]=0;
+    }
+
     public function showSiteHeader(string $url)
     {
         echo '  <img src="'.$this->searcNamePath($url).'" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';

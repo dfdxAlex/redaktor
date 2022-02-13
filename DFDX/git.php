@@ -1,8 +1,8 @@
 <?php
 namespace class\redaktor;
 
-//файл сгенерирован CMS-DFDX 2022-02-13 22:50:32
-//file generated CMS-DFDX 2022-02-13 22:50:32
+//файл сгенерирован CMS-DFDX 2022-02-13 23:40:24
+//file generated CMS-DFDX 2022-02-13 23:40:24
 session_start();
 require "funcii.php";
 require "functionDfdx.php";
@@ -10,7 +10,6 @@ require "image/swapImages.php";
 require "class.php";
 
   $redaktor=new Modul();
-  $poisk = new poisk();
   $statistik = new statistic();
   $header = new Header();
   $futter = new futter();
@@ -22,31 +21,28 @@ echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
   $header->headStart('<title>git</title>');
-  $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
+  $header->headBootStrap5([$header->searcNamePath('styli.css'),$header->searcNamePath('dfdx.css')]);
 
 echo '</head>';
 echo '<body>';
 
-if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
-if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
-if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
-if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
-////////////////////////////////////////////Верхнее меню///////////////////////////////////////////////////////   
-///////////////////////////////////////////Обработка верхнего меню
-if ($_SESSION["status"]>0)             // если есть какой-то статух входа на сайт
-  if (isset($_POST['menu_up_dfdx']))    // если было нажатие любой кнопки верхнего меню
-    if ($_POST['menu_up_dfdx']=='Выход') {// Если была нажата кнопка Выход верхнего меню
-        $_SESSION["status"]=0;              // Обнуляем статус пользователя (выходим)
-        $_SESSION["login"]='';
-      }
-if ($_SESSION["status"]==0)             // если пользователь не вошел
-  if (isset($_POST['menu_up_dfdx']))    // если было нажатие любой кнопки верхнего меню
-    if ($_POST['menu_up_dfdx']=='Вход') {// Если была нажата кнопка Вход верхнего меню
-        $_SESSION["login"]=$_POST['login'];
-        $_SESSION["parol"]=$_POST['parol'];
-      }
+// функция создает переменные сессий при первом посещении страницы
+// funkcja tworzy zmienne sesji przy pierwszej wizycie na stronie
+// function creates session variables on first visit to the page
+$header->firstCreationSessionVariables();
 
-if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$poisk->statusRegi($_SESSION["login"],$_SESSION["parol"]);
+// Функция проверяет поля логина и пароля, если они заполнены, то вытягивает из базы статус 
+// пользователя и заносит его в переменную $_SESSION["status"]
+// Также функция обрабатывает нажатие кнопки Вход и Выход
+   
+// Funkcja sprawdza pola login i hasło, czy są wypełnione, a następnie pobiera status 
+// użytkownika z bazy danych i wpisuje go do zmiennej $_SESSION["status"]
+// Funkcja obsługuje również naciśnięcie klawisza Enter i Exit
+
+// The function checks the login and password fields, if they are filled, then pulls the user status 
+// from the database and enters it into the $_SESSION["status"] variable
+// Also, the function handles the button press Enter and Exit
+$header->checkUserStatus();
 
 // функция скачивает и показывает колличество монет у пользователя
 // Modul $redaktor сигнатура класса работы с админкой
@@ -61,10 +57,11 @@ $header->showNumberOfCoins($redaktor);
 // The function implements the setting and processing of the top main menu
 $header->topMenuProcessing();
 
-////////////////////////////Начало основного кода страницы//////////////////////////  
-/////////////////////////////////////////////////// Шапка
-echo '  <img src="image/logo.png" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
- //////////////////////////////////////////////////////////////////////////////////////////////////
+// Функция выводит картинку шапки
+// Funkcja wyświetla obraz nagłówka
+// The function displays the header image
+$header->showSiteHeader('image/logo.png');
+
  // Функция показывает раздел сайта под шапкой, либо, если это статья по персональной ссылке, то бегущую строку названия статьи
  // Если картинки нет для раздела, то так-же будет выведена бегущая строка раздела сайта
  // Funkcja wyświetla sekcję witryny pod nagłówkiem lub, jeśli jest to artykuł za pośrednictwem osobistego linku, przewijany wiersz tytułu artykułu
@@ -80,9 +77,6 @@ echo '<div class="row">';
 // blok wyświetlania lewego menu
 // block for displaying the left menu
 $nonTemplates->leftMenu();
-////////////////////////////////////////////Центр//////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-
 
 // имя таблица со статьями для функции news1
 // nazwa tabeli z artykułami dla funkcji news1

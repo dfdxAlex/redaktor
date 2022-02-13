@@ -11,7 +11,6 @@ require "image/swapImages.php";
 require "class.php";
 
   $redaktor=new Modul();
-  $poisk = new poisk();
   $statistik = new statistic();
   $header = new Header();
   $futter = new futter();
@@ -23,21 +22,20 @@ echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
   $header->headStart('<title>dfdx</title>');
-  $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
+  $header->headBootStrap5([$header->searcNamePath('styli.css'),$header->searcNamePath('dfdx.css')]);
 
 echo '</head>';
 echo '<body>';
 
-if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
-if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
-if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
-if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
-if (!isset($_SESSION["runStrNews"])) $_SESSION["runStrNews"]=false; // если страницу загрузили из модуля news, то значение true, если по прямой ссылке, то остается false
-if (!isset($_SESSION['redaktiruem'])) $_SESSION['redaktiruem']='';
+// функция создает переменные сессий при первом посещении страницы
+// funkcja tworzy zmienne sesji przy pierwszej wizycie na stronie
+// function creates session variables on first visit to the page
+$header->firstCreationSessionVariables();
 
-if ($_SESSION["status"]>99) $_SESSION["status"]=9;
-if (isset($_POST['redaktor_up'])) $_SESSION["regimRaboty"]=0; // Если пришли из редактора движка, то абнулить режим работы
-
+// функция обнуляет все режимы работы, если на страницу пришли из административной панели
+// funkcja resetuje wszystkie tryby działania, jeśli strona była odwiedzana z panelu administratora
+// the function resets all modes of operation if the page was visited from the admin panel
+$header->resetOperatingMode();
 
 // Функция проверяет поля логина и пароля, если они заполнены, то вытягивает из базы статус 
 // пользователя и заносит его в переменную $_SESSION["status"]
@@ -54,7 +52,6 @@ $header->checkUserStatus();
 
 echo '<section class="container-fluid">';
 echo '<div class="row">';
-
 // функция скачивает и показывает колличество монет у пользователя
 // Modul $redaktor сигнатура класса работы с админкой
 // funkcja pobiera i pokazuje liczbę monet, które posiada użytkownik
@@ -67,7 +64,6 @@ $header->showNumberOfCoins($redaktor);
 // Funkcja realizuje ustawienia i przetwarzanie w górnym menu głównym
 // The function implements the setting and processing of the top main menu
 $header->topMenuProcessing();
-
 echo '</div>';
 echo '</section>';
 

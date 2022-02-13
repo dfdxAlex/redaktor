@@ -10,7 +10,6 @@ require "image/swapImages.php";
 require "class.php";
 
   $redaktor=new Modul();
-  $poisk = new poisk();
   $statistik = new statistic();
   $header = new Header();
   $futter = new futter();
@@ -22,16 +21,15 @@ echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
   $header->headStart('#title#');
-  $header->headBootStrap5([$poisk->searcNamePath('styli.css'),$poisk->searcNamePath('dfdx.css')]);
+  $header->headBootStrap5([$header->searcNamePath('styli.css'),$header->searcNamePath('dfdx.css')]);
 
 echo '</head>';
 echo '<body>';
 
-if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
-if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
-if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
-if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
-////////////////////////////////////////////Верхнее меню///////////////////////////////////////////////////////  
+// функция создает переменные сессий при первом посещении страницы
+// funkcja tworzy zmienne sesji przy pierwszej wizycie na stronie
+// function creates session variables on first visit to the page
+$header->firstCreationSessionVariables();
 
 // Функция проверяет поля логина и пароля, если они заполнены, то вытягивает из базы статус 
 // пользователя и заносит его в переменную $_SESSION["status"]

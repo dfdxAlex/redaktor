@@ -60,4 +60,14 @@ interface InterfaceWorkToHeader extends InterfaceWorkToMenu
     // pokazuje nagłówek strony
     // shows the site header
     public function showSiteHeader(string $url);
+
+    // функция обнуляет все режимы работы, если на страницу пришли из административной панели
+    // funkcja resetuje wszystkie tryby działania, jeśli strona była odwiedzana z panelu administratora
+    // the function resets all modes of operation if the page was visited from the admin panel
+    public function resetOperatingMode();
+
+    // функция создает переменные сессий при первом посещении страницы
+    // funkcja tworzy zmienne sesji przy pierwszej wizycie na stronie
+    // function creates session variables on first visit to the page
+    public function firstCreationSessionVariables();
 }
