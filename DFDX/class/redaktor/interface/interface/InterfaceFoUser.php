@@ -87,4 +87,17 @@ interface InterfaceFoUser extends InterfaceButton
    // sprawdzenie loginu, jeśli login nie istnieje lub nie pasuje do reguł, to zwróć TRUE
    // checking the login, if the login does not exist or does not match the rules, then return TRUE
    public function prowerkaLogin(); 
+
+   // Функция проверяет поля логина и пароля, если они заполнены, то вытягивает из базы статус 
+   // пользователя и заносит его в переменную $_SESSION["status"]
+   // Также функция обрабатывает нажатие кнопки Вход и Выход
+   
+   // Funkcja sprawdza pola login i hasło, czy są wypełnione, a następnie pobiera status 
+   // użytkownika z bazy danych i wpisuje go do zmiennej $_SESSION["status"]
+   // Funkcja obsługuje również naciśnięcie klawisza Enter i Exit
+
+   // The function checks the login and password fields, if they are filled, then pulls the user status 
+   // from the database and enters it into the $_SESSION["status"] variable
+   // Also, the function handles the button press Enter and Exit
+   public function checkUserStatus();
 }

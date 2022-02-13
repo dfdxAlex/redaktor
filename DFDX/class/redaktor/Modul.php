@@ -1,19 +1,31 @@
 <?php
-
 namespace class\redaktor;
+
 //класс готовых модулей
-class Modul
+class Modul implements interface\interface\InterfaceWorkToModul
     {
+        use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
+        use \class\redaktor\interface\trait\TraitInterfaceDebug;
+        use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
+        use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
+        use \class\redaktor\interface\trait\TraitInterfaceButton;
+        use \class\redaktor\interface\trait\TraitInterfaceFoUser;
+        use \class\redaktor\interface\trait\TraitInterfaceCollectScolding;
+        use \class\redaktor\interface\trait\TraitInterfaceWorkToMenu;
+        use \class\redaktor\interface\trait\TraitInterfaceWorkToSearch;
+
+        use \class\redaktor\interface\trait\TraitInterfaceWorkToModul;
+
         public function __construct()
             {
+              $this->connectToBd();
+              $this->tableValidationCMS();
             }
 
         //новостной модуль
         public function news1(...$parametr)
         {
 
-           $classPhp = new maty();
-           $classInstr = new poisk();
            $nametablice=''; // по умолчанию
            $zagolowok='p';  // по умолчанию
            $statusRedaktora='-s12345'; // Определяет статус пользователя, для которого открывается меню редактирования
@@ -179,7 +191,7 @@ class Modul
   $status_1_2_3=false;         // true если редактор статусом 1 или 2 или 3
 
   // Блок с условиями - нажатиями различных кнопок в редакторе статей
-  if ($nametablice!='' && $classPhp->searcNameTablic($nametablice)) $tablicaOk=true;
+  if ($nametablice!='' && $this->searcNameTablic($nametablice)) $tablicaOk=true;
   if (isset($_POST[$nametablice.'_redaktor']) && $_POST[$nametablice.'_redaktor']=='Сохранить') $buttonBaveRedaktor=true;
   if (isset($_POST[$nametablice.'_redaktor2']) && $_POST[$nametablice.'_redaktor2']=='Сохранить') $buttonBaveRedaktor2=true;
   if (isset($_POST['vvv'])) $buttonSelectHablon=true;
@@ -209,7 +221,7 @@ class Modul
       $loginAwtora='';
       $id=-1;
       // Преобразовываем имя статьи и статью в нормальный вид и записываем + удалить мат заголовка
-      $imieNowosti=$classPhp->bezMatov(quotemeta($classPhp->clearCode($_POST['zagolowok']))); 
+      $imieNowosti=$this->bezMatov(quotemeta($this->clearCode($_POST['zagolowok']))); 
 
       //Найти хештег Раздел
       $mas=array();
@@ -220,7 +232,7 @@ class Modul
       else $razdel=preg_replace('/#/','',$mas[0]);  
                           
       // удаляем маты и теги из статьи
-      $news=$classPhp->bezMatov(quotemeta($classPhp->clearCode(nl2br($_POST['statia'])))); 
+      $news=$this->bezMatov(quotemeta($this->clearCode(nl2br($_POST['statia'])))); 
                           
       // длина статьи из текстового окна сайта
       $dlinaStati=strlen($news); 
@@ -229,31 +241,31 @@ class Modul
       // Если Сохранить была нажата при редактировании существующей статьи
       if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) { 
           // найти старую длину статьи
-          $rez=$classPhp->zaprosSQL("select news FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
+          $rez=$this->zaprosSQL("select news FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
           $stroka=mysqli_fetch_array($rez);
           $dlinaStatiStara=strlen($stroka[0]); // -длина старой статьи
           $dlinaStati=$dlinaStati-$dlinaStatiStara; // разница длин старой и отредактированной статьи
-          $classPhp->zaprosSQL("UPDATE ".$nametablice." SET name='".$imieNowosti."',news='".$news."',razdel='".$razdel."'  WHERE id=".$_SESSION['redaktirowatId']);
+          $this->zaprosSQL("UPDATE ".$nametablice." SET name='".$imieNowosti."',news='".$news."',razdel='".$razdel."'  WHERE id=".$_SESSION['redaktirowatId']);
           if ($status_1_3) // Если статью публикует подписчик или просто пользователь, то закинуть в раздел не проверенных
-              $classPhp->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$_SESSION['redaktirowatId'].")");
+              $this->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$_SESSION['redaktirowatId'].")");
        } else {   // Если сохраняем новую статью
-                  $id=$classPhp->maxIdLubojTablicy($nametablice);
-                  $classPhp->zaprosSQL("INSERT INTO ".$nametablice."(id, name,news,login_redaktora,razdel) VALUES (".$id.", '".$imieNowosti."','".$news."', '".$_SESSION['login']."','".$razdel."')");
+                  $id=$this->maxIdLubojTablicy($nametablice);
+                  $this->zaprosSQL("INSERT INTO ".$nametablice."(id, name,news,login_redaktora,razdel) VALUES (".$id.", '".$imieNowosti."','".$news."', '".$_SESSION['login']."','".$razdel."')");
                   // Если статью публикует подписчик или просто пользователь, то закинуть в раздел не проверенных
                   if ($status_1_3) { 
-                      $classPhp->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$id.")");
+                      $this->zaprosSQL("INSERT INTO status_statii_dfdx(id) VALUES (".$id.")");
                       echo '<meta http-equiv="refresh" content="125; URL=dfdx.php">';
                       echo 'Статья отправлена на модерацию, страница вот-вот перезагрузится';
                     }
                }
        // Если статью сохранили статусы 4 или 5 и её ИД есть в таблице возвращенных статей, то удалить этот ИД из данной таблицы
        if ($status_4_5) {
-           $classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
+           $this->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
            // поиск автора редактируемой или создаваемой статьи
            if (!isset($_SESSION['redaktirowatId']) || $_SESSION['redaktirowatId']<0) // признак того, что создается новая статья
                $loginAwtora=$_SESSION['login'];
            if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) {
-               $rez=$classPhp->zaprosSQL("select login_redaktora FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
+               $rez=$this->zaprosSQL("select login_redaktora FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']);
                $stroka=mysqli_fetch_array($rez);
                $loginAwtora=$stroka[0];
             }
@@ -261,7 +273,7 @@ class Modul
          }
 
       if ($status_1_3) // Если статью сохранили статусы 1 или 3 то удалить статью из таблицы возвратов
-          $classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
+          $this->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$_SESSION['redaktirowatId']); 
                  
       $_SESSION['mas_time_name_news']='';
       $_SESSION['mas_time_news']='';
@@ -275,83 +287,83 @@ class Modul
    }
               
               ////////////////////////////////////// работаем с кнопкой удалить //////////////////////////////////
-              if ($classPhp->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Удалить') {
-                  $killStroka=$classPhp->hanterButton('rez=hant','nameStatic=statia','returnName');
+              if ($this->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Удалить') {
+                  $killStroka=$this->hanterButton('rez=hant','nameStatic=statia','returnName');
                   $killStroka=preg_replace('/statia/','',$killStroka);  
                   $killStroka=preg_replace('/kill/','',$killStroka);  
                   //$killStroka - ИД статьи, которую нужно удалить 
                   $killStroka=preg_replace('/'.$_SESSION['login'].'/','',$killStroka); 
             
                   //Вытягиваем путь к удаленному файлу из базы данных
-                  $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nametablice." WHERE id=".$killStroka);
+                  $rez=$this->zaprosSQL("SELECT url FROM url_po_id_".$nametablice." WHERE id=".$killStroka);
                   $killPath=mysqli_fetch_array($rez);
 
                   $killName='';
                   //Находим файл на диске и удаляем его
-                  if ($classPhp->notFalseAndNULL($killPath)) {
+                  if ($this->notFalseAndNULL($killPath)) {
                       $killName=$killPath[0];
                       if (!file_exists($killPath[0]))
                           $killName=preg_filter('/news\/.+\//','',$killPath[0]);
                    }
                   if ($killName!='')
-                      unlink($classPhp->searcNamePath($killName));
-                  $classPhp->killZapisTablicy('url_po_id_'.$nametablice,'WHERE id='.$killStroka);
+                      unlink($this->searcNamePath($killName));
+                  $this->killZapisTablicy('url_po_id_'.$nametablice,'WHERE id='.$killStroka);
 
                   if (($status_4_5) && $this->statusStati($killStroka)) {
-                    $rez=$classPhp->zaprosSQL("select login_redaktora, news from ".$nametablice." where id=".$killStroka); // логин редактора и статья
+                    $rez=$this->zaprosSQL("select login_redaktora, news from ".$nametablice." where id=".$killStroka); // логин редактора и статья
                     $stroka=mysqli_fetch_assoc($rez);
-                    if ($classPhp->notFalseAndNULL($stroka)) {
+                    if ($this->notFalseAndNULL($stroka)) {
                         $zaplatit=strlen($stroka['news']);
                         $zaplatit=0-$zaplatit;
                         $login=$stroka['login_redaktora'];
                         $this->money('login='.$login,'заплатить='.$zaplatit);
                       }
                   }
-                  $classPhp->killZapisTablicy($nametablice,'WHERE id='.$killStroka);
-                  $classPhp->killZapisTablicy('status_statii_dfdx','WHERE id='.$killStroka);
-                  $classPhp->killZapisTablicy('vernul_statii_dfdx','WHERE id='.$killStroka);
+                  $this->killZapisTablicy($nametablice,'WHERE id='.$killStroka);
+                  $this->killZapisTablicy('status_statii_dfdx','WHERE id='.$killStroka);
+                  $this->killZapisTablicy('vernul_statii_dfdx','WHERE id='.$killStroka);
            }
          /////////////////////////////////////////////////////////////////////////////////////////////////////
          /////////////////////////////////////// работаем с кнопкой редактировать ////////////////////////////
-         if ($classPhp->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Редактировать') {
-              $redaktirowat=$classPhp->hanterButton('rez=hant','nameStatic=statia','returnName');
+         if ($this->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Редактировать') {
+              $redaktirowat=$this->hanterButton('rez=hant','nameStatic=statia','returnName');
               $redaktirowat=preg_replace('/statia/','',$redaktirowat); // Удалить лишнее
               $redaktirowat=preg_replace('/redakt/','',$redaktirowat); // Удалить лишнее
               $redaktirowat=preg_replace('/'.$_SESSION['login'].'/','',$redaktirowat); // Удалить лишнее // нашли ID редактируемой статьи
               $_SESSION['redaktirowatId']=$redaktirowat; //Получить id редактируемой статьи
             }
           /////////////////////////////////////////////Кнопка Опубликовать
-         if ($classPhp->hanterButton('rez=hant','nameStatic=opublikowat','returnNameDynamic',"false=www")!='www') {
-            $id=$classPhp->hanterButton('rez=hant','nameStatic=opublikowat','returnNameDynamic',"false=www"); // находим ИД статьи
-            $classPhp->killZapisTablicy('status_statii_dfdx','where id='.$id); // удаляем ИД статьи из таблицы не проверенных статей
-            $rez=$classPhp->zaprosSQL('select news from bd2 where  id='.$id);
+         if ($this->hanterButton('rez=hant','nameStatic=opublikowat','returnNameDynamic',"false=www")!='www') {
+            $id=$this->hanterButton('rez=hant','nameStatic=opublikowat','returnNameDynamic',"false=www"); // находим ИД статьи
+            $this->killZapisTablicy('status_statii_dfdx','where id='.$id); // удаляем ИД статьи из таблицы не проверенных статей
+            $rez=$this->zaprosSQL('select news from bd2 where  id='.$id);
             $stroka=mysqli_fetch_array($rez);
             $zaplatit=strlen($stroka[0]);
-            $rez=$classPhp->zaprosSQL('select login_redaktora from bd2 where  id='.$id);
+            $rez=$this->zaprosSQL('select login_redaktora from bd2 where  id='.$id);
             $stroka=mysqli_fetch_array($rez);
             $this->money('login='.$stroka[0],'заплатить='.$zaplatit);
           }
 
           // Вернуть на доработку
-          if ($classPhp->hanterButton('rez=hant','nameStatic=vernut','returnNameDynamic',"false=www")!='www') {
-            $id=$classPhp->hanterButton('rez=hant','nameStatic=vernut','returnNameDynamic',"false=www"); // находим ИД статьи
+          if ($this->hanterButton('rez=hant','nameStatic=vernut','returnNameDynamic',"false=www")!='www') {
+            $id=$this->hanterButton('rez=hant','nameStatic=vernut','returnNameDynamic',"false=www"); // находим ИД статьи
             if ($_POST['vernut'.$id]=='Вернуть') {
                 $pricinaVozwrata=$_POST['pricina'];
                 if ($_POST['pricina']=='Причина возврата') 
                       $pricinaVozwrata="Причина не указана";
-                $rez=$classPhp->zaprosSQL("INSERT INTO vernul_statii_dfdx(id, komment) VALUES (".$id.",'".$pricinaVozwrata."')");// Добавить статью в базу возвращенных
+                $rez=$this->zaprosSQL("INSERT INTO vernul_statii_dfdx(id, komment) VALUES (".$id.",'".$pricinaVozwrata."')");// Добавить статью в базу возвращенных
              }
              if ($_POST['vernut'.$id]=='Отмена возврата' || $_POST['vernut'.$id]=='Отправить на проверку')
-                $rez=$classPhp->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$id);
+                $rez=$this->zaprosSQL("DELETE FROM vernul_statii_dfdx WHERE id=".$id);
            }
           /////////////////////////////////////////////////////////////////////////////////////////////////////
           // Начало прорисовки блока
           // Проверим присутствует ли таблица блока, если нет, то создадим её
-          if ($nametablice!='' && !$classPhp->searcNameTablic($nametablice))
-                $classPhp->zaprosSQL("CREATE TABLE ".$nametablice."(id INT, name VARCHAR(200), news VARCHAR(65000), login_redaktora VARCHAR(200), razdel VARCHAR(100))");
+          if ($nametablice!='' && !$this->searcNameTablic($nametablice))
+                $this->zaprosSQL("CREATE TABLE ".$nametablice."(id INT, name VARCHAR(200), news VARCHAR(65000), login_redaktora VARCHAR(200), razdel VARCHAR(100))");
           
           // проверим пустая ли таблица новостей, если да, то вывести кнопку добавления новости
-          if ($classPhp->kolVoZapisTablice($nametablice)==0 ) 
+          if ($this->kolVoZapisTablice($nametablice)==0 ) 
               $netNowostej=true;
 
           // Определяем какие именно статьи подгружать из таблицы
@@ -370,7 +382,7 @@ class Modul
           $razdelFoWhere='';  // В строке будет список категорий, в которые входит входная категория, если из 2 или больше, то добавится OR
           if ($razdel!='' && $razdel!='Home' && $razdel!='home') {
                $lokalZapros='SELECT razdel FROM '.$nametablice.' WHERE 1';
-               $lokalRez=$classPhp->zaprosSQL($lokalZapros);
+               $lokalRez=$this->zaprosSQL($lokalZapros);
                $i=0;
                while(!is_null($lokalStroka=mysqli_fetch_array($lokalRez))) {
                   if (stripos($lokalStroka[0],$razdel)!==false)
@@ -394,14 +406,14 @@ class Modul
        /////////////////////////////////////Конец загрузки нужных статей из БД////////////////////////////////////////////////////////////////////////////////////
        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
              $dataMas = array(array(),array(),array(),array(),array());
-             $rez=$classPhp->zaprosSQL($zapros);
+             $rez=$this->zaprosSQL($zapros);
 
              // сформируем отступ между статьями
              $otstupBr='<br>';
              for ($j=0; $j<$otstup;$j++) $otstupBr=$otstupBr.'<br>';
 
              $i=0; //Загрузить таблицу в массив
-             if ($classPhp->notFalseAndNULL($rez))
+             if ($this->notFalseAndNULL($rez))
                 while(!is_null($stroka=mysqli_fetch_assoc($rez))) {
                   $dataMas[$i][0][0][0][0]=$stroka['id'];
                   $dataMas[$i][1][0][0][0]=$stroka['name'];
@@ -411,7 +423,7 @@ class Modul
                 }
              //проверим не была ли нажата кнопка заголовка статьи
              //строка находит ИД кнопки в обход входного параметра
-             $nomerZagolowkaStati=$classPhp->hanterButton("rez=hant","nameStatic=statiaKorotka","returnNameDynamic",'false=www');
+             $nomerZagolowkaStati=$this->hanterButton("rez=hant","nameStatic=statiaKorotka","returnNameDynamic",'false=www');
              if ($nomerZagolowkaStati!='www') $pokazatStatiuPoId=$nomerZagolowkaStati;
              $statusStatii=false;
              $pokazalStatej=0;
@@ -419,7 +431,7 @@ class Modul
 
              //запомнить число выводимых статей для будущего подсчёта страниц
              $nomerStatejStart=$nomerStatej; //число статей на странице
-             $buttonStr=$classPhp->hanterButton("rez=hant","nameStatic=stranica","returnNameDynamic","false=netStr"); //номер страницы
+             $buttonStr=$this->hanterButton("rez=hant","nameStatic=stranica","returnNameDynamic","false=netStr"); //номер страницы
              if ($buttonStr!='netStr') $pokazatStatiuPoId=-1; // если была нажата кнопка листания страниц, то обнулить работу с ИД
              if ($buttonStr=='netStr') $buttonStr=1;
              $startOutNews=$buttonStr*$nomerStatej-$nomerStatej; //c какой по счёту статьи следует начинать выводить
@@ -482,7 +494,7 @@ class Modul
                              // удалить из текста неразрешенные теги, в базе они остаются.
                              foreach ($masLessMore[0] as $value) {
                               $value=preg_replace('/(\[less\])|(\[more\])/','',$value);
-                              if ($classInstr->tegAllowed($value)===false) {
+                              if ($this->tegAllowed($value)===false) {
                                   $text=preg_replace('/\[less\]'.$value.'\[more\]?/u','',$text);
                                   $text=preg_replace('/\[less\]\/'.$value.'\[more\]?/u','',$text);
                               }
@@ -537,7 +549,7 @@ class Modul
                              $text=preg_replace('/<\/code>/','</div></code></div></div></section>',$text); // вставить класс в теги code
                              $text='<p class="perwaLitera'.$hablon.'">'.$perwSymbol.'</p><p class="osnownojText'.$hablon.'">'.$text.'</p>'; // подготовить весь текст
                          }
-                        echo '<form method="post" action="'.$classPhp->initsite().'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'-вернули на доработку">'.'<div>'.$text.'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small></form>';
+                        echo '<form method="post" action="'.$this->initsite().'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'-вернули на доработку">'.'<div>'.$text.'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small></form>';
                         echo $otstupBr;
                         echo 'Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]);
                  }
@@ -571,7 +583,7 @@ class Modul
             if ($statusStatii)// Если труе, то статья проверена модератором
                 if ($dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati && $pokazalStatej==0)  {// Вывод по клику по заголовку статьи
                    ///////////////////////////////////////////создаем нужные папки ////////////////////////////
-                   if (!file_exists('../../'.$classPhp->initsite()))  {// Создаем папки только в том случае, если не находимся в уже созданных папках
+                   if (!file_exists('../../'.$this->initsite()))  {// Создаем папки только в том случае, если не находимся в уже созданных папках
                        if ($dataMas[$ii][0][0][0][1]!='-')
                              $katalog2='news/'.$dataMas[$ii][0][0][0][1]; // Папка со статьями + текущая категория
                        else $katalog2='news/non-path';
@@ -599,7 +611,7 @@ class Modul
 
                    $urlNews=$this->urlPoId($nametablice,$nomerZagolowkaStati);
                    if ($urlNews) {// если для статьи есть свой файл, то просто перейти на него
-                           $_SESSION['statiaPoId']=$classPhp->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
+                           $_SESSION['statiaPoId']=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
                            $action=$this->urlPoIdPath($nametablice,$nomerZagolowkaStati);
                            $_SESSION["runStrNews"]=true;
                            echo $urlNews;
@@ -608,12 +620,12 @@ class Modul
 
                    if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки)
                        if ($_SESSION['status']<4 || $_SESSION['status']==9) // если жмёт не модератор или администратор
-                            header('Location: '.$classPhp->initsite());
+                            header('Location: '.$this->initsite());
 
                    // если статусы 4 или 5 или смотрит статью её автор, то работаем
                    if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
                        if ($status_4_5 || $_SESSION['login']==$dataMas[$i][0][0][1][0]) {  
-                           $dfdx=file($classPhp->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
+                           $dfdx=file($this->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
                            
                            foreach ($dfdx as &$value) { 
                               $valueTemp=preg_filter('/action.*php/u','action=#',$value); // Замена страниц обработчиков
@@ -658,9 +670,9 @@ class Modul
                             $this->urlPoIdSave($nametablice,$nomerZagolowkaStati,$fileName);
                             file_put_contents($fileName,$dfdx);
                             $_SESSION["runStrNews"]=true;
-                            $_SESSION['statiaPoId']=$classPhp->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
+                            $_SESSION['statiaPoId']=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
                             header('Location: '.$fileName);
-                        } else header('Location: '.$classPhp->initsite());
+                        } else header('Location: '.$this->initsite());
                       $pokazalStatej=1;
                     }
 
@@ -692,11 +704,11 @@ class Modul
                             if (($redaktorUser || $redaktorPodpis) && $statusStatii  || ($statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login'])) {// ЕСЛИ СТАТУС 1 или 3 и статья не на проверке
                                 $value='Добавить';
                                 if ($statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']) {
-                                    $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
+                                    $this->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
                                                             'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
                                                             'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-"'.$action.'"-');
                                   } else
-                                    $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-'.$value,'n1-dobawitNow', // Кнопка Добавить
+                                    $this->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-'.$value,'n1-dobawitNow', // Кнопка Добавить
                                                             'кнопок-1','c1=-'.$classKill.' btn-','action=-"'.$action.'"-');
                       }
                     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -705,7 +717,7 @@ class Modul
                     ///////////////////////////////////Кнопки удаления, редактирования, добавления
                     if ($nomerZagolowkaStati=='www' || $dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati) 
                      if ($status_4_5)
-                        $classPhp->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
+                        $this->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
                                                 'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
                                                 'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-"'.$action.'"-');
                       ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -750,8 +762,7 @@ class Modul
   public function numberNews($kategori)
     {
       $number=0;
-      $classPhp = new maty();
-      $rez=$classPhp->zaprosSQL("SELECT razdel FROM ".$_SESSION['newsTab']." WHERE 1");
+      $rez=$this->zaprosSQL("SELECT razdel FROM ".$_SESSION['newsTab']." WHERE 1");
       while (!is_null($stroka=mysqli_fetch_array($rez))) 
        if (stripos('sss'.$stroka[0],$kategori)>0)
         $number++;
@@ -760,8 +771,7 @@ class Modul
   // Служебная функция поиск правильного пути к папке файла
   function urlPoIdPath($nameBd,$id)
     {
-      $classPhp = new maty();
-      $classPhp->createTab(
+      $this->createTab(
                             "name=url_po_id_".$nameBd,
                             "poleN=id",   // будет соответствовать ИД статьи
                             "poleT=int", 
@@ -770,7 +780,7 @@ class Modul
                             "poleT=varchar(1000)",
                             "poleS=пусто"
                           );
-      $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
+      $rez=$this->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
       $stroka=mysqli_fetch_array($rez);
       if (file_exists($stroka[0])) 
           return $stroka[0]; // если файл существует по текущему пути
@@ -790,8 +800,7 @@ class Modul
     // Служебная функция возвращает ссылку на статью по ID или false
     function urlPoId($nameBd,$id)
       {
-        $classPhp = new maty();
-        $classPhp->createTab(
+        $this->createTab(
                               "name=url_po_id_".$nameBd,
                               "poleN=id",   // будет соответствовать ИД статьи
                               "poleT=int", 
@@ -800,7 +809,7 @@ class Modul
                               "poleT=varchar(1000)",
                               "poleS=пусто"
                             );
-        $rez=$classPhp->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
+        $rez=$this->zaprosSQL("SELECT url FROM url_po_id_".$nameBd." WHERE id=".$id);
         $stroka=mysqli_fetch_array($rez);
         if (!is_null($stroka) && $stroka!=false) 
             return $stroka[0];
@@ -809,18 +818,15 @@ class Modul
     // Служебная функция записывает ссылку на статью по ID или false
     function urlPoIdSave($nameBd,$id,$url)
       {
-        $classPhp = new maty();
         if ($this->urlPoId($nameBd,$id)) 
             return false; // если запись уже есть то выходим с результатом Фалс
-        $classPhp->zaprosSQL("INSERT INTO url_po_id_".$nameBd."(id, url) VALUES (".$id.",'".$url."')");
+        $this->zaprosSQL("INSERT INTO url_po_id_".$nameBd."(id, url) VALUES (".$id.",'".$url."')");
         return true;
       }
     // служебная функция для задания стилей оформления статьи
     function styliStati(...$parametr) // тут
       {
-        $classPhp = new maty();
-        $instrum = new poisk();
-        $classPhp->createTab(
+        $this->createTab(
                               "name=styl_statii_dfdx",
                               "poleN=id",   // будет соответствовать ИД статьи
                               "poleT=int", 
@@ -848,7 +854,7 @@ class Modul
                  $hablonStati=preg_replace('/hablon=/','',$value);
         foreach($parametr as $value) // задать шаблон статьи
             if (stripos('sss'.$value,'id-hablon') || stripos('sss'.$value,'hablon-id')) {
-                 $rez=$classPhp->zaprosSQL("select nomer_styla FROM styl_statii_dfdx WHERE id=".$idStati);
+                 $rez=$this->zaprosSQL("select nomer_styla FROM styl_statii_dfdx WHERE id=".$idStati);
                  $stroka=mysqli_fetch_array($rez);
                  if ($stroka===false || is_null($stroka)) 
                       return 1;
@@ -856,7 +862,7 @@ class Modul
               }
         foreach($parametr as $value)
           if ($value=='link' || $value=='образец')
-              return  '<a href="'.$classPhp->searcNamePath('obrazec.php').'" target="_blank">Посмотреть образцы оформлений</a>';
+              return  '<a href="'.$this->searcNamePath('obrazec.php').'" target="_blank">Посмотреть образцы оформлений</a>';
     
         foreach($parametr as $value) // показать радио кнопки
           if (stripos('sss'.$value,'вариантов=')) {
@@ -882,8 +888,8 @@ class Modul
           return $stroka;
         }
         if ($idStati>-1 && $hablonStati>0) {// реализация присвоения статье своего стиля
-            $classPhp->zaprosSQL("DELETE FROM styl_statii_dfdx WHERE id=".$idStati);
-            $classPhp->zaprosSQL("INSERT INTO styl_statii_dfdx(id, nomer_styla) VALUES (".$idStati.",".$hablonStati.")");
+            $this->zaprosSQL("DELETE FROM styl_statii_dfdx WHERE id=".$idStati);
+            $this->zaprosSQL("INSERT INTO styl_statii_dfdx(id, nomer_styla) VALUES (".$idStati.",".$hablonStati.")");
           }
         //обработка параметра help
         foreach($parametr as $value)
@@ -900,73 +906,17 @@ class Modul
             echo '<p></p>';
           } 
     }
-    function money(...$parametr) // работа с символами или деньгами
-        {
-            $classPhp = new maty();
-            $classPhp->createTab(
-                                  "name=monety_dfdx",
-                                  "poleN=login",
-                                  "poleT=varchar(50)",
-                                  "poleS=login",
-                                  "poleN=monet",
-                                  "poleT=int",
-                                  "poleS=0"
-                                  );
-            $login='';
-            $zaplatit=0;
-            foreach($parametr as $value)
-                if (stripos('sss'.$value,'login='))
-                    $login=preg_replace('/login=/','',$value);
-            foreach($parametr as $value)
-                if (stripos('sss'.$value,'заплатить='))
-                    $zaplatit=preg_replace('/заплатить=/','',$value);
-            if ($login!='') {// Обработка параметра Логин + заплатить
-                $regaJest=false;
-                $regaJest=$classPhp->siearcSlova('monety_dfdx','login',$login);
-                if ($regaJest) {
-                    $rez=$classPhp->zaprosSQL("SELECT monet FROM monety_dfdx WHERE login='".$login."'");
-                    $stroka=mysqli_fetch_array($rez);
-                    $monet=$stroka[0];
-                    $monet=$monet+$zaplatit;
-                    $zapros="UPDATE monety_dfdx SET monet=".$monet." WHERE login='".$login."'";
-                    $classPhp->zaprosSQL($zapros);
-                  }
-                if (!$regaJest) {
-                    $zapros="INSERT INTO monety_dfdx(login, monet) VALUES ('".$login."',".$zaplatit.") ";
-                    $classPhp->zaprosSQL($zapros);
-                  }
-              }
-            if ($login!='' && $zaplatit==0) {// Обработка параметра Логин
-                $rez=$classPhp->zaprosSQL("SELECT monet FROM monety_dfdx WHERE login='".$login."'");
-                $stroka=mysqli_fetch_array($rez);
-                return $stroka[0];
-              }
-            //обработка параметра help
-            foreach($parametr as $value)
-            if ($value=='help' || $value=='Помощь') {
-                echo '<p>Функция проверяет существует ли таблица монет, если нет, то создает её и присваивает начальные значения</p>';
-                echo '<p>Чтобы функция вернула число монет пользователя, необходимо задать логин путем "login=логин игрока". Функция возвращает значение и выходит</p>';
-                echo '<p>Чтобы добавить число монет человеку, вводим логин и заплатить."login=логин игрока", "заплатить=1000" </p>';
-                echo '<p></p>';
-                echo '<p></p>';
-                echo '<p></p>';
-                echo '<p></p>';
-                echo '<p></p>';
-                echo '<p></p>';
-                echo '<p></p>';
-              } 
-      }
+  
       // вспомогательная функция к news1
       public function statusStati($id) // Проверяет статус статьи, проверил её модератор или нет
         {                                // если Труе, то можно показать статью
-          $classPhp = new maty();
-          $classPhp->createTab(
+          $this->createTab(
                               "name=status_statii_dfdx",
                               "poleN=id",
                               "poleT=int",
                               "poleS=-1"
                               );
-          $rez=$classPhp->zaprosSQL("SELECT id FROM status_statii_dfdx WHERE 1");
+          $rez=$this->zaprosSQL("SELECT id FROM status_statii_dfdx WHERE 1");
           while (!is_null($stroka=mysqli_fetch_array($rez))) 
             if ($id==$stroka[0]) return false;
           return true;
@@ -974,8 +924,7 @@ class Modul
       // вспомогательная функция к news1
       public function vernutStati($id) // Возврат статьи на доработку, возвращает труе, если вернули статью
         {                                //
-          $classPhp = new maty();
-          $classPhp->createTab(
+          $this->createTab(
                               "name=vernul_statii_dfdx",
                               "poleN=id",
                               "poleT=int",
@@ -984,31 +933,29 @@ class Modul
                               "poleT=varchar(500)",
                               "poleS=ноу комент))"
                               );
-          $rez=$classPhp->zaprosSQL("SELECT id FROM vernul_statii_dfdx WHERE 1");
+          $rez=$this->zaprosSQL("SELECT id FROM vernul_statii_dfdx WHERE 1");
           while (!is_null($stroka=mysqli_fetch_array($rez))) 
             if ($id==$stroka[0]) return true;
           return false;
         }
         public function vernutStatiKomment($id) // Возврат коммента при возврате статьи
         {                                //
-          $classPhp = new maty();
-          $rez=$classPhp->zaprosSQL("SELECT komment FROM vernul_statii_dfdx WHERE id=".$id);
+          $rez=$this->zaprosSQL("SELECT komment FROM vernul_statii_dfdx WHERE id=".$id);
           $stroka=mysqli_fetch_array($rez);
           return $stroka[0];
         }
         // вспомогательная функция к news1
         public function poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action)
          {
-            $classPhp = new maty();
-            if ($nametablice!='' && $classPhp->searcNameTablic($nametablice)) {
+            if ($nametablice!='' && $this->searcNameTablic($nametablice)) {
                if (!$razresheniePoLoginu &&  ($_SESSION['status']>0)) {  // Запускаем это меню только если нет разрешения по логину
                   $zagolowok='';//echo 'разрешение по логину';
                   $statia='';
                   $awtor='';
                   if ($_SESSION['redaktirowatId']>-1)  {//если была нажата кнопка редактирования, то достать статью из базы
                          $zapros="SELECT * FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']; //настройка показа формы сбора данных
-                         $rez=$classPhp->zaprosSQL($zapros);
-                         if ($classPhp->notFalseAndNULL($rez)) 
+                         $rez=$this->zaprosSQL($zapros);
+                         if ($this->notFalseAndNULL($rez)) 
                               $stroka=mysqli_fetch_assoc($rez);
                          $zagolowok=$stroka['name'];
                          $statia=$stroka['news'];
@@ -1018,7 +965,7 @@ class Modul
                   if ($_SESSION['mas_time_news']!='') $statia=$_SESSION['mas_time_news'];
                   if ($_SESSION['mas_time_name_news']!='') $zagolowok=$_SESSION['mas_time_name_news'];
                         $statia=preg_replace('/<br>/','',$statia);
-                        $classPhp->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
+                        $this->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
                                             'textarea', 'statia',$statia,'br',
                                             'p',$awtor,'br',
                                             'submit3',$nametablice.'_redaktor','Сохранить',$action,'myZoneSave','form_not_close'
@@ -1050,7 +997,7 @@ class Modul
                       echo '<div class="row">';
                           echo '<div class="col-12">';  
                               echo '<div class="helpPodRedaktoromStatejDopTegi">';
-                                  echo '<h6>Допустимые теги:'.$classPhp->clearCode('','список').'</h6>';
+                                  echo '<h6>Допустимые теги:'.$this->clearCode('','список').'</h6>';
                               echo '</div>';
                           echo '</div>';
                       echo '</div>';
@@ -1062,8 +1009,8 @@ class Modul
               $awtor='';
               if ($_SESSION['redaktirowatId']>-1) { //если была нажата кнопка редактирования, то достать статью из базы
                  $zapros="SELECT * FROM ".$nametablice." WHERE id=".$_SESSION['redaktirowatId']; //настройка показа формы сбора данных
-                 $rez=$classPhp->zaprosSQL($zapros);
-                    if ($classPhp->notFalseAndNULL($rez)) 
+                 $rez=$this->zaprosSQL($zapros);
+                    if ($this->notFalseAndNULL($rez)) 
                         $stroka=mysqli_fetch_assoc($rez);
                     $zagolowok=$stroka['name'];
                     $statia=$stroka['news'];
@@ -1073,7 +1020,7 @@ class Modul
                   $statia=$_SESSION['mas_time_news'];
               if ($_SESSION['mas_time_name_news']!='') $zagolowok=$_SESSION['mas_time_name_news'];
                   $statia=preg_replace('/<br>/','',$statia);
-              $classPhp->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
+              $this->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
                                   'textarea', 'statia',$statia,'br','p',$awtor,'br',
                                   'submit3',$nametablice.'_redaktor2','Сохранить',$action,'myZoneSave','form_not_close'
                                   );
@@ -1104,7 +1051,7 @@ class Modul
                   echo '<div class="row">';
                       echo '<div class="col-12">';  
                           echo '<div class="helpPodRedaktoromStatejDopTegi">';
-                              echo '<h6>Допустимые теги:'.$classPhp->clearCode('','список').'</h6>';
+                              echo '<h6>Допустимые теги:'.$this->clearCode('','список').'</h6>';
                           echo '</div>';
                       echo '</div>';
                   echo '</div>';
@@ -1119,7 +1066,6 @@ class Modul
 // функция проверяет дубликаты по ссылке источнику картинки.
 public function loadImgForm()
 {
-  $classPhp = new initBd();
   $fileSize=0;
 
   if (!isset($_SESSION['loadImgFormTextUrl'])) $_SESSION['loadImgFormTextUrl']='url';
@@ -1127,7 +1073,7 @@ public function loadImgForm()
   if (!isset($_SESSION['loadImgFormTextWidth'])) $_SESSION['loadImgFormTextWidth']='Width';
   if (!isset($_SESSION['loadImgFormTextHeight'])) $_SESSION['loadImgFormTextHeight']='Height';
 
-  $classPhp->createTab(
+  $this->createTab(
                        "name=load_img",
                        "poleN=id",
                        "poleT=int",
@@ -1181,11 +1127,11 @@ public function loadImgForm()
                    $_SESSION['loadImgFormTextWidth']=$masSizeImages[0];
                    $_SESSION['loadImgFormTextHeight']=$masSizeImages[1];
 
-                   $fileIsAlreadiTrue=$classPhp->siearcSlova('load_img','url',$_SESSION['loadImgFormTextUrl']);
+                   $fileIsAlreadiTrue=$this->siearcSlova('load_img','url',$_SESSION['loadImgFormTextUrl']);
                    //сохраняем файл на диске
                    if ($_POST['loadImageLink']=='Сохранить') {
                        $nameFileLocal=$nameFileImage.$masTypImage;   // локальное имя файла
-                       $id=$classPhp->maxIdLubojTablicy('load_img'); // нашли свободный ИД
+                       $id=$this->maxIdLubojTablicy('load_img'); // нашли свободный ИД
                        $actualWidth=$_POST['linkImageTextWidth'];    // ширина из формы
                        $actualHeight=$_POST['linkImageTextHeight'];  // высота из формы
                        $actualAlt=$_POST['altImageText'];            // alt из формы
@@ -1202,14 +1148,14 @@ public function loadImgForm()
                        //если есть ссылка файла источника картинки
                        if ($fileIsAlreadiTrue) 
                            $zapros="UPDATE load_img SET alt='".$actualAlt."',width=".$actualWidth.",height=".$actualHeight." WHERE url='".$_SESSION['loadImgFormTextUrl']."'";
-                       $classPhp->zaprosSQL($zapros); // записываем новый файл в БД или изменяем старый
+                       $this->zaprosSQL($zapros); // записываем новый файл в БД или изменяем старый
                     } // От Сохранить
                        // читаем из БД параметры файла, который заливается из вне
                        $zapros="SELECT name,alt,width,height FROM load_img WHERE  url='".$_SESSION['loadImgFormTextUrl']."'";
-                       $rez=$classPhp->zaprosSQL($zapros); // читаем локальное имя файла из таблицы
-                       if ($classPhp->notFalseAndNULL($rez)) { 
+                       $rez=$this->zaprosSQL($zapros); // читаем локальное имя файла из таблицы
+                       if ($this->notFalseAndNULL($rez)) { 
                            $stroka=mysqli_fetch_assoc($rez);
-                           if ($classPhp->notFalseAndNULL($stroka)) { 
+                           if ($this->notFalseAndNULL($stroka)) { 
                                echo '<div class="name-local-file-fo-redaktor"><p>[IMG]'.$stroka['name'].'[IMG]</p></div>';
                                $_SESSION['loadImgFormTextAlt']=$stroka['alt'];
                                $_SESSION['loadImgFormTextWidth']=$stroka['width'];
@@ -1245,12 +1191,11 @@ public function loadImgForm()
 
 function imgBbToUrl(&$stringBB,$hablonStyle)
 {
-   $classPhp = new initBd();
    // создаем массив с БиБи кодами
    preg_match_all('/\[IMG\].+\..+\[IMG\]?/',$stringBB,$masBB);
    
    $masBBone=$masBB[0];
-   //$classPhp->printMas($masBBone);
+   //$this->printMas($masBBone);
 
    foreach ($masBBone as $value) {
        $timeValue=$value;
@@ -1267,10 +1212,10 @@ function imgBbToUrl(&$stringBB,$hablonStyle)
        $width=0;
        $height=0;
        $zapros="SELECT alt,width,height FROM load_img WHERE  name='".$timeValue."'";
-       $rez=$classPhp->zaprosSQL($zapros); // читаем локальное имя файла из таблицы
-       if ($classPhp->notFalseAndNULL($rez)) {
+       $rez=$this->zaprosSQL($zapros); // читаем локальное имя файла из таблицы
+       if ($this->notFalseAndNULL($rez)) {
            $stroka=mysqli_fetch_assoc($rez);
-           if ($classPhp->notFalseAndNULL($stroka)) {
+           if ($this->notFalseAndNULL($stroka)) {
                $alt=$stroka['alt'];
                $width=$stroka['width'];
                $height=$stroka['height'];

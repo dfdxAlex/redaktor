@@ -3,6 +3,21 @@ namespace class\redaktor\interface\trait;
 
 trait TraitInterfaceWorkToHeader
 {
+    public function showSiteHeader(string $url)
+    {
+        echo '  <img src="'.$this->searcNamePath($url).'" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
+    }
+
+    public function showNumberOfCoins(\class\redaktor\interface\interface\InterfaceWorkToModul $redaktor)
+    {
+        echo '<div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-12">';
+        if (isset($_SESSION["login"])) {
+            echo '<div class="monetki"><img src="'.$this->searcNamePath('image/pngwingmal.png').'" class="img-fluid" alt="монет"></div>';
+            echo $redaktor->money('login='.$_SESSION["login"]);
+        }
+        echo '</div>';
+    }
+
     public function topMenuProcessing()
     {
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">';

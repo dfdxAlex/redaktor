@@ -44,5 +44,20 @@ interface InterfaceWorkToHeader extends InterfaceWorkToMenu
     public function showSiteSection(string $pathFileSection, string $functionAnalogSectionImages);
 
     // функция обслуживает верхнее меню сайта.
+    // funkcja służy do górnego menu serwisu.
+    // function serves the top menu of the site.
     public function topMenuProcessing();
+
+    // функция скачивает и показывает колличество монет у пользователя
+    // InterfaceWorkToModul $redaktor сигнатура класса работы с админкой
+    // funkcja pobiera i pokazuje liczbę monet, które posiada użytkownik
+    // InterfaceWorkToModul klasy administratora modułu $redaktor
+    // the function downloads and shows the number of coins the user has
+    // InterfaceWorkToModul $redaktor admin class signature
+    public function showNumberOfCoins(InterfaceWorkToModul $redaktor);
+
+    // показывает шапку сайта
+    // pokazuje nagłówek strony
+    // shows the site header
+    public function showSiteHeader(string $url);
 }

@@ -4,6 +4,25 @@ namespace class\redaktor\interface\trait;
 trait TraitInterfaceFoUser
 {
 
+   public function checkUserStatus()
+   {
+    if ($_SESSION["status"]>0)                      // если есть какой-то статух входа на сайт
+        if (isset($_POST['menu_up_dfdx']))          // если было нажатие любой кнопки верхнего меню
+            if ($_POST['menu_up_dfdx']=='Выход') {  // Если была нажата кнопка Выход верхнего меню
+                $_SESSION["status"]=0;              // Обнуляем статус пользователя (выходим)
+                $_SESSION["login"]='';
+             }
+
+    if ($_SESSION["status"]==0)                      // если пользователь не вошел
+        if (isset($_POST['menu_up_dfdx']))           // если было нажатие любой кнопки верхнего меню
+            if ($_POST['menu_up_dfdx']=='Вход') {    // Если была нажата кнопка Вход верхнего меню
+                $_SESSION["login"]=$_POST['login'];
+                $_SESSION["parol"]=$_POST['parol'];
+             }
+    if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) 
+        $_SESSION["status"]=$this->statusRegi($_SESSION["login"],$_SESSION["parol"]);
+   }
+
    public function resetParol()
    {
       $this->zaprosSQL("UPDATE status_klienta SET parol='1111' WHERE login='".$_POST['login']."'");

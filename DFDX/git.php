@@ -1,8 +1,8 @@
 <?php
 namespace class\redaktor;
 
-//файл сгенерирован CMS-DFDX 2022-02-13 20:53:58
-//file generated CMS-DFDX 2022-02-13 20:53:58
+//файл сгенерирован CMS-DFDX 2022-02-13 22:50:32
+//file generated CMS-DFDX 2022-02-13 22:50:32
 session_start();
 require "funcii.php";
 require "functionDfdx.php";
@@ -48,6 +48,14 @@ if ($_SESSION["status"]==0)             // если пользователь н�
 
 if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) $_SESSION["status"]=$poisk->statusRegi($_SESSION["login"],$_SESSION["parol"]);
 
+// функция скачивает и показывает колличество монет у пользователя
+// Modul $redaktor сигнатура класса работы с админкой
+// funkcja pobiera i pokazuje liczbę monet, które posiada użytkownik
+// Podpis klasy administratora modułu $redaktor
+// the function downloads and shows the number of coins the user has
+// Modul $redaktor admin class signature
+$header->showNumberOfCoins($redaktor);
+
 // Функция реализует установку и обработку верхнего главного меню
 // Funkcja realizuje ustawienia i przetwarzanie w górnym menu głównym
 // The function implements the setting and processing of the top main menu
@@ -67,13 +75,14 @@ echo '  <img src="image/logo.png" alt="Картинка должна назыв�
 
 echo '<section class="container-fluid">';
 echo '<div class="row">';
+
 // блок для вывода левого меню
-echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';
+// blok wyświetlania lewego menu
+// block for displaying the left menu
 $nonTemplates->leftMenu();
-echo '</div>';
 ////////////////////////////////////////////Центр//////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
-echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
+
 
 // имя таблица со статьями для функции news1
 // nazwa tabeli z artykułami dla funkcji news1
@@ -94,8 +103,6 @@ $nonTemplates->publishNews($redaktor,'action=git.php','Число_статей=5
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
 //buttonTwitter
-
-echo '</div>';
 
 // функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
 // the function displays the right menu along with its part of the Bootstrap markup and the site search function
