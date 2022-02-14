@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 10.0.0.57
--- Время создания: Янв 29 2022 г., 16:42
+-- Время создания: Фев 15 2022 г., 00:58
 -- Версия сервера: 5.7.35-38
 -- Версия PHP: 7.2.34
 
@@ -69,7 +69,13 @@ INSERT INTO `bd2` (`id`, `name`, `news`, `login_redaktora`, `razdel`) VALUES
 (27, 'Работа с редактором DFDX (news1). Загрузка изображений.', 'Редактор новостей, обновление от 19.01.2022.<br>\r\nВ модуле news1 доработан функционал загрузки картинок на сервер сайта.<br>\r\nПошаговая инструкция о том, как пользоваться последним обновлением редактора будет в видеоролике в конце статьи. Здесь же только описание правок, которые были внесены. <br>\r\n[IMG]ctnjxbahzz.gif[IMG]<br>\r\n<br>\r\nПункт 1. Модуль остался совместимым с предыдущими его версиями.<br>\r\nПункт 2. Доработан функционал загрузки картинок на сервер сайта или хостинга. <br>\r\n<br>\r\nЗагрузка происходит в 2 этапа. Сначала вносите ссылку на картинку в соответствующее поле и жмёте кнопку «Загрузить». При этом картинка загружается в оперативную память и проверяется. <br>\r\n<br>\r\nЕсли загрузка прошла неудачно, будет соответствующее сообщение с причиной неудачи. К таким причинам можно отнести некорректный тип файла, допускаются только файлы типов (jpg,png,bmp,gif,tif). Файл может быть слишком большой, по умолчанию максимальный размер установлен около 90 кбайт, и др. <br>\r\n<br>\r\nЕсли загрузка прошла нормально, Вы получите параметры высоты и ширины загруженной картинки в соответствующих полях. После удачной загрузки можно прописать атрибут alt и задать новые параметры высоты и ширины, они пропишутся в атрибуты width и height. <br>\r\n<br>\r\nПосле обновления данных жмём кнопку «Загрузить». На этом этапе картинка сохраняется на сервере и делается запись в базу данных. Если всё прошло удачно, то над формой загрузок появится код, который необходимо вставить в нужное место в тексте статьи, там и будет картинка.<br>\r\n<br>\r\nЕсли Вы по какой-то причине потеряли данный код, то можно повторно загрузить картинку по ссылке, если картинка загружалась ранее, то уже на этапе загрузки Вы получите тот же самый код, он будет взят из базы данных, где был сохранен ранее, повторной записи или добавления второго такого же файла не будет даже после нажатия на кнопку «Сохранить».<br>\r\n<br>\r\nТак же следует отметить, что старый способ добавления картинок по ссылке остается актуальным. Если нет необходимости загружать картинку на свой хостинг, то лучше всего скопировать образец тега img  из подсказок и вставить в него свою ссылку. Напоминаю, что в данном варианте необходимо для каждой картинки прописать оригинальный alt.<br>\r\n<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ZsAeOFUJ_Es\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#cmsdfdx#<br>\r\n<br>\r\n<br>\r\n', 'alfa54', 'cmsdfdx'),
 (28, 'Структура HTML страницы.', 'Страница  HTML состоит из нескольких блоков или частей. В самом верху, первой строкой располагается название типа документа или тип документа. В случае, если у Вас документ является HTML5, то в первой строке у Вас должно быть слово <br>\r\n<br>\r\n<code>      <br>\r\n&ltDOCTYPE html&gt <br>\r\n</code><br>\r\n<br>\r\nПосле этого весь документ HTML должен быть заключен в теги:<br>\r\n<br>\r\n<code>      <br>\r\n&lthtml&gt <br>\r\n<br>\r\n&lt/html&gt <br>\r\n</code><br>\r\n<br>\r\nЭти теги ограничивают главный контейнер HTML документа, то есть просто весь документ. Контейнер означает, что в него можно что-то положить.<br>\r\n<br>\r\nСледующей структурой HTML странички является блок заголовка, он обрамлен тегами:<br>\r\n<br>\r\n<code>      <br>\r\n&lthead&gt <br>\r\n<br>\r\n&lt/head&gt <br>\r\n</code><br>\r\n<br>\r\nЗдесь располагаются настройки документа, язык к примеру, так же здесь осуществляется подключение стилей, к примеру и много другой служебной информации.<br>\r\n<br>\r\nСодержимое, которое должен увидеть, пользователь обрамляется тегами:<br>\r\n<br>\r\n<code>      <br>\r\n&ltbody&gt <br>\r\n<br>\r\n&lt/body&gt <br>\r\n</code><br>\r\n<br>\r\nВ итоге получаем такую структуру документа:<br>\r\n<br>\r\n<code>      <br>\r\n&ltDOCTYPE html&gt <br>\r\n<br>\r\n&lthtml&gt <br>\r\n    &lthead&gt <br>\r\n<br>\r\n    &lt/head&gt <br>\r\n<br>\r\n    &ltbody&gt <br>\r\n<br>\r\n    &lt/body&gt <br>\r\n<br>\r\n&lt/html&gt <br>\r\n</code><br>\r\n<br>\r\nПримерно так выглядит HTML страничка.<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ok4GjaFf6Io\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml'),
 (29, 'Заголовки h1-h6', 'Для разметки документов или страниц html существует 6 заголовков, соответственно от h1 до h6. Отличаются они размером шрифта. Заголовок h1 – это самый крупный шрифт, заголовок h6 является самым мелким шрифтом.<br>\r\n<br>\r\n<h1>Заголовок h1</h1><br>\r\n<h2>Заголовок h2</h2><br>\r\n<h3>Заголовок h3</h3><br>\r\n<h4>Заголовок h4</h4><br>\r\n<h5>Заголовок h5</h5><br>\r\n<h6>Заголовок h6</h6><br>\r\n<br>\r\nСледовательно, в начале любого документа, заголовке, располагается тег h1 или h2, дальше используются более мелкие заголовки. На пример название статьи заголовком h1, а название пунктов заголовками h2 или h3 и так далее. В видео под текстом производится разметка текста с помощью заголовков.<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/mnNPfLHN2pM\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml'),
-(30, 'Абзацы HTML', 'Понятие абзацев в HTML соответствует понятиям абзацев в обычных текстах. Абзац – это некий блок текста, написанный с новой строки. Для разметки абзаца на странице HTML существует тег &lt;p&gt;. Имеется закрывающий тег, как у всех блочных контейнеров. Текст, помещенный между открывающимся &lt;p&gt;  и закрывающимся &lt;/p&gt;  тегами p и будет помещен в абзац.<br>\r\n<code> <br>\r\n&lt;p&gt;  <br>\r\nНекий текст.<br>\r\n&lt;/p&gt;  <br>\r\n</code><br>\r\nТеги не обязаны располагаться в отдельных строках и могут быть размещены внутри текста. Важно лишь соответствие числа закрывающих тегов числу открывающих.<br>\r\nВ ролике ниже форматируется текст с помощью тегов &lt;p&gt;  &lt;/p&gt;  <br>\r\n<br>\r\n<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cJeSmJDUhA8\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml');
+(30, 'Абзацы HTML', 'Понятие абзацев в HTML соответствует понятиям абзацев в обычных текстах. Абзац – это некий блок текста, написанный с новой строки. Для разметки абзаца на странице HTML существует тег [less]p[more]. Имеется закрывающий тег, как у всех блочных контейнеров. Текст, помещенный между открывающимся [less]p[more]  и закрывающимся [less]/p[more]  тегами p и будет помещен в абзац.<br>\r\n<code>   <br>\r\n<p>  <br>\r\nНекий текст.<br>\r\n</p>  <br>\r\n</code><br>\r\nТеги не обязаны располагаться в отдельных строках и могут быть размещены внутри текста. Важно лишь соответствие числа закрывающих тегов числу открывающих.<br>\r\nВ ролике ниже форматируется текст с помощью тегов [less]p[more]  [less]/p[more]  <br>\r\n<br>\r\n<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cJeSmJDUhA8\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml'),
+(31, 'Полужирный текст и курсив. Теги B и I.', 'В статье рассматриваются два тега [less]b[more] и [less]i[more].<br>\r\nТег [less]b[more] делает текст внутри себя полужирным. Использовать очень просто. Нужный участок текста просто заключаем в теги [less]b[more] .<br>\r\n<br>\r\nПример:<br>\r\n<code>     <br>\r\n[less]b[more]Полужирный текст.[less]/b[more]<br>\r\n<b>    Полужирный текст.</b><br>\r\n</code><br>\r\n<br>\r\nВторой тег [less]i[more] делает курсив. Аналогичное использование. Необходимый участок текста заключаем в тег [less]i[more].<br>\r\n<br>\r\nПример:<br>\r\n<code>     <br>\r\n[less]i[more]Текс курсив.[less]/i[more]<br>\r\n<i>Текс курсив.</i><br>\r\n</code><br>\r\n<br>\r\nНиже в ролике показано использование данных тегов.<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/yQaSSpuFHqI\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml'),
+(32, 'Надстрочные и подстрочные символы.', 'Два тега, необходимые для реализации надстрочных или подстрочных символов sup и sub.<br>\r\n<br>\r\nВ ситуациях, когда необходимо воспроизвести надстрочный символ, к примеру возведение числа в степень, E=mc<sup> 2</sup> , используется тег &lt;sup&gt;. Применение очень простое, необходимую часть заключаем между открытым и закрытым тегом. <br>\r\n<br>\r\nПример:<br>\r\nE=mc&lt;sup&gt;2&lt;/sup&gt;<br>\r\n<br>\r\nАналогичная ситуация с подстрочным текстом. Если нужен текст подстрочный, к примеру, для описания формулы спирта C&ltsub&gt2&lt/sub&gtH&ltsub&gt5&lt/sub&gtOH заключаем нужный текст в тег sub.<br>\r\n<br>\r\nПример:<br>\r\nC&lt;sub&gt;2&lt;/sub&gt;H&lt;sub&gt;5&lt;/sub&gt;OH<br>\r\n<br>\r\nЕсли остались вопросы, можно просмотреть видеоролик внизу.<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/XD5Ys74PWd8\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 'alfa54', '-'),
+(33, 'Надстрочные и подстрочные символы.', 'Два тега, необходимые для реализации надстрочных или подстрочных символов [less]sup[more] и [less]sub[more].<br>\r\n<br>\r\nВ ситуациях, когда необходимо воспроизвести надстрочный символ, к примеру возведение числа в степень, E=mc<sup>            2</sup> , используется тег [less]sup[more]  . Применение очень простое, необходимую часть заключаем между открытым и закрытым тегом. <br>\r\n<br>\r\nПример:<br>\r\n<code>            <br>\r\nE=mc[less]sup[more]2[less]/sup[more]<br>\r\n</code><br>\r\n<br>\r\nАналогичная ситуация с подстрочным текстом. Если нужен текст подстрочный, к примеру, для описания формулы спирта C<sub>    2</sub>H<sub>   5</sub>OH заключаем нужный текст в тег [less]sub[more].<br>\r\n<br>\r\nПример:<br>\r\n<code>            <br>\r\nC[less]sub[more]2[less]/sub[more]H[less]sub[more]5[less]/sub[more]OH<br>\r\n</code><br>\r\n<br>\r\nЕсли остались вопросы, можно просмотреть видеоролик внизу.<br>\r\n<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/XD5Ys74PWd8\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n<br>\r\n#html3html5xhtml#<br>\r\n', 'alfa54', 'html3html5xhtml'),
+(35, 'Сворачивание пробелов в HTML', 'В документах HTML или на страничках HTML существует такое понятие, как сворачивание пробелов. Понятие довольно простое, но иногда способное доставить неудобства.<br>\r\n<br>\r\nСуть заключается в том, что браузеры встретив несколько пробелов превращают их в один пробел. Это не всегда удобно для форматирования текста. То же самое происходит и с пустыми строками, если их есть несколько, то произойдёт переход на следующую строку только один раз. В случае с пустыми строками не появляется одной пустой строки потому, что браузер встретив несколько служебных символов перехода на следующую строку воспроизводит только один из них, как и в случае с пробелами, однако символ перехода на новую строку не делает пустой строки. Исключением является последняя пустая строка в тексте, если будет символ перехода в конце, то, разумеется, останется последняя пустая строка.<br>\r\n<br>\r\nБороться с этим весьма просто. В случае с пустыми строками, если они нужны, ставят тег [less]br[more] столько раз, сколько нужно воспроизвести переходов на новую строку, не путать с пустыми строками. Чтобы внутри текста сделать пустую строку, необходимо поставить два тега [less]br[more][less]br[more].<br>\r\n[IMG]zlesnpybsv.jpg[IMG]<br>\r\nКогда речь идёт о дополнительных пробелах, то для реализации или решения этой задачи служит комбинация:<br>\r\n<br>\r\n<br>\r\nКак это работает можно посмотреть в коротком видеоролике ниже.<br>\r\n<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/ypzgOBrVzwI\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml'),
+(36, 'Теги strong и em.', 'Короткая статья касательно двух тегов.<br>\r\n<br>\r\nStrong.<br>\r\nДанный тег предназначен для ситуации, когда в тексте необходимо сделать предупреждение. Визуально текст, в тегах [less]strong[more]Предупреждение!!![less]/strong[more] отображается полужирным или жирным стилем, однако данный тег не следует применять именно для визуализации текста. Вероятнее всего текст в тегах [less]strong[more] используют автоматические системы воспроизведения текста.<br>\r\n<br>\r\nПример: <br>\r\n<strong>    Предупреждение!!!</strong><br>\r\n<br>\r\nEm.<br>\r\nТег [less]em[more] Этот текст важнее остального текста в статье.[less]/em[more] используется для акцентирования внимания на часть текста. Визуально он воспроизводится курсивом, текс в данных тегах, но теги исключительно для акцентирования внимания.<br>\r\n<br>\r\nПример: <br>\r\n<em>     Этот текст важнее остального текста в статье.</em><br>\r\n<br>\r\nНиже представлено видео, касательно использования данных тегов.<br>\r\n<br>\r\n<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/2SwTQkAO1uc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#<br>\r\n', 'alfa54', 'html3html5xhtml'),
+(37, 'Цитаты blockqwote и q', 'Теги [less]blockquote[more] и [less]q[more] предназначены для выделения цитат в тексте. Как видно из названия тегов, [less]blockquote[more] является блочным тегом, или цитирует блок с созданием своего параграфа или блока с текстом. Тег же [less]q[more] предназначен для обрамления цитат внутри текста без создания своих блоков.<br>\r\n<br>\r\nНесмотря на то, что тег [less]blockquote[more] является блочным, то есть создает свой параграф или блок, его всё равно рекомендуют использовать вместе с тегом параграфа [less]p[more], то есть [less]blockquote[more][less]p[more]Цитата[less]/p[more][less]/blockquote[more].<br>\r\n<br>\r\nПример:<br>\r\n<code>     <br>\r\n[less]blockquote[more]<br>\r\n[less]p[more]<br>\r\nЦитата<br>\r\n[less]/p[more]<br>\r\n[less]/blockquote[more].<br>\r\n</code><br>\r\n<br>\r\nЕсли речь про тег [less]q[more], то его можно использовать непосредственно в тексте.<br>\r\n<br>\r\nПример:<br>\r\n<code>     <br>\r\nОсновная часть текста, в котором есть [less]q[more]небольшой цитируемый участок[less]/q[more].<br>\r\n</code><br>\r\nЕсть у данных тегов свое собственное свойство, которое позволяет задать источник цитаты текста, ссылку на сайт. Браузер данную ссылку никак не воспроизводит, однако её значение видят скрипты.<br>\r\n<br>\r\nПример:<br>\r\n<code>     <br>\r\nОсновная часть текста, в котором есть [less]q site=”google.com”[more]небольшой цитируемый участок[less]/q[more].<br>\r\n</code><br>\r\n<br>\r\nКак работают данные теги показано в ролике внизу.<br>\r\n<br>\r\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cnycVhAOOho\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>\r\n#html3html5xhtml#', 'alfa54', 'html3html5xhtml');
 
 -- --------------------------------------------------------
 
@@ -149,7 +155,8 @@ INSERT INTO `load_img` (`id`, `name`, `url`, `alt`, `width`, `height`) VALUES
 (3, 'qzovofbudx.gif', 'https://i.ibb.co/yp4s93P/2022-01-18-221304.gif', 'CMD-DFDX', 550, 311),
 (4, 'smmbwsddmv.gif', 'https://i.ibb.co/bz110M0/2022-01-18-223601.gif', 'CMD-DFDX', 550, 309),
 (5, 'ctnjxbahzz.gif', 'http://sleza-mobile.ru/data/loads/any/abstrakcii_(139).gif', 'CMD-DFDX', 240, 320),
-(6, 'jezfxmjoof.jpg', 'https://ktonanovenkogo.ru/image/priroda-gora.jpg', 'CMD-DFDX', 500, 307);
+(6, 'jezfxmjoof.jpg', 'https://ktonanovenkogo.ru/image/priroda-gora.jpg', 'CMD-DFDX', 500, 307),
+(7, 'zlesnpybsv.jpg', 'https://i.ibb.co/Vx6Bnp4/2022-02-06-181524.jpg', 'CMD-DFDX', 278, 130);
 
 -- --------------------------------------------------------
 
@@ -300,10 +307,6 @@ INSERT INTO `menu_parametr_tab` (`ID`, `NAME`, `URL`, `CLASS`) VALUES
 (0, 'stolbcov', 'text', 'menu_parametr_tab'),
 (1, 'strok', 'text', 'menu_parametr_tab'),
 (2, 'Ок', 'redaktor.php', 'menu_parametr_tab'),
-(3, 'Отмена', 'redaktor.php', 'menu_parametr_tab'),
-(0, 'stolbcov', 'text', 'menu_parametr_tab'),
-(1, 'strok', 'text', 'menu_parametr_tab'),
-(2, 'Ок', 'redaktor.php', 'menu_parametr_tab'),
 (3, 'Отмена', 'redaktor.php', 'menu_parametr_tab');
 
 -- --------------------------------------------------------
@@ -351,7 +354,7 @@ CREATE TABLE `monety_dfdx` (
 
 INSERT INTO `monety_dfdx` (`login`, `monet`) VALUES
 ('login', 0),
-('alfa54', 144317),
+('alfa54', 157433),
 ('test123', 0),
 ('test124', 0),
 ('admin', 0),
@@ -373,7 +376,7 @@ CREATE TABLE `nastrolkiredaktora` (
 --
 
 INSERT INTO `nastrolkiredaktora` (`imiePosTabl`) VALUES
-('redaktor_up');
+('menu_parametr_tab');
 
 -- --------------------------------------------------------
 
@@ -1128,16 +1131,16 @@ INSERT INTO `slegka_dfdx` (`id`, `metka`, `zaprosov`) VALUES
 (0, '-', 4),
 (2, 'rdNowaStr', 95),
 (3, 'nastrNowaStranica', 41),
-(7, 'dfdx', 2898),
+(7, 'dfdx', 3059),
 (8, 'html', 838),
 (9, 'html5', 267),
 (10, 'regular_expressions', 507),
-(11, 'xhtml', 10),
-(12, 'cmsdfdx', 132),
+(11, 'xhtml', 11),
+(12, 'cmsdfdx', 155),
 (13, 'obrazec', 2),
-(14, 'git', 67),
+(14, 'git', 70),
 (15, 'kommentarii-v-html-', 4),
-(16, '-lt-doctype-gt-obyavlenie-tipa-dokumenta-', 3),
+(16, '-lt-doctype-gt-obyavlenie-tipa-dokumenta-', 5),
 (17, 'funkciya-preg_filter-', 6),
 (18, 'funkciya-preg_quote', 5),
 (19, 'funkciya-preg_grep-', 6),
@@ -1147,29 +1150,36 @@ INSERT INTO `slegka_dfdx` (`id`, `metka`, `zaprosov`) VALUES
 (23, 'funkciya-preg_replace-', 44),
 (24, 'funkciya-preg_replace_callback-', 9),
 (25, 'preg_replace_callback_arrayphp', 4),
-(26, 'registraciya-polzovatelya-na-sayte-s-cms-dfdx', 3),
-(27, 'kak-opublikovat-statyu-na-sayte-s-cms-dfdx-', 8),
-(28, 'nastraivaem-menyu-ispolzuya-admin-panel-', 4),
-(29, 'skachivanie-i-nastroyka-github-', 4),
-(30, 'dorabotka-tekstovogo-redaktora-ot-cms-dfdx', 6),
-(31, 'generaciya-ssh-klyucha-i-dobavlenie-ego-v-githab-', 17),
+(26, 'registraciya-polzovatelya-na-sayte-s-cms-dfdx', 5),
+(27, 'kak-opublikovat-statyu-na-sayte-s-cms-dfdx-', 13),
+(28, 'nastraivaem-menyu-ispolzuya-admin-panel-', 7),
+(29, 'skachivanie-i-nastroyka-github-', 5),
+(30, 'dorabotka-tekstovogo-redaktora-ot-cms-dfdx', 10),
+(31, 'generaciya-ssh-klyucha-i-dobavlenie-ego-v-githab-', 18),
 (32, 'leson', 47),
 (33, 'generaciya-nomera-pesel', 19),
 (34, 'generaciya-nomera-pe-elopisanie-stranicy', 17),
-(35, 'registraciya-administratora-na-sayte-s-cms-dfdx', 2),
+(35, 'registraciya-administratora-na-sayte-s-cms-dfdx', 4),
 (36, 'apidfdx', 6),
-(37, 'kak-podklyuchitsya-k-repozitoriyu-github', 31),
-(38, 'avtomatizaciya-raboty-s-github', 21),
+(37, 'kak-podklyuchitsya-k-repozitoriyu-github', 44),
+(38, 'avtomatizaciya-raboty-s-github', 24),
 (39, 'generaciya-nomera-pe-el-', 1),
 (40, 'psr', 22),
-(41, 'standart-psrpomechen-kak-ustarevshiy-', 27),
+(41, 'standart-psrpomechen-kak-ustarevshiy-', 28),
 (42, 'standart-oformleniya-koda-php-psr', 21),
-(43, 'dorabotka-redaktora-new-cms-dfdx-', 16),
-(44, 'rabota-s-redaktorom-dfdxnew-zagruzka-izobrazheniy-', 37),
-(45, 'html3', 4),
-(46, 'struktura-html-stranicy-', 13),
-(47, 'zagolovki-hh-', 12),
-(48, 'abzacy-html', 29);
+(43, 'dorabotka-redaktora-new-cms-dfdx-', 21),
+(44, 'rabota-s-redaktorom-dfdxnew-zagruzka-izobrazheniy-', 43),
+(45, 'html3', 11),
+(46, 'struktura-html-stranicy-', 15),
+(47, 'zagolovki-hh-', 14),
+(48, 'abzacy-html', 32),
+(49, 'poluzhirnyy-tekst-i-kursivtegi-b-i-i-', 22),
+(50, 'nadstrochnye-i-podstrochnye-simvoly-', 34),
+(51, 'svorachivanie-probelov-v-html', 37),
+(52, 'tegitrong-i-em-', 24),
+(53, 'PanelAdministratora', 3),
+(54, 'regular', 2),
+(55, 'citaty-blockqwote-i-q', 18);
 
 -- --------------------------------------------------------
 
@@ -1227,7 +1237,7 @@ CREATE TABLE `statistik_dfdx` (
 --
 
 INSERT INTO `statistik_dfdx` (`statik_true`, `n_zapros`, `d_zapros`) VALUES
-(1, 1658461, '2022-01-29');
+(1, 1922370, '2022-02-15');
 
 -- --------------------------------------------------------
 
@@ -1324,7 +1334,13 @@ INSERT INTO `styl_statii_dfdx` (`id`, `nomer_styla`) VALUES
 (27, 3),
 (28, 3),
 (29, 3),
-(30, 3);
+(30, 3),
+(31, 3),
+(33, 3),
+(35, 3),
+(34, 3),
+(36, 3),
+(37, 3);
 
 -- --------------------------------------------------------
 
@@ -1442,35 +1458,9 @@ CREATE TABLE `url_po_id_bd2` (
 
 INSERT INTO `url_po_id_bd2` (`id`, `url`) VALUES
 (-1, 'пусто'),
-(23, 'news/git/avtomatizaciya-raboty-s-github.php'),
-(22, 'news/git/kak-podklyuchitsya-k-repozitoriyu-github.php'),
-(21, 'news/leson/generaciya-nomera-pe-el.php'),
-(20, 'news/leson/generaciya-nomera-pesel.php'),
-(19, 'news/git/generaciya-ssh-klyucha-i-dobavlenie-ego-v-githab.php'),
-(18, 'news/cmsdfdx/dorabotka-tekstovogo-redaktora-ot-cms-dfdx.php'),
-(17, 'news/git/skachivanie-i-nastroyka-github.php'),
-(16, 'news/cmsdfdx/nastraivaem-menyu-ispolzuya-admin-panel.php'),
-(15, 'news/cmsdfdx/kak-opublikovat-statyu-na-sayte-s-cms-dfdx.php'),
-(14, 'news/cmsdfdx/registraciya-administratora-na-sayte-s-cms-dfdx.php'),
-(12, 'news/phpregular/preg_replace_callback_arrayphp.php'),
-(13, 'news/cmsdfdx/registraciya-polzovatelya-na-sayte-s-cms-dfdx.php'),
-(11, 'news/phpregular/funkciya-preg_replace_callback.php'),
-(10, 'news/phpregular/funkciya-preg_replace.php'),
-(9, 'news/phpregular/funkciya-preg_-plit.php'),
-(8, 'news/phpregular/funkciya-preg_match_all.php'),
-(7, 'news/phpregular/funkciya-preg_match.php'),
-(6, 'news/phpregular/funkciya-preg_grep.php'),
-(5, 'news/phpregular/funkciya-preg_quote.php'),
-(4, 'news/phpregular/funkciya-preg_filter.php'),
+(36, 'news/html3html5xhtml/tegitrong-i-em.php'),
 (2, 'news/html3html5xhtml/lt-doctype-gt-obyavlenie-tipa-dokumenta.php'),
-(0, 'news/html3html5xhtml/kommentarii-v-html.php'),
-(24, 'news/psr/standart-psrpomechen-kak-ustarevshiy.php'),
-(25, 'news/psr/standart-oformleniya-koda-php-psr.php'),
-(26, 'news/cmsdfdx/dorabotka-redaktora-new-cms-dfdx.php'),
-(27, 'news/cmsdfdx/rabota-s-redaktorom-dfdxnew-zagruzka-izobrazheniy.php'),
-(28, 'news/html3html5xhtml/struktura-html-stranicy.php'),
-(29, 'news/html3html5xhtml/zagolovki-hh.php'),
-(30, 'news/non-path/abzacy-html.php');
+(37, 'news/html3html5xhtml/citaty-blockqwote-i-q.php');
 
 -- --------------------------------------------------------
 

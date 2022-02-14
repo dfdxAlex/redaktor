@@ -42,8 +42,6 @@ $header->firstCreationSessionVariables();
 // Also, the function handles the button press Enter and Exit
 $header->checkUserStatus();
 
-
-
 echo '<section class="container-fluid">';
 echo '<div class="row">';
 // функция скачивает и показывает колличество монет у пользователя
@@ -58,11 +56,11 @@ $header->showNumberOfCoins(new Modul);
 // Funkcja realizuje ustawienia i przetwarzanie w górnym menu głównym
 // The function implements the setting and processing of the top main menu
 $header->topMenuProcessing();
-echo '</div>';
-echo '</section>';
+echo '</div>
+      </section>';
 ////////////////////////////Начало основного кода страницы////////////////////////// 
 ////////////////////////////////////////////////////////////////////////////////////////////////// 
-?>
+echo '
 <section class="container-fluid">
 <div class="row">
 <div class="col-12">  
@@ -94,8 +92,8 @@ echo '</section>';
 for($j=0; $j<$i; $j++) 
            <br>{<br>
              if ($j+1<$i) <br>
-            $z=$z.$masN[$j].' '.$masT[$j].', ';<br>
-            else $z=$z.$masN[$j].' '.$masT[$j];<br>
+            $z=$z.$masN[$j].\' \'.$masT[$j].\', \';<br>
+            else $z=$z.$masN[$j].\' \'.$masT[$j];<br>
             }<br>
          </div>
 </code>
@@ -127,8 +125,8 @@ for($j=0; $j<$i; $j++)
 for($j=0; $j<$i; $j++) 
            <br>{<br>
              if ($j+1<$i) <br>
-            $z=$z.$masN[$j].' '.$masT[$j].', ';<br>
-            else $z=$z.$masN[$j].' '.$masT[$j];<br>
+            $z=$z.$masN[$j].\' \'.$masT[$j].\', \';<br>
+            else $z=$z.$masN[$j].\' \'.$masT[$j];<br>
             }<br>
          </div>
 </code>
@@ -160,8 +158,8 @@ for($j=0; $j<$i; $j++)
 for($j=0; $j<$i; $j++) 
            <br>{<br>
              if ($j+1<$i) <br>
-            $z=$z.$masN[$j].' '.$masT[$j].', ';<br>
-            else $z=$z.$masN[$j].' '.$masT[$j];<br>
+            $z=$z.$masN[$j].\' \'.$masT[$j].\', \';<br>
+            else $z=$z.$masN[$j].\' \'.$masT[$j];<br>
             }<br>
          </div>
 </code>
@@ -170,8 +168,8 @@ for($j=0; $j<$i; $j++)
 </div> 
 </div> 
 </section>
- <?php
-////////////////////////////////////////////////////////////////////////////////////////////////// 
+';
+
 ////////////////////////////Конец основного кода страницы////////////////////////// 
     $futter->futterGeneral($statistik,'obrazec');
     $futter->closeHtmlDok();
