@@ -165,4 +165,9 @@ interface InterfaceButton extends InterfaceWorkToBd
    // bootstrap-f-start - adds /col-12 /row row, col-12
    // bootstrap-finish - adds /col-12 /row /section
    public function formBlock($nameBlock, $actionN,...$parametr);
+
+   // функция ставит кнопку для твиттера. Параметр $text содержит заголовок статьи и ссылку на статью
+   // funkcja ustawia przycisk dla Twittera. Parametr $text zawiera tytuł artykułu i link do artykułu
+   // function sets the button for twitter. The $text parameter contains the title of the article and a link to the article
+   public function buttonTwitter($text);
 }

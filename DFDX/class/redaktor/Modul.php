@@ -650,8 +650,8 @@ class Modul implements interface\interface\InterfaceWorkToModul
                               $valueTemp=preg_filter('/\/\/if\s\(!\$/','if (!$',$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
                               
-                              $strokaZameny='buttonTwitter("'.$dataMas[$ii][1][0][0][0].' http://dfdx.uxp.ru/'.$fileName.'");';
-                              $valueTemp=preg_filter('/\/\/buttonTwitter/u',$strokaZameny,$value);
+                              $strokaZameny=$dataMas[$ii][1][0][0][0].' http://dfdx.uxp.ru/'.$fileName;
+                              $valueTemp=preg_filter('/buttonTwitter/u',$strokaZameny,$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
                               
                               $valueTemp=preg_filter('/title\>dfdx\<\/title/u','title>'.$dataMas[$ii][1][0][0][0].'</title',$value);

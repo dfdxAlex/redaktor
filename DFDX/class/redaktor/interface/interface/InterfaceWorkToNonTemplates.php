@@ -59,7 +59,7 @@ interface InterfaceWorkToNonTemplates extends InterfaceWorkToMenu
     // the nameBD parameter defines the name of the table containing the news1 function articles
     // string parameter $searchCategory determines which categories the poiskStati() function will work with.
     // string parameter $articleSection determines which categories the news1() function will work with.
-    public function publishNews(\class\redaktor\Modul $modul,string $action,string $nomerNewsGlawn, int $runNewsIsNews1, string $nameBD, string $searchСategory, string $articleSection);
+    public function publishNews(\class\redaktor\Modul $modul,string $action,string $nomerNewsGlawn, int $runNewsIsNews1, string $nameBD, string $searchСategory, string $articleSection, string $twitter);
 
     // функция выводит левое меню на странице сайта
     // funkcja wyświetla lewe menu na stronie serwisu

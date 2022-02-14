@@ -27,76 +27,77 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
      {
         echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';
         $this->formBlock('levBlock','dfdx.php',
-        'submit',
-        'levBlock',
-        'API DFDX',
-        $this->searcNamePath('apidfdx.php'),
-        'br',
-        'submit',
-        'levBlock',
-        'CMS DFDX',
-        $this->searcNamePath('cms-dfdx.php'),
-        'br',
-        'submit',
-        'levBlock',
-        'GIT',
-        $this->searcNamePath('git.php'),
-        'br',
-        'submit',
-        'levBlock',
-        'HTML',
-        $this->searcNamePath('htmlFoDfdx.php'),
-        'br',
-        'submit',
-        'levBlock',
-        'XHTML',
-        $this->searcNamePath('xhtml.php'),
-        'br',
-        'submit',
-        'levBlock',
-        'HTML5',
-        $this->searcNamePath('html5FoDfdx.php'),
-        'br',
-        'submit',
-        'levBlock',
-        'CSS3',
-        '#',
-        'br',
-        'submit',
-        'levBlock',
-        'Bootstrap 5',
-        '#',
-        'br',
-        'submit',
-        'levBlock',
-        'jQuery',
-        '#',
-        'br',
-        'submit',
-        'levBlock',
-        'Регулярные в...',
-        $this->searcNamePath('regular_expressions.php'),
-        'br',
-        'submit',
-        'levBlock',
-        'PHP8',
-        '#',
-        'br',
-        'submit',
-        'levBlock',
-        'PSR',
-        $this->searcNamePath('psr.php'),
-        'br',
-        '3',
-        'submit',
-        'levBlock',
-        'Задачи',
-        $this->searcNamePath('leson.php')
+            'submit',
+            'levBlock',
+            'API DFDX',
+            $this->searcNamePath('apidfdx.php'),
+            'br',
+            'submit',
+            'levBlock',
+            'CMS DFDX',
+            $this->searcNamePath('cms-dfdx.php'),
+            'br',
+            'submit',
+            'levBlock',
+            'GIT',
+            $this->searcNamePath('git.php'),
+            'br',
+            'submit',
+            'levBlock',
+            'HTML',
+            $this->searcNamePath('htmlFoDfdx.php'),
+            'br',
+            'submit',
+            'levBlock',
+            'XHTML',
+            $this->searcNamePath('xhtml.php'),
+            'br',
+            'submit',
+            'levBlock',
+            'HTML5',
+            $this->searcNamePath('html5FoDfdx.php'),
+            'br',
+            'submit',
+            'levBlock',
+            'CSS3',
+            '#',
+            'br',
+            'submit',
+            'levBlock',
+            'Bootstrap 5',
+            '#',
+            'br',
+            'submit',
+            'levBlock',
+            'jQuery',
+            '#',
+            'br',
+            'submit',
+            'levBlock',
+            'Регулярные в...',
+            $this->searcNamePath('regular_expressions.php'),
+            'br',
+            'submit',
+            'levBlock',
+            'PHP8',
+            '#',
+             'br',
+             'submit',
+             'levBlock',
+             'PSR',
+             $this->searcNamePath('psr.php'),
+             'br',
+             '3',
+             'submit',
+             'levBlock',
+             'Задачи',
+             $this->searcNamePath('leson.php')
             );
-echo '</div>';
+
+       echo '</div>';
      }
 
-     public function publishNews(\class\redaktor\Modul $modul, string $action, string $nomerNewsGlawn, int $runNewsIsNews1, string $nameBD, string $searchСategory, string $articleSection)
+     public function publishNews(\class\redaktor\Modul $modul, string $action, string $nomerNewsGlawn, int $runNewsIsNews1, string $nameBD, string $searchСategory, string $articleSection, string $twitter)
      {
         $bylPoisk=false;
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
@@ -144,6 +145,8 @@ echo '</div>';
                 if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
                     $modul->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$articleSection);
             }
+            if ($twitter!=='buttonTwitter')
+                $this->buttonTwitter($twitter);
             echo '</div>';
      }
 
@@ -161,6 +164,7 @@ echo '</div>';
      {
      echo '<section class="container-fluid">';
      echo '<div class="pravoe-pole-div">';
+
      $strSummRazdel='WHERE ('; // переменная с условием запроса
      $zapros="SELECT razdel FROM bd2 WHERE 1";
      $rez=$InterfaceWorkToStatistik->zaprosSQL($zapros);
@@ -179,7 +183,9 @@ echo '</div>';
        else $zapros='SELECT bd2.name, url_po_id_bd2.url, bd2.id FROM bd2, url_po_id_bd2 WHERE bd2.id=url_po_id_bd2.id';
        $rez=$InterfaceWorkToStatistik->zaprosSQL($zapros);
        if (!$InterfaceWorkToStatistik->notFalseAndNULL($rez)) return false;
+
        echo '<form action="'.$_SESSION['redaktiruem'].'" method="post">';
+
        while (!is_null($stroka=(mysqli_fetch_assoc($rez)))) {
          $stroka['name']=$InterfaceWorkToStatistik->clearCode($stroka['name'],'удалить_все');
           echo '<div class="row">';
@@ -199,7 +205,9 @@ echo '</div>';
           echo '</div>';
           echo '</div>';
         }
+        
        echo '</form>';
+
        echo '</div>';
       echo '</section>';
  }

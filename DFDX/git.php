@@ -92,7 +92,7 @@ $metka="git"; //метка для счётчика статистики посе
 // функция управляет выводом статей в разных режимах используя функцию news1
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function
-$nonTemplates->publishNews($redaktor,'action=git.php','Число_статей=5',-1,$nameBD,'категория-git','Раздел=git');
+$nonTemplates->publishNews($redaktor,'action=git.php','Число_статей=5',-1,$nameBD,'категория-git','Раздел=git','buttonTwitter');
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 

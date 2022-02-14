@@ -24,31 +24,42 @@ require "class.php";
   echo '</head>';
   echo '<body>';
 
-if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;
-if (!isset($_SESSION["regimRaboty"])) $_SESSION["regimRaboty"]=0;
-if (!isset($_SESSION["status"])) $_SESSION["status"]=0;
-if (!isset($_SESSION["sSajta"])) $_SESSION["sSajta"]=false;
+// функция создает переменные сессий при первом посещении страницы
+// funkcja tworzy zmienne sesji przy pierwszej wizycie na stronie
+// function creates session variables on first visit to the page
+$header->firstCreationSessionVariables();
 
-if (isset($_SESSION["login"]) && isset($_SESSION["parol"])) 
-    $_SESSION["status"]=$poisk->statusRegi($_SESSION["login"],$_SESSION["parol"]);
-if ($_SESSION["status"]>99) $_SESSION["status"]=9;
+// Функция проверяет поля логина и пароля, если они заполнены, то вытягивает из базы статус 
+// пользователя и заносит его в переменную $_SESSION["status"]
+// Также функция обрабатывает нажатие кнопки Вход и Выход
+   
+// Funkcja sprawdza pola login i hasło, czy są wypełnione, a następnie pobiera status 
+// użytkownika z bazy danych i wpisuje go do zmiennej $_SESSION["status"]
+// Funkcja obsługuje również naciśnięcie klawisza Enter i Exit
+
+// The function checks the login and password fields, if they are filled, then pulls the user status 
+// from the database and enters it into the $_SESSION["status"] variable
+// Also, the function handles the button press Enter and Exit
+$header->checkUserStatus();
 
 
 
-if ($_SESSION["status"]>99 || $_SESSION["status"]==9)
-   $poisk->__unserialize(array("menu6","podtverdit","redaktor.php","Введите код"));
-if ($_SESSION["status"]==5 || $_SESSION["status"]==4)
-   $poisk->__unserialize(array("menu3","redaktor_up","Редактор","Сайт","Выйти","Создать страницу"));
-if ($_SESSION["status"]==0)
-   $poisk->__unserialize(array("menu4","login","redaktor.php","Логин","Пароль","Вход","Регистрация"));
-if ($_SESSION["status"]==1 || $_SESSION["status"]==2 || $_SESSION["status"]==3)
-   $poisk->menu("dla_statusob_123");
-if (isset($_SESSION["status"]) && $_SESSION["status"]>0)
-  echo "<h6>Вы вошли под логином: ".$_SESSION["login"]."</h6>";
-else {
-      echo '<h6 class="mesage">Доброго времени суток. Вы попали в админ. панель движка dfdx. Выберите продолжение регистрации или войдите под своим логином и паролем.</h6>';
-      echo '<h6 class="mesage">Так-же Вы всегда можете вернуться на сайт нажав на кнопку "На сайт"</h6>';
-  }
+echo '<section class="container-fluid">';
+echo '<div class="row">';
+// функция скачивает и показывает колличество монет у пользователя
+// Modul $redaktor сигнатура класса работы с админкой
+// funkcja pobiera i pokazuje liczbę monet, które posiada użytkownik
+// Podpis klasy administratora modułu $redaktor
+// the function downloads and shows the number of coins the user has
+// Modul $redaktor admin class signature
+$header->showNumberOfCoins(new Modul);
+
+// Функция реализует установку и обработку верхнего главного меню
+// Funkcja realizuje ustawienia i przetwarzanie w górnym menu głównym
+// The function implements the setting and processing of the top main menu
+$header->topMenuProcessing();
+echo '</div>';
+echo '</section>';
 ////////////////////////////Начало основного кода страницы////////////////////////// 
 ////////////////////////////////////////////////////////////////////////////////////////////////// 
 ?>

@@ -31,16 +31,7 @@ function genericKodAdmina($login)
     file_put_contents('kod.txt',mt_rand(1000000,9999999));
 }
 
-function buttonTwitter($text)
-{
-  $textTwitter=preg_filter('/\s/','%20',$text);
-  echo '<br><br>';
-  echo '<div class="buttonTwitterDiv">';
-  echo '<a class="link-button-twitter-text" target="_blank"';
-  echo ' href="https://twitter.com/intent/tweet?text='.$textTwitter.'">';
-  echo 'Твитнуть</a>';
-  echo '</div>';
-}
+
 
 function forma($idTeg,$Teg,$opisanie,$opisanieVideo,$idPrimer,$idAtribut,$idSintax,$kluc1,$kluc2,$kluc3,$kluc4,$kluc5,$kluc6,$kluc7,$kluc8,$kluc9,$kluc10)
 {

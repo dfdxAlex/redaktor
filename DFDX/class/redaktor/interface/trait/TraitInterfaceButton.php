@@ -3,6 +3,18 @@ namespace class\redaktor\interface\trait;
 
 trait TraitInterfaceButton
 {
+
+  public function buttonTwitter($text)
+  {
+    $textTwitter=preg_filter('/\s/','%20',$text);
+    echo '<br><br>';
+    echo '<div class="buttonTwitterDiv">';
+    echo '<a class="link-button-twitter-text" target="_blank"';
+    echo ' href="https://twitter.com/intent/tweet?text='.$textTwitter.'">';
+    echo 'Твитнуть</a>';
+    echo '</div>';
+  }
+
     // функция рисует кнопку с использованием параметров префикса и переменной. Работает с функцией buttonHanter()
 public function buttonPrefix(...$parametr)
 {

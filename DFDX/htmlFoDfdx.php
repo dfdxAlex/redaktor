@@ -92,7 +92,7 @@ $metka="html3"; //метка для счётчика статистики пос
 // функция управляет выводом статей в разных режимах используя функцию news1
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function
-$nonTemplates->publishNews($redaktor,'action=htmlFoDfdx.php','Число_статей=5',-1,$nameBD,'категория-html3','Раздел=html3');
+$nonTemplates->publishNews($redaktor,'action=htmlFoDfdx.php','Число_статей=5',-1,$nameBD,'категория-html3','Раздел=html3','buttonTwitter');
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 

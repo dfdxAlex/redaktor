@@ -92,7 +92,7 @@ $metka="cmsdfdx"; //метка для счётчика статистики по
 // функция управляет выводом статей в разных режимах используя функцию news1
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function
-$nonTemplates->publishNews($redaktor,'action=cms-dfdx.php','Число_статей=5',-1,$nameBD,'категория-cmsdfdx','Раздел=cmsdfdx');
+$nonTemplates->publishNews($redaktor,'action=cms-dfdx.php','Число_статей=5',-1,$nameBD,'категория-cmsdfdx','Раздел=cmsdfdx','buttonTwitter');
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
