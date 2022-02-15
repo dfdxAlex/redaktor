@@ -19,4 +19,20 @@ interface InterfaceDebug
     // Displays data from the debug table
     public function printTabEcho();
 
+    // функция выводит на echo путь к файлу, в котором находится функция. 
+    // реагирует функция на параметр 
+    // функция работает только если $_SESSION['domDom'] === true.
+    // синтаксис domDom(func_get_args());
+
+    // funkcja wyświetla na echo ścieżkę do pliku, w którym znajduje się funkcja.
+    // funkcja reaguje na parametr
+    // funkcja działa tylko wtedy, gdy $_SESSION['domDom'] === true.
+    // składnia domDom(func_get_args());
+    
+    // the function outputs on echo the path to the file in which the function is located.
+    // the function reacts to the parameter
+    // function only works if $_SESSION['domDom'] === true.
+    // syntax domDom(func_get_args());
+    public function domDom(array $masArgument);
+
 }

@@ -4,6 +4,22 @@ namespace class\redaktor\interface\trait;
 trait TraitInterfaceWorkToHeader
 {
 
+    public function menuOfOurProjects(array $masBotton)
+    {
+        $pokazMenu=true;
+
+        if ($pokazMenu) {
+
+
+        //echo 'ddd';
+        foreach($masBotton as $key => $value)
+          echo $key.'--'.$value;
+
+
+
+        }
+    }
+
     public function firstCreationSessionVariables()
     {
         if (!isset($_SESSION["resetNameTable"])) $_SESSION["resetNameTable"]=false;

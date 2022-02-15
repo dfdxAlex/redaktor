@@ -2,8 +2,8 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-//файл сгенерирован CMS-DFDX 2022-02-14 01:28:36
-//file generated CMS-DFDX 2022-02-14 01:28:36
+//файл сгенерирован CMS-DFDX 2022-02-15 22:06:07
+//file generated CMS-DFDX 2022-02-15 22:06:07
 session_start();
 include "../../funcii.php";
 include "../../functionDfdx.php";
@@ -79,6 +79,9 @@ $header->showSiteHeader('image/logo.png');
  // The function shows the section of the site under the header, or, if this is an article via a personal link, then the scrolling line of the article title
  // If there is no picture for the section, then the running line of the site section will also be displayed
 $header->showSiteSection('image/home.png','home');   
+
+//второе меню. В кнопки можно добавлять через массив добавляя пару Название=>ссылка
+$header->menuOfOurProjects(array('Электронные визитки'=>'second_menu\elVisitka.php'));
 
 echo '<section class="container-fluid pole">';
 echo '<div class="row">';

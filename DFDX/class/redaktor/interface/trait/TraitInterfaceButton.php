@@ -286,6 +286,7 @@ foreach($parametr as $value) {
     }
     public function formBlock($nameBlock, $actionN,...$parametr)
     {
+       $this->domDom(func_get_args());
        $form_not_open=false;          // Управляет выводом открывающего тега Форм, если фалс, то выводим.
        $form_not_close=false;         // Управляет выводом закрывающего тега Форм, если фалс, то выводим.
        $zero_style=false;

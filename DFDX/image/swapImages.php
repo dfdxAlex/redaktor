@@ -45,4 +45,7 @@ function psr()
 {
    echo '<p class="swap-images"><span>Рекомендации PSR<span></p>';
 }
-?>
+function elVisitka()
+{
+   echo '<p class="swap-images"><span>Создаем электронную визитку<span></p>';
+}

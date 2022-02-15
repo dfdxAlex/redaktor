@@ -3,7 +3,6 @@ namespace class\redaktor;
 // ////////////////Считываем параметры инициализации базы данных////////////////////////////
 
 class Header implements interface\interface\InterfaceWorkToHeader
-                        //interface\interface\InterfaceWorkToModul
 {
     use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
     use \class\redaktor\interface\trait\TraitInterfaceDebug;

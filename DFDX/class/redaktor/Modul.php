@@ -614,7 +614,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                            $_SESSION['statiaPoId']=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
                            $action=$this->urlPoIdPath($nametablice,$nomerZagolowkaStati);
                            $_SESSION["runStrNews"]=true;
-                           echo $urlNews;
+                           //echo $urlNews;
                            header('Location: '.$action);
                      }
 
@@ -664,6 +664,9 @@ class Modul implements interface\interface\InterfaceWorkToModul
                               if (!is_null($valueTemp)) $value=$valueTemp;
 
                               $valueTemp=preg_filter('/#file\sgenerated#/u',"//file generated CMS-DFDX ".date('Y-m-d H:i:s'),$value);
+                              if (!is_null($valueTemp)) $value=$valueTemp;
+
+                              $valueTemp=preg_filter('/\$header->menuOfOurProjects/u','//$header->menuOfOurProjects',$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
 
                             } 

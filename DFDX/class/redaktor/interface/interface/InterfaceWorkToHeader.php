@@ -70,4 +70,7 @@ interface InterfaceWorkToHeader extends InterfaceWorkToMenu
     // funkcja tworzy zmienne sesji przy pierwszej wizycie na stronie
     // function creates session variables on first visit to the page
     public function firstCreationSessionVariables();
+
+    // $masBotton ассоциативный массив имя кнопки => ссылка на обработчик
+    public function menuOfOurProjects(array $masBotton);
 }

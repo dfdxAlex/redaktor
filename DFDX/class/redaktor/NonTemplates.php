@@ -27,6 +27,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates
      {
         echo '<div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';
         $this->formBlock('levBlock','dfdx.php',
+        //$this->formBlock('где дом','dfdx.php',
             'submit',
             'levBlock',
             'API DFDX',
