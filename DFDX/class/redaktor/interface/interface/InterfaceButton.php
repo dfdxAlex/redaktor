@@ -166,6 +166,19 @@ interface InterfaceButton extends InterfaceWorkToBd
    // bootstrap-finish - adds /col-12 /row /section
    public function formBlock($nameBlock, $actionN,...$parametr);
 
+   // функция является копией функции formBlock($nameBlock, $actionN,...$parametr);, только входящий параметр - массив
+   // цель модификации функции упростить динамическое проектирование модуля форм кнопок и других полей
+   // есть вероятность, что развитие функций не будет синхронным.
+
+   // funkcja jest kopią funkcji formBlock($nameBlock, $actionN,...$parametr); tylko parametr wejściowy jest tablicą
+   // celem modyfikacji funkcji jest uproszczenie dynamicznego projektowania modułu formularza przycisku i innych pól
+   // istnieje możliwość, że rozwój funkcji nie będzie synchroniczny.
+
+   // the function is a copy of the formBlock($nameBlock, $actionN,...$parametr); function, only the input parameter is an array
+   // the purpose of modifying the function is to simplify the dynamic design of the button form module and other fields
+   // there is a possibility that the development of functions will not be synchronous.
+   public function formBlockMas(array $parametr);
+
    // функция ставит кнопку для твиттера. Параметр $text содержит заголовок статьи и ссылку на статью
    // funkcja ustawia przycisk dla Twittera. Parametr $text zawiera tytuł artykułu i link do artykułu
    // function sets the button for twitter. The $text parameter contains the title of the article and a link to the article

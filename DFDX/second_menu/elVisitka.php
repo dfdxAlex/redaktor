@@ -4,10 +4,10 @@ namespace class\redaktor;
 //файл сгенерирован CMS-DFDX 2022-02-15 20:39:32
 //file generated CMS-DFDX 2022-02-15 20:39:32
 session_start();
-require "funcii.php";
-require "functionDfdx.php";
-require "image/swapImages.php";
-require "class.php";
+require "../funcii.php";
+require "../functionDfdx.php";
+require "../image/swapImages.php";
+require "../class.php";
 
   $redaktor=new Modul();
   $statistik = new statistic();
@@ -44,6 +44,8 @@ $header->firstCreationSessionVariables();
 // Also, the function handles the button press Enter and Exit
 $header->checkUserStatus();
 
+echo '<section class="container-fluid">';
+echo '<div class="row">';
 // функция скачивает и показывает колличество монет у пользователя
 // Modul $redaktor сигнатура класса работы с админкой
 // funkcja pobiera i pokazuje liczbę monet, które posiada użytkownik
@@ -51,11 +53,12 @@ $header->checkUserStatus();
 // the function downloads and shows the number of coins the user has
 // Modul $redaktor admin class signature
 $header->showNumberOfCoins($redaktor);
-
 // Функция реализует установку и обработку верхнего главного меню
 // Funkcja realizuje ustawienia i przetwarzanie w górnym menu głównym
 // The function implements the setting and processing of the top main menu
 $header->topMenuProcessing();
+echo '</div>';
+echo '</section>';
 
 // Функция выводит картинку шапки
 // Funkcja wyświetla obraz nagłówka

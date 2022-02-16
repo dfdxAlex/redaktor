@@ -9,7 +9,7 @@ require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
 
-  $redaktor=new Modul();
+  $redaktor= new Modul();
   $statistik = new statistic();
   $header = new Header();
   $futter = new futter();
@@ -44,6 +44,8 @@ $header->firstCreationSessionVariables();
 // Also, the function handles the button press Enter and Exit
 $header->checkUserStatus();
 
+echo '<section class="container-fluid">';
+echo '<div class="row">';
 // функция скачивает и показывает колличество монет у пользователя
 // Modul $redaktor сигнатура класса работы с админкой
 // funkcja pobiera i pokazuje liczbę monet, które posiada użytkownik
@@ -56,6 +58,8 @@ $header->showNumberOfCoins($redaktor);
 // Funkcja realizuje ustawienia i przetwarzanie w górnym menu głównym
 // The function implements the setting and processing of the top main menu
 $header->topMenuProcessing();
+echo '</div>';
+echo '</section>';
 
 // Функция выводит картинку шапки
 // Funkcja wyświetla obraz nagłówka

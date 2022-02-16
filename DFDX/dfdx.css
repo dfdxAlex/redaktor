@@ -652,3 +652,18 @@ width: 100%;
     margin-left: 30px;
 }
 /*******************************************************preg_replace*****************************************************************/
+/*Стили второго меню второе меню*/
+.second-menu{
+    font-size: 14px;
+    line-height: 15px;
+    height: 30px;
+    width: 100%;
+    margin-bottom: 20px;
+    color: rgb(5, 10, 10);
+}
+.second-menusecond-menu2{
+    border-style: double;
+    border-color: black;
+    float: left;
+}
+/*Конец !!! Стили второго меню второе меню*/

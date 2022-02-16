@@ -6,18 +6,21 @@ trait TraitInterfaceWorkToHeader
 
     public function menuOfOurProjects(array $masBotton)
     {
-        $pokazMenu=true;
 
-        if ($pokazMenu) {
+        $mas = array();
+        $blockName='second-menu';
+        $mas[0]=$blockName;
+        $mas[1]='dfdx.php';
+        $i=2;
 
-
-        //echo 'ddd';
-        foreach($masBotton as $key => $value)
-          echo $key.'--'.$value;
-
-
-
+        foreach($masBotton as $key => $value) {
+            $mas[$i++]='submit';
+            $mas[$i++]=$blockName;
+            $mas[$i++]=$key;
+            $mas[$i++]=$value;
         }
+
+        $this->formBlockMas($mas);
     }
 
     public function firstCreationSessionVariables()
