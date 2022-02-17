@@ -169,14 +169,17 @@ interface InterfaceButton extends InterfaceWorkToBd
    // функция является копией функции formBlock($nameBlock, $actionN,...$parametr);, только входящий параметр - массив
    // цель модификации функции упростить динамическое проектирование модуля форм кнопок и других полей
    // есть вероятность, что развитие функций не будет синхронным.
+   // Работают только кнопки Submit
 
    // funkcja jest kopią funkcji formBlock($nameBlock, $actionN,...$parametr); tylko parametr wejściowy jest tablicą
    // celem modyfikacji funkcji jest uproszczenie dynamicznego projektowania modułu formularza przycisku i innych pól
    // istnieje możliwość, że rozwój funkcji nie będzie synchroniczny.
+   // Działają tylko przyciski przesyłania
 
    // the function is a copy of the formBlock($nameBlock, $actionN,...$parametr); function, only the input parameter is an array
    // the purpose of modifying the function is to simplify the dynamic design of the button form module and other fields
    // there is a possibility that the development of functions will not be synchronous.
+   // Only submit buttons work
    public function formBlockMas(array $parametr);
 
    // функция ставит кнопку для твиттера. Параметр $text содержит заголовок статьи и ссылку на статью

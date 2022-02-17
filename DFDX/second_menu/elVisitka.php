@@ -81,6 +81,9 @@ echo '<div class="row">';
 // block for displaying the left menu
 $nonTemplates->leftMenu();
 
+
+
+
 // имя таблица со статьями для функции news1
 // nazwa tabeli z artykułami dla funkcji news1
 // table name with articles for news1 function
