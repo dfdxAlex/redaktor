@@ -81,9 +81,6 @@ echo '<div class="row">';
 // block for displaying the left menu
 $nonTemplates->leftMenu();
 
-
-
-
 // имя таблица со статьями для функции news1
 // nazwa tabeli z artykułami dla funkcji news1
 // table name with articles for news1 function
@@ -98,7 +95,12 @@ $metka="elVisitka"; //метка для счётчика статистики п
 // функция управляет выводом статей в разных режимах используя функцию news1
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function
-$nonTemplates->publishNews($redaktor,'action=elVisitka.php','Число_статей=5',-1,$nameBD,'категория-elVisitka','Раздел=elVisitka','buttonTwitter');
+//$nonTemplates->publishNews($redaktor,'action=elVisitka.php','Число_статей=5',-1,$nameBD,'категория-elVisitka','Раздел=elVisitka','buttonTwitter');
+
+echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';
+// функция выводит поля для ввода данных для создания визитки
+$nonTemplates->interfaceDataCard();
+echo '</div>';
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
@@ -108,7 +110,10 @@ $nonTemplates->publishNews($redaktor,'action=elVisitka.php','Число_стат
 // the function displays the right menu along with its part of the Bootstrap markup and the site search function
 $nonTemplates->rightMenu($statistik,"home");
 echo '</div>';
+
+
 echo '</section>';
+
 // Функция выводит нижнюю часть сайта
 // The function displays the bottom of the site
 $futter->futterGeneral($statistik,$metka);

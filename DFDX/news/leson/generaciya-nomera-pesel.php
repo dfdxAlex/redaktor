@@ -2,17 +2,13 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-#файл сгенерирован#
-#file generated#
+//файл сгенерирован CMS-DFDX 2022-02-20 20:33:48
+//file generated CMS-DFDX 2022-02-20 20:33:48
 session_start();
-require "class/redaktor/PHPMailer/PHPMailer/src/PHPMailer.php";
-require "funcii.php";
-require "functionDfdx.php";
-require "image/swapImages.php";
-require "class.php";
-
-
-$mailer= new \class\redaktor\PHPMailer\PHPMailer\PHPMailer();
+include "../../funcii.php";
+include "../../functionDfdx.php";
+include "../../image/swapImages.php";
+include "../../class.php";
 
   $redaktor=new Modul();
   $statistik = new statistic();
@@ -28,7 +24,7 @@ echo '<html lang="ru">';
 echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-  $header->headStart('<title>dfdx</title>');
+  $header->headStart('<title>Генерация номера PESEL</title>');
   $header->headBootStrap5([$header->searcNamePath('styli.css'),$header->searcNamePath('dfdx.css')]);
 
 echo '</head>';
@@ -91,7 +87,7 @@ echo '<section class="container-fluid">
      <div class="row">
      <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';
 //второе меню. В кнопки можно добавлять через массив добавляя пару Название=>ссылка
-$header->menuOfOurProjects(array('Электронные визитки'=>'second_menu\elVisitka.php'));
+//$header->menuOfOurProjects(array('Электронные визитки'=>'second_menu\elVisitka.php'));
 echo '</div>
       </div>
       </section>';
@@ -107,7 +103,7 @@ $nonTemplates->leftMenu();
 //метка для счётчика статистики посещения конкретной страницы
 //etykieta licznika statystyk odwiedzin na określonej stronie
 //label for the statistics counter of visits to a specific page
-$metka='dfdx'; 
+$metka='generaciya-nomera-pesel'; 
 
 // имя таблица со статьями для функции news1
 // nazwa tabeli z artykułami dla funkcji news1
@@ -118,7 +114,7 @@ $nameBD='nameTD='.$nameBD;
 // функция управляет выводом статей в разных режимах используя функцию news1
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function
-$nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=5',-1,$nameBD,'#категория для поиска#','Раздел=regular_expressions','buttonTwitter');
+$nonTemplates->publishNews($redaktor,'action=#','Число_статей=5',-1,$nameBD,'#категория для поиска#','Раздел=regular_expressions','Генерация номера PESEL http://dfdx.uxp.ru/news/leson/generaciya-nomera-pesel.php');
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 

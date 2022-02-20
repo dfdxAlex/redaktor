@@ -7,4 +7,6 @@ namespace class\rare_use\interface;
 
 interface InterfaceFoVersitcard extends \class\redaktor\interface\interface\InterfaceWorkToMenu
 {
+    // функция выводит интерфейс, для заполнения данных для визитки
+    public function interfaceDataCard();
 }
