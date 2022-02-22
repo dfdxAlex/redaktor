@@ -7,6 +7,20 @@ session_start();
 require "../funcii.php";
 require "../functionDfdx.php";
 require "../image/swapImages.php";
+
+// подключение автозагрузчика от PHPMailer, библиотека инсталлирована с помощью Composer
+// podłączenie autoloadera z PHPMailera, biblioteka jest instalowana za pomocą Composera
+// connecting the autoloader from PHPMailer, the library is installed using Composer
+require "../PHPMailer-6.5.4/PHPMailer-6.5.4/vendor/autoload.php";
+
+// создание объектов с использованием Composer подключаемой библиотеки
+// tworzenie obiektów za pomocą wtyczki Composer
+// create objects using the Composer plugin
+$mailer = new \PHPMailer\PHPMailer\PHPMailer();
+
+// загрузка классов по старой схеме используя автозагрузчик из PSR0
+// ładowanie klas według starego schematu za pomocą autoloadera z PSR0
+// loading classes according to the old scheme using the autoloader from PSR0
 require "../class.php";
 
   $redaktor=new Modul();

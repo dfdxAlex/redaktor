@@ -5,12 +5,15 @@ namespace class\redaktor;
 #файл сгенерирован#
 #file generated#
 session_start();
-require "PHPMailer-6.5.4/PHPMailer-6.5.4/vendor/autoload.php";
+
 require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 
-$mailer= new \PHPMailer\PHPMailer\PHPMailer();
+// подключение автозагрузчика от PHPMailer, библиотека инсталлирована с помощью Composer
+// podłączenie autoloadera z PHPMailera, biblioteka jest instalowana za pomocą Composera
+// connecting the autoloader from PHPMailer, the library is installed using Composer
+//require "PHPMailer-6.5.4/PHPMailer-6.5.4/vendor/autoload.php";
 
 // загрузка классов по старой схеме используя автозагрузчик из PSR0
 // ładowanie klas według starego schematu za pomocą autoloadera z PSR0

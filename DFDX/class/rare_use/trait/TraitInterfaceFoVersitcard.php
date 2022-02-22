@@ -55,6 +55,11 @@ trait TraitInterfaceFoVersitcard
                          'Почта для отправки визитки',
                          'br',
 
+                         'text2',
+                         'fileName',
+                         'имя файла',
+                         'br',
+
                          'submit',
                          'block-v-card',
                          'Сгенерировать файл',
@@ -77,6 +82,8 @@ trait TraitInterfaceFoVersitcard
         $email=$_POST['email'] ?? '';
         $url=$_POST['url'] ?? '';
         $note=$_POST['note'] ?? '';
+
+        $file=$_POST['fileName'] ?? '123123123.txt';
 
         $exportEmail=$_POST['exportEmail'] ?? '';
 
@@ -107,16 +114,44 @@ trait TraitInterfaceFoVersitcard
             if ($note!='') {
                 echo 'NOTE:'.$note;
             }
-            if ($_POST['block-v-card']=='Отправить файл' && $exportEmail!=''){
-                //mail(
-                //    $exportEmail,
-                //    'Электронная визитка',
-                //    string $message,
-                //    array|string $additional_headers = [],
-                //    string $additional_params = ""
-                //);
-            }
-        }
+
+            if ($_POST['block-v-card']=='Отправить файл' && $exportEmail!='') {
+
+                   }
+               }
+
+
+ 
+$mail = new \PHPMailer\PHPMailer\PHPMailer();
+
+$mail->isSMTP();   
+$mail->SMTPAuth   = true;
+
+// Настройки вашей почты
+$mail->Host       = 'smtp.gmail.com'; // SMTP сервера вашей почты
+$mail->Username   = 'amator.ded@gmail.com'; // Логин на почте
+$mail->Password   = 'wepldF5hgpsbv'; // Пароль на почте
+$mail->SMTPSecure = 'ssl';
+$mail->Port       = 465;
+$mail->setFrom('amator.ded@gmail.com', 'CMS-DFDX'); // Адрес самой почты и имя отправителя
+
+$mail->CharSet = 'UTF-8';
+$mail->addReplyTo('amator.ded@gmail.com', 'CMS-DFDX');  // обратный адрес
+$mail->addAddress($exportEmail, 'CMS-DFDX');            // кому
+$mail->Subject = 'Тест';                           // тема
+//$mail->msgHTML(file_get_contents('contents.html'), __DIR__);  // получаем "тело" письма из файла
+$mail->msgHTML('Тело письма');
+$mail->AltBody = 'Письмо обычным текстом';  // письмо обычным текстом, если клиент не поддерживает html
+$mail->addAttachment('123123123.txt');        // прикрепляем один файл
+ 
+// Отправляем
+if ($mail->send()) {
+  echo 'Письмо отправлено!';
+} else {
+  echo 'Ошибка: ' . $mail->ErrorInfo;
+}
+
+
 
         echo '<br>END:VCARD';
 
