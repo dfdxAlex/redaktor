@@ -5,14 +5,14 @@ namespace class\redaktor;
 #файл сгенерирован#
 #file generated#
 session_start();
-require "class/redaktor/PHPMailer/PHPMailer/src/PHPMailer.php";
+//require "class/redaktor/PHPMailer/PHPMailer/src/PHPMailer.php";
 require "funcii.php";
 require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
 
 
-$mailer= new \class\redaktor\PHPMailer\PHPMailer\PHPMailer();
+//$mailer= new \class\redaktor\PHPMailer\PHPMailer\PHPMailer();
 
   $redaktor=new Modul();
   $statistik = new statistic();
