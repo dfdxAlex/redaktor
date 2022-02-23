@@ -122,7 +122,6 @@ trait TraitInterfaceFoVersitcard
 
 
  
-$mail = new \PHPMailer\PHPMailer\PHPMailer();
 /*
 $mail->isSMTP();   
 $mail->SMTPAuth   = true;
@@ -151,7 +150,7 @@ if ($mail->send()) {
   echo 'Ошибка: ' . $mail->ErrorInfo;
 }
 */
-        $this->simpleLetter($mail,'От DFDX', 'alexmway@mail.ru','тема обычного письма' ,'отправил обычное письмо', false);
+        $this->simpleLetterPlusFileileAttachment(new \PHPMailer\PHPMailer\PHPMailer(),'От DFDX', 'alexmway@mail.ru','тема обычного письма' ,'отправил обычное письмо','elVisitka.php', false);
 
         echo '<br>END:VCARD';
 
