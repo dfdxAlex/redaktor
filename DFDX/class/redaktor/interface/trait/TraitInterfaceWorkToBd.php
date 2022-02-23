@@ -12,6 +12,8 @@ trait TraitInterfaceWorkToBd
       $this->parol=stristr(fgets($fd),';',true); 
       $this->nameBD=stristr(fgets($fd),';',true); 
       $this->site=stristr(fgets($fd),';',true); 
+      $this->mailFoPhpMailer=stristr(fgets($fd),';',true); 
+      $this->parolFoMailFoPhpMailer=stristr(fgets($fd),';',true); 
       fclose($fd);
       $this->con = mysqli_connect($this->initBdHost(),$this->initBdLogin(),$this->initBdParol(),$this->initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд        mysqli_set_charset ( $con , "utf8" ) ;
   }
@@ -401,6 +403,16 @@ trait TraitInterfaceWorkToBd
     public function initsite()
     {
       return $this->site;
+    } 
+
+    public function initMailFoPhpMailer()
+    {
+      return $this->mailFoPhpMailer;
+    } 
+
+    public function initParolFoMailFoPhpMailer()
+    {
+      return $this->parolFoMailFoPhpMailer;
     } 
 
     public function checkedStatus($pole,$str,$status,$nameTable)

@@ -37,6 +37,16 @@ interface InterfaceWorkToBd extends InterfaceWorkToFiles
     //function returns the main page of the site
     public function initsite();
 
+    //функция возвращает почту, которая используется для отправки писем и работает с PHPMailer
+    //funkcja zwraca pocztę używaną do wysyłania e-maili i współpracuje z PHPMailer
+    //function returns the mail that is used to send emails and works with PHPMailer
+    public function initMailFoPhpMailer();
+
+    //функция возвращает пароль к почте, которая используется для отправки писем и работает с PHPMailer
+    //funkcja zwraca hasło do poczty używanej do wysyłania e-maili i współpracuje z PHPMailer
+    //function returns the password for the mail that is used to send emails and works with PHPMailer
+    public function initParolFoMailFoPhpMailer();
+
     //функция возвращает главную страницу сайта. Точный аналог функции initsite();
     //funkcja zwraca stronę główną serwisu. Dokładny odpowiednik funkcji initsite();
     //function returns the main page of the site. The exact analogue of the initsite() function;

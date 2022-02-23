@@ -129,14 +129,14 @@ $mail->SMTPAuth   = true;
 
 // Настройки вашей почты
 $mail->Host       = 'smtp.gmail.com'; // SMTP сервера вашей почты
-$mail->Username   = 'amator.ded@gmail.com'; // Логин на почте
-$mail->Password   = ''; // Пароль на почте
+$mail->Username   = $this->initMailFoPhpMailer(); // Логин на почте
+$mail->Password   = $this->initParolFoMailFoPhpMailer(); // Пароль на почте
 $mail->SMTPSecure = 'ssl';
 $mail->Port       = 465;
-$mail->setFrom('amator.ded@gmail.com', 'CMS-DFDX'); // Адрес самой почты и имя отправителя
+$mail->setFrom($this->initMailFoPhpMailer(), 'CMS-DFDX'); // Адрес самой почты и имя отправителя
 
 $mail->CharSet = 'UTF-8';
-$mail->addReplyTo('amator.ded@gmail.com', 'CMS-DFDX');  // обратный адрес
+$mail->addReplyTo($this->initMailFoPhpMailer(), 'CMS-DFDX');  // обратный адрес
 $mail->addAddress($exportEmail, 'CMS-DFDX');            // кому
 $mail->Subject = 'Тест';                           // тема
 //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);  // получаем "тело" письма из файла
