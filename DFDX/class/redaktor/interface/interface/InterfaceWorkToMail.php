@@ -5,6 +5,30 @@ namespace class\redaktor\interface\interface;
 //interfejs funkcji obsługujących pocztę
 //interface of functions working with mail
 
-interface InterfaceWorkToMail
+interface InterfaceWorkToMail extends InterfaceWorkToBd
 {
+    //Функция отправляет сообщение на указанную почту
+    //первый параметр передает объект типа PHPMailer в функцию
+    //параметр string $sender определяет отправителя письма, его подпись
+    //параметр string $address определяет адрес получателя письма
+    //параметр string $emailHeader определяет заголовок письма
+    //параметр string $textOfTheLetter задает текст сообщения письма
+    //параметр bool $showSendResult определяет показать ли сообщение о результате отработки функции
+
+    //Funkcja wysyła wiadomość na podany adres e-mail
+    //pierwszy parametr przekazuje do funkcji obiekt typu PHPMailer
+    //string parametr $sender określa nadawcę listu, jego podpis
+    //string parametr $address określa adres odbiorcy listu
+    //string parametr $emailHeader definiuje nagłówek wiadomości e-mail
+    //string parametr $textOfTheLetter ustawia tekst wiadomości w liście
+    //bool parametr $showSendResult określa, czy wyświetlać komunikat o wyniku przetwarzania funkcji
+
+    //The function sends a message to the specified mail
+    //first parameter passes an object of type PHPMailer to the function
+    //string parameter $sender defines the sender of the letter, his signature
+    //string parameter $address defines the address of the recipient of the letter
+    //string parameter $emailHeader defines the email header
+    //string parameter $textOfTheLetter sets the message text of the letter
+    //bool parameter $showSendResult determines whether to show a message about the result of the function processing
+    public function simpleLetter(\PHPMailer\PHPMailer\PHPMailer $mailer, string $sender, string $address, string $emailHeader, string $textOfTheLetter, bool $showSendResult=false);
 }

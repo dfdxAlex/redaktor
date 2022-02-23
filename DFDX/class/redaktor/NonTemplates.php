@@ -3,7 +3,8 @@ namespace class\redaktor;
 
 // Класс - шаблон по умолчанию
 class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
-                              \class\rare_use\interface\InterfaceFoVersitcard
+                              \class\rare_use\interface\InterfaceFoVersitcard,
+                              interface\interface\InterfaceWorkToMail
 {
 
   use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
@@ -18,6 +19,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
   use \class\redaktor\interface\trait\TraitInterfaceWorkToSearch;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToStatistik;
   use \class\rare_use\trait\TraitInterfaceFoVersitcard;
+  use \class\redaktor\interface\trait\TraitInterfaceWorkToMail;
 
     public function __construct()
      {

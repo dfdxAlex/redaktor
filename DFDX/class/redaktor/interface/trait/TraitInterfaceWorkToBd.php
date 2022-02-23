@@ -3,7 +3,6 @@ namespace class\redaktor\interface\trait;
 
 trait TraitInterfaceWorkToBd
 {
-
   public function connectToBd()
   {
       $fd = fopen($this->searcNamePath('tmp/initBD.ini'), 'r') or die("не удалось открыть файл");
