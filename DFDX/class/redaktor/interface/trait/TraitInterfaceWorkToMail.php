@@ -71,7 +71,7 @@ trait TraitInterfaceWorkToMail
         $mailer->addAddress($address, $sender);                         // кому
         $mailer->Subject = $emailHeader;        
         $mailer->msgHTML(file_get_contents($fileOfTheLetter), __DIR__);  // получаем "тело" письма из файла
-        echo file_get_contents($fileOfTheLetter);
+        //echo file_get_contents($fileOfTheLetter);
         if ($pathFileAttachment!='')
         $mailer->addAttachment($pathFileAttachment);        // прикрепляем один файл
         // Отправляем

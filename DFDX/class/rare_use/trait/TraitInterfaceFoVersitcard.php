@@ -5,8 +5,8 @@ trait TraitInterfaceFoVersitcard
 {
     public function interfaceDataCard()
     {
-        echo 'BEGIN:VCARD<br>
-              VERSION:3.0<br><br>';
+        //echo 'BEGIN:VCARD<br>
+        //      VERSION:3.0<br><br>';
 
         $this->formBlock('block-v-card','elWisitka.php',
                          'text2',
@@ -55,22 +55,22 @@ trait TraitInterfaceFoVersitcard
                          'Почта для отправки визитки',
                          'br',
 
-                         'text2',
-                         'fileName',
-                         'имя файла',
-                         'br',
+                       //  'text2',
+                       //  'fileName',
+                       //  'имя файла',
+                       //  'br',
 
                          'submit',
                          'block-v-card',
                          'Сгенерировать файл',
                          '#',
-                         'submit',
-                         'block-v-card',
-                         'Отправить файл',
-                         '#',
+                        // 'submit',
+                        // 'block-v-card',
+                        // 'Отправить файл',
+                        // '#',
                 );
 
-        echo '<br>END:VCARD';
+        //echo '<br>END:VCARD';
 
         $name = $_POST['name'] ?? '';
         $surname = $_POST['surname'] ?? '';
@@ -83,79 +83,80 @@ trait TraitInterfaceFoVersitcard
         $url=$_POST['url'] ?? '';
         $note=$_POST['note'] ?? '';
 
-        $file=$_POST['fileName'] ?? '123123123.txt';
+        //$file=$_POST['fileName'] ?? '123123123.txt';
 
         $exportEmail=$_POST['exportEmail'] ?? '';
 
+ 
 
-        echo 'BEGIN:VCARD<br>
-              VERSION:3.0<br>';
-
+        
         if (isset($_POST['block-v-card'])){
+
+            $file=$this->siteRootDirectory().'second_menu/card_'.$_SESSION['login'].'.vcr';
+            $handle = fopen($file, "w");
+            $stroka='BEGIN:VCARD';
+            echo $stroka.'<br>';
+            fwrite($handle,$stroka."\n");
+            $stroka='VERSION:3.0';
+            echo $stroka.'<br>';
+            fwrite($handle,$stroka."\n");
+
             if ($name!='' || $surname!='' || $surname!='') {
-                echo 'FN:к.м.н., пр. '.$surname.' '.$name.' '.$patronymic.'<br>'
-                     .'N:'.$surname.';'.$name.';'.$patronymic.';пр.,к.м.н.<br>';
+                $stroka= 'FN:к.м.н., пр. '.$surname.' '.$name.' '.$patronymic;
+                echo $stroka.'<br>';
+                fwrite($handle,$stroka."\n");
+                $stroka= 'N:'.$surname.';'.$name.';'.$patronymic.';пр.,к.м.н.';
+                echo $stroka.'<br>';
+                fwrite($handle,$stroka."\n");
             }
             if ($org!='') {
-                echo 'ORG:'.$org.'<br>';
+                $stroka= 'ORG:'.$org;
+                echo $stroka.'<br>';
+                fwrite($handle,$stroka."\n");
             }
             if ($role!='') {
-                echo 'ROLE:'.$role.'<br>';
+                $stroka= 'ROLE:'.$role;
+                echo $stroka.'<br>';
+                fwrite($handle,$stroka."\n");
             }
             if ($tel_home!='') {
-                echo 'TEL;TYPE=work, voice, pref, cell, msg:'.$tel_home.'<br>';
+                $stroka= 'TEL;TYPE=work, voice, pref, cell, msg:'.$tel_home;
+                echo $stroka.'<br>';
+                fwrite($handle,$stroka."\n");
             }
             if ($url!='') {
-                echo 'URL:'.$url.'<br>';
+                $stroka= 'URL:'.$url;
+                echo $stroka.'<br>';
+                fwrite($handle,$stroka."\n");
             }
             if ($email!='') {
-                echo 'EMAIL;TYPE=INTERNET:'.$email.'<br>';
+                $stroka= 'EMAIL;TYPE=INTERNET:'.$email;
+                echo $stroka.'<br>';
+                fwrite($handle,$stroka."\n");
             }
             if ($note!='') {
-                echo 'NOTE:'.$note;
+                $stroka= 'NOTE:'.$note;
+                echo $stroka.'<br>';
+                fwrite($handle,$stroka."\n");
             }
 
-            if ($_POST['block-v-card']=='Отправить файл' && $exportEmail!='') {
+            //if ($_POST['block-v-card']=='Отправить файл' && $exportEmail!='') {
+                $this->letterTextFromFilePlusAttachment(new \PHPMailer\PHPMailer\PHPMailer(),
+                                                       'Визитка от DFDX', $exportEmail,'Визитка от DFDX', 
+                                                       $file,$file, false);
+            //}
+            $stroka='END:VCARD';
+            echo $stroka.'<br>';
+            fwrite($handle,$stroka.'\n');
+            fclose($handle);
+            echo 'Файл отправлен на указанную почту.';
+        }
 
-                   }
-               }
-
-
+            
  
-/*
-$mail->isSMTP();   
-$mail->SMTPAuth   = true;
 
-// Настройки вашей почты
-$mail->Host       = 'smtp.gmail.com'; // SMTP сервера вашей почты
-$mail->Username   = $this->initMailFoPhpMailer(); // Логин на почте
-$mail->Password   = $this->initParolFoMailFoPhpMailer(); // Пароль на почте
-$mail->SMTPSecure = 'ssl';
-$mail->Port       = 465;
-$mail->setFrom($this->initMailFoPhpMailer(), 'CMS-DFDX'); // Адрес самой почты и имя отправителя
+       
 
-$mail->CharSet = 'UTF-8';
-$mail->addReplyTo($this->initMailFoPhpMailer(), 'CMS-DFDX');  // обратный адрес
-$mail->addAddress($exportEmail, 'CMS-DFDX');            // кому
-$mail->Subject = 'Тест';                           // тема
-//$mail->msgHTML(file_get_contents('contents.html'), __DIR__);  // получаем "тело" письма из файла
-$mail->msgHTML('Тело письма');
-$mail->AltBody = 'Письмо обычным текстом';  // письмо обычным текстом, если клиент не поддерживает html
-$mail->addAttachment('123123123.txt');        // прикрепляем один файл
- 
-// Отправляем
-if ($mail->send()) {
-  echo 'Письмо отправлено!';
-} else {
-  echo 'Ошибка: ' . $mail->ErrorInfo;
-}
-*/
-//$search = new \class\redaktor\menu();
-echo $this->siteRootDirectory().'second_menu/123123123.txt';
-//echo searcNamePath('second_menu/');
-        $this->letterTextFromFilePlusAttachment(new \PHPMailer\PHPMailer\PHPMailer(),'От DFDX', 'alexmway@mail.ru','тема обычного письма', $this->siteRootDirectory().'second_menu/123123123.txt','', false);
-
-        echo '<br>END:VCARD';
 
 
 
