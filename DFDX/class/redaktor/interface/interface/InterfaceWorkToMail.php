@@ -69,6 +69,23 @@ interface InterfaceWorkToMail extends InterfaceWorkToBd
     //параметр string $pathFileAttachment задает путь и имя файла для вложения в письмо
     //параметр bool $showSendResult определяет показать ли сообщение о результате отработки функции
 
+    //Funkcja wysyła wiadomość z pliku na określoną pocztę + dołącza osobny plik w załącznikach
+    //pierwszy parametr przekazuje do funkcji obiekt typu PHPMailer
+    //string parametr $sender określa nadawcę listu, jego podpis
+    //string parametr $address określa adres odbiorcy listu
+    //string parametr $emailHeader definiuje nagłówek wiadomości e-mail
+    //string parametr $fileOfTheLetter plik z treścią listu
+    //parametr ciągu $pathFileAttachment ustawia ścieżkę i nazwę pliku do załączenia do wiadomości e-mail
+    //bool parametr $showSendResult określa, czy wyświetlać komunikat o wyniku przetwarzania funkcji
+
+    //The function sends a message from a file to the specified mail + attaches a separate file in attachments
+    //first parameter passes an object of type PHPMailer to the function
+    //string parameter $sender defines the sender of the letter, his signature
+    //string parameter $address defines the address of the recipient of the letter
+    //string parameter $emailHeader defines the email header
+    //string parameter $fileOfTheLetter file with the content of the letter
+    //string parameter $pathFileAttachment sets the path and file name to attach to the email
+    //bool parameter $showSendResult determines whether to show a message about the result of the function processing
     public function letterTextFromFilePlusAttachment(\PHPMailer\PHPMailer\PHPMailer $mailer, string $sender, string $address, string $emailHeader, string $fileOfTheLetter, string $pathFileAttachment, bool $showSendResult=false);
 
 }
