@@ -59,4 +59,16 @@ interface InterfaceWorkToMail extends InterfaceWorkToBd
      //string parameter $pathFileAttachment sets the path and file name to attach to the email
      //bool parameter $showSendResult determines whether to show a message about the result of the function processing
     public function simpleLetterPlusFileileAttachment(\PHPMailer\PHPMailer\PHPMailer $mailer, string $sender, string $address, string $emailHeader, string $textOfTheLetter, string $pathFileAttachment, bool $showSendResult=false);
+
+    //Функция отправляет сообщение из файла на указанную почту + прикрепляет файл отдельный во вложениях
+    //первый параметр передает объект типа PHPMailer в функцию
+    //параметр string $sender определяет отправителя письма, его подпись
+    //параметр string $address определяет адрес получателя письма
+    //параметр string $emailHeader определяет заголовок письма
+    //параметр string $fileOfTheLetter файл с содержимым письма
+    //параметр string $pathFileAttachment задает путь и имя файла для вложения в письмо
+    //параметр bool $showSendResult определяет показать ли сообщение о результате отработки функции
+
+    public function letterTextFromFilePlusAttachment(\PHPMailer\PHPMailer\PHPMailer $mailer, string $sender, string $address, string $emailHeader, string $fileOfTheLetter, string $pathFileAttachment, bool $showSendResult=false);
+
 }

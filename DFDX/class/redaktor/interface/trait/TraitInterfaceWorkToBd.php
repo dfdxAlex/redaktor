@@ -13,6 +13,7 @@ trait TraitInterfaceWorkToBd
       $this->site=stristr(fgets($fd),';',true); 
       $this->mailFoPhpMailer=stristr(fgets($fd),';',true); 
       $this->parolFoMailFoPhpMailer=stristr(fgets($fd),';',true); 
+      $this->siteRootDirectory=stristr(fgets($fd),';',true); 
       fclose($fd);
       $this->con = mysqli_connect($this->initBdHost(),$this->initBdLogin(),$this->initBdParol(),$this->initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд        mysqli_set_charset ( $con , "utf8" ) ;
   }
@@ -413,6 +414,12 @@ trait TraitInterfaceWorkToBd
     {
       return $this->parolFoMailFoPhpMailer;
     } 
+
+    public function siteRootDirectory()
+    {
+      if ($this->siteRootDirectory=='') return $_SERVER['DOCUMENT_ROOT'];
+      return $this->siteRootDirectory;
+    }
 
     public function checkedStatus($pole,$str,$status,$nameTable)
     {

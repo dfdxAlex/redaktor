@@ -47,6 +47,11 @@ interface InterfaceWorkToBd extends InterfaceWorkToFiles
     //function returns the password for the mail that is used to send emails and works with PHPMailer
     public function initParolFoMailFoPhpMailer();
 
+    //функция возвращает корневой каталог сайта. Полезна в тех случаях, когда необходимо задать не стандартный домашний каталог сайте
+    //funkcja zwraca katalog główny serwisu. Przydatne w przypadkach, gdy konieczne jest ustawienie niestandardowego katalogu domowego witryny
+    //function returns the root directory of the site. Useful in cases where it is necessary to set a non-standard site home directory
+    public function siteRootDirectory();
+
     //функция возвращает главную страницу сайта. Точный аналог функции initsite();
     //funkcja zwraca stronę główną serwisu. Dokładny odpowiednik funkcji initsite();
     //function returns the main page of the site. The exact analogue of the initsite() function;

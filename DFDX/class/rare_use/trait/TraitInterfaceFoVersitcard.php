@@ -150,7 +150,10 @@ if ($mail->send()) {
   echo 'Ошибка: ' . $mail->ErrorInfo;
 }
 */
-        $this->simpleLetterPlusFileileAttachment(new \PHPMailer\PHPMailer\PHPMailer(),'От DFDX', 'alexmway@mail.ru','тема обычного письма' ,'отправил обычное письмо','elVisitka.php', false);
+//$search = new \class\redaktor\menu();
+echo $this->siteRootDirectory().'second_menu/123123123.txt';
+//echo searcNamePath('second_menu/');
+        $this->letterTextFromFilePlusAttachment(new \PHPMailer\PHPMailer\PHPMailer(),'От DFDX', 'alexmway@mail.ru','тема обычного письма', $this->siteRootDirectory().'second_menu/123123123.txt','', false);
 
         echo '<br>END:VCARD';
 
