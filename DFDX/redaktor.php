@@ -3,6 +3,12 @@ namespace class\redaktor;
 
 session_start();
 include 'funcii.php';
+
+// подключение автозагрузчика от PHPMailer, библиотека инсталлирована с помощью Composer
+// podłączenie autoloadera z PHPMailera, biblioteka jest instalowana za pomocą Composera
+// connecting the autoloader from PHPMailer, the library is installed using Composer
+require "PHPMailer-6.5.4/PHPMailer-6.5.4/vendor/autoload.php";
+
 include 'class.php';
 
 $red = new  redaktor();
@@ -49,17 +55,21 @@ $spisokTablic=false;    // Признак нажатия кнопки Списо
 // from the database and enters it into the $_SESSION["status"] variable
 // Also, the function handles the button press Enter and Exit
 $header->checkUserStatus();
+//echo $_SESSION['status'];
 
 echo '<a name="vverh">';
-
-      if ($_SESSION['status']>99 || $_SESSION['status']==9)
+//$_SESSION['status']=5;
+      if ($_SESSION['status']>99 || $_SESSION['status']==9) {
+          if ($_SESSION['status']>99) $_SESSION['status']=9;
           $red->__unserialize(array('menu6','podtverdit','redaktor.php','Введите код'));
+      }
       if ($status45)
           $red->__unserialize(array('menu3','redaktor_up','Редактор','Сайт','Выйти','Создать страницу','Подсветить меню'));
       if ($_SESSION['status']==0)
           $red->__unserialize(array('menu4','login','redaktor.php','Логин','Пароль','Вход','Регистрация'));
       if ($_SESSION['status']==1 || $_SESSION['status']==2 || $_SESSION['status']==3)
            $red->menu('dla_statusob_123');
+
       if (isset($_SESSION['status']) && $_SESSION['status']>0)
           echo '<h6>Вы вошли под логином: '.$_SESSION['login'].'</h6>';
       else {
@@ -88,10 +98,12 @@ if ((isset($_POST['redaktor_nastr7']) && $_POST['redaktor_nastr7']==$red->getNam
     $_SESSION['regimRaboty']=3;
     $red->nazataPokazatSpisokTablic();
   }
+
 if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit']=='На сайт') {//Переход на главную страницу
     $_SESSION['regimRaboty']=0;
     $red->naGlavnuStranicu();
  }
+
 if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit']=='Выйти') {//Выйти из учётки
     $_SESSION['login']='';
     $_SESSION['parol']='';
@@ -99,10 +111,15 @@ if ($_SESSION['status']==9 && isset($_POST['podtverdit']) && $_POST['podtverdit'
     $_SESSION['regimRaboty']=0;
     $red->naGlavnuStranicu();
  }
+
 if ($_SESSION['status']==9 && isset($_POST['podtverdit'])  &&  $_POST['podtverdit']=='Найти письмо') { //Если нажата кнопка Найти письмо
     $_SESSION['regimRaboty']=20;
     $mailText='Доброго времени суток. Была запрошена повторная отправка письма с кодом регистрации с сайта '.$red->nameGlawnogoSite().' Код для подтверждения регистрации:';
-    $red->siearcMail($_SESSION['login'],$mailText);
+    $zapros="SELECT status FROM status_klienta WHERE login='".$_SESSION['login']."'";
+    $rez=$poisk->zaprosSQL($zapros);
+    $stroka=mysqli_fetch_array($rez);
+    $mailText.=$stroka[0];
+    $red->modifiedSearcMail(new \PHPMailer\PHPMailer\PHPMailer, $_SESSION['login'],$mailText);
     echo '<p class="mesage">Письмо отправлено</p>';
 }
 

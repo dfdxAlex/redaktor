@@ -13,6 +13,7 @@ class Header implements interface\interface\InterfaceWorkToHeader
     use \class\redaktor\interface\trait\TraitInterfaceCollectScolding;
     use \class\redaktor\interface\trait\TraitInterfaceWorkToMenu;
     use \class\redaktor\interface\trait\TraitInterfaceWorkToHeader;
+    use \class\redaktor\interface\trait\TraitInterfaceWorkToMail;
 
     public function __construct() 
     {

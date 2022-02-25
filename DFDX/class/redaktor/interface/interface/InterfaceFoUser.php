@@ -5,7 +5,7 @@ namespace class\redaktor\interface\interface;
 //Interfejs użytkownika
 //User Interface
 
-interface InterfaceFoUser extends InterfaceButton
+interface InterfaceFoUser extends InterfaceButton, InterfaceWorkToMail
 {
 
    // записывает в таблицу нового пользователя
@@ -47,6 +47,11 @@ interface InterfaceFoUser extends InterfaceButton
    // ponowne wysłanie e-maila z kodem weryfikacyjnym
    // resending the email with the verification code
    public function siearcMail($login,$meilText);
+
+   // модифицированная функция siearcMail(), отправка почты с помощью PHPMailer
+   // zmodyfikowano funkcję searcMail(), wysyłanie poczty za pomocą PHPMailer
+   // modified searcMail() function, sending mail with PHPMailer
+   public function modifiedSearcMail(\PHPMailer\PHPMailer\PHPMailer $mailer, $login, $meilText);
 
    // функция генерирует вопрос для капчи
    // funkcja generuje pytanie captcha

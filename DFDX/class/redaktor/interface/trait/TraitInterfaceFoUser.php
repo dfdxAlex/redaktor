@@ -177,7 +177,22 @@ trait TraitInterfaceFoUser
     $mlText=$meilText.$stroka['status'];
     mail ($stroka['mail'],'Нашли письмо',$mlText);
   }
-
+  public function modifiedSearcMail(\PHPMailer\PHPMailer\PHPMailer $mailer, $login,$meilText)
+  {
+    $zapros="SELECT * FROM status_klienta WHERE login='".$login."'";
+    $rez=$this->zaprosSQL($zapros);
+    $stroka=mysqli_fetch_assoc($rez);
+    $mlText=$meilText.$stroka['status'];
+    
+    //Функция отправляет сообщение на указанную почту
+    //первый параметр передает объект типа PHPMailer в функцию
+    //параметр string $sender определяет отправителя письма, его подпись
+    //параметр string $address определяет адрес получателя письма
+    //параметр string $emailHeader определяет заголовок письма
+    //параметр string $textOfTheLetter задает текст сообщения письма
+    //параметр bool $showSendResult определяет показать ли сообщение о результате отработки функции
+    $this->simpleLetter($mailer, "От DFDX", $stroka['mail'],"Kod oт ".$this->initsite(), $meilText);
+  }
   public function lovimOtvetNaCapcu($knopka)
   {
    if ($knopka=='4' || $knopka=='6' || $knopka=='8' || $knopka=='10' || $knopka=='Колесо круглое' 

@@ -1,7 +1,8 @@
 <?php
 namespace class\redaktor;
 
-class redaktor implements interface\interface\InterfaceAdminPanelDfdx
+class redaktor implements interface\interface\InterfaceAdminPanelDfdx,
+                          interface\interface\InterfaceWorkToMail
 {
 
   use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
@@ -13,6 +14,7 @@ class redaktor implements interface\interface\InterfaceAdminPanelDfdx
   use \class\redaktor\interface\trait\TraitInterfaceFoUser;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToMenu;
   use \class\redaktor\interface\trait\TraitInterfaceAdminPanelDfdx;
+  use \class\redaktor\interface\trait\TraitInterfaceWorkToMail;
 
     public function __construct()
      {

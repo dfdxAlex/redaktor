@@ -62,6 +62,7 @@ $header->resetOperatingMode();
 // from the database and enters it into the $_SESSION["status"] variable
 // Also, the function handles the button press Enter and Exit
 $header->checkUserStatus();
+//$_SESSION['status']=5;
 
 echo '<section class="container-fluid">';
 echo '<div class="row">';

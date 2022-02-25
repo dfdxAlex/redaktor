@@ -418,6 +418,7 @@ trait TraitInterfaceWorkToMenu
         for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
             while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
                 if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
+                //echo $stroka['STATUS'];
                 if ($stroka['ID']==$idPoz)
                     if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
                         $linkButton=$stroka['URL'];

@@ -6,6 +6,7 @@ namespace class\redaktor\interface\interface;
 //interface of functions working with mail
 
 interface InterfaceWorkToMail extends InterfaceWorkToBd
+
 {
     //Функция отправляет сообщение на указанную почту
     //первый параметр передает объект типа PHPMailer в функцию

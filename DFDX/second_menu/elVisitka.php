@@ -125,7 +125,6 @@ echo '</div>';
 $nonTemplates->rightMenu($statistik,"home");
 echo '</div>';
 
-
 echo '</section>';
 
 // Функция выводит нижнюю часть сайта

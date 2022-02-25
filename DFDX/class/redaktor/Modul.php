@@ -13,6 +13,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
         use \class\redaktor\interface\trait\TraitInterfaceCollectScolding;
         use \class\redaktor\interface\trait\TraitInterfaceWorkToMenu;
         use \class\redaktor\interface\trait\TraitInterfaceWorkToSearch;
+        use \class\redaktor\interface\trait\TraitInterfaceWorkToMail;
 
         use \class\redaktor\interface\trait\TraitInterfaceWorkToModul;
 

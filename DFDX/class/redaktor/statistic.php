@@ -14,6 +14,7 @@ class statistic implements interface\interface\InterfaceWorkToStatistik
   use \class\redaktor\interface\trait\TraitInterfaceFoUser;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToMenu;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToStatistik;
+  use \class\redaktor\interface\trait\TraitInterfaceWorkToMail;
 
   public function __construct()
   {
