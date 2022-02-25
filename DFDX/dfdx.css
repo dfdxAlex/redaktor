@@ -667,3 +667,26 @@ width: 100%;
     float: left;
 }
 /*Конец !!! Стили второго меню второе меню*/
+/*block-v-card электронная визитка*/
+.block-v-card{
+    font-size: 14px;
+    line-height: 15px;
+}
+.block-v-card-div{
+    margin-top: 5px;
+    height: 300px;
+}
+.block-v-cardsurname0,.block-v-cardname4,.block-v-cardpatronymic8,
+.block-v-cardtel_home12,.block-v-cardorg16,.block-v-cardrole20,
+.block-v-cardurl24,.block-v-cardemail28,.block-v-cardnote32,
+.block-v-cardexportEmail36,.block-v-cardblock-v-card40{
+    color:black;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 30px;
+}
+.block-v-cardblock-v-card40{
+    border-style: double;
+    border-color: black;
+}
+/*Конец block-v-card электронная визитка*/
