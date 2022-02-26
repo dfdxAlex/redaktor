@@ -71,58 +71,90 @@ trait TraitInterfaceFoVersitcard
         $exportEmail=$_POST['exportEmail'] ?? '';
         
         if (isset($_POST['block-v-card'])){
-
-            $file=$this->siteRootDirectory().'second_menu/card_'.$_SESSION['login'].'.vcf';
+        echo '<section>';
+        echo '<div class="row">';
+        echo '<div class="col-12">';
+            $file=$this->siteRootDirectory().'second_menu'.DIRECTORY_SEPARATOR.'card_'.$_SESSION['login'].'.vcf';
             $handle = fopen($file, "w");
             $stroka='BEGIN:VCARD';
-            echo $stroka.'<br>';
+        echo '</div></div>';
+        echo '<div class="row">';
+        echo '<div class="col-12">';
+        echo $stroka.'<br>';
             fwrite($handle,$stroka."\n");
             $stroka='VERSION:3.0';
             echo $stroka.'<br>';
+        echo '</div></div>';
+        echo '<div class="row">';
+        echo '<div class="col-12">';
             fwrite($handle,$stroka."\n");
 
             if ($name!='' || $surname!='' || $surname!='') {
                 $stroka= 'FN:к.м.н., пр. '.$surname.' '.$name.' '.$patronymic;
                 echo $stroka.'<br>';
+            echo '</div></div>';
+            echo '<div class="row">';
+            echo '<div class="col-12">';
                 fwrite($handle,$stroka."\n");
                 $stroka= 'N:'.$surname.';'.$name.';'.$patronymic.';пр.,к.м.н.';
                 echo $stroka.'<br>';
+            echo '</div></div>';
+            echo '<div class="row">';
+            echo '<div class="col-12">';
                 fwrite($handle,$stroka."\n");
             }
 
             if ($org!='') {
                 $stroka= 'ORG:'.$org;
                 echo $stroka.'<br>';
+            echo '</div></div>';
+            echo '<div class="row">';
+            echo '<div class="col-12">';
                 fwrite($handle,$stroka."\n");
             }
 
             if ($role!='') {
                 $stroka= 'ROLE:'.$role;
                 echo $stroka.'<br>';
+            echo '</div></div>';
+            echo '<div class="row">';
+            echo '<div class="col-12">';
                 fwrite($handle,$stroka."\n");
             }
 
             if ($tel_home!='') {
                 $stroka= 'TEL;TYPE=work, voice, pref, cell, msg:'.$tel_home;
                 echo $stroka.'<br>';
+            echo '</div></div>';
+            echo '<div class="row">';
+            echo '<div class="col-12">';
                 fwrite($handle,$stroka."\n");
             }
 
             if ($url!='') {
                 $stroka= 'URL:'.$url;
                 echo $stroka.'<br>';
+            echo '</div></div>';
+            echo '<div class="row">';
+            echo '<div class="col-12">';
                 fwrite($handle,$stroka."\n");
             }
 
             if ($email!='') {
                 $stroka= 'EMAIL;TYPE=INTERNET:'.$email;
-                echo $stroka.'<br>';
+            echo $stroka.'<br>';
+            echo '</div></div>';
+            echo '<div class="row">';
+            echo '<div class="col-12">';
                 fwrite($handle,$stroka."\n");
             }
             
             if ($note!='') {
                 $stroka= 'NOTE:'.$note;
-                echo $stroka.'<br>';
+            echo $stroka.'<br>';
+            echo '</div></div>';
+            echo '<div class="row">';
+            echo '<div class="col-12">';
                 fwrite($handle,$stroka."\n");
             }
 
@@ -130,12 +162,13 @@ trait TraitInterfaceFoVersitcard
             echo $stroka.'<br>';
             fwrite($handle,$stroka);
             fclose($handle);
-
+            echo '</div></div>';
             $this->letterTextFromFilePlusAttachment(new \PHPMailer\PHPMailer\PHPMailer(),
                                                    'Визитка от DFDX', $exportEmail,'Визитка от DFDX', 
                                                     $file,$file, false);
 
             echo 'Файл отправлен на указанную почту.';
+        echo '</section>';
         }
     }
 }

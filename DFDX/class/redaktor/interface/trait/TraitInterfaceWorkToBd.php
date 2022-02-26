@@ -417,7 +417,9 @@ trait TraitInterfaceWorkToBd
 
     public function siteRootDirectory()
     {
-      if ($this->siteRootDirectory=='') return $_SERVER['DOCUMENT_ROOT'];
+      if ($this->siteRootDirectory=='') return $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR;
+      $this->siteRootDirectory=preg_replace('/\//',DIRECTORY_SEPARATOR,$this->siteRootDirectory);
+      //echo $this->siteRootDirectory;
       return $this->siteRootDirectory;
     }
 
