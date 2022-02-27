@@ -7,11 +7,15 @@ require "functionDfdx.php";
 require "image/swapImages.php";
 require "class.php";
 
+//use \class\rare_use\class\ClassRegularTest;
+
   $class = new statistic();
   $redaktor= new Modul();
   $header = new Header();
   $futter = new futter();
   $nonTemplates = new NonTemplates();
+  $testRegular = new \class\rare_use\class\ClassRegularTest();
+
 
   echo '<!DOCTYPE html>';
   echo '<html lang="ru">';

@@ -163,8 +163,9 @@ trait TraitInterfaceFoVersitcard
             fwrite($handle,$stroka);
             fclose($handle);
             echo '</div></div>';
-            echo '<br><br><a href="'.$file.'" download=""> <button class="btn">Скачать файл</button> </a><br><br>';
-            echo '<p>Ссылка для скачивания:</p>'.$file;
+            $fileFoUrl='http:'.DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR.'www.dfdx.uxp.ru'.DIRECTORY_SEPARATOR.'second_menu'.DIRECTORY_SEPARATOR.'card_'.$_SESSION['login'].'.vcf';
+            echo '<br><br><a href="'.$fileFoUrl.'" download=""> <button class="btn">Скачать файл</button> </a><br><br>';
+            echo '<p>Ссылка для скачивания:</p>'.$fileFoUrl;
             if ($exportEmail!='') {
                 $this->letterTextFromFilePlusAttachment(new \PHPMailer\PHPMailer\PHPMailer(),
                                                         'Визитка от DFDX', $exportEmail,'Визитка от DFDX', 

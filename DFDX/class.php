@@ -1,5 +1,6 @@
 <?php
-namespace redaktor;
+//namespace redaktor;
+
 spl_autoload_register(function ($class_name) {
  // echo $class_name.'<br>';
     $hablon='/[^\d\w]/';
