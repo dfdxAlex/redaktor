@@ -11,6 +11,7 @@ trait TraitInterfaceWorkToBd
       $this->parol=stristr(fgets($fd),';',true); 
       $this->nameBD=stristr(fgets($fd),';',true); 
       $this->site=stristr(fgets($fd),';',true); 
+      $this->smtpServerFoPhpMailer=stristr(fgets($fd),';',true); 
       $this->mailFoPhpMailer=stristr(fgets($fd),';',true); 
       $this->parolFoMailFoPhpMailer=stristr(fgets($fd),';',true); 
       $this->siteRootDirectory=stristr(fgets($fd),';',true); 
@@ -415,11 +416,15 @@ trait TraitInterfaceWorkToBd
       return $this->parolFoMailFoPhpMailer;
     } 
 
-    public function siteRootDirectory()
+    public function smtpServerFoPhpMailer()
+    {
+      return $this->smtpServerFoPhpMailer;
+    } 
+
+    public function siteRootDirectory()//
     {
       if ($this->siteRootDirectory=='') return $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR;
       $this->siteRootDirectory=preg_replace('/\//',DIRECTORY_SEPARATOR,$this->siteRootDirectory);
-      //echo $this->siteRootDirectory;
       return $this->siteRootDirectory;
     }
 

@@ -119,7 +119,11 @@ if ($_SESSION['status']==9 && isset($_POST['podtverdit'])  &&  $_POST['podtverdi
     $rez=$poisk->zaprosSQL($zapros);
     $stroka=mysqli_fetch_array($rez);
     $mailText.=$stroka[0];
-    $red->modifiedSearcMail(new \PHPMailer\PHPMailer\PHPMailer, $_SESSION['login'],$mailText);
+    if ($this->smtpServerFoPhpMailer()!='')
+        $red->modifiedSearcMail(new \PHPMailer\PHPMailer\PHPMailer, $_SESSION['login'],$mailText);
+    if ($this->smtpServerFoPhpMailer()=='')
+        $red->siearcMail($_SESSION['login'],$meilText);
+
     echo '<p class="mesage">Письмо отправлено</p>';
 }
 

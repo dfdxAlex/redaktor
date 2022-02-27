@@ -8,7 +8,7 @@ trait TraitInterfaceWorkToMail
         $mailer->isSMTP();   
         $mailer->SMTPAuth   = true;
         // Настройки вашей почты
-        $mailer->Host       = 'smtp.gmail.com';                         // SMTP сервера вашей почты
+        $mailer->Host       = $this->smtpServerFoPhpMailer();           // SMTP сервера вашей почты
         $mailer->Username   = $this->initMailFoPhpMailer();             // Логин на почте
         $mailer->Password   = $this->initParolFoMailFoPhpMailer();      // Пароль на почте
         $mailer->SMTPSecure = 'ssl';
@@ -33,7 +33,7 @@ trait TraitInterfaceWorkToMail
         $mailer->isSMTP();   
         $mailer->SMTPAuth   = true;
         // Настройки вашей почты
-        $mailer->Host       = 'smtp.gmail.com';                         // SMTP сервера вашей почты
+        $mailer->Host       = $this->smtpServerFoPhpMailer();           // SMTP сервера вашей почты
         $mailer->Username   = $this->initMailFoPhpMailer();             // Логин на почте
         $mailer->Password   = $this->initParolFoMailFoPhpMailer();      // Пароль на почте
         $mailer->SMTPSecure = 'ssl';
@@ -60,11 +60,13 @@ trait TraitInterfaceWorkToMail
         $mailer->isSMTP();   
         $mailer->SMTPAuth   = true;
         // Настройки вашей почты
-        $mailer->Host       = 'smtp.gmail.com';                         // SMTP сервера вашей почты
+        $mailer->Host       = $this->smtpServerFoPhpMailer();           // SMTP сервера вашей почты
         $mailer->Username   = $this->initMailFoPhpMailer();             // Логин на почте
         $mailer->Password   = $this->initParolFoMailFoPhpMailer();      // Пароль на почте
         $mailer->SMTPSecure = 'ssl';
+
         $mailer->Port       = 465;
+
         $mailer->setFrom($this->initMailFoPhpMailer(), $sender);        // Адрес самой почты и имя отправителя
         $mailer->CharSet = 'UTF-8';
         $mailer->addReplyTo($this->initMailFoPhpMailer(), $sender);     // обратный адрес
@@ -72,12 +74,12 @@ trait TraitInterfaceWorkToMail
         $mailer->Subject = $emailHeader;        
         $mailer->msgHTML(file_get_contents($fileOfTheLetter), __DIR__);  // получаем "тело" письма из файла
         if ($pathFileAttachment!='')
-        $mailer->addAttachment($pathFileAttachment);        // прикрепляем один файл
+            $mailer->addAttachment($pathFileAttachment);        // прикрепляем один файл
         // Отправляем
         if ($mailer->send()) {
             if ($showSendResult) echo 'Письмо отправлено!';
         } else {
-            if ($showSendResult) echo 'Ошибка: ' . $mail->ErrorInfo;
+            if ($showSendResult) echo 'Ошибка: ' . $mailer->ErrorInfo;
         }
     }
 }
