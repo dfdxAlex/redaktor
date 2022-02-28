@@ -21,4 +21,29 @@ interface InterfaceFoRegular extends \class\redaktor\interface\interface\Interfa
     // praca z testowaniem funkcji preg_replace_callback()
     // work with testing the function preg_replace_callback()
     public function pregReplaceCallback();
+
+    // работа с тестированием функции preg_replace()
+    // praca z testowaniem funkcji preg_replace()
+    // work with testing the function preg_replace()
+    public function pregReplace();
+
+    // работа с тестированием функции preg_split()
+    // praca z testowaniem funkcji preg_split()
+    // work with testing the function preg_split()
+    public function pregSplit();
+
+    // работа с тестированием функции preg_match_all()
+    // praca z testowaniem funkcji preg_match_all()
+    // work with testing the function preg_match_all()
+    public function pregMatchAll();
+
+    // работа с тестированием функции preg_match()
+    // praca z testowaniem funkcji preg_match()
+    // work with testing the function preg_match()
+    public function pregMatch();
+
+    // работа с тестированием функции preg_filter()
+    // praca z testowaniem funkcji preg_filter()
+    // work with testing the function preg_filter()
+    public function pregFilter(); 
 }
