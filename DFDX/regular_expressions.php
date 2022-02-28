@@ -133,127 +133,24 @@ if (isset($_POST['selectFunctionPhp']) &&  isset($_POST['functionPhp'])
     // work with testing the function preg_match()
     $testRegular->pregMatch(); 
 
+    // работа с тестированием функции preg_grep()
+    // praca z testowaniem funkcji preg_grep()
+    // work with testing the function preg_grep()
+    $testRegular->pregGrep(); 
+
     // работа с тестированием функции preg_filter()
     // praca z testowaniem funkcji preg_filter()
     // work with testing the function preg_filter()
-    $testRegular->pregFilter(); 
+    $testRegular->pregFilter();  
 
- 
-       //////////////////////////////---------------------------------------------------------------------
-   ////////////////////////////////////////////// работа с preg_filter ////////////////////////////////////////////////
-      if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_filter()') 
-        || (isset($_POST['buttonPregQuote']) && $_SESSION['name_function_test']=='preg_filter()')  ) {
-          if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
-          echo '<div class="row">';
-          echo '<div class="col-12">';
-           echo '<div class="working-with-the-function-p">';
-            echo '<p><b>Работаем с preg_filter()</b></p>';
-            echo '<p>Синтаксис:</p>';
-            echo '<code><div class="kod3">';
-            echo "<p>preg_filter(string|array \$pattern, //искомый шаблон <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; string|array \$replacement, //строка для замены <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; string|array \$subject, //входная строка <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; int \$limit = -1, // максимальное число замен<br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; int &\$count = null //содержит число замен <br> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;): string|array|null</p>";
-            echo '</div></code>';
-            echo '</div>';
-          echo '</div>';
-          echo '</div>';
-          echo '<div class="row">';
-          echo '<div class="col-12">';
-          if (!isset($_SESSION['result_regular_function'])) $_SESSION['result_regular_function']='Данных нет';
-          // запоминаем данные с формы
-          if (!isset($_SESSION['pattern'])) $_SESSION['pattern']='Введите регулярное выражение';
-          if (isset($_POST['pattern']) && $_POST['pattern']!='') $_SESSION['pattern']=$_POST['pattern']; 
-          if (!isset($_SESSION['replacement'])) $_SESSION['replacement']='Введите выражение для замены';
-          if (isset($_POST['replacement']) && $_POST['replacement']!='') $_SESSION['replacement']=$_POST['replacement']; 
-          if (isset($_SESSION['replacement']) && $_SESSION['replacement']=="''") $_SESSION['replacement']='';
-          if (isset($_SESSION['replacement']) && $_SESSION['replacement']=='""') $_SESSION['replacement']='';
-          if (!isset($_SESSION['subjekt'])) $_SESSION['subjekt']='Входная строка';
-          if (isset($_POST['subjekt']) && $_POST['subjekt']!='') $_SESSION['subjekt']=$_POST['subjekt']; 
-          if (!isset($_SESSION['substitutions'])) $_SESSION['substitutions']='-1';
-          if (isset($_POST['substitutions']) && $_POST['substitutions']!='') $_SESSION['substitutions']=$_POST['substitutions']; 
-          $_SESSION['substitutions']=preg_replace('/[a-zA-Zа-яёА-Яё]/u','',$_SESSION['substitutions']); // Удалить все нецифры
-          if ($_SESSION['substitutions']=='' || $_SESSION['substitutions']==' ')  $_SESSION['substitutions']=-1;
-          if (!isset($_SESSION['substitutions_rez'])) $_SESSION['substitutions_rez']='0';
-          if (isset($_POST['buttonPregQuote'])) {// если была нажата кнопка Отработать
-           $pattern='/'.$_SESSION['pattern'].'/u';
-           $_SESSION['result_regular_function']=preg_filter($pattern,$_SESSION['replacement'],$_SESSION['subjekt'],$_SESSION['substitutions'],$_SESSION['substitutions_rez']);
-          }
-          ///////////////////////////////////////////////////////////////////////////////////
-          $class->formBlock('block_function_test_filter','regular_expressions.php','bootstrap-start',
-                'p','preg_filter(','regular-block-name-function-filter-p',
-                'text2','pattern',$_SESSION['pattern'],
-                'p',' ,','zapiataja','bootstrap-f-start',
-                'text2','replacement',$_SESSION['replacement'],
-                'p',' ,','zapiataja','bootstrap-f-start',
-                'text2','subjekt',$_SESSION['subjekt'],
-                'p',' ,','zapiataja','bootstrap-f-start',
-                'text2','substitutions',$_SESSION['substitutions'],
-                'p',' ,','zapiataja','bootstrap-f-start',
-                'p','Удалось совершить замен:'.$_SESSION['substitutions_rez'].');','substitutions_rez','bootstrap-f-start',
-                'submit','buttonPregQuote','Отработать','regular_expressions.php',
-                'reset','Очистить',
-                'bootstrap-finish',
-                'zero_style'
-                 );
-            echo '</div>';
-            echo '</div>';
-            echo '<div class="row">';
-            echo '<div class="col-12">';
-              echo '<p>Результат:</p>';
-              echo '<code><div class="kod3">';
-                echo '<p>'.$_SESSION['result_regular_function'].'</p>';
-              echo '</div></code>';
-            echo '</div>';
-            echo '</div>';
-          }// конец работы с preg_filter
-          //////////////////////////////---------------------------------------------------------------------
-        if ((isset($_POST['functionPhp']) && $_POST['functionPhp']=='preg_quote()') 
-          || (isset($_POST['buttonPregQuote']) && $_SESSION['name_function_test']=='preg_quote()')) {// preg_quote()
-            if (isset($_POST['functionPhp'])) $_SESSION['name_function_test']=$_POST['functionPhp'];
-            echo '<div class="row">';
-            echo '<div class="col-12">';
-             echo '<div class="working-with-the-function-p">';
-              echo '<p><b>Работаем с preg_quote()</b></p>';
-              echo '<p>Синтаксис:</p>';
-              echo '<code><div class="kod3">';
-              echo "<p>preg_quote(string \$str, ?string \$delimiter = null): string</p>";
-              echo '</div></code>';
-              echo '</div>';
-            echo '</div>';
-            echo '</div>';
-            echo '<div class="row">';
-            echo '<div class="col-12">';
-            if (!isset($_SESSION['textValue'])) $_SESSION['textValue']='Введите исходную строку';
-            if (isset($_POST['stringFunctionBegin']) && $_POST['stringFunctionBegin']!='') $_SESSION['textValue']=$_POST['stringFunctionBegin']; 
-            if (!isset($_SESSION['textValueDelimiter'])) $_SESSION['textValueDelimiter']='Delimiter';
-            if (isset($_POST['stringFunctionDelimiter']) && $_POST['stringFunctionDelimiter']=='') $_SESSION['textValueDelimiter']='Delimiter';
-            if (isset($_POST['stringFunctionDelimiter']) && $_POST['stringFunctionDelimiter']!='') $_SESSION['textValueDelimiter']=$_POST['stringFunctionDelimiter']; 
-            
-            $class->formBlock('block_function_test','regular_expressions.php','bootstrap-start',
-                  'p','preg_quote(','regular-block-name-function',
-                  'text2','stringFunctionBegin',$_SESSION['textValue'],
-                  'p',',','bootstrap-f-start',
-                  'text2','stringFunctionDelimiter',$_SESSION['textValueDelimiter'],
-                  'p',');','regular-block-close-function','bootstrap-f-start',
-                  'submit','buttonPregQuote','Отработать','regular_expressions.php',
-                  'bootstrap-finish',
-                  'zero_style'
-                   );
+    // работа с тестированием функции preg_quote()
+    // praca z testowaniem funkcji preg_quote()
+    // work with testing the function preg_quote()
+    $testRegular->pregQuote(); 
 
-              echo '</div>';
-              echo '</div>';
-              echo '<div class="row">';
-              echo '<div class="col-12">';
-                echo '<p>Результат:</p>';
-                echo '<code><div class="kod3">';
-                if ($_SESSION['textValueDelimiter']!='Delimiter')
-                  echo '<p>'.preg_quote($_SESSION['textValue'],$_SESSION['textValueDelimiter']).'</p>';
-                if ($_SESSION['textValueDelimiter']=='Delimiter')
-                  echo '<p>'.preg_quote($_SESSION['textValue']).'</p>';
-                echo '</div></code>';
-              echo '</div>';
-              echo '</div>';
-            }// конец работы с preg_quote()
-        }  // Конец Нажата кнопка выбора функции
-  }// Конец работы с регулярными выражениями
+  }  // Конец Нажата кнопка выбора функции
+}// Конец работы с регулярными выражениями
+
  //////////////////////////////////////////работа с выводом статей
 $bylPoisk=false;
 

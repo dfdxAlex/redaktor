@@ -42,8 +42,18 @@ interface InterfaceFoRegular extends \class\redaktor\interface\interface\Interfa
     // work with testing the function preg_match()
     public function pregMatch();
 
+    // работа с тестированием функции preg_grep()
+    // praca z testowaniem funkcji preg_grep()
+    // work with testing the function preg_grep()
+    public function pregGrep(); 
+
     // работа с тестированием функции preg_filter()
     // praca z testowaniem funkcji preg_filter()
     // work with testing the function preg_filter()
     public function pregFilter(); 
+
+    // работа с тестированием функции preg_quote()
+    // praca z testowaniem funkcji preg_quote()
+    // work with testing the function preg_quote()
+    public function pregQuote(); 
 }
