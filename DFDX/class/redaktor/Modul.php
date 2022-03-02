@@ -615,7 +615,8 @@ class Modul implements interface\interface\InterfaceWorkToModul
                            $_SESSION['statiaPoId']=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
                            $action=$this->urlPoIdPath($nametablice,$nomerZagolowkaStati);
                            $_SESSION["runStrNews"]=true;
-                           //echo $urlNews;
+                           echo $urlNews;
+                           echo $action;
                            header('Location: '.$action);
                      }
 

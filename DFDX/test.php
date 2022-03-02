@@ -1,8 +1,13 @@
 <?php
-declare(strict_types=1);
+class test
+{
+ public $name;
 
-namespace class\redaktor;
+ public function __construct($name)
+ {
+    $this->name=$name;
+ }
 
-include 'class.php';
+}
 
-$www = new htmlTeg('b');
+

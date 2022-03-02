@@ -2,12 +2,22 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-//файл сгенерирован CMS-DFDX 2022-02-15 22:06:07
-//file generated CMS-DFDX 2022-02-15 22:06:07
+//файл сгенерирован CMS-DFDX 2022-03-01 01:39:45
+//file generated CMS-DFDX 2022-03-01 01:39:45
 session_start();
+
 include "../../funcii.php";
 include "../../functionDfdx.php";
 include "../../image/swapImages.php";
+
+// подключение автозагрузчика от PHPMailer, библиотека инсталлирована с помощью Composer
+// podłączenie autoloadera z PHPMailera, biblioteka jest instalowana za pomocą Composera
+// connecting the autoloader from PHPMailer, the library is installed using Composer
+//include "../../PHPMailer-6.5.4/PHPMailer-6.5.4/vendor/autoload.php";
+
+// загрузка классов по старой схеме используя автозагрузчик из PSR0
+// ładowanie klas według starego schematu za pomocą autoloadera z PSR0
+// loading classes according to the old scheme using the autoloader from PSR0
 include "../../class.php";
 
   $redaktor=new Modul();
@@ -15,6 +25,9 @@ include "../../class.php";
   $header = new Header();
   $futter = new futter();
   $nonTemplates = new NonTemplates();
+
+  // определяет будет ли функция domDom() проверять входные параметры функций, в которых она прописана
+  $_SESSION['domDom']=true;
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
@@ -49,6 +62,7 @@ $header->resetOperatingMode();
 // from the database and enters it into the $_SESSION["status"] variable
 // Also, the function handles the button press Enter and Exit
 $header->checkUserStatus();
+//$_SESSION['status']=5;
 
 echo '<section class="container-fluid">';
 echo '<div class="row">';
@@ -80,8 +94,14 @@ $header->showSiteHeader('image/logo.png');
  // If there is no picture for the section, then the running line of the site section will also be displayed
 $header->showSiteSection('image/home.png','home');   
 
+echo '<section class="container-fluid">
+     <div class="row">
+     <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-12">';
 //второе меню. В кнопки можно добавлять через массив добавляя пару Название=>ссылка
-$header->menuOfOurProjects(array('Электронные визитки'=>'second_menu\elVisitka.php'));
+//$header->menuOfOurProjects(array('Электронные визитки'=>'second_menu\elVisitka.php'));
+echo '</div>
+      </div>
+      </section>';
 
 echo '<section class="container-fluid pole">';
 echo '<div class="row">';
