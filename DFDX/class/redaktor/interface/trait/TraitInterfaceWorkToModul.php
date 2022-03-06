@@ -3,6 +3,7 @@ namespace class\redaktor\interface\trait;
 
 trait TraitInterfaceWorkToModul
 {
+    
     public function money(...$parametr) // работа с символами или деньгами
     {
         $this->createTab(

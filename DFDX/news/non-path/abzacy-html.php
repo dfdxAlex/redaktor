@@ -2,8 +2,8 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-//файл сгенерирован CMS-DFDX 2022-03-01 01:39:45
-//file generated CMS-DFDX 2022-03-01 01:39:45
+//файл сгенерирован CMS-DFDX 2022-03-06 01:27:57
+//file generated CMS-DFDX 2022-03-06 01:27:57
 session_start();
 
 include "../../funcii.php";
@@ -27,14 +27,14 @@ include "../../class.php";
   $nonTemplates = new NonTemplates();
 
   // определяет будет ли функция domDom() проверять входные параметры функций, в которых она прописана
-  $_SESSION['domDom']=true;
+  //$_SESSION['domDom']=true;
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
 echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-  $header->headStart('<title>Абзацы HTML</title>');
+  $header->headStart('<title>30</title>');
   $header->headBootStrap5([$header->searcNamePath('styli.css'),$header->searcNamePath('dfdx.css')]);
 
 echo '</head>';
@@ -125,7 +125,7 @@ $nameBD='nameTD='.$nameBD;
 // функция управляет выводом статей в разных режимах используя функцию news1
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function
-$nonTemplates->publishNews($redaktor,'action=#','Число_статей=5',-1,$nameBD,'#категория для поиска#','Раздел=regular_expressions','Абзацы HTML http://dfdx.uxp.ru/news/non-path/abzacy-html.php');
+$nonTemplates->publishNews($redaktor,'action=#','Число_статей=5',30,$nameBD,'#категория для поиска#','Раздел=regular_expressions','30 http://dfdx.uxp.ru/news/non-path/abzacy-html.php');
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 

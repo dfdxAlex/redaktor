@@ -129,4 +129,3 @@ function poisk($zapros)  // форма для поиска на сайте
     }
      else echo "<h1>".$tegPoisk->teg."</h1>";
   }
-?>

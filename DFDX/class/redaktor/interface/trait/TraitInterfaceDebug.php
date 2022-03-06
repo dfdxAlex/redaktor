@@ -3,7 +3,15 @@ namespace class\redaktor\interface\trait;
 
 trait TraitInterfaceDebug
 {
-        public function domDom(array $masArgument)
+  public function headerTrue(string $mesage=null)
+  {
+    if (isset($mesage) && headers_sent())
+            echo $mesage;
+    if (!isset($mesage) && headers_sent())
+            echo 'Заголовок отправлен';
+  }
+
+  public function domDom(array $masArgument)
         {
           $masOk=false;
           if (!isset($_SESSION['domDom'])) $_SESSION['domDom']=false;

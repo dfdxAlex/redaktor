@@ -44,4 +44,9 @@ interface InterfaceWorkToType
     // sprawdza, czy wartość zmiennej $slowo znajduje się w tablicy $mas. Można zastąpić wyrażeniami regularnymi
     // checks if the value of the $slowo variable is in the $mas array. Can be replaced with regular expressions
     public function proverkaMassiwa($mas,$slowo);
+
+    //функция преобразовывает русское слово в транслит
+    //funkcja zamienia rosyjskie słowo na transliterację
+    //function converts a Russian word into transliteration
+    public function translit($string);
 }

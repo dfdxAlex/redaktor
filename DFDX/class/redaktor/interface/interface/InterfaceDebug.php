@@ -9,6 +9,10 @@ namespace class\redaktor\interface\interface;
 interface InterfaceDebug
 //extends InterfaceWorkToBd
 {
+
+    // Функция пишет сообщение, если есть отправленный заголовок
+    public function headerTrue(string $mesage=null);
+
     // Функция записывает некоторое сообщение в таблицу `debuger`. Если $kill=true, запись будет одна, если false, то будут добавляться
     // Funkcja zapisuje komunikat do tabeli `debuger`. Jeśli $kill=true, wpis będzie jeden, jeśli false, wpisy zostaną dodane
     // The function writes some message to the `debuger` table. If $kill=true, the entry will be one, if false, then the entries will be added

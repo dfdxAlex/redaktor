@@ -26,7 +26,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
         //новостной модуль
         public function news1(...$parametr)
         {
-
+          //$this->headerTrue();
            $nametablice=''; // по умолчанию
            $zagolowok='p';  // по умолчанию
            $statusRedaktora='-s12345'; // Определяет статус пользователя, для которого открывается меню редактирования
@@ -121,7 +121,6 @@ class Modul implements interface\interface\InterfaceWorkToModul
                   $pokazatStatiuPoId=preg_replace('/id=/','',$value);  
                   $pokazatStatiuPoId=$pokazatStatiuPoId*1;
                }
-            
               if (stripos('sss'.$value,'classKill=')) {
                   $classKill=preg_replace('/classKill=/','',$value);  
                   $classKill=preg_replace('/-/','',$classKill);  
@@ -422,10 +421,13 @@ class Modul implements interface\interface\InterfaceWorkToModul
                   $dataMas[$i][0][0][1][0]=$stroka['login_redaktora'];
                   $dataMas[$i++][0][0][0][1]=$stroka['razdel'];
                 }
+
              //проверим не была ли нажата кнопка заголовка статьи
              //строка находит ИД кнопки в обход входного параметра
-             $nomerZagolowkaStati=$this->hanterButton("rez=hant","nameStatic=statiaKorotka","returnNameDynamic",'false=www');
-             if ($nomerZagolowkaStati!='www') $pokazatStatiuPoId=$nomerZagolowkaStati;
+             // проверить необходимость данного блока
+             //$nomerZagolowkaStati=$this->hanterButton("rez=hant","nameStatic=statiaKorotka","returnNameDynamic",'false=www');
+             //if ($nomerZagolowkaStati!='www') $pokazatStatiuPoId=$nomerZagolowkaStati;
+            
              $statusStatii=false;
              $pokazalStatej=0;
              // вывести статью согласно определенному шаблону.
@@ -440,7 +442,8 @@ class Modul implements interface\interface\InterfaceWorkToModul
              if ($pokazatStatiuPoId>-1) $outBlokStranic=false;// запретить показ модуля страниц
              
     if ($hablonNews==2)
-      if (!isset($_POST['dobawitNow']))
+
+      if (!isset($_POST['dobawitNow'])) 
         for ($ii=$i-1; $ii>-1; $ii--) {  
             // считает число статей, которые можно было показать     
             $nomerStatejSumm++; 
@@ -459,8 +462,9 @@ class Modul implements interface\interface\InterfaceWorkToModul
                 if ($pokazatStatiuPoId<0 || ($pokazatStatiuPoId==$dataMas[$ii][0][0][0][0] && $statusStatii))
                   if (stripos('sss'.$dataMas[$ii][0][0][0][1],$razdel) || $dataMas[$ii][0][0][0][1]=='-' || $razdel=='') {// Если заданный раздел входит в категорию статьи
                     if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))      // Если труе, то статья проверена модератором
-                      if ($pokazalStatej==0 && $nomerZagolowkaStati=='www') {  // первая статья не по клику по названию статьи
+                      if ($pokazalStatej==0/* && $nomerZagolowkaStati=='www'*/) {  // первая статья не по клику по названию статьи
                         if (!$statiaVozwrat) { // показ первой статьи при обычных условиях
+                          echo 'Первая статья'.$pokazatStatiuPoId;
                            $class='statiaKrutka btn'; // класс заголовка по умолчанию
                            // Условие сработает если задан какой-либо вид оформления статьи
                            if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0) { // класс заголовка в зависимости от стиля тут
@@ -506,11 +510,15 @@ class Modul implements interface\interface\InterfaceWorkToModul
                              echo '<section class="container-fluid">';
                              echo '<div class="row">';
                              echo '<div class="col-12">';
-                             if (file_exists($action))
-                                echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
-                             else 
-                                echo '<p class="'.$class.'">'.$dataMas[$ii][1][0][0][0].'</p>';
-                             echo '</div></div>';
+                             if (file_exists(false)) {
+                                //echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
+                                //echo '<a class="'.$class.'"></a>';
+                             }
+                                else {
+                                //echo '<p class="'.$class.'"><a href="'.$this->urlFoNews($statusStatii, $pokazatStatiuPoId).'">'.$dataMas[$ii][1][0][0][0].'</a></p>';
+                                echo '<p class="'.$class.'"><a href="'.$this->urlFoNews($statusStatii, $dataMas[$ii][0][0][0][0]).'">'.$dataMas[$ii][1][0][0][0].'</a></p>';
+                                }
+                                echo '</div></div>';
                              echo '<div class="row">';
                              echo '<div class="col-12">';
                              echo '<div>'.$text.'</div>';
@@ -525,7 +533,8 @@ class Modul implements interface\interface\InterfaceWorkToModul
                                    echo '<section class="container-fluid">';
                                    echo '<div class="row">';
                                    echo '<div class="col-12">';
-                                   echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
+                                   //echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
+                                   echo '<p class="'.$class.'"><a href="'.$this->urlFoNews($statusStatii, $dataMas[$ii][0][0][0][0]).'">'.$dataMas[$ii][1][0][0][0].'</a></p>';
                                    echo '</div></div>';
                                    echo '<div class="row">';
                                    echo '<div class="col-12">';
@@ -557,7 +566,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
            }
            ///////////////////////////Вторая и следующие статьи//////////////////////////////
            if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))     // Если труе, то статья проверена модератором
-               if ($pokazalStatej>0 && $nomerZagolowkaStati=='www')  { // вторая и дальше статья не по клику по названию статьи
+               if ($pokazalStatej>0)  { // вторая и дальше статья не по клику по названию статьи
                   $nomerStatej--;
                   $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
                   $text=$dataMas[$ii][0][1][0][0]; 
@@ -577,11 +586,13 @@ class Modul implements interface\interface\InterfaceWorkToModul
                     }
                  $text=preg_filter('/<br>/','',$text);
                  $text=preg_filter('/[<>]/','',$text);
-                 echo '<form method="post" action="'.$action.'"><input class="statiaKrutka btn" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>'.'<div>'.mb_substr($text,0,$prevju).'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
+                 //echo '<form method="post" action="'.$action.'"><input class="statiaKrutka btn" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>'.'<div>'.mb_substr($text,0,$prevju).'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
+                 echo '<a class="statiaKrutka btn" href="'.$this->urlFoNews($statusStatii,$dataMas[$ii][0][0][0][0]).'"> '.$dataMas[$ii][1][0][0][0].'</a><div>'.mb_substr($text,0,$prevju).'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
                  echo $otstupBr; 
              }
             //////////////////////////////////// Блок выводит статью при нажатии на её заголовок-///////////////////////////////////////
-            if ($statusStatii)// Если труе, то статья проверена модератором
+            //$this->urlFoNews($statusStatii, $pokazatStatiuPoId);
+            if ($statusStatii && false)// Если труе, то статья проверена модератором
                 if ($dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati && $pokazalStatej==0)  {// Вывод по клику по заголовку статьи
                    ///////////////////////////////////////////создаем нужные папки ////////////////////////////
                    if (!file_exists('../../'.$this->initsite()))  {// Создаем папки только в том случае, если не находимся в уже созданных папках
@@ -615,8 +626,9 @@ class Modul implements interface\interface\InterfaceWorkToModul
                            $_SESSION['statiaPoId']=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
                            $action=$this->urlPoIdPath($nametablice,$nomerZagolowkaStati);
                            $_SESSION["runStrNews"]=true;
-                           echo $urlNews;
-                           echo $action;
+                           //echo $urlNews;
+                           //echo $action;
+                           //if (!headers_sent())
                            header('Location: '.$action);
                      }
 
@@ -676,8 +688,11 @@ class Modul implements interface\interface\InterfaceWorkToModul
                             file_put_contents($fileName,$dfdx);
                             $_SESSION["runStrNews"]=true;
                             $_SESSION['statiaPoId']=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
-                            header('Location: '.$fileName);
-                        } else header('Location: '.$this->initsite());
+                            //if (!headers_sent())
+                               header('Location: '.$fileName);
+                        } else 
+                            //if (!headers_sent())
+                               header('Location: '.$this->initsite());
                       $pokazalStatej=1;
                     }
 
@@ -720,7 +735,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                     if ($statusStatii)   $pokazalStatej++;   // Если труе, то статья проверена модератором
 
                     ///////////////////////////////////Кнопки удаления, редактирования, добавления
-                    if ($nomerZagolowkaStati=='www' || $dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati) 
+                    //if ($nomerZagolowkaStati=='www' || $dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati) 
                      if ($status_4_5)
                         $this->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
                                                 'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
@@ -763,6 +778,141 @@ class Modul implements interface\interface\InterfaceWorkToModul
         echo '</div></div></div></div>';
       }
   }
+
+  // Функция возвращает ссылку на статью если она есть, если нет, то создает её и возвращает
+  // bool $statusStatii - определяет проверена ли статья модератором
+  //// int $pokazalStatej - так, как вывод статей в цикле, то в переменную вносится глобальная переменная //удалено
+  //// для подсчета выведенных статей. Функция после первой статьи задаст значение переменной как 1 и больше выводов не будет //удалено
+  // int $pokazatStatiuPoId - ID статьи, на которую нужно перейти
+  public function urlFoNews(bool $statusStatii, int $pokazatStatiuPoId)//, int &$pokazalStatej)
+  {
+    // раздел статьи, на которую нужно перейти по клику на заголовок
+    $razdelNews=''; 
+    $katalog2='#';
+    $nomerZagolowkaStati=$pokazatStatiuPoId; // $nomerZagolowkaStati от старого алгоритма
+
+    if ($statusStatii)// Если труе, то статья проверена модератором
+    //if ($dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati)// && $pokazalStatej==0)  {// Вывод по клику по заголовку статьи
+       ///////////////////////////////////////////создаем нужные папки ////////////////////////////
+      {
+    
+      //если в модуль не пришел ИД статьи или пришел ИД=-1, то проверить массив пост на наличие другого ИД статьи
+      //проверим не была ли нажата кнопка заголовка статьи
+      //строка находит ИД кнопки в обход входного параметра
+       if ($pokazatStatiuPoId==-1) {
+           $nomerZagolowkaStati=$this->hanterButton("rez=hant","nameStatic=statiaKorotka","returnNameDynamic",'false=www');
+       if ($nomerZagolowkaStati!='www') $pokazatStatiuPoId=$nomerZagolowkaStati;
+       }
+
+       // работаем с папками, если их не хватает, то создаем
+       // проверяем не находимся ли в папке с контентом, чтобы не дублировать в ней новую папку с контентом.
+       if (!file_exists('../../'.$this->initsite()))  {// Создаем папки только в том случае, если не находимся в уже созданных папках
+         
+        $razdelNews = new \class\value_object\RazdelPoId($pokazatStatiuPoId);  // получаем раздел
+        $katalog2='news/'.$razdelNews; // Папка со статьями + текущая категория
+        if (!is_dir('news')) // Если нет главной папки со статьями, то создать её
+            mkdir('news',0777,1);
+        if (!is_dir($katalog2)) // Если нет папки соответствующей категории, то создать её
+            mkdir($katalog2,0777,1);
+         }
+      }
+       $fileNameNotPhp = new \class\value_object\NameFile($pokazatStatiuPoId); // создаем имя файла
+       $fileName = new \class\value_object\PathPlusNameFile($katalog2,$fileNameNotPhp); // получить имя файла и путь
+
+       // Проверить существует ли статья с таким же названием и путем (если работаем из главной страницы)
+       $newsAlready=false;
+       if (file_exists($fileName)) $newsAlready=true;
+
+       // Проверить существует ли статья с таким же названием в текущей папке (если работаем в папке персональных статей-ссылок)
+       $newsName=preg_filter('/news\/.+\//','',$fileName);
+       if (file_exists($newsName)) $newsAlready=true;
+
+       // если файл уже есть, то добавить к его имени слово double и фремя в секундах (в случае, если две статьи имеют одинаковое название)
+       if ($newsAlready) 
+                $fileName=preg_filter('/\.php/','-double-'.time().'.php',$fileName);
+ 
+       // получает ссылку на статью из таблицы url_po_id
+       $urlNews=$this->urlPoId('bd2',$pokazatStatiuPoId);
+
+       if ($urlNews) {// если для статьи есть свой файл, то просто перейти на него
+               // ищем файл по ссылке из базы данных, если нашли, то возвращаем относительный путь к файлу
+               $action=$this->urlPoIdPath('bd2',$pokazatStatiuPoId);
+               $_SESSION["runStrNews"]=true;
+               return $action;
+         }
+
+       if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки)
+           if ($_SESSION['status']<4 || $_SESSION['status']==9) // если жмёт не модератор или администратор
+                return $this->initsite();
+
+       // если статусы 4 или 5 или смотрит статью её автор, то работаем
+       if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
+           if ($_SESSION['status']==4 || $_SESSION['status']==5 || $_SESSION['login']==$dataMas[$i][0][0][1][0]) {  
+
+               $dfdx=file($this->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
+               
+               foreach ($dfdx as &$value) { 
+                  $valueTemp=preg_filter('/action.*php/u','action=#',$value); // Замена страниц обработчиков
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+                  
+                  $valueTemp=preg_filter('/require\s"/u','include "../../',$value); // Замена пути для Инклудов
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+                  
+                  $valueTemp=preg_filter('/\$maty.*огин.*роль.*/u','echo \'<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>\';',$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+                  
+                  $valueTemp=preg_filter('/levoeMenu/u','//levoeMenu',$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+                  
+                  $valueTemp=preg_filter('/poiskDfdx/u','//poiskDfdx',$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+                  
+                  $valueTemp=preg_filter('/-1,/',$nomerZagolowkaStati.',',$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+
+                  //$valueTemp=preg_filter('/\-1\)/',$nomerZagolowkaStati.')',$value);
+                  //if (!is_null($valueTemp)) $value=$valueTemp;
+                  
+                  $valueTemp=preg_filter('/\/\/if\s\(!\$/','if (!$',$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+                  
+                  $strokaZameny=$pokazatStatiuPoId.' http://dfdx.uxp.ru/'.$fileName;
+                  $valueTemp=preg_filter('/buttonTwitter/u',$strokaZameny,$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+                  
+                  $valueTemp=preg_filter('/title\>dfdx\<\/title/u','title>'.$pokazatStatiuPoId.'</title',$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+
+                  $valueTemp=preg_filter('/tka=\'dfdx/u',"tka='".$fileNameNotPhp,$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+
+                  $valueTemp=preg_filter('/#файл\sсгенерирован#/u',"//файл сгенерирован CMS-DFDX ".date('Y-m-d H:i:s'),$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+
+                  $valueTemp=preg_filter('/#file\sgenerated#/u',"//file generated CMS-DFDX ".date('Y-m-d H:i:s'),$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+
+                  $valueTemp=preg_filter('/\$header->menuOfOurProjects/u','//$header->menuOfOurProjects',$value);
+                  if (!is_null($valueTemp)) $value=$valueTemp;
+
+                  //$valueTemp=preg_filter('/Число_статей=5/u','Число_статей=1',$value);
+                  //if (!is_null($valueTemp)) $value=$valueTemp;
+
+                } 
+                
+                $this->urlPoIdSave('bd2',$nomerZagolowkaStati,$fileName);
+                file_put_contents($fileName,$dfdx);
+                $_SESSION["runStrNews"]=true;
+
+                //$_SESSION['statiaPoId']=
+                //$_SESSION['statiaPoId']=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
+                //if (!headers_sent())
+                   return $fileName;
+            } else 
+                   return $this->initsite();
+          //$pokazalStatej=1;
+        }
+
   // Служебная функция считает число статей в БД с заданное категорией
   public function numberNews($kategori)
     {
@@ -789,6 +939,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
       $stroka=mysqli_fetch_array($rez);
       if (file_exists($stroka[0])) 
           return $stroka[0]; // если файл существует по текущему пути
+
       if (!file_exists($stroka[0])) {
           $stroka[0]=preg_filter('/news\//','',$stroka[0]);
           if (file_exists($stroka[0])) 
