@@ -26,7 +26,6 @@ class Modul implements interface\interface\InterfaceWorkToModul
         //новостной модуль
         public function news1(...$parametr)
         {
-          //$this->headerTrue();
            $nametablice=''; // по умолчанию
            $zagolowok='p';  // по умолчанию
            $statusRedaktora='-s12345'; // Определяет статус пользователя, для которого открывается меню редактирования
@@ -464,7 +463,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                     if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))      // Если труе, то статья проверена модератором
                       if ($pokazalStatej==0/* && $nomerZagolowkaStati=='www'*/) {  // первая статья не по клику по названию статьи
                         if (!$statiaVozwrat) { // показ первой статьи при обычных условиях
-                          echo 'Первая статья'.$pokazatStatiuPoId;
+                          //echo 'Первая статья'.$pokazatStatiuPoId;
                            $class='statiaKrutka btn'; // класс заголовка по умолчанию
                            // Условие сработает если задан какой-либо вид оформления статьи
                            if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0) { // класс заголовка в зависимости от стиля тут
@@ -590,6 +589,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                  echo '<a class="statiaKrutka btn" href="'.$this->urlFoNews($statusStatii,$dataMas[$ii][0][0][0][0]).'"> '.$dataMas[$ii][1][0][0][0].'</a><div>'.mb_substr($text,0,$prevju).'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
                  echo $otstupBr; 
              }
+             /*
             //////////////////////////////////// Блок выводит статью при нажатии на её заголовок-///////////////////////////////////////
             //$this->urlFoNews($statusStatii, $pokazatStatiuPoId);
             if ($statusStatii && false)// Если труе, то статья проверена модератором
@@ -648,8 +648,8 @@ class Modul implements interface\interface\InterfaceWorkToModul
                               $valueTemp=preg_filter('/require\s"/u','include "../../',$value); // Замена пути для Инклудов
                               if (!is_null($valueTemp)) $value=$valueTemp;
                               
-                              $valueTemp=preg_filter('/\$maty.*огин.*роль.*/u','echo \'<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>\';',$value);
-                              if (!is_null($valueTemp)) $value=$valueTemp;
+                              $valueTemp=preg_filter('/\$maty.*огин.*роль.*///u','echo \'<form method="post" action="../../dfdx.php"><input name="menu_up_dfdx" type="submit" class="button_menu_up_dfdx button_menu_up_dfdx_parser btn" value="Главная"></form>\';',$value);
+                              /*if (!is_null($valueTemp)) $value=$valueTemp;
                               
                               $valueTemp=preg_filter('/levoeMenu/u','//levoeMenu',$value);
                               if (!is_null($valueTemp)) $value=$valueTemp;
@@ -695,7 +695,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                                header('Location: '.$this->initsite());
                       $pokazalStatej=1;
                     }
-
+*/
                     //////////////////////////////////////////////////////////////////////////////////////////////////////
                     if (!$statusStatii)// Статья не проверена модератором
                        if ($status_4_5) {
@@ -735,7 +735,6 @@ class Modul implements interface\interface\InterfaceWorkToModul
                     if ($statusStatii)   $pokazalStatej++;   // Если труе, то статья проверена модератором
 
                     ///////////////////////////////////Кнопки удаления, редактирования, добавления
-                    //if ($nomerZagolowkaStati=='www' || $dataMas[$ii][0][0][0][0]==$nomerZagolowkaStati) 
                      if ($status_4_5)
                         $this->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
                                                 'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
