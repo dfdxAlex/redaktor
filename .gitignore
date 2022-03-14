@@ -1,2 +1,17 @@
 #cat .gitignore
 123.bat
+DFDX/*.sql
+DFDX/test.php
+DFDX/value_test.php
+DFDX/test2.php
+DFDX/test2.html
+DFDX/*.zip
+DFDX/.vscode
+DFDX/PHPMailer-6.5.4
+DFDX/PHPUnit
+DFDX/news
+DFDX/symfony_api
+symfony.exe
+LICENSE
+npm
+npm.cmd

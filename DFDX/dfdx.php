@@ -15,6 +15,9 @@ require "image/swapImages.php";
 // connecting the autoloader from PHPMailer, the library is installed using Composer
 //require "PHPMailer-6.5.4/PHPMailer-6.5.4/vendor/autoload.php";
 
+// подключение автозагрузчика от SYMFONY, библиотека инсталлирована с помощью Composer
+require "symfony_api/vendor/autoload.php";
+
 // загрузка классов по старой схеме используя автозагрузчик из PSR0
 // ładowanie klas według starego schematu za pomocą autoloadera z PSR0
 // loading classes according to the old scheme using the autoloader from PSR0
