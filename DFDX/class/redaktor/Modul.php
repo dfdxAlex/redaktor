@@ -1141,7 +1141,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                           echo '<div class="col-12">';       
                               echo '<div class="helpPodRedaktoromStatej">';           
                                   echo '<h6 class="mesage helpPodRedaktoromStatejH6">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
-                                  //echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
+                                  echo '<h6 class="mesage helpPodRedaktoromStatejH6">"&-nbsp;" - без кавычек и тире - дополнительный пробел</h6>';
                                   echo '<h6 class="mesage helpPodRedaktoromStatejH6">&lt&ltтег&gt&gt - отобразить тег в тексте</h6>';
                                   echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку" alt="текст к картинке" &gt</h6>'; 
                                   echo '<h6 class="mesage helpPodRedaktoromStatejH6">Внимание!! Аттрибут alt="текст" обязателет и если картинок много, должен НЕ ПОВТОРЯТЬСЯ!!</h6>'; 
@@ -1195,7 +1195,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                       echo '<div class="col-12">';       
                           echo '<div class="helpPodRedaktoromStatej">';           
                               echo '<h6 class="mesage helpPodRedaktoromStatejH6">Чтобы задать раздел, в который попадет статья, необходимо задать его между двумя символами #Раздел#<br>в любом месте статьи.</h6>';                    
-                              //echo '<h6 class="mesage helpPodRedaktoromStatejH6">&ltbr&gt - переход на новую строку</h6>';
+                              echo '<h6 class="mesage helpPodRedaktoromStatejH6">"&-nbsp;" - без кавычек и тире- дополнительный пробел</h6>';
                               echo '<h6 class="mesage helpPodRedaktoromStatejH6">&lt&ltтег&gt&gt - отобразить тег в тексте</h6>';
                               echo '<h6 class="mesage helpPodRedaktoromStatejH6">Вставить картинку можно через тег img. Пример &ltimg src="ссылка на картинку"&gt</h6>'; 
                               echo '<h6 class="mesage helpPodRedaktoromStatejH6">Внимание!! Аттрибут alt="текст" обязателет и если картинок много, должен НЕ ПОВТОРЯТЬСЯ!!</h6>'; 
