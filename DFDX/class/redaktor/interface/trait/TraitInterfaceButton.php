@@ -4,9 +4,25 @@ namespace class\redaktor\interface\trait;
 trait TraitInterfaceButton
 {
 
-  public function buttonTwitter($text)
+  public function buttonTwitter($text, $nameTD='bd2')
   {
-    $textTwitter=preg_filter('/\s/','%20',$text);
+    // получить ID статьи из входящего параметра
+    // get the article ID from the input parameter
+    $idNews=preg_match('/\d+\s/',$text,$masRez);
+    // вытащить по ИД название статьи из таблицы
+    // pull out the title of the article from the table by ID
+    if ($this->notFalseAndNULL($masRez))
+        if ($masRez[0]>-1) {
+          $zapros="SELECT name FROM ".$nameTD." WHERE id=".$masRez[0];
+          $rez=$this->zaprosSQL($zapros);
+          $stroka=mysqli_fetch_array($rez);
+        }
+    // заменить ИД в переменной $text на имя статьи, для дальнейшей передачи в кнопку твиттера
+    // replace the ID in the $text variable with the name of the article, to be passed to the twitter button
+    $text=preg_replace('/\d+\s/','',$text);
+    $stroka[0].=$text;
+
+    $textTwitter=preg_filter('/\s/','%20',$stroka[0]);
     echo '<br><br>';
     echo '<div class="buttonTwitterDiv">';
     echo '<a class="link-button-twitter-text" target="_blank"';
