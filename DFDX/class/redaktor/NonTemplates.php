@@ -164,11 +164,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
             if ($action!='action=dfdx.php' && $statiaPoId==-1)
                 if (!$_SESSION["runStrNews"]) 
                     $statiaPoId=$runNewsIsNews1; 
-
-                    
-
           }
-
 
           // часть кода работает с системой генерации новых страниц общих. rd_nova_str.php
           if (isset($_POST['poisk']) && $searchСategory!='#категория для поиска#') {
@@ -191,21 +187,24 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
             echo '</div>';
      }
 
-     public function rightMenu(interface\interface\InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc)
+     public function rightMenu(interface\interface\InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc, int $nBootton=1000000)
      {
          echo '<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 prawy">';  // правое меню
          echo '<div class="poiskDiv">';
          poiskDfdx('dfdx.php');
          echo '</div>';
-         $this->pravoePole($InterfaceWorkToStatistik, $kluc);   // категория статей, которые должны быть показаны в правом меню 
+         $this->pravoePole($InterfaceWorkToStatistik, $kluc, $nBootton);   // категория статей, которые должны быть показаны в правом меню 
          echo '</div>';
      }
  
-     function pravoePole(interface\interface\InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc)
+     // interface\interface\InterfaceWorkToStatistik $InterfaceWorkToStatistik передача объекта для исползования его методов
+     // string $kluc, - категория, с которой работаем
+     // int $nBootton - число кнопок максимальное
+     function pravoePole(interface\interface\InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc, int $nBootton=1000000)
      {
      echo '<section class="container-fluid">';
      echo '<div class="pravoe-pole-div">';
-
+     $i=0;
      $strSummRazdel='WHERE ('; // переменная с условием запроса
      $zapros="SELECT razdel FROM bd2 WHERE 1";
      $rez=$InterfaceWorkToStatistik->zaprosSQL($zapros);
@@ -227,7 +226,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
 
        echo '<form action="'.$_SESSION['redaktiruem'].'" method="post">';
 
-       while (!is_null($stroka=(mysqli_fetch_assoc($rez)))) {
+       while (!is_null($stroka=(mysqli_fetch_assoc($rez))) && $nBootton>$i) {
          $stroka['name']=$InterfaceWorkToStatistik->clearCode($stroka['name'],'удалить_все');
           echo '<div class="row">';
           echo '<div class="col-12">';
@@ -241,8 +240,10 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
                  if ($path!==false) {$strokaUrl=$path;$knopkaYes=true;}
               }
           
-          if ($knopkaYes)
+          if ($knopkaYes) {
               echo '<button class="prawBlock btn"  name="panelPrawa'.$stroka['id'].'" formaction="'.$strokaUrl.'">'.$nameSmall.'</button>';
+              $i++;  
+          }
           echo '</div>';
           echo '</div>';
         }

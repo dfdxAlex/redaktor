@@ -16,7 +16,7 @@ require "image/swapImages.php";
 //require "PHPMailer-6.5.4/PHPMailer-6.5.4/vendor/autoload.php";
 
 // подключение автозагрузчика от SYMFONY, библиотека инсталлирована с помощью Composer
-require "symfony_api/vendor/autoload.php";
+//require "symfony_api/vendor/autoload.php";
 
 // загрузка классов по старой схеме используя автозагрузчик из PSR0
 // ładowanie klas według starego schematu za pomocą autoloadera z PSR0
@@ -139,7 +139,7 @@ $_SESSION["runStrNews"]=false; // обнуление переменной
 
 // функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
 // the function displays the right menu along with its part of the Bootstrap markup and the site search function
-$nonTemplates->rightMenu($statistik,"home");
+$nonTemplates->rightMenu($statistik,"home",20);
 echo '</div>';
 echo '</section>';
 

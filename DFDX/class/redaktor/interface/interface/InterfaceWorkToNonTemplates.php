@@ -18,7 +18,7 @@ interface InterfaceWorkToNonTemplates extends InterfaceWorkToMenu
     // параметр InterfaceWorkToStatistik - это любой объект данного типа
     // parametr InterfaceWorkToStatistik to dowolny obiekt tego typu
     // InterfaceWorkToStatistik parameter is any object of this type
-    public function rightMenu(InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc);
+    public function rightMenu(InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc, int $nBootton=1000000);
 
     // функция отображает правое меню на сайте
     // funkcja wyświetla odpowiednie menu na stronie
@@ -31,7 +31,7 @@ interface InterfaceWorkToNonTemplates extends InterfaceWorkToMenu
     // параметр InterfaceWorkToStatistik - это любой объект данного типа
     // parametr InterfaceWorkToStatistik to dowolny obiekt tego typu
     // InterfaceWorkToStatistik parameter is any object of this type
-    function pravoePole(InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc);
+    function pravoePole(InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc, int $nBootton=1000000);
 
     // Функция выводит статью с помощью функции news1
     // параметр Modul $modul необходим для передачи в функцию объекта класса Modul, в котором и живёт news1()
