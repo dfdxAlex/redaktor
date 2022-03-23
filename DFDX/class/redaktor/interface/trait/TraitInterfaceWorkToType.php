@@ -412,6 +412,22 @@ trait TraitInterfaceWorkToType
              $cod=preg_replace('/&ltdl&gt/','<dl> ',$cod); // Удалить лишнее
              $cod=preg_replace('/&lt\/dl&gt/','</dl>',$cod); // Вернуть закрытый тег
              $listTegow=$listTegow.'&ltdl&gt ';
+
+             if (!$spisokPlusBr) 
+                 $listTegow=$listTegow.',';
+             if ($spisokPlusBr) 
+                 $listTegow=$listTegow.'<br>';
+             $cod=preg_replace('/&ltdd&gt/','<dd> ',$cod); // Удалить лишнее
+             $cod=preg_replace('/&lt\/dd&gt/','</dd>',$cod); // Вернуть закрытый тег
+             $listTegow=$listTegow.'&ltdd&gt ';
+
+             if (!$spisokPlusBr) 
+                 $listTegow=$listTegow.',';
+             if ($spisokPlusBr) 
+                 $listTegow=$listTegow.'<br>';
+             $cod=preg_replace('/&ltdd&gt/','<dd> ',$cod); // Удалить лишнее
+             $cod=preg_replace('/&lt\/dd&gt/','</dd>',$cod); // Вернуть закрытый тег
+             $listTegow=$listTegow.'&ltdd&gt ';
  
              if (!$spisokPlusBr) 
                  $listTegow=$listTegow.',';

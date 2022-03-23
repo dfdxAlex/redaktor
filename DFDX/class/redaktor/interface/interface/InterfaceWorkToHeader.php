@@ -72,5 +72,15 @@ interface InterfaceWorkToHeader extends InterfaceWorkToMenu
     public function firstCreationSessionVariables();
 
     // $masBotton ассоциативный массив имя кнопки => ссылка на обработчик
-    public function menuOfOurProjects(array $masBotton);
+    // $blockName='second-menu' - необязательный параметр на случай необходимости создать ещё одно меню. Задает начальный класс контейнера
+    // $blockName='second-menu' используется на главной странице dfdx.php
+    
+    // $masBotton nazwa przycisku tablicy asocjacyjnej => link do obsługi
+    // $blockName='drugie menu' jest parametrem opcjonalnym na wypadek konieczności utworzenia innego menu. Określa początkową klasę kontenera
+    // $blockName='drugie menu' jest używane na stronie głównej dfdx.php
+    
+    // $masBotton associative array button name => link to handler
+    // $blockName='second-menu' is an optional parameter in case you need to create another menu. Specifies the initial container class
+    // $blockName='second-menu' is used on the main page dfdx.php
+    public function menuOfOurProjects(array $masBotton, $blockName='second-menu');
 }

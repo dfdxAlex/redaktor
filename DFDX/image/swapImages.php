@@ -3,7 +3,7 @@
 // Файл содержит функции, заменяющие картинки в определенных местах
 function zagolowkaBeg($stroka)
 {
-   echo '<p class="swap-images"><span>'.$stroka.'<span></p>';
+   echo '<p class="swap-images"><span>'.$stroka.'</span></p>';
 }
 function htmlPhp()
 {
@@ -11,41 +11,49 @@ function htmlPhp()
 }
 function cmsdfdx()
 {
-   echo '<p class="swap-images"><span>CMS DFDX<span></p>';
+   echo '<p class="swap-images"><span>CMS DFDX</span></p>';
 }
 function xhtml()
 {
-   echo '<p class="swap-images"><span>XHTML<span></p>';
+   echo '<p class="swap-images"><span>XHTML</span></p>';
 }
 function home()
 {
-   echo '<p class="swap-images"><span>Главная страница<span></p>';
+   echo '<p class="swap-images"><span>Главная страница</span></p>';
 }
 function git()
 {
-   echo '<p class="swap-images"><span>GitHub<span></p>';
+   echo '<p class="swap-images"><span>GitHub</span></p>';
 }
 function leson()
 {
-   echo '<p class="swap-images"><span>Различные реализованные задачи<span></p>';
+   echo '<p class="swap-images"><span>Различные реализованные задачи</span></p>';
 }
 function apidfdx()
 {
-   echo '<p class="swap-images"><span>API DFDX<span></p>';
+   echo '<p class="swap-images"><span>API DFDX</span></p>';
 }
 function html3()
 {
-   echo '<p class="swap-images"><span>HTML3<span></p>';
+   echo '<p class="swap-images"><span>HTML3</span></p>';
 }
 function html5()
 {
-   echo '<p class="swap-images"><span>HTML5<span></p>';
+   echo '<p class="swap-images"><span>HTML5</span></p>';
 }
 function psr()
 {
-   echo '<p class="swap-images"><span>Рекомендации PSR<span></p>';
+   echo '<p class="swap-images"><span>Рекомендации PSR</span></p>';
 }
 function elVisitka()
 {
-   echo '<p class="swap-images"><span>Создаем электронную визитку<span></p>';
+   echo '<p class="swap-images"><span>Создаем электронную визитку</span></p>';
+}
+function tictactoe()
+{
+   echo '<p class="swap-images"><span>Игра крестики нолики</span></p>';
+}
+function gamesOfPhp()
+{
+   echo '<p class="swap-images"><span>Игры на PHP</span></p>';
 }

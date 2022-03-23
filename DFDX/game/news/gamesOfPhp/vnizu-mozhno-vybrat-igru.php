@@ -2,26 +2,26 @@
 declare(strict_types=1);
 namespace class\redaktor;
 
-#файл сгенерирован#
-#file generated#
+//файл сгенерирован CMS-DFDX 2022-03-20 19:42:48
+//file generated CMS-DFDX 2022-03-20 19:42:48
 session_start();
 
-require "funcii.php";
-require "functionDfdx.php";
-require "image/swapImages.php";
+include "../../funcii.php";
+include "../../functionDfdx.php";
+include "../../image/swapImages.php";
 
 // подключение автозагрузчика от PHPMailer, библиотека инсталлирована с помощью Composer
 // podłączenie autoloadera z PHPMailera, biblioteka jest instalowana za pomocą Composera
 // connecting the autoloader from PHPMailer, the library is installed using Composer
-//require "PHPMailer-6.5.4/PHPMailer-6.5.4/vendor/autoload.php";
+//include "../../PHPMailer-6.5.4/PHPMailer-6.5.4/vendor/autoload.php";
 
 // подключение автозагрузчика от SYMFONY, библиотека инсталлирована с помощью Composer
-//require "symfony_api/vendor/autoload.php";
+//include "../../symfony_api/vendor/autoload.php";
 
 // загрузка классов по старой схеме используя автозагрузчик из PSR0
 // ładowanie klas według starego schematu za pomocą autoloadera z PSR0
 // loading classes according to the old scheme using the autoloader from PSR0
-require "class.php";
+include "../../class.php";
 
   $redaktor=new Modul();
   $statistik = new statistic();
@@ -37,7 +37,7 @@ echo '<html lang="ru">';
 echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
-  $header->headStart('<title>dfdx</title>');
+  $header->headStart('<title>44</title>');
   $header->headBootStrap5([$header->searcNamePath('styli.css'),$header->searcNamePath('dfdx.css')]);
 
 echo '</head>';
@@ -101,7 +101,7 @@ echo '<section class="container-fluid">
      <div class="row">
      <div class="col-12">';
 //второе меню. В кнопки можно добавлять через массив добавляя пару Название=>ссылка
-$header->menuOfOurProjects(array('Электронные визитки'=>'second_menu\elVisitka.php','Игры на PHP'=>'game\gamesOfPhp.php'));
+//$header->menuOfOurProjects(array('Электронные визитки'=>'second_menu\elVisitka.php','Игры на PHP'=>'games\gameOfPhp.php'));
 echo '</div>
       </div>
       </section>';
@@ -117,7 +117,7 @@ $nonTemplates->leftMenu();
 //метка для счётчика статистики посещения конкретной страницы
 //etykieta licznika statystyk odwiedzin na określonej stronie
 //label for the statistics counter of visits to a specific page
-$metka='dfdx'; 
+$metka='vnizu-mozhno-vybrat-igru'; 
 
 // имя таблица со статьями для функции news1
 // nazwa tabeli z artykułami dla funkcji news1
@@ -128,7 +128,7 @@ $nameBD='nameTD='.$nameBD;
 // функция управляет выводом статей в разных режимах используя функцию news1
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function
-$nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=5',-1,$nameBD,'#категория для поиска#','Раздел=regular_expressions','buttonTwitter');
+$nonTemplates->publishNews($redaktor,'action=#','Число_статей=5',44,$nameBD,'#категория для поиска#','Раздел=regular_expressions','44 http://dfdx.uxp.ru/news/gamesOfPhp/vnizu-mozhno-vybrat-igru.php');
 
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 

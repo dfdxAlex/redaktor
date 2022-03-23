@@ -4,7 +4,7 @@ namespace class\redaktor\interface\trait;
 trait TraitInterfaceWorkToHeader
 {
 
-    public function menuOfOurProjects(array $masBotton)
+    public function menuOfOurProjects(array $masBotton, $blockName='second-menu')
     {
 
         $mas = array();

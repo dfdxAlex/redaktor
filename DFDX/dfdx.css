@@ -656,15 +656,16 @@ width: 100%;
 .second-menu{
     font-size: 14px;
     line-height: 15px;
-    height: 30px;
+    height: 45px;
     width: 100%;
     margin-bottom: 20px;
     color: rgb(5, 10, 10);
 }
-.second-menusecond-menu2{
+.second-menusecond-menu2,.second-menusecond-menu6{
     border-style: double;
     border-color: black;
     float: left;
+    margin-left: 1px;
 }
 /*Конец !!! Стили второго меню второе меню*/
 /*block-v-card электронная визитка*/
