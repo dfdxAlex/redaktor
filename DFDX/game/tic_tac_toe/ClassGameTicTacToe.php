@@ -8,61 +8,13 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
     use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
     use \class\redaktor\interface\trait\TraitInterfaceDebug;
- /*   
-    //игровое поле// функция рисует игровое поле согласно переменным сессии
-    function playingField($buttonPole)
-    {
 
-        // Если игрок клацнул на занятое поле, то нарисовать старое поле и выйти
-        //if ($_SESSION['firstMove']=='player')
-        if ($buttonPole!='')
-        if ($buttonPole!='poleNet')
-            if ($_SESSION['pole'.$buttonPole]!='') {
-                echo '<h2>Поле занято</h2>';
-                $this->poleOnline($buttonPole);
-                return true;
-        }
-
-        if ($this->gamesPlayed()) {
-            echo '<h2>Игра закончена (Game over)</h2>';
-            return true;
-        }
-
-
-        if ($buttonPole!='poleNet') {
-            // если была нажата кнопка на игровом поле, то поместить в соответствующую переменную сессии значение X или O, 
-            // в зависимости от того, чем играет пользователь
-            if ($buttonPole!='')
-            {
-                if ($_SESSION['firstMove']=='player') {
-                    $_SESSION['pole'.$buttonPole] = $_SESSION['x_o'];
-                    if ($this->playerWon($buttonPole, $_SESSION['x_o'])) {
-                        $this->poleOnline($buttonPole);
-                        return true;
-                    }
-                }
-
-                $comp='X';
-                if ($_SESSION['x_o']=='X') $comp='O';
-
-                $nomer=$this->computerMove();
-                $_SESSION['pole'.$nomer] = $comp;
-                //$_SESSION['firstMove']='player';
-                if ($this->playerWon($nomer, $comp)) {
-                    $this->poleOnline($nomer);
-                    return true;
-                }
-            }
-
-            $this->poleOnline($buttonPole);
-
-            
-        }
-    }
-*/
     // выбрать чем играть, крестиками или ноликами
     public function pickSide()
     {
+        // проверяет существуют ли необходимые для работы переменные сессии, если нет, то создает их
+        $choiceOfStones = new ValueObject\ValueCreateSession();
+        unset($choiceOfStones);
 
         if (isset($_POST['Go'])) {
            
@@ -72,18 +24,22 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
            // создается служебный объект только ради того, чтобы в $_SESSION['x_o'] поместить камни игрока, крестики или нолики
            // больше объект $choiceOfStones не будет использоваться
            $choiceOfStones = new ValueObject\ValueXO();
+           unset($choiceOfStones);
 
            // создается служебный объект только ради того, чтобы в $_SESSION['firstMove'] поместить инфу о том, кто ходит первый
            // больше объект $choiceOfStones не будет использоваться
            $choiceOfStones = new ValueObject\ValueWhoFirst();
+           unset($choiceOfStones);
 
            // создается служебный объект только ради того, чтобы в $_SESSION['gameDifficulty'] поместить сложность игры
            // больше объект $choiceOfStones не будет использоваться
            $choiceOfStones = new ValueObject\ValueGameDifficulty();
+           unset($choiceOfStones);
 
            // создается служебный объект только ради того, чтобы:
            // очищаем переменные сессий, отвечающий за игровое поле
            $choiceOfStones = new ValueObject\ValueMasSession('reset');
+           unset($choiceOfStones);
 
            // первый ход, если ходит первым компьютер, то делаем ход от компьютера и рисуем поле
            // если первый ход за игроком, то рисуем пустое поле
@@ -93,8 +49,9 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
            $_SESSION['blockBigMenu']=true;
         }
 
+
         // Если была нажата кнопка Reset, то отключить блокировку главного меню, то есть конец игре
-        if (isset($_POST['Reset'])) $_SESSION['blockBigMenu']=false;
+        if (isset($_POST['Reset'])) $_SESSION['blockBigMenu']=false; 
 
 
         // если разблокировано основное меню обнулить счётчик ходов
@@ -111,6 +68,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
 
         // проверяем была ли нажата любая кнопка на игровом поле
         $klac=(int)$this->hanterButton("rez=hant","nameStatic=pole","returnNameDynamic","false=qqq");
+        
         // создается служебный объект только ради того, чтобы:
         // очищаем переменные сессий, отвечающий за игровое поле
         $_SESSION['firstMove']='player';
@@ -154,54 +112,11 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
            $choiceOfStones = new ValueObject\ValueMasSession($this->computerMove());
         $this->poleOnlineTo();
     }
-/*
-    // функция рисует поле с проверками выигрыша или проигрыша
-    function poleOnline($buttonPole)
-    {
-        echo '<form action="#" method="post">
-        <div class="gameMapa">';
 
-        $simbolComp='X';
-        if ($_SESSION['x_o']=='X') $simbolComp='O';
-
-        if ($this->playerWon($buttonPole,$simbolComp)) {
-            echo '<h2>Вы проиграли</h2>';
-            for ($i=1; $i<10; $i++) {
-                if ($_SESSION['pole'.$i]=='O') echo '<input class="gameMapaLost" type="submit" value="O" name="pole'.$i.'">';
-                if ($_SESSION['pole'.$i]=='X') echo '<input class="gameMapaLost" type="submit" value="X" name="pole'.$i.'">';
-                if ($_SESSION['pole'.$i]=='')  echo '<input class="gameMapaLost" type="submit" value=" " name="pole'.$i.'">';
-                if ($i==3 || $i==6) echo '<br>';
-            }
-            echo '</div></form>';
-            return true;
-        }
-
-    if ($this->playerWon($buttonPole,$_SESSION['x_o'])) {
-        echo '<h2>Вы выиграли</h2>';
-        for ($i=1; $i<10; $i++) {
-            if ($_SESSION['pole'.$i]=='O') echo '<input class="gameMapaWon" type="submit" value="O" name="pole'.$i.'">';
-            if ($_SESSION['pole'.$i]=='X') echo '<input class="gameMapaWon" type="submit" value="X" name="pole'.$i.'">';
-            if ($_SESSION['pole'.$i]=='')  echo '<input class="gameMapaWon" type="submit" value=" " name="pole'.$i.'">';
-            if ($i==3 || $i==6) echo '<br>';
-        }
-        echo '</div></form>';
-        return true;
-    }
-
-    if (!$this->playerWon($buttonPole,$_SESSION['x_o'])) 
-    for ($i=1; $i<10; $i++) {
-       if ($_SESSION['pole'.$i]=='O') echo '<input class="gameMapa'.$i.'" type="submit" value="O" name="pole'.$i.'">';
-       if ($_SESSION['pole'.$i]=='X') echo '<input class="gameMapa'.$i.'" type="submit" value="X" name="pole'.$i.'">';
-       if ($_SESSION['pole'.$i]=='')  echo '<input class="gameMapa'.$i.'" type="submit" value=" " name="pole'.$i.'">';
-       if ($i==3 || $i==6) echo '<br>';
-    }
-    
-    echo '</div></form>';
-    }
-*/
     // функция просто рисует поле 
     function poleOnlineTo($class="gameMapa")
     {
+        echo '<section class="container-fluid"><div class="row"><div class="col-12">';
         echo '<form action="#" method="post">
         <div class="gameMapa">';
 
@@ -213,11 +128,13 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     }
     
     echo '</div></form>';
+    echo '</div></div></section>';
     }
 
     // функция просто рисует поле 
     function poleOnlineWon()
     {
+        echo '<section class="container-fluid"><div class="row"><div class="col-12">';
         echo '<form action="#" method="post">
         <div class="gameMapa">';
 
@@ -229,11 +146,13 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     }
     
     echo '</div></form>';
+    echo '</div></div></section>';
     }
 
     // функция просто рисует поле 
     function poleOnlineLost()
     {
+        echo '<section class="container-fluid"><div class="row"><div class="col-12">';
         echo '<form action="#" method="post">
         <div class="gameMapa">';
 
@@ -245,6 +164,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     }
     
     echo '</div></form>';
+    echo '</div></div></section>';
     }
 
     // Ход компьютера, если есть пустые места для хода, то находим вариант для хода
