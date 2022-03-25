@@ -77,23 +77,26 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
         // если удалось нажать на крестик или нолик
         if ($choiceOfStones=='Ok') {
 
+            // Проверяю не выиграл ли я после последнего хода
             if ($this->gamesPlayed()) {
+                // если выиграл, то закрасить поле к зеленый цвет и выйти из метода
                 $this->poleOnlineWon();
                 return;
             }
 
-
             // Проверяю не выиграл ли я после последнего нажатия кнопки.
             if (!$this->gamesPlayed()) {
+                // если не выиграл, то передать ход компьютеру
                 $_SESSION['firstMove']='computer';
+                // сделать ход компьютером
                 $choiceOfStones = new ValueObject\ValueMasSession($this->computerMove());
             }
+            // проверить не выиграл ли компьютер
             if ($this->gamesComputer())
+                //если выиграл, то закрасить поле красным цветом
                 $this->poleOnlineLost();
 
         }
-
-
 
         if (!$this->gamesPlayed() && !$this->gamesComputer())
         if ($_SESSION['hit']>0)
@@ -173,6 +176,43 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
         $kn=0;
         $numer=true;
 
+        // если не легкий уровень игры то проверяем можно ли куда-то поставить свой крест или ноль для выигрыша
+        // если такое место есть, то ставим
+        if ($_SESSION['gameDifficulty']!='easy') {
+
+            // узнаем какими камнями играет компьютер
+            $x_o_comp = new ValueObject\ValueXO('computer');
+            $x_o_comp_str=(string)$x_o_comp;
+            // узнаем какими камнями играет игрок
+            $x_o_player =  new ValueObject\ValueXO();
+            $x_o_player_str=(string)$x_o_player;
+
+            // перебираем все клетки поля
+            for ($i=1; $i<10; $i++) {
+                // если очередная клетка поля пустая
+                if ($_SESSION['pole'.$i]=='') {
+                    // проверяем, если поместить камень компьютера на эту позицию закончится ли игра победой
+                    if ($this->playerWon($i, $x_o_comp_str)) {
+                        $_SESSION['pole'.$i]=$x_o_comp_str;
+                        return $i;
+                    }
+                }
+            }
+            // если компьютер не нашел комбинацию для выигрыша проверить, не находится ли игрок накануне выигрыша
+            // ессли игрок собрал 2 камня рядом, то заблокировать его победу своим камнем
+            // перебираем все клетки поля
+            for ($i=1; $i<10; $i++) {
+                 // если очередная клетка поля пустая
+                 if ($_SESSION['pole'.$i]=='') {
+                     // проверяем, если поместить камень компьютера на эту позицию закончится ли игра победой
+                     if ($this->playerWon($i,$x_o_player_str)) {
+                         $_SESSION['pole'.$i]=$x_o_comp_str;
+                         return $i;
+                     }
+                 }
+            }
+        }
+
         // проверка пустых полей
         if ($_SESSION['pole1']!='' 
             && $_SESSION['pole2']!=''
@@ -191,6 +231,11 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
                $kn=rand(1,9);
                if ($_SESSION['pole'.$kn]=='') $numer=false;
            }
+        }  else {
+            while ($numer) {
+                $kn=rand(1,9);
+                if ($_SESSION['pole'.$kn]=='') $numer=false;
+            }
         }
         return $kn;
     }
@@ -199,7 +244,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     // Последний ход берется после нажатия кнопки, до прорисовки нажатия кнопки
     function playerWon($klac, $x_o='X')
     {
-        $_SESSION['pole'.$klac]=$x_o;
+        ///$_SESSION['pole'.$klac]=$x_o;
        // проверка горизонтальных рядов
        if ($klac==1 || $klac==4 || $klac==7)
            if ($_SESSION['pole'.$klac+1]==$x_o && $_SESSION['pole'.$klac+2]==$x_o)
