@@ -59,6 +59,7 @@ class SettingMenu
                                 <optgroup label="Выбрать сложность игры (Select game difficulty)">
                                     <option>Простая игра (Simple game)</option>
                                     <option>Сложная игра (Difficult game)</option>
+                                    <option>Невозможно выиграть (impossible to win)</option>
                                 </optgroup>
                             </select>
                         </div>

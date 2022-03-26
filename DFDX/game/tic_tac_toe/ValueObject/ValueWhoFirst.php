@@ -6,6 +6,8 @@ namespace game\tic_tac_toe\ValueObject;
 // кто должен сделать ход в определенный момент времени можно узнать благодаря магическому методу __toString
 // для отработки класса необходимо просто создать объект и можно сразу же его удалять
 
+// Внимание!! Переменная $_SESSION['firstMove'] изменяет свое значение в процессе ходов игрока и компьютера
+
 // obiekt akceptuje zawartość przycisku, aby wybrać, kto idzie pierwszy, gracz czy komputer
 // sam obiekt pobiera informacje z tablicy $_POST['firstMove'] i umieszcza je w zmiennej $_SESSION['firstMove']
 // kto powinien wykonać ruch w określonym momencie, można dowiedzieć się dzięki magicznej metodzie __toString
@@ -21,8 +23,14 @@ class ValueWhoFirst
     public function __construct()
     {
         if (isset($_POST['firstMove'])) {
-            if ($_POST['firstMove']=='Я хожу первым (I go first)') $_SESSION['firstMove']='player';
-            else $_SESSION['firstMove']='computer';
+            if ($_POST['firstMove']=='Я хожу первым (I go first)') {
+                $_SESSION['firstMove']='player';
+                $_SESSION['firstMoveConst']='player';
+            }
+            else {
+                $_SESSION['firstMove']='computer';
+                $_SESSION['firstMoveConst']='computer';
+            }
         } 
     }
 
@@ -30,4 +38,5 @@ class ValueWhoFirst
     {
         return $_SESSION['firstMove'];
     }
+
 }

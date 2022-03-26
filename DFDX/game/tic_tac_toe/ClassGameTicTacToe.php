@@ -29,7 +29,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
            // создается служебный объект только ради того, чтобы в $_SESSION['firstMove'] поместить инфу о том, кто ходит первый
            // больше объект $choiceOfStones не будет использоваться
            $choiceOfStones = new ValueObject\ValueWhoFirst();
-           unset($choiceOfStones);
+           //unset($choiceOfStones);
 
            // создается служебный объект только ради того, чтобы в $_SESSION['gameDifficulty'] поместить сложность игры
            // больше объект $choiceOfStones не будет использоваться
@@ -62,7 +62,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
 
         // проверка не выиграл ли пользователь
         if ($this->gamesPlayed() && $_SESSION['blockBigMenu']) {
-            $this->poleOnlineWon();
+            $this->poleOnlineWonLostDraw('Won');
             return;
         }
 
@@ -80,7 +80,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
             // Проверяю не выиграл ли я после последнего хода
             if ($this->gamesPlayed()) {
                 // если выиграл, то закрасить поле к зеленый цвет и выйти из метода
-                $this->poleOnlineWon();
+                $this->poleOnlineWonLostDraw('Won');
                 return;
             }
 
@@ -94,13 +94,25 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
             // проверить не выиграл ли компьютер
             if ($this->gamesComputer())
                 //если выиграл, то закрасить поле красным цветом
-                $this->poleOnlineLost();
+                $this->poleOnlineWonLostDraw('Lost');
 
         }
 
-        if (!$this->gamesPlayed() && !$this->gamesComputer())
+        // Проверка на ничью
+        if (!$this->gamesPlayed())
+        if (!$this->gamesComputer())
+        if ($this->drawСheck()) {
+            $this->poleOnlineWonLostDraw('Draw');
+           // создается служебный объект только ради того, чтобы:
+           // очищаем переменные сессий, отвечающий за игровое поле
+           //$choiceOfStones = new ValueObject\ValueMasSession('reset');
+           //unset($choiceOfStones);
+            return;
+        }
+
+        if (!$this->gamesPlayed() && !$this->gamesComputer() && !$this->drawСheck())
         if ($_SESSION['hit']>0)
-            $this->poleOnlineTo();
+            $this->poleOnlineWonLostDraw();
 
         }
 
@@ -113,68 +125,47 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
            // создается служебный объект только ради того, чтобы:
            // заносим первый ход компьютера в блок переменный сессий
            $choiceOfStones = new ValueObject\ValueMasSession($this->computerMove());
-        $this->poleOnlineTo();
+        $this->poleOnlineWonLostDraw();
     }
 
     // функция просто рисует поле 
-    function poleOnlineTo($class="gameMapa")
+    function poleOnlineWonLostDraw(string $type='game')
     {
         echo '<section class="container-fluid"><div class="row"><div class="col-12">';
         echo '<form action="#" method="post">
         <div class="gameMapa">';
 
-    for ($i=1; $i<10; $i++) {
-       if ($_SESSION['pole'.$i]=='O') echo '<input class="'.$class.$i.'" type="submit" value="O" name="pole'.$i.'">';
-       if ($_SESSION['pole'.$i]=='X') echo '<input class="'.$class.$i.'" type="submit" value="X" name="pole'.$i.'">';
-       if ($_SESSION['pole'.$i]=='')  echo '<input class="'.$class.$i.'" type="submit" value=" " name="pole'.$i.'">';
-       if ($i==3 || $i==6) echo '<br>';
+    if ($type=='Won' || $type=='Lost' || $type=='Draw') {
+        $class='';
+        if ($type=='Won') $class='gameMapaWon';
+        if ($type=='Lost') $class='gameMapaLost';
+        if ($type=='Draw') $class='gameMapaDraw';
+        for ($i=1; $i<10; $i++) {
+            if ($_SESSION['pole'.$i]=='O') echo '<input class="'.$class.'" type="submit" value="O" name="pole'.$i.'">';
+            if ($_SESSION['pole'.$i]=='X') echo '<input class="'.$class.'" type="submit" value="X" name="pole'.$i.'">';
+            if ($_SESSION['pole'.$i]=='')  echo '<input class="'.$class.'" type="submit" value=" " name="pole'.$i.'">';
+           if ($i==3 || $i==6) echo '<br>';
+        } 
+    }else {
+        for ($i=1; $i<10; $i++) {
+            if ($_SESSION['pole'.$i]=='O') echo '<input class="gameMapa'.$i.'" type="submit" value="O" name="pole'.$i.'">';
+            if ($_SESSION['pole'.$i]=='X') echo '<input class="gameMapa'.$i.'" type="submit" value="X" name="pole'.$i.'">';
+            if ($_SESSION['pole'.$i]=='')  echo '<input class="gameMapa'.$i.'" type="submit" value=" " name="pole'.$i.'">';
+            if ($i==3 || $i==6) echo '<br>';
+         }
     }
     
     echo '</div></form>';
     echo '</div></div></section>';
     }
-
-    // функция просто рисует поле 
-    function poleOnlineWon()
-    {
-        echo '<section class="container-fluid"><div class="row"><div class="col-12">';
-        echo '<form action="#" method="post">
-        <div class="gameMapa">';
-
-    for ($i=1; $i<10; $i++) {
-        if ($_SESSION['pole'.$i]=='O') echo '<input class="gameMapaWon" type="submit" value="O" name="pole'.$i.'">';
-        if ($_SESSION['pole'.$i]=='X') echo '<input class="gameMapaWon" type="submit" value="X" name="pole'.$i.'">';
-        if ($_SESSION['pole'.$i]=='')  echo '<input class="gameMapaWon" type="submit" value=" " name="pole'.$i.'">';
-       if ($i==3 || $i==6) echo '<br>';
-    }
-    
-    echo '</div></form>';
-    echo '</div></div></section>';
-    }
-
-    // функция просто рисует поле 
-    function poleOnlineLost()
-    {
-        echo '<section class="container-fluid"><div class="row"><div class="col-12">';
-        echo '<form action="#" method="post">
-        <div class="gameMapa">';
-
-    for ($i=1; $i<10; $i++) {
-        if ($_SESSION['pole'.$i]=='O') echo '<input class="gameMapaLost" type="submit" value="O" name="pole'.$i.'">';
-        if ($_SESSION['pole'.$i]=='X') echo '<input class="gameMapaLost" type="submit" value="X" name="pole'.$i.'">';
-        if ($_SESSION['pole'.$i]=='')  echo '<input class="gameMapaLost" type="submit" value=" " name="pole'.$i.'">';
-       if ($i==3 || $i==6) echo '<br>';
-    }
-    
-    echo '</div></form>';
-    echo '</div></div></section>';
-    }
-
     // Ход компьютера, если есть пустые места для хода, то находим вариант для хода
     function computerMove()
     {
         $kn=0;
         $numer=true;
+
+        // узнаем сложность игры
+        $levlGame = new ValueObject\ValueGameDifficulty();
 
         // если не легкий уровень игры то проверяем можно ли куда-то поставить свой крест или ноль для выигрыша
         // если такое место есть, то ставим
@@ -184,7 +175,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
             $x_o_comp = new ValueObject\ValueXO('computer');
             $x_o_comp_str=(string)$x_o_comp;
             // узнаем какими камнями играет игрок
-            $x_o_player =  new ValueObject\ValueXO();
+            $x_o_player = new ValueObject\ValueXO();
             $x_o_player_str=(string)$x_o_player;
 
             // перебираем все клетки поля
@@ -211,8 +202,96 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
                      }
                  }
             }
-        }
 
+            // работа с треугольником победы)
+            // если до сих пор не вышли, значит ещё нет возможности выиграть и нет угрозы проиграть
+            // алгоритм работает при максимальной сложности игры
+            //////////////////////////////////////////////////////////////////////////////////////////////////////    
+            if ($levlGame=='impossible')
+            {
+                // если первый ход за игроком, то занимаем центр поля, если он ещё не занят
+                // если первым ходит игрок и не занимает центр, то после занятия центра алгоритму-компьютеру достаточно 
+                // просто не давать игроку выиграть, либо ходить случайно в пустые места, тогда игрок будет догонять компьютер,
+                // не давая ему выиграть.
+                if ($_SESSION['firstMoveConst']=='player') {
+                    $choiceOfStones = new ValueObject\ValueMasSession(5);
+                    if ($choiceOfStones!='error') return 5;
+
+                    // если середина поля занята, туда сходил игрок, то следует поставить свой камень на один из углов поля
+                    // данная ситуация сработает только один раз, дальше либо игрок будет не давать компьютеру выиграть
+                    // либо компьютер не будет давать игроку выиграть.
+                    // поэтому на этом этапе достаточно выбрать случайный угол для хода
+                    if ($choiceOfStones=='error') {
+                        $rezOut = match (rand(1,4)) {
+                                   1 => 1,
+                                   2 => 3,
+                                   3 => 7,
+                                   4 => 9,
+                                  };
+                        $choiceOfStones = new ValueObject\ValueMasSession($rezOut);  
+                        return $rezOut;    
+                    }
+                }
+
+                
+                if ($_SESSION['firstMoveConst']=='computer') {
+                    // проверяем какими камнями играет компьютер
+                    $mySimbol =  new ValueObject\ValueXO('computer');
+
+                    // если ходов ещё не было, то генерируем ход в один из углов поля
+                    if ($_SESSION['hit']==0) {
+                            $rezOut = match (rand(1,4)) {
+                                             1 => 1,
+                                             2 => 3,
+                                             3 => 7,
+                                             4 => 9,
+                                            };
+                            $choiceOfStones = new ValueObject\ValueMasSession($rezOut);  
+                            return $rezOut;    
+                    }
+
+                    if ($_SESSION['hit']==1) {
+                        // проверяем в каком углу наш первый камень
+                        $ferstSymbol=0;
+                        if ($_SESSION['pole1']==$mySimbol) $ferstSymbol=1;
+                        if ($_SESSION['pole3']==$mySimbol) $ferstSymbol=3;
+                        if ($_SESSION['pole7']==$mySimbol) $ferstSymbol=7;
+                        if ($_SESSION['pole9']==$mySimbol) $ferstSymbol=9;
+                        if ($ferstSymbol==1 && $_SESSION['pole2']=='' && $_SESSION['pole3']=='') $rezOut=3;
+                        if ($ferstSymbol==1 && $_SESSION['pole4']=='' && $_SESSION['pole7']=='') $rezOut=7;
+
+                        if ($ferstSymbol==3 && $_SESSION['pole2']=='' && $_SESSION['pole1']=='') $rezOut=1;
+                        if ($ferstSymbol==3 && $_SESSION['pole6']=='' && $_SESSION['pole9']=='') $rezOut=9;
+
+                        if ($ferstSymbol==7 && $_SESSION['pole4']=='' && $_SESSION['pole1']=='') $rezOut=1;
+                        if ($ferstSymbol==7 && $_SESSION['pole8']=='' && $_SESSION['pole9']=='') $rezOut=9;
+
+                        if ($ferstSymbol==9 && $_SESSION['pole6']=='' && $_SESSION['pole3']=='') $rezOut=3;
+                        if ($ferstSymbol==9 && $_SESSION['pole8']=='' && $_SESSION['pole7']=='') $rezOut=7;
+                        $choiceOfStones = new ValueObject\ValueMasSession($rezOut);  
+                        return $rezOut;  
+                    }
+
+                    if ($_SESSION['hit']==2) {
+                        // на третьем ходу, если сюда пришли, то нет угрозы проигрыша или вероятности выигрыша
+                        // занимаем любой свободный угол
+                        // после этого хода игра переходит на уровень выиграть или не дать выиграть противнику
+                        $ferstSymbol=0;
+                        if ($_SESSION['pole1']=='') $rezOut=1;
+                        if ($_SESSION['pole3']=='') $rezOut=3;
+                        if ($_SESSION['pole7']=='') $rezOut=7;
+                        if ($_SESSION['pole9']=='') $rezOut=9;
+
+                        $choiceOfStones = new ValueObject\ValueMasSession($rezOut);  
+                        return $rezOut;  
+                    }
+                }
+                
+                
+               // если противник-игрок ходит первым
+            }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////
+        }
         // проверка пустых полей
         if ($_SESSION['pole1']!='' 
             && $_SESSION['pole2']!=''
@@ -244,7 +323,6 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     // Последний ход берется после нажатия кнопки, до прорисовки нажатия кнопки
     function playerWon($klac, $x_o='X')
     {
-        ///$_SESSION['pole'.$klac]=$x_o;
        // проверка горизонтальных рядов
        if ($klac==1 || $klac==4 || $klac==7)
            if ($_SESSION['pole'.$klac+1]==$x_o && $_SESSION['pole'.$klac+2]==$x_o)
@@ -321,4 +399,22 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
             if ($_SESSION['pole3']==$x_o && $_SESSION['pole5']==$x_o && $_SESSION['pole7']==$x_o) return true;
             return false;
         }
+
+    // проверить не закончились ли пустые места на поле.
+    // функция провряет не наступила ли ничья
+    function drawСheck()
+    {
+        for ($i=1; $i<10; $i++) {
+            if ($_SESSION['pole'.$i]=='') {
+                return false;
+            }
+        }
+        return true;
+    }
+   
 }
+
+
+
+
+
