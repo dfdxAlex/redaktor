@@ -137,14 +137,24 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
 
     if ($type=='Won' || $type=='Lost' || $type=='Draw') {
         $class='';
-        if ($type=='Won') $class='gameMapaWon';
-        if ($type=='Lost') $class='gameMapaLost';
-        if ($type=='Draw') $class='gameMapaDraw';
+        if ($type=='Won') {
+            $class='gameMapaWon';
+            $mesage='Hooray!! You won!';
+        };
+        if ($type=='Lost') {
+            $class='gameMapaLost';
+            $mesage='You should have better luck next time. Good luck.';
+        };
+        if ($type=='Draw') {
+            $class='gameMapaDraw';
+            $mesage='Hmm. The enemy was not so simple.';
+        };
+        echo '<h3>'.$mesage.'</h3>';
         for ($i=1; $i<10; $i++) {
             if ($_SESSION['pole'.$i]=='O') echo '<input class="'.$class.'" type="submit" value="O" name="pole'.$i.'">';
             if ($_SESSION['pole'.$i]=='X') echo '<input class="'.$class.'" type="submit" value="X" name="pole'.$i.'">';
             if ($_SESSION['pole'.$i]=='')  echo '<input class="'.$class.'" type="submit" value=" " name="pole'.$i.'">';
-           if ($i==3 || $i==6) echo '<br>';
+            if ($i==3 || $i==6) echo '<br>';
         } 
     }else {
         for ($i=1; $i<10; $i++) {
@@ -166,6 +176,9 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
 
         // узнаем сложность игры
         $levlGame = new ValueObject\ValueGameDifficulty();
+
+        // проверяем какими камнями играет компьютер
+        $mySimbol =  new ValueObject\ValueXO('computer');
 
         // если не легкий уровень игры то проверяем можно ли куда-то поставить свой крест или ноль для выигрыша
         // если такое место есть, то ставим
@@ -221,7 +234,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
                     // данная ситуация сработает только один раз, дальше либо игрок будет не давать компьютеру выиграть
                     // либо компьютер не будет давать игроку выиграть.
                     // поэтому на этом этапе достаточно выбрать случайный угол для хода
-                    if ($choiceOfStones=='error') {
+                    if ($_SESSION['pole5']!=$mySimbol) {
                         $rezOut = match (rand(1,4)) {
                                    1 => 1,
                                    2 => 3,
@@ -229,15 +242,34 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
                                    4 => 9,
                                   };
                         $choiceOfStones = new ValueObject\ValueMasSession($rezOut);  
-                        return $rezOut;    
+                        if ($choiceOfStones!='error')
+                            return $rezOut;    
+                    }
+                    // если центр поля занят компьютером, то разместить камень в любой неугол
+                    // если так-же не исчерпаны возможности горизонтали и вертикали
+                    if ($this->horizonVertical())
+                    if ($_SESSION['pole5']==$mySimbol) {
+                        $rezOutGood=true;
+                        while ($rezOutGood) {
+                        $rezOut = match (rand(1,4)) {
+                                   1 => 2,
+                                   2 => 4,
+                                   3 => 6,
+                                   4 => 8,
+                                  };
+                        if ($rezOut==2 && $_SESSION['pole8']=='') $rezOutGood=false;
+                        if ($rezOut==4 && $_SESSION['pole6']=='') $rezOutGood=false;
+                        if ($rezOut==6 && $_SESSION['pole4']=='') $rezOutGood=false;
+                        if ($rezOut==8 && $_SESSION['pole2']=='') $rezOutGood=false;
+                        }
+                        $choiceOfStones = new ValueObject\ValueMasSession($rezOut);  
+                        if ($choiceOfStones!='error')
+                            return $rezOut;    
                     }
                 }
 
                 
                 if ($_SESSION['firstMoveConst']=='computer') {
-                    // проверяем какими камнями играет компьютер
-                    $mySimbol =  new ValueObject\ValueXO('computer');
-
                     // если ходов ещё не было, то генерируем ход в один из углов поля
                     if ($_SESSION['hit']==0) {
                             $rezOut = match (rand(1,4)) {
@@ -286,9 +318,6 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
                         return $rezOut;  
                     }
                 }
-                
-                
-               // если противник-игрок ходит первым
             }
             /////////////////////////////////////////////////////////////////////////////////////////////////////
         }
@@ -319,6 +348,14 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
         return $kn;
     }
 
+    // служебная функция, проверяет есть ли свободная горизонталь-вертикаль
+    // используется для того, чтобы работать с центром своим и отрабатывать вертикали или горизонтали
+    function horizonVertical()
+    {
+        if ($_SESSION['pole2']=='' && $_SESSION['pole8']=='') return true;
+        if ($_SESSION['pole4']=='' && $_SESSION['pole6']=='') return true;
+        return false;
+    }
     // Функция анализирует расположение камней и проверяет выиграл ли игрок
     // Последний ход берется после нажатия кнопки, до прорисовки нажатия кнопки
     function playerWon($klac, $x_o='X')
