@@ -28,8 +28,10 @@ class ValueGameDifficulty
                 $_SESSION['gameDifficulty']='easy';
             else if ($_POST['gameDifficulty']=='Сложная игра (Difficult game)')
                 $_SESSION['gameDifficulty']='difficult';
-            else 
+            else if ($_POST['gameDifficulty']=='Невозможно выиграть (impossible to win)')
                 $_SESSION['gameDifficulty']='impossible';
+            else 
+                $_SESSION['gameDifficulty']='intelligence';
         } 
     }
 

@@ -1,6 +1,6 @@
 .gameMapa{
-    margin-top: 40px;
-    margin-left: 150px;
+    margin-top: 10%;
+    margin-left: 15%;
     margin-bottom: 150px;
 }
 .gameMapa1,.gameMapa2,.gameMapa3,.gameMapa4,.gameMapa5,.gameMapa6,.gameMapa7,.gameMapa8,.gameMapa9,
@@ -20,5 +20,6 @@
     background-color: rgba(46, 37, 37, 0.979);
 }
 .menu-tic-tac-toe{
-    margin-bottom: 100px;
+    margin-bottom: 200px;
+    height: 370px;
 }

@@ -101,7 +101,6 @@ $nameBD='nameTD='.$nameBD;
 //label for the statistics counter of visits to a specific page
 $metka="tic_tac_toe"; //метка для счётчика статистики посещения конкретной страницы
 
-
 // функция управляет выводом статей в разных режимах используя функцию news1
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function

@@ -17,9 +17,16 @@ class ValueCreateSession
         if (!isset($_SESSION['blockBigMenu'])) $_SESSION['blockBigMenu']=false;
         if (!isset($_SESSION['x_o'])) $_SESSION['x_o']='X';
         if (!isset($_SESSION['firstMove'])) $_SESSION['firstMove']='player';
+        if (!isset($_SESSION['game_result'])) $_SESSION['game_result']='';
+        if (!isset($_SESSION['nomer_move'])) $_SESSION['nomer_move']=0;
 
         for ($i=1; $i<10; $i++)
             if (!isset($_SESSION['pole'.$i]))
                 $_SESSION['pole'.$i]='';
+
+        for ($i=1; $i<10; $i++)
+            if (!isset($_SESSION['move'.$i]))
+                $_SESSION['move'.$i]='';
+        
     }
 }

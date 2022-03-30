@@ -60,6 +60,7 @@ class SettingMenu
                                     <option>Простая игра (Simple game)</option>
                                     <option>Сложная игра (Difficult game)</option>
                                     <option>Невозможно выиграть (impossible to win)</option>
+                                    <option>Искусственный интеллект (artificial intelligence)</option>
                                 </optgroup>
                             </select>
                         </div>

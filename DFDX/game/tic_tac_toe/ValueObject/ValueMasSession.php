@@ -53,6 +53,15 @@ class ValueMasSession
     {
         $this->rezOut='Ok';
 
+        // статистика ходов в не зависимости от того, кто ходил
+        if (gettype($type)=='integer')
+            if ($type>0 && $type<10)
+                if ($_SESSION['pole'.$type]=='')
+                    {
+                        $_SESSION['nomer_move']++;
+                        $_SESSION['move'.$_SESSION['nomer_move']]=$type;
+                    }
+
         // если в объект передан не цифровой параметр или передана цифра на уже занятое место, то вернуть 'error'
         if (gettype($type)=='integer' && $type>0 && $type<10) {
          if ($_SESSION['pole'.$type]!='') $this->rezOut='error';
@@ -62,6 +71,12 @@ class ValueMasSession
         if ($type=='reset') {
             for ($i=1; $i<10; $i++) 
                  $_SESSION['pole'.$i]='';
+
+            for ($i=1; $i<10; $i++)
+                 $_SESSION['move'.$i]='0';
+
+            $_SESSION['nomer_move']=0;
+            $_SESSION['blockBigMenu']=false; 
          }
 
          $x_o=$_SESSION['x_o']; // по умолчанию крест или ноль берется у игрока

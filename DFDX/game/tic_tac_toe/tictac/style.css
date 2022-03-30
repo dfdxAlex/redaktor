@@ -1,0 +1,76 @@
+*,
+*:after,
+*:before {
+	box-sizing: border-box;
+}
+.game {
+	display: flex;
+	flex-wrap: wrap;
+	width: 600px;
+	height: 600px;
+	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
+	border-radius: 15px;
+	overflow: hidden;
+}
+
+.item {
+	flex: 0 0 33.333%;
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/* border-bottom: 1px solid #333; */
+	box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+}
+.item span {
+	display: block;
+	width: 100%;
+	height: 100%;
+	transition: 0.5s;
+	position: relative;
+}
+.item span.active {
+	transition: 0.5s;
+}
+.item span.active:before {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	transition: 0.5s;
+	animation: click 0.5s forwards;
+
+	filter: drop-shadow(3px 4px 2px grey);
+}
+.item span.active.activeX:before {
+	content: "";
+	background-image: url("x.svg");
+	transition: 0.5s;
+}
+.item span.active.activeO:before {
+	content: "";
+	background-image: url("o.svg");
+
+	transition: 0.5s;
+}
+@keyframes click {
+	from {
+		transform: scale(0);
+		opacity: 0.5;
+	}
+	80% {
+		transform: scale(1.2);
+	}
+	90% {
+		transform: scale(0.9);
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
+}

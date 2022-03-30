@@ -89,6 +89,47 @@ trait TraitInterfaceWorkToBd
                  'poleT=int',
                  'poleS=0'//,'просмотр'
                );
+
+                // проверка присутствия таблиц для искусственного интеллекта игры крестики нолики
+                $this->createTab(
+                 'name=tic_tac_toe',
+                 'poleN=id',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=iniciator',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=move1',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=move2',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=move3',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=move4',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=move5',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=move6',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=move7',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=move8',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=move9',
+                 'poleT=int',
+                 'poleS=0',
+                 'poleN=rezult',
+                 'poleT=VARCHAR(50)',
+                 'poleS=-',
+               );
       }
 
   public function createTab(...$parametr) //функция проверяет есть ли таблица и если нет, то создает её
