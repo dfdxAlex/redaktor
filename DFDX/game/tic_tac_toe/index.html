@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="gameMapa">
+			<div class="gameMapa1" value="X"></div>
+			<div class="gameMapa2" value="O"></div>
+			<div class="gameMapa3"></div>
+			<div class="gameMapa4"></div>
+			<div class="gameMapa5"></div>
+			<div class="gameMapa6"></div>
+			<div class="gameMapa7"></div>
+			<div class="gameMapa8"></div>
+			<div class="gameMapa9"></div>
+		</div>
+		<script>
+			let clicks = document.querySelectorAll(".gameMapa > div");
+			clicks.forEach((element) => {
+				element.addEventListener("click", function (e) {
+					element.setAttribute("value", "O");
+				});
+			});
+		</script>
+	</body>
+</html>

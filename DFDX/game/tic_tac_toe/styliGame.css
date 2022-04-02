@@ -1,25 +1,76 @@
-.gameMapa{
-    margin-top: 10%;
-    margin-left: 15%;
-    margin-bottom: 150px;
+*,
+*:after,
+*:before {
+	box-sizing: border-box;
 }
-.gameMapa1,.gameMapa2,.gameMapa3,.gameMapa4,.gameMapa5,.gameMapa6,.gameMapa7,.gameMapa8,.gameMapa9,
-.gameMapaWon,.gameMapaLost,.gameMapaDraw{
-    width: 70px;
-    height: 70px;
-    margin-top: 5px;
-    margin-left: 5px;
+.gameMapa {
+	display: flex;
+	flex-wrap: wrap;
+	width: 600px;
+	height: 600px;
+	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
+	border-radius: 15px;
+	overflow: hidden;
 }
-.gameMapaWon{
-    background-color: chartreuse;
+
+.gameMapa > div {
+	flex: 0 0 33.333%;
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/* border-bottom: 1px solid #333; */
+	box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+	position: relative;
 }
-.gameMapaLost{
-    background-color: rgba(187, 22, 22, 0.582);
+.gameMapa div:before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	width: 100%;
+	height: 100%;
+	transition: 0.5s;
+	position: relative;
 }
-.gameMapaDraw{
-    background-color: rgba(46, 37, 37, 0.979);
+.gameMapa div[value="X"]:before,
+.gameMapa div[value="O"]:before {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	filter: drop-shadow(3px 4px 2px grey);
+	animation: click 0.5s forwards;
+	transition: 0.5s;
 }
-.menu-tic-tac-toe{
-    margin-bottom: 200px;
-    height: 370px;
+
+.gameMapa div[value="X"]:before {
+	content: "";
+	background-image: url("x.svg");
+	transition: 0.5s;
+}
+.gameMapa div[value="O"]:before {
+	content: "";
+	background-image: url("o.svg");
+	transition: 0.5s;
+}
+@keyframes click {
+	from {
+		transform: scale(0);
+		opacity: 0.5;
+	}
+	80% {
+		transform: scale(1.2);
+	}
+	90% {
+		transform: scale(0.9);
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
 }

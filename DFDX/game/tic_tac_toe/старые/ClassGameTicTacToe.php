@@ -158,17 +158,17 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
         // Этот блок срабатывает в конце игры, в зависимости от результата используется оригинальное имя класса
         // Имя класса создается немного выше)
         for ($i=1; $i<10; $i++) {
-            if ($_SESSION['pole'.$i]=='O') echo '<button class="'.$class.'" type="button" name="pole'.$i.'"></button>';
-            if ($_SESSION['pole'.$i]=='X') echo '<button class="'.$class.'" type="button" name="pole'.$i.'"></button>';
-            if ($_SESSION['pole'.$i]=='')  echo '<button class="'.$class.'" type="button" name="pole'.$i.'"></button>';
+            if ($_SESSION['pole'.$i]=='O') echo '<input class="'.$class.'" type="submit" value="O" name="pole'.$i.'">';
+            if ($_SESSION['pole'.$i]=='X') echo '<input class="'.$class.'" type="submit" value="X" name="pole'.$i.'">';
+            if ($_SESSION['pole'.$i]=='')  echo '<input class="'.$class.'" type="submit" value=" " name="pole'.$i.'">';
             if ($i==3 || $i==6) echo '<br>';
         } 
     } else {
         // Этот блок срабатывает тогда, когда игра ещё не закончена
         for ($i=1; $i<10; $i++) {
-            if ($_SESSION['pole'.$i]=='O') echo '<button class="gameMapa'.$i.'" type="button" name="pole'.$i.'">O</button>';
-            if ($_SESSION['pole'.$i]=='X') echo '<button class="gameMapa'.$i.'" type="button" name="pole'.$i.'">X</button>';
-            if ($_SESSION['pole'.$i]=='')  echo '<button class="gameMapa'.$i.'" type="button" name="pole'.$i.'"> </button>';
+            if ($_SESSION['pole'.$i]=='O') echo '<input class="gameMapa'.$i.'" type="submit" value="O" name="pole'.$i.'">';
+            if ($_SESSION['pole'.$i]=='X') echo '<input class="gameMapa'.$i.'" type="submit" value="X" name="pole'.$i.'">';
+            if ($_SESSION['pole'.$i]=='')  echo '<input class="gameMapa'.$i.'" type="submit" value=" " name="pole'.$i.'">';
             if ($i==3 || $i==6) echo '<br>';
          }
     }
