@@ -211,7 +211,5 @@ class Intelligence implements \class\redaktor\interface\interface\InterfaceWorkT
             if ($this->notFalseAndNULL($rez)) 
                 echo 'Запись удалась <br>';
         }
-           // else echo 'такая комбинации уже есть';
-
     }
 }

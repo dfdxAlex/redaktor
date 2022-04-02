@@ -124,7 +124,6 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     // функция просто рисует поле 
     function poleOnlineWonLostDraw(string $type='game')
     {
-
         //подключаем класс искусственного интеллекта
         $Intelligence = new ClassFoTicTacToe\Intelligence;
 
@@ -173,7 +172,6 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     // Ход компьютера, если есть пустые места для хода, то находим вариант для хода
     function computerMove()
     {
-
         $kn=0;
         $numer=true;
 
@@ -294,24 +292,22 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
                     if ($_SESSION['pole5']==$mySimbol) {
                         $rezOutGood=true;
                         while ($rezOutGood) {
-                        $rezOut = match (rand(1,4)) {
-                                   1 => 2,
-                                   2 => 4,
-                                   3 => 6,
-                                   4 => 8,
-                                  };
-                        if ($rezOut==2 && $_SESSION['pole8']=='') $rezOutGood=false;
-                        if ($rezOut==4 && $_SESSION['pole6']=='') $rezOutGood=false;
-                        if ($rezOut==6 && $_SESSION['pole4']=='') $rezOutGood=false;
-                        if ($rezOut==8 && $_SESSION['pole2']=='') $rezOutGood=false;
+                            $rezOut = match (rand(1,4)) {
+                                       1 => 2,
+                                       2 => 4,
+                                       3 => 6,
+                                       4 => 8,
+                                      };
+                            if ($rezOut==2 && $_SESSION['pole8']=='') $rezOutGood=false;
+                            if ($rezOut==4 && $_SESSION['pole6']=='') $rezOutGood=false;
+                            if ($rezOut==6 && $_SESSION['pole4']=='') $rezOutGood=false;
+                            if ($rezOut==8 && $_SESSION['pole2']=='') $rezOutGood=false;
                         }
 
                         $choiceOfStones = new ValueObject\ValueMasSession($rezOut);  
-                        if ($choiceOfStones!='error')
-                            return $rezOut;    
+                        if ($choiceOfStones!='error') return $rezOut;    
                     }
                 }
-
                 
                 if ($_SESSION['firstMoveConst']=='computer') {
                     // если ходов ещё не было, то генерируем ход в один из углов поля
