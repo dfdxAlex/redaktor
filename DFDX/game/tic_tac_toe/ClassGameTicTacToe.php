@@ -125,7 +125,8 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     function poleOnlineWonLostDraw(string $type='game')
     {
         //подключаем класс искусственного интеллекта
-        $Intelligence = new ClassFoTicTacToe\Intelligence;
+        if ($_SESSION['gameDifficulty']=='impossible')
+            $Intelligence = new ClassFoTicTacToe\Intelligence;
 
         echo '<section class="container-fluid">
              <div class="row">
@@ -138,17 +139,20 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
         if ($type=='Won') {
             $class='gameMapaWon';  // создали имя класса для выигрыша
             $mesage='Hooray!! You won!';
-            $Intelligence->saveMasMove('Won');
+            if ($_SESSION['gameDifficulty']=='impossible')
+                $Intelligence->saveMasMove('Won');
         };
         if ($type=='Lost') {
             $class='gameMapaLost'; // создали имя класса для проигрыша
             $mesage='You should have better luck next time. Good luck.';
-            $Intelligence->saveMasMove('Lost');
+            if ($_SESSION['gameDifficulty']=='impossible')
+                $Intelligence->saveMasMove('Lost');
         };
         if ($type=='Draw') {
             $class='gameMapaDraw';  // создали имя класса для ничьи
             $mesage='Hmm. The enemy was not so simple.';
-            $Intelligence->saveMasMove('Draw');
+            if ($_SESSION['gameDifficulty']=='impossible')
+                $Intelligence->saveMasMove('Draw');
         };
         echo '<h3>'.$mesage.'</h3>';
         // Этот блок срабатывает в конце игры, в зависимости от результата используется оригинальное имя класса
