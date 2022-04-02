@@ -136,21 +136,23 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     if ($type=='Won' || $type=='Lost' || $type=='Draw') {
         $class='';
         if ($type=='Won') {
-            $class='gameMapaWon';
+            $class='gameMapaWon';  // создали имя класса для выигрыша
             $mesage='Hooray!! You won!';
             $Intelligence->saveMasMove('Won');
         };
         if ($type=='Lost') {
-            $class='gameMapaLost';
+            $class='gameMapaLost'; // создали имя класса для проигрыша
             $mesage='You should have better luck next time. Good luck.';
             $Intelligence->saveMasMove('Lost');
         };
         if ($type=='Draw') {
-            $class='gameMapaDraw';
+            $class='gameMapaDraw';  // создали имя класса для ничьи
             $mesage='Hmm. The enemy was not so simple.';
             $Intelligence->saveMasMove('Draw');
         };
         echo '<h3>'.$mesage.'</h3>';
+        // Этот блок срабатывает в конце игры, в зависимости от результата используется оригинальное имя класса
+        // Имя класса создается немного выше)
         for ($i=1; $i<10; $i++) {
             if ($_SESSION['pole'.$i]=='O') echo '<input class="'.$class.'" type="submit" value="O" name="pole'.$i.'">';
             if ($_SESSION['pole'.$i]=='X') echo '<input class="'.$class.'" type="submit" value="X" name="pole'.$i.'">';
@@ -158,6 +160,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
             if ($i==3 || $i==6) echo '<br>';
         } 
     } else {
+        // Этот блок срабатывает тогда, когда игра ещё не закончена
         for ($i=1; $i<10; $i++) {
             if ($_SESSION['pole'.$i]=='O') echo '<input class="gameMapa'.$i.'" type="submit" value="O" name="pole'.$i.'">';
             if ($_SESSION['pole'.$i]=='X') echo '<input class="gameMapa'.$i.'" type="submit" value="X" name="pole'.$i.'">';
