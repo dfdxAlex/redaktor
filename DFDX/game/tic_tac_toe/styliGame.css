@@ -1,8 +1,3 @@
-*,
-*:after,
-*:before {
-	box-sizing: border-box;
-}
 .gameMapa {
 	display: flex;
 	flex-wrap: wrap;
@@ -10,67 +5,45 @@
 	height: 600px;
 	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
 	border-radius: 15px;
-	overflow: hidden;
 }
 
-.gameMapa > div {
+.gameItem {
+	position: relative;
 	flex: 0 0 33.333%;
+	height: 200px;
 	padding: 1rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	/* border-bottom: 1px solid #333; */
 	box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
-	position: relative;
 }
-.gameMapa div:before {
-	content: "";
+.gameItem input {
 	position: absolute;
+	opacity: 0;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
-	width: 100%;
-	height: 100%;
-	transition: 0.5s;
-	position: relative;
+	z-index: 5;
 }
-.gameMapa div[value="X"]:before,
-.gameMapa div[value="O"]:before {
+input + label {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 100%;
 	height: 100%;
 	background-position: center;
-	background-size: cover;
+	background-size: 0%;
 	background-repeat: no-repeat;
 	filter: drop-shadow(3px 4px 2px grey);
-	animation: click 0.5s forwards;
 	transition: 0.5s;
 }
 
-.gameMapa div[value="X"]:before {
-	content: "";
+input[value="X"] + label {
 	background-image: url("x.svg");
-	transition: 0.5s;
+	background-size: 100%;
 }
-.gameMapa div[value="O"]:before {
-	content: "";
+input[value="O"] + label {
 	background-image: url("o.svg");
-	transition: 0.5s;
-}
-@keyframes click {
-	from {
-		transform: scale(0);
-		opacity: 0.5;
-	}
-	80% {
-		transform: scale(1.2);
-	}
-	90% {
-		transform: scale(0.9);
-	}
-	to {
-		transform: scale(1);
-		opacity: 1;
-	}
+	background-size: 100%;
 }

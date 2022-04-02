@@ -125,7 +125,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     function poleOnlineWonLostDraw(string $type='game')
     {
         //подключаем класс искусственного интеллекта
-        if ($_SESSION['gameDifficulty']=='impossible')
+        if ($_SESSION['gameDifficulty']=='intelligence')
             $Intelligence = new ClassFoTicTacToe\Intelligence;
 
         echo '<section class="container-fluid">
@@ -139,36 +139,55 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
         if ($type=='Won') {
             $class='gameMapaWon';  // создали имя класса для выигрыша
             $mesage='Hooray!! You won!';
-            if ($_SESSION['gameDifficulty']=='impossible')
+            if ($_SESSION['gameDifficulty']=='intelligence')
                 $Intelligence->saveMasMove('Won');
         };
         if ($type=='Lost') {
             $class='gameMapaLost'; // создали имя класса для проигрыша
             $mesage='You should have better luck next time. Good luck.';
-            if ($_SESSION['gameDifficulty']=='impossible')
+            if ($_SESSION['gameDifficulty']=='intelligence')
                 $Intelligence->saveMasMove('Lost');
         };
         if ($type=='Draw') {
             $class='gameMapaDraw';  // создали имя класса для ничьи
             $mesage='Hmm. The enemy was not so simple.';
-            if ($_SESSION['gameDifficulty']=='impossible')
+            if ($_SESSION['gameDifficulty']=='intelligence')
                 $Intelligence->saveMasMove('Draw');
         };
         echo '<h3>'.$mesage.'</h3>';
         // Этот блок срабатывает в конце игры, в зависимости от результата используется оригинальное имя класса
         // Имя класса создается немного выше)
         for ($i=1; $i<10; $i++) {
-            if ($_SESSION['pole'.$i]=='O') echo '<button class="'.$class.'" type="button" name="pole'.$i.'"></button>';
-            if ($_SESSION['pole'.$i]=='X') echo '<button class="'.$class.'" type="button" name="pole'.$i.'"></button>';
-            if ($_SESSION['pole'.$i]=='')  echo '<button class="'.$class.'" type="button" name="pole'.$i.'"></button>';
+            if ($_SESSION['pole'.$i]=='O') echo '<div class="gameItem"> 
+                                                     <input type="submit" class="gameMapa'.$i.'" name="pole'.$i.'" value="O">
+                                                     <label for="pole'.$i.'"></label>
+                                                 </div>';
+            if ($_SESSION['pole'.$i]=='X') echo '<div class="gameItem"> 
+                                                    <input type="submit" class="gameMapa'.$i.'" name="pole'.$i.'" value="X">
+                                                    <label for="pole'.$i.'"></label>
+                                                 </div>';
+            if ($_SESSION['pole'.$i]=='')  echo '<div class="gameItem"> 
+                                                     <input type="submit" class="gameMapa'.$i.'" name="pole'.$i.'" value=" ">
+                                                     <label for="pole'.$i.'"></label>
+                                                 </div>';
             if ($i==3 || $i==6) echo '<br>';
         } 
     } else {
         // Этот блок срабатывает тогда, когда игра ещё не закончена
         for ($i=1; $i<10; $i++) {
-            if ($_SESSION['pole'.$i]=='O') echo '<button class="gameMapa'.$i.'" type="button" name="pole'.$i.'">O</button>';
-            if ($_SESSION['pole'.$i]=='X') echo '<button class="gameMapa'.$i.'" type="button" name="pole'.$i.'">X</button>';
-            if ($_SESSION['pole'.$i]=='')  echo '<button class="gameMapa'.$i.'" type="button" name="pole'.$i.'"> </button>';
+            if ($_SESSION['pole'.$i]=='O') echo '<div class="gameItem"> 
+                                                     <input type="submit" class="gameMapa'.$i.'" name="pole'.$i.'" value="O">
+                                                     <label for="pole'.$i.'"></label>
+                                                 </div>';
+                                                 
+            if ($_SESSION['pole'.$i]=='X') echo '<div class="gameItem"> 
+                                                     <input type="submit" class="gameMapa'.$i.'" name="pole'.$i.'" value="X">
+                                                     <label for="pole'.$i.'"></label>
+                                                 </div>';
+            if ($_SESSION['pole'.$i]=='')  echo '<div class="gameItem"> 
+                                                     <input type="submit" class="gameMapa'.$i.'" name="pole'.$i.'" value=" ">
+                                                     <label for="pole'.$i.'"></label>
+                                                 </div>';
             if ($i==3 || $i==6) echo '<br>';
          }
     }
