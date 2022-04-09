@@ -15,7 +15,8 @@ class ClassIPCalculator
     public function businesIPCalculator()
     {
         $interface = new class\ClassInterfaceIPCalculator();
-        $interface->interfaceIPCalculator();
+        $interface->interfaceIPCalculatorGroups();
+        $interface->interfaceIPCalculatorCIDR();
 
 
     }
