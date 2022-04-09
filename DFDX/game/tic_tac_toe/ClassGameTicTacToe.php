@@ -221,13 +221,13 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
              // если ход не нашли, то возвращаем false
              $rezII=$Intelligence->artificialIntelligenceMove();
              if ($rezII>0) {
-                 echo 'А я сюда на клетку '.$rezII.'!!<br>';
+                 echo '<div class="mesagesII"><h3>А я сюда на клетку '.$rezII.'!!</h3></div>';
                  $choiceOfStones = new ValueObject\ValueMasSession($rezII);
              }
 
              // если не придумали как ходить, то ходим случайно
              if (!$rezII) {
-                 echo 'Я не волшебник, я только учусь и хожу случайно.<br>';
+                 echo '<div class="mesagesII"><h3>Я не волшебник, я только учусь и хожу случайно.</h3></div>';
                  $choiceOfStones = new ValueObject\ValueMasSession($this->randomMove());
              }
              return;

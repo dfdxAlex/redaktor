@@ -661,13 +661,13 @@ width: 100%;
     margin-bottom: 20px;
     color: rgb(5, 10, 10);
 }
-.second-menusecond-menu2,.second-menusecond-menu6{
+.second-menusecond-menu2,.second-menusecond-menu6,.second-menusecond-menu10{
     border-style: double;
     border-color: black;
     float: left;
     margin-left: 1px;
 }
-/*Конец !!! Стили второго меню второе меню*/
+/*Конец !!! Стили второго меню второе меню игры программы*/
 /*block-v-card электронная визитка*/
 .block-v-card{
     font-size: 14px;

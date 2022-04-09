@@ -57,3 +57,11 @@ function gamesOfPhp()
 {
    echo '<p class="swap-images"><span>Игры на PHP</span></p>';
 }
+function programToPhp()
+{
+   echo '<p class="swap-images"><span>Программы на PHP</span></p>';
+}
+function ipCalculator()
+{
+   echo '<p class="swap-images"><span>IP Калькулятор на PHP</span></p>';
+}

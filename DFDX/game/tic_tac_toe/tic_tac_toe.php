@@ -117,7 +117,7 @@ echo '</div>'; //закрыть центр
 
 // функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
 // the function displays the right menu along with its part of the Bootstrap markup and the site search function
-$nonTemplates->rightMenu($statistik,"home");
+//$nonTemplates->rightMenu($statistik,"home");
 echo '</div>';
 echo '</section>';
 // Функция выводит нижнюю часть сайта

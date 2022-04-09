@@ -7,6 +7,24 @@
 	border-radius: 15px;
 }
 
+.gameMapa h3{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #adff2f73;
+	padding: 2rem;
+	z-index: 10;
+}
+.mesagesII {
+	position: absolute;
+	top: 15%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #adff2f73;
+	padding: 2rem;
+	z-index: 10;
+}
 .gameItem {
 	position: relative;
 	flex: 0 0 33.333%;

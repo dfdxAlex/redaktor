@@ -204,14 +204,14 @@ class Intelligence implements \class\redaktor\interface\interface\InterfaceWorkT
         $id=$this->maxIdLubojTablicy('tic_tac_toe');
         // Если комбинацию не нашли, то делаем запись в БД
         if ($rezultFromBd!=$rezult) {
-            echo 'Добавляю новую комбинацию <br>'; 
+            //echo 'Добавляю новую комбинацию <br>'; 
             $zapros="INSERT INTO tic_tac_toe(id, iniciator, move1, move2, move3, move4, move5, move6, move7, move8, move9, rezult) 
                      VALUES (".$id.",".$inicializ.",".$_SESSION['move1'].",".$_SESSION['move2'].",".
                      $_SESSION['move3'].",".$_SESSION['move4'].",".$_SESSION['move5'].",".$_SESSION['move6'].",".
                      $_SESSION['move7'].",".$_SESSION['move8'].",".$_SESSION['move9'].",'".$rezult."')";
             $rez=$this->zaprosSQL($zapros);
-            if ($this->notFalseAndNULL($rez)) 
-                echo 'Запись удалась <br>';
+            //if ($this->notFalseAndNULL($rez)) 
+                //echo 'Запись удалась <br>';
         }
     }
 }

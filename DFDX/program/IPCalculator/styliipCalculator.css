@@ -1,0 +1,22 @@
+/*стили класса ClassInterfaceIPCalculator*/
+.interface-ip-calculator-div{
+    color: brown;
+    font-size: 15px;
+    width: 100%;
+}
+/**/
+.button-IP-Groups{
+    margin-left: 30px;
+    height: 30px;
+    float: left;
+}
+.select-IP-Groups-div{
+     height: 30px;
+     width: 80px;
+     float: left;
+}
+.select-IP-Groups{
+    height: 30px;
+}
+/**********************************************/
+/**********************************************/
