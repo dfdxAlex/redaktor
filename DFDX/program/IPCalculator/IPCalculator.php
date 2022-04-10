@@ -14,14 +14,14 @@ use \class\redaktor\statistic;
 use \class\redaktor\Header;
 use \class\redaktor\futter;
 use \class\redaktor\NonTemplates;
-use \program\IPCalculator\src\ClassIpCalculator;
+use \program\IPCalculator\src\ClassIPCalculator;
 
   $redaktor= new Modul();
   $statistik = new statistic();
   $header = new Header();
   $futter = new futter();
   $nonTemplates = new NonTemplates();
-  $ipCalculator = new ClassIpCalculator();
+  $ipCalculator = new ClassIPCalculator();
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
@@ -102,13 +102,10 @@ $nameBD='nameTD='.$nameBD;
 //label for the statistics counter of visits to a specific page
 $metka="ipCalculator"; //метка для счётчика статистики посещения конкретной страницы
 
-// функция управляет выводом статей в разных режимах используя функцию news1
-// funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
-// the function controls the output of articles in different modes using the news1 function
-//$nonTemplates->publishNews($redaktor,'action=tic_tac_toe.php','Число_статей=5',-1,$nameBD,'категория-tic_tac_toe','Раздел=tictactoe','buttonTwitter');
-
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
-// бизнесс логика страницы
+// Запуск объекта, который определяет бизнес логику данной страницы
+// Uruchom obiekt, który definiuje logikę biznesową tej strony
+// Run an object that defines the business logic of this page
 $ipCalculator->businesIPCalculator();
 echo '</div>'; //закрыть центр
 
@@ -116,9 +113,6 @@ echo '</div>'; //закрыть центр
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
 //buttonTwitter
 
-// функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
-// the function displays the right menu along with its part of the Bootstrap markup and the site search function
-//$nonTemplates->rightMenu($statistik,"home");
 echo '</div>';
 echo '</section>';
 // Функция выводит нижнюю часть сайта

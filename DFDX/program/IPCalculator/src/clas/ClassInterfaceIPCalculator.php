@@ -1,5 +1,5 @@
 <?php
-namespace program\IPCalculator\src\class;
+namespace program\IPCalculator\src\clas;
 
 class ClassInterfaceIPCalculator
 {

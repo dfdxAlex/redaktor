@@ -2,6 +2,8 @@
 namespace program\IPCalculator\src\ValueObject;
 
 // Класс для контроля наличия и управления переменными Сессий
+// Klasa do kontroli obecności i zarządzania zmiennymi sesji
+// Class to control the presence and manage session variables
 class ControlSession
 {
     public function __construct()
@@ -20,6 +22,8 @@ class ControlSession
     }
 
     // функция устанавливает значения переменным сессий, в зависимости от имеющихся значений в массиве пост
+    // funkcja ustawia wartości zmiennych sesji, w zależności od wartości w tablicy postu
+    // the function sets values to session variables, depending on the values in the post array
     public function varSet()
     {
         if (isset($_POST['button-IP-Groups'])) {
