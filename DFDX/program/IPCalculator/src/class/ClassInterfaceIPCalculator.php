@@ -5,9 +5,6 @@ class ClassInterfaceIPCalculator
 {
     public function __construct()
     {
-         if ($_SESSION['ipMask']==0) {
-
-         }
     }
 
     public function interfaceIPCalculatorGroups()
@@ -339,6 +336,7 @@ class ClassInterfaceIPCalculator
 
     }
 
+    // функция возвращает число хостов в сети, отнимая от 32-х число битов, выделенных под адрес сети
     function numerHost()
     {
         $power=32-$_SESSION['ipMask'];
