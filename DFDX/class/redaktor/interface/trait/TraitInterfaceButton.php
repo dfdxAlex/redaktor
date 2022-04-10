@@ -9,6 +9,7 @@ trait TraitInterfaceButton
     // получить ID статьи из входящего параметра
     // get the article ID from the input parameter
     $idNews=preg_match('/\d+\s/',$text,$masRez);
+    if (count($masRez)<1) return;
     // вытащить по ИД название статьи из таблицы
     // pull out the title of the article from the table by ID
     if ($this->notFalseAndNULL($masRez))

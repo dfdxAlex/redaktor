@@ -11,7 +11,8 @@ class ClassInterfaceIPCalculator
     public function interfaceIPCalculatorGroups()
     {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////\\\
-        if ($_SESSION['button-IP-Groups']=='z') {
+        $ContrlSession = new \program\IPCalculator\src\ValueObject\ControlSession();
+        if ($ContrlSession->showUserMenu()) {
         // интерфейс выбора вычислений айпишников по группам А,B ...
         echo '<div class="interface-ip-calculator-div">
                   <form action="IPCalculator.php" method="post">
@@ -25,10 +26,12 @@ class ClassInterfaceIPCalculator
                           <option value="E">Класс E</option>
                       </select>
                       </div>
-                      <input class="button-IP-Groups" name="button-IP-Groups" type="submit" value="Показать характеристики">
+                      <input class="button-IP-Groups btn" name="button-IP-Groups" type="submit" value="Показать характеристики">
                   </form>
               </div>';
-        } else {
+        } else if ($_SESSION['button-IP-Groups']=='A' || $_SESSION['button-IP-Groups']=='B'
+                || $_SESSION['button-IP-Groups']=='C' || $_SESSION['button-IP-Groups']=='D'
+                || $_SESSION['button-IP-Groups']=='E') {
             echo '<h3>Параметры сети класса '.$_SESSION['button-IP-Groups'].'</h3>
                   <p>Все адресное пространство занимает 32 бита. Записывается в десятичном виде и состоит из 4 однобайтовых чисел, разделенных точкой, однако компьютер их принимает как 32 бита одним значением.</p>';
             
@@ -92,7 +95,7 @@ class ClassInterfaceIPCalculator
             // показать кнопку сбросса
             echo '<div class="interface-ip-calculator-div">
                       <form action="IPCalculator.php" method="post">
-                          <input class="button-IP-Groups" name="button-IP-Groups-reset" type="submit" value="Вернуться к выбору">
+                          <input class="button-IP-Groups btn" name="button-IP-Groups-reset" type="submit" value="Вернуться к выбору">
                       </form>
                   </div>';
         }
@@ -101,10 +104,198 @@ class ClassInterfaceIPCalculator
 
     public function interfaceIPCalculatorCIDR()
     {
-        echo '<div class="IPV4-CIDR">
-                 <form action="IPCalculator.php" method="post">
-                     <h3>IPV4 CIDR</h3>
-                 </form>
-              </div>';
+        $ContrlSession = new \program\IPCalculator\src\ValueObject\ControlSession();
+        if ($ContrlSession->showUserMenu()) {
+            echo '<div class="IPV4-CIDR">
+                     <form action="IPCalculator.php" method="post">
+                         <h3>IPV4 CIDR</h3>
+                         <input type="text" name="ipS1" placeholder="0" class="ipS">
+                         <input type="text" name="ipS2" placeholder="0" class="ipS">
+                         <input type="text" name="ipS3" placeholder="0" class="ipS">
+                         <input type="text" name="ipS4" placeholder="0" class="ipS">
+                         <span> / </span>
+                         <input type="text" name="ipSmask" placeholder="0" class="ipS">
+                         <input type="submit" name="ipSSIDR" value="Считаем" class="button-ipS btn">
+                     </form>
+                  </div>';
+        } else if ($_SESSION['ipSSIDR']==0) {
+            
+            echo '<p>Вы проверяете адрес: '.$this->ip().'</p>';
+
+            echo '<p>Двоичная маска подсети: '.$this->maska2().'</p>';
+
+            echo '<p>Десятичная маска подсети: '.$this->maska10($this->maska2()).'</p>';
+
+            echo '<p>Адрес сети: '.$this->networkAddressByMaskAndIp($this->ip10To2($this->ip()),$this->maska2()).'</p>';
+
+            echo '<p>Первый адрес в сети: '.$this->firstAddress($this->networkAddressByMaskAndIp($this->ip10To2($this->ip()),$this->maska2())).'</p>';
+
+            echo '<form action="IPCalculator.php" method="post">
+                      <input type="submit" name="ipSSIDRreset" value="Вернуться" class="button-ipS btn">
+                  </form>';
+        }
+    }
+
+    // функция возвращает IP адрес, создавая его из переменных сессий
+    function ip()
+    {
+        return $_SESSION['ip1'].'.'.$_SESSION['ip2'].'.'.$_SESSION['ip3'].'.'.$_SESSION['ip4'];
+    }
+
+    // двоичное представление маски подсети возвращает
+    function maska2()
+    {
+        $maska='';
+        $ii=$_SESSION['ipMask'];
+        for ($i=1; $i<33; $i++) {
+            if ($ii>0) $maska.='1'; else $maska.='0';
+            if ($i==8 || $i==16 || $i==24) $maska.=' ';
+            $ii--;
+        }
+        return $maska;
+    }
+
+    // десятичное представление маски подсети
+    // если функции дать IP адрес представленный строкой в двоичном виде, то она вернет строку IP в десятичном виде
+    function maska10($nomer2)
+    {
+        $maska='';
+        $nomer=0;
+        $nomer2=str_replace(' ','',$nomer2);
+        for ($i=1; $i<33; $i++) {
+            if (substr($nomer2,$i-1,1)=='1') {
+                $nomer=$nomer+$this->bit($i);
+            }
+            if ($i==8) {
+                $maska=$nomer;$nomer=0;
+            }
+            if ($i==16 || $i==24 || $i==32) {
+                $maska.='.'.$nomer;$nomer=0;
+            }
+        }
+        return $maska;
+    }
+
+    // функция возвращает вес бита
+    function bit($nomer)
+    {
+        while($nomer>8) {
+            $nomer=$nomer-8;
+        }
+         return match ($nomer) {
+             8=>1,
+             7=>2,
+             6=>4,
+             5=>8,
+             4=>16,
+             3=>32,
+             2=>64,
+             1=>128,
+         };
+    }
+    
+    // функция возвращает вес бита за 32 разряда
+    function bit32($nomer)
+        {
+             return match ($nomer) {
+                 32=>1,
+                 31=>2,
+                 30=>4,
+                 29=>8,
+                 28=>16,
+                 27=>32,
+                 26=>64,
+                 25=>128,
+                 24=>256,
+                 23=>512,
+                 22=>1024,
+                 21=>2048,
+                 20=>4096,
+                 19=>8192,
+                 18=>16384,
+                 17=>32768,
+                 16=>65536,
+                 15=>131072,
+                 14=>262144,
+                 13=>524288,
+                 12=>1048576,
+                 11=>2097152,
+                 10=>4194304,
+                 9=>8388608,
+                 8=>16777216,
+                 7=>33554432,
+                 6=>67108864,
+                 5=>134217728,
+                 4=>268435456,
+                 3=>536870912,
+                 2=>1073741824,
+                 1=>2147483648,
+
+             };
+        }
+
+    // функция узнает адрес сети по маске и IP адресу хоста
+    function networkAddressByMaskAndIp($ip,$mask)
+    {
+         $ip=str_replace(' ','',$ip);
+         $mask=str_replace(' ','',$mask);
+         $adres='';
+         for ($i=1; $i<33; $i++) {
+             if (substr($ip,$i-1,1)=='1' && substr($mask,$i-1,1)=='1') $adres.='1'; else $adres.='0';
+         }
+         return $this->maska10($adres);
+    }
+
+    // функция переводит десятичный вил IP адреса или маски в двоичный
+    // входной параметр типа 111.111.111.111
+    function ip10To2($nomer2) {
+        $masIp=preg_split ('/\./',$nomer2);
+        $rez=$this->nomer10to2((int)$masIp[0]).$this->nomer10to2((int)$masIp[1]).$this->nomer10to2((int)$masIp[2]).$this->nomer10to2((int)$masIp[3]);
+        return $rez;
+    }
+
+    // функция перевода десятичного числа в двоичное (1 байт)
+    // $positions=8 определяет сколько знаков должно быть в выходном числе, недостающие заполнятся нулями
+    function nomer10to2($nomer, $positions=8)
+    {
+        $job=true;
+        $nomerJob=$nomer;
+        $rez='';
+
+        // преобразовываем из десятичного в двоичный делением на 2
+        while($job) {
+            $rez.=$nomerJob % 2;
+            $nomerJob=intdiv($nomerJob,2);
+            if ($nomerJob<2) {
+                $rez.=$nomerJob;
+                $job=false;
+            } 
+        }
+        // зеркально разворачиваем строку
+        $rez=strrev($rez);
+        // заполняем нулями недостающие позиции
+        while(strlen($rez)<$positions) {
+            $rez='0'.$rez;
+        }
+        return $rez;
+    }
+
+    // Функция возвращает первый доступный адрес хоста добавляя единицу к адресу сети
+    function firstAddress($adsress)
+    {
+        $address2=$this->ip10To2($adsress);
+        $nomer=0;
+
+        // переводим двоичный адрес в десятичный, чтобы добавить единицу
+        for ($i=1; $i<33; $i++) {
+             if (substr($address2,$i-1,1)=='1') $nomer+=$this->bit32($i);
+        }
+        if ($nomer>4294967294) return 'В этой сети нет свободных адресов:)';
+
+        // добавляем единицу - это будет первый адрес в сети
+        $nomer++;
+
+        return $this->maska10($this->nomer10to2($nomer, 32));
+
     }
 }
