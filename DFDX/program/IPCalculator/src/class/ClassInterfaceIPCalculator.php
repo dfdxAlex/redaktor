@@ -5,7 +5,9 @@ class ClassInterfaceIPCalculator
 {
     public function __construct()
     {
+         if ($_SESSION['ipMask']==0) {
 
+         }
     }
 
     public function interfaceIPCalculatorGroups()
@@ -109,6 +111,7 @@ class ClassInterfaceIPCalculator
             echo '<div class="IPV4-CIDR">
                      <form action="IPCalculator.php" method="post">
                          <h3>IPV4 CIDR</h3>
+                         <p>IP адрес</p>
                          <input type="text" name="ipS1" placeholder="0" class="ipS">
                          <input type="text" name="ipS2" placeholder="0" class="ipS">
                          <input type="text" name="ipS3" placeholder="0" class="ipS">
@@ -116,9 +119,17 @@ class ClassInterfaceIPCalculator
                          <span> / </span>
                          <input type="text" name="ipSmask" placeholder="0" class="ipS">
                          <input type="submit" name="ipSSIDR" value="Считаем" class="button-ipS btn">
+                         <br><br>
+                         <p>Маска сети в виде 4 байт</p>
+                         <input type="text" name="mask1" placeholder="0" class="ipS">
+                         <input type="text" name="mask2" placeholder="0" class="ipS">
+                         <input type="text" name="mask3" placeholder="0" class="ipS">
+                         <input type="text" name="mask4" placeholder="0" class="ipS">
                      </form>
                   </div>';
         } else if ($_SESSION['ipSSIDR']==0) {
+
+            $this->mask4BytTo32Bit();
             
             echo '<p>Вы проверяете адрес: '.$this->ip().'</p>';
 
@@ -130,16 +141,44 @@ class ClassInterfaceIPCalculator
 
             echo '<p>Первый адрес в сети: '.$this->firstAddress($this->networkAddressByMaskAndIp($this->ip10To2($this->ip()),$this->maska2())).'</p>';
 
+            echo '<p>Число хостов в сети: '.$this->numerHost().'<p>';
+
+            echo '<p>Последний адрес в сети: '.$this->firstAddress($this->networkAddressByMaskAndIp($this->ip10To2($this->ip()),$this->maska2()),$this->numerHost()).'</p>';
+
+            echo '<p>Широковещательный адрес в сети: '.$this->firstAddress($this->networkAddressByMaskAndIp($this->ip10To2($this->ip()),$this->maska2()),(1+$this->numerHost())).'</p>';
+            
             echo '<form action="IPCalculator.php" method="post">
                       <input type="submit" name="ipSSIDRreset" value="Вернуться" class="button-ipS btn">
                   </form>';
         }
     }
 
+    // функция уточняет содержимое переменной $_SESSION['ipMask']
+    // которая в свое время содержит маску в виде одного числа, числа битов
+    // если значение переменной равно нулю, а все вычисления привязаны к ней
+    // то преобразовать маску из вида 4-х байтового десятичного в вид числа битов адреса
+    function mask4BytTo32Bit()
+    {
+        if ($_SESSION['ipMask']!=0) return;
+
+        $nomer=$this->ip10To2($this->mask10());
+        $i=0;
+        while (substr($nomer, $i, 1)=='1') {
+            $i++;
+        }
+        $_SESSION['ipMask']=$i;
+    }
+
     // функция возвращает IP адрес, создавая его из переменных сессий
     function ip()
     {
         return $_SESSION['ip1'].'.'.$_SESSION['ip2'].'.'.$_SESSION['ip3'].'.'.$_SESSION['ip4'];
+    }
+
+    // функция возвращает маску в десятичном виде, создавая его из переменных сессий
+    function mask10()
+    {
+        return $_SESSION['mask1'].'.'.$_SESSION['mask2'].'.'.$_SESSION['mask3'].'.'.$_SESSION['mask4'];
     }
 
     // двоичное представление маски подсети возвращает
@@ -280,8 +319,9 @@ class ClassInterfaceIPCalculator
         return $rez;
     }
 
-    // Функция возвращает первый доступный адрес хоста добавляя единицу к адресу сети
-    function firstAddress($adsress)
+    // Функция возвращает первый доступный адрес хоста добавляя единицу к адресу сети если не подавать число хостов
+    // если подать в переменную $hostov число хостов в сети, то получим последний адрес сети
+    function firstAddress($adsress, $hostov=1)
     {
         $address2=$this->ip10To2($adsress);
         $nomer=0;
@@ -293,9 +333,17 @@ class ClassInterfaceIPCalculator
         if ($nomer>4294967294) return 'В этой сети нет свободных адресов:)';
 
         // добавляем единицу - это будет первый адрес в сети
-        $nomer++;
+        $nomer=$nomer+$hostov;
 
         return $this->maska10($this->nomer10to2($nomer, 32));
 
+    }
+
+    function numerHost()
+    {
+        $power=32-$_SESSION['ipMask'];
+        $power=pow(2, $power);
+        $power-=2;
+        return $power;
     }
 }

@@ -13,6 +13,10 @@ class ControlSession
         if (!isset($_SESSION['ip4'])) $_SESSION['ip4']=0;
         if (!isset($_SESSION['ipMask'])) $_SESSION['ipMask']=0;
         if (!isset($_SESSION['ipSSIDR'])) $_SESSION['ipSSIDR']=-1;
+        if (!isset($_SESSION['mask1'])) $_SESSION['mask1']=0;
+        if (!isset($_SESSION['mask2'])) $_SESSION['mask2']=0;
+        if (!isset($_SESSION['mask3'])) $_SESSION['mask3']=0;
+        if (!isset($_SESSION['mask4'])) $_SESSION['mask4']=0;
     }
 
     // функция устанавливает значения переменным сессий, в зависимости от имеющихся значений в массиве пост
@@ -29,6 +33,10 @@ class ControlSession
         if (isset($_POST['ipSmask']) && $_POST['ipSmask']>-1 && $_POST['ipSmask']<33) $_SESSION['ipMask']=$_POST['ipSmask']; else $_SESSION['ipMask']=0;
         if (isset($_POST['ipSSIDRreset'])) $_SESSION['ipSSIDR']=-1;
         if (isset($_POST['ipSSIDR'])) $_SESSION['ipSSIDR']=0;
+        if (isset($_POST['mask1']) && $_POST['mask1']>-1 && $_POST['mask1']<256) $_SESSION['mask1']=$_POST['mask1']; else $_SESSION['mask1']=0;
+        if (isset($_POST['mask2']) && $_POST['mask2']>-1 && $_POST['mask2']<256) $_SESSION['mask2']=$_POST['mask2']; else $_SESSION['mask2']=0;
+        if (isset($_POST['mask3']) && $_POST['mask3']>-1 && $_POST['mask3']<256) $_SESSION['mask3']=$_POST['mask3']; else $_SESSION['mask3']=0;
+        if (isset($_POST['mask4']) && $_POST['mask4']>-1 && $_POST['mask4']<256) $_SESSION['mask4']=$_POST['mask4']; else $_SESSION['mask4']=0;
     }
 
     // функция определяет можно ли показывать меню пользователя
