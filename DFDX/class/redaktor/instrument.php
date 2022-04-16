@@ -27,8 +27,11 @@ class instrument implements interface\interface\InterfaceWorkToType,
 
    use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
    use \class\redaktor\interface\trait\TraitInterfaceButton;
-   use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
+   use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles; 
    use \class\redaktor\interface\trait\TraitInterfaceFoUser;
+   use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
+   use \class\redaktor\interface\trait\TraitInterfaceDebug;
+   use \class\redaktor\interface\trait\TraitInterfaceWorkToMail;
 }
 
 
