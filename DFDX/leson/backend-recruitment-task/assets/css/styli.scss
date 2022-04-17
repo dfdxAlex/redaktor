@@ -1,0 +1,49 @@
+/*table styles*/
+/*стили оформления таблиц*/
+table {
+    width: 100%;
+    table-layout: fixed;
+        td, th{
+            width: 210px;
+        }
+}
+/* DELETE button styles */
+/*стили кнопок УДАЛЕНИЕ*/
+form {
+    .remove-button{
+        position: relative;
+        left: 50%;
+        transform: translate(-50%, 0);
+        border-radius: 5px;
+    }
+}
+/*styles the paragraph p pointing to the heading before the table output*/
+/*стили абзаца p указывающего на заголовок перед выводом таблицы*/
+.zmiane {
+    margin-top: 50px;
+    color:rgb(101, 89, 89);
+    font-size: 18px;
+}
+/*user input form styles*/
+/*стили формы ввода данных пользователя*/
+.form-add-div {
+    margin-top: 50px;
+    width: 100%;
+    margin-bottom: 100px;
+    height: 450px;
+    background: rgb(236, 228, 228);
+    padding-left: 10px;
+    padding-top: 5px;
+    .form-add-form {
+        width: 100%;
+        .input-text {
+            margin-top: 35px;
+        }
+        .button {
+            text-align: center;
+            width: 100px;
+            margin-top: 35px;
+            margin-left: 50px;
+        }
+    }
+}
