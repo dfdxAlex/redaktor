@@ -17,7 +17,9 @@ use \class\nonBD\HtmlHead;
 use \class\nonBD\HtmlFutter;
 use \extensions\resource\menuofjson\object\MenuUp;
 use \class\value_object\toSession;
+use \extensions\resource\menuofjson\valueObject\toSessionLocal;
 
+$toSession = new toSessionLocal();
 $toSession = new toSession('');
 
 // начало документа
