@@ -16,9 +16,7 @@ include '../class.php';
 use \class\nonBD\HtmlHead;
 use \class\nonBD\HtmlFutter;
 use \extensions\resource\menuofjson\object\MenuUp;
-use \class\value_object\toSession;
-
-$toSession = new toSession('');
+use \extensions\resource\menuofjson\valueObject\toSession;
 
 // начало документа
 echo new HtmlHead('resource/menuofjson/css/styles_menu_of_json.css','MenuOfJSON');
@@ -28,6 +26,7 @@ $menuAp = new MenuUp();
 
 
 
+echo new toSession('');
 
 
 
