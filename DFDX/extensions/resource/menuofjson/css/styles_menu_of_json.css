@@ -1,0 +1,29 @@
+@charset "UTF-8";
+body {
+  background-image: url("../images/json2.jpg");
+  background-size: 100%;
+  background-attachment: fixed;
+}
+
+/*Стилизация верхнего меню*/
+.menuUpJson {
+  all: none;
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 100%;
+  height: 30px;
+}
+
+.menuUpJson .menuUpJson-div {
+  width: 350px;
+  height: 40px;
+  text-align: center;
+}
+
+.menuUpJson .menuUpJson-div .menuUpJsonmenuUp1, .menuUpJson .menuUpJson-div .menuUpJsonmenuUp4 {
+  border-style: solid;
+  border-color: black;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+/*# sourceMappingURL=styles_menu_of_json.css.map */

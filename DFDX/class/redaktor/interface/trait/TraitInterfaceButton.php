@@ -301,15 +301,20 @@ foreach($parametr as $value) {
          echo '</div>';
      echo '</section>';
     }
+
+
     public function formBlock($nameBlock, $actionN,...$parametr)
     {
        $form_not_open=false;          // Управляет выводом открывающего тега Форм, если фалс, то выводим.
        $form_not_close=false;         // Управляет выводом закрывающего тега Форм, если фалс, то выводим.
-       $zero_style=false;
+       $zero_style=false;             // если присутствует данный признак, то Bootstrap работать не будет
+       $btn_start=false;              // если данный признак установить в true, то в классах кнопок btn будет на первом месте
+       // поиск различных признаков.
        foreach ($parametr as $value) {// поиск признаков $form_not_open и $form_not_close=false;
            if ($value=='form_not_open') $form_not_open=true;
            if ($value=='form_not_close') $form_not_close=true;
            if ($value=='zero_style') $zero_style=true;
+           if ($value=='btn_start') $btn_start=true;
         }
      
        if (!$zero_style) {
@@ -386,9 +391,15 @@ foreach($parametr as $value) {
          if ($value=='reset') {
              if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
                if (!$this->searcTegFormBlock($parametr[$i+1])) $textValue=$parametr[$i+1]; else $textValue='Reset'; else $textValue='Reset';
+             
              $class=$nameBlock.'reset'.$i;
-             if (!$zero_style) echo '<input type="reset" class="'.$class.' btn" value="'.$textValue.'">';
-             if ($zero_style) echo '<input type="reset" class="'.$class.' " value="'.$textValue.'">';
+             if (!$zero_style) {
+                 if ($btn_start)
+                     $class='btn '.$class;
+                 if (!$btn_start)
+                     $class=$class.' btn';
+             }
+             echo '<input type="reset" class="'.$class.'" value="'.$textValue.'">';
            }
          if ($value=='submit') {
              if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
@@ -398,8 +409,13 @@ foreach($parametr as $value) {
              if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
              $class=$nameBlock.$name.$i;
-             if (!$zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
-             if ($zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' " formaction="'.$textWww.'">';
+             if (!$zero_style) {
+                 if ($btn_start)
+                     $class='btn '.$class;
+                 if (!$btn_start)
+                     $class=$class.' btn';
+             }
+             echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
            }
          if ($value=='submit2') {
              if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
@@ -408,9 +424,14 @@ foreach($parametr as $value) {
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
              if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
-             $class=$nameBlock.$i;
-             if (!$zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
-             if ($zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
+             $class=$nameBlock.$name.$i;
+             if (!$zero_style) {
+                 if ($btn_start)
+                     $class='btn '.$class;
+                 if (!$btn_start)
+                     $class=$class.' btn';
+             }
+             echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
            }
          if ($value=='submit3') {
              if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
@@ -421,8 +442,15 @@ foreach($parametr as $value) {
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
              if (isset($parametr[$i+4]) && $parametr[$i+4]!='bootstrap-start' && $parametr[$i+4]!='bootstrap-f-start' && $parametr[$i+4]!='bootstrap-finish')
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3]) && !$this->searcTegFormBlock($parametr[$i+4])) $class=$parametr[$i+4]; else $class=''; else $textWww='';
-             if (!$zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'"></div>';
-             if ($zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'"></div>';
+             $class=$nameBlock.$name.$i;
+             $classFoDiv=$class;
+             if (!$zero_style) {
+                 if ($btn_start)
+                     $class='btn '.$class;
+                 if (!$btn_start)
+                     $class=$class.' btn';
+             }
+             echo '<div class="'.$classFoDiv.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'"></div>';
            }
          if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') {
              if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')

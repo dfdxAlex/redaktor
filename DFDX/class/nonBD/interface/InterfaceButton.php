@@ -1,11 +1,16 @@
 <?php
-namespace class\redaktor\interface\interface;
+namespace class\nonBD\interface;
 
 //интерфейс функций, работающих с кнопками
 //Interfejs funkcji przycisków
 //button functions interface
 
-interface InterfaceButton extends InterfaceWorkToBd
+// Есть аналог данного интерфейса, который наследует работу с БД.
+// Если необходимо работать без использования базы данных, то следует использовать этот файл из этого пространства имен
+// There is an analogue of this interface, which inherits the work with the database.
+// If you need to work without using a database, then you should use this file from this namespace
+
+interface InterfaceButton
 {
    //Функция ловит нажатую кнопку по её имени, части имени или названию перебирая массив POST
    //Funkcja przechwytuje wciśnięty przycisk według jego nazwy, części nazwy lub nazwy, przeglądając tablicę POST
@@ -79,7 +84,6 @@ interface InterfaceButton extends InterfaceWorkToBd
    // <div class="classPH"><span class="class">Текст</span></div>
    // Признаки form_not_open form_not_close не обязательны и управляют отсутствием открывающего тега form и закрывающего тега form соответственно.
    // Признак zero_style, если задать этот признак, то элементы будут без  бутстрапа
-   // btn_start - признак того, что в стилях кнопки сласс btn от Bootstrap будет на первом месте. Добавлено 19.04.2022
    // Стили
    // Класс общего Дива равен имени блока. <div class="$nameBlock">
    // Класс внутриформенного блока <div class="$nameBlock-div">
@@ -87,7 +91,6 @@ interface InterfaceButton extends InterfaceWorkToBd
    // bootstrap-start - добавляет section, row, col-12
    // bootstrap-f-start - добавляет /col-12 /row row, col-12
    // bootstrap-finish - добавляет /col-12 /row /section
-
    //
    // Funkcja umieszcza blok przycisków i pól tekstowych bez korzystania z bazy danych.
    //$nameBlock - nazwa bloku przycisku
