@@ -5,6 +5,9 @@ namespace class\value_object;
 // параметр $nameVarSession вводит имя переменной сессии и если его нет, то создать новую переменную
 // Если передан параметр пустой строки, то не проверять существование переменной
 // Если задать ключевое слово в параметре all, то объект вернет список всех переменных сессий и их значения
+//  getSession($nameVarSession) возвращает значение переменной сессии по имени или false, если её нет
+// getSessionAll() - выводит список всех переменных сессий
+// public function getSessionAllFilter($filter) выводит список всех переменных сессий, в имени которых содержится $filter
 class toSession
 {
     private $nameVarSession;
@@ -23,6 +26,27 @@ class toSession
         else return false;
     }
 
+    // выводит все переменные сессий
+    public function getSessionAll()
+    {
+        echo 'Функция getSessionAll() выводит список всех переменных сессий<br>';
+        foreach ($_SESSION as $key=>$value) {
+            echo '$_SESSION["'.$key.'"]='.$value.'<br>';
+        }
+        echo 'Вывод переменных сессий закончен.';
+    }
+
+    // выводит все переменные сессий, в имени которых есть $filter
+    public function getSessionAllFilter($filter) 
+    {
+        echo 'Функция getSessionAllFilter("часть ключа") выводит список всех переменных сессий<br>';
+        foreach ($_SESSION as $key=>$value) {
+            if (strripos($key,$filter)!==false)
+                echo '$_SESSION["'.$key.'"]='.$value.'<br>';
+        }
+        echo 'Вывод переменных сессий закончен.';
+    }
+
     public function __toString()
     {
         $rez='';
@@ -30,7 +54,7 @@ class toSession
         if ($this->nameVarSession=='all') {
             $rez='Ввели объект без параметров, возвращаю список всех переменных и их значений<br>';
             foreach ($_SESSION as $key=>$value) {
-                $rez.='$_SESSION["'.$key.'"]='.$value.'<br>';
+               $rez.='$_SESSION["'.$key.'"]='.$value.'<br>';
             }
             $rez.='Вывод переменных сессий закончен.';
         return $rez;
@@ -47,8 +71,8 @@ class toSession
          echo '$value="" - Значение для данной переменной сессии</p>';
          echo '<p>getSession($nameVarSession) // $_SESSION[""] | false<br>';
          echo 'Функция возвращает содержимое переменной или false</p>';
-         echo '<p></p>';
-         echo '<p></p>';
+         echo '<p>getSessionAll() - выводит список всех переменных сессий</p>';
+         echo '<p>getSessionAllFilter($filter) выводит список всех переменных сессий, в имени которых содержится $filter</p>';
          echo '<p></p>';
          echo '<p></p>';
          echo '<p></p>';

@@ -1,0 +1,24 @@
+@charset "UTF-8";
+body {
+  background-image: url("../images/image.jpeg");
+  background-size: 100%;
+  background-attachment: fixed;
+}
+
+/*Стили верхнего меню*/
+.imagesMapaMenuUp {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.imagesMapaMenuUp .imagesMapaMenuUp-div {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp1 {
+  border: 1px solid;
+}
+
+/**************************************88*/
+/*# sourceMappingURL=imagesmapa.css.map */

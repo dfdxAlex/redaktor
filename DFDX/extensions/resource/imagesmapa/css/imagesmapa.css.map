@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": ";AAAA,AAAA,IAAI,CAAC;EACD,gBAAgB,EAAE,2BAA2B;EAC7C,eAAe,EAAE,IAAI;EACrB,qBAAqB,EAAE,KAAK;CAC/B;;AACD,uBAAuB;AACvB,AAAA,iBAAiB,CAAA;EACb,UAAU,EAAE,IAAI;EAChB,WAAW,EAAE,IAAI;CAQpB;;AAVD,AAGI,iBAHa,CAGb,qBAAqB,CAAA;EACjB,UAAU,EAAE,IAAI;EAChB,WAAW,EAAE,IAAI;CAIpB;;AATL,AAMQ,iBANS,CAGb,qBAAqB,CAGjB,kCAAkC,CAAA;EAC9B,MAAM,EAAE,SAAS;CACpB;;AAGT,2CAA2C",
+    "sources": [
+        "imagesmapa.scss"
+    ],
+    "names": [],
+    "file": "imagesmapa.css"
+}

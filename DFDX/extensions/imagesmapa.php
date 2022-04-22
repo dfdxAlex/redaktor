@@ -3,11 +3,11 @@ namespace extensions;
 
 session_start();
 
-// menu of json 
-// start proect 19.04.2022
-// проект создается для быстрого создания менюшек, основанных на технологии файлов JSON
-// С помощью страницы меню нужно создать и уметь редактировать
-// С помощью отдельного модуля меню нужно установить в нужное место
+// imagesMapa
+// start proect 22.04.2022
+// проект создается для создания карт на картинке
+// Задача с помощью Джейсон файла создать карту, привязянную к картинке и определять по какой зоне кликнул пользователь
+//  
 
 
 // подключение автозагрузчика cms-dfdx
@@ -15,28 +15,24 @@ include '../class.php';
 
 use \class\nonBD\HtmlHead;
 use \class\nonBD\HtmlFutter;
-use \extensions\resource\menuofjson\object\MenuUp;
-use \class\value_object\toSession;
+use \extensions\resource\imagesmapa\object\MenuUp;
 use \extensions\resource\menuofjson\valueObject\toSessionLocal;
+use \class\value_object\toSession;
 
 // Класс локальных переменных сессий.
 // объект создается на один раз для проверки наличия всех переменных необходимых для работы, если их нет, то они создаются
 $toSession = new toSessionLocal();
 // объект для работы с переменными сессии, класс находится в движке dfdx
-$toSession = new toSession('');
+$toSession = new toSession();
+//$toSession->toSessionHelp();
 
 // начало документа
-echo new HtmlHead('resource/menuofjson/css/styles_menu_of_json.css','MenuOfJSON');
+echo new HtmlHead('resource/imagesmapa/css/imagesmapa.css','ImagesMapa');
 
 // верхнее меню
 $menuAp = new MenuUp();
 
-
-
-
-
-
-
+//$toSession->getSessionAllFilter('imagesmapa');
 
 
 // конец документа
