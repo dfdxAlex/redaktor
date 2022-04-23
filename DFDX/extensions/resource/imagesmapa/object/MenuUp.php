@@ -4,9 +4,11 @@ namespace extensions\resource\imagesmapa\object;
 class MenuUp implements \class\nonBD\interface\InterfaceButton
 {
     use \class\redaktor\interface\trait\TraitInterfaceButton; 
-
+    
     public function __construct()
     {
+        $toSession = new \class\value_object\toSession();
+        $toSessionLocal = new \extensions\resource\imagesmapa\valueObject\toSessionLocal();
         $classWorkToType = new \class\nonBD\WorkToType(); // удалить
         // обрабатываем режим или шаг
         // при нажатии кнопок формируется соответствующий щаг вперед или назад
@@ -23,6 +25,9 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
             if ($_POST['imagesMapaMenuUp']=='Очистить') {
                 $_SESSION['imagesMapaWightTmp']='';
                 $_SESSION['imagesMapaHeightTmp']='';
+            }
+            if ($_POST['imagesMapaMenuUp']=='Очистить точки') {
+                $toSession->killSessionFilter('klac');
             }
         }
 
@@ -76,15 +81,25 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
                              'submit',
                              'imagesMapaMenuUp',
                              'Очистить',
+                             'submit',
+                             'imagesMapaMenuUp',
+                             'Очистить точки',
                             );
             if (isset($_POST['imagesMapaMenuUp']) && $_POST['imagesMapaMenuUp']=='Загрузить') {
                 $fileimage=file_get_contents($_FILES['imagesFiles']['tmp_name']);
                 $_SESSION['imagesMapaPathImageTmp']='resource/imagesmapa/tmp/'.$_FILES['imagesFiles']['name'];
                 file_put_contents($_SESSION['imagesMapaPathImageTmp'],$fileimage);
             }
-            $classWorkToType->printMas($_POST);
+
+            if (isset($_POST['image_x'])) {
+                $i=$toSessionLocal->klacNumerEnd();
+                $_SESSION['klacX'.$i]=$_POST['image_x'];
+                $_SESSION['klacY'.$i]=$_POST['image_y'];
+            }
+
             // исходная строка с кнопкой-картинкой без высоты и ширины
-            $imageButton='<input type="image" name="image" src="'.$_SESSION['imagesMapaPathImageTmp'].'">';
+            $imageButton='<input type="image" name="image" class="imagesMapaImageButton-button" src="'.$_SESSION['imagesMapaPathImageTmp'].'">';
+
             // проверяем переменные сессий, которые могут содержать высоту и ширину картинки
             // если такие переменные есть, то вставляем соответствующий параметр в строку
             if ($_SESSION['imagesMapaWightTmp']!='')
@@ -94,7 +109,18 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
             
             echo '<div class="imagesMapaImageButton-div">
                       <form action"#" method="post">
-                          '.$imageButton.'
+                          <section class="container-fluid">
+                              <div class="row">
+                                  <div class="col-6">
+                                      '.$imageButton.'
+                                  </div>
+                                  <div class="col-6">
+                                      <div class="imagesMapaImageButton-div-klac">'
+                                          .$toSession->getSessionAllFilterReturn("klac").'
+                                      </div>
+                                  </div>
+                              </div>
+                          </section>
                       </form>
                  </div>
             ';

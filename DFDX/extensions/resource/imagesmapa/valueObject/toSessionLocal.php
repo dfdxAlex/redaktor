@@ -11,4 +11,18 @@ class toSessionLocal
         if (!isset($_SESSION['imagesMapaWightTmp'])) $_SESSION['imagesMapaWightTmp']='';
         if (!isset($_SESSION['imagesMapaHeightTmp'])) $_SESSION['imagesMapaHeightTmp']='';
     }
+
+    // функция возвращает следующий свободный номер для записи координат
+    public function klacNumerEnd()
+    {
+        $i=0;
+         foreach ($_SESSION as $key=>$value) {
+             if (stripos($key,'klacX')!==false) $i++;
+         }
+        $i++;
+        return $i;
+    }
+
+
+
 }

@@ -19,7 +19,8 @@ body {
 }
 
 .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp1, .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp4,
-.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp13, .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp16 {
+.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp13, .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp16,
+.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp19 {
   border: 1px solid;
   margin-left: 5px;
   float: left;
@@ -36,6 +37,10 @@ body {
 
 .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimageHeight10 {
   margin-left: 5px;
+}
+
+.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp19 {
+  margin-left: 50px;
 }
 
 /***************************************/
@@ -64,12 +69,26 @@ body {
   border: 1px solid;
   margin-top: 10px;
   margin-bottom: 50px;
-  width: auto;
+  width: 100%;
   height: auto;
+  background: #816a6a;
 }
 
-.imagesMapaImageButton-div .imagesMapaImageButton-image {
-  width: 300px;
-  height: 300px;
+.imagesMapaImageButton-div form {
+  overflow: hidden;
+}
+
+.imagesMapaImageButton-div form .imagesMapaImageButton-button {
+  padding-top: 1px;
+  width: 100%;
+  overflow: auto;
+}
+
+.imagesMapaImageButton-div form .imagesMapaImageButton-div-klac {
+  padding-right: 1px;
+  width: 100%;
+  overflow: auto;
+  height: 100%;
+  word-wrap: break-word;
 }
 /*# sourceMappingURL=imagesmapa.css.map */

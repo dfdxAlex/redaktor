@@ -7,7 +7,11 @@ namespace class\value_object;
 // Если задать ключевое слово в параметре all, то объект вернет список всех переменных сессий и их значения
 //  getSession($nameVarSession) возвращает значение переменной сессии по имени или false, если её нет
 // getSessionAll() - выводит список всех переменных сессий
-// public function getSessionAllFilter($filter) выводит список всех переменных сессий, в имени которых содержится $filter
+// public function getSessionAllFilter($filter,$header) выводит список всех переменных сессий, в имени которых содержится $filter
+// если $header=false то функция выводит только значения переменных через запятую
+// killSessionFilter($filter) функция удаляет переменные сессии, содержащие фильтр в имени $_SESSION['$filter']
+// public function getSessionAllFilterReturn($filter,$header=',') // возвращает строку со всеми параметрами 
+// содержащимися во всех подходящих переменных
 class toSession
 {
     private $nameVarSession;
@@ -37,14 +41,34 @@ class toSession
     }
 
     // выводит все переменные сессий, в имени которых есть $filter
-    public function getSessionAllFilter($filter) 
+    // если $header=false то функция выводит только значения переменных через запятую
+    public function getSessionAllFilter($filter,$header=true) 
     {
-        echo 'Функция getSessionAllFilter("часть ключа") выводит список всех переменных сессий<br>';
+        if ($header)
+            echo 'Функция getSessionAllFilter("часть ключа") выводит список всех переменных сессий<br>';
         foreach ($_SESSION as $key=>$value) {
-            if (strripos($key,$filter)!==false)
-                echo '$_SESSION["'.$key.'"]='.$value.'<br>';
+            if (strripos($key,$filter)!==false) {
+                if ($header)
+                    echo '$_SESSION["'.$key.'"]='.$value.'<br>';
+                if (!$header)
+                    echo $value.',';
+            }
         }
-        echo 'Вывод переменных сессий закончен.';
+        if ($header)
+            echo 'Вывод переменных сессий закончен.';
+    }
+
+    // возвращает все переменные сессий, в имени которых есть $filter
+    // если $header задает разделитель, по уполчанию будет запятая
+    public function getSessionAllFilterReturn($filter,$header=',') 
+    {
+        $rez='';
+        foreach ($_SESSION as $key=>$value) {
+            if (strripos($key,$filter)!==false) {
+                    $rez.=$value.$header;
+            }
+        }
+        return $rez;
     }
 
     public function __toString()
@@ -62,6 +86,14 @@ class toSession
         return '';
     }
 
+    // функция удаляет переменные сессии, содержащие фильтр в имени $_SESSION['$filter']
+    public function killSessionFilter($filter)
+    {
+         foreach ($_SESSION as $key=>$value) {
+             if (stripos($key,$filter)!==false) unset($_SESSION[$key]);
+         }
+    }
+
     public function toSessionHelp()
     {
          echo '<br>';
@@ -72,8 +104,10 @@ class toSession
          echo '<p>getSession($nameVarSession) // $_SESSION[""] | false<br>';
          echo 'Функция возвращает содержимое переменной или false</p>';
          echo '<p>getSessionAll() - выводит список всех переменных сессий</p>';
-         echo '<p>getSessionAllFilter($filter) выводит список всех переменных сессий, в имени которых содержится $filter</p>';
-         echo '<p></p>';
+         echo '<p>getSessionAllFilter($filter,$header) выводит список всех переменных сессий, в имени которых содержится $filter';
+         echo 'если $header=false то функция выводит только значения переменных через запятую</p>';         
+         echo '<p>getSessionAllFilterReturn($filter,$header=",") возвращает строку со всеми параметрами содержащимися во всех подходящих переменных</p>';
+         echo '<p>killSessionFilter($filter) функция удаляет переменные сессии, содержащие фильтр в имени $_SESSION[..filter..]</p>';
          echo '<p></p>';
          echo '<p></p>';
          echo '<p></p>';
