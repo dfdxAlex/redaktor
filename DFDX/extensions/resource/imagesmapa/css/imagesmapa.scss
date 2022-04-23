@@ -2,6 +2,7 @@ body {
     background-image: url("../images/image.jpeg");
     background-size: 100%;
     background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 /*Стили верхнего меню*/
 .imagesMapaMenuUp{
@@ -10,9 +11,27 @@ body {
     .imagesMapaMenuUp-div{
         margin-top: 10px;
         margin-left: 10px;
-        .imagesMapaMenuUpimagesMapaMenuUp1{
+        .imagesMapaMenuUpimagesMapaMenuUp1, .imagesMapaMenuUpimagesMapaMenuUp4{
             border: 1px solid;
+            margin-left: 5px;
         }
     }
 }
-/**************************************88*/
+/***************************************/
+/*Меню загрузки картинки*/
+.imagesMapaLoadFiles{
+    margin-top: 50px;
+    margin-left: 300px;
+    width: 100%;
+    color:rgb(244, 252, 252);
+    .imagesMapaLoadFiles-label{
+        border: 1px solid;
+        margin-right: 30px;
+        color:rgb(244, 252, 252);
+    }
+    .imagesMapaLoadFiles-button{
+        border: 1px solid;
+        color:rgb(244, 252, 252);
+    }
+}
+/************************/

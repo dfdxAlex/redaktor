@@ -3,6 +3,7 @@ body {
   background-image: url("../images/image.jpeg");
   background-size: 100%;
   background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 /*Стили верхнего меню*/
@@ -16,9 +17,30 @@ body {
   margin-left: 10px;
 }
 
-.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp1 {
+.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp1, .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp4 {
   border: 1px solid;
+  margin-left: 5px;
 }
 
-/**************************************88*/
+/***************************************/
+/*Меню загрузки картинки*/
+.imagesMapaLoadFiles {
+  margin-top: 50px;
+  margin-left: 300px;
+  width: 100%;
+  color: #f4fcfc;
+}
+
+.imagesMapaLoadFiles .imagesMapaLoadFiles-label {
+  border: 1px solid;
+  margin-right: 30px;
+  color: #f4fcfc;
+}
+
+.imagesMapaLoadFiles .imagesMapaLoadFiles-button {
+  border: 1px solid;
+  color: #f4fcfc;
+}
+
+/************************/
 /*# sourceMappingURL=imagesmapa.css.map */
