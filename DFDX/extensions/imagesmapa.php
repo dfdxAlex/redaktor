@@ -16,7 +16,7 @@ include '../class.php';
 use \class\nonBD\HtmlHead;
 use \class\nonBD\HtmlFutter;
 use \extensions\resource\imagesmapa\object\MenuUp;
-use \extensions\resource\menuofjson\valueObject\toSessionLocal;
+use \extensions\resource\imagesmapa\valueObject\toSessionLocal;
 use \class\value_object\toSession;
 
 // Класс локальных переменных сессий.

@@ -7,6 +7,8 @@ class toSessionLocal
     public function __construct()
     {
         if (!isset($_SESSION['imagesMapaMenuUp'])) $_SESSION['imagesMapaMenuUp']='';
-        //if (!isset($_SESSION['edit_menu'])) $_SESSION['edit_menu']='';
+        if (!isset($_SESSION['imagesMapaPathImageTmp'])) $_SESSION['imagesMapaPathImageTmp']='';
+        if (!isset($_SESSION['imagesMapaWightTmp'])) $_SESSION['imagesMapaWightTmp']='';
+        if (!isset($_SESSION['imagesMapaHeightTmp'])) $_SESSION['imagesMapaHeightTmp']='';
     }
 }

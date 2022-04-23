@@ -11,8 +11,22 @@ body {
     .imagesMapaMenuUp-div{
         margin-top: 10px;
         margin-left: 10px;
-        .imagesMapaMenuUpimagesMapaMenuUp1, .imagesMapaMenuUpimagesMapaMenuUp4{
+        height: 50px;
+        .imagesMapaMenuUpimagesMapaMenuUp1, .imagesMapaMenuUpimagesMapaMenuUp4, 
+        .imagesMapaMenuUpimagesMapaMenuUp13, .imagesMapaMenuUpimagesMapaMenuUp16{
             border: 1px solid;
+            margin-left: 5px;
+            float: left;
+        }
+        .imagesMapaMenuUpimageWidth7, .imagesMapaMenuUpimageHeight10{
+            border: 1px solid;
+            margin-left: 50px;
+            height: 38px;
+            width: 75px;
+            text-align: center;
+            float: left;
+        }
+        .imagesMapaMenuUpimageHeight10{
             margin-left: 5px;
         }
     }
@@ -33,5 +47,17 @@ body {
         border: 1px solid;
         color:rgb(244, 252, 252);
     }
+
 }
 /************************/
+/*Стилизация кнопки-картинки для стилизаци*/
+.imagesMapaImageButton-div{
+    border: 1px solid;
+    margin-top: 10px;
+    width:auto;
+    height: auto;
+    .imagesMapaImageButton-image{
+        width:300px;
+        height: 300px;
+    }
+}
