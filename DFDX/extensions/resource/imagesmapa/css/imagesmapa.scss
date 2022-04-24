@@ -7,23 +7,24 @@ body {
 /*Стили верхнего меню*/
 .imagesMapaMenuUp{
     margin-top: 10px;
-    margin-left: 10px;
+    margin-left: 5px;
     .imagesMapaMenuUp-div{
         margin-top: 10px;
-        margin-left: 10px;
+        margin-left: 5px;
         height: 50px;
         .imagesMapaMenuUpimagesMapaMenuUp1, .imagesMapaMenuUpimagesMapaMenuUp4, 
         .imagesMapaMenuUpimagesMapaMenuUp13, .imagesMapaMenuUpimagesMapaMenuUp16,
-        .imagesMapaMenuUpimagesMapaMenuUp19{
+        .imagesMapaMenuUpimagesMapaMenuUp19, .imagesMapaMenuUpimagesMapaMenuUp22,
+        .imagesMapaMenuUpimagesMapaMenuUp25, .imagesMapaMenuUpimagesMapaMenuUp28{
             border: 1px solid;
-            margin-left: 5px;
+            margin-left: 2px;
             float: left;
         }
         .imagesMapaMenuUpimageWidth7, .imagesMapaMenuUpimageHeight10{
             border: 1px solid;
-            margin-left: 50px;
+            margin-left: 20px;
             height: 38px;
-            width: 75px;
+            width: 60px;
             text-align: center;
             float: left;
         }
@@ -31,7 +32,10 @@ body {
             margin-left: 5px;
         }
         .imagesMapaMenuUpimagesMapaMenuUp19{
-            margin-left: 50px;
+            margin-left: 20px;
+        }
+        .imagesMapaMenuUpimagesMapaMenuUp25{
+            margin-left: 20px;
         }
     }
 }
@@ -61,20 +65,17 @@ body {
     margin-bottom: 50px;
     width: 100%;
     height: auto;
-    background: rgb(129, 106, 106);
     form {
-        overflow:hidden;
         .imagesMapaImageButton-button{
             padding-top: 1px;
             width: 100%;
-            overflow: auto;
         }
         .imagesMapaImageButton-div-klac{
             padding-right: 1px;
             width: 100%;
-            overflow: auto;
             height: 100%;
             word-wrap: break-word;
+            background: rgb(163, 147, 147);
         }
     }
 

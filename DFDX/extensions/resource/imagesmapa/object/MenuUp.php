@@ -29,6 +29,9 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
             if ($_POST['imagesMapaMenuUp']=='Очистить точки') {
                 $toSession->killSessionFilter('klac');
             }
+            if ($_POST['imagesMapaMenuUp']=='Очистить дубли') {
+                $toSessionLocal->killDubli();
+            }
         }
 
         // рисуем кнопки
@@ -84,6 +87,15 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
                              'submit',
                              'imagesMapaMenuUp',
                              'Очистить точки',
+                             'submit',
+                             'imagesMapaMenuUp',
+                             'Очистить дубли',
+                             'submit',
+                             'imagesMapaMenuUp',
+                             'HTML',
+                             'submit',
+                             'imagesMapaMenuUp',
+                             'PHP',
                             );
             if (isset($_POST['imagesMapaMenuUp']) && $_POST['imagesMapaMenuUp']=='Загрузить') {
                 $fileimage=file_get_contents($_FILES['imagesFiles']['tmp_name']);
@@ -95,7 +107,16 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
                 $i=$toSessionLocal->klacNumerEnd();
                 $_SESSION['klacX'.$i]=$_POST['image_x'];
                 $_SESSION['klacY'.$i]=$_POST['image_y'];
+               
             }
+
+            $poleTwo='';
+            if ((isset($_POST['imagesMapaMenuUp']) && $_POST['imagesMapaMenuUp']=='Очистить дубли') || isset($_POST['image_x'])) {
+                $poleTwo=$toSession->getSessionAllFilterReturn("klac");
+            }
+
+            if ((isset($_POST['imagesMapaMenuUp']) && $_POST['imagesMapaMenuUp']=='HTML'))
+                $poleTwo=$this->kodHTML($toSessionLocal->sessionToMas());
 
             // исходная строка с кнопкой-картинкой без высоты и ширины
             $imageButton='<input type="image" name="image" class="imagesMapaImageButton-button" src="'.$_SESSION['imagesMapaPathImageTmp'].'">';
@@ -107,6 +128,9 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
             if ($_SESSION['imagesMapaHeightTmp']!='')
                 $imageButton=preg_replace('/input\s/','input height="'.$_SESSION['imagesMapaHeightTmp'].'px" ',$imageButton);
             
+           
+
+            // рисуем картинку-кнопку и справа от неё список координат
             echo '<div class="imagesMapaImageButton-div">
                       <form action"#" method="post">
                           <section class="container-fluid">
@@ -116,7 +140,7 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
                                   </div>
                                   <div class="col-6">
                                       <div class="imagesMapaImageButton-div-klac">'
-                                          .$toSession->getSessionAllFilterReturn("klac").'
+                                          .$poleTwo.'
                                       </div>
                                   </div>
                               </div>
@@ -124,6 +148,28 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
                       </form>
                  </div>
             ';
+           //$classWorkToType->printMas($toSessionLocal->sessionToMas()); 
         }
+    }
+
+    //Функция создает код для вставки в документ html 
+    public function kodHTML($mas)
+    {
+        //$classWorkToType = new \class\nonBD\WorkToType(); // удалить
+        //$classWorkToType->printMas($mas);
+        $cords='';
+        for ($i=0; $i<count($mas[0]); $i++) {
+            if ($i>0)
+                $cords=$cords.','.$mas[0][$i].','.$mas[1][$i];
+            else 
+                $cords=$mas[0][$i].','.$mas[1][$i];
+          // echo $i;     
+        }
+        //$cords=$cords.','.$mas[0][0].','.$mas[1][0];
+        $rez='&#060;img src="'.$_SESSION['imagesMapaPathImageTmp'].'" alt="CMS-DFDX" usemap="#workmap"&#062;<br><br>';
+        $rez.='&#060;map name="workmap"&#062;';
+        $rez.='&#060;area shape="poly" name="workmap" href="http://www.google.com" coords="'.$cords.'" &#062;';
+        $rez.='&#060;/map&#062;';
+        return $rez;
     }
 }

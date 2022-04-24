@@ -9,28 +9,29 @@ body {
 /*Стили верхнего меню*/
 .imagesMapaMenuUp {
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .imagesMapaMenuUp .imagesMapaMenuUp-div {
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 5px;
   height: 50px;
 }
 
 .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp1, .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp4,
 .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp13, .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp16,
-.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp19 {
+.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp19, .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp22,
+.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp25, .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp28 {
   border: 1px solid;
-  margin-left: 5px;
+  margin-left: 2px;
   float: left;
 }
 
 .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimageWidth7, .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimageHeight10 {
   border: 1px solid;
-  margin-left: 50px;
+  margin-left: 20px;
   height: 38px;
-  width: 75px;
+  width: 60px;
   text-align: center;
   float: left;
 }
@@ -40,7 +41,11 @@ body {
 }
 
 .imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp19 {
-  margin-left: 50px;
+  margin-left: 20px;
+}
+
+.imagesMapaMenuUp .imagesMapaMenuUp-div .imagesMapaMenuUpimagesMapaMenuUp25 {
+  margin-left: 20px;
 }
 
 /***************************************/
@@ -71,24 +76,18 @@ body {
   margin-bottom: 50px;
   width: 100%;
   height: auto;
-  background: #816a6a;
-}
-
-.imagesMapaImageButton-div form {
-  overflow: hidden;
 }
 
 .imagesMapaImageButton-div form .imagesMapaImageButton-button {
   padding-top: 1px;
   width: 100%;
-  overflow: auto;
 }
 
 .imagesMapaImageButton-div form .imagesMapaImageButton-div-klac {
   padding-right: 1px;
   width: 100%;
-  overflow: auto;
   height: 100%;
   word-wrap: break-word;
+  background: #a39393;
 }
 /*# sourceMappingURL=imagesmapa.css.map */
