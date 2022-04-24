@@ -32,16 +32,7 @@ echo new HtmlHead('resource/imagesmapa/css/imagesmapa.css','ImagesMapa');
 // верхнее меню
 $menuAp = new MenuUp();
 
-//$toSession->getSessionAllFilter('imagesmapa');
-?>
 
-
-<img src="resource/imagesmapa/tmp/imageTest.jpg" alt="CMS-DFDX" usemap="#workmap">
-
-<map name="workmap"><area shape="poly" name="workmap" href="#" coords="58,132,87,110,106,102,121,104,128,78,145,87,156,112,166,138,173,172,121,135,56,138" ></map>
-
-
-<?php
 
 // конец документа
 echo new HtmlFutter();

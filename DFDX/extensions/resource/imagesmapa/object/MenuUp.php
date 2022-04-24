@@ -135,10 +135,12 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
                       <form action"#" method="post">
                           <section class="container-fluid">
                               <div class="row">
-                                  <div class="col-6">
+                                  <div class="col-12">
                                       '.$imageButton.'
                                   </div>
-                                  <div class="col-6">
+                              </div>
+                              <div class="row">
+                                  <div class="col-12">
                                       <div class="imagesMapaImageButton-div-klac">'
                                           .$poleTwo.'
                                       </div>
@@ -155,20 +157,24 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
     //Функция создает код для вставки в документ html 
     public function kodHTML($mas)
     {
-        //$classWorkToType = new \class\nonBD\WorkToType(); // удалить
-        //$classWorkToType->printMas($mas);
         $cords='';
         for ($i=0; $i<count($mas[0]); $i++) {
             if ($i>0)
                 $cords=$cords.','.$mas[0][$i].','.$mas[1][$i];
             else 
                 $cords=$mas[0][$i].','.$mas[1][$i];
-          // echo $i;     
         }
-        //$cords=$cords.','.$mas[0][0].','.$mas[1][0];
-        $rez='&#060;img src="'.$_SESSION['imagesMapaPathImageTmp'].'" alt="CMS-DFDX" usemap="#workmap"&#062;<br><br>';
-        $rez.='&#060;map name="workmap"&#062;';
-        $rez.='&#060;area shape="poly" name="workmap" href="http://www.google.com" coords="'.$cords.'" &#062;';
+        $width='';
+        if ($_SESSION['imagesMapaWightTmp']!='') {
+            $width='width="'.$_SESSION['imagesMapaWightTmp'].'px" ';
+        }
+        $height='';
+        if ($_SESSION['imagesMapaHeightTmp']!='') {
+            $height='height="'.$_SESSION['imagesMapaHeightTmp'].'px" ';
+        }
+        $rez='&#060;img src="'.$_SESSION['imagesMapaPathImageTmp'].'" '.$width.$height.' alt="CMS-DFDX" usemap="#workmap"&#062;<br><br>';
+        $rez.='&#060;map name="workmap"&#062;<br>';
+        $rez.='&#060;area shape="poly" href="http://www.google.com" coords="'.$cords.'" &#062;<br>';
         $rez.='&#060;/map&#062;';
         return $rez;
     }
