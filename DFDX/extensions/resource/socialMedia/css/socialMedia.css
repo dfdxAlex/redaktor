@@ -1,0 +1,19 @@
+body {
+  background-image: url("../images/json2.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.fon-youtube, .fon-youtube-g {
+  position: absolute;
+  background-color: #f67c7c;
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+}
+
+.fon-youtube {
+  top: 150px;
+  left: 50px;
+}
+/*# sourceMappingURL=socialMedia.css.map */

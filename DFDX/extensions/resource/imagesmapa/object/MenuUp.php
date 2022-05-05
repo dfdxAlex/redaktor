@@ -46,6 +46,7 @@ class MenuUp implements \class\nonBD\interface\InterfaceButton
                              'Загрузить картинку',
                             );
 
+        // данный блок выводит кнопки для загрузки изображения
         if ($_SESSION['imagesMapaMenuUp']==1) {
             echo '<section class="container-fluid">
                       <div class="row">

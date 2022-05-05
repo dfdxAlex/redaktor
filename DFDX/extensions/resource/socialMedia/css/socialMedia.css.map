@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,IAAI,CAAC;EACD,gBAAgB,EAAE,0BAA0B;EAC5C,eAAe,EAAE,KAAK;EACtB,qBAAqB,EAAE,KAAK;CAC/B;;AACD,AAAA,YAAY,EAAE,cAAc,CAAA;EACxB,QAAQ,EAAE,QAAQ;EAClB,gBAAgB,EAAE,OAAkB;EACpC,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,IAAI;EACX,aAAa,EAAE,IAAI;CACtB;;AAED,AAAA,YAAY,CAAA;EACR,GAAG,EAAC,KAAK;EACT,IAAI,EAAC,IAAI;CACZ",
+    "sources": [
+        "socialMedia.scss"
+    ],
+    "names": [],
+    "file": "socialMedia.css"
+}
