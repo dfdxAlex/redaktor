@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/css" href="style_test.css"?>
+<!--File Name:test.xml-->
+
+<TEST>
+  <BOOK>
+    <TITLE>Стихи</TITLE>
+    <AUTHOR>Пушкин А.С.</AUTHOR>
+    <NUMER>333</NUMER>
+    <MONEY>100$</MONEY>
+  </BOOK>
+
+  <BOOK>
+    <TITLE>Стихи</TITLE>
+    <AUTHOR>Пушкин А.С.</AUTHOR>
+    <NUMER>333</NUMER>
+    <MONEY>100$</MONEY>
+  </BOOK>
+
+  <BOOK>
+    <TITLE>Стихи</TITLE>
+    <AUTHOR>Пушкин А.С.</AUTHOR>
+    <NUMER>333</NUMER>
+    <MONEY>100$</MONEY>
+  </BOOK>
+  
+  <BOOK>
+    <TITLE>Стихи</TITLE>
+    <AUTHOR>Пушкин А.С.</AUTHOR>
+    <NUMER>333</NUMER>
+    <MONEY>100$</MONEY>
+  </BOOK>
+</TEST>

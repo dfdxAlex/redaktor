@@ -6,11 +6,19 @@ namespace class\nonBD;
 // The second parameter sets the title page parameter
 // The value is assigned to the object using the toString magic method, that is, the object must be printed
 // with the echo construct, the object itself may not be created. example echo new \...\...\...\HtmlHead('style.css','title')
+
 // Класс прописывает заголовок страницы html
 // При создании объекта необходимо задать путь и имя файла стилей относительно страницы, на которой объект создан
 // Вторым параметром задается параметр страницы title
 // Значение присваивается объекту с помощью магического метода toString, то есть объект нужно вывести на печать 
 // конструкцией echo, сам объект можно не создавать. пример echo new \...\...\...\HtmlHead('style.css','title')
+
+// class upgrade 04/19/2022
+// Added parameter $classBody='non'.
+// If this parameter is set as the style name "body-style" then this class will be added to the body class="body-style"
+// If non-zero optional parameters $indexMin=0,$indexMax=0 are entered, then
+// a random number from $indexMin to $indexMax and is assigned to the name of the given class through the "-" sign
+// $indexMin must be >=0 but less than $indexMax
 
 // модернизация класса 19.04.2022
 // Добавлен параметр $classBody='non'.
@@ -19,7 +27,7 @@ namespace class\nonBD;
 // случайное число от $indexMin до $indexMax и приписано к имени заданного класса через знак "-"
 // $indexMin должен быть >=0 но меньше $indexMax
 
-// $oblect = new HtmlHead('css/styles.css','scp');
+// $oblect = new HtmlHead('css/styles.css','scp',$classBody='non',$indexMin=0,$indexMax=0);
 class HtmlHead
 {
     private $name;
