@@ -1,28 +1,40 @@
-#include <time.h> // Директива нужна для инициализации функции rand() 
-#include <stdio.h> // Включаем поддержку функций ввода/вывода 
-#include <stdlib.h> // А это — для поддержки функции rand() 
-//int main(void) { 
-int main(int argc,char **argv) {
- int num; 
- time_t t; 
- srand(time(&t)); 
- num = rand() % 10; 
+#include <stdio.h> 
+#include <stdlib.h> 
 
- printf("Content-type: image/gif\n"); 
- printf("Pragma: no-cache\n"); 
- printf("\n"); 
+int main(void) { 
+ // Извлекаем значения переменных окружения 
+ char *remote_addr = getenv("REMOTE_ADDR"); 
+ char *content_length = getenv("CONTENT_LENGTH"); 
+ char *query_string = getenv("QUERY_STRING"); 
 
- //printf("<!DOCTYPE html>"); 
- //printf("<html lang='ru'>"); 
- //printf("<head>"); 
- //printf("<title>Случайное число</title>"); 
- //printf("<meta charset='utf-8'>"); 
- //printf("</head>"); 
- //printf("<body>"); 
- //printf("<h1>Здравствуйте!</h1>"); 
- //printf("<p>Случайное число в диапазоне 0-9: %d</p>", num); 
- //printf("</body>"); 
- //printf("</html>"); 
+ // Вычисляем длину данных - переводим строку в число 
+ int num_bytes = atoi(content_length); 
 
-  
+ // Выделяем в свободной памяти буфер нужного размера 
+ char *data = (char *)malloc(num_bytes + 1); 
+
+ // Читаем данные из стандартного потока ввода 
+ fread(data, 1, num_bytes, stdin); 
+
+ // Добавляем нулевой код в конец строки 
+ // (в C нулевой код сигнализирует о конце строки) 
+ data[num_bytes] = 0; 
+
+ // Выводим заголовок 
+ printf("Content-type: text/html\n\n"); 
+
+ // Выводим документ 
+ printf("<!DOCTYPE html>"); 
+ printf("<html lang='ru'>"); 
+ printf("<head>"); 
+ printf("<title>Получение данных POST</title>"); 
+ printf("<meta charset='utf-8'>"); 
+ printf("</head>"); 
+ printf("<body>"); 
+ printf("<h1>Здравствуйте. Мы знаем о Вас все!</h1>"); 
+ printf("<p>Ваш IP-адрес: %s</p>", remote_addr); 
+ printf("<p>Количество байтов данных: %d</p>", num_bytes); 
+ printf("<p>Вот параметры, которые Вы указали: %s</p>", data); 
+ printf("<p>А вот то, что мы получили через URL: %s</p>", query_string); 
+ printf("</body></html>"); 
 }
