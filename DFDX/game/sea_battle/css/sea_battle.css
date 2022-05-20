@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .sea-battle-body-0 {
   background-image: url("../images/seabattlebody0.jpg");
   background-size: cover;
@@ -22,5 +23,51 @@ body {
   color: black;
   width: 100%;
   min-height: 600px;
+}
+
+/*Настройки меню ввода имени пользователя
+ Username input menu settings*/
+.select-name {
+  margin-top: 100px;
+  margin-left: 100px;
+}
+
+.select-name .select-name-div {
+  font-size: 30px;
+  font-family: "old-kharkiv";
+  height: 100px;
+}
+
+.select-name .select-name-div .select-namespan0 {
+  float: left;
+}
+
+.select-name .select-name-div .select-nameuserName2 {
+  background-color: rgba(123, 224, 224, 0);
+  width: 150px;
+  border: none;
+  border-radius: 20%;
+  float: left;
+  margin-left: 5px;
+}
+
+.select-name .select-name-div .select-nameuserNameOk5 {
+  width: auto;
+  font-size: 30px;
+  border-color: black;
+  border-style: solid;
+  float: left;
+  height: 45px;
+  margin-left: 10px;
+}
+
+@font-face {
+  font-family: "Boncegro";
+  src: url("../font/Boncegro FF 4F/Boncegro FF 4F.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "old-kharkiv";
+  src: url("../font/Old Kharkiv/old-kharkiv.otf") format("opentype");
 }
 /*# sourceMappingURL=sea_battle.css.map */

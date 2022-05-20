@@ -21,3 +21,50 @@ body {
     width: 100%;
     min-height: 600px;
 }
+/*Настройки меню ввода имени пользователя
+ Username input menu settings*/
+.select-name{
+        margin-top: 100px;
+        margin-left: 100px;
+
+        .select-name-div{
+                font-size: 30px;
+                font-family: "old-kharkiv";
+                height: 100px;
+                .select-namespan0{
+                        float: left;
+                }
+                .select-nameuserName2{
+                        background-color: rgba(123, 224, 224, 0);
+                        width: 150px;
+                        border: none;
+                        border-radius: 20%;
+                        float: left;
+                        margin-left: 5px;
+                }
+                .select-nameuserNameOk5{
+                        width: auto;
+                        font-size: 30px;
+                        border-color: black;
+                        border-style: solid;
+                        float: left;
+                        height: 45px;
+                        margin-left: 10px;
+                }
+        }
+}
+
+
+
+@font-face {
+        // название шрифта(чтобы не запутаться лучше указать название папки со шрифтом) 
+        font-family: "Boncegro"; 
+        // адрес шрифта и тип 
+        src: url("../font/Boncegro FF 4F/Boncegro FF 4F.otf") format("opentype"); 
+        } 
+@font-face {
+        // название шрифта(чтобы не запутаться лучше указать название папки со шрифтом) 
+        font-family: "old-kharkiv"; 
+        // адрес шрифта и тип 
+        src: url("../font/Old Kharkiv/old-kharkiv.otf") format("opentype"); 
+        } 

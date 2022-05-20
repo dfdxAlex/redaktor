@@ -65,4 +65,8 @@ class HtmlHead
         <body'.$returnClassBody.'>
         ';
     }
+    public function getRand()
+    {
+        return $this->indexBodyClass;
+    }
 }
