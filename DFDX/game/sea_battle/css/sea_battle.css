@@ -38,11 +38,11 @@ body {
   height: 100px;
 }
 
-.select-name .select-name-div .select-namespan0 {
+.select-name .select-name-div span[class*="span"] {
   float: left;
 }
 
-.select-name .select-name-div .select-nameuserName2 {
+.select-name .select-name-div .select-nameuserName2, .select-name .select-name-div .select-nameuserPassword7 {
   background-color: rgba(123, 224, 224, 0);
   width: 150px;
   border: none;
@@ -51,7 +51,7 @@ body {
   margin-left: 5px;
 }
 
-.select-name .select-name-div .select-nameuserNameOk5 {
+.select-name .select-name-div .select-nameuserNameOk10 {
   width: auto;
   font-size: 30px;
   border-color: black;
@@ -59,6 +59,12 @@ body {
   float: left;
   height: 45px;
   margin-left: 10px;
+}
+
+.nameError {
+  font-size: 30px;
+  font-family: "old-kharkiv";
+  color: #9a0d0d;
 }
 
 @font-face {

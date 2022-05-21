@@ -31,10 +31,11 @@ body {
                 font-size: 30px;
                 font-family: "old-kharkiv";
                 height: 100px;
-                .select-namespan0{
+                //.select-namespan0, .select-namespan5{
+                span[class*="span"]{
                         float: left;
                 }
-                .select-nameuserName2{
+                .select-nameuserName2, .select-nameuserPassword7{
                         background-color: rgba(123, 224, 224, 0);
                         width: 150px;
                         border: none;
@@ -42,7 +43,7 @@ body {
                         float: left;
                         margin-left: 5px;
                 }
-                .select-nameuserNameOk5{
+                .select-nameuserNameOk10{
                         width: auto;
                         font-size: 30px;
                         border-color: black;
@@ -53,6 +54,14 @@ body {
                 }
         }
 }
+
+.nameError{
+        font-size: 30px;
+        font-family: "old-kharkiv";
+        color:rgb(154, 13, 13);
+}
+
+
 
 
 

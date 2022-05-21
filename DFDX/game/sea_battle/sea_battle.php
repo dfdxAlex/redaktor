@@ -14,14 +14,18 @@ use \class\nonBD\HtmlHead;
 use \class\nonBD\HtmlFutter;
 use \class\nonBD\Button;
 use \game\sea_battle\valueObject\SelectName;
+use \game\sea_battle\object\WorkingWithSessions;
 // начало документа
 $headHead = new HtmlHead('css/sea_battle.css','Sea Battle','sea-battle-body',0,3);
 echo $headHead;
 
-//echo $headHead->getRand(); //получить значение фона
+//Создает переменные сессии, если их ещё нет
+$sessionCreate = new WorkingWithSessions();
 
+//$_SESSION['sea_battle_user_step']=0;
 // класс для ввода имени
-$selectName = new SelectName();
+if ($_SESSION['sea_battle_user_step']<2)
+    $selectName = new SelectName();
 
 
 $qqq = new Button();
