@@ -22,7 +22,7 @@ echo $headHead;
 //Создает переменные сессии, если их ещё нет
 $sessionCreate = new WorkingWithSessions();
 
-//$_SESSION['sea_battle_user_step']=0;
+//$_SESSION['sea_battle_user_step']=0;//
 // класс для ввода имени
 // коммент для теста
 if ($_SESSION['sea_battle_user_step']<2)
