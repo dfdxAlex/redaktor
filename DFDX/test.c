@@ -1,40 +1,54 @@
 #include <stdio.h> 
 #include <stdlib.h> 
+#include <string.h> 
+// Начало программы 
+int main() { 
+ // Временный буфер 
+ char buf[1000]; 
+ char buf_cookie[1000]; 
+ // Получаем в переменную Cook значение Cookies 
+ char *cook = getenv("HTTP_COOKIE"); 
+ if(cook != NULL) { 
+ // Пропускаем в ней 5 первых символов ("cook="), 
+ // если она не пустая - получим как раз значение cookie, 
+ // которое мы установили ранее (см. ниже) 
+ strcpy(buf_cookie, cook + 5); 
+ } 
 
-int main(void) { 
- // Извлекаем значения переменных окружения 
- char *remote_addr = getenv("REMOTE_ADDR"); 
- char *content_length = getenv("CONTENT_LENGTH"); 
- char *query_string = getenv("QUERY_STRING"); 
-
- // Вычисляем длину данных - переводим строку в число 
- int num_bytes = atoi(content_length); 
-
- // Выделяем в свободной памяти буфер нужного размера 
- char *data = (char *)malloc(num_bytes + 1); 
-
- // Читаем данные из стандартного потока ввода 
- fread(data, 1, num_bytes, stdin); 
-
- // Добавляем нулевой код в конец строки 
- // (в C нулевой код сигнализирует о конце строки) 
- data[num_bytes] = 0; 
-
- // Выводим заголовок 
+ // Получаем переменную QUERY_STRING 
+ char *query = getenv("QUERY_STRING"); 
+ // Проверяем, заданы ли параметры у сценария - если да, то 
+ // пользователь, очевидно, ввел свое имя или нажал кнопку, 
+ // в противном случае он просто запустил сценарий без параметров 
+ if(query != NULL) { // строка не пустая? 
+     // Копируем в буфер значение QUERY_STRING, 
+     // пропуская первые 5 символов (часть "name=") - 
+     // получим как раз текст пользователя 
+     strcpy(buf, query + 5); 
+     // Пользователь ввел имя, значит, нужно установить cookie 
+     printf("Set-cookie: cook=%s; " 
+     "expires=Thursday, 2-Feb-25 15:52:00 GMT\n", buf); 
+     // Теперь это новое значение cookie 
+     strcpy(buf_cookie, buf); 
+ } 
+ // Выводим страницу с формой 
  printf("Content-type: text/html\n\n"); 
+ printf("<!DOCTYPE html>\n"); 
+ printf("<html lang='ru'>\n"); 
+ printf("<head>\n"); 
+ printf("<title>Простой сценарий, использующий cookies</title>\n"); 
+ printf("<meta charset='utf-8'>\n"); 
+ printf("</head>\n"); 
 
- // Выводим документ 
- printf("<!DOCTYPE html>"); 
- printf("<html lang='ru'>"); 
- printf("<head>"); 
- printf("<title>Получение данных POST</title>"); 
- printf("<meta charset='utf-8'>"); 
- printf("</head>"); 
- printf("<body>"); 
- printf("<h1>Здравствуйте. Мы знаем о Вас все!</h1>"); 
- printf("<p>Ваш IP-адрес: %s</p>", remote_addr); 
- printf("<p>Количество байтов данных: %d</p>", num_bytes); 
- printf("<p>Вот параметры, которые Вы указали: %s</p>", data); 
- printf("<p>А вот то, что мы получили через URL: %s</p>", query_string); 
+ printf("<body>\n\n"); 
+ // Если имя задано (не пустая строка), приветствие 
+ if(strlen(buf_cookie) > 0) 
+ printf("<h1>Привет, %s!</h1>\n", buf_cookie); 
+ // продолжаем 
+ printf("<form action='test.cgi' method='GET'>\n"); 
+ printf("<p>Ваше имя: "); 
+ printf("<input type='text' name='name' value='%s'></p>\n", buf_cookie); 
+ printf("<p><input type='submit' value='Отправить'></p>\n"); 
+ printf("</form>\n"); 
  printf("</body></html>"); 
-}
+} 

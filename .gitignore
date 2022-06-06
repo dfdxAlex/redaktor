@@ -15,4 +15,6 @@ symfony.exe
 LICENSE
 npm
 npm.cmd
-style_test.css
+DFDX/style_test.css
+DFDX/test.*
+DFDX/*.cgi

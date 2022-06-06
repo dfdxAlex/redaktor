@@ -1,0 +1,17 @@
+
+
+ .div-body{
+     width: 100%;
+     height: 700px;
+
+     /*background: -webkit-linear-gradient(45deg, rgb(176, 160, 160) 20px, rgb(56, 4, 4) 80%);*/
+
+     background: -webkit-radial-gradient(left, circle, rgb(176, 160, 160) 20px, rgb(56, 4, 4) 80%);
+
+     display: -webkit-box;
+
+
+     /*-webkit-box-orient: vertical;*/
+
+
+ }
