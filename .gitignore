@@ -17,5 +17,5 @@ LICENSE
 npm
 npm.cmd
 DFDX/style_test*.css
-#DFDX/test*.*
+DFDX/test*.*
 DFDX/*.cgi
