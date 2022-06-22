@@ -3,18 +3,22 @@
 // Object.getPrototypeOf() определить прототип любого объекта
 // p.isPrototypeOf(o) является ли p прототипом o
 
+xxx={c:3};
 
 b={x:1,v:5,z:45,c:6};                         // Создал объект 1
 
 c=Object.create(b);
 c.cc=23;
 
-cc=Object.create(c);
-
-console.log(p.isPrototypeOf(cc));
+ccc=Object.create(c);
 
 
-//for (xxx in b) console.log(xxx);
+//console.log(ccc);
+
+if (xxx.isPrototypeOf(ccc)) console.log("Объект присутствует в цепочке прототипов"); else  console.log("Объект не присутствует в цепочке прототипов");
+
+
+//for (xxx in ccc) console.log(xxx);
 
 
 //console.log();
