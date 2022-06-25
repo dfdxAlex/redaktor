@@ -15,11 +15,21 @@ b={x:1,v:5,z:45,c:6};                         // Создал объект 1
 c=Object.create(b);
 c.cc=23;
 
+
 ccc=Object.create(c);
 
 ccc.x=3;
+Object.freeze(ccc);
+ccc.x=123;
+
+//Object.seal(ccc);
+//Object.preventExtensions(ccc);
+
 ccc.v=24;
 
+delete(ccc.x);
+console.log(Object.isFrozen(ccc));
+console.log(Object.isSealed(ccc));
 console.log(Object.isExtensible(ccc));
 console.log(ccc);
 
