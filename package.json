@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@popperjs/core": "^2.11.5"
+    "@popperjs/core": "^2.11.5",
+    "winjs": "^4.4.3"
   }
 }

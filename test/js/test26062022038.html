@@ -1,3 +1,7 @@
+<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.3/css/ui-dark.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.3/js/base.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.3/js/ui.js"></script>-->
+
 <script src="MyLib.js"></script>
 <script>
 //"use strict";
@@ -5,11 +9,15 @@
 // Object.seal() и Object.freeze()
 
 
+xx=new StayOrGo();
 
-xy = new XY(1,1,111,111);
+xx.goUrl="http://google.com";
 
+zzz=xx.userСhoice();
 
-console.log(xy.dist());
+if (zzz) xx.goUrlF();
+
+console.log();
 
 //for (xxx in xy) console.log(xxx);
 

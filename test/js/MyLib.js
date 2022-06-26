@@ -1,3 +1,19 @@
+
+
+//Предлагаем пользователю перейти сайт google, если пользователь соглашается,то переходим
+function StayOrGo()
+{
+    this.goUrl=window.location;        // Узнать, на какой странице находится пользователь.
+    this.goUrlF=function()
+    {
+        window.location=this.goUrl;    // записываем новое значение в свойство window.location
+    }
+    this.userСhoice=function()
+    {
+        return window.confirm("Желаете перейти на сайт google.com?");  // выводим модальный диалог
+    }
+}
+
 // Конструктор вычисляет расстояние от точки до точки используя теорему Пифагора
 function XY(x1,y1,x2,y2)
  {                                           // Конструктор, хранящий данные координат
@@ -47,3 +63,5 @@ function PointXY()
         return l;                      // возвращаем значение
     }
 }
+
+
