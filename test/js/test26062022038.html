@@ -6,12 +6,16 @@
 
 d = new Array(1,2,3,4,5,"wed");
 
-with(point) {
-    x1=1;
-    y1=1;
-    x2=10;
-    y2=10;
+point = new PointXY();
+
+with (point) {
+x1=1;
+y1=1;
+x2=100;
+y2=100;
 }
+
+
 
 console.log(point.dist());
 //for (xxx in newObject) console.log(xxx);
