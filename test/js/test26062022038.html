@@ -1,19 +1,23 @@
+<script src="MyLib.js"></script>
 <script>
 //"use strict";
-// 4294967295
-// 
+// Object.defineProperty(a,"length",{writable:false});
+// Object.seal() и Object.freeze()
 
-var bb={v:1,f:3,b:6};
+d = new Array(1,2,3,4,5,"wed");
 
+with(point) {
+    x1=1;
+    y1=1;
+    x2=10;
+    y2=10;
+}
 
-var b=new Array(2,3,4,5,6,"ddd");
-
-b["jhvuv"]=23;
-
+console.log(point.dist());
 //for (xxx in newObject) console.log(xxx);
 
 
-console.log(bb["v"]);
+//console.log(d.length);
 
 </script>
 
