@@ -4,21 +4,14 @@
 // Object.defineProperty(a,"length",{writable:false});
 // Object.seal() и Object.freeze()
 
-d = new Array(1,2,3,4,5,"wed");
-
-point = new PointXY();
-
-with (point) {
-x1=1;
-y1=1;
-x2=100;
-y2=100;
-}
 
 
+xy = new XY(1,1,111,111);
 
-console.log(point.dist());
-//for (xxx in newObject) console.log(xxx);
+
+console.log(xy.dist());
+
+//for (xxx in xy) console.log(xxx);
 
 
 //console.log(d.length);
