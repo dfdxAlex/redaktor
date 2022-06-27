@@ -1,4 +1,35 @@
 
+//функция прячет элемент на странице с заданным ID
+function killElement(id)
+{
+    var idUrl = document.getElementById(id);        // получаем ссылку на элемент с заданным ID
+    if (idUrl!==null) {                             // Если есть объект с таким ID
+        idUrl.style.display = "none";               // Добавить новое свойство для элемента
+    } else {
+        console.log("Документ с id=${id} не найден");
+    }
+}
+
+// функция создает кнопку с именем ID, если такой кнопки нет в документе
+function ButtonSet()
+{
+    this.id=null;                             // свойство содержит элемент HTML или null
+    this.idUser="";                           // хранит атрибут id, заданный пользователем
+    this.buttonSearch=function(id)
+    {
+        this.idUser=id;                       // помещаем в свойство заданный пользователем ID аттрибут кнопки
+        this.id=document.getElementById(id);  // поиск элемента html с заданным атрибутом id
+    }
+    this.buttonSet=function()
+    {
+        if (this.id===null) {
+            const btn = document.createElement("button");   // создаем элемент HTML button
+            btn.innerHTML = "Кнопка с id="+this.idUser;     // создаем надпись на кнопке
+            btn.id = this.idUser;                           // добавить id атрибут кнопки
+            document.body.appendChild(btn);                 // установить элемент в конец элемента body
+        }
+    }
+}
 
 //Предлагаем пользователю перейти сайт google, если пользователь соглашается,то переходим
 function StayOrGo()

@@ -1,6 +1,17 @@
-<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.3/css/ui-dark.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.3/js/base.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.3/js/ui.js"></script>-->
+
+<head>
+<style>
+    #sss {
+        float:right;
+    }
+
+
+</style>
+</head>
+<body>
+    <h1 id="rrr">Привет</h1>
+</body>
+
 
 <script src="MyLib.js"></script>
 <script>
@@ -8,21 +19,26 @@
 // Object.defineProperty(a,"length",{writable:false});
 // Object.seal() и Object.freeze()
 
+x = new ButtonSet();
 
-xx=new StayOrGo();
+x.buttonSearch("tt");
+x.buttonSet();
 
-xx.goUrl="http://google.com";
+x.buttonSearch("sss");
+x.buttonSet();
 
-zzz=xx.userСhoice();
+killElement("tt");
+killElement("sss");
+killElement("rrr");
+//console.log(x.id);
 
-if (zzz) xx.goUrlF();
-
-console.log();
 
 //for (xxx in xy) console.log(xxx);
 
 
-//console.log(d.length);
+//console.log(xx.id);
 
 </script>
+
+
 
