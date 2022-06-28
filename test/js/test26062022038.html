@@ -16,12 +16,25 @@
 // Object.seal() и Object.freeze()
 
 mas=[3,4,5,6,4,3,2,3];
+mas4=[3,4,5,6,4,3,2,3];
+mas3=[3,4,5,6,4];
+
+mas5=[,,,,,,,,,,,,,,,,,,,,,,,];
+mas5["v"]=3434;
+mas5["n"]=345234;
+mas5["cc"]=2543;
+mas5["gg"]="etretwre";
+
 
 mas2={v:3434,n:345234,cc:2543,gg:"etretwre"};
 
+xx = new MasToMas();
 
 
-console.log();
+
+xx.objAnalysis(mas5,mas2);
+
+console.log(xx,mas5);
 
 
 

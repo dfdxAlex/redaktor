@@ -1,4 +1,49 @@
 //////////////////////////////////////////////////////////////////////////////////
+// функция сравнивает массивы и объекты и анализирует результат
+function MasToMas()
+{
+    this.obj1Length = 0;       // хранит длину первого объекта
+    this.obj2Length = 0;       // хранит длину первого объекта
+    this.info1="";             // хранит вывод касательно длины объектов
+    this.info2="";             // хранит вывод касательно вхождения второго объекта в первый
+    this.info3="";             // хранит вывод касательно вхождения первого объекта во второй
+    this.info4="";             // хранит вывод касательно равенства объектов по свойствам
+    this.info5="";             // хранит результат сравнения
+
+    this.objAnalysis = function(obj1,obj2)               // функция анализирует объекты
+    {
+    for (xxx in obj1) 
+        if (obj1[xxx]!==undefined) this.obj1Length++;    // определяем длину первого объекта
+    
+    for (xxx in obj2) 
+        if (obj2[xxx]!==undefined) this.obj2Length++;    // определяем длину второго объекта
+
+    if (this.obj1Length>this.obj2Length) this.info1="первый объект больше";          // сравниваем длины объектов и помещаем информацию
+        else if (this.obj1Length<this.obj2Length) this.info1="второй объект больше"; // в свойство info1
+            else this.info1="объекты одинаковы по длине";
+
+    if (this.obj1Length>this.obj2Length)                            // если объект 2 меньше объекта 1
+        for (xxx in obj2)                                           // то проверяем содержит ли объект 1 все свойства объекта 2
+            if (obj1[xxx]!==obj2[xxx])
+                this.info2="Объект 2 не входит в объект 1";
+
+    if (this.obj1Length<this.obj2Length)                            // если объект 2 больше объекта 1
+        for (xxx in obj1)                                           // то проверяем содержит ли объект 2 все свойства объекта 1
+            if (obj1[xxx]!==obj2[xxx])
+                this.info3="Объект 1 не входит в объект 2";
+
+    if (this.obj1Length==this.obj2Length)                           // если объекты одинаковой длины
+        for (xxx in obj1)                                           // проверяем есть ли все свойства одного объекта во втором объекте
+            if (obj1[xxx]!==obj2[xxx])
+                this.info4="Объект 1 и 2 не равны";
+    
+    // Анализируем результат сравнений и делаем вывод, записываем его в свойство info5
+    if (this.obj1Length>this.obj2Length && this.info2=="") this.info5="Объект 2 входит в объект 1"; 
+    if (this.obj1Length<this.obj2Length && this.info3=="") this.info5="Объект 1 входит в объект 2"; 
+    if (this.obj1Length==this.obj2Length && this.info4=="") this.info5="Объект 1 равен по свойствам объекту 2"; 
+    }                  
+}
+
 // функция преобразовывает массив в объект
 function masToObj(mas)
 {
@@ -16,7 +61,7 @@ function masToAssoc(mas)
     var masRez=[];                                      // создаем новый локальный массив
     for (xxx in mas) {                                  // просматриваем все элементы массива или объекта
         if (mas[xxx]!==undefined) {                     // проверяем не является ли элемент undefined
-        masRez[String(xxx)]=mas[xxx];                   // если элемент определен, то скопировать его в массив
+        masRez[xxx]=mas[xxx];                   // если элемент определен, то скопировать его в массив
         }
     }
     return masRez;
