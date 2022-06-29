@@ -1,3 +1,47 @@
+// функция создает массив с несколькими прородителями
+function masSum5(obj1,obj2,obj3,obj4,obj5)
+{
+    var objReturn = [];                  //создается пустой стартовый объект
+
+        for (xxx in obj1)                // перебираются все свойства первого объекта
+            objReturn[xxx]=obj1[xxx];
+     
+        for (xxx in obj2)                // перебираются все свойства первого объекта
+            objReturn[xxx]=obj2[xxx];
+
+        for (xxx in obj3)                // перебираются все свойства первого объекта
+            objReturn[xxx]=obj3[xxx];
+
+        for (xxx in obj4)                // перебираются все свойства первого объекта
+            objReturn[xxx]=obj4[xxx];
+
+        for (xxx in obj5)                // перебираются все свойства первого объекта
+            objReturn[xxx]=obj5[xxx];
+
+    return objReturn;
+}
+// функция создает объект с несколькими прородителями
+function extend5(obj1,obj2,obj3,obj4,obj5)
+{
+    var objReturn = {};                  //создается пустой стартовый объект
+
+        for (xxx in obj1)                // перебираются все свойства первого объекта
+            objReturn[xxx]=obj1[xxx];
+     
+        for (xxx in obj2)                // перебираются все свойства первого объекта
+            objReturn[xxx]=obj2[xxx];
+
+        for (xxx in obj3)                // перебираются все свойства первого объекта
+            objReturn[xxx]=obj3[xxx];
+
+        for (xxx in obj4)                // перебираются все свойства первого объекта
+            objReturn[xxx]=obj4[xxx];
+
+        for (xxx in obj5)                // перебираются все свойства первого объекта
+            objReturn[xxx]=obj5[xxx];
+
+    return objReturn;
+}
 //////////////////////////////////////////////////////////////////////////////////
 // функция сравнивает массивы и объекты и анализирует результат
 function MasToMas()
