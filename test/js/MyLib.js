@@ -8,7 +8,8 @@ function masInit2(x,y,z)
         for (j=0; j<y; j++)
             mas[i][j]=z;
     return mas;
-}
+};
+
 // функция создает массив с несколькими прородителями
 function masSum5(obj1,obj2,obj3,obj4,obj5)
 {
@@ -201,7 +202,8 @@ function StayOrGo()
     {
         window.location=this.goUrl;    // записываем новое значение в свойство window.location
     }
-    this.userСhoice=function()
+    
+    this.userChoice=function()
     {
         return window.confirm("Желаете перейти на сайт google.com?");  // выводим модальный диалог
     }
