@@ -6,22 +6,17 @@
 
     <script>
 
-// mas3=mas.map(function(x) {return;};    передаем все параметры, должен быть return     
+// mas3=mas.map(function(x) {return;};    передаем все параметры, должен быть return - возвращает массив значений  
 // mas3=mas.filter(function(x) {return;};    передаем все параметры, должен быть return   boolean
-// mas3=mas.every(function(x) {return;};    передаем все параметры, должен быть return c с условием. Вернет true если все элементы выполняют условие
-    
-mas = [1,2,3,4,5];
-
+// mas3=mas.every(function(x) {return;};    передаем все параметры, должен быть return c условием. Вернет true если все элементы выполняют условие
+// mas3=mas.some(function(x) {return;};    передаем все параметры, должен быть return c с условием. Вернет true хоть один вариант сработал
+// reduce() и reduceRight() mas3=mas.reduce(function (x,y),n);
+// indexOf() и lastIndexOf() поиск элемента и возврат его индекса
+mas = [1,2,3,4,5,2];
+mas3=[];
 mas2 = ['we','wrg','er','wrt','ety','tyu','ert','rty','tyu','wre','dfg','dgf','tyh'];
 
-mas3=mas.filter(function (x){
-     return (x<3);
-});
-
-
-
-
-
+mas3 = mas.lastIndexOf(2);
 
 console.log(mas3);
 
