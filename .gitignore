@@ -19,4 +19,4 @@ npm.cmd
 DFDX/style_test*.css
 DFDX/test*.*
 DFDX/*.cgi
-node_modules/*.*
+/node_modules/*
