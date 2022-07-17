@@ -13,7 +13,7 @@ require "class.php";
   $statistik = new statistic();
   $header = new Header();
   $futter = new futter();
-  $nonTemplates = new NonTemplates(); //
+  $nonTemplates = new NonTemplates(); 
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
