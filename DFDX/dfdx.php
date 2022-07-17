@@ -8,7 +8,7 @@ session_start();
 
 require "funcii.php";
 require "functionDfdx.php";
-require "image/swapImages.php";
+require "image/swapImages.php"; //
 
 // подключение автозагрузчика от PHPMailer, библиотека инсталлирована с помощью Composer
 // podłączenie autoloadera z PHPMailera, biblioteka jest instalowana za pomocą Composera
