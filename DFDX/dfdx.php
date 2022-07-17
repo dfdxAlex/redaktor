@@ -7,7 +7,7 @@ namespace class\redaktor;
 session_start();
 
 require "funcii.php";
-require "functionDfdx.php"; 
+require "functionDfdx.php"; ////
 require "image/swapImages.php"; 
 
 // подключение автозагрузчика от PHPMailer, библиотека инсталлирована с помощью Composer
