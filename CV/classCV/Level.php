@@ -29,4 +29,11 @@ class Level
     {
         return $_SESSION['level']=0;
     }
+
+    static function levelHunt()
+    {
+        if (isset($_REQUEST['next'])) self::levelInc();
+        if (isset($_REQUEST['back'])) self::levelDec();
+        if (isset($_REQUEST['main'])) self::levelReset();
+    }
 }

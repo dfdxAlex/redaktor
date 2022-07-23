@@ -18,9 +18,13 @@ use class\nonBD\HtmlFutter;
 use classCV\Level;
 // класс контролирующий выбранный пользователем язык интерфейса
 use classCV\SelectLanguage;
+// класс подставляет слово в зависимости от выбранного языка интерфейса
+use classCV\Translation;
 
 // класс ставит кнопки выбора языка интерфейса
 use classCV\ButtonLanguage;
+// класс выводит кнопки навигации вперед, назад, на главную
+use classCV\ButtonMenuUp;
 
 // Создает объект в котором хранится информация о текущем шаге пользователя
 // Конструктор проверяет существует ли переменная сессии и если нет, то создает её.
@@ -30,17 +34,20 @@ $level = new Level();
 $language = new SelectLanguage();
 // метод отслеживает массив $_REQUEST['en'...]
 SelectLanguage::setLenguage();
+// метод слушает $_REQUEST[] на наличие команд от меню навигационного
+Level::levelHunt();
 
-
+//////////////////////////////////////////////начало страницы body/////////////////////////////////////////////
 //сгенерировать верхнюю часть сайта header
 echo new HtmlHead('CSS/cv.css','CV');
 ///////////////////////////////////////////// 
-
 // поставить кнопки выбора языка интерфейса
 echo new ButtonLanguage();
+// меню навигации по сайту
+echo new ButtonMenuUp();
 
 
-echo SelectLanguage::getLenguage();
+echo new Level;
 
 
 // установка futter

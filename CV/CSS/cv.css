@@ -1,4 +1,21 @@
-* {
-  background-color: antiquewhite;
+body {
+  background: #466368;
+  background: -webkit-gradient(linear, left top, left bottom, from(#648880), to(#293f50));
+  background: linear-gradient(#648880, #293f50);
+  border-radius: 6px;
+  height: 1000px;
+}
+
+.button-language {
+  float: right;
+  background: #466368;
+  background: -webkit-gradient(linear, left top, left bottom, from(#648880), to(#293f50));
+  background: linear-gradient(#648880, #293f50);
+  border-radius: 6px;
+  color: #c2d5e2;
+}
+
+.menu-nav {
+  float: left;
 }
 /*# sourceMappingURL=cv.css.map */
