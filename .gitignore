@@ -20,3 +20,6 @@ DFDX/style_test*.css
 DFDX/test*.*
 DFDX/*.cgi
 /node_modules/*
+CV/class/*
+/CV/vendor/
+CV/compos*.*

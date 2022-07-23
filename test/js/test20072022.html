@@ -1,0 +1,32 @@
+
+<head>
+    </head>
+    <body>
+    <script src="MyLib.js"></script>
+
+    <script>
+
+function abs(p1,p2,p3,p4)
+{
+    console.log(p1,p2,p3,p4);
+}
+
+function b(parametr)
+{
+    abs(
+        parametr.p1 || 1,
+        parametr.p2 || 1,
+        parametr.p3 || 1,
+        parametr.p4 || 1
+    );
+}
+
+console.log(b({p4:4,p3:3,p2:2,p1:1}));
+
+
+
+</script>
+
+</body>
+
+
