@@ -19,21 +19,28 @@ use classCV\Level;
 // класс контролирующий выбранный пользователем язык интерфейса
 use classCV\SelectLanguage;
 
-
-//сгенерировать верхнюю часть сайта header
-echo new HtmlHead('CSS/cv.css','CV');
-///////////////////////////////////////////// 
+// класс ставит кнопки выбора языка интерфейса
+use classCV\ButtonLanguage;
 
 // Создает объект в котором хранится информация о текущем шаге пользователя
 // Конструктор проверяет существует ли переменная сессии и если нет, то создает её.
 $level = new Level();
 
 // если была нажата кнопка выбора языка интерфейса пользователя, то зафиксировать это
-$lenguage = new SelectLanguage();
+$language = new SelectLanguage();
+// метод отслеживает массив $_REQUEST['en'...]
 SelectLanguage::setLenguage();
 
 
+//сгенерировать верхнюю часть сайта header
+echo new HtmlHead('CSS/cv.css','CV');
+///////////////////////////////////////////// 
 
+// поставить кнопки выбора языка интерфейса
+echo new ButtonLanguage();
+
+
+echo SelectLanguage::getLenguage();
 
 
 // установка futter
