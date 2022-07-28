@@ -35,5 +35,6 @@ class Level
         if (isset($_REQUEST['next'])) self::levelInc();
         if (isset($_REQUEST['back'])) self::levelDec();
         if (isset($_REQUEST['main'])) self::levelReset();
+        if ($_SESSION['level']<0) $_SESSION['level']=0;
     }
 }
