@@ -23,24 +23,26 @@ class UserName
     }
     public function nameForm()
     {
+        
         echo '
+        <script src="js/MyLib.js"></script>
             <div class="name-form">
                 <section class="container">
                     <div class="row">
                         <div class="col-12">
-                            <p class="mesage-form-name-CV">'. (string) new Translation('Введите имя и фамилию').'</p> 
+                            <p>'. (string) new Translation('Введите имя и фамилию').'</p> 
                         </div>
                     </div>
                     <div class="row">
                     <form action="#" method="post">
-                        <div class="col-4 pole-boot-col-name-CV">
-                            <input type="text" name="name" value="'.$this->getName().'" class="pole-text-name-CV">
+                        <div class="col-4">
+                            <input type="text" name="name" value="'.$this->getName().'">
                         </div>
-                        <div class="col-4 pole-boot-col-name-CV">
-                            <input type="text" name="surname" value="'.$this->getSurname().'" class="pole-text-name-CV">
+                        <div class="col-4">
+                            <input type="text" name="surname" value="'.$this->getSurname().'">
                         </div>
-                        <div class="col-4 pole-boot-col-name-CV">
-                            <input type="submit" name="nameFoCV" value="'. (string) new Translation('Отправить').'" class="btn btn-secondary class-btn pole-text-name-CV">
+                        <div class="col-4">
+                            <input type="submit" name="nameFoCV" value="'. (string) new Translation('Отправить').'" class="btn btn-secondary" >
                         </div>
                     </form>
                     </div>

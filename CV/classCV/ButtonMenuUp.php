@@ -9,9 +9,9 @@ class ButtonMenuUp
         return '
         <nav class="btn button-language menu-nav">
             <form action="#" method="post">
-                <input type="submit" name="next" value="'.new Translation('Вперед').'" class="btn button-language">
-                <input type="submit" name="back" value="'.new Translation('Назад').'" class="btn button-language">
-                <input type="submit" name="main" value="'.new Translation('На главную').'" class="btn button-language">
+                <input type="submit" name="next" value="'.new Translation('Вперед').'">
+                <input type="submit" name="back" value="'.new Translation('Назад').'">
+                <input type="submit" name="main" value="'.new Translation('На главную').'">
             </form>
         </nav>
         ';

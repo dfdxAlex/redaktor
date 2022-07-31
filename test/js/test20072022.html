@@ -6,25 +6,20 @@
 
     <script>
 
-var x=0;
+// length
 
-function qqq()
+function qqq(q,w,e,r)
 {
-    var x=4;
-    function f()
-    {
-        var x=45;
-        var y=25;
-        function f2()
-        {
-            return x;
-        }
-        return f2();
-    }
-    return f();
+    var start = arguments.callee.length;
+    var fact = arguments.length;
+    if (start<fact) console.log("Функция получила на "+(fact-start)+" параметров больше");
+    if (start>fact) console.log("Функция получила на "+(0-fact+start)+" параметров меньше");
+    if (start==fact) console.log("Функция получила необходимое колличество параметров");
 }
 
-console.log(qqq());
+qqq(2,2,2,2,4,5,6,7,6,5,4,3);
+
+//console.log(qqq(1,2,3,4,5,6,7,6,5,4,3,3));
 
 
 

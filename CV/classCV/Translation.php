@@ -13,11 +13,55 @@ class Translation
     {
         return match (true) {
 
+            $this->str=='Опишите свой опыт' && SelectLanguage::getLenguage()=='ru' => 'Опишите свой опыт',
+            $this->str=='Опишите свой опыт' && SelectLanguage::getLenguage()=='ua' => 'Опишіть свій досвід',
+            $this->str=='Опишите свой опыт' && SelectLanguage::getLenguage()=='pl' => 'Opisz swoje doświadczenie',
+            $this->str=='Опишите свой опыт' && SelectLanguage::getLenguage()=='en' => 'Describe your experience',
+
+            $this->str=='Опишите свои умения' && SelectLanguage::getLenguage()=='ru' => 'Опишите свои умения',
+            $this->str=='Опишите свои умения' && SelectLanguage::getLenguage()=='ua' => 'Опишіть свої вміння',
+            $this->str=='Опишите свои умения' && SelectLanguage::getLenguage()=='pl' => 'Opisz swoje umiejętności',
+            $this->str=='Опишите свои умения' && SelectLanguage::getLenguage()=='en' => 'Describe your skills',
+
+            $this->str=='Почта' && SelectLanguage::getLenguage()=='ru' => 'Почта',
+            $this->str=='Почта' && SelectLanguage::getLenguage()=='ua' => 'Пошта',
+            $this->str=='Почта' && SelectLanguage::getLenguage()=='pl' => 'Poczta',
+            $this->str=='Почта' && SelectLanguage::getLenguage()=='en' => 'Mail',
+
+            $this->str=='Телефон' && SelectLanguage::getLenguage()=='ru' => 'Телефон',
+            $this->str=='Телефон' && SelectLanguage::getLenguage()=='ua' => 'Телефон',
+            $this->str=='Телефон' && SelectLanguage::getLenguage()=='pl' => 'Telefon',
+            $this->str=='Телефон' && SelectLanguage::getLenguage()=='en' => 'Telephone',
+
+            $this->str=='Адрес' && SelectLanguage::getLenguage()=='ru' => 'Адрес',
+            $this->str=='Адрес' && SelectLanguage::getLenguage()=='ua' => 'Адреса',
+            $this->str=='Адрес' && SelectLanguage::getLenguage()=='pl' => 'Adres',
+            $this->str=='Адрес' && SelectLanguage::getLenguage()=='en' => 'Address',
+
+            $this->str=='Ссылка на картинку' && SelectLanguage::getLenguage()=='ru' => 'Ссылка на картинку:',
+            $this->str=='Ссылка на картинку' && SelectLanguage::getLenguage()=='ua' => 'Посилання на картинку:',
+            $this->str=='Ссылка на картинку' && SelectLanguage::getLenguage()=='pl' => 'Link do zdjęcia:',
+            $this->str=='Ссылка на картинку' && SelectLanguage::getLenguage()=='en' => 'Link to picture:',
+
+            $this->str=='Выбрать' && SelectLanguage::getLenguage()=='ru' => 'Выбрать',
+            $this->str=='Выбрать' && SelectLanguage::getLenguage()=='ua' => 'Вибрати',
+            $this->str=='Выбрать' && SelectLanguage::getLenguage()=='pl' => 'Wybierac',
+            $this->str=='Выбрать' && SelectLanguage::getLenguage()=='en' => 'Choose',
+
+            $this->str=='Выбрать фотографию' && SelectLanguage::getLenguage()=='ru' => 'Выбрать фотографию',
+            $this->str=='Выбрать фотографию' && SelectLanguage::getLenguage()=='ua' => 'Вибрати фотографію',
+            $this->str=='Выбрать фотографию' && SelectLanguage::getLenguage()=='pl' => 'Wybierz zdjęcie',
+            $this->str=='Выбрать фотографию' && SelectLanguage::getLenguage()=='en' => 'Choose photo',
 
             $this->str=='Отправить' && SelectLanguage::getLenguage()=='ru' => 'Отправить',
             $this->str=='Отправить' && SelectLanguage::getLenguage()=='ua' => 'Відправити',
             $this->str=='Отправить' && SelectLanguage::getLenguage()=='pl' => 'Wysłać',
             $this->str=='Отправить' && SelectLanguage::getLenguage()=='en' => 'Send',
+
+            $this->str=='Очистить' && SelectLanguage::getLenguage()=='ru' => 'Очистить',
+            $this->str=='Очистить' && SelectLanguage::getLenguage()=='ua' => 'Очистити',
+            $this->str=='Очистить' && SelectLanguage::getLenguage()=='pl' => 'Сzysta',
+            $this->str=='Очистить' && SelectLanguage::getLenguage()=='en' => 'Clear',
 
             $this->str=='Имя' && SelectLanguage::getLenguage()=='ru' => 'Имя',
             $this->str=='Имя' && SelectLanguage::getLenguage()=='ua' => 'Ім\'я',
