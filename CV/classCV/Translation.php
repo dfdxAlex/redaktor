@@ -13,6 +13,11 @@ class Translation
     {
         return match (true) {
 
+            $this->str=='Опишите своё образование' && SelectLanguage::getLenguage()=='ru' => 'Опишите своё образование',
+            $this->str=='Опишите своё образование' && SelectLanguage::getLenguage()=='ua' => 'Опишіть свою освіту',
+            $this->str=='Опишите своё образование' && SelectLanguage::getLenguage()=='pl' => 'Opisz swoje wykształcenie',
+            $this->str=='Опишите своё образование' && SelectLanguage::getLenguage()=='en' => 'Describe your education',
+
             $this->str=='Опишите свой опыт' && SelectLanguage::getLenguage()=='ru' => 'Опишите свой опыт',
             $this->str=='Опишите свой опыт' && SelectLanguage::getLenguage()=='ua' => 'Опишіть свій досвід',
             $this->str=='Опишите свой опыт' && SelectLanguage::getLenguage()=='pl' => 'Opisz swoje doświadczenie',

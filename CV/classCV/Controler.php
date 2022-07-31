@@ -43,10 +43,15 @@ class Controler
             $scills->skillsHunt();
             echo $scills;
         }
-        if ($_SESSION['level']==5) {                   // Создать объект для работы со страницей ввода скилов
+        if ($_SESSION['level']==5) {                   // Создать объект для работы со страницей ввода опыта
             $experience = new Experience();
             $experience->experienceHunt();
             echo $experience;
+        }
+        if ($_SESSION['level']==6) {                   // Создать объект для работы со страницей ввода образования
+            $education = new Education();
+            $education->educationHunt();
+            echo $education;
         }
     }
 }
@@ -63,3 +68,5 @@ class Controler
 //$_SESSION['Linkedln']=$_REQUEST['Linkedln'];  Linkedln
 //$_SESSION['git']=$_REQUEST['git'];         гит
 //$_SESSION['skills'] Содержит описание скилов
+//$_SESSION['experience'] опыт
+//$_SESSION['education'] образование

@@ -1,7 +1,7 @@
 <?php
 namespace classCV;
 
-// класс хранит информацию об контактных данных 
+// класс хранит информацию об опыте
 class Experience
 {
     public function __construct()

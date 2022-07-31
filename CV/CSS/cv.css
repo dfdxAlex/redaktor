@@ -1,20 +1,20 @@
-.form-skills, .form-experience {
+.form-skills, .form-experience, .form-education {
   float: left;
   margin-top: 150px;
   width: 400px;
 }
 
-.form-skills p, .form-experience p {
+.form-skills p, .form-experience p, .form-education p {
   font-size: 25px;
   color: black;
 }
 
-.form-skills textarea, .form-experience textarea {
+.form-skills textarea, .form-experience textarea, .form-education textarea {
   height: 150px;
   width: 500px;
 }
 
-.form-skills input, .form-experience input {
+.form-skills input, .form-experience input, .form-education input {
   width: 150px;
   text-align: center;
   height: 40px;
