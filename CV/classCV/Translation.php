@@ -13,6 +13,36 @@ class Translation
     {
         return match (true) {
 
+            $this->str=='Читаю, пишу и разговариваю' && SelectLanguage::getLenguage()=='ru' => 'Читаю, пишу и разговариваю',
+            $this->str=='Читаю, пишу и разговариваю' && SelectLanguage::getLenguage()=='ua' => 'Читаю, пишу та розмовляю',
+            $this->str=='Читаю, пишу и разговариваю' && SelectLanguage::getLenguage()=='pl' => 'Czytanie, pisanie i mówienie',
+            $this->str=='Читаю, пишу и разговариваю' && SelectLanguage::getLenguage()=='en' => 'Reading, writing and speaking',
+
+            $this->str=='Могу читать и разговаривать' && SelectLanguage::getLenguage()=='ru' => 'Могу читать и разговаривать',
+            $this->str=='Могу читать и разговаривать' && SelectLanguage::getLenguage()=='ua' => 'Можу читати та розмовляти',
+            $this->str=='Могу читать и разговаривать' && SelectLanguage::getLenguage()=='pl' => 'Umiem czytać i mówić',
+            $this->str=='Могу читать и разговаривать' && SelectLanguage::getLenguage()=='en' => 'I can read and speak',
+
+            $this->str=='Читаю документацию с переводчиком' && SelectLanguage::getLenguage()=='ru' => 'Читаю документацию с переводчиком',
+            $this->str=='Читаю документацию с переводчиком' && SelectLanguage::getLenguage()=='ua' => 'Читаю документацію з перекладачем',
+            $this->str=='Читаю документацию с переводчиком' && SelectLanguage::getLenguage()=='pl' => 'Czytanie dokumentacji z tłumaczem',
+            $this->str=='Читаю документацию с переводчиком' && SelectLanguage::getLenguage()=='en' => 'Reading documentation with a translator',
+
+            $this->str=='Свободное владение языком' && SelectLanguage::getLenguage()=='ru' => 'Свободное владение языком',
+            $this->str=='Свободное владение языком' && SelectLanguage::getLenguage()=='ua' => 'Вільне володіння мовою',
+            $this->str=='Свободное владение языком' && SelectLanguage::getLenguage()=='pl' => 'Biegła znajomość języka',
+            $this->str=='Свободное владение языком' && SelectLanguage::getLenguage()=='en' => 'Fluency in the language',
+
+            $this->str=='Родной' && SelectLanguage::getLenguage()=='ru' => 'Родной',
+            $this->str=='Родной' && SelectLanguage::getLenguage()=='ua' => 'Рідний',
+            $this->str=='Родной' && SelectLanguage::getLenguage()=='pl' => 'Rodzinny',
+            $this->str=='Родной' && SelectLanguage::getLenguage()=='en' => 'Native',
+
+            $this->str=='Уровень владения языком' && SelectLanguage::getLenguage()=='ru' => 'Уровень владения языком',
+            $this->str=='Уровень владения языком' && SelectLanguage::getLenguage()=='ua' => 'Рівень володіння мовою',
+            $this->str=='Уровень владения языком' && SelectLanguage::getLenguage()=='pl' => 'Znajomość języka',
+            $this->str=='Уровень владения языком' && SelectLanguage::getLenguage()=='en' => 'Language Proficiency',
+
             $this->str=='Опишите своё образование' && SelectLanguage::getLenguage()=='ru' => 'Опишите своё образование',
             $this->str=='Опишите своё образование' && SelectLanguage::getLenguage()=='ua' => 'Опишіть свою освіту',
             $this->str=='Опишите своё образование' && SelectLanguage::getLenguage()=='pl' => 'Opisz swoje wykształcenie',

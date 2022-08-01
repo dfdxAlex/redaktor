@@ -53,6 +53,13 @@ class Controler
             $education->educationHunt();
             echo $education;
         }
+        if ($_SESSION['level']==7) {                   // Создать объект для работы со страницей ввода информации об языках
+            $languages = new Languages();
+            echo $languages->saveLevl();
+            $languages->languagesNumer();
+            echo $languages;
+            //var_dump ($_REQUEST);
+        }
     }
 }
 
@@ -70,3 +77,6 @@ class Controler
 //$_SESSION['skills'] Содержит описание скилов
 //$_SESSION['experience'] опыт
 //$_SESSION['education'] образование
+//$_SESSION['languages_numer'] число позиций в языках
+//$_SESSION['languages(1-n)'] информация о языках (сам язык)
+//$_SESSION['languages-level'] уровень владения 
