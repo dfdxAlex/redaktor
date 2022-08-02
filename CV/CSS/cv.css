@@ -1,10 +1,45 @@
-.form-languages {
+.create-cv {
+  float: left;
+  margin: 30mm 45mm 30mm 45mm;
+  margin-top: 10px;
+  height: 29.7cm;
+  width: 21cm;
+  background-color: #098b9f;
+}
+
+.create-cv .name p {
+  margin-top: 20px;
+  font-size: 45px;
+  font-weight: 900;
+  line-height: 30px;
+  color: #fefbfb;
+}
+
+.create-cv .address-cv-create p {
+  margin-top: 10px;
+  font-size: 16px;
+  /*font-weight: 900;*/
+  line-height: 15px;
+  color: #fefbfb;
+}
+
+.create-cv .address-cv-create p:nth-child(odd) {
+  font-weight: 900;
+  line-height: 10px;
+}
+
+.btn-load-cv {
+  float: left;
+  margin-top: 100px;
+}
+
+.form-languages, .form-certificates {
   float: left;
   margin-top: 150px;
   width: 400px;
 }
 
-.form-languages input[name="form_plus"], .form-languages input[name="form_minus"] {
+.form-languages input[name="form_plus"], .form-languages input[name="form_minus"], .form-certificates input[name="form_plus"], .form-certificates input[name="form_minus"] {
   margin-top: 50px;
   font-size: 25px;
   margin-left: 5px;
@@ -13,18 +48,23 @@
   width: 40px;
 }
 
-.form-languages ul {
+.form-languages ul, .form-certificates ul {
   margin-top: 5px;
 }
 
-.form-languages li {
+.form-languages li, .form-certificates li {
   text-align: left;
 }
 
-.form-languages input[name*="form_text"] {
+.form-languages input[name*="form_text"], .form-certificates input[name*="form_text"] {
   width: 100%;
   height: 38px;
   border-radius: 5px;
+}
+
+.form-languages p, .form-certificates p {
+  font-size: 25px;
+  color: #c2d5e2;
 }
 
 .form-skills, .form-experience, .form-education {
@@ -144,7 +184,7 @@ body {
   background: -webkit-gradient(linear, left top, left bottom, from(#648880), to(#293f50));
   background: linear-gradient(#648880, #293f50);
   border-radius: 6px;
-  height: 1000px;
+  height: 1500px;
   width: 100%;
 }
 

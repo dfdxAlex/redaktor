@@ -4,8 +4,6 @@ namespace classCV;
 // класс хранит информацию об Языках
 class Languages
 {
-    //use \class\nonBD\Button;
-
     public function __construct()
     {
         if (!isset($_SESSION['languages_numer'])) $_SESSION['languages_numer']=1; // число полей для заполнения
@@ -19,17 +17,21 @@ class Languages
     public function __toString()
     {
         $formLang='';
+        
         for($i=0; $i<$_SESSION['languages_numer']; $i++) {
+            if ($_SESSION['languages-level'.$i]=='') $nameLevelButton=(string) new Translation('Уровень владения языком');
+            else $nameLevelButton = $_SESSION['languages-level'.$i];
+
             $formLang.='   
             <div class="row">
-            <div class="col-4">
+            <div class="col-8">
                 <input type="text" name="form_text'.$i.'" value="'.$_SESSION['languages'.$i].'">
             </div>   
 
             <div class="col-4">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    '.(string) new Translation('Уровень владения языком').'
+                    '.$nameLevelButton.'
                     </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new Translation('Родной').'"></li>
@@ -40,18 +42,17 @@ class Languages
                 </ul>
                 </div>
             </div> 
-
-            <div class="col-4">
-                '.$_SESSION['languages-level'.$i].'
-            </div>   
-             
             </div>
             ';
         }
 
-
         return '
             <section class="container-fluid form-languages">
+                <div class="row">
+                    <div class="col-12">
+                        <p>'.(string) new Translation('Уровень владения языком').'</p>
+                    </div>
+                </div>
                 <form action="#" method="post">
                 '.$formLang.'
                     <div class="row">
@@ -72,9 +73,15 @@ class Languages
 
     public function languagesNumer()
     {
-        if (isset($_REQUEST['form_plus'])) $_SESSION['languages_numer']++;
+        if (isset($_REQUEST['form_plus'])) {
+            $_SESSION['languages_numer']++;
+            if (!isset($_SESSION['languages-level'.$_SESSION['languages_numer']]))
+                $_SESSION['languages-level'.$_SESSION['languages_numer']]='';
+                $_SESSION['languages'.$_SESSION['languages_numer']]='';
+        }
         else if (isset($_REQUEST['form_minus'])) $_SESSION['languages_numer']--;
         if ($_SESSION['languages_numer']<0) $_SESSION['languages_numer']=0;
+        //$this->saveLevl();
     }
 
     public function saveLevl()

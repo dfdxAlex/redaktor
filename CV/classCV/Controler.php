@@ -55,10 +55,19 @@ class Controler
         }
         if ($_SESSION['level']==7) {                   // Создать объект для работы со страницей ввода информации об языках
             $languages = new Languages();
-            echo $languages->saveLevl();
+            $languages->saveLevl();
             $languages->languagesNumer();
             echo $languages;
-            //var_dump ($_REQUEST);
+        }
+        if ($_SESSION['level']==8) {                   // Создать объект для работы со страницей ввода информации об языках
+            $certificates = new Certificates();
+            $certificates->certificatesLevl();
+            $certificates->certificatesNumer();
+            echo $certificates;
+        }
+        if ($_SESSION['level']==9) {                   // генерируем CV
+            $cvCreate = new CVCreate();
+            echo $cvCreate;
         }
     }
 }
@@ -80,3 +89,5 @@ class Controler
 //$_SESSION['languages_numer'] число позиций в языках
 //$_SESSION['languages(1-n)'] информация о языках (сам язык)
 //$_SESSION['languages-level'] уровень владения 
+//$_SESSION['certificates_numer'] число полей сертификатов
+//$_SESSION['certificates_name'.$i] содержимое полей сертификатов

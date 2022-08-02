@@ -12,6 +12,16 @@ class Translation
     public function __toString()
     {
         return match (true) {
+            
+            $this->str=='Сертификаты, допуски, разрешения' && SelectLanguage::getLenguage()=='ru' => 'Сертификаты, допуски, разрешения',
+            $this->str=='Сертификаты, допуски, разрешения' && SelectLanguage::getLenguage()=='ua' => 'Сертифікати, допуски, дозволи',
+            $this->str=='Сертификаты, допуски, разрешения' && SelectLanguage::getLenguage()=='pl' => 'Certyfikaty, atesty, zezwolenia',
+            $this->str=='Сертификаты, допуски, разрешения' && SelectLanguage::getLenguage()=='en' => 'Certificates, approvals, permits',
+
+            $this->str=='Скачать CV' && SelectLanguage::getLenguage()=='ru' => 'Скачать CV',
+            $this->str=='Скачать CV' && SelectLanguage::getLenguage()=='ua' => 'Завантажити CV',
+            $this->str=='Скачать CV' && SelectLanguage::getLenguage()=='pl' => 'Pobierz CV',
+            $this->str=='Скачать CV' && SelectLanguage::getLenguage()=='en' => 'Download CV',
 
             $this->str=='Читаю, пишу и разговариваю' && SelectLanguage::getLenguage()=='ru' => 'Читаю, пишу и разговариваю',
             $this->str=='Читаю, пишу и разговариваю' && SelectLanguage::getLenguage()=='ua' => 'Читаю, пишу та розмовляю',
@@ -61,7 +71,7 @@ class Translation
             $this->str=='Почта' && SelectLanguage::getLenguage()=='ru' => 'Почта',
             $this->str=='Почта' && SelectLanguage::getLenguage()=='ua' => 'Пошта',
             $this->str=='Почта' && SelectLanguage::getLenguage()=='pl' => 'Poczta',
-            $this->str=='Почта' && SelectLanguage::getLenguage()=='en' => 'Mail',
+            $this->str=='Почта' && SelectLanguage::getLenguage()=='en' => 'Email',
 
             $this->str=='Телефон' && SelectLanguage::getLenguage()=='ru' => 'Телефон',
             $this->str=='Телефон' && SelectLanguage::getLenguage()=='ua' => 'Телефон',
