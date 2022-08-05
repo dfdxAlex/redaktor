@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+//declare(strict_types=1);
 
 session_start();
 
@@ -37,6 +37,38 @@ SelectLanguage::setLenguage();
 echo new HtmlHead('CSS/cv.css','CV');
 ///////////////////////////////////////////// 
 
+if (isset($_REQUEST['loadCV'])) {
+    // instantiate and use the dompdf class
+    //$dompdf = new Dompdf();
+    $cv = new \classCV\CVCreate();
+
+    $header = new HtmlHead('CSS/cv.css','CV');
+    $futer = new HtmlFutter();
+
+    $rez="
+    $header 
+    $cv
+    $futer
+    ";
+
+    file_put_contents('qwe.html',$rez);
+
+    //$dompdf->loadHtml((string)$cv);
+
+    //$qwert=file_get_contents('test2.html');
+    //$dompdf->loadHtml($qwert);
+    
+    // (Optional) Setup the paper size and orientation
+    //$dompdf->setPaper('A4', 'landscape');
+    
+    // Render the HTML as PDF
+    //$dompdf->render();
+    
+    //ob_end_clean();
+    // Output the generated PDF to Browser
+    //$dompdf->stream();
+    }
+
 // Контроллер
 $controller = new Controler();
 Controler::control();
@@ -51,17 +83,4 @@ Controler::control();
 
 // установка futter
 echo new HtmlFutter();
-///////////////////////////////////////////// 
-/*
-// instantiate and use the dompdf class
-$dompdf = new Dompdf();
-$dompdf->loadHtml(file_get_contents('https://www.php.net/manual/ru/domdocument.loadhtml.php'));
-
-// (Optional) Setup the paper size and orientation
-$dompdf->setPaper('A4', 'landscape');
-
-// Render the HTML as PDF
-$dompdf->render();
-
-// Output the generated PDF to Browser
-$dompdf->stream();*/
+///////////////////////////////////////////

@@ -20,7 +20,6 @@ class Controler
     }
     static function control()
     {
-        //$_SESSION['level']=4; // удалить
         // вывести список шаблонов, если шаг = 0
         if ($_SESSION['level']==0) {                   // Создать объект для работы со страницей выбора шаблона
             $patternCV = new SelectPattern();
@@ -67,8 +66,14 @@ class Controler
         }
         if ($_SESSION['level']==9) {                   // генерируем CV
             $cvCreate = new CVCreate();
+            //$cvCreate->buttonLoadCV();
+            $cvCreate->buttonPrintCV();
+            $cvCreate->createCV();
+            $cvCreate->printCV();
             echo $cvCreate;
         }
+
+          
     }
 }
 
@@ -91,3 +96,5 @@ class Controler
 //$_SESSION['languages-level'] уровень владения 
 //$_SESSION['certificates_numer'] число полей сертификатов
 //$_SESSION['certificates_name'.$i] содержимое полей сертификатов
+//$_SESSION['nameFile'] имя последнего сгенерированного файла резюме
+//$_SESSION['md5'] мд5 код оследнего сохранённого файла

@@ -12,6 +12,56 @@ class Translation
     public function __toString()
     {
         return match (true) {
+
+            $this->str=='Открыть последнее CV' && SelectLanguage::getLenguage()=='ru' => 'Открыть последнее CV',
+            $this->str=='Открыть последнее CV' && SelectLanguage::getLenguage()=='ua' => 'Відкрити останнє CV',
+            $this->str=='Открыть последнее CV' && SelectLanguage::getLenguage()=='pl' => 'Otwórz najnowsze CV',
+            $this->str=='Открыть последнее CV' && SelectLanguage::getLenguage()=='en' => 'Open latest CV',
+
+            $this->str=='Создать CV' && SelectLanguage::getLenguage()=='ru' => 'Создать CV',
+            $this->str=='Создать CV' && SelectLanguage::getLenguage()=='ua' => 'Створити CV',
+            $this->str=='Создать CV' && SelectLanguage::getLenguage()=='pl' => 'Utwórz CV',
+            $this->str=='Создать CV' && SelectLanguage::getLenguage()=='en' => 'Create CV',
+
+            $this->str=='Отправить на печать' && SelectLanguage::getLenguage()=='ru' => 'Отправить на печать',
+            $this->str=='Отправить на печать' && SelectLanguage::getLenguage()=='ua' => 'Надіслати на друк',
+            $this->str=='Отправить на печать' && SelectLanguage::getLenguage()=='pl' => 'Wyślij do druku',
+            $this->str=='Отправить на печать' && SelectLanguage::getLenguage()=='en' => 'Send to print',
+
+            $this->str=='Сервис создан на базе CMS DFDX' && SelectLanguage::getLenguage()=='ru' => 'Сервис создан на базе CMS DFDX',
+            $this->str=='Сервис создан на базе CMS DFDX' && SelectLanguage::getLenguage()=='ua' => 'Сервіс створений на базі CMS DFDX',
+            $this->str=='Сервис создан на базе CMS DFDX' && SelectLanguage::getLenguage()=='pl' => 'Serwis stworzony w oparciu o CMS DFDX',
+            $this->str=='Сервис создан на базе CMS DFDX' && SelectLanguage::getLenguage()=='en' => 'Service created on the basis of CMS DFDX',
+
+            $this->str=='Сертификаты' && SelectLanguage::getLenguage()=='ru' => 'Сертификаты',
+            $this->str=='Сертификаты' && SelectLanguage::getLenguage()=='ua' => 'Сертифікати',
+            $this->str=='Сертификаты' && SelectLanguage::getLenguage()=='pl' => 'Certyfikaty',
+            $this->str=='Сертификаты' && SelectLanguage::getLenguage()=='en' => 'Certificates',
+
+            $this->str=='Знания языков' && SelectLanguage::getLenguage()=='ru' => 'Знания языков',
+            $this->str=='Знания языков' && SelectLanguage::getLenguage()=='ua' => 'Знання мов',
+            $this->str=='Знания языков' && SelectLanguage::getLenguage()=='pl' => 'Znajomość języków',
+            $this->str=='Знания языков' && SelectLanguage::getLenguage()=='en' => 'Knowledge of languages',
+
+            $this->str=='Образование' && SelectLanguage::getLenguage()=='ru' => 'Образование',
+            $this->str=='Образование' && SelectLanguage::getLenguage()=='ua' => 'Освіта',
+            $this->str=='Образование' && SelectLanguage::getLenguage()=='pl' => 'Edukacja',
+            $this->str=='Образование' && SelectLanguage::getLenguage()=='en' => 'Education',
+
+            $this->str=='Опыт' && SelectLanguage::getLenguage()=='ru' => 'Опыт',
+            $this->str=='Опыт' && SelectLanguage::getLenguage()=='ua' => 'Досвід',
+            $this->str=='Опыт' && SelectLanguage::getLenguage()=='pl' => 'Doświadczenie',
+            $this->str=='Опыт' && SelectLanguage::getLenguage()=='en' => 'Experience',
+
+            $this->str=='Основные навыки' && SelectLanguage::getLenguage()=='ru' => 'Основные навыки',
+            $this->str=='Основные навыки' && SelectLanguage::getLenguage()=='ua' => 'Основні навички',
+            $this->str=='Основные навыки' && SelectLanguage::getLenguage()=='pl' => 'Umiejętności podstawowe',
+            $this->str=='Основные навыки' && SelectLanguage::getLenguage()=='en' => 'Core Skills',
+
+            $this->str=='Резюме' && SelectLanguage::getLenguage()=='ru' => 'Резюме',
+            $this->str=='Резюме' && SelectLanguage::getLenguage()=='ua' => 'Резюме',
+            $this->str=='Резюме' && SelectLanguage::getLenguage()=='pl' => 'Streszczenie',
+            $this->str=='Резюме' && SelectLanguage::getLenguage()=='en' => 'Summary',
             
             $this->str=='Сертификаты, допуски, разрешения' && SelectLanguage::getLenguage()=='ru' => 'Сертификаты, допуски, разрешения',
             $this->str=='Сертификаты, допуски, разрешения' && SelectLanguage::getLenguage()=='ua' => 'Сертифікати, допуски, дозволи',
