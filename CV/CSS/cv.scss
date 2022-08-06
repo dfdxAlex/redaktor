@@ -2,16 +2,18 @@
     .pole-info{
         float: left;
         background-color: #fff;
-        height: 36.5cm;
-        width: 28cm;
+        height: 27.0cm;
+        width: 21cm;
         margin-top: 10px;
-        box-shadow: #293f50 10px 10px;
+        box-shadow:  #495253 5px 5px;
+        border: solid 1px;
+        border-color:  #098b9f;
         .summary, .experience, .education, .language, .sertificates, .git{
             width: 100%;
             div {
                 margin-top: 30px;
                 font-weight: 900;
-                font-size: 30px;
+                font-size: 25px;
                 padding-left: 10px;
                 line-height: 10px;
             }
@@ -19,9 +21,9 @@
         .summary-text, .experience-text, .education_text, .git-text{
             width: 100%;
             div {
-                margin-top: 15px;
+                margin-top: 10px;
                 padding-left: 25px;
-                font-size: 20px;
+                font-size: 16px;
             }
         }
         .language{
@@ -29,7 +31,7 @@
         }
         .language_text div, .sertificates_text div{
             padding-left: 13px;
-            font-size: 20px;
+            font-size: 16px;
         }
         .sertificates div{
             margin-top: 20px;
@@ -39,10 +41,9 @@
     float:left;
     padding-left: 0px;
     padding-right: 0px;
-    height: 41.4cm;
-    width: 30cm;
+    height: 32cm;
+    width: 21.2cm;
     background-color: #098b9f;  
-    
     .name p{
         margin-top: 20px;
         margin-left: 20px;
@@ -70,7 +71,7 @@
     float: left;
     font-size: 11px;
     margin-top: 7px;
-    color: rgb(255, 255, 255);
+    color: rgb(248, 242, 242);
 }
 
 input[name="loadCV"], input[name="printCV"]{
@@ -218,12 +219,13 @@ body{
     background: #466368;
     background: linear-gradient(#648880, #293f50);
     border-radius: 6px;
-    height: 41.4cm;
-    width: 32cm;
+    height: 27cm;
+    width: 22cm;
 }
 .classPrint{
-    height: 41.4cm;
-    width: 32cm;
+    height: 27cm;
+    width: 22cm;
+    background: #fff;
 }
 .button-language, .button-language input{
     float:right;
