@@ -3,15 +3,16 @@
         float: left;
         background-color: #fff;
         height: 36.5cm;
-        width: 32cm;
+        width: 28cm;
         margin-top: 10px;
+        box-shadow: #293f50 10px 10px;
         .summary, .experience, .education, .language, .sertificates, .git{
             width: 100%;
             div {
                 margin-top: 30px;
                 font-weight: 900;
                 font-size: 30px;
-                padding-left: 20px;
+                padding-left: 10px;
                 line-height: 10px;
             }
         }
@@ -39,8 +40,9 @@
     padding-left: 0px;
     padding-right: 0px;
     height: 41.4cm;
-    width: 33cm;
+    width: 30cm;
     background-color: #098b9f;  
+    
     .name p{
         margin-top: 20px;
         margin-left: 20px;
@@ -62,11 +64,12 @@
     div[class="col-5 address-cv-create"] {
         height: 150px;
     }
-}
+} /*конец create-cv*/
 
 .servis-create-dfdx{
     float: left;
     font-size: 11px;
+    margin-top: 7px;
     color: rgb(255, 255, 255);
 }
 
@@ -215,13 +218,12 @@ body{
     background: #466368;
     background: linear-gradient(#648880, #293f50);
     border-radius: 6px;
-    height: 40cm;
+    height: 41.4cm;
     width: 32cm;
 }
 .classPrint{
-    height: 35cm;
-    width: 25cm;
-    background-color: #243431;
+    height: 41.4cm;
+    width: 32cm;
 }
 .button-language, .button-language input{
     float:right;
