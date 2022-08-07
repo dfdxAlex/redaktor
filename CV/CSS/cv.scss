@@ -1,13 +1,18 @@
 .create-cv{
     .pole-info{
         float: left;
-        background-color: #fff;
+        /*background-color: #fff;*/
+        background: -webkit-linear-gradient(top, rgba(255, 255, 255), rgb(234, 229, 229));
+        /*background: -webkit-radial-gradient(bottom, circle, rgba(230, 222, 222), rgba(48, 44, 44));*/
         height: 27.0cm;
         width: 21cm;
         margin-top: 10px;
-        box-shadow:  #495253 5px 5px;
-        border: solid 1px;
-        border-color:  #098b9f;
+        box-shadow:  #495253 15px 15px;/*inset;*/
+        border-radius: 10px;
+        //border: solid 1px;
+        //border-color:  #098b9f;
+        outline: 1px solid black;
+        outline-offset: -4px;
         .summary, .experience, .education, .language, .sertificates, .git{
             width: 100%;
             div {
@@ -49,9 +54,19 @@
         margin-left: 20px;
         font-size: 55px;
         font-weight: 900;
-        line-height: 30px;
+        line-height: 50px;
         color:#fefbfb;
+        text-shadow: #466368 5px 5px;
+        font-family: "cd2f1";
+
+        /*
+    font-family: 'beer';
+    font-family: 'pirate';
+    font-family: 'cd2f1';
+    font-family: 'React';
+        */
     }
+
     .address-cv-create p{
         margin-top: 10px;
         font-size: 16px;
@@ -322,4 +337,21 @@ body{
         color:hsl(204, 62%, 67%);
         font-size: 25px;
     }
+}
+@font-face {
+    font-family: 'beer';
+    src: url('../fonts/beer-money12.ttf') format("truetype");
+}
+@font-face {
+    font-family: 'pirate';
+    src: url('../fonts/pirate-keg-italic4.ttf') format("truetype");
+}
+@font-face {
+    font-family: 'cd2f1';
+    src: url('../fonts/cd2f1-36d91_sunday.ttf') format("truetype");
+}
+
+@font-face {
+    font-family: 'React';
+    src: url('../fonts/ReactiveAnchor-L3L0n.ttf') format("truetype");
 }
