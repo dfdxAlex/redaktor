@@ -7,22 +7,23 @@ class Certificates
     public function __construct()
     {
         if (!isset($_SESSION['certificates_numer'])) $_SESSION['certificates_numer']=1; // число полей для заполнения
-
-        for($i=0; $i<$_SESSION['certificates_numer']; $i++) {
-            if (!isset($_SESSION['certificates_name'.$i])) $_SESSION['certificates_name'.$i]='';
-        }
     }
 
     public function __toString()
     {
         $formLang='';
+
+        // открыть новую переменную сессий, если были открыты новые поля
+        for($i=0; $i<$_SESSION['certificates_numer']; $i++) {
+            if (!isset($_SESSION['certificates_name'.$i])) $_SESSION['certificates_name'.$i]='';
+        }
         
         for($i=0; $i<$_SESSION['certificates_numer']; $i++) {
 
             $formLang.='   
             <div class="row">
             <div class="col-12">
-                <input type="text" name="form_text'.$i.'" value="'.$_SESSION['certificates_name'.$i].'">
+                <input type="text" name="form_text_sert'.$i.'" value="'.$_SESSION['certificates_name'.$i].'">
             </div>   
             </div>
             ';
@@ -45,7 +46,7 @@ class Certificates
                     </div>
                     <div class="row">
                     <div class=col-12>
-                        <input type="submit" name="go" value="Отправить" class="btn btn-info">
+                        <input type="submit" name="go_sertificate" value="'.(string) new Translation('Отправить').'" class="btn btn-info">
                     </div>   
                 </div>
                 </form>
@@ -56,6 +57,7 @@ class Certificates
     public function certificatesNumer()
     {
         if (isset($_REQUEST['form_plus'])) {
+            // Если была нажата кнопка +, то добавить одну строку для ввода текста
             $_SESSION['certificates_numer']++;
             if (!isset($_SESSION['certificates_name'.$_SESSION['certificates_numer']]))
                 $_SESSION['certificates_name'.$_SESSION['certificates_numer']]='';
@@ -68,8 +70,8 @@ class Certificates
     {
         $button='';
         for ($button=0; $button<$_SESSION['certificates_numer']; $button++) 
-            if (isset($_REQUEST['form_text'.$button]))
-                $_SESSION['certificates_name'.$button]=$_REQUEST['form_text'.$button];
+            if (isset($_REQUEST['form_text_sert'.$button]))
+                $_SESSION['certificates_name'.$button]=$_REQUEST['form_text_sert'.$button];
             else break;
         
         return $button;

@@ -1,7 +1,7 @@
 <?php
 namespace classCV;
 
-// класс хранит информацию об контактных данных 
+// класс хранит информацию об умениях в тексте
 class Skills
 {
     public function __construct()

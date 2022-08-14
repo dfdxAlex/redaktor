@@ -13,6 +13,11 @@ class Translation
     {
         return match (true) {
 
+            $this->str=='Список навыков' && SelectLanguage::getLenguage()=='ru' => 'Список навыков',
+            $this->str=='Список навыков' && SelectLanguage::getLenguage()=='ua' => 'Список навичок',
+            $this->str=='Список навыков' && SelectLanguage::getLenguage()=='pl' => 'Lista umiejętności',
+            $this->str=='Список навыков' && SelectLanguage::getLenguage()=='en' => 'List of skills',
+
             $this->str=='Открыть последнее CV' && SelectLanguage::getLenguage()=='ru' => 'Открыть последнее CV',
             $this->str=='Открыть последнее CV' && SelectLanguage::getLenguage()=='ua' => 'Відкрити останнє CV',
             $this->str=='Открыть последнее CV' && SelectLanguage::getLenguage()=='pl' => 'Otwórz najnowsze CV',

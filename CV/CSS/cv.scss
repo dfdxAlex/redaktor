@@ -1,19 +1,16 @@
 .create-cv{
     .pole-info{
         float: left;
-        /*background-color: #fff;*/
         background: -webkit-linear-gradient(top, rgba(255, 255, 255), rgb(234, 229, 229));
-        /*background: -webkit-radial-gradient(bottom, circle, rgba(230, 222, 222), rgba(48, 44, 44));*/
         height: 27.0cm;
         width: 21cm;
         margin-top: 10px;
-        box-shadow:  #495253 15px 15px;/*inset;*/
+        box-shadow:  #495253 10px 10px;/*inset;*/
         border-radius: 10px;
-        //border: solid 1px;
-        //border-color:  #098b9f;
         outline: 1px solid black;
         outline-offset: -4px;
-        .summary, .experience, .education, .language, .sertificates, .git{
+        //border-image: url('../images/CV_origin_1.png') 20;
+        .summary, .experience, .education, .language, .sertificates, .git, .list-skills{
             width: 100%;
             div {
                 margin-top: 30px;
@@ -23,7 +20,7 @@
                 line-height: 10px;
             }
         }
-        .summary-text, .experience-text, .education_text, .git-text{
+        .summary-text, .experience-text, .education_text, .git-text, .list-skills-text{
             width: 100%;
             div {
                 margin-top: 10px;
@@ -49,6 +46,7 @@
     height: 32cm;
     width: 21.2cm;
     background-color: #098b9f;  
+    // стиль заголовка - имя и фамилия
     .name p{
         margin-top: 20px;
         margin-left: 20px;
@@ -58,15 +56,10 @@
         color:#fefbfb;
         text-shadow: #466368 5px 5px;
         font-family: "cd2f1";
-
-        /*
-    font-family: 'beer';
-    font-family: 'pirate';
-    font-family: 'cd2f1';
-    font-family: 'React';
-        */
+        //transition: all 1s ea 0.5s;
+        transform: translate(15px, -5px) rotate(-5deg);  // перемещает элемент на новое место
     }
-
+        
     .address-cv-create p{
         margin-top: 10px;
         font-size: 16px;
@@ -97,7 +90,7 @@ input[name="printCV"]{
     margin-left: 5px;
 }
 
-.form-languages, .form-certificates{
+.form-languages, .form-certificates, .skills_short{
     float: left;
     margin-top: 150px;
     width: 400px;

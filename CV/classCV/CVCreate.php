@@ -18,42 +18,75 @@ class CVCreate
 
     function CV1()
     {
-        
+        // формирование строки с адресом
         if ($_SESSION['address']!='') {
             $address=(string)  new Translation('Адрес');
             $addressTeg="<p>$address :</p><p>{$_SESSION['address']}</p>";
         } else $addressTeg='';
 
+        // формирование строки с телефоном
         if ($_SESSION['tel']!='') {
             $tel=(string)  new Translation('Телефон');
             $telTeg="<p>$tel :</p><p>{$_SESSION['tel']}</p>";
         } else $telTeg='';     
         
+        // формирование строки с электронной почтой
         if ($_SESSION['email']!='') {
             $email=(string)  new Translation('Почта');
             $emailTeg="<p>$email :</p><p>{$_SESSION['email']}</p>";
         } else $emailTeg='';  
 
+        // формирование строк для списка скилов
+        if ($_SESSION['skillsbriefly_numer']>0) {
+            $listSkills=(string)  new Translation('Список навыков');
+            $listSkills_text="";
+            $priznak=true;
+
+            for ($i=1; $i<=$_SESSION['skillsbriefly_numer']; $i++) {
+                $skillsL=$_SESSION['skillsbriefly_name'.$i-1];
+
+                if ((($i-1)%6==0 && $i>6) || $i==1) {
+                    $listSkills_text.="<div class='row list-skills-text'>";
+                    $priznak=false;
+                }
+                $listSkills_text.="
+                        <div class='col-2'>
+                            <div>$skillsL</div> 
+                        </div>
+                ";
+                if (($i)%6==0 && $i>2) {
+                    $listSkills_text.="</div>";
+                    $priznak=true;
+                }
+            }
+            if (!$priznak) $listSkills_text.="</div>";
+        }
+
+        // формирование строк со скилами
         if ($_SESSION['skills']!='') {
             $skills=(string)  new Translation('Резюме');
             $skills_text="{$_SESSION['skills']}";
         } else $skills='';  
 
+        // формирование строк с описанием опыта
         if ($_SESSION['experience']!='') {
             $experience=(string)  new Translation('Опыт');
             $experience_text="{$_SESSION['experience']}";
         } else $experience='';  
 
+        // формирование строк с описанием образования
         if ($_SESSION['education']!='') {
             $education=(string)  new Translation('Образование');
             $education_text="{$_SESSION['education']}";
         } else $education='';  
 
+        // формирование ссылки на гит
         if ($_SESSION['git']!='') {
             $git='GIT';
             $git_text="<a href='{$_SESSION['git']}' target='_blank'>{$_SESSION['git']}</a>";
         } else $git='';  
 
+        // формирование строки с перечнем сертификатов
         if ($_SESSION['certificates_numer']>0) {
             $certificates=(string)  new Translation('Сертификаты');
             $certificates_text="";
@@ -69,6 +102,7 @@ class CVCreate
             }
         } else $certificates='';  
 
+        // формирование строк с перечнем языков и уровнем владения языками
         if ($_SESSION['languages_numer']>0) {
             $language=(string)  new Translation('Знания языков');
             $language_text="";
@@ -107,6 +141,14 @@ class CVCreate
                 </div>
 
                 <section class='container-fluid pole-info'>
+
+                   <div class='row'>
+                       <div class='col-12 list-skills'>
+                           <div>$listSkills</div>
+                       </div>
+                   </div>
+                           $listSkills_text
+
                     <div class='row'>
                         <div class='col-12 summary'>
                             <div>$skills</div>

@@ -14,9 +14,6 @@ class Controler
         // метод слушает $_REQUEST[] на наличие команд от меню навигационного
         // если команда есть, то гуляем по меню
         Level::levelHunt();
-
-
-
     }
     static function control()
     {
@@ -37,34 +34,41 @@ class Controler
             $address->addressHunt();
             echo $address;
         }
-        if ($_SESSION['level']==4) {                   // Создать объект для работы со страницей ввода скилов
+        if ($_SESSION['level']==4) {                   // Создать объект для работы со страницей ввода списка скилов
+            $skillsBriefly = new SkillsBriefly();
+            //$address->addressHunt();
+            $skillsBriefly->skillsBrieflyNumer();
+            $skillsBriefly->skillsBrieflyLevl();
+            echo $skillsBriefly;
+        }
+        if ($_SESSION['level']==5) {                   // Создать объект для работы со страницей ввода скилов
             $scills = new Skills();
             $scills->skillsHunt();
             echo $scills;
         }
-        if ($_SESSION['level']==5) {                   // Создать объект для работы со страницей ввода опыта
+        if ($_SESSION['level']==6) {                   // Создать объект для работы со страницей ввода опыта
             $experience = new Experience();
             $experience->experienceHunt();
             echo $experience;
         }
-        if ($_SESSION['level']==6) {                   // Создать объект для работы со страницей ввода образования
+        if ($_SESSION['level']==7) {                   // Создать объект для работы со страницей ввода образования
             $education = new Education();
             $education->educationHunt();
             echo $education;
         }
-        if ($_SESSION['level']==7) {                   // Создать объект для работы со страницей ввода информации об языках
+        if ($_SESSION['level']==8) {                   // Создать объект для работы со страницей ввода информации об языках
             $languages = new Languages();
             $languages->saveLevl();
             $languages->languagesNumer();
             echo $languages;
         }
-        if ($_SESSION['level']==8) {                   // Создать объект для работы со страницей ввода информации об языках
+        if ($_SESSION['level']==9) {                   // Создать объект для работы со страницей ввода информации об языках
             $certificates = new Certificates();
             $certificates->certificatesLevl();
             $certificates->certificatesNumer();
             echo $certificates;
         }
-        if ($_SESSION['level']==9) {                   // генерируем CV
+        if ($_SESSION['level']==10) {                   // генерируем CV
             $cvCreate = new CVCreate();
             //$cvCreate->buttonLoadCV();
             $cvCreate->buttonPrintCV();
@@ -98,3 +102,5 @@ class Controler
 //$_SESSION['certificates_name'.$i] содержимое полей сертификатов
 //$_SESSION['nameFile'] имя последнего сгенерированного файла резюме
 //$_SESSION['md5'] мд5 код оследнего сохранённого файла
+//$_SESSION['Skillsbriefly_numer'] число в списке навыков
+//$_SESSION['skillsbriefly_name'.$i] список навыков

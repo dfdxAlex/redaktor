@@ -36,6 +36,16 @@ SelectLanguage::setLenguage();
 //сгенерировать верхнюю часть сайта header
 echo new HtmlHead('CSS/cv.css','CV');
 ///////////////////////////////////////////// 
+Level::dataHunt(new classCV\Certificates(),
+                new classCV\Languages(),
+                new classCV\Address(),
+                new classCV\Education(),
+                new classCV\Experience(),
+                new classCV\Skills(),
+                new classCV\UserName(),
+                new classCV\SkillsBriefly(),
+               );
+
 
 if (isset($_REQUEST['loadCV'])) {
     // instantiate and use the dompdf class
@@ -79,6 +89,7 @@ Controler::control();
 
 
 //echo new Level;
+
 
 
 // установка futter

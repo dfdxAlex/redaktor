@@ -8,15 +8,18 @@ class Languages
     {
         if (!isset($_SESSION['languages_numer'])) $_SESSION['languages_numer']=1; // число полей для заполнения
 
-        for($i=0; $i<$_SESSION['languages_numer']; $i++) {
-            if (!isset($_SESSION['languages'.$i])) $_SESSION['languages'.$i]='';
-            if (!isset($_SESSION['languages-level'.$i])) $_SESSION['languages-level'.$i]='';
-        }
+
     }
 
     public function __toString()
     {
         $formLang='';
+
+        // добавить новую переменную сессий, если было открыто новое поле
+        for($i=0; $i<$_SESSION['languages_numer']; $i++) {
+            if (!isset($_SESSION['languages'.$i])) $_SESSION['languages'.$i]='';
+            if (!isset($_SESSION['languages-level'.$i])) $_SESSION['languages-level'.$i]='';
+        }
         
         for($i=0; $i<$_SESSION['languages_numer']; $i++) {
             if ($_SESSION['languages-level'.$i]=='') $nameLevelButton=(string) new Translation('Уровень владения языком');
@@ -63,7 +66,7 @@ class Languages
                     </div>
                     <div class="row">
                     <div class=col-12>
-                        <input type="submit" name="go" value="Отправить" class="btn btn-info">
+                        <input type="submit" name="go_language" value="'.(string) new Translation('Отправить').'" class="btn btn-info">
                     </div>   
                 </div>
                 </form>
@@ -71,6 +74,7 @@ class Languages
         ';
     }
 
+    // работает с числом колличества языков
     public function languagesNumer()
     {
         if (isset($_REQUEST['form_plus'])) {
@@ -81,9 +85,9 @@ class Languages
         }
         else if (isset($_REQUEST['form_minus'])) $_SESSION['languages_numer']--;
         if ($_SESSION['languages_numer']<0) $_SESSION['languages_numer']=0;
-        //$this->saveLevl();
     }
 
+    // работает с информацией об языках и уровнях владения языками
     public function saveLevl()
     {
         $hunt = new \class\nonBD\Button();

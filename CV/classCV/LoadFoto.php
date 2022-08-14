@@ -14,7 +14,8 @@ class LoadFoto
 
     function formLoad()
     {
-        if (isset($_FILES['file']['tmp_name'])) {
+        //echo $_FILES['file']['tmp_name'];
+        if (isset($_FILES['file']['tmp_name']) && !is_null($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name']!='') {
             $f=file_get_contents($_FILES['file']['tmp_name']);
             $name=$_FILES['file']['name'];
             $path="images_user/";
@@ -54,7 +55,7 @@ class LoadFoto
                     </div>
                     </div>
                     <div class="col-4 pole-boot-col-foto-CV">
-                        <input type="submit" value="'. (string) new Translation("Отправить").'" class="btn btn-secondary class-btn pole-text-name-CV">
+                        <input type="submit" name="load_foto" value="'. (string) new Translation("Отправить").'" class="btn btn-secondary class-btn pole-text-name-CV">
                     </div>
                 </form>
                 </div>
@@ -64,5 +65,10 @@ class LoadFoto
 
 
     ';
+    }
+
+    public function saveFoto()
+    {
+
     }
 }
