@@ -1,11 +1,7 @@
 <?php
-//declare(strict_types=1);
 
 session_start();
 
-// подключение автозагрузчика библиотеки Dompdf
-require_once "vendor/autoload.php"; 
-use Dompdf\Dompdf;
 /////////////////////////////////////////////
 // подключение автозагрузчика библиотеки DFDX
 require_once "class/autoloaderDFDX.php";
@@ -21,6 +17,9 @@ use classCV\SelectLanguage;
 // класс подставляет слово в зависимости от выбранного языка интерфейса
 use classCV\Translation;
 
+// класс отслеживает нажатия кнопок
+use classCV\RequestButton;
+
 // класс контроллер
 use classCV\Controler;
 
@@ -32,7 +31,11 @@ $language = new SelectLanguage();
 // метод отслеживает массив $_REQUEST['en'...]
 SelectLanguage::setLenguage();
 
+        // отслеживает возврат из режима создания CV
+        RequestButton::livesCreateCV();
 //////////////////////////////////////////////начало страницы body/////////////////////////////////////////////
+// подключение библиотеки с js функциями
+echo "<script src='js/MyLib.js'></script>";
 //сгенерировать верхнюю часть сайта header
 echo new HtmlHead('CSS/cv.css','CV');
 ///////////////////////////////////////////// 
@@ -47,48 +50,10 @@ Level::dataHunt(new classCV\Certificates(),
                );
 
 
-if (isset($_REQUEST['loadCV'])) {
-    // instantiate and use the dompdf class
-    //$dompdf = new Dompdf();
-    $cv = new \classCV\CVCreate();
-
-    $header = new HtmlHead('CSS/cv.css','CV');
-    $futer = new HtmlFutter();
-
-    $rez="
-    $header 
-    $cv
-    $futer
-    ";
-
-    file_put_contents('qwe.html',$rez);
-
-    //$dompdf->loadHtml((string)$cv);
-
-    //$qwert=file_get_contents('test2.html');
-    //$dompdf->loadHtml($qwert);
-    
-    // (Optional) Setup the paper size and orientation
-    //$dompdf->setPaper('A4', 'landscape');
-    
-    // Render the HTML as PDF
-    //$dompdf->render();
-    
-    //ob_end_clean();
-    // Output the generated PDF to Browser
-    //$dompdf->stream();
-    }
 
 // Контроллер
 $controller = new Controler();
 Controler::control();
-
-
-//echo $_SESSION['level'];
-
-
-
-//echo new Level;
 
 
 

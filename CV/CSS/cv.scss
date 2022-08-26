@@ -1,9 +1,21 @@
+// Стили для объекта настроек
+.container-setting {
+    margin-top: 40px;
+    .styleText {
+        font-size: 18px;
+        margin-left: 20px;
+    }
+    p {
+        font-size: 18px;
+    }
+}
+// конец стилей объекта настроек
 .create-cv{
     .pole-info{
         float: left;
         background: -webkit-linear-gradient(top, rgba(255, 255, 255), rgb(234, 229, 229));
-        height: 27.0cm;
-        width: 21cm;
+        height: 27.5cm;
+        width: 22cm;
         margin-top: 10px;
         box-shadow:  #495253 10px 10px;/*inset;*/
         border-radius: 10px;
@@ -43,8 +55,8 @@
     float:left;
     padding-left: 0px;
     padding-right: 0px;
-    height: 32cm;
-    width: 21.2cm;
+    height: 32.5cm;
+    width: 22cm;
     background-color: #098b9f;  
     // стиль заголовка - имя и фамилия
     .name p{
@@ -58,6 +70,9 @@
         font-family: "cd2f1";
         //transition: all 1s ea 0.5s;
         transform: translate(15px, -5px) rotate(-5deg);  // перемещает элемент на новое место
+    }
+    .name button{
+        all: initial; // сбросить унаследованные стили
     }
         
     .address-cv-create p{
@@ -74,6 +89,7 @@
         height: 150px;
     }
 } /*конец create-cv*/
+///////////////////////////////////////////////////////////////////////
 
 .servis-create-dfdx{
     float: left;
@@ -236,7 +252,6 @@ body{
     background: #fff;
 }
 .button-language, .button-language input{
-    float:right;
     background: #466368;
     background: linear-gradient(#648880, #293f50);
     border-radius: 6px;
@@ -290,9 +305,7 @@ body{
         font-size: 25px; 
     }
 }
-.menu-nav{
-    float:left;
-}
+
 .pattern-row-1{
     float: left;
     margin-top: 150px;

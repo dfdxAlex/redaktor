@@ -13,6 +13,31 @@ class Translation
     {
         return match (true) {
 
+            $this->str=='Ввести размер шрифта' && SelectLanguage::getLenguage()=='ru' => 'Ввести размер шрифта',
+            $this->str=='Ввести размер шрифта' && SelectLanguage::getLenguage()=='ua' => 'Ввести розмір шрифту',
+            $this->str=='Ввести размер шрифта' && SelectLanguage::getLenguage()=='pl' => 'Wprowadź rozmiar czcionki',
+            $this->str=='Ввести размер шрифта' && SelectLanguage::getLenguage()=='en' => 'Enter font size',
+
+            $this->str=='Настройки блока списка умений' && SelectLanguage::getLenguage()=='ru' => 'Настройки блока списка умений',
+            $this->str=='Настройки блока списка умений' && SelectLanguage::getLenguage()=='ua' => 'Налаштування блоку списку умінь',
+            $this->str=='Настройки блока списка умений' && SelectLanguage::getLenguage()=='pl' => 'Ustawienia bloku listy umiejętności',
+            $this->str=='Настройки блока списка умений' && SelectLanguage::getLenguage()=='en' => 'Skill list block settings',
+
+            $this->str=='Введите число столбцов' && SelectLanguage::getLenguage()=='ru' => 'Введите число столбцов',
+            $this->str=='Введите число столбцов' && SelectLanguage::getLenguage()=='ua' => 'Введіть кількість стовпців',
+            $this->str=='Введите число столбцов' && SelectLanguage::getLenguage()=='pl' => 'Podaj liczbę kolumn',
+            $this->str=='Введите число столбцов' && SelectLanguage::getLenguage()=='en' => 'Enter number of columns',
+
+            $this->str=='Сохранить' && SelectLanguage::getLenguage()=='ru' => 'Сохранить',
+            $this->str=='Сохранить' && SelectLanguage::getLenguage()=='ua' => 'Зберегти',
+            $this->str=='Сохранить' && SelectLanguage::getLenguage()=='pl' => 'Zapisz',
+            $this->str=='Сохранить' && SelectLanguage::getLenguage()=='en' => 'Save',
+
+            $this->str=='Настройки' && SelectLanguage::getLenguage()=='ru' => 'Настройки',
+            $this->str=='Настройки' && SelectLanguage::getLenguage()=='ua' => 'Налаштування',
+            $this->str=='Настройки' && SelectLanguage::getLenguage()=='pl' => 'Ustawienie',
+            $this->str=='Настройки' && SelectLanguage::getLenguage()=='en' => 'Setting',
+
             $this->str=='Список навыков' && SelectLanguage::getLenguage()=='ru' => 'Список навыков',
             $this->str=='Список навыков' && SelectLanguage::getLenguage()=='ua' => 'Список навичок',
             $this->str=='Список навыков' && SelectLanguage::getLenguage()=='pl' => 'Lista umiejętności',
@@ -195,7 +220,7 @@ class Translation
 
             $this->str=='Назад' && SelectLanguage::getLenguage()=='ru' => 'Назад',
             $this->str=='Назад' && SelectLanguage::getLenguage()=='ua' => 'Назад',
-            $this->str=='Назад' && SelectLanguage::getLenguage()=='pl' => 'Z powrotem',
+            $this->str=='Назад' && SelectLanguage::getLenguage()=='pl' => 'Zwrócić',
             $this->str=='Назад' && SelectLanguage::getLenguage()=='en' => 'Back',
 
             $this->str=='На главную' && SelectLanguage::getLenguage()=='ru' => 'На главную',

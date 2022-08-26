@@ -7,13 +7,29 @@ class Controler
 {
     public function __construct()
     {
-        // поставить кнопки выбора языка интерфейса
-        echo new ButtonLanguage();
-        // меню навигации по сайту
-        echo new ButtonMenuUp();
+
+        // Блок ставит два верхних меню: работа с языками и навигацией по сайту
+        $menuLen = new ButtonLanguage();
+        $menuUp = new  ButtonMenuUp();
+        $progress=$this->progress();
+        if ($_SESSION['level']!=10)
+            echo "<nav>
+                     <div class='container-fluid'>
+                         <div class='row'>
+                             <div class='col-8'>
+                                 $menuUp
+                             </div>
+                             <div class='col-4'>
+                                 $menuLen
+                             </div>
+                         </div>
+                         $progress
+                     </div>
+                 </nav>
+            ";
         // метод слушает $_REQUEST[] на наличие команд от меню навигационного
         // если команда есть, то гуляем по меню
-        Level::levelHunt();
+        //Level::levelHunt();
     }
     static function control()
     {
@@ -36,7 +52,6 @@ class Controler
         }
         if ($_SESSION['level']==4) {                   // Создать объект для работы со страницей ввода списка скилов
             $skillsBriefly = new SkillsBriefly();
-            //$address->addressHunt();
             $skillsBriefly->skillsBrieflyNumer();
             $skillsBriefly->skillsBrieflyLevl();
             echo $skillsBriefly;
@@ -69,15 +84,33 @@ class Controler
             echo $certificates;
         }
         if ($_SESSION['level']==10) {                   // генерируем CV
+            echo new ButtonMenuUp();
             $cvCreate = new CVCreate();
-            //$cvCreate->buttonLoadCV();
-            $cvCreate->buttonPrintCV();
             $cvCreate->createCV();
-            $cvCreate->printCV();
-            echo $cvCreate;
+            $_SESSION['level-10-true']=true;
+        }
+
+        if ($_SESSION['level']==1000) {                   // генерируем CV
+            $cvSetting = new Setting();
         }
 
           
+    }
+
+    function progress()
+    {
+        if ($_SESSION['level']==1000) return ''; 
+        $progress=$_SESSION['level'];
+        $progressMax=$_SESSION['level_max'];
+        return "
+        <div class='row'>
+            <div class='col-4'>
+                <progress max='$progressMax' value='$progress'></progress>
+            </div>
+            <div class='col-8'>
+            </div>
+        </div>
+        ";
     }
 }
 
@@ -104,3 +137,5 @@ class Controler
 //$_SESSION['md5'] мд5 код оследнего сохранённого файла
 //$_SESSION['Skillsbriefly_numer'] число в списке навыков
 //$_SESSION['skillsbriefly_name'.$i] список навыков
+//$_SESSION['setting'] держит информацию о том, с какой именно страницы перешли на страницу настроек
+
