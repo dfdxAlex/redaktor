@@ -12,13 +12,14 @@ class Setting
         if (!isset($_SESSION['number_columns_skill_list'])) $_SESSION['number_columns_skill_list']=6;
         // размер шрифта в пикселах в списке скилов
         if (!isset($_SESSION['font_size_skill_list'])) $_SESSION['font_size_skill_list']=18;
+        // высота строки
+        if (!isset($_SESSION['row_size_skill_list'])) $_SESSION['row_size_skill_list']=18;
+        
 
         $listSkillNumber=$this->settingListSkills();
         echo "
             <div class='container-fluid container-setting'>
-
                     $listSkillNumber
-
             </div>
         ";
 
@@ -31,6 +32,7 @@ class Setting
     {
         $text1 = new Translation('Введите число столбцов');
         $text2 = new Translation('Ввести размер шрифта');
+        $text3 = new Translation('Высота строки');
         $titleBlock = new Translation('Настройки блока списка умений');
         return "
             <div class='row'>
@@ -54,6 +56,14 @@ class Setting
                     <label class='styleText' for='listSkillFontSize'> $text2 </label>
                 </div>
             </div>
+            <div class='row'>
+            <div class='col-1'>
+                <input type='number' name='listSkillRowSize' min='1', max='50' id='listSkillRowSize' form='form_setting' value='{$_SESSION['row_size_skill_list']}'>
+            </div>
+            <div class='col-11'>
+                <label class='styleText' for='listSkillFontSize'> $text3 </label>
+            </div>
+        </div>
         ";
     }
 
@@ -64,8 +74,9 @@ class Setting
 
         if ($_REQUEST['listSkillNumber']!='') $_SESSION['number_columns_skill_list']=$_REQUEST['listSkillNumber'];
         if ($_REQUEST['listSkillFontSize']!='') $_SESSION['font_size_skill_list']=$_REQUEST['listSkillFontSize'];
+        if ($_REQUEST['listSkillRowSize']!='') $_SESSION['row_size_skill_list']=$_REQUEST['listSkillRowSize'];
 
-        $_SESSION['md5']='';
+        //$_SESSION['md5']='';
     }
 }
 
@@ -74,3 +85,4 @@ class Setting
 
 // $_SESSION['number_columns_skill_list'] - содержит число столбцов в списке скилов
 // $_SESSION['font_size_skill_list'] - содержит размер шрифта в списке скилов
+// $_SESSION['row_size_skill_list'] - содержит высоту строки

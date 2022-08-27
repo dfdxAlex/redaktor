@@ -1,11 +1,22 @@
 // Функции для класса настроек
 function listSkillNumberTest()
 {
+    // находим соответвующую форму
     name1=document.getElementById('listSkillNumber');
+    // регистрируем событие для проверки
     name1.addEventListener('input', testErrorNumberSkillList, false);
+
+    // находим соответвующую форму
     name2=document.getElementById('listSkillFontSize');
+    // регистрируем событие для проверки
     name2.addEventListener('input', listSkillFontSize, false);
 
+    // находим соответвующую форму
+    name2=document.getElementById('listSkillRowSize');
+    // регистрируем событие для проверки
+    name2.addEventListener('input', listSkillRowSize, false);
+
+    // функция проверки правильности ввода числа столбцов 
     function testErrorNumberSkillList()
     {
         if (name1.value<1 
@@ -24,6 +35,7 @@ function listSkillNumberTest()
         }
     }
 
+    // проверяем размер шрифта
     function listSkillFontSize()
     {
         if (name2.value<1 || name2.value>50) {
@@ -34,21 +46,20 @@ function listSkillNumberTest()
             name2.setCustomValidity('');
         }
     }
+
+    function listSkillRowSize()
+    {
+        if (name3.value<1 || name2.value>50) {
+            name3.style.background='red';
+            name3.setCustomValidity('Значение должно быть в пределах 1-50');
+        } else {
+            name3.style.background='white';
+            name3.setCustomValidity('');
+        }
+    }
 }
 
-// функция обрабатывает событие клик по странице body когда сгенерировано CV 
-/*function bodyClick()
-{
-    var name1=document.getElementById("form_setting");
-    var name2=document.getElementById('button_form_setting');
-    if (name2===null) {
-        //name1.innerHTML='<input form="form_setting" type="submit" name="resetCreateCV" id="button_form_setting" value="<<<<<<<" class="btn btn-info">';
-        //name1.innerHTML='<a href="cv.php?name=vernut" id="button_form_setting"  class="btn btn-info">Вернуться</a>';
-    } 
-    else {
-        //name1.innerHTML='';
-    }
-}*/
+
 
 
 

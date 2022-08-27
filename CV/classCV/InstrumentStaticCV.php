@@ -35,11 +35,26 @@ class InstrumentStaticCV
                     {
                         name1=document.getElementsByClassName('skills');
                        
-                        for (zzz in name1) {
+                        for (zzz in name1) 
                             if (typeof name1[zzz]=='object')
                                 name1[zzz].style.fontSize = '{$_SESSION['font_size_skill_list']}px';
-                                console.log(typeof name1[zzz]);
-                        }
+                        
+                    }
+                  </script>";
+    }
+
+    static function listSkillRowSetup()
+    {
+            // найти ДИВ который держит в себе один из списка Скилов скил и задать ему стиль
+            echo "<script>
+                    function listSkillRowSetup()
+                    {
+                        name1=document.getElementsByClassName('skills');
+                       
+                        for (zzz in name1) 
+                            if (typeof name1[zzz]=='object')
+                                name1[zzz].style.lineHeight = '{$_SESSION['row_size_skill_list']}px';
+                        
                     }
                   </script>";
     }

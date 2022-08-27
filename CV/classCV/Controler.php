@@ -133,8 +133,6 @@ class Controler
 //$_SESSION['languages-level'] уровень владения 
 //$_SESSION['certificates_numer'] число полей сертификатов
 //$_SESSION['certificates_name'.$i] содержимое полей сертификатов
-//$_SESSION['nameFile'] имя последнего сгенерированного файла резюме
-//$_SESSION['md5'] мд5 код оследнего сохранённого файла
 //$_SESSION['Skillsbriefly_numer'] число в списке навыков
 //$_SESSION['skillsbriefly_name'.$i] список навыков
 //$_SESSION['setting'] держит информацию о том, с какой именно страницы перешли на страницу настроек

@@ -13,6 +13,11 @@ class Translation
     {
         return match (true) {
 
+            $this->str=='Высота строки' && SelectLanguage::getLenguage()=='ru' => 'Высота строки',
+            $this->str=='Высота строки' && SelectLanguage::getLenguage()=='ua' => 'Висота рядка',
+            $this->str=='Высота строки' && SelectLanguage::getLenguage()=='pl' => 'Wysokość wiersza',
+            $this->str=='Высота строки' && SelectLanguage::getLenguage()=='en' => 'Row height',
+
             $this->str=='Ввести размер шрифта' && SelectLanguage::getLenguage()=='ru' => 'Ввести размер шрифта',
             $this->str=='Ввести размер шрифта' && SelectLanguage::getLenguage()=='ua' => 'Ввести розмір шрифту',
             $this->str=='Ввести размер шрифта' && SelectLanguage::getLenguage()=='pl' => 'Wprowadź rozmiar czcionki',

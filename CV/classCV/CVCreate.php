@@ -6,8 +6,8 @@ class CVCreate
 {
     public function __construct()
     {
-        if (!isset($_SESSION['nameFile'])) $_SESSION['nameFile']='';
-        if (!isset($_SESSION['md5'])) $_SESSION['md5']='';
+       // if (!isset($_SESSION['nameFile'])) $_SESSION['nameFile']='';
+       // if (!isset($_SESSION['md5'])) $_SESSION['md5']='';
     }
 
     public function __toString()
@@ -43,9 +43,13 @@ class CVCreate
             /////////////////////////////////////////////////////////////////////////////////
             // объявление функции listSkillFontSetup()
             InstrumentStaticCV::listSkillFontSetup();
+            // объявление функции listSkillRowSetup()
+            InstrumentStaticCV::listSkillRowSetup();
             // Скрипт загружает событие, которое отслеживает вводимую информацию в число столбцов
             InstrumentStaticCV::loadFunctionEventLoad('listSkillFontSetup');
-            /////////////////////////////////////////////////////////////////////////////////
+            // Скрипт загружает событие, которое отслеживает вводимую информацию в число столбцов
+            InstrumentStaticCV::loadFunctionEventLoad('listSkillRowSetup');
+            /////////////////////////////////////////////////////////////////////////////////listSkillRowSetup
 
             $listSkills=(string)  new Translation('Список навыков');
             $listSkills_text="<section class='container-fluid'>";
@@ -251,7 +255,7 @@ class CVCreate
         //if (!isset($_REQUEST['printCV'])) {
             //echo $header;
             echo $this->CV1();
-            InstrumentStaticCV::loadFunctionEventClick('bodyClick');
+            //InstrumentStaticCV::loadFunctionEventClick('bodyClick');
             //echo $futer;
             //return false;
        // }
