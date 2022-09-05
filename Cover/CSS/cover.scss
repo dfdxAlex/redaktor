@@ -1,0 +1,35 @@
+html{
+    font-size: 18px;
+}
+.FieldSize {
+    p {
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    input[name="loadWidth"]{    
+       margin-top: 10px;
+    }
+    input[name="loadHeyght"]{    
+        margin-top: 10px;
+    }
+    input[name="buttonFieldSize"]{    
+        margin-top: 10px;
+    }
+
+}
+.BackGroundColor{
+    label[for="checkName1"] {
+        margin-left: 20px;
+    }
+    input[type="color"] {
+        float:left;
+        margin-left: 20px;
+    }
+    input[name="buttonBorder"] {
+        margin-left: 10px;
+    }
+    p {
+        float:left;
+    }
+}

@@ -302,19 +302,31 @@ foreach($parametr as $value) {
      echo '</section>';
     }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function formBlock($nameBlock, $actionN,...$parametr)
     {
        $form_not_open=false;          // Управляет выводом открывающего тега Форм, если фалс, то выводим.
        $form_not_close=false;         // Управляет выводом закрывающего тега Форм, если фалс, то выводим.
        $zero_style=false;             // если присутствует данный признак, то Bootstrap работать не будет
        $btn_start=false;              // если данный признак установить в true, то в классах кнопок btn будет на первом месте
+       $btn_btn='';
+       $checkbox=true;
        // поиск различных признаков.
        foreach ($parametr as $value) {// поиск признаков $form_not_open и $form_not_close=false;
            if ($value=='form_not_open') $form_not_open=true;
            if ($value=='form_not_close') $form_not_close=true;
            if ($value=='zero_style') $zero_style=true;
            if ($value=='btn_start') $btn_start=true;
+           if ($value=='btn-primary') $btn_btn='btn-primary ';
+           if ($value=='btn-secondary') $btn_btn='btn-secondary ';
+           if ($value=='btn-success') $btn_btn='btn-success ';
+           if ($value=='btn-danger') $btn_btn='btn-danger ';
+           if ($value=='btn-warning') $btn_btn='btn-warning ';
+           if ($value=='btn-info') $btn_btn='btn-info ';
+           if ($value=='btn-light') $btn_btn='btn-light ';
+           if ($value=='btn-dark') $btn_btn='btn-dark ';
+           if ($value=='btn-link') $btn_btn='btn-link ';
         }
      
        if (!$zero_style && !$form_not_open && !$form_not_close) {
@@ -399,9 +411,9 @@ foreach($parametr as $value) {
              $class=$nameBlock.'reset'.$i;
              if (!$zero_style) {
                  if ($btn_start)
-                     $class='btn '.$class;
+                     $class='btn '.$btn_btn.$class;
                  if (!$btn_start)
-                     $class=$class.' btn';
+                     $class=$class.' btn'.$btn_btn;
              }
              echo '<input type="reset" class="'.$class.'" value="'.$textValue.'">';
            }
@@ -415,29 +427,13 @@ foreach($parametr as $value) {
              $class=$nameBlock.$name.$i;
              if (!$zero_style) {
                  if ($btn_start)
-                     $class='btn '.$class;
+                     $class='btn '.$btn_btn.$class;
                  if (!$btn_start)
-                     $class=$class.' btn';
+                     $class=$class.' btn'.$btn_btn;
              }
              echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
            }
-           /*
-         if ($value=='submit2') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-             if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
-             $class=$nameBlock.$name.$i;
-             if (!$zero_style) {
-                 if ($btn_start)
-                     $class='btn '.$class;
-                 if (!$btn_start)
-                     $class=$class.' btn';
-             }
-             echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
-           }*/
+
          if ($value=='submit3') {
              if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
                if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
@@ -471,6 +467,43 @@ foreach($parametr as $value) {
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
              echo '<'.$value.' class="'.$class.'">'.$text.'</'.$value.'>';
            }
+          if ($value=='color') {
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
+            //if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+            //  if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+            //$class=$nameBlock.$name.$i;
+            echo '<input type="color" name="'.$name.'" id="'.$name.'">';
+          }
+          if ($value=='checkbox') {
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+            //$class=$nameBlock.$name.$i;
+            if ($checkbox) 
+                $check='checked';
+            else 
+                $check='';
+            $checkbox=false;
+            echo "<label for='$name$i'>$textValue</label>";
+            echo '<input type="checkbox" name="'.$name.'" id="'.$name.$i.'" '.$check.'>';
+          }
+          if ($value=='radio') {
+            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+              if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
+            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+              if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+            //$class=$nameBlock.$name.$i;
+            if ($checkbox) 
+                $check='checked';
+            else 
+                $check='';
+                $checkbox=false;
+            echo "<label for='$name'>$textValue</label>";
+            echo '<input type="radio" name="'.$name.'" id="'.$name.'" '.$check.'>';
+          }
+
            $i++; 
         }
         
@@ -651,6 +684,9 @@ foreach($parametr as $value) {
        if ($parametr=='submit2') return true;
        if ($parametr=='submit3') return true;
        if ($parametr=='span') return true;
+       if ($parametr=='color') return true;
+       if ($parametr=='radio') return true;
+       if ($parametr=='checkbox') return true;
        return false;
    }
 }

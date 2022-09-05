@@ -7,17 +7,37 @@ class Controler
 {
     public function __construct()
     {
+        if (!isset($_SESSION['level_cover'])) $_SESSION['level_cover']=0;
 
-        // Блок ставит два верхних меню: работа с языками и навигацией по сайту
-        echo new ButtonLanguage();
+        $requestTest = new RequestButton();
 
+        // Блок ставит  меню: работа с языками
+        echo '<nav class="container-fluid">
+                  <div class="row">'.
+                      '<div class="col-7">
+                           <div class="up-menu">'.
+                               new ButtonMenuUp().
+                          '</div>
+                      </div>
+                      <div class="col-5">
+                          <div class="up-menu">'.
+                               new ButtonLanguage().
+                          '</div>
+                      </div>
+                   </div>
+               </nav>';
 
     }
+
     static function control()
     {
-        // вывести список шаблонов, если шаг = 0
-
-
+        $_SESSION['level_cover']=1;
+        if ($_SESSION['level_cover']==0) {
+           $fieldSize = new FieldSize();
+        }
+        if ($_SESSION['level_cover']==1) {
+            $fieldSize = new BackGroundPole();
+         }
           
     }
 
@@ -26,4 +46,8 @@ class Controler
 
 
 //$_SESSION['languageCover']   содержит язык пользователя
+//$_SESSION['level_cover']    текущий шаг страниц
+//$_SESSION['level_max_cover'] максимальное значение шагов
+//$_SESSION['loadWidth_cover'] значение ширины поля
+//$_SESSION['loadHeyght_cover'] высота рабочего поля
 

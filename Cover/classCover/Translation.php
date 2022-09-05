@@ -13,6 +13,41 @@ class Translation
     {
         return match (true) {
 
+            $this->str=='Граница поля' && SelectLanguage::getLenguage()=='ru' => 'Граница поля',
+            $this->str=='Граница поля' && SelectLanguage::getLenguage()=='ua' => 'Кордон поля',
+            $this->str=='Граница поля' && SelectLanguage::getLenguage()=='pl' => 'Granica pola',
+            $this->str=='Граница поля' && SelectLanguage::getLenguage()=='en' => 'Field boundary',
+
+            $this->str=='Применить' && SelectLanguage::getLenguage()=='ru' => 'Применить',
+            $this->str=='Применить' && SelectLanguage::getLenguage()=='ua' => 'Застосувати',
+            $this->str=='Применить' && SelectLanguage::getLenguage()=='pl' => 'Stosować',
+            $this->str=='Применить' && SelectLanguage::getLenguage()=='en' => 'Apply',
+
+            $this->str=='Определить второй цвет' && SelectLanguage::getLenguage()=='ru' => 'Определить второй цвет',
+            $this->str=='Определить второй цвет' && SelectLanguage::getLenguage()=='ua' => 'Визначити другий колір',
+            $this->str=='Определить второй цвет' && SelectLanguage::getLenguage()=='pl' => 'Zdefiniuj drugi kolor',
+            $this->str=='Определить второй цвет' && SelectLanguage::getLenguage()=='en' => 'Define second color',
+
+            $this->str=='Определить первый цвет' && SelectLanguage::getLenguage()=='ru' => 'Определить первый цвет',
+            $this->str=='Определить первый цвет' && SelectLanguage::getLenguage()=='ua' => 'Визначити перший колір',
+            $this->str=='Определить первый цвет' && SelectLanguage::getLenguage()=='pl' => 'Określ pierwszy kolor',
+            $this->str=='Определить первый цвет' && SelectLanguage::getLenguage()=='en' => 'Determine first color',
+
+            $this->str=='Введите высоту' && SelectLanguage::getLenguage()=='ru' => 'Введите высоту',
+            $this->str=='Введите высоту' && SelectLanguage::getLenguage()=='ua' => 'Введіть висоту',
+            $this->str=='Введите высоту' && SelectLanguage::getLenguage()=='pl' => 'Wprowadź wysokość',
+            $this->str=='Введите высоту' && SelectLanguage::getLenguage()=='en' => 'Enter Height',
+
+            $this->str=='Введите ширину' && SelectLanguage::getLenguage()=='ru' => 'Введите ширину',
+            $this->str=='Введите ширину' && SelectLanguage::getLenguage()=='ua' => 'Введіть ширину',
+            $this->str=='Введите ширину' && SelectLanguage::getLenguage()=='pl' => 'Wprowadź szerokość',
+            $this->str=='Введите ширину' && SelectLanguage::getLenguage()=='en' => 'Enter Width',
+
+            $this->str=='Введите размер поля' && SelectLanguage::getLenguage()=='ru' => 'Введите размер поля',
+            $this->str=='Введите размер поля' && SelectLanguage::getLenguage()=='ua' => 'Введіть розмір поля',
+            $this->str=='Введите размер поля' && SelectLanguage::getLenguage()=='pl' => 'Wpisz rozmiar pola',
+            $this->str=='Введите размер поля' && SelectLanguage::getLenguage()=='en' => 'Enter field size',
+
             $this->str=='Высота строки' && SelectLanguage::getLenguage()=='ru' => 'Высота строки',
             $this->str=='Высота строки' && SelectLanguage::getLenguage()=='ua' => 'Висота рядка',
             $this->str=='Высота строки' && SelectLanguage::getLenguage()=='pl' => 'Wysokość wiersza',
