@@ -31,8 +31,8 @@ class Controler
 
     static function control()
     {
-        $_SESSION['level_cover']=1;
-        
+        //$_SESSION['level_cover']=1;
+
         if ($_SESSION['level_cover']==0) {
            $fieldSize = new FieldSize();
         }
