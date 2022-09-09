@@ -32,6 +32,7 @@ class Controler
     static function control()
     {
         $_SESSION['level_cover']=1;
+        
         if ($_SESSION['level_cover']==0) {
            $fieldSize = new FieldSize();
         }
@@ -50,4 +51,8 @@ class Controler
 //$_SESSION['level_max_cover'] максимальное значение шагов
 //$_SESSION['loadWidth_cover'] значение ширины поля
 //$_SESSION['loadHeyght_cover'] высота рабочего поля
+//$_SESSION['colorName1_cover'] Первый цвет фона
+//$_SESSION['colorName2_cover'] Второй цвет фона
+//$_SESSION['checkName1_cover'] Вариант фона - один из цветов или градиент
+//$_SESSION['border_cover'] Если true то рисовать границу, иначе нет
 

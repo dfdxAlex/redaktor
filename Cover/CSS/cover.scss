@@ -26,10 +26,16 @@ html{
         float:left;
         margin-left: 20px;
     }
-    input[name="buttonBorder"] {
-        margin-left: 10px;
-    }
-    p {
+    p, .buttonBorderPH, #buttonFieldSize {
         float:left;
+        
+    }
+    .buttonBorder, #buttonFieldSize{
+        background: #0dcaf0;
+        margin-left: 5px;
+        width: 122px;
+        height: 42px;
+        border-radius: 0.25rem;
+        padding-top: 6px;
     }
 }

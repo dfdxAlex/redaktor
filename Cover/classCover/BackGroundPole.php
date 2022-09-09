@@ -41,21 +41,27 @@ class BackGroundPole extends \class\nonBD\Button
             'Фон 2',
             'radio',
             'checkName1',
-            'Фон 1-2',
+            'Линейный градиент',
+            'radio',
+            'checkName1',
+            'Радиальный градиент',
             'bootstrap-f-start',
             'submit',
             'buttonFieldSize',
              $applyB,
-             'submit',
-             'buttonBorder',
+             'p',
               $borderB,
+              'buttonBorder',
             'bootstrap-finish',
            );
 
+           $qq=$_SESSION['n']++;
         echo "
-            <section class='workingField'>
-                
+            <script>window.addEventListener('load', borderSet);</script>
+            <section id='workingField'>
+            $qq
             </section>
         ";
+
     }
 }
