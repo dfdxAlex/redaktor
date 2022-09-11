@@ -15,8 +15,8 @@ class RequestButton
         if (!isset($_SESSION['border_cover'])) $_SESSION['checkName1_cover']=false;
 
         // отслеживаем нажатые кнопки и помещаем их значения в переменные сессий
-        if (isset($_REQUEST['loadWidth'])) $_SESSION['loadWidth_cover']=(int)$_REQUEST['loadWidth'];
-        if (isset($_REQUEST['loadHeyght'])) $_SESSION['loadHeyght_cover']=(int)$_REQUEST['loadHeyght'];
+        if (isset($_REQUEST['loadWidth']) && !$_REQUEST['loadWidth']=='') $_SESSION['loadWidth_cover']=(int)$_REQUEST['loadWidth'];
+        if (isset($_REQUEST['loadHeyght']) && !$_REQUEST['loadHeyght']=='') $_SESSION['loadHeyght_cover']=(int)$_REQUEST['loadHeyght'];
         // Данные фона поля
         if (isset($_REQUEST['colorName1'])) $_SESSION['colorName1_cover']=$_REQUEST['colorName1'];
         if (isset($_REQUEST['colorName2'])) $_SESSION['colorName2_cover']=$_REQUEST['colorName2'];

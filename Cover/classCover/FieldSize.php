@@ -2,7 +2,7 @@
 namespace classCover;
 
 
-// класс управляет логикой приложения  
+// класс принимает данные размера поля.
 class FieldSize extends \class\nonBD\Button
 {
     
@@ -11,8 +11,16 @@ class FieldSize extends \class\nonBD\Button
         parent::__construct();
 
         $mesageHeight=(string)  new Translation('Введите размер поля');
+
+        $loadWidthSes='';
+        if ((int)$_SESSION['loadWidth_cover']>0) $loadWidthSes=$_SESSION['loadWidth_cover']; 
         $loadWidth=(string)  new Translation('Введите ширину');
+
+        $loadHeyghtSes='';
+        if ((int)$_SESSION['loadHeyght_cover']>0) $loadHeyghtSes=$_SESSION['loadHeyght_cover'];
         $loadHeyght=(string)  new Translation('Введите высоту');
+
+        
         $buttonFieldSize=(string)  new Translation('Сохранить');
 
         parent::formBlock(
@@ -20,21 +28,21 @@ class FieldSize extends \class\nonBD\Button
                          '#',
                          'btn_start',
                          'btn-info',
-
                          'bootstrap-start',
                          'p',
                          $mesageHeight,
                          'mesageHeight',
                          'bootstrap-f-start',
-                         'text2',
+                         'textLH',
                          'loadWidth',
                          $loadWidth,
+                         $loadWidthSes,
                          'bootstrap-f-start',
-                         'text2',
+                         'textLH',
                          'loadHeyght',
                          $loadHeyght,
+                         $loadHeyghtSes,
                          'bootstrap-f-start',
-                         
                          'submit',
                          'buttonFieldSize',
                          $buttonFieldSize,

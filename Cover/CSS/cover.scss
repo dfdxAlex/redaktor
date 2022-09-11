@@ -16,6 +16,9 @@ html{
     input[name="buttonFieldSize"]{    
         margin-top: 10px;
     }
+    label{
+        margin-top: 20px;
+    }
 
 }
 .BackGroundColor{
@@ -33,9 +36,15 @@ html{
     .buttonBorder, #buttonFieldSize{
         background: #0dcaf0;
         margin-left: 5px;
-        width: 122px;
+        width: 140px;
         height: 42px;
         border-radius: 0.25rem;
         padding-top: 6px;
+        text-align: center;
     }
+}
+#workingField{
+    float: left;
+    margin-left: 5px;
+    margin-bottom: 50px;
 }

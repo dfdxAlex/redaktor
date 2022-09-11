@@ -372,6 +372,29 @@ foreach($parametr as $value) {
                $class=$nameBlock.$name.$i;
                echo '<input type="text" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
            }
+           //noBootstrap($attrib)
+          if ($value=='textL') {
+            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
+                if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
+            if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
+                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValueFoLabel=$parametr[$i+2]; else $textValueFoLabel=''; else $textValueFoLabel='';
+            if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
+                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textValueFoText=$parametr[$i+3]; else $textValueFoText=''; else $textValueFoText='';
+            $class=$nameBlock.$name.$i;
+            echo "<label for='{$class}label'>$textValueFoLabel </label>";
+            echo "<input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
+          }
+          if ($value=='textLH') {
+            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
+                if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
+            if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
+                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValueFoLabel=$parametr[$i+2]; else $textValueFoLabel=''; else $textValueFoLabel='';
+            if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
+                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textValueFoText=$parametr[$i+3]; else $textValueFoText=''; else $textValueFoText='';
+            $class=$nameBlock.$name.$i;
+            echo "<label for='{$class}label'>$textValueFoLabel </label><br>";
+            echo "<input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
+          }
          if ($value=='textarea') {
              if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
                if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
@@ -708,6 +731,8 @@ foreach($parametr as $value) {
        if ($parametr=='radio') return true;
        if ($parametr=='checkbox') return true;
        if ($parametr=='buttonUrl') return true;
+       if ($parametr=='textL') return true;
+       if ($parametr=='textLH') return true;
        return false;
    }
    //функция проверяет, не находится ли в очередном параметре ключевые слова работы с бутстрапом

@@ -55,11 +55,17 @@ class BackGroundPole extends \class\nonBD\Button
             'bootstrap-finish',
            );
 
-           $qq=$_SESSION['n']++;
+           //$qq=$_SESSION['n']++;
+           //window.addEventListener('load', borderSet);
+           $heyghtB=$_SESSION['loadHeyght_cover'];
+           $widthB=$_SESSION['loadWidth_cover'];
+           
         echo "
-            <script>window.addEventListener('load', borderSet);</script>
+            <script>
+                b = new BorderSet($heyghtB,$widthB);
+            </script>
+
             <section id='workingField'>
-            $qq
             </section>
         ";
 
