@@ -365,9 +365,9 @@ foreach($parametr as $value) {
                  echo '<br>';
            }
           if ($value=='text') {
-               if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+               if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                    if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-               if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+               if (isset($parametr[$i+2])  && $this->noBootstrap($parametr[$i+2]))
                    if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
                $class=$nameBlock.$name.$i;
                echo '<input type="text" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
@@ -396,39 +396,39 @@ foreach($parametr as $value) {
             echo "<input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
           }
          if ($value=='textarea') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
              $class=$nameBlock.$name.$i;
              echo '<textarea name="'.$name.'" class="'.$class.'">'.$textValue.'</textarea>';
            }
          if ($value=='text2') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
              $class=$nameBlock.$name.$i;
              echo '<input type="text" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
            }
          if ($value=='password') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
              $class=$nameBlock.$name.$i;
              echo '<input type="password" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
            }
          if ($value=='password2') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
              $class=$nameBlock.$name.$i;
              echo '<input type="password" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
            }
          if ($value=='reset') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFormBlock($parametr[$i+1])) $textValue=$parametr[$i+1]; else $textValue='Reset'; else $textValue='Reset';
              
              $class=$nameBlock.'reset'.$i;
@@ -441,11 +441,11 @@ foreach($parametr as $value) {
              echo '<input type="reset" class="'.$class.'" value="'.$textValue.'">';
            }
          if ($value=='submit' || $value=='submit2') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-             if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
+             if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
              $class=$nameBlock.$name.$i;
              if (!$zero_style) {
@@ -458,13 +458,13 @@ foreach($parametr as $value) {
            }
 
          if ($value=='submit3') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-             if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
+             if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
-             if (isset($parametr[$i+4]) && $parametr[$i+4]!='bootstrap-start' && $parametr[$i+4]!='bootstrap-f-start' && $parametr[$i+4]!='bootstrap-finish')
+             if (isset($parametr[$i+4]) && $this->noBootstrap($parametr[$i+4]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3]) && !$this->searcTegFormBlock($parametr[$i+4])) $class=$parametr[$i+4]; else $class=''; else $textWww='';
              $class=$nameBlock.$name.$i;
              $classFoDiv=$class;
@@ -495,28 +495,28 @@ foreach($parametr as $value) {
            echo '<div class="'.$classFoDiv.'Div"><a class="'.$class.'" href="'.$textWww.'">'.$textValue.'</a></div>';
          }
          if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
              echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'" id="'.$class.'">'.$text.'</'.$value.'></div>';
            }
          if ($value=='span') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
                if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
              echo '<'.$value.' class="'.$class.'">'.$text.'</'.$value.'>';
            }
           if ($value=='color') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
             echo '<input type="color" name="'.$name.'" id="'.$name.'">';
           }
           if ($value=='checkbox') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+            if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
             if ($checkbox) 
                 $check='checked';
@@ -527,9 +527,9 @@ foreach($parametr as $value) {
             echo '<input type="checkbox" name="'.$name.'" id="'.$name.$i.'" '.$check.'>';
           }
           if ($value=='radio') {
-            if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
+            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
-            if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
+            if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
             if ($checkbox) 
                 $check='checked';
