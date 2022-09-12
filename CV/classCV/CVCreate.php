@@ -69,7 +69,7 @@ class CVCreate
                             <div class='skills'>$skillsL</div> 
                         </div>
                 ";
-                if (($i)%$numberColumns==0 && $i>2) {
+                if ((($i)%$numberColumns==0 && $i>2) || ($numberColumns==1)) {
                     $listSkills_text.="</div>";
                     $priznak=true;
                 }
