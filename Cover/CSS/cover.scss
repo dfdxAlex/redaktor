@@ -31,9 +31,8 @@ html{
     }
     p, .buttonBorderPH, #buttonFieldSize {
         float:left;
-        
     }
-    .buttonBorder, #buttonFieldSize{
+    .buttonBorder, #buttonFieldSize, .buttonOk{
         background: #0dcaf0;
         margin-left: 5px;
         width: 140px;
@@ -54,6 +53,10 @@ html{
          height: 25px;
          margin-left: 10px;
          font-size: 12px;
+    }
+    .BackGroundColorsaveColor53{
+        float:left;
+        margin-left: 6px;
     }
 }
 #workingField{

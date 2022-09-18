@@ -84,12 +84,10 @@ class BackGroundPole extends \class\nonBD\Button
            $widthB=$_SESSION['loadWidth_cover'];
 
            $nomerChecked=$_SESSION['checkName1_cover'];
-           $bBackGround=$_SESSION['checkName1_cover'];
+           $bBackGround=$_SESSION['colorName1_cover'];
 
            if ($nomerChecked=='fon2')
                $bBackGround=$_SESSION['colorName2_cover'];
-
-               echo $nomerChecked;
 
            $color1=$_SESSION['colorName1_cover'];
            $color2=$_SESSION['colorName2_cover'];

@@ -58,11 +58,11 @@ function BorderSet(bHeyght,bWidth,bBackGround,nomerChecked)
         if (fon=='fon1') return false;
 
         // если выбран любой радиобаттон кроме первого, то удалить точку с первого радиобаттона
-        var nameRadio1=document.getElementById('checkName126');
+        var nameRadio1=document.getElementById('fon1');
         nameRadio1.checked = false;
-        var nameRadio2=document.getElementById('checkName130');
-        var nameRadio3=document.getElementById('checkName134');
-        var nameRadio4=document.getElementById('checkName138');
+        var nameRadio2=document.getElementById('fon2');
+        var nameRadio3=document.getElementById('fon3');
+        var nameRadio4=document.getElementById('fon4');
 
         if  (fon=='fon2') nameRadio2.checked = true;
         if  (fon=='fon3') nameRadio3.checked = true;
