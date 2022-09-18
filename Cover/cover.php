@@ -2,6 +2,7 @@
 
 session_start();
 
+
 /////////////////////////////////////////////
 // подключение автозагрузчика библиотеки DFDX
 require_once "class/autoloaderDFDX.php";
@@ -38,7 +39,8 @@ $controller = new Controler();
 Controler::control();
 
 
-
+echo '<script src="https://kit.fontawesome.com/e6a725b74a.js" crossorigin="anonymous"></script>';
 // установка futter
 echo new HtmlFutter();
+
 ///////////////////////////////////////////

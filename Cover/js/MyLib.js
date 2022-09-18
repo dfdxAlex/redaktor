@@ -33,6 +33,7 @@ function BorderSet(bHeyght,bWidth,bBackGround,nomerChecked,bBackGround2)
 
     }
 
+    // Функция меняет фон области редактирования, в зависимости от настроек
     function coverCreate()
     {
         // находим контейнер рабочего поля

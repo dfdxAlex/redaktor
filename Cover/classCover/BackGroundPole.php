@@ -94,6 +94,8 @@ class BackGroundPole extends \class\nonBD\Button
                 
            }
 
+           echo '<i class="fa-solid fa-arrows-spin"></i>';
+
            $color1=$_SESSION['colorName1_cover'];
            $color2=$_SESSION['colorName2_cover'];
            
