@@ -85,16 +85,21 @@ class BackGroundPole extends \class\nonBD\Button
 
            $nomerChecked=$_SESSION['checkName1_cover'];
            $bBackGround=$_SESSION['colorName1_cover'];
+           $bBackGround2=$_SESSION['colorName2_cover'];
 
            if ($nomerChecked=='fon2')
                $bBackGround=$_SESSION['colorName2_cover'];
+
+           if ($nomerChecked=='fon3') {
+                
+           }
 
            $color1=$_SESSION['colorName1_cover'];
            $color2=$_SESSION['colorName2_cover'];
            
         echo "
             <script>
-                b = new BorderSet($heyghtB,$widthB,'$bBackGround','$nomerChecked');
+                b = new BorderSet($heyghtB,$widthB,'$bBackGround','$nomerChecked','$bBackGround2');
                 b.colorDivCircle('$color1','$color2');
                 b.checkedFlag('$nomerChecked');
             </script>

@@ -1,5 +1,5 @@
 // конструктор создает объект для работы с границей рабочей части
-function BorderSet(bHeyght,bWidth,bBackGround,nomerChecked)
+function BorderSet(bHeyght,bWidth,bBackGround,nomerChecked,bBackGround2)
 {
     // находим кнопку, нажатие которой ставит или убирает рамку по границе рабочего поля
     var name2=document.getElementById('buttonBorder');
@@ -41,6 +41,9 @@ function BorderSet(bHeyght,bWidth,bBackGround,nomerChecked)
         name1.style.width=bWidth;
         if (nomerChecked=='fon1' || nomerChecked=='fon2')
             name1.style.background=bBackGround;
+        if (nomerChecked=='fon3') {
+            name1.innerHTML='<div style="color:red; heyght:100%; widht="100%"></div>';
+        }
     }
 
     // функция задает цвет фона для дивов, которые показывают, какой цвет выбран
@@ -52,7 +55,7 @@ function BorderSet(bHeyght,bWidth,bBackGround,nomerChecked)
         name2.style.background=color2;
     }
 
-    this.checkedFlag = function(fon)
+    this.checkedFlag = function(fon,fon2)
     {
         // если выбрана первая радиокнопка то просто выйти из функции установки точки выбора
         if (fon=='fon1') return false;
