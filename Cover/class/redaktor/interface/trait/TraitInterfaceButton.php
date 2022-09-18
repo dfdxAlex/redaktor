@@ -527,26 +527,34 @@ foreach($parametr as $value) {
               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
               if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+            if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
+              if (!$this->searcTegFor($parametr,$i,3)) $valueV='value="'.$parametr[$i+3].'"'; else $valueV=''; else $valueV='';
+            if (isset($parametr[$i+4]) && $this->noBootstrap($parametr[$i+4]))
+              if (!$this->searcTegFor($parametr,$i,4)) $id='id="'.$parametr[$i+4].'"'; else $id=''; else $id='';
             if ($checkbox) 
                 $check='checked';
             else 
                 $check='';
             $checkbox=false;
             echo "<label for='$name$i'>$textValue</label>";
-            echo "<input type='checkbox' name='$name' id='$name.$i' $check>";
+            echo "<input type='checkbox' name='$name' $id $check $valueV>";
           }
           if ($value=='radio') {
             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
               if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+            if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
+              if (!$this->searcTegFor($parametr,$i,3)) $valueV='value="'.$parametr[$i+3].'"'; else $valueV=''; else $valueV='';
+            if (isset($parametr[$i+4]) && $this->noBootstrap($parametr[$i+4]))
+              if (!$this->searcTegFor($parametr,$i,4)) $id='id="'.$parametr[$i+4].'"'; else $id=''; else $id='';
             if ($checkbox) 
                 $check='checked';
             else 
                 $check='';
                 $checkbox=false;
             echo "<label for='$name'>$textValue</label>";
-            echo '<input type="radio" name="'.$name.'" id="'.$name.'" '.$check.'>';
+            echo "<input type='radio' name='$name' $id $check $valueV >";
           }
 
            $i++; 
@@ -742,6 +750,7 @@ foreach($parametr as $value) {
        if ($parametr=='buttonUrl') return true;
        if ($parametr=='textL') return true;
        if ($parametr=='textLH') return true;
+       if ($parametr=='div') return true;
        return false;
    }
    // функция проверяет не являются ли параметры тегами или на оборот

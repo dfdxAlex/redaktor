@@ -49,17 +49,21 @@ class BackGroundPole extends \class\nonBD\Button
             'checkName1',
             'Фон 1',
             'fon1',
+            'fon1',
             'radio',
             'checkName1',
             'Фон 2',
+            'fon2',
             'fon2',
             'radio',
             'checkName1',
             'Линейный градиент',
             'fon3',
+            'fon3',
             'radio',
             'checkName1',
             'Радиальный градиент',
+            'fon4',
             'fon4',
             'bootstrap-f-start',
             'p',
@@ -79,8 +83,8 @@ class BackGroundPole extends \class\nonBD\Button
            $heyghtB=$_SESSION['loadHeyght_cover'];
            $widthB=$_SESSION['loadWidth_cover'];
 
-           //echo $_SESSION['checkName1_cover'];
            $nomerChecked=$_SESSION['checkName1_cover'];
+           $bBackGround=$_SESSION['checkName1_cover'];
 
            if ($nomerChecked=='fon2')
                $bBackGround=$_SESSION['colorName2_cover'];
