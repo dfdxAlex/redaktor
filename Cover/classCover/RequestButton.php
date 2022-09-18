@@ -18,9 +18,13 @@ class RequestButton
         if (isset($_REQUEST['loadWidth']) && !$_REQUEST['loadWidth']=='') $_SESSION['loadWidth_cover']=(int)$_REQUEST['loadWidth'];
         if (isset($_REQUEST['loadHeyght']) && !$_REQUEST['loadHeyght']=='') $_SESSION['loadHeyght_cover']=(int)$_REQUEST['loadHeyght'];
         // Данные фона поля
-        if (isset($_REQUEST['colorName1'])) $_SESSION['colorName1_cover']=$_REQUEST['colorName1'];
-        if (isset($_REQUEST['colorName2'])) $_SESSION['colorName2_cover']=$_REQUEST['colorName2'];
+        if (isset($_REQUEST['colorName1']) && $_REQUEST['colorName1']!='#000000') $_SESSION['colorName1_cover']=$_REQUEST['colorName1'];
+        if (isset($_REQUEST['colorName2']) && $_REQUEST['colorName2']!='#000000') $_SESSION['colorName2_cover']=$_REQUEST['colorName2'];
         if (isset($_REQUEST['checkName1'])) $_SESSION['checkName1_cover']=$_REQUEST['checkName1'];
+        if (isset($_REQUEST['resetColor'])) {
+            $_SESSION['colorName1_cover']='#000000';
+            $_SESSION['colorName2_cover']='#000000';
+        }
         // Видна ли граница поля
         if (isset($_REQUEST['buttonBorder']) && $_SESSION['border_cover']) $_SESSION['border_cover']=false;
         else if (isset($_REQUEST['buttonBorder']) && !$_SESSION['border_cover']) $_SESSION['border_cover']=true;

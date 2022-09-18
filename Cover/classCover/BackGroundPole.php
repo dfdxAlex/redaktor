@@ -1,7 +1,7 @@
 <?php
 namespace classCover;
 
-// класс выводит кнопки Вперед, Назад, В начало
+// класс настраивает параметры фона
 class BackGroundPole extends \class\nonBD\Button
 {
     public function __construct()
@@ -26,43 +26,75 @@ class BackGroundPole extends \class\nonBD\Button
             '',
             'color',
             'colorName1',
+            'div',
+            '',
+            '',
+            'div_color_1',
             'bootstrap-f-start',
             'p',
              $secondColor,
              '',
              'color',
              'colorName2',
+             'div',
+             '',
+             '',
+             'div-color-2',
+
+             'submit',
+             'resetColor',
+             'Без фона',
             'bootstrap-f-start',
             'radio',
             'checkName1',
             'Фон 1',
+            'fon1',
             'radio',
             'checkName1',
             'Фон 2',
+            'fon2',
             'radio',
             'checkName1',
             'Линейный градиент',
+            'fon3',
             'radio',
             'checkName1',
             'Радиальный градиент',
+            'fon4',
             'bootstrap-f-start',
-            'submit',
-            'buttonFieldSize',
+            'p',
              $applyB,
+             'buttonOk',
              'p',
-              $borderB,
-              'buttonBorder',
+             $borderB,
+             'buttonBorder',
+             'submit',
+             'saveColor',
+             'Запомнить',
             'bootstrap-finish',
+            
            );
 
-           //$qq=$_SESSION['n']++;
            //window.addEventListener('load', borderSet);
            $heyghtB=$_SESSION['loadHeyght_cover'];
            $widthB=$_SESSION['loadWidth_cover'];
+
+           //echo $_SESSION['checkName1_cover'];
+           $nomerChecked=$_SESSION['checkName1_cover'];
+
+           if ($nomerChecked=='fon2')
+               $bBackGround=$_SESSION['colorName2_cover'];
+
+               echo $nomerChecked;
+
+           $color1=$_SESSION['colorName1_cover'];
+           $color2=$_SESSION['colorName2_cover'];
            
         echo "
             <script>
-                b = new BorderSet($heyghtB,$widthB);
+                b = new BorderSet($heyghtB,$widthB,'$bBackGround','$nomerChecked');
+                b.colorDivCircle('$color1','$color2');
+                b.checkedFlag('$nomerChecked');
             </script>
 
             <section id='workingField'>

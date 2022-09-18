@@ -513,6 +513,15 @@ foreach($parametr as $value) {
               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
             echo '<input type="color" name="'.$name.'" id="'.$name.'">';
           }
+          if ($value=='div') {
+            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
+              if (!$this->searcTegFor($parametr,$i,1)) $mesage=$parametr[$i+1]; else $mesage=''; else $mesage='';
+          if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
+            if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+          if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
+            if (!$this->searcTegFor($parametr,$i,3)) $id="id='".$parametr[$i+3]."'"; else $id=''; else $id='';
+          echo "<div $class $id>$mesage</div>";
+          }
           if ($value=='checkbox') {
             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
@@ -524,7 +533,7 @@ foreach($parametr as $value) {
                 $check='';
             $checkbox=false;
             echo "<label for='$name$i'>$textValue</label>";
-            echo '<input type="checkbox" name="'.$name.'" id="'.$name.$i.'" '.$check.'>';
+            echo "<input type='checkbox' name='$name' id='$name.$i' $check>";
           }
           if ($value=='radio') {
             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))

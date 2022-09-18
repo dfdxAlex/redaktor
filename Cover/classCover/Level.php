@@ -7,12 +7,8 @@ class Level
 {
     public function __construct()
     {
-
-
         // функция ловит кнопки навигации и изменяет переменную текущего шага
         $this->levelHunt();
-
-
     }
 
     public function __toString()
@@ -49,7 +45,7 @@ class Level
         if (isset($_REQUEST['main'])) self::levelReset();
 
         /////////////////////////////////////////////////////
-        if ($_SESSION['level']<0) $_SESSION['level']=0;
+        if ($_SESSION['level_cover']<0) $_SESSION['level_cover']=0;
 
         // Ограничиваем рост уровня страницы если он не равен 1000
             if ($_SESSION['level_cover']>$_SESSION['level_max_cover']) 
