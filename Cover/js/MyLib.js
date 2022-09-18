@@ -41,10 +41,11 @@ function BorderSet(bHeyght,bWidth,bBackGround,nomerChecked,bBackGround2)
         name1.style.width=bWidth;
         if (nomerChecked=='fon1' || nomerChecked=='fon2')
             name1.style.background=bBackGround;
-        if (nomerChecked=='fon3') {
-            name1.innerHTML='<div style="color:red; heyght:100%; widht="100%"></div>';
-        }
-    }
+        if (nomerChecked=='fon3') 
+            name1.innerHTML='<div style="background: linear-gradient('+bBackGround+','+bBackGround2+'); height:100%; width="100%"></div>';
+        if (nomerChecked=='fon4') 
+            name1.innerHTML='<div style="background: radial-gradient('+bBackGround+','+bBackGround2+'); height:100%; width="100%"></div>';
+        } //
 
     // функция задает цвет фона для дивов, которые показывают, какой цвет выбран
     this.colorDivCircle = function(color1,color2)
