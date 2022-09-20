@@ -15,6 +15,11 @@ class BackGroundPole extends \class\nonBD\Button
         $applyB=(string)  new Translation('Применить');
         $borderB=(string)  new Translation('Граница поля');
 
+        echo '<section class="container-fluid">
+                 <div class="row">
+                     <div class="col-8">';
+
+
         parent::formBlock(
             'BackGroundColor', 
             '#',
@@ -76,8 +81,41 @@ class BackGroundPole extends \class\nonBD\Button
              'saveColor',
              'Запомнить',
             'bootstrap-finish',
-            
            );
+
+           echo "</div>
+                 <div class='col-4'>";
+                 parent::formBlock(
+                    'object', 
+                    '#',
+                    'btn_start',
+                    'btn-info',
+                    'bootstrap-start',
+                    'select',
+                    'selectBlock',
+                    'selectBlock',
+                    'nameSel',
+                    'label=выбери пункт,',
+                    '_group=Первая',
+                    '_value=name1-лист1-',
+                    '_value=name2-лист2-selected',
+                    '_group',
+                    '_group=Первая',
+                    '_value=name2-лист3',
+                    '_value=name2-лист3',
+                    '_group',
+                    '_group=Первая',
+                    '_value=name2-лист3',
+                    '_value=name2-лист3',
+                    '_group',
+                    '_group=Первая',
+                    '_value=name2-лист3',
+                    '_value=name2-лист3',
+                    '_group',
+                    'bootstrap-finish',
+                   );
+           echo '</div></div></section>';
+
 
            //window.addEventListener('load', borderSet);
            $heyghtB=$_SESSION['loadHeyght_cover'];

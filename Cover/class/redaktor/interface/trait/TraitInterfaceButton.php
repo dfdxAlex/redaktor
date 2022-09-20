@@ -556,6 +556,218 @@ foreach($parametr as $value) {
             echo "<label for='$name'>$textValue</label>";
             echo "<input type='radio' name='$name' $id $check $valueV >";
           }
+          // список ul
+          if ($value=='ulli') {
+            $j = $i;
+            $mas = [];
+            $jMas=0;
+            // создать массив со всеми найденными параметрами
+            while(isset($parametr[$j+3]) && $this->noBootstrap($parametr[$j+3]) && !$this->searcTegFor($parametr,$j+3,1)) {
+              $mas[$jMas]=$parametr[$j+3];
+              $j++;
+              $jMas++;
+            }
+            // определить класс, если он есть
+            $elementFoClass=$parametr[$i+1];
+            // определить id, если он есть
+            $elementFoId=$parametr[$i+2];
+            $class='';
+            $id='';
+            if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
+                $class="class='$elementFoClass'";
+            if ($elementFoId!='') // если параметр не пустой, то оформить сласс
+                $id="id='$elementFoId'";   
+            $rez="<ul $class $id>";
+            foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
+                if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
+                    $classFoLi="class='$elementFoClass$key'";
+                else $classFoLi='';
+                if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
+                    $idFoLi="id='$elementFoId$key'";
+                else $idFoLi='';
+                $rez.="<li $classFoLi $idFoLi>$value</li>";
+            }
+            $rez.="</ul>";
+            echo $rez;
+          }
+
+          // список ol
+          if ($value=='olli') {
+            $j = $i;
+            $mas = [];
+            $jMas=0;
+            // создать массив со всеми найденными параметрами
+            while(isset($parametr[$j+3]) && $this->noBootstrap($parametr[$j+3]) && !$this->searcTegFor($parametr,$j+3,1)) {
+              $mas[$jMas]=$parametr[$j+3];
+              $j++;
+              $jMas++;
+            }
+            // определить класс, если он есть
+            $elementFoClass=$parametr[$i+1];
+            // определить id, если он есть
+            $elementFoId=$parametr[$i+2];
+            $class='';
+            $id='';
+            if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
+                $class="class='$elementFoClass'";
+            if ($elementFoId!='') // если параметр не пустой, то оформить сласс
+                $id="id='$elementFoId'";   
+            $rez="<ol $class $id>";
+            foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
+                if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
+                    $classFoLi="class='$elementFoClass$key'";
+                else $classFoLi='';
+                if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
+                    $idFoLi="id='$elementFoId$key'";
+                else $idFoLi='';
+                $rez.="<li $classFoLi $idFoLi>$value</li>";
+            }
+            $rez.="</ol>";
+            echo $rez;
+          }
+
+          // список dl
+          if ($value=='dlli') {
+            $j = $i;
+            $mas = [];
+            $jMas=0;
+            // создать массив со всеми найденными параметрами
+            while(isset($parametr[$j+3]) && $this->noBootstrap($parametr[$j+3]) && !$this->searcTegFor($parametr,$j+3,1)) {
+              $mas[$jMas]=$parametr[$j+3];
+              $j++;
+              $jMas++;
+            }
+            // определить класс, если он есть
+            $elementFoClass=$parametr[$i+1];
+            // определить id, если он есть
+            $elementFoId=$parametr[$i+2];
+            $class='';
+            $id='';
+            if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
+                $class="class='$elementFoClass'";
+            if ($elementFoId!='') // если параметр не пустой, то оформить сласс
+                $id="id='$elementFoId'";   
+            $rez="<dl $class $id>";
+
+            foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
+                if ($key%2==0 && $key!=1) { // Заходим в блок только на чётных элементах массива, в тегах используются парные данные
+
+                    //определить класс и id для тегов dt
+                    if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
+                        $classFoLi="class='dt$elementFoClass$key'";
+                    else $classFoLi='';
+
+                    if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
+                        $idFoLi="id='dt$elementFoId$key'";
+                    else $idFoLi='';
+
+                    $rez.="<dt $classFoLi $idFoLi>$value</dt>";
+                }
+                if ($key%2!=0 && $key!=0 || $key==1) { // Заходим в блок только на чётных элементах массива, в тегах используются парные данные
+
+                  //определить класс и id для тегов dt
+                  if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
+                      $classFoLi="class='dd$elementFoClass$key'";
+                  else $classFoLi='';
+
+                  if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
+                      $idFoLi="id='dd$elementFoId$key'";
+                  else $idFoLi='';
+
+                  $rez.="<dd $classFoLi $idFoLi>$value</dd>";
+              }
+            }
+            $rez.="</dl>";
+            echo $rez;
+          }
+
+          // список select
+          if ($value=='select') {
+            $j = $i;
+            $mas = [];
+            $jMas=0;
+            // создать массив со всеми найденными параметрами
+            while(isset($parametr[$j+5]) && $this->noBootstrap($parametr[$j+5]) && !$this->searcTegFor($parametr,$j+5,1)) {
+              $mas[$jMas]=$parametr[$j+5];
+              $j++;
+              $jMas++;
+            }
+            // определить класс, если он есть
+            $elementFoClass=$parametr[$i+1];
+            // определить id, если он есть
+            $elementFoId=$parametr[$i+2];
+            $class='';
+            $id='';
+            // определить параметр name
+            $elementFoName=$parametr[$i+3];
+            // работа с дополнительной информацией
+            // найти multiple
+            $multiple=false;
+            $elementFoMultiple=$parametr[$i+4];
+
+            $multiple='';
+            if (mb_strripos($elementFoMultiple,'multiple')!==false) 
+                $multiple='multiple';
+            // найти label
+            $label=false;
+            $elementFoMultiple=$parametr[$i+4];
+            if (mb_strripos($elementFoMultiple,'label')!==false) 
+                $label=true; 
+            // выделить текст для label
+            $labelText='';  
+            if ($label) {
+                $labelText=$elementFoMultiple;
+                $labelText=preg_replace('/multiple/','',$labelText);
+                $labelText=preg_replace('/label=/','',$labelText);
+                $labelText=preg_replace('/,/','',$labelText);
+            }     
+            if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
+                $class="class='$elementFoClass'";
+            $for='';
+            if ($elementFoId!='') { // если параметр не пустой, то оформить сласс и сразу атрибут for для label
+                $id="id='$elementFoId'"; 
+                $for="for='$elementFoId'";
+            }  
+            if ($elementFoName!='') // если параметр не пустой, то оформить NAME
+                $name="name='$elementFoName'"; 
+            if ($label) 
+                $rez="<label $for>$labelText</label>";
+            else $rez='';
+            $rez.="<select $multiple $class $id $name>";
+
+            foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
+                if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для option
+                    $classFoOption="class='$elementFoClass$key'";
+                else $classFoOption='';
+                if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для option
+                    $idFoOption="id='$elementFoId$key'";
+                else $idFoOption='';
+                $disabled='';
+                if (mb_strripos($value,'-disabled')) {
+                    $disabled='disabled';
+                    $value=preg_replace('/-disabled/','',$value);
+                }
+                $selected='';
+                if (mb_strripos($value,'-selected')) {
+                    $selected='selected';
+                    $value=preg_replace('/-selected/','',$value);
+                }
+                if (mb_strripos($value,'_value')!==false) {
+                  $valueFoOption=preg_split('/(=)|(-)/',$value);
+                  $valueFoOptionString='value="'.$valueFoOption[1].'"';
+                  $textFoOptionString=$valueFoOption[2];
+                  $rez.="<option $selected $disabled $valueFoOptionString $idFoOption>$textFoOptionString</option>";
+                }
+                if (mb_strripos($value,'_group=')!==false) {
+                  $valueFoGroup='label="'.preg_replace('/_group=/','',$value).'"';
+                  $rez.="<optgroup $valueFoGroup>";
+                } else if (mb_strripos($value,'_group')!==false) {
+                  $rez.="</optgroup>";
+                }
+            }
+            $rez.="</select>";
+            echo $rez;
+          }
 
            $i++; 
         }
@@ -751,6 +963,10 @@ foreach($parametr as $value) {
        if ($parametr=='textL') return true;
        if ($parametr=='textLH') return true;
        if ($parametr=='div') return true;
+       if ($parametr=='ulli') return true;
+       if ($parametr=='olli') return true;
+       if ($parametr=='dlli') return true;
+       if ($parametr=='select') return true;
        return false;
    }
    // функция проверяет не являются ли параметры тегами или на оборот
