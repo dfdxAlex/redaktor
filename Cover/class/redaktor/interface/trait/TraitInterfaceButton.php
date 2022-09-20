@@ -651,29 +651,23 @@ foreach($parametr as $value) {
 
             foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
                 if ($key%2==0 && $key!=1) { // Заходим в блок только на чётных элементах массива, в тегах используются парные данные
-
                     //определить класс и id для тегов dt
                     if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
                         $classFoLi="class='dt$elementFoClass$key'";
                     else $classFoLi='';
-
                     if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
                         $idFoLi="id='dt$elementFoId$key'";
                     else $idFoLi='';
-
                     $rez.="<dt $classFoLi $idFoLi>$value</dt>";
                 }
                 if ($key%2!=0 && $key!=0 || $key==1) { // Заходим в блок только на чётных элементах массива, в тегах используются парные данные
-
                   //определить класс и id для тегов dt
                   if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
                       $classFoLi="class='dd$elementFoClass$key'";
                   else $classFoLi='';
-
                   if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
                       $idFoLi="id='dd$elementFoId$key'";
                   else $idFoLi='';
-
                   $rez.="<dd $classFoLi $idFoLi>$value</dd>";
               }
             }
