@@ -34,7 +34,7 @@ class FieldSize extends \class\nonBD\Button
                          'mesageHeight',
                          'bootstrap-f-start',
                          //'textLH',
-                         'textL',
+                         'password',
                          'loadWidth',
                          $loadWidth,
                          $loadWidthSes,

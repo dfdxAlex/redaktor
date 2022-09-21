@@ -348,27 +348,24 @@ foreach($parametr as $value) {
           if (stripos($value,'bootstrap')!==false) echo $this->tegiFoBootstrap($value);
           
           // устанавливает заданное число тегов <br>
-          if ($value=='br') $this->tegiBr($parametr,$i);
+          if ($value=='br') $this->tegiBr($parametr, $i);
 
           //устанавливает поле формы типа input type=text
-          if ($value=='text') $this->tegiInputText($nameBlock,$parametr,$i);
+          if ($value=='text') $this->tegiInputText($nameBlock, $parametr, $i);
+
+          //устанавливает поле формы типа input type=text вместо value - PlaceHolder
+          if ($value=='text2') $this->tegiInputText2($nameBlock, $parametr, $i);
            
           //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder
           if ($value=='textL') $this->tegiInputTextL($nameBlock, $parametr, $i);
 
-          
-          if ($value=='textLH') {
-            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-                if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-            if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-                if (!$this->searcTegFor($parametr,$i,2)) $textValueFoLabel=$parametr[$i+2]; else $textValueFoLabel=''; else $textValueFoLabel='';
-            if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
-                if (!$this->searcTegFor($parametr,$i,1)) $textValueFoText=$parametr[$i+3]; else $textValueFoText=''; else $textValueFoText='';
-            $class=$nameBlock.$name.$i;
-            echo "<label for='{$class}label'>$textValueFoLabel </label><br>";
-            echo "<input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
-          }
-         if ($value=='textarea') {
+          //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder с добавленным BR
+          if ($value=='textLH') $this->tegiInputTextLH($nameBlock, $parametr, $i);
+
+          // текстовое поле для ввода пароля
+          if ($value=='password') $this->tegiInputParol($nameBlock, $parametr, $i);
+         
+          if ($value=='textarea') {
              if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
              if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
@@ -376,22 +373,9 @@ foreach($parametr as $value) {
              $class=$nameBlock.$name.$i;
              echo '<textarea name="'.$name.'" class="'.$class.'">'.$textValue.'</textarea>';
            }
-         if ($value=='text2') {
-             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-               if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-             $class=$nameBlock.$name.$i;
-             echo '<input type="text" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
-           }
-         if ($value=='password') {
-             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
-             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-               if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-             $class=$nameBlock.$name.$i;
-             echo '<input type="password" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
-           }
+
+         
+           
          if ($value=='password2') {
              if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
@@ -751,6 +735,29 @@ foreach($parametr as $value) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Вспомогательные функции для formBlock()
+    // текстовое поле для ввода пароля
+    function tegiInputParol(string $nameBlock, array $parametr, int $i)
+    {
+      if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
+          if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
+      if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
+          if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+      $class=$nameBlock.$name.$i;
+      echo "<input type='password' name='$name' value='$textValue' class='$class'>";
+    }
+    //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder с добавленным BR
+    function tegiInputTextLH(string $nameBlock, array $parametr, int $i)
+    {
+      if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
+      if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
+      if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
+      if (!$this->searcTegFor($parametr,$i,2)) $textValueFoLabel=$parametr[$i+2]; else $textValueFoLabel=''; else $textValueFoLabel='';
+      if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
+      if (!$this->searcTegFor($parametr,$i,1)) $textValueFoText=$parametr[$i+3]; else $textValueFoText=''; else $textValueFoText='';
+      $class=$nameBlock.$name.$i;
+      echo "<label for='{$class}label'>$textValueFoLabel </label><br>
+            <input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
+    }
     //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder
     function tegiInputTextL(string $nameBlock, array $parametr, int $i)
     {
@@ -763,6 +770,16 @@ foreach($parametr as $value) {
       $class=$nameBlock.$name.$i;
       echo "<label for='{$class}label'>$textValueFoLabel </label>
             <input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
+    }
+    // устанавливает поле формы типа input type=text, вместо value PlaceHolder
+    function tegiInputText2(string $nameBlock, array $parametr, int $i)
+    {
+      if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
+          if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
+      if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
+          if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+      $class=$nameBlock.$name.$i;
+      echo "<input type='text' name='$name' placeholder='$textValue' class='$class'>";
     }
     // устанавливает поле формы типа input type=text
     function tegiInputText(string $nameBlock, array $parametr, int $i)
