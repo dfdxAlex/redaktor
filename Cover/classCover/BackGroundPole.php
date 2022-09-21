@@ -25,6 +25,8 @@ class BackGroundPole extends \class\nonBD\Button
             '#',
             'btn_start',
             'btn-info',
+            'br',
+             5,
             'bootstrap-start',
             'p',
             $firstColor,

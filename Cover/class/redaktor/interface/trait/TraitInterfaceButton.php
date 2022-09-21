@@ -343,47 +343,20 @@ foreach($parametr as $value) {
        echo '<div class="'.$nameBlock.'-div">';
        $i=0;
        foreach ($parametr as $key => $value) {
-          if ($value=='bootstrap-start') {
-             echo '<section class="container-fluid">';
-             echo '<div class="row">';
-             echo '<div class="col-12">';
-           }
-          if ($value=='bootstrap-f-start') {
-             echo '</div></div>';
-             echo '<div class="row">';
-             echo '<div class="col-12">';
-           }
-          if ($value=='bootstrap-finish')
-             echo '</div></div></section>';
- 
-          if ($value=='br') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]>1 && gettype($parametr[$i+1])=='integer') 
-                 $kolWoBr=$parametr[$i+1]; 
-             else 
-                 $kolWoBr=1;
-             for($j=0; $j<$kolWoBr; $j++)
-                 echo '<br>';
-           }
-          if ($value=='text') {
-               if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-                   if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-               if (isset($parametr[$i+2])  && $this->noBootstrap($parametr[$i+2]))
-                   if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-               $class=$nameBlock.$name.$i;
-               echo '<input type="text" name="'.$name.'" value="'.$textValue.'" class="'.$class.'">';
-           }
-           //noBootstrap($attrib)
-          if ($value=='textL') {
-            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-                if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-            if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-                if (!$this->searcTegFor($parametr,$i,2)) $textValueFoLabel=$parametr[$i+2]; else $textValueFoLabel=''; else $textValueFoLabel='';
-            if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
-                if (!$this->searcTegFor($parametr,$i,3)) $textValueFoText=$parametr[$i+3]; else $textValueFoText=''; else $textValueFoText='';
-            $class=$nameBlock.$name.$i;
-            echo "<label for='{$class}label'>$textValueFoLabel </label>";
-            echo "<input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
-          }
+
+          // устанавливает дивы с классами для BootStrap bootstrap
+          if (stripos($value,'bootstrap')!==false) echo $this->tegiFoBootstrap($value);
+          
+          // устанавливает заданное число тегов <br>
+          if ($value=='br') $this->tegiBr($parametr,$i);
+
+          //устанавливает поле формы типа input type=text
+          if ($value=='text') $this->tegiInputText($nameBlock,$parametr,$i);
+           
+          //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder
+          if ($value=='textL') $this->tegiInputTextL($nameBlock, $parametr, $i);
+
+          
           if ($value=='textLH') {
             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                 if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
@@ -775,7 +748,60 @@ foreach($parametr as $value) {
         if (!$zero_style && !$form_not_close && !$form_not_open) 
             echo '</div></section>';
     }
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Вспомогательные функции для formBlock()
+    //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder
+    function tegiInputTextL(string $nameBlock, array $parametr, int $i)
+    {
+      if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
+          if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
+      if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
+          if (!$this->searcTegFor($parametr,$i,2)) $textValueFoLabel=$parametr[$i+2]; else $textValueFoLabel=''; else $textValueFoLabel='';
+      if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
+          if (!$this->searcTegFor($parametr,$i,3)) $textValueFoText=$parametr[$i+3]; else $textValueFoText=''; else $textValueFoText='';
+      $class=$nameBlock.$name.$i;
+      echo "<label for='{$class}label'>$textValueFoLabel </label>
+            <input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
+    }
+    // устанавливает поле формы типа input type=text
+    function tegiInputText(string $nameBlock, array $parametr, int $i)
+    {
+      if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
+      if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
+      if (isset($parametr[$i+2])  && $this->noBootstrap($parametr[$i+2]))
+          if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
+              $class=$nameBlock.$name.$i;
+      echo "<input type='text' name='$name' value='$textValue' class='$class'>";
+    }
+    // устанавливает функция некоторое число тегов <br>
+    function tegiBr(array $parametr, int $i)
+    {
+      if (isset($parametr[$i+1]) && $parametr[$i+1]>1 && gettype($parametr[$i+1])=='integer') 
+          $kolWoBr=$parametr[$i+1]; 
+      else 
+          $kolWoBr=1;
+      for($j=0; $j<$kolWoBr; $j++)
+          echo '<br>';
+    }
+    // Функция устанавливает дивы с классами для разметки от BootStrap
+    function tegiFoBootstrap(string $value)
+    {
+      if ($value=='bootstrap-start') {
+        return '<section class="container-fluid">
+              <div class="row">
+              <div class="col-12">';
+      }
+      if ($value=='bootstrap-f-start') {
+         return '</div></div>
+               <div class="row">
+               <div class="col-12">';
+       }
+      if ($value=='bootstrap-finish')
+         return '</div></div></section>';
+    }
+    //////////////////////////////////////////////////// Конец вспомогательных функций для formBlock()/////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function formBlockMas(array $parametr)
     {
        $form_not_open=false;          // Управляет выводом открывающего тега Форм, если фалс, то выводим.
