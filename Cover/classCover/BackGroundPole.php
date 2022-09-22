@@ -26,7 +26,7 @@ class BackGroundPole extends \class\nonBD\Button
             'btn_start',
             'btn-info',
             'bootstrap-start',
-            'textarea',
+            'submit',
             'name',
             'value',
             'value11',

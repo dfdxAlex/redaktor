@@ -306,9 +306,11 @@ foreach($parametr as $value) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function formBlock($nameBlock, $actionN,...$parametr)
     {
+       $this->nameB=$nameBlock;
        $form_not_open=false;          // Управляет выводом открывающего тега Форм, если фалс, то выводим.
        $form_not_close=false;         // Управляет выводом закрывающего тега Форм, если фалс, то выводим.
        $zero_style=false;             // если присутствует данный признак, то Bootstrap работать не будет
+       $this->zeroStyle=$zero_style;
        $btn_start=false;              // если данный признак установить в true, то в классах кнопок btn будет на первом месте
        $btn_btn='';
        $checkbox=true;
@@ -329,18 +331,28 @@ foreach($parametr as $value) {
            if ($value=='btn-link') $btn_btn='btn-link ';
         }
      
+       //локальная переменная $zero_style исчезнет после полной модификации метода
+       $this->zeroStyle=$zero_style;
+       //локальная переменная $btn_start исчезнет после полной модификации метода
+       $this->btnStart=$btn_start;
+       //локальная переменная $btn_btn исчезнет после полной модификации метода
+       $this->btnBtn=$btn_btn;
+
+       $this->actionForm=$actionN;
+
+
        if (!$zero_style && !$form_not_open && !$form_not_close) {
            echo '<section class="container-fluid">';
            echo '<div class="row">';
        }
 
        if (!$form_not_open && !$form_not_close)
-           echo '<div class="'.$nameBlock.'">';
+           echo '<div class="'.$this->nameB.'">';
 
        if (!$form_not_open)
            echo '<form action="'.$actionN.'" method="POST">';
 
-       echo '<div class="'.$nameBlock.'-div">';
+       echo '<div class="'.$this->nameB.'-div">';
 
        //$i=0;
        //foreach ($parametr as $key => $value) {
@@ -362,93 +374,75 @@ foreach($parametr as $value) {
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
           if ($value=='text') 
-              if ($this->tegiInputText($nameBlock, $parametr, $i)) continue;
+              if ($this->tegiInputText($parametr, $i)) continue;
 
           //устанавливает поле формы типа input type=text вместо value - PlaceHolder
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
           if ($value=='text2') 
-              if ($this->tegiInputText2($nameBlock, $parametr, $i)) continue;
+              if ($this->tegiInputText2($parametr, $i)) continue;
            
           //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
           if ($value=='textL') 
-              if ($this->tegiInputTextL($nameBlock, $parametr, $i)) continue;
+              if ($this->tegiInputTextL($parametr, $i)) continue;
 
           //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder с добавленным BR
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
           if ($value=='textLH') 
-              if ($this->tegiInputTextLH($nameBlock, $parametr, $i)) continue;
+              if ($this->tegiInputTextLH($parametr, $i)) continue;
 
           // текстовое поле для ввода пароля
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
           if ($value=='password') 
-              if ($this->tegiInputParol($nameBlock, $parametr, $i)) continue;
+              if ($this->tegiInputParol($parametr, $i)) continue;
 
           // текстовое поле для ввода пароля
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
           if ($value=='password2') 
-              if ($this->tegiInputParol2($nameBlock, $parametr, $i)) continue;
+              if ($this->tegiInputParol2($parametr, $i)) continue;
          
           // текстовое поле для ввода текста
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
           if ($value=='textarea') 
-              if ($this->tegiInputTextArea($nameBlock, $parametr, $i)) continue;
-         
+              if ($this->tegiInputTextArea($parametr, $i)) continue;
 
+          // Кнопка Reset
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='reset') 
+              if ($this->tegiInputButtonReset($parametr, $i)) continue;
 
+          // Кнопка Reset
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='submit' || $value=='submit2') 
+              if ($this->tegiInputButtonSubmit($parametr, $i)) continue;
 
-         if ($value=='reset') {
-             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-               if (!$this->searcTegFor($parametr,$i,1)) $textValue=$parametr[$i+1]; else $textValue='Reset'; else $textValue='Reset';
-             
-             $class=$nameBlock.'reset'.$i;
-             if (!$zero_style) {
-                 if ($btn_start)
-                     $class='btn '.$btn_btn.$class;
-                 if (!$btn_start)
-                     $class=$class.' btn'.$btn_btn;
-             }
-             echo '<input type="reset" class="'.$class.'" value="'.$textValue.'">';
-           }
-         if ($value=='submit' || $value=='submit2') {
-             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-               if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-             if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
-               if (!$this->searcTegFor($parametr,$i,3)) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
-             $class=$nameBlock.$name.$i;
-             if (!$zero_style) {
-                 if ($btn_start)
-                     $class='btn '.$btn_btn.$class;
-                 if (!$btn_start)
-                     $class=$class.' btn'.$btn_btn;
-             }
-             echo '<input type="submit" id="'.$name.'" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
-           }
 
          if ($value=='submit3') {
              if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'submit'.$i; else $name=$nameBlock.'submit'.$i;
+               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$this->nameB.'submit'.$i; else $name=$nameBlock.'submit'.$i;
              if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
                if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
              if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
                if (!$this->searcTegFor($parametr,$i,3)) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
              if (isset($parametr[$i+4]) && $this->noBootstrap($parametr[$i+4]))
                if (!$this->searcTegFor($parametr,$i,4)) $class=$parametr[$i+4]; else $class=''; else $textWww='';
-             $class=$nameBlock.$name.$i;
+             $class=$this->nameB.$name.$i;
              $classFoDiv=$class;
              if (!$zero_style) {
                  if ($btn_start)
@@ -466,7 +460,7 @@ foreach($parametr as $value) {
              if (!$this->searcTegFor($parametr,$i,2)) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
            if (isset($parametr[$i+3]) &&  $this->noBootstrap($parametr[$i+3]))
              if (!$this->searcTegFor($parametr,$i,3)) $class=$parametr[$i+4]; else $class=''; else $textWww='';
-           $class=$nameBlock.$name.$i;
+           $class=$this->nameB.$name.$i;
            $classFoDiv=$class;
            if (!$zero_style) {
                if ($btn_start)
@@ -480,19 +474,19 @@ foreach($parametr as $value) {
              if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFor($parametr,$i,1)) $text=$parametr[$i+1]; else $text=''; else $text='';
              if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-               if (!$this->searcTegFor($parametr,$i,2)) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
+               if (!$this->searcTegFor($parametr,$i,2)) $class=$parametr[$i+2]; else $class=$this->nameB.$value.$i; else $class=$class=$nameBlock.$value.$i;
              echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'" id="'.$class.'">'.$text.'</'.$value.'></div>';
            }
          if ($value=='span') {
              if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFor($parametr,$i,1)) $text=$parametr[$i+1]; else $text=''; else $text='';
              if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-               if (!$this->searcTegFor($parametr,$i,2)) $class=$parametr[$i+2]; else $class=$nameBlock.$value.$i; else $class=$class=$nameBlock.$value.$i;
+               if (!$this->searcTegFor($parametr,$i,2)) $class=$parametr[$i+2]; else $class=$this->nameB.$value.$i; else $class=$class=$nameBlock.$value.$i;
              echo '<'.$value.' class="'.$class.'">'.$text.'</'.$value.'>';
            }
           if ($value=='color') {
             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-              if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
+              if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$this->nameB.$value.$i; else $name=$nameBlock.$value.$i;
             echo '<input type="color" name="'.$name.'" id="'.$name.'">';
           }
           if ($value=='div') {
@@ -506,7 +500,7 @@ foreach($parametr as $value) {
           }
           if ($value=='checkbox') {
             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-              if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
+              if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$this->nameB.$value.$i; else $name=$nameBlock.$value.$i;
             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
               if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
             if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
@@ -523,7 +517,7 @@ foreach($parametr as $value) {
           }
           if ($value=='radio') {
             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-              if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.$value.$i; else $name=$nameBlock.$value.$i;
+              if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$this->nameB.$value.$i; else $name=$nameBlock.$value.$i;
             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
               if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
             if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
@@ -760,79 +754,114 @@ foreach($parametr as $value) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Вспомогательные функции для formBlock()
+
+        // Кнопка типа Submit 1-2
+        function tegiInputButtonSubmit(array $parametr, int &$i)
+        {
+          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+          if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.'submit'.$iForOld;
+          if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='Ok';
+          if ($this->searchParam($parametr, $i)) $textWww=$parametr[++$i]; else $textWww=$this->actionForm;
+          $class=$this->nameB.$name.$iForOld;
+          if (!$this->zeroStyle) {
+            if ($this->btnStart)
+                $class='btn '.$this->btnBtn.$class;
+            else
+                $class=$class.' btn '.$this->btnBtn;
+          }
+          echo "<input type='submit' id='$name' name='$name' value='$textValue' class='$class' formaction='$textWww'>";
+          return true;
+        }
+
+    // Кнопка типа Reset
+    function tegiInputButtonReset(array $parametr, int &$i)
+    {
+      $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+      if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='Reset';
+      $class=$this->nameB.'reset'.$iForOld;
+      if (!$this->zeroStyle) {
+          if ($this->btnStart)
+              $class='btn '.$this->btnBtn.$class;
+          else
+              $class=$class.' btn '.$this->btnBtn;
+      }
+      echo "<input type='reset' class='$class' value='$textValue'>";
+      return true;
+    }
+
   // текстовое поле для ввода текста
-  function tegiInputTextArea(string $nameBlock, array $parametr, int &$i)
+  function tegiInputTextArea(array $parametr, int &$i)
   {
     $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-    if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'text'.$iForOld;
+    if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.'text'.$iForOld;
     if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='';
-    $class=$nameBlock.$name.$iForOld;
+    $class=$this->nameB.$name.$iForOld;
     echo "<textarea name='$name' class='$class'>$textValue</textarea>";
     return true;
   }
 
   // текстовое поле для ввода пароля c placeholder
-  function tegiInputParol2(string $nameBlock, array $parametr, int &$i)
+  function tegiInputParol2(array $parametr, int &$i)
   {
     $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-    if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'password'.$iForOld; 
+    if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.'password'.$iForOld; 
     if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue=''; 
-    $class=$nameBlock.$name.$iForOld;
+    $class=$this->nameB.$name.$iForOld;
     echo '<input type="password" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
     return true;
 }
 
     // текстовое поле для ввода пароля
-    function tegiInputParol(string $nameBlock, array $parametr, int &$i)
+    function tegiInputParol(array $parametr, int &$i)
     {
       $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-          if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'password'.$iForOld;
+          if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.'password'.$iForOld;
           if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='';
-      $class=$nameBlock.$name.$iForOld;
+      $class=$this->nameB.$name.$iForOld;
       echo "<input type='password' name='$name' value='$textValue' class='$class'>";
       return true;
     }
     //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder с добавленным BR
-    function tegiInputTextLH(string $nameBlock, array $parametr, int &$i)
+    function tegiInputTextLH(array $parametr, int &$i)
     {
       $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'text'.$iForOld; 
+      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.'text'.$iForOld; 
       if ($this->searchParam($parametr, $i)) $textValueFoLabel=$parametr[++$i]; else $textValueFoLabel='';
       if ($this->searchParam($parametr, $i)) $textValueFoText=$parametr[++$i]; else $textValueFoText='';
-      $class=$nameBlock.$name.$iForOld;
+      $class=$this->nameB.$name.$iForOld;
       echo "<label for='{$class}label'>$textValueFoLabel </label><br>
             <input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
       return true;
     }
     //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder
-    function tegiInputTextL(string $nameBlock, array $parametr, int &$i)
+    function tegiInputTextL(array $parametr, int &$i)
     {
       $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'text'.$iForOld;
+      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.'text'.$iForOld;
       if ($this->searchParam($parametr, $i)) $textValueFoLabel=$parametr[++$i]; else $textValueFoLabel='';
       if ($this->searchParam($parametr, $i)) $textValueFoText=$parametr[++$i]; else $textValueFoText='';
-      $class=$nameBlock.$name.$iForOld;
+      $class=$this->nameB.$name.$iForOld;
       echo "<label for='{$class}label'>$textValueFoLabel </label>
             <input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
       return true;
     }
     // устанавливает поле формы типа input type=text, вместо value PlaceHolder
-    function tegiInputText2(string $nameBlock, array $parametr, int &$i)
+    function tegiInputText2(array $parametr, int &$i)
     {
       $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'text'.$iForOld;
+      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.'text'.$iForOld;
       if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='';
-      $class=$nameBlock.$name.$iForOld;
+      $class=$this->nameB.$name.$iForOld;
       echo "<input type='text' name='$name' placeholder='$textValue' class='$class'>";
       return true;
     }
     // устанавливает поле формы типа input type=text
-    function tegiInputText(string $nameBlock, array $parametr, int &$i)
+    function tegiInputText(array $parametr, int &$i)
     {
       $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'text'.$iForOld;
+      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.'text'.$iForOld;
       if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='';
-      $class=$nameBlock.$name.$iForOld;
+      $class=$this->nameB.$name.$iForOld;
       echo "<input type='text' name='$name' value='$textValue' class='$class'>";
       return true;
     } 
