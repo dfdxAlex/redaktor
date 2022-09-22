@@ -341,49 +341,74 @@ foreach($parametr as $value) {
            echo '<form action="'.$actionN.'" method="POST">';
 
        echo '<div class="'.$nameBlock.'-div">';
-       $i=0;
-       foreach ($parametr as $key => $value) {
 
+       //$i=0;
+       //foreach ($parametr as $key => $value) {
+       for ($i=0; $i<count($parametr); $i++) {
+          $value=$parametr[$i];
+          
           // устанавливает дивы с классами для BootStrap bootstrap
           if (stripos($value,'bootstrap')!==false) echo $this->tegiFoBootstrap($value);
           
           // устанавливает заданное число тегов <br>
-          if ($value=='br') $this->tegiBr($parametr, $i);
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='br') 
+              if ($this->tegiBr($parametr, $i)) continue;
 
           //устанавливает поле формы типа input type=text
-          if ($value=='text') $this->tegiInputText($nameBlock, $parametr, $i);
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='text') 
+              if ($this->tegiInputText($nameBlock, $parametr, $i)) continue;
 
           //устанавливает поле формы типа input type=text вместо value - PlaceHolder
-          if ($value=='text2') $this->tegiInputText2($nameBlock, $parametr, $i);
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='text2') 
+              if ($this->tegiInputText2($nameBlock, $parametr, $i)) continue;
            
           //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder
-          if ($value=='textL') $this->tegiInputTextL($nameBlock, $parametr, $i);
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='textL') 
+              if ($this->tegiInputTextL($nameBlock, $parametr, $i)) continue;
 
           //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder с добавленным BR
-          if ($value=='textLH') $this->tegiInputTextLH($nameBlock, $parametr, $i);
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='textLH') 
+              if ($this->tegiInputTextLH($nameBlock, $parametr, $i)) continue;
 
           // текстовое поле для ввода пароля
-          if ($value=='password') $this->tegiInputParol($nameBlock, $parametr, $i);
-         
-          if ($value=='textarea') {
-             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-               if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-             $class=$nameBlock.$name.$i;
-             echo '<textarea name="'.$name.'" class="'.$class.'">'.$textValue.'</textarea>';
-           }
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='password') 
+              if ($this->tegiInputParol($nameBlock, $parametr, $i)) continue;
 
+          // текстовое поле для ввода пароля
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='password2') 
+              if ($this->tegiInputParol2($nameBlock, $parametr, $i)) continue;
          
-           
-         if ($value=='password2') {
-             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
-             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-               if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-             $class=$nameBlock.$name.$i;
-             echo '<input type="password" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
-           }
+          // текстовое поле для ввода текста
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='textarea') 
+              if ($this->tegiInputTextArea($nameBlock, $parametr, $i)) continue;
+         
+
+
+
          if ($value=='reset') {
              if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
                if (!$this->searcTegFor($parametr,$i,1)) $textValue=$parametr[$i+1]; else $textValue='Reset'; else $textValue='Reset';
@@ -720,7 +745,7 @@ foreach($parametr as $value) {
             echo $rez;
           }
 
-           $i++; 
+           //$i++; 
         }
         
         echo '</div>'; // конец внутреннего блока
@@ -735,72 +760,95 @@ foreach($parametr as $value) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Вспомогательные функции для formBlock()
+  // текстовое поле для ввода текста
+  function tegiInputTextArea(string $nameBlock, array $parametr, int &$i)
+  {
+    $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+    if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'text'.$iForOld;
+    if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='';
+    $class=$nameBlock.$name.$iForOld;
+    echo "<textarea name='$name' class='$class'>$textValue</textarea>";
+    return true;
+  }
+
+  // текстовое поле для ввода пароля c placeholder
+  function tegiInputParol2(string $nameBlock, array $parametr, int &$i)
+  {
+    $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+    if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'password'.$iForOld; 
+    if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue=''; 
+    $class=$nameBlock.$name.$iForOld;
+    echo '<input type="password" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
+    return true;
+}
+
     // текстовое поле для ввода пароля
-    function tegiInputParol(string $nameBlock, array $parametr, int $i)
+    function tegiInputParol(string $nameBlock, array $parametr, int &$i)
     {
-      if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-          if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'password'.$i; else $name=$nameBlock.'password'.$i;
-      if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-          if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-      $class=$nameBlock.$name.$i;
+      $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+          if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'password'.$iForOld;
+          if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='';
+      $class=$nameBlock.$name.$iForOld;
       echo "<input type='password' name='$name' value='$textValue' class='$class'>";
+      return true;
     }
     //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder с добавленным BR
-    function tegiInputTextLH(string $nameBlock, array $parametr, int $i)
+    function tegiInputTextLH(string $nameBlock, array $parametr, int &$i)
     {
-      if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-      if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-      if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-      if (!$this->searcTegFor($parametr,$i,2)) $textValueFoLabel=$parametr[$i+2]; else $textValueFoLabel=''; else $textValueFoLabel='';
-      if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
-      if (!$this->searcTegFor($parametr,$i,1)) $textValueFoText=$parametr[$i+3]; else $textValueFoText=''; else $textValueFoText='';
-      $class=$nameBlock.$name.$i;
+      $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'text'.$iForOld; 
+      if ($this->searchParam($parametr, $i)) $textValueFoLabel=$parametr[++$i]; else $textValueFoLabel='';
+      if ($this->searchParam($parametr, $i)) $textValueFoText=$parametr[++$i]; else $textValueFoText='';
+      $class=$nameBlock.$name.$iForOld;
       echo "<label for='{$class}label'>$textValueFoLabel </label><br>
             <input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
+      return true;
     }
     //устанавливает поле формы типа input type=text с подключеным тегом LABEL и PlaceHolder
-    function tegiInputTextL(string $nameBlock, array $parametr, int $i)
+    function tegiInputTextL(string $nameBlock, array $parametr, int &$i)
     {
-      if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-          if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-      if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-          if (!$this->searcTegFor($parametr,$i,2)) $textValueFoLabel=$parametr[$i+2]; else $textValueFoLabel=''; else $textValueFoLabel='';
-      if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
-          if (!$this->searcTegFor($parametr,$i,3)) $textValueFoText=$parametr[$i+3]; else $textValueFoText=''; else $textValueFoText='';
-      $class=$nameBlock.$name.$i;
+      $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'text'.$iForOld;
+      if ($this->searchParam($parametr, $i)) $textValueFoLabel=$parametr[++$i]; else $textValueFoLabel='';
+      if ($this->searchParam($parametr, $i)) $textValueFoText=$parametr[++$i]; else $textValueFoText='';
+      $class=$nameBlock.$name.$iForOld;
       echo "<label for='{$class}label'>$textValueFoLabel </label>
             <input type='text' name='$name' class='$class' placeholder='$textValueFoText' id='$class'>";
+      return true;
     }
     // устанавливает поле формы типа input type=text, вместо value PlaceHolder
-    function tegiInputText2(string $nameBlock, array $parametr, int $i)
+    function tegiInputText2(string $nameBlock, array $parametr, int &$i)
     {
-      if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-          if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-      if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-          if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-      $class=$nameBlock.$name.$i;
+      $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'text'.$iForOld;
+      if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='';
+      $class=$nameBlock.$name.$iForOld;
       echo "<input type='text' name='$name' placeholder='$textValue' class='$class'>";
+      return true;
     }
     // устанавливает поле формы типа input type=text
-    function tegiInputText(string $nameBlock, array $parametr, int $i)
+    function tegiInputText(string $nameBlock, array $parametr, int &$i)
     {
-      if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-      if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$nameBlock.'text'.$i; else $name=$nameBlock.'text'.$i;
-      if (isset($parametr[$i+2])  && $this->noBootstrap($parametr[$i+2]))
-          if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-              $class=$nameBlock.$name.$i;
+      $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+      if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$nameBlock.'text'.$iForOld;
+      if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='';
+      $class=$nameBlock.$name.$iForOld;
       echo "<input type='text' name='$name' value='$textValue' class='$class'>";
-    }
+      return true;
+    } 
+
     // устанавливает функция некоторое число тегов <br>
-    function tegiBr(array $parametr, int $i)
+    function tegiBr(array $parametr, &$i)
     {
-      if (isset($parametr[$i+1]) && $parametr[$i+1]>1 && gettype($parametr[$i+1])=='integer') 
-          $kolWoBr=$parametr[$i+1]; 
+      if (isset($parametr[$i+1]) && $parametr[$i+1]>1) 
+          $kolWoBr=$parametr[++$i];
       else 
           $kolWoBr=1;
       for($j=0; $j<$kolWoBr; $j++)
           echo '<br>';
+      return true;
     }
+
     // Функция устанавливает дивы с классами для разметки от BootStrap
     function tegiFoBootstrap(string $value)
     {
@@ -1011,11 +1059,22 @@ foreach($parametr as $value) {
    // $start - это стартовая позиция или позиция текущего обрабатываемого тега
    // $nom задает число параметров вперед, которые нужно проверить.
    // если один из необходимых параметров окажется тегом или названием объекта, то возвращаем true
+   // УДАЛИТЬ ПОСЛЕ ПОЛНОЙ МОДЕРНИЗАЦИИ МЕТОДА formBlock
    function searcTegFor($parametr,$start,$nom)
    {
     for ($i=1; $i<=$nom; $i++)
            if ($this->searcTegFormBlock($parametr[$start+$i])) return true;
     return false;
+   }
+
+   // Функция проверяет существует ли следующий элемент в массиве, не является ли он тегом для бутстрапа и не является ли он тегов в принципе
+   function searchParam(array $parametr, int $i)
+   {
+       if (isset($parametr[$i+1]))                              // если следующий параметр существует
+           if ($this->noBootstrap($parametr[$i+1]))             // если это не разметка бутстрапа
+               if (!$this->searcTegFormBlock($parametr[$i+1]))  // если это не следующая форма
+                   return true;
+       return false;
    }
    //функция проверяет, не находится ли в очередном параметре ключевые слова работы с бутстрапом
    function noBootstrap($attrib)
