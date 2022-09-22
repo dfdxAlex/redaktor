@@ -425,34 +425,21 @@ foreach($parametr as $value) {
           if ($value=='reset') 
               if ($this->tegiInputButtonReset($parametr, $i)) continue;
 
-          // Кнопка Reset
+          // Кнопка Submit
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
           if ($value=='submit' || $value=='submit2') 
               if ($this->tegiInputButtonSubmit($parametr, $i)) continue;
 
+          // Кнопка Submit3
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='submit3') 
+              if ($this->tegiInputButtonSubmit3($parametr, $i)) continue;
 
-         if ($value=='submit3') {
-             if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-               if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$this->nameB.'submit'.$i; else $name=$nameBlock.'submit'.$i;
-             if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-               if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-             if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
-               if (!$this->searcTegFor($parametr,$i,3)) $textWww=$parametr[$i+3]; else $textWww=$actionN; else $textWww=$actionN;
-             if (isset($parametr[$i+4]) && $this->noBootstrap($parametr[$i+4]))
-               if (!$this->searcTegFor($parametr,$i,4)) $class=$parametr[$i+4]; else $class=''; else $textWww='';
-             $class=$this->nameB.$name.$i;
-             $classFoDiv=$class;
-             if (!$zero_style) {
-                 if ($btn_start)
-                     $class='btn '.$class;
-                 if (!$btn_start)
-                     $class=$class.' btn';
-             }
-             echo '<div class="'.$classFoDiv.'Div"><input type="submit" id="'.$name.'" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'"></div>';
-           }
-           //кнопка из Url
+              //кнопка из Url
           if ($value=='buttonUrl') {
            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
              if (!$this->searcTegFor($parametr,$i,1)) $textValue=$parametr[$i+1]; else $textValue='Ok'; else $textValue='Ok';
@@ -754,6 +741,26 @@ foreach($parametr as $value) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Вспомогательные функции для formBlock()
+
+        // Кнопка типа Submit 3
+        function tegiInputButtonSubmit3(array $parametr, int &$i)
+        {
+          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+          if ($this->searchParam($parametr, $i)) $name=$parametr[$i+1]; else $name=$this->nameB.'submit'.$iForOld;
+          if ($this->searchParam($parametr, $i)) $textValue=$parametr[$i+2]; else $textValue='Ok';
+          if ($this->searchParam($parametr, $i)) $textWww=$parametr[$i+3]; else $textWww=$this->actionForm;
+          if ($this->searchParam($parametr, $i)) $class=$parametr[$i+4]; else $class='';
+          $class=$this->nameB.$name.$iForOld;
+          $classFoDiv=$class;
+          if (!$this->zeroStyle) {
+            if ($this->btnStart)
+                $class='btn '.$this->btnBtn.$class;
+            else
+                $class=$class.' btn '.$this->btnBtn;
+          }
+          echo "<div class='{$classFoDiv}Div'><input type='submit' id='$name' name='$name' value='$textValue' class='$class' formaction='$textWww'></div>";
+          return true;
+        }
 
         // Кнопка типа Submit 1-2
         function tegiInputButtonSubmit(array $parametr, int &$i)
