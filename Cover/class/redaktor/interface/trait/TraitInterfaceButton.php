@@ -313,7 +313,7 @@ foreach($parametr as $value) {
        $this->zeroStyle=$zero_style;
        $btn_start=false;              // если данный признак установить в true, то в классах кнопок btn будет на первом месте
        $btn_btn='';
-       $checkbox=true;
+       $this->checkbox=true;
        // поиск различных признаков.
        foreach ($parametr as $value) {// поиск признаков $form_not_open и $form_not_close=false;
            if ($value=='form_not_open') $form_not_open=true;
@@ -466,51 +466,28 @@ foreach($parametr as $value) {
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
           if ($value=='color') 
               if ($this->colorF($parametr, $i)) continue;
+
+          // Контейнер div
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='div') 
+              if ($this->divF($parametr, $i)) continue;
           
-          if ($value=='div') {
-            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-              if (!$this->searcTegFor($parametr,$i,1)) $mesage=$parametr[$i+1]; else $mesage=''; else $mesage='';
-          if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-            if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-          if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
-            if (!$this->searcTegFor($parametr,$i,3)) $id="id='".$parametr[$i+3]."'"; else $id=''; else $id='';
-            $class=$id;
-          echo "<div $class $id>$mesage</div>";
-          }
-          if ($value=='checkbox') {
-            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-              if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$this->nameB.$value.$i; else $name=$nameBlock.$value.$i;
-            if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-              if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-            if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
-              if (!$this->searcTegFor($parametr,$i,3)) $valueV='value="'.$parametr[$i+3].'"'; else $valueV=''; else $valueV='';
-            if (isset($parametr[$i+4]) && $this->noBootstrap($parametr[$i+4]))
-              if (!$this->searcTegFor($parametr,$i,4)) $id='id="'.$parametr[$i+4].'"'; else $id=''; else $id='';
-            if ($checkbox) 
-                $check='checked';
-            else 
-                $check='';
-            $checkbox=false;
-            echo "<label for='$name$i'>$textValue</label>";
-            echo "<input type='checkbox' name='$name' $id $check $valueV>";
-          }
-          if ($value=='radio') {
-            if (isset($parametr[$i+1]) && $this->noBootstrap($parametr[$i+1]))
-              if (!$this->searcTegFor($parametr,$i,1)) $name=$parametr[$i+1]; else $name=$this->nameB.$value.$i; else $name=$nameBlock.$value.$i;
-            if (isset($parametr[$i+2]) && $this->noBootstrap($parametr[$i+2]))
-              if (!$this->searcTegFor($parametr,$i,2)) $textValue=$parametr[$i+2]; else $textValue=''; else $textValue='';
-            if (isset($parametr[$i+3]) && $this->noBootstrap($parametr[$i+3]))
-              if (!$this->searcTegFor($parametr,$i,3)) $valueV='value="'.$parametr[$i+3].'"'; else $valueV=''; else $valueV='';
-            if (isset($parametr[$i+4]) && $this->noBootstrap($parametr[$i+4]))
-              if (!$this->searcTegFor($parametr,$i,4)) $id='id="'.$parametr[$i+4].'"'; else $id=''; else $id='';
-            if ($checkbox) 
-                $check='checked';
-            else 
-                $check='';
-                $checkbox=false;
-            echo "<label for='$name'>$textValue</label>";
-            echo "<input type='radio' name='$name' $id $check $valueV >";
-          }
+          // Контейнер checkbox
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='checkbox') 
+              if ($this->checkboxF($parametr, $i)) continue;
+
+          // Контейнер radio
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='radio') 
+              if ($this->radioF($parametr, $i)) continue;
+
           // список ul
           if ($value=='ulli') {
             $j = $i;
@@ -734,6 +711,53 @@ foreach($parametr as $value) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Вспомогательные функции для formBlock()
 
+        // Контейнер CheckBox
+        function radioF(array $parametr, int &$i)
+        {
+          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+          if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.$value.$iForOld;
+          if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='';  
+          if ($this->searchParam($parametr, $i)) $valueV='value="'.$parametr[++$i].'"'; else $valueV=''; 
+          if ($this->searchParam($parametr, $i)) $id='id="'.$parametr[++$i].'"'; else $id='';  
+          if ($this->checkbox) 
+              $check='checked';
+          else 
+              $check='';
+              $this->checkbox=false;
+          echo "<label for='$name'>$textValue</label>";
+          echo "<input type='radio' name='$name' $id $check $valueV >";
+          return true;
+        }
+
+        // Контейнер CheckBox
+        function checkboxF(array $parametr, int &$i)
+        {
+          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+          if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.$value.$iForOld; 
+          if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue=''; 
+          if ($this->searchParam($parametr, $i)) $valueV='value="'.$parametr[++$i].'"'; else $valueV=''; 
+          if ($this->searchParam($parametr, $i)) $id='id="'.$parametr[++$i].'"'; else $id=''; 
+        if ($this->checkbox) 
+            $check='checked';
+        else 
+            $check='';
+        $this->checkbox=false;
+        echo "<label for='$name$i'>$textValue</label>";
+        echo "<input type='checkbox' name='$name' $id $check $valueV>";
+          return true;
+        }
+
+        // Контейнер Div
+        function divF(array $parametr, int &$i)
+        {
+          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+          if ($this->searchParam($parametr, $i)) $mesage=$parametr[++$i]; else $mesage=''; 
+          if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue=''; 
+          if ($this->searchParam($parametr, $i)) $id="id='".$parametr[++$i]."'"; else $id=''; 
+          $class=$id;
+          echo "<div $class $id>$mesage</div>";
+          return true;
+        }
 
         // Контейнер Color
         function colorF(array $parametr, int &$i)
