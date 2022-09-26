@@ -502,97 +502,12 @@ foreach($parametr as $value) {
           if ($value=='dlli') 
               if ($this->dlli($parametr, $i)) continue;
 
-
-
-          // список select
-          if ($value=='select') {
-            $j = $i;
-            $mas = [];
-            $jMas=0;
-            // создать массив со всеми найденными параметрами
-            while(isset($parametr[$j+5]) && $this->noBootstrap($parametr[$j+5]) && !$this->searcTegFor($parametr,$j+5,1)) {
-              $mas[$jMas]=$parametr[$j+5];
-              $j++;
-              $jMas++;
-            }
-            // определить класс, если он есть
-            $elementFoClass=$parametr[$i+1];
-            // определить id, если он есть
-            $elementFoId=$parametr[$i+2];
-            $class='';
-            $id='';
-            // определить параметр name
-            $elementFoName=$parametr[$i+3];
-            // работа с дополнительной информацией
-            // найти multiple
-            $multiple=false;
-            $elementFoMultiple=$parametr[$i+4];
-
-            $multiple='';
-            if (mb_strripos($elementFoMultiple,'multiple')!==false) 
-                $multiple='multiple';
-            // найти label
-            $label=false;
-            $elementFoMultiple=$parametr[$i+4];
-            if (mb_strripos($elementFoMultiple,'label')!==false) 
-                $label=true; 
-            // выделить текст для label
-            $labelText='';  
-            if ($label) {
-                $labelText=$elementFoMultiple;
-                $labelText=preg_replace('/multiple/','',$labelText);
-                $labelText=preg_replace('/label=/','',$labelText);
-                $labelText=preg_replace('/,/','',$labelText);
-            }     
-            if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
-                $class="class='$elementFoClass'";
-            $for='';
-            if ($elementFoId!='') { // если параметр не пустой, то оформить сласс и сразу атрибут for для label
-                $id="id='$elementFoId'"; 
-                $for="for='$elementFoId'";
-            }  
-            if ($elementFoName!='') // если параметр не пустой, то оформить NAME
-                $name="name='$elementFoName'"; 
-            if ($label) 
-                $rez="<label $for>$labelText</label>";
-            else $rez='';
-            $rez.="<select $multiple $class $id $name>";
-
-            foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
-                if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для option
-                    $classFoOption="class='$elementFoClass$key'";
-                else $classFoOption='';
-                if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для option
-                    $idFoOption="id='$elementFoId$key'";
-                else $idFoOption='';
-                $disabled='';
-                if (mb_strripos($value,'-disabled')) {
-                    $disabled='disabled';
-                    $value=preg_replace('/-disabled/','',$value);
-                }
-                $selected='';
-                if (mb_strripos($value,'-selected')) {
-                    $selected='selected';
-                    $value=preg_replace('/-selected/','',$value);
-                }
-                if (mb_strripos($value,'_value')!==false) {
-                  $valueFoOption=preg_split('/(=)|(-)/',$value);
-                  $valueFoOptionString='value="'.$valueFoOption[1].'"';
-                  $textFoOptionString=$valueFoOption[2];
-                  $rez.="<option $selected $disabled $valueFoOptionString $idFoOption>$textFoOptionString</option>";
-                }
-                if (mb_strripos($value,'_group=')!==false) {
-                  $valueFoGroup='label="'.preg_replace('/_group=/','',$value).'"';
-                  $rez.="<optgroup $valueFoGroup>";
-                } else if (mb_strripos($value,'_group')!==false) {
-                  $rez.="</optgroup>";
-                }
-            }
-            $rez.="</select>";
-            echo $rez;
-          }
-
-           //$i++; 
+          // Контейнер dl
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='select') 
+              if ($this->selectF($parametr, $i)) continue;
         }
         
         echo '</div>'; // конец внутреннего блока
@@ -608,7 +523,112 @@ foreach($parametr as $value) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Вспомогательные функции для formBlock()
 
-        // Контейнер Radio
+        // Контейнер select
+        function selectF(array $parametr, int &$i)
+        {
+          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+          $j = $i;
+          $mas = [];
+          $jMas=0;
+          // создать массив со всеми найденными параметрами
+          while($this->searchParam($parametr, $j+4)) {
+            $mas[$jMas]=$parametr[$j+5];
+            $j++;
+            $jMas++;
+          }
+
+          // определить класс, если он есть
+          $elementFoClass=$parametr[++$i];
+          // определить id, если он есть
+          $elementFoId=$parametr[++$i];
+          $class='';
+          $id='';
+          // определить параметр name
+          $elementFoName=$parametr[++$i];
+          // работа с дополнительной информацией
+          // найти multiple
+          $multiple=false;
+          $elementFoMultiple=$parametr[++$i]; // i+4
+
+          $multiple='';
+          if (mb_strripos($elementFoMultiple,'multiple')!==false) 
+              $multiple='multiple';
+
+          // найти label
+          $label=false;
+          $elementFoMultiple=$parametr[$i];
+          if (mb_strripos($elementFoMultiple,'label')!==false) 
+              $label=true; 
+
+          // выделить текст для label
+          $labelText='';  
+          if ($label) {
+              $labelText=$elementFoMultiple;
+              $labelText=preg_replace('/multiple/','',$labelText);
+              $labelText=preg_replace('/label=/','',$labelText);
+              $labelText=preg_replace('/,/','',$labelText);
+          }   
+
+          if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
+              $class="class='$elementFoClass'";
+
+          $for='';
+          if ($elementFoId!='') { // если параметр не пустой, то оформить сласс и сразу атрибут for для label
+              $id="id='$elementFoId'"; 
+              $for="for='$elementFoId'";
+          }  
+
+          if ($elementFoName!='') // если параметр не пустой, то оформить NAME
+              $name="name='$elementFoName'"; 
+
+          if ($label) 
+              $rez="<label $for>$labelText</label>";
+
+          else $rez='';
+          $rez.="<select $multiple $class $id $name>";
+
+          foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
+              if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для option
+                  $classFoOption="class='$elementFoClass$key'";
+              else $classFoOption='';
+              if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для option
+                  $idFoOption="id='$elementFoId$key'";
+              else $idFoOption='';
+              $disabled='';
+              if (mb_strripos($value,'-disabled')) {
+                  $disabled='disabled';
+                  $value=preg_replace('/-disabled/','',$value);
+              }
+
+              $selected='';
+              if (mb_strripos($value,'-selected')) {
+                  $selected='selected';
+                  $value=preg_replace('/-selected/','',$value);
+              }
+
+              if (mb_strripos($value,'_value')!==false) {
+                $valueFoOption=preg_split('/(=)|(-)/',$value);
+                $valueFoOptionString='value="'.$valueFoOption[1].'"';
+                $textFoOptionString=$valueFoOption[2];
+                $rez.="<option $selected $disabled $valueFoOptionString $idFoOption>$textFoOptionString</option>";
+              }
+
+              if (mb_strripos($value,'_group=')!==false) {
+                $valueFoGroup='label="'.preg_replace('/_group=/','',$value).'"';
+                $rez.="<optgroup $valueFoGroup>";
+              } else if (mb_strripos($value,'_group')!==false) {
+                $rez.="</optgroup>";
+              }
+
+          } //конец foreach
+          $rez.="</select>";
+          echo $rez;
+        
+          $i=$j+3;
+          return true;
+        }
+
+        // Контейнер dl
         function dlli(array $parametr, int &$i)
         {
           $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
@@ -657,6 +677,7 @@ foreach($parametr as $value) {
           }
           $rez.="</dl>";
           echo $rez;
+          $i=$j+2;
           return true;
         }
     
@@ -701,7 +722,7 @@ foreach($parametr as $value) {
           }
           $rez.="</$teg>";
           echo $rez;
-          $i=$i+$j-1;
+          $i=$j+2;
           return true;
         }
 
