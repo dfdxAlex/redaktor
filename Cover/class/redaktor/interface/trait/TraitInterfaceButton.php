@@ -488,124 +488,21 @@ foreach($parametr as $value) {
           if ($value=='radio') 
               if ($this->radioF($parametr, $i)) continue;
 
-          // список ul
-          if ($value=='ulli') {
-            $j = $i;
-            $mas = [];
-            $jMas=0;
-            // создать массив со всеми найденными параметрами
-            while(isset($parametr[$j+3]) && $this->noBootstrap($parametr[$j+3]) && !$this->searcTegFor($parametr,$j+3,1)) {
-              $mas[$jMas]=$parametr[$j+3];
-              $j++;
-              $jMas++;
-            }
-            // определить класс, если он есть
-            $elementFoClass=$parametr[$i+1];
-            // определить id, если он есть
-            $elementFoId=$parametr[$i+2];
-            $class='';
-            $id='';
-            if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
-                $class="class='$elementFoClass'";
-            if ($elementFoId!='') // если параметр не пустой, то оформить сласс
-                $id="id='$elementFoId'";   
-            $rez="<ul $class $id>";
-            foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
-                if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
-                    $classFoLi="class='$elementFoClass$key'";
-                else $classFoLi='';
-                if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
-                    $idFoLi="id='$elementFoId$key'";
-                else $idFoLi='';
-                $rez.="<li $classFoLi $idFoLi>$value</li>";
-            }
-            $rez.="</ul>";
-            echo $rez;
-          }
+          // Контейнер ul и ol
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='ulli' || $value=='olli') 
+              if ($this->ulli($parametr, $i)) continue;
 
-          // список ol
-          if ($value=='olli') {
-            $j = $i;
-            $mas = [];
-            $jMas=0;
-            // создать массив со всеми найденными параметрами
-            while(isset($parametr[$j+3]) && $this->noBootstrap($parametr[$j+3]) && !$this->searcTegFor($parametr,$j+3,1)) {
-              $mas[$jMas]=$parametr[$j+3];
-              $j++;
-              $jMas++;
-            }
-            // определить класс, если он есть
-            $elementFoClass=$parametr[$i+1];
-            // определить id, если он есть
-            $elementFoId=$parametr[$i+2];
-            $class='';
-            $id='';
-            if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
-                $class="class='$elementFoClass'";
-            if ($elementFoId!='') // если параметр не пустой, то оформить сласс
-                $id="id='$elementFoId'";   
-            $rez="<ol $class $id>";
-            foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
-                if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
-                    $classFoLi="class='$elementFoClass$key'";
-                else $classFoLi='';
-                if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
-                    $idFoLi="id='$elementFoId$key'";
-                else $idFoLi='';
-                $rez.="<li $classFoLi $idFoLi>$value</li>";
-            }
-            $rez.="</ol>";
-            echo $rez;
-          }
+          // Контейнер dl
+          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
+          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
+          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
+          if ($value=='dlli') 
+              if ($this->dlli($parametr, $i)) continue;
 
-          // список dl
-          if ($value=='dlli') {
-            $j = $i;
-            $mas = [];
-            $jMas=0;
-            // создать массив со всеми найденными параметрами
-            while(isset($parametr[$j+3]) && $this->noBootstrap($parametr[$j+3]) && !$this->searcTegFor($parametr,$j+3,1)) {
-              $mas[$jMas]=$parametr[$j+3];
-              $j++;
-              $jMas++;
-            }
-            // определить класс, если он есть
-            $elementFoClass=$parametr[$i+1];
-            // определить id, если он есть
-            $elementFoId=$parametr[$i+2];
-            $class='';
-            $id='';
-            if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
-                $class="class='$elementFoClass'";
-            if ($elementFoId!='') // если параметр не пустой, то оформить сласс
-                $id="id='$elementFoId'";   
-            $rez="<dl $class $id>";
 
-            foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
-                if ($key%2==0 && $key!=1) { // Заходим в блок только на чётных элементах массива, в тегах используются парные данные
-                    //определить класс и id для тегов dt
-                    if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
-                        $classFoLi="class='dt$elementFoClass$key'";
-                    else $classFoLi='';
-                    if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
-                        $idFoLi="id='dt$elementFoId$key'";
-                    else $idFoLi='';
-                    $rez.="<dt $classFoLi $idFoLi>$value</dt>";
-                }
-                if ($key%2!=0 && $key!=0 || $key==1) { // Заходим в блок только на чётных элементах массива, в тегах используются парные данные
-                  //определить класс и id для тегов dt
-                  if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
-                      $classFoLi="class='dd$elementFoClass$key'";
-                  else $classFoLi='';
-                  if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
-                      $idFoLi="id='dd$elementFoId$key'";
-                  else $idFoLi='';
-                  $rez.="<dd $classFoLi $idFoLi>$value</dd>";
-              }
-            }
-            $rez.="</dl>";
-            echo $rez;
-          }
 
           // список select
           if ($value=='select') {
@@ -711,7 +608,104 @@ foreach($parametr as $value) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Вспомогательные функции для formBlock()
 
-        // Контейнер CheckBox
+        // Контейнер Radio
+        function dlli(array $parametr, int &$i)
+        {
+          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+          $j = $i;
+          $mas = [];
+          $jMas=0;
+          // создать массив со всеми найденными параметрами
+          while($this->searchParam($parametr, $j+2)) {
+            $mas[$jMas]=$parametr[$j+3];
+            $j++;
+            $jMas++;
+          }
+          // определить класс, если он есть
+          $elementFoClass=$parametr[++$i];
+          // определить id, если он есть
+          $elementFoId=$parametr[++$i];
+          $class='';
+          $id='';
+          if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
+              $class="class='$elementFoClass'";
+          if ($elementFoId!='') // если параметр не пустой, то оформить сласс
+              $id="id='$elementFoId'";   
+          $rez="<dl $class $id>";
+
+          foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
+              if ($key%2==0 && $key!=1) { // Заходим в блок только на чётных элементах массива, в тегах используются парные данные
+                  //определить класс и id для тегов dt
+                  if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
+                      $classFoLi="class='dt$elementFoClass$key'";
+                  else $classFoLi='';
+                  if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
+                      $idFoLi="id='dt$elementFoId$key'";
+                  else $idFoLi='';
+                  $rez.="<dt $classFoLi $idFoLi>$value</dt>";
+              }
+              if ($key%2!=0 && $key!=0 || $key==1) { // Заходим в блок только на чётных элементах массива, в тегах используются парные данные
+                //определить класс и id для тегов dt
+                if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
+                    $classFoLi="class='dd$elementFoClass$key'";
+                else $classFoLi='';
+                if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
+                    $idFoLi="id='dd$elementFoId$key'";
+                else $idFoLi='';
+                $rez.="<dd $classFoLi $idFoLi>$value</dd>";
+            }
+          }
+          $rez.="</dl>";
+          echo $rez;
+          return true;
+        }
+    
+        // Контейнер ul и ol
+        function ulli(array $parametr, int &$i)
+        {
+          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+          $j = $i;
+          $mas = [];
+          $jMas=0;
+          //echo $parametr[$i];
+          $teg='ul';
+          if ($parametr[$i]=='olli') $teg='ol';
+          // создать массив со всеми найденными параметрами
+          while($this->searchParam($parametr, $j+2)) {
+            $mas[$jMas]=$parametr[$j+3];
+            $j++;
+            $jMas++;
+          }
+          // определить класс, если он есть
+          $elementFoClass=$parametr[++$i];
+          // определить id, если он есть
+          $elementFoId=$parametr[++$i];
+          $class='';
+          $id='';
+          if ($elementFoClass!='') // если параметр не пустой, то оформить сласс
+              $class="class='$elementFoClass'";
+          if ($elementFoId!='') // если параметр не пустой, то оформить сласс
+              $id="id='$elementFoId'"; 
+
+          $rez="<$teg $class $id>";
+          foreach($mas as $key=>$value) { //нарисовать под каждый параметр элемент списка
+              if ($elementFoClass!='')    // если есть параметр класса во входящих параметрах, то создать класс из него для li
+                  $classFoLi="class='$elementFoClass$key'";
+              else $classFoLi='';
+              if ($elementFoId!='')       // если есть параметр id во входящих параметрах, то создать id из него для li
+                  $idFoLi="id='$elementFoId$key'";
+
+              else $idFoLi='';
+
+              $rez.="<li $classFoLi $idFoLi>$value</li>";
+          }
+          $rez.="</$teg>";
+          echo $rez;
+          $i=$i+$j-1;
+          return true;
+        }
+
+        // Контейнер Radio
         function radioF(array $parametr, int &$i)
         {
           $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
