@@ -38,16 +38,33 @@ function BorderSet(bHeyght,bWidth,bBackGround,nomerChecked,bBackGround2)
     {
         // находим контейнер рабочего поля
         var name1=document.getElementById('workingField');
-        name1.style.height=bHeyght;
-        name1.style.width=bWidth;
-        if (nomerChecked=='fon1' || nomerChecked=='fon2')
-            name1.style.background=bBackGround;
+        canvas=name1.getContext('2d');
+        canvas.beginPath();
+        var heightCanvas=name1.height;
+        var weightCanvas=name1.width;
+
+        if (nomerChecked=='fon1' || nomerChecked=='fon2') 
+            canvas.fillStyle=bBackGround;
+
         if (nomerChecked=='fon3') 
-            name1.innerHTML='<div style="background: linear-gradient('+bBackGround+','+bBackGround2+'); height:100%; width="100%"></div>';
-        if (nomerChecked=='fon4') 
-            name1.innerHTML='<div style="background: radial-gradient('+bBackGround+','+bBackGround2+'); height:100%; width="100%"></div>';
+            var gradient = canvas.createLinearGradient(0,0,weightCanvas,heightCanvas);
+        
+        if (nomerChecked=='fon4') {
+            // в качестве радиуса для градиента выбрать большую из сторон прямоугольника
+            var radius=0;
+            if (weightCanvas>heightCanvas) radius=weightCanvas; else radius=heightCanvas;
+            var gradient = canvas.createRadialGradient((weightCanvas/2).toFixed(0),(heightCanvas/2).toFixed(0),10,(weightCanvas/2).toFixed(0),(heightCanvas/2).toFixed(0),(radius/2).toFixed(0));
+        }
+        if (nomerChecked=='fon3' || nomerChecked=='fon4') {
+            gradient.addColorStop(0,bBackGround);
+            gradient.addColorStop(1,bBackGround2);
+            canvas.fillStyle = gradient;
+        }
+        canvas.fillRect(0, 0, weightCanvas, heightCanvas);
+        canvas.stroke();
         } //
 
+        
     // функция задает цвет фона для дивов, которые показывают, какой цвет выбран
     this.colorDivCircle = function(color1,color2)
     {

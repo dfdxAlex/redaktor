@@ -144,7 +144,7 @@ class BackGroundPole extends \class\nonBD\Button
                 b.checkedFlag('$nomerChecked');
             </script>
             
-            <canvas id='workingField'>
+            <canvas id='workingField' height='{$heyghtB}px' width='{$widthB}px' >
             </canvas>
         ";
 
