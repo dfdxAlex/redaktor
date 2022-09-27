@@ -729,36 +729,52 @@ foreach($parametr as $value) {
         // Контейнер Radio
         function radioF(array $parametr, int &$i)
         {
+          $checkedLocal=false;
           $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-          if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.$value.$iForOld;
+          if ($this->searchParam($parametr, $i)) {
+              $name=$parametr[++$i];
+              // если в первом параметре name есть слово -checked, то записать флаг в переменную $checkedLocal, а флаг удалить из имени
+              if (mb_strripos($name,'-checked')) {
+                $checkedLocal=true;
+                $name=preg_replace('/-checked/','',$name);
+              }
+          } else $name=$this->nameB.$value.$iForOld;
           if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='';  
           if ($this->searchParam($parametr, $i)) $valueV='value="'.$parametr[++$i].'"'; else $valueV=''; 
-          if ($this->searchParam($parametr, $i)) $id='id="'.$parametr[++$i].'"'; else $id='';  
-          if ($this->checkbox) 
+          if ($this->searchParam($parametr, $i)) $id=$parametr[++$i]; else $id='';  
+          if ($this->checkbox || $checkedLocal) 
               $check='checked';
           else 
               $check='';
               $this->checkbox=false;
-          echo "<label for='$name'>$textValue</label>";
-          echo "<input type='radio' name='$name' $id $check $valueV >";
+          echo "<label for='$id'>$textValue</label>";
+          echo "<input type='radio' name='$name' id='$id' $valueV $check>";
           return true;
         }
 
         // Контейнер CheckBox
         function checkboxF(array $parametr, int &$i)
         {
+          $checkedLocal=false;
           $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-          if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.$value.$iForOld; 
+          if ($this->searchParam($parametr, $i)) {
+              $name=$parametr[++$i];
+              // если в первом параметре name есть слово -checked, то записать флаг в переменную $checkedLocal, а флаг удалить из имени
+              if (mb_strripos($name,'-checked')) {
+                $checkedLocal=true;
+                $name=preg_replace('/-checked/','',$name);
+              }
+          } else $name=$this->nameB.$value.$iForOld; 
           if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue=''; 
           if ($this->searchParam($parametr, $i)) $valueV='value="'.$parametr[++$i].'"'; else $valueV=''; 
-          if ($this->searchParam($parametr, $i)) $id='id="'.$parametr[++$i].'"'; else $id=''; 
-        if ($this->checkbox) 
+          if ($this->searchParam($parametr, $i)) $id=$parametr[++$i]; else $id=''; 
+        if ($this->checkbox || $checkedLocal) 
             $check='checked';
         else 
             $check='';
         $this->checkbox=false;
-        echo "<label for='$name$i'>$textValue</label>";
-        echo "<input type='checkbox' name='$name' $id $check $valueV>";
+        echo "<label for='$id'>$textValue</label>";
+        echo "<input type='checkbox' name='$name' id='$id' $check $valueV>";
           return true;
         }
 

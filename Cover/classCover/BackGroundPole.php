@@ -51,7 +51,7 @@ class BackGroundPole extends \class\nonBD\Button
              'Без фона',
             'bootstrap-f-start',
             'radio',
-            'checkName1',
+            'checkName1-checked',
             'Фон 1',
             'fon1',
             'fon1',
@@ -118,10 +118,10 @@ class BackGroundPole extends \class\nonBD\Button
 
 
            //window.addEventListener('load', borderSet);
-           $heyghtB=$_SESSION['loadHeyght_cover'];
+           $heyghtB=$_SESSION['loadHeyght_cover']; // хранит высоту блока
            $widthB=$_SESSION['loadWidth_cover'];
 
-           $nomerChecked=$_SESSION['checkName1_cover'];
+           $nomerChecked=$_SESSION['checkName1_cover']; 
            $bBackGround=$_SESSION['colorName1_cover'];
            $bBackGround2=$_SESSION['colorName2_cover'];
 
@@ -132,7 +132,7 @@ class BackGroundPole extends \class\nonBD\Button
                 
            }
 
-           echo '<i class="fa-solid fa-arrows-spin"></i>';
+           //echo '<i class="fa-solid fa-arrows-spin"></i>';
 
            $color1=$_SESSION['colorName1_cover'];
            $color2=$_SESSION['colorName2_cover'];
@@ -143,9 +143,9 @@ class BackGroundPole extends \class\nonBD\Button
                 b.colorDivCircle('$color1','$color2');
                 b.checkedFlag('$nomerChecked');
             </script>
-
-            <section id='workingField'>
-            </section>
+            
+            <canvas id='workingField'>
+            </canvas>
         ";
 
     }
