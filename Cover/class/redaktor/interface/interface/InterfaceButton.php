@@ -1,5 +1,5 @@
 <?php
-namespace class\nonBD\interface;
+namespace class\redaktor\interface\interface;
 
 //интерфейс функций, работающих с кнопками
 //Interfejs funkcji przycisków

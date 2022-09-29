@@ -91,8 +91,12 @@ class Controler
             $_SESSION['level-10-true']=true;
         }
 
-        if ($_SESSION['level']==1000) {                   // генерируем CV
+        if ($_SESSION['level']==1000) {                   // генерируем страницу настроек
             $cvSetting = new Setting();
+        }
+
+        if ($_SESSION['level']==1001) {                   // генерируем страницу сохранения данных
+            $cvSave = new SaveCV();
         }
 
           

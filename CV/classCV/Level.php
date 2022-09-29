@@ -9,6 +9,7 @@ class Level
     {
         if (!isset($_SESSION['level'])) $_SESSION['level']=0;
         if (!isset($_SESSION['setting'])) $_SESSION['setting']=0;
+        if (!isset($_SESSION['save'])) $_SESSION['save']=0;
 
         $this->levelHunt();
 
@@ -45,8 +46,23 @@ class Level
         $_SESSION['level']=1000;
     }
 
+    // переход на страничку записи информации
+    static function saveData()
+    {
+        if ($_SESSION['level']!=1001)
+            $_SESSION['save']=$_SESSION['level'];
+        $_SESSION['level']=1001;
+    }
+    
     // срабатывает при выходе из режима настроек и присваивает ранее сохраненное значение с какой страницы перешли в настройки
     static function leaveSetting()
+    {
+        $_SESSION['level']=$_SESSION['setting'];
+        //$_SESSION['level']=0;
+    }
+
+    // выход из странички записи информации
+    static function leaveSave()
     {
         $_SESSION['level']=$_SESSION['setting'];
         //$_SESSION['level']=0;
@@ -62,6 +78,8 @@ class Level
         if (isset($_REQUEST['main'])) self::levelReset();
         if (isset($_REQUEST['setting'])) self::levelSetting();
         if (isset($_REQUEST['leave_setting'])) self::leaveSetting();
+        if (isset($_REQUEST['save'])) self::saveData();
+        if (isset($_REQUEST['leave_save'])) self::leaveSave();
         // obsługa przycisków przesyłania na różnych stronach
         // обработка кнопок Отправить на разных страницах
         if (isset($_REQUEST['nameFoCV'])
@@ -79,7 +97,7 @@ class Level
 
         // Ограничиваем рост уровня страницы если он не равен 1000
         // Уровень 1000 означает переход на страницу настроек
-        if ($_SESSION['level']!=1000)
+        if ($_SESSION['level']!=1000 && $_SESSION['level']!=1001)
             if ($_SESSION['level']>$_SESSION['level_max']) 
                 $_SESSION['level']=$_SESSION['level_max'];
     }

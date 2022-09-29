@@ -10,7 +10,7 @@ class ButtonMenuUp
         // Если не находимся в режиме настройки, то показать кнопки навигации по страницам
         $save='';
         if ($_SESSION['status']>0)
-            $save="<input type='submit' name='setting' value='".new Translation('Сохранить')."'>";
+            $save="<input type='submit' name='save' value='".new Translation('Сохранить')."' formaction='#'>";
 
         if ($_SESSION['level']!=1000 && $_SESSION['level']!=10)
             $rez = "
@@ -24,17 +24,20 @@ class ButtonMenuUp
                 </form>
             </nav>
             ";
-
-        if ($_SESSION['level']==1000)
+            
+        // ставит кнопки сохранения и возврат, если перешли в настройки или только возврат, если перешли в сохранение данных
+        if ($_SESSION['level']==1000 || $_SESSION['level']==1001) {
+            $saveKillMenuUp = '';
+            if ($_SESSION['level']==1000) $saveKillMenuUp="<input type='submit' name='save_setting' value='".new Translation('Сохранить')."'>";
             $rez = "
             <nav class='btn button-language'>
                 <form action='#' method='post' id='form_setting'>
-                    <input type='submit' name='save_setting' value='".new Translation('Сохранить')."'>
+                    $saveKillMenuUp
                     <input type='submit' name='leave_setting' value='".new Translation('Назад')."'>
                 </form>
             </nav>
             ";
-
+        }
         // Если кнопка не должна показываться при генерации CV, то выводим только форму, а кнопка возврата будет вставлена через JS
         // в методе создания CV готового для сохранения. public function createCV() класса CVCreate
         if ($_SESSION['level']==10)

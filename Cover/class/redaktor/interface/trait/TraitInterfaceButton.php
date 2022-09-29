@@ -972,7 +972,7 @@ foreach($parametr as $value) {
     // устанавливает функция некоторое число тегов <br>
     function tegiBr(array $parametr, &$i)
     {
-      if (isset($parametr[$i+1]) && $parametr[$i+1]>1) 
+      if ($this->searchParam($parametr, $i)) 
           $kolWoBr=$parametr[++$i];
       else 
           $kolWoBr=1;
