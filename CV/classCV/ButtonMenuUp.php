@@ -8,6 +8,10 @@ class ButtonMenuUp
     {
         $rez='';
         // Если не находимся в режиме настройки, то показать кнопки навигации по страницам
+        $save='';
+        if ($_SESSION['status']>0)
+            $save="<input type='submit' name='setting' value='".new Translation('Сохранить')."'>";
+
         if ($_SESSION['level']!=1000 && $_SESSION['level']!=10)
             $rez = "
             <nav class='btn button-language'>
@@ -16,6 +20,7 @@ class ButtonMenuUp
                     <input type='submit' name='back' value='".new Translation('Назад')."'>
                     <input type='submit' name='next' value='".new Translation('Вперед')."'>
                     <input type='submit' name='setting' value='".new Translation('Настройки')."'>
+                    $save
                 </form>
             </nav>
             ";
