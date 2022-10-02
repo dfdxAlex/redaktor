@@ -9,31 +9,32 @@ class ButtonMenuUp
         $rez='';
         // Если не находимся в режиме настройки, то показать кнопки навигации по страницам
         $save='';
+        if (!isset($_SESSION['status'])) $_SESSION['status']=0;
         if ($_SESSION['status']>0)
-            $save="<input type='submit' name='save' value='".new Translation('Сохранить')."' formaction='#'>";
+            $save="<input type='submit' name='save' value='".new \class\nonBD\Translation('Сохранить')."' formaction='#'>";
 
         if ($_SESSION['level']!=1000 && $_SESSION['level']!=10)
             $rez = "
             <nav class='btn button-language'>
                 <form action='#' method='post'>
-                    <input type='submit' name='main' value='".new Translation('На главную')."'>
-                    <input type='submit' name='back' value='".new Translation('Назад')."'>
-                    <input type='submit' name='next' value='".new Translation('Вперед')."'>
-                    <input type='submit' name='setting' value='".new Translation('Настройки')."'>
+                    <input type='submit' name='main' value='".new \class\nonBD\Translation('На главную')."'>
+                    <input type='submit' name='back' value='".new \class\nonBD\Translation('Назад')."'>
+                    <input type='submit' name='next' value='".new \class\nonBD\Translation('Вперед')."'>
+                    <input type='submit' name='setting' value='".new \class\nonBD\Translation('Настройки')."'>
                     $save
                 </form>
             </nav>
             ";
-            
+
         // ставит кнопки сохранения и возврат, если перешли в настройки или только возврат, если перешли в сохранение данных
         if ($_SESSION['level']==1000 || $_SESSION['level']==1001) {
             $saveKillMenuUp = '';
-            if ($_SESSION['level']==1000) $saveKillMenuUp="<input type='submit' name='save_setting' value='".new Translation('Сохранить')."'>";
+            if ($_SESSION['level']==1000) $saveKillMenuUp="<input type='submit' name='save_setting' value='".new \class\nonBD\Translation('Сохранить')."'>";
             $rez = "
             <nav class='btn button-language'>
                 <form action='#' method='post' id='form_setting'>
                     $saveKillMenuUp
-                    <input type='submit' name='leave_setting' value='".new Translation('Назад')."'>
+                    <input type='submit' name='leave_setting' value='".new \class\nonBD\Translation('Назад')."'>
                 </form>
             </nav>
             ";

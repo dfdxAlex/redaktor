@@ -7,10 +7,13 @@ class UserName
     public function __construct()
     {
         $this->nameHunt();
-        if (!isset($_SESSION['name']) || (isset($_SESSION['name']) && ($_SESSION['name']=='' || $_SESSION['name']=='Name'  || $_SESSION['name']=='Imię' || $_SESSION['name']=='Ім\'я' || $_SESSION['name']=='Имя'))) 
-            $_SESSION['name']=(string) new Translation('Имя');
-        if (!isset($_SESSION['surname']) || (isset($_SESSION['surname']) && ($_SESSION['surname']=='' || $_SESSION['surname']=='Surname'  || $_SESSION['surname']=='Nazwisko' || $_SESSION['surname']=='Прізвище' || $_SESSION['surname']=='Фамилия'))) 
-        $_SESSION['surname']= (string) new Translation('Фамилия');
+        if (!isset($_SESSION['name']) || (isset($_SESSION['name']) && ($_SESSION['name']=='' || $_SESSION['name']=='Name'  
+           || $_SESSION['name']=='Imię' || $_SESSION['name']=='Ім\'я' || $_SESSION['name']=='Имя'))) 
+            $_SESSION['name']=(string) new \class\nonBD\Translation('Имя');
+        if (!isset($_SESSION['surname']) || (isset($_SESSION['surname']) && ($_SESSION['surname']=='' 
+           || $_SESSION['surname']=='Surname'  || $_SESSION['surname']=='Nazwisko' || $_SESSION['surname']=='Прізвище' 
+              || $_SESSION['surname']=='Фамилия'))) 
+            $_SESSION['surname']= (string) new \class\nonBD\Translation('Фамилия');
     }
 
     public function getName()
@@ -30,7 +33,7 @@ class UserName
                 <section class="container">
                     <div class="row">
                         <div class="col-12">
-                            <p>'. (string) new Translation('Введите имя и фамилию').'</p> 
+                            <p>'. (string) new \class\nonBD\Translation('Введите имя и фамилию').'</p> 
                         </div>
                     </div>
                     <div class="row">
@@ -42,7 +45,7 @@ class UserName
                             <input type="text" name="surname" value="'.$this->getSurname().'">
                         </div>
                         <div class="col-4">
-                            <input type="submit" name="nameFoCV" value="'. (string) new Translation('Отправить').'" class="btn btn-secondary" >
+                            <input type="submit" name="nameFoCV" value="'. (string) new \class\nonBD\Translation('Отправить').'" class="btn btn-secondary" >
                         </div>
                     </form>
                     </div>

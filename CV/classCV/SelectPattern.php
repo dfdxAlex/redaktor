@@ -14,8 +14,8 @@ class SelectPattern
     public function __toString()
     {
         if ($_SESSION['pattern']==0)
-            $mesages = new Translation('Выберите шаблон');
-        else $mesages = new Translation('Выбран шаблон').' :'.$_SESSION['pattern'];
+            $mesages = new \class\nonBD\Translation('Выберите шаблон');
+        else $mesages = new \class\nonBD\Translation('Выбран шаблон').' :'.$_SESSION['pattern'];
 
 
         return '

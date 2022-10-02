@@ -30,7 +30,7 @@ class SkillsBriefly
             <section class="container-fluid skills_short">
                 <div class="row">
                     <div class="col-12">
-                        <p>'.(string) new Translation('Список навыков').'</p>
+                        <p>'.(string) new \class\nonBD\Translation('Список навыков').'</p>
                     </div>
                 </div>
                 <form action="#" method="post">
@@ -43,7 +43,7 @@ class SkillsBriefly
                     </div>
                     <div class="row">
                     <div class=col-12>
-                        <input type="submit" name="skills_short" value="'.(string) new Translation('Отправить').'" class="btn btn-info">
+                        <input type="submit" name="skills_short" value="'.(string) new \class\nonBD\Translation('Отправить').'" class="btn btn-info">
                     </div>   
                 </div>
                 </form>

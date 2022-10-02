@@ -13,9 +13,9 @@ use class\nonBD\HtmlFutter;
 // класс хранит шаг пользователя
 use classCV\Level;
 // класс контролирующий выбранный пользователем язык интерфейса
-use classCV\SelectLanguage;
+use class\nonBD\SelectLanguage;
 // класс подставляет слово в зависимости от выбранного языка интерфейса
-use classCV\Translation;
+use class\nonBD\Translation;
 
 // класс отслеживает нажатия кнопок
 use classCV\RequestButton;
@@ -27,7 +27,7 @@ use classCV\Controler;
 // Конструктор проверяет существует ли переменная сессии и если нет, то создает её.
 $level = new Level();
 // если была нажата кнопка выбора языка интерфейса пользователя, то зафиксировать это
-$language = new SelectLanguage();
+//$language = new SelectLanguage();
 // метод отслеживает массив $_REQUEST['en'...]
 SelectLanguage::setLenguage();
 

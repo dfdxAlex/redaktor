@@ -33,7 +33,7 @@ class Certificates
             <section class="container-fluid form-certificates">
             <div class="row">
             <div class="col-12">
-                <p>'.(string) new Translation('Сертификаты, допуски, разрешения').'</p>
+                <p>'.(string) new \class\nonBD\Translation('Сертификаты, допуски, разрешения').'</p>
             </div>
             </div>
                 <form action="#" method="post">
@@ -46,7 +46,7 @@ class Certificates
                     </div>
                     <div class="row">
                     <div class=col-12>
-                        <input type="submit" name="go_sertificate" value="'.(string) new Translation('Отправить').'" class="btn btn-info">
+                        <input type="submit" name="go_sertificate" value="'.(string) new \class\nonBD\Translation('Отправить').'" class="btn btn-info">
                     </div>   
                 </div>
                 </form>

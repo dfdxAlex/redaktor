@@ -22,7 +22,7 @@ class Languages
         }
         
         for($i=0; $i<$_SESSION['languages_numer']; $i++) {
-            if ($_SESSION['languages-level'.$i]=='') $nameLevelButton=(string) new Translation('Уровень владения языком');
+            if ($_SESSION['languages-level'.$i]=='') $nameLevelButton=(string) new \class\nonBD\Translation('Уровень владения языком');
             else $nameLevelButton = $_SESSION['languages-level'.$i];
 
             $formLang.='   
@@ -37,11 +37,11 @@ class Languages
                     '.$nameLevelButton.'
                     </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new Translation('Родной').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new Translation('Свободное владение языком').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new Translation('Читаю, пишу и разговариваю').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new Translation('Могу читать и разговаривать').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new Translation('Читаю документацию с переводчиком').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new \class\nonBD\Translation('Родной').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new \class\nonBD\Translation('Свободное владение языком').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new \class\nonBD\Translation('Читаю, пишу и разговариваю').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new \class\nonBD\Translation('Могу читать и разговаривать').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new \class\nonBD\Translation('Читаю документацию с переводчиком').'"></li>
                 </ul>
                 </div>
             </div> 
@@ -53,7 +53,7 @@ class Languages
             <section class="container-fluid form-languages">
                 <div class="row">
                     <div class="col-12">
-                        <p>'.(string) new Translation('Уровень владения языком').'</p>
+                        <p>'.(string) new \class\nonBD\Translation('Уровень владения языком').'</p>
                     </div>
                 </div>
                 <form action="#" method="post">
@@ -66,7 +66,7 @@ class Languages
                     </div>
                     <div class="row">
                     <div class=col-12>
-                        <input type="submit" name="go_language" value="'.(string) new Translation('Отправить').'" class="btn btn-info">
+                        <input type="submit" name="go_language" value="'.(string) new \class\nonBD\Translation('Отправить').'" class="btn btn-info">
                     </div>   
                 </div>
                 </form>

@@ -20,7 +20,7 @@ class Address
         <form action="#" method="post">
             <div class="row">
                 <div class="col-6">
-                    <label for="address">'. (string) new Translation('Адрес').':</label>
+                    <label for="address">'. (string) new \class\nonBD\Translation('Адрес').':</label>
                 </div>
                 <div class="col-6">
                     <input type="text" name="address" id="address" value="'.$_SESSION['address'].'"><br>
@@ -28,7 +28,7 @@ class Address
             </div>
             <div class="row">
             <div class="col-6">
-                <label for="tel">'. (string) new Translation('Телефон').':</label>
+                <label for="tel">'. (string) new \class\nonBD\Translation('Телефон').':</label>
                 </div>
                 <div class="col-6">
                 <input type="tel" name="tel" id="tel" value="'.$_SESSION['tel'].'"><br>
@@ -36,7 +36,7 @@ class Address
             </div>
             <div class="row">
             <div class="col-6">
-                <label for="email">'. (string) new Translation('Почта').':</label>
+                <label for="email">'. (string) new \class\nonBD\Translation('Почта').':</label>
                 </div>
                 <div class="col-6">
                 <input type="email" name="email" id="email" value="'.$_SESSION['email'].'"><br>
@@ -63,7 +63,7 @@ class Address
                 
             </div>
             <div class="col-6">
-            <input type="submit" name="adresButton" value="'. (string) new Translation('Отправить').'" class="btn btn-info"><br>
+            <input type="submit" name="adresButton" value="'. (string) new \class\nonBD\Translation('Отправить').'" class="btn btn-info"><br>
             </div>
             </div>
         </form>

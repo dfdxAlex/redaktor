@@ -30,10 +30,10 @@ class Setting
     // функция настраивает параметры блока списка скилов
     function settingListSkills()
     {
-        $text1 = new Translation('Введите число столбцов');
-        $text2 = new Translation('Ввести размер шрифта');
-        $text3 = new Translation('Высота строки');
-        $titleBlock = new Translation('Настройки блока списка умений');
+        $text1 = new \class\nonBD\Translation('Введите число столбцов');
+        $text2 = new \class\nonBD\Translation('Ввести размер шрифта');
+        $text3 = new \class\nonBD\Translation('Высота строки');
+        $titleBlock = new \class\nonBD\Translation('Настройки блока списка умений');
         return "
             <div class='row'>
                 <div class='col-12'>

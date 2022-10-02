@@ -21,19 +21,19 @@ class CVCreate
         
         // формирование строки с адресом
         if ($_SESSION['address']!='') {
-            $address=(string)  new Translation('Адрес');
+            $address=(string)  new \class\nonBD\Translation('Адрес');
             $addressTeg="<p>$address :</p><p>{$_SESSION['address']}</p>";
         } else $addressTeg='';
 
         // формирование строки с телефоном
         if ($_SESSION['tel']!='') {
-            $tel=(string)  new Translation('Телефон');
+            $tel=(string)  new \class\nonBD\Translation('Телефон');
             $telTeg="<p>$tel :</p><p>{$_SESSION['tel']}</p>";
         } else $telTeg='';     
         
         // формирование строки с электронной почтой
         if ($_SESSION['email']!='') {
-            $email=(string)  new Translation('Почта');
+            $email=(string)  new \class\nonBD\Translation('Почта');
             $emailTeg="<p>$email :</p><p>{$_SESSION['email']}</p>";
         } else $emailTeg='';  
 
@@ -51,7 +51,7 @@ class CVCreate
             InstrumentStaticCV::loadFunctionEventLoad('listSkillRowSetup');
             /////////////////////////////////////////////////////////////////////////////////listSkillRowSetup
 
-            $listSkills=(string)  new Translation('Список навыков');
+            $listSkills=(string)  new \class\nonBD\Translation('Список навыков');
             $listSkills_text="<section class='container-fluid'>";
             $priznak=true;
             $numberColumns=$_SESSION['number_columns_skill_list'];
@@ -80,19 +80,19 @@ class CVCreate
 
         // формирование строк со скилами
         if ($_SESSION['skills']!='') {
-            $skills=(string)  new Translation('Резюме');
+            $skills=(string)  new \class\nonBD\Translation('Резюме');
             $skills_text="{$_SESSION['skills']}";
         } else $skills='';  
 
         // формирование строк с описанием опыта
         if ($_SESSION['experience']!='') {
-            $experience=(string)  new Translation('Опыт');
+            $experience=(string)  new \class\nonBD\Translation('Опыт');
             $experience_text="{$_SESSION['experience']}";
         } else $experience='';  
 
         // формирование строк с описанием образования
         if ($_SESSION['education']!='') {
-            $education=(string)  new Translation('Образование');
+            $education=(string)  new \class\nonBD\Translation('Образование');
             $education_text="{$_SESSION['education']}";
         } else $education='';  
 
@@ -104,7 +104,7 @@ class CVCreate
 
         // формирование строки с перечнем сертификатов
         if ($_SESSION['certificates_numer']>0) {
-            $certificates=(string)  new Translation('Сертификаты');
+            $certificates=(string)  new \class\nonBD\Translation('Сертификаты');
             $certificates_text="";
             for ($i=0; $i<$_SESSION['certificates_numer']; $i++) {
                 $sert=$_SESSION['certificates_name'.$i];
@@ -120,7 +120,7 @@ class CVCreate
 
         // формирование строк с перечнем языков и уровнем владения языками
         if ($_SESSION['languages_numer']>0) {
-            $language=(string)  new Translation('Знания языков');
+            $language=(string)  new \class\nonBD\Translation('Знания языков');
             $language_text="";
             for ($i=0; $i<$_SESSION['languages_numer']; $i++) {
                 $lang=$_SESSION['languages'.$i];
@@ -138,7 +138,7 @@ class CVCreate
             }
         } else $language='';  
 
-        $servisCreateDFDX=(string) new Translation('Сервис создан на базе CMS DFDX');
+        $servisCreateDFDX=(string) new \class\nonBD\Translation('Сервис создан на базе CMS DFDX');
         
        // $menu = new ButtonMenuUp;
 
@@ -235,7 +235,7 @@ class CVCreate
 
     public function buttonLoadCV()
     {
-        $cvCreate=(string) new Translation('Скачать CV');
+        $cvCreate=(string) new \class\nonBD\Translation('Скачать CV');
         echo "<form action='#' method='post'>
             <input type='submit' value='$cvCreate' name='loadCV' class='btn btn-info'>
         </form>";
@@ -243,7 +243,7 @@ class CVCreate
 
     public function buttonPrintCV()
     {
-        $cvCreate=(string) new Translation('Создать CV');
+        $cvCreate=(string) new \class\nonBD\Translation('Создать CV');
         echo "<form action='#' method='post'>
             <input type='submit' value='$cvCreate' name='printCV' class='btn btn-info'>
         </form>";
@@ -251,48 +251,12 @@ class CVCreate
 
     public function createCV()
     {
-
-        //if (!isset($_REQUEST['printCV'])) {
-            //echo $header;
             echo $this->CV1();
-            //InstrumentStaticCV::loadFunctionEventClick('bodyClick');
-            //echo $futer;
-            //return false;
-       // }
-
-
-        //$cv = new \classCV\CVCreate();
-
-        //$header = new \class\nonBD\HtmlHead('CSS/cv.css','CV','classPrint',1,1);
-        //$futer = new \class\nonBD\HtmlFutter();
-
-
-       
-        //InstrumentStaticCV::createCvJs($this->CV1());
-
-        
-        //InstrumentStaticCV::loadFunctionEventLoad('createCV');
-        /*
-        $nameFile="user_files/{$_SESSION['name']}_{$_SESSION['surname']}.html";
-
-        $i=0;
-        while (file_exists($nameFile)) {
-            $i++;
-            $nameFile="user_files/{$_SESSION['name']}_{$_SESSION['surname']}$i.html";
-        }
-        $_SESSION['nameFile']=$nameFile;
-
-        if ($_SESSION['md5']!=hash('md5',$rez)) {
-            $rez=preg_replace('/CSS\/cv/',"../CSS/cv",$rez);
-            $_SESSION['md5']=hash('md5',$rez);
-            file_put_contents($nameFile,$rez);
-        } else return false;
-        */
     }
     public function printCV()
     {
         if ($_SESSION['nameFile']=='') return false;
-        $cvCreate=(string) new Translation('Открыть последнее CV');
+        $cvCreate=(string) new \class\nonBD\Translation('Открыть последнее CV');
         echo "<form action='{$_SESSION['nameFile']}' method='post'>
             <input type='submit' value='$cvCreate' name='printCV' class='btn btn-info'>
         </form>";

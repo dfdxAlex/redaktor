@@ -16,7 +16,7 @@ class Skills
         <form action="#" method="post">
             <div class="row">
                 <div class="col-12">
-                    <p> '. (string) new Translation('Опишите свои умения').'</p>
+                    <p> '. (string) new \class\nonBD\Translation('Опишите свои умения').'</p>
                 </div>
             </div>
             <div class="row">
@@ -26,7 +26,7 @@ class Skills
             </div>
             <div class="row">
             <div class="col-6">
-                <input type="submit" class="btn btn-info" name="skills_button" value="'. (string) new Translation('Отправить').'">
+                <input type="submit" class="btn btn-info" name="skills_button" value="'. (string) new \class\nonBD\Translation('Отправить').'">
             </div>
             </div>
         </form>
