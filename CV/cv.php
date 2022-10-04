@@ -17,8 +17,8 @@ use class\nonBD\SelectLanguage;
 // класс подставляет слово в зависимости от выбранного языка интерфейса
 use class\nonBD\Translation;
 
-use class\redaktor\initBd;
-$bd = new initBd();
+//use class\redaktor\initBd;
+//$bd = new initBd();
 
 // класс отслеживает нажатия кнопок
 use classCV\RequestButton;

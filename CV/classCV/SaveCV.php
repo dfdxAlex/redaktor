@@ -10,18 +10,19 @@ class SaveCV extends \class\nonBD\Button
     public function __construct()
     {
         $bd = new \class\redaktor\initBd();
+
         // проверка присутствия таблиц для модуля работы со статистикой
         $bd->createTab(
-          'name=cv_json',
-          'poleN=id',
+          'name=cv_json', //имя таблицы для хранения данных CV
+          'poleN=id',     //поле ID
           'poleT=int',
           'poleS=0',
-          'poleN=id_user',
+          'poleN=id_user', //поле ID пользователя
           'poleT=int',
           'poleS=0',
-          'poleN=json',
-          'poleT=VARCHAR',
-          'poleS='
+          'poleN=json_str',        // поле содержит строку json
+          'poleT=VARCHAR(10000)',
+          'poleS= ',
         );
 
         $this->nameCV='';
