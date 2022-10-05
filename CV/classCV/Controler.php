@@ -99,6 +99,10 @@ class Controler
             $cvSave = new SaveCV();
         }
 
+        if ($_SESSION['level']==1002) {                   // генерируем страницу сохранения данных
+            //$cvLoad = new LoadCV();
+        }
+
           
     }
 
