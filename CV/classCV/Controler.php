@@ -100,7 +100,7 @@ class Controler
         }
 
         if ($_SESSION['level']==1002) {                   // генерируем страницу сохранения данных
-            //$cvLoad = new LoadCV();
+            $cvLoad = new LoadCV();
         }
 
           
