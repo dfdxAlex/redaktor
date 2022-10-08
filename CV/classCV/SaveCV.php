@@ -52,22 +52,30 @@ class SaveCV extends \class\nonBD\Button
         $namePlaceholder = new \class\nonBD\Translation('Название');
         $buttonValue = new \class\nonBD\Translation('Сохранить');
 
-        echo "<section class='container-fluid'>";
-            parent::formBlock('formSave','#', 'btn_start', 'btn-info',
-            'bootstrap-start',
-            'h4',
-            $nameBlock,
-            'bootstrap-f-start',
-            'textL',
-            'nameCV',
-            $nameCv,
-            $namePlaceholder,
-            'submit',
-            'saveSV',
-            $buttonValue,
-            'bootstrap-finish',
-            );
-        echo "</section>";
+        $admin = new \classCV\AdminCvToBd();
+        echo "<section class='container-fluid'>
+                  <div class='row'>
+                      <div class='col-7'>";
+                          parent::formBlock('formSave','#', 'btn_start', 'btn-info',
+                          'bootstrap-start',
+                          'h4',
+                          $nameBlock,
+                          'bootstrap-f-start',
+                          'textL',
+                          'nameCV',
+                          $nameCv,
+                          $namePlaceholder,
+                          'submit',
+                          'saveSV',
+                          $buttonValue,
+                          'bootstrap-finish',
+                          );
+        echo     "    </div>
+                      <div class='col-5'>
+                          {$admin->interfaceForSaveCv()}
+                      </div>
+                  </div>
+             </section>";
     }
 
     function searcValue()
