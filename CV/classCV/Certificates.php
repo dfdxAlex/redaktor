@@ -7,12 +7,15 @@ class Certificates
     public function __construct()
     {
         if (!isset($_SESSION['certificates_numer'])) $_SESSION['certificates_numer']=1; // число полей для заполнения
+        
     }
 
     public function __toString()
     {
         $formLang='';
 
+        if (!isset($_SESSION['certificates_name'])) $_SESSION['certificates_name']=''; // число полей для заполнения
+        
         // открыть новую переменную сессий, если были открыты новые поля
         for($i=0; $i<$_SESSION['certificates_numer']; $i++) {
             if (!isset($_SESSION['certificates_name'.$i])) $_SESSION['certificates_name'.$i]='';

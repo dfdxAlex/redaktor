@@ -14,6 +14,8 @@ class SkillsBriefly
         $SkillsBriefly='';
         $this->testSession();
 
+        //if (!isset($_SESSION['skillsbriefly_name'])) $_SESSION['skillsbriefly_name']='';
+
         for($i=0; $i<$_SESSION['skillsbriefly_numer']; $i++) {
 
             $SkillsBriefly.='   

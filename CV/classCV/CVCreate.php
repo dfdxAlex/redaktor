@@ -88,19 +88,29 @@ class CVCreate
         if ($_SESSION['experience']!='') {
             $experience=(string)  new \class\nonBD\Translation('Опыт');
             $experience_text="{$_SESSION['experience']}";
-        } else $experience='';  
+        } else {
+                $experience='';  
+                $experience_text='';
+            }
+
 
         // формирование строк с описанием образования
         if ($_SESSION['education']!='') {
             $education=(string)  new \class\nonBD\Translation('Образование');
             $education_text="{$_SESSION['education']}";
-        } else $education='';  
+        } else {
+               $education='';  
+               $education_text='';
+        }
 
         // формирование ссылки на гит
         if ($_SESSION['git']!='') {
             $git='GIT';
             $git_text="<a href='{$_SESSION['git']}' target='_blank'>{$_SESSION['git']}</a>";
-        } else $git='';  
+        } else {
+               $git='';  
+               $git_text='';
+        }
 
         // формирование строки с перечнем сертификатов
         if ($_SESSION['certificates_numer']>0) {
