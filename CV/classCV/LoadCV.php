@@ -9,34 +9,68 @@ class LoadCV extends \class\nonBD\Button
     {
         // подключить модуль работы с базой данных
         $bd = new \class\redaktor\initBd();
+        
+        // подключить модуль работы с базой данных
+        $instrument = new \class\redaktor\instrument();
+        
 
-      
+        // проверяем был ли выбор варианта СВ
+        $this->loadCv($bd, $instrument);
         
         // функция рисует интерфейс для пользователя
-        $this->interfaceForSaveCv();
+        $this->interfaceForSaveCv($bd);
     }
 
+    function loadCv($bd, $instrument)
+    {
+        $masJs = array();
+        if (isset($_REQUEST['button-formLoad'])) {
+            //echo 'выбрали '.$_REQUEST['formLoad-name'];
+            $zapros="SELECT json_str FROM cv_json WHERE name_user='{$_SESSION['login']}' AND json_name='{$_REQUEST['formLoad-name']}'";
+            $rez=$bd->zaprosSQL($zapros);
+            if ($instrument->notFalseAndNULL($rez)) {
+                $stroka=mysqli_fetch_array($rez);
+                $strokaJs=$stroka[0];
+                $levelLocal=$_SESSION['level'];
+                $_SESSION=unserialize($strokaJs);
+                $_SESSION['level']=$levelLocal;
+                //var_dump($_SESSION);
 
+            }
+            
+        }
+    }
 
-    function interfaceForSaveCv()
+    function interfaceForSaveCv($bd)
     {
         // работа с текстами, нуждающимися к переводу
-        $nameCv = new \class\nonBD\Translation('Название CV');
-        $namePlaceholder = new \class\nonBD\Translation('Название');
-        $buttonValue = new \class\nonBD\Translation('Сохранить');
-//echo 'ergdf';
+        $nameCv = new \class\nonBD\Translation('Выберите CV из списка');
+
+        $zapros="select json_name from cv_json where name_user='{$_SESSION['login']}'";
+        $rez=$bd->zaprosSQL($zapros);
+        
+        $strParam='pull:';
+
+        while($stroka=mysqli_fetch_array($rez)) {
+            $strParam.='_value='.$stroka[0].'-'.$stroka[0];
+        }
+
         echo "<section class='container-fluid'>";
             parent::formBlock('formLoad','#', 'btn_start', 'btn-info',
             'bootstrap-start',
+            'h4',
+            $nameCv,
+            'bootstrap-f-start',
             'select',
-            'class',
-            'id',
-            'name',
-            'multiple',
-            '_value=name1-парам 1',
-            'pull:_value=name1-парам 2_value=name1-парам 3_value=name1-парам 4_value=name1-парам 5_value=name1-парам 6',
-            '_value=name1-парам 7',
-            'pull:_value=name1-парам 2_value=name1-парам 3_value=name1-парам 4_value=name1-парам 5_value=name1-парам 6',
+            'formLoad-select',
+            'formLoad-select-id',
+            'formLoad-name',
+            '',
+            $strParam,
+            'bootstrap-f-start',
+            'submit',
+            'button-formLoad',
+            new \class\nonBD\Translation('Загрузить'),
             'bootstrap-finish',
             );
         echo "</section>";

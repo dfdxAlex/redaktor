@@ -29,7 +29,9 @@ class Level
 
     static function levelDec()
     {
-        return $_SESSION['level']--;
+        if ($_SESSION['level']!=1002 && $_SESSION['level']!=1001)
+            return $_SESSION['level']--;
+        else $_SESSION['level']=0;
     }
 
     static function levelReset()
@@ -78,6 +80,7 @@ class Level
     static function leaveLoad()
     {
         $_SESSION['level']=$_SESSION['load'];
+        //$_SESSION['level']=0;
     }
 
     static function levelHunt()

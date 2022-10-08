@@ -29,7 +29,12 @@ class SaveCV extends \class\nonBD\Button
             $this->errorNameCv=true;
         }
         else {
-             $str=json_encode($_SESSION);
+
+            // сделаю свою функцию перевода массива в строку
+             //$str=json_encode($_SESSION);
+
+             $str=serialize($_SESSION);
+
              $id=$bd->maxIdLubojTablicy("cv_json");
              $login=$_SESSION['login'];
              $zapros="INSERT INTO cv_json(id, name_user, json_name, json_str) VALUES ($id,'$login','$this->nameCV','$str')";
