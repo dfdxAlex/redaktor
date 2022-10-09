@@ -33,7 +33,7 @@ class Controler
     }
     static function control()
     {
-        //$_SESSION['level']=0;
+        //$_SESSION['level']=8;
         // вывести список шаблонов, если шаг = 0
         if ($_SESSION['level']==0) {                   // Создать объект для работы со страницей выбора шаблона
             $patternCV = new SelectPattern();

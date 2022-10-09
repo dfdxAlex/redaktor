@@ -37,16 +37,16 @@ class Languages
                     '.$nameLevelButton.'
                     </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new \class\nonBD\Translation('Родной').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new \class\nonBD\Translation('Свободное владение языком').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new \class\nonBD\Translation('Читаю, пишу и разговариваю').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new \class\nonBD\Translation('Могу читать и разговаривать').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="btn btn-light" value="'.(string) new \class\nonBD\Translation('Читаю документацию с переводчиком').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Родной').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Свободное владение языком').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Читаю, пишу и разговариваю').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Могу читать и разговаривать').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Читаю документацию с переводчиком').'"></li>
                 </ul>
                 </div>
             </div> 
             </div>
-            ';
+            ';//<li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Родной').'"></li>
         }
 
         return '

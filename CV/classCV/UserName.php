@@ -62,8 +62,8 @@ class UserName
             if ($_REQUEST['surname']!='' && $_REQUEST['surname']!='Surname' && $_REQUEST['surname']!='Nazwisko' && $_REQUEST['surname']!='Прізвище' && $_REQUEST['surname']!='Фамилия')
                 $_SESSION['surname']=$_REQUEST['surname'];
         } else {
-            $_SESSION['name']='Name';
-            $_SESSION['surname']='UserName';
+           // $_SESSION['name']='Name';
+           // $_SESSION['surname']='UserName';
         }
 
     }
