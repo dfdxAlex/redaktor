@@ -12,6 +12,9 @@ class initBd implements interface\interface\InterfaceCollectScolding
     use \class\redaktor\interface\trait\TraitInterfaceDebug;
     use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
     use \class\redaktor\interface\trait\TraitInterfaceFoUser;
+    use \class\redaktor\interface\trait\TraitInterfaceWorkToMail;
+    
+    //use \class\redaktor\interface\interface\InterfaceWorkToMail;
 
     public function __construct()
     {

@@ -53,12 +53,10 @@ class SaveCV extends \class\nonBD\Button
         $buttonValue = new \class\nonBD\Translation('Сохранить');
 
         $admin = new \classCV\AdminCvToBd();
-        echo "<section class='container-fluid'>
-                  <div class='row'>
-                      <div class='col-7'>";
+        echo "<section class='container-fluid'>";
                           parent::formBlock('formSave','#', 'btn_start', 'btn-info',
                           'bootstrap-start',
-                          'h4',
+                          'h5',
                           $nameBlock,
                           'bootstrap-f-start',
                           'textL',
@@ -70,11 +68,7 @@ class SaveCV extends \class\nonBD\Button
                           $buttonValue,
                           'bootstrap-finish',
                           );
-        echo     "    </div>
-                      <div class='col-5'>
-                          {$admin->interfaceForSaveCv()}
-                      </div>
-                  </div>
+        echo     "  {$admin->interfaceForSaveCv()}
              </section>";
     }
 

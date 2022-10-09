@@ -44,6 +44,7 @@ class AdminCvToBd extends \class\nonBD\Button
 
         while($stroka=mysqli_fetch_array($rez)) {
             $strParam.=$stroka[0]." .....<button name='$stroka[0]'> <span class='kill_CV'>x</span></button>-";
+
         }
 
         echo "<section class='container-fluid'>";

@@ -531,12 +531,25 @@ foreach($parametr as $value) {
           $mas = [];
           $jMas=0;
           // создать массив со всеми найденными параметрами
+          // параметры пунктов для выбора
           while($this->searchParam($parametr, $j+4)) {
-            $mas[$jMas]=$parametr[$j+5];
+            //если параметры заданы простым способом _value=name-userText
+            if (stripos($parametr[$j+5],'pull:')===false) 
+                $mas[$jMas]=$parametr[$j+5];
+            else {
+                 //если находим строку с началом pull: то разбераем её на отдельные параметры и заносим в массив
+                 $paramText=preg_replace('/pull:/','',$parametr[$j+5]);
+                 $paramMas=preg_split('/_value=/',$paramText);
+                 foreach($paramMas as $value) 
+                      if ($value!='')
+                          $mas[$jMas++]='_value='.$value;
+                 
+            }
+            //--
             $j++;
             $jMas++;
           }
-
+          //var_dump($mas);
           // определить класс, если он есть
           $elementFoClass=$parametr[++$i];
           // определить id, если он есть
@@ -609,7 +622,9 @@ foreach($parametr as $value) {
               if (mb_strripos($value,'_value')!==false) {
                 $valueFoOption=preg_split('/(=)|(-)/',$value);
                 $valueFoOptionString='value="'.$valueFoOption[1].'"';
-                $textFoOptionString=$valueFoOption[2];
+                $textFoOptionString='Название не определено';
+                if (isset($valueFoOption[2]))
+                    $textFoOptionString=$valueFoOption[2];
                 $rez.="<option $selected $disabled $valueFoOptionString $idFoOption>$textFoOptionString</option>";
               }
 
@@ -632,14 +647,22 @@ foreach($parametr as $value) {
         function dlli(array $parametr, int &$i)
         {
           $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-          $j = $i;
+          $j = $i+2;
           $mas = [];
           $jMas=0;
           // создать массив со всеми найденными параметрами
-          while($this->searchParam($parametr, $j+2)) {
-            $mas[$jMas]=$parametr[$j+3];
-            $j++;
-            $jMas++;
+          while($this->searchParam($parametr, $j)) {
+            if (stripos($parametr[++$j],'pull:')===false) 
+                $mas[$jMas++]=$parametr[$j];
+            
+            else {
+                 //если находим строку с началом pull: то разбераем её на отдельные параметры и заносим в массив
+                 $paramText=preg_replace('/pull:/','',$parametr[$j]);
+                 $paramMas=preg_split('/\-/',$paramText);
+                 foreach($paramMas as $value) 
+                      if ($value!='') 
+                          $mas[$jMas++]=$value;
+            }
           }
           // определить класс, если он есть
           $elementFoClass=$parametr[++$i];
@@ -685,17 +708,25 @@ foreach($parametr as $value) {
         function ulli(array $parametr, int &$i)
         {
           $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-          $j = $i;
+          $j = $i+2;
           $mas = [];
           $jMas=0;
           //echo $parametr[$i];
           $teg='ul';
           if ($parametr[$i]=='olli') $teg='ol';
           // создать массив со всеми найденными параметрами
-          while($this->searchParam($parametr, $j+2)) {
-            $mas[$jMas]=$parametr[$j+3];
-            $j++;
-            $jMas++;
+          while($this->searchParam($parametr, $j)) {
+            if (stripos($parametr[++$j],'pull:')===false) 
+                $mas[$jMas++]=$parametr[$j];
+            else {
+                 //если находим строку с началом pull: то разбераем её на отдельные параметры и заносим в массив
+                 $paramText=preg_replace('/pull:/','',$parametr[$j]);
+                 $paramMas=preg_split('/\-/',$paramText);
+                 foreach($paramMas as $value) 
+                      if ($value!='') 
+                          $mas[$jMas++]=$value;
+            
+            }
           }
           // определить класс, если он есть
           $elementFoClass=$parametr[++$i];

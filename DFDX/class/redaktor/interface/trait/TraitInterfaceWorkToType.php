@@ -5,6 +5,43 @@ trait TraitInterfaceWorkToType
 {
     //interface InterfaceWorkToType
 
+    public function translitUnicodToCirilCompact($string)
+    { 
+        $strRez=$string;
+        $masCod = array();
+        // набирается массив с декодирующими данными
+        for ($i=40; $i<56; $i++) {
+            $j=$i;
+            if ($i==50) $j='4a';
+            if ($i==51) $j='Ab';
+            if ($i==52) $j='4c';
+            if ($i==53) $j='4d';
+            if ($i==54) $j='4e';
+            if ($i==55) $j='4f';
+            $masCod["u0{$j}0"]="&#x{$j}0";
+            $masCod["u0{$j}1"]="&#x{$j}1";
+            $masCod["u0{$j}2"]="&#x{$j}2";
+            $masCod["u0{$j}3"]="&#x{$j}3";
+            $masCod["u0{$j}4"]="&#x{$j}4";
+            $masCod["u0{$j}5"]="&#x{$j}5";
+            $masCod["u0{$j}6"]="&#x{$j}6";
+            $masCod["u0{$j}7"]="&#x{$j}7";
+            $masCod["u0{$j}8"]="&#x{$j}8";
+            $masCod["u0{$j}9"]="&#x{$j}9";
+            $masCod["u0{$j}a"]="&#x{$j}a";
+            $masCod["u0{$j}b"]="&#x{$j}b";
+            $masCod["u0{$j}c"]="&#x{$j}c";
+            $masCod["u0{$j}d"]="&#x{$j}d";
+            $masCod["u0{$j}e"]="&#x{$j}e";
+            $masCod["u0{$j}f"]="&#x{$j}f";
+        }
+
+        foreach($masCod as $key=>$value) {
+            $strRez=str_replace($key,$value,$strRez);
+        }
+        return $strRez;
+    }
+
     public function translit($string)
     {
     $converter = array(

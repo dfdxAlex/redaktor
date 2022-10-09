@@ -10,7 +10,7 @@ namespace class\redaktor\interface\interface;
 // There is an analogue of this interface, which inherits the work with the database.
 // If you need to work without using a database, then you should use this file from this namespace
 
-interface InterfaceButton
+interface InterfaceButton extends InterfaceWorkToBd
 {
    //Функция ловит нажатую кнопку по её имени, части имени или названию перебирая массив POST
    //Funkcja przechwytuje wciśnięty przycisk według jego nazwy, części nazwy lub nazwy, przeglądając tablicę POST
@@ -114,6 +114,7 @@ interface InterfaceButton
    // второй параметр - это id, для ol и ul и dl он не изменется, для li добавляется нумерация если '' то id не будет
    // следующие параметры - это содержимое списков li, число не ограничено
    // в теге dl соответственно сначала идёт параметр для dt, потом для dd
+   // можно задавать дополнительные параметры одной строкой pull:param1-param2-param3-param4
 
    // добавлен список select
    // первый параметр - это класс, для select он не изменется, для option добавляется нумерация, если '' то класса не будет
@@ -123,11 +124,14 @@ interface InterfaceButton
    // атрибут к тегу select. если там будет слово label=текст, то добавятся теги label с текстом для тега select, 
    // дополнительные параметры перечисляются через запятую
    // дальше идут строки с данными для списка
+   // После знака = пишется то, что будет возвращено в массиве POST, а после знака -, то, что увидит в пункте пользователь
    // -- _value=параметр передаваемый в name тега select - надпись в пункте
    // -- пример _value=name1-Александр-disabled-selected (через тире можно добавить дополнительные атрибуты для option)
    // -- _group=имя группы
    // -- _group=Андроид
    // -- _group -если без параметра, то конец предыдущей группы
+   // -- параметры можно задать одной строкой начав её со слова pull:
+   // -- 'pull:_value=name1-парам 2_value=name1-парам 3_value=name1-парам 4_value=name1-парам 5_value=name1-парам 6',
 
    // Признаки form_not_open form_not_close не обязательны и управляют отсутствием открывающего тега form и закрывающего тега form соответственно.
    // Признак zero_style, если задать этот признак, то элементы будут без  бутстрапа

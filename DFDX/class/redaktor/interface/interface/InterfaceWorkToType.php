@@ -49,4 +49,9 @@ interface InterfaceWorkToType
     //funkcja zamienia rosyjskie słowo na transliterację
     //function converts a Russian word into transliteration
     public function translit($string);
+
+    //функция заменяет unicod в символ кирилицы, в том числе старые и специальные символы кирилицы Кириллица (блок Юникода)
+    //funkcja zastępuje Unicode znakiem cyrylicy, w tym stare i specjalne znaki cyrylicy Cyrylica (blok Unicode)
+    //function replaces unicode with a Cyrillic character, including old and special Cyrillic characters Cyrillic (Unicode block)
+    public function translitUnicodToCirilCompact($string);
 }

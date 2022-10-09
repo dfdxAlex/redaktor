@@ -47,12 +47,10 @@ class LoadCV extends \class\nonBD\Button
             $strParam.='_value='.$stroka[0].'-'.$stroka[0];
         }
         $admin = new \classCV\AdminCvToBd();
-        echo "<section class='container-fluid'>
-                  <div class='row'>
-                      <div class='col-7'>";
+        echo "<section class='container-fluid'>";
                           parent::formBlock('formLoad','#', 'btn_start', 'btn-info',
                           'bootstrap-start',
-                          'h4',
+                          'h5',
                           $nameCv,
                           'bootstrap-f-start',
                           'select',
@@ -67,11 +65,7 @@ class LoadCV extends \class\nonBD\Button
                           new \class\nonBD\Translation('Загрузить'),
                           'bootstrap-finish',
                           );
-        echo     "    </div>
-                      <div class='col-5'>
-                          {$admin->interfaceForSaveCv()}
-                      </div>
-                  </div>
+        echo     " {$admin->interfaceForSaveCv()}
              </section>";
     }
 

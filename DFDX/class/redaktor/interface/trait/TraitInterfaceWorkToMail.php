@@ -3,7 +3,7 @@ namespace class\redaktor\interface\trait;
 
 trait TraitInterfaceWorkToMail
 {
-    public function simpleLetter(\PHPMailer\PHPMailer\PHPMailer $mailer, string $sender, string $address, string $emailHeader, string $textOfTheLetter, bool $showSendResult=false)
+    public function simpleLetter(\class\vendorMailerPhp\phpmailer\phpmailer\PHPMailer $mailer, string $sender, string $address, string $emailHeader, string $textOfTheLetter, bool $showSendResult=false)
     {
         $mailer->isSMTP();   
         $mailer->SMTPAuth   = true;
@@ -28,7 +28,7 @@ trait TraitInterfaceWorkToMail
         }
     } 
 
-    public function simpleLetterPlusFileileAttachment(\PHPMailer\PHPMailer\PHPMailer $mailer, string $sender, string $address, string $emailHeader, string $textOfTheLetter, string $pathFileAttachment='', bool $showSendResult=false)
+    public function simpleLetterPlusFileileAttachment(\class\vendorMailerPhp\phpmailer\phpmailer\PHPMailer $mailer, string $sender, string $address, string $emailHeader, string $textOfTheLetter, string $pathFileAttachment='', bool $showSendResult=false)
     {
         $mailer->isSMTP();   
         $mailer->SMTPAuth   = true;
@@ -55,7 +55,7 @@ trait TraitInterfaceWorkToMail
         }
     }
 
-    public function letterTextFromFilePlusAttachment(\PHPMailer\PHPMailer\PHPMailer $mailer, string $sender, string $address, string $emailHeader, string $fileOfTheLetter, string $pathFileAttachment, bool $showSendResult=false)
+    public function letterTextFromFilePlusAttachment(\class\vendorMailerPhp\phpmailer\phpmailer\PHPMailer $mailer, string $sender, string $address, string $emailHeader, string $fileOfTheLetter, string $pathFileAttachment, bool $showSendResult=false)
     {
         $mailer->isSMTP();   
         $mailer->SMTPAuth   = true;

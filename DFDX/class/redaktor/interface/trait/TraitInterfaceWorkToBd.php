@@ -145,17 +145,17 @@ trait TraitInterfaceWorkToBd
    $ii=0;
    $iii=0;
    foreach($parametr as $value) {
-       if (stripos('sss'.$value,'name=')) {
+       if (stripos($value,'name=')!==false) {
            $nametablice=preg_replace('/name=/','',$value);
            $nametablice=mb_strtolower($nametablice);
        }
-       if (stripos('sss'.$value,'просмотр'))
+       if (stripos($value,'просмотр')!==false)
            $prosmotr=true;
-       if (stripos('sss'.$value,'poleN='))
+       if (stripos($value,'poleN=')!==false)
            $masN[$i++]=preg_replace('/poleN=/','',$value);
-       if (stripos('sss'.$value,'poleT='))
+       if (stripos($value,'poleT=')!==false)
            $masT[$ii++]=preg_replace('/poleT=/','',$value);
-       if (stripos('sss'.$value,'poleS='))
+       if (stripos($value,'poleS=')!==false)
            $masS[$iii++]=preg_replace('/poleS=/','',$value);
        if ($value=='help' || $value=='Помощь') {
            echo '<p>Функция проверяет существует ли таблица, если нет, то создает её и присваивает начальные значения</p>';
@@ -202,8 +202,8 @@ trait TraitInterfaceWorkToBd
            $z=$z.$masN[$j];
        $znak='';
 
-       if (stripos('sss'.$masT[$j],'VARCHAR') 
-        || stripos('sss'.$masT[$j],'varchar')
+       if (stripos($masT[$j],'VARCHAR')!==false 
+        || stripos($masT[$j],'varchar')!==false
          || ($masT[$j]=='TEXT' || $masT[$j]=='text')
            || ($masT[$j]=='DATE' || $masT[$j]=='date')
              || ($masT[$j]=='DATETIME' || $masT[$j]=='datetime')
@@ -230,6 +230,7 @@ trait TraitInterfaceWorkToBd
       }
       $zapros=$zapros.$z.') VALUES ('.$z1.')';
       $zapros2=$zapros;
+      //echo $zapros;
       if (!$prosmotr)
        $this->zaprosSQL($zapros);
    } 
