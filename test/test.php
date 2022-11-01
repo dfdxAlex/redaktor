@@ -15,7 +15,7 @@
 <body>
 
     <section id="canvasbox">
-        <canvas id="canvas" height="500" width="500">
+        <canvas id="canvas" height="500" width="800">
             В вашеб браузере элемент не поддерживается
 
 
