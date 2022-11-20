@@ -1,0 +1,13 @@
+#dropbox, #dropbox2 {
+    float:left;
+    height: 100px;
+    width: 100px;
+}
+
+#picturesbox{
+    float:left;
+}
+
+#picturesbox > img {
+    float: left;
+}
