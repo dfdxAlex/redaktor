@@ -11,7 +11,7 @@
     <style>
      
     </style>
-    <script src="js/drag_and_drop.js"></script>
+    <script src="js/drag_and_drop2.js"></script>
 </head>
 <body>
 
