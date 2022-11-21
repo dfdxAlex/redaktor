@@ -1,4 +1,4 @@
-window.addEventListener("load",createPreviewHtml5,false);
+window.addEventListener("load",createPreviewArduino,false);
 
 function test()
 {
@@ -47,6 +47,74 @@ function test()
      
 
   }
+
+
+      // перетаскивание Arduino
+      function createPreviewArduino()
+      {
+          var elem=document.getElementById("canvas");
+          canvas5=elem.getContext('2d');
+      
+          var color1="#0095B6";
+          var color2="#7FFFD4";
+      
+          var gradient=canvas5.createLinearGradient(0, 0, 0, 500);
+          gradient.addColorStop(0, color1);
+          gradient.addColorStop(1, color2);
+          canvas5.fillStyle = gradient;
+          canvas5.fillRect(0, 0, 800, 500);
+      
+          canvas5.shadowColor=color2;
+          canvas5.shadowOffsetX=3;
+          canvas5.shadowOffsetY=3;
+      
+          canvas5.fillStyle=color2;
+          canvas5.font="bold 40px arial";
+          canvas5.textAlign="start";
+          canvas5.textBaseline="top";
+          canvas5.fillText("Amator DED",15,15,350);
+      
+          canvas5.shadowColor=color2;
+          canvas5.shadowOffsetX=20;
+          canvas5.shadowOffsetY=20;
+          canvas5.shadowBlur=10;
+      
+          //canvas5.font="bold 140px arial";
+          //canvas5.textAlign="start";
+          //canvas5.textBaseline="top";
+          //canvas5.fillText("ES6",445,35,80);
+      
+          var ing = new Image();
+          ing.src="resistor.png";
+          ing.addEventListener("load",styleMyArduino,false);
+      
+          canvas5.shadowColor=color1;
+          canvas5.shadowOffsetX=20;
+          canvas5.shadowOffsetY=20;
+          canvas5.shadowBlur=10;
+      
+          var js = new Image();
+          js.src="arduino.png";
+          js.addEventListener("load",function(){
+             canvas5.drawImage(js,590,20,150,150);
+          },false);
+      }
+      
+      function styleMyArduino(e)
+      {
+          var ing4=e.target;
+          var styleMy=canvas5.createPattern(ing4,'repeat');
+          canvas5.fillStyle=styleMy;
+      
+          canvas5.font="bold 274px arial";
+          canvas5.textAlign="start";
+          canvas5.textBaseline="top";
+          //canvas5.fillText("DRAG",15,135,400);
+          canvas5.fillText("Arduino",15,235,700);
+          //canvas5.fillText("Script",135,295,500);
+          //canvas5.fillText("DROP",315,335,430);
+      
+      }
 
     // перетаскивание Html
     function createPreviewHtml5()
