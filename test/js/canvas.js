@@ -1,4 +1,4 @@
-window.addEventListener("load",createPreviewArduino,false);
+window.addEventListener("load",createPreviewPhp,false);
 
 function test()
 {
@@ -275,15 +275,15 @@ function createPreviewJs()
     canvas5.textBaseline="top";
     canvas5.fillText("Amator DED",15,15,350);
 
-    canvas5.shadowColor=color2;
+    canvas5.shadowColor="#800000";
     canvas5.shadowOffsetX=20;
     canvas5.shadowOffsetY=20;
     canvas5.shadowBlur=10;
 
-    canvas5.font="bold 140px arial";
-    canvas5.textAlign="start";
-    canvas5.textBaseline="top";
-    canvas5.fillText("ES6",445,35,80);
+    //canvas5.font="bold 140px arial";
+    //canvas5.textAlign="start";
+    //canvas5.textBaseline="top";
+    //canvas5.fillText("ES6",545,35,180);
 
     var ing = new Image();
     ing.src="patern2.png";
@@ -294,11 +294,11 @@ function createPreviewJs()
     canvas5.shadowOffsetY=20;
     canvas5.shadowBlur=10;
 
-    var js = new Image();
-    js.src="jslogo.png";
-    js.addEventListener("load",function(){
-        canvas5.drawImage(js,520,0,250,250);
-    },false);
+    //var js = new Image();
+    //js.src="js.png";
+    //js.addEventListener("load",function(){
+    //    canvas5.drawImage(js,520,0,150,150);
+    //},false);
 }
 
 function styleMyJs(e)
@@ -347,10 +347,10 @@ function createPreviewPhp()
     canvas5.shadowOffsetY=20;
     canvas5.shadowBlur=10;
 
-    //canvas5.font="bold 40px arial";
-    //canvas5.textAlign="start";
-    //canvas5.textBaseline="top";
-    //canvas5.fillText("API",645,45,60);
+    canvas5.font="bold 110px arial";
+    canvas5.textAlign="start";
+    canvas5.textBaseline="top";
+    canvas5.fillText("OOP",145,100,260);
 
     var ing = new Image();
     ing.src="patern2.png";
