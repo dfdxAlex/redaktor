@@ -148,7 +148,7 @@ class CVCreate
        // $menu = new ButtonMenuUp;
 
         return '
-               <section class="container-fluid create-cv">
+               <section class="container create-cv">
                 <div class="row">
                     <div class="col-7 name">
                         <button name="lives1" form="form_setting">

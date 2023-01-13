@@ -11,17 +11,20 @@
 }
 // конец стилей объекта настроек
 .create-cv{
+    width: 100%;
+    padding: 0;
+    border: 0;
+    height: 32cm;
+    background-color: #098b9f;  
     .pole-info{
-        float: left;
-        background: -webkit-linear-gradient(top, rgba(255, 255, 255), rgb(234, 229, 229));
-        height: 27.5cm;
+        background: -webkit-linear-gradient(top, rgba(255, 255, 255) 50%, rgb(234, 229, 229) 100%) no-repeat, #97c49a ;
+        height: 83%;
         width: 22cm;
         margin-top: 10px;
         box-shadow:  #495253 10px 10px;/*inset;*/
         border-radius: 10px;
         outline: 1px solid black;
         outline-offset: -4px;
-        //border-image: url('../images/CV_origin_1.png') 20;
         .summary, .experience, .education, .language, .sertificates, .git, .list-skills{
             width: 100%;
             div {
@@ -56,13 +59,8 @@
             margin-top: 20px;
             margin-bottom: 15px;
         }
-    }
-    float:left;
-    padding-left: 0px;
-    padding-right: 0px;
-    height: 32.5cm;
-    width: 22cm;
-    background-color: #098b9f;  
+    } // конец pole-info
+
     // стиль заголовка - имя и фамилия
     .name p{
         margin-top: 20px;
@@ -73,7 +71,6 @@
         color:#fefbfb;
         text-shadow: #466368 5px 5px;
         font-family: "cd2f1";
-        //transition: all 1s ea 0.5s;
         transform: translate(15px, -5px) rotate(-5deg);  // перемещает элемент на новое место
     }
     .name button{
@@ -97,7 +94,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 .servis-create-dfdx{
-    float: left;
+    // float: left;
     font-size: 11px;
     margin-top: 7px;
     color: rgb(248, 242, 242);
@@ -245,11 +242,7 @@ input[name="printCV"]{
   }
 
 body{
-    background: #466368;
     background: linear-gradient(#648880, #293f50);
-    border-radius: 6px;
-    height: 27cm;
-    width: 22cm;
 }
 .classPrint{
     height: 27cm;
