@@ -78,7 +78,8 @@ $header->showSiteHeader('image/logo.png');
  <div class="row">
  <div class="col-12">';
 //второе меню. В кнопки можно добавлять через массив добавляя пару Название=>ссылка
-$header->menuOfOurProjects(array('IP Калькулятор'=>'IPCalculator\IPCalculator.php'));
+//названия кнопок должны отличаться. 
+$header->menuOfOurProjects(array('IP Калькулятор'=>'IPCalculator\IPCalculator.php','CV creator'=>'../../CV/cv.php'));
 echo '</div>
   </div>
   </section>';

@@ -4,11 +4,6 @@ namespace classCV;
 // класс формирует страницу
 class CVCreate
 {
-    public function __construct()
-    {
-       // if (!isset($_SESSION['nameFile'])) $_SESSION['nameFile']='';
-       // if (!isset($_SESSION['md5'])) $_SESSION['md5']='';
-    }
 
     public function __toString()
     {

@@ -9,17 +9,16 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/dragdrop.css">
     <style>
-     
+
     </style>
     <script src="js/canvas.js"></script>
 </head>
 <body>
-
-    <section id="canvasbox">
-        <canvas id="canvas" height="500" width="800">
-            В вашеб браузере элемент не поддерживается
-        </canvas>
-    </section>
+<img id='image1' src='jshtmlcss.png' style='display:none;'/>
+<img id='image2' src='Matrix.png' style='display:none;'/>
+    <canvas id="canvas" width=800px height=500px >
+        <button id="geolokation"></button>
+    </canvas>
 
 
 </body>

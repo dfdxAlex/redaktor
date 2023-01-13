@@ -1,4 +1,4 @@
-window.addEventListener("load",createPreviewPhp,false);
+window.addEventListener("load",createFront,false);
 
 function test()
 {
@@ -48,6 +48,128 @@ function test()
 
   }
 
+ // геолокация
+ function createFront()
+ {
+     var elem=document.getElementById("canvas");
+     canvas5=elem.getContext('2d');
+ 
+     var color1="yellow";
+     var color2="#fff";
+ 
+     var gradient=canvas5.createLinearGradient(0, 0, 0, 500);
+     gradient.addColorStop(0, color1);
+     gradient.addColorStop(1, color2);
+     canvas5.fillStyle = gradient;
+     canvas5.fillRect(0, 0, 800, 500);
+ 
+    //  canvas5.shadowColor=color2;
+    //  canvas5.shadowOffsetX=3;
+    //  canvas5.shadowOffsetY=3;
+ 
+
+     canvas5.shadowColor=color1;
+     canvas5.shadowOffsetX=20;
+     canvas5.shadowOffsetY=20;
+     canvas5.shadowBlur=10;
+ 
+ 
+     var ing = new Image();
+     ing.src="Matrix.png";
+     ing.addEventListener("load",styleMyFront,false);
+ 
+     canvas5.shadowColor=color1;
+     canvas5.shadowOffsetX=0;
+     canvas5.shadowOffsetY=0;
+     canvas5.shadowBlur=0;
+ 
+    var img2=document.getElementById('image2');
+    canvas5.drawImage(img2,0,0,800,800);
+
+     var img=document.getElementById('image1');
+     canvas5.drawImage(img,510,110,200,200);
+
+ }
+ 
+ function styleMyFront(e)
+ {
+     var ing4=e.target;
+     var styleMy=canvas5.createPattern(ing4,'repeat');
+     canvas5.fillStyle=styleMy;
+
+     canvas5.fillStyle="OrangeRed";
+     canvas5.font="900 60px arial";
+     canvas5.textAlign="start";
+     canvas5.textBaseline="top";
+     canvas5.fillText("Amator DED",15,15,350); 
+
+     canvas5.fillText("Галопом по...",15,450,350); 
+ 
+ }
+
+ // геолокация
+ function createPreviewGeo()
+ {
+     var elem=document.getElementById("canvas");
+     canvas5=elem.getContext('2d');
+ 
+     var color1="Orange";
+     var color2="Green";
+ 
+     var gradient=canvas5.createLinearGradient(0, 0, 0, 500);
+     gradient.addColorStop(0, color1);
+     gradient.addColorStop(1, color2);
+     canvas5.fillStyle = gradient;
+     canvas5.fillRect(0, 0, 800, 500);
+ 
+     canvas5.shadowColor=color2;
+     canvas5.shadowOffsetX=3;
+     canvas5.shadowOffsetY=3;
+ 
+     canvas5.fillStyle=color2;
+     canvas5.font="bold 40px arial";
+     canvas5.textAlign="start";
+     canvas5.textBaseline="top";
+     canvas5.fillText("Amator DED",15,15,350);
+ 
+     canvas5.shadowColor=color1;
+     canvas5.shadowOffsetX=20;
+     canvas5.shadowOffsetY=20;
+     canvas5.shadowBlur=10;
+ 
+     canvas5.font="bold 110px arial";
+     canvas5.textAlign="start";
+     canvas5.textBaseline="top";
+     canvas5.fillText("location     API",45,100,460);
+ 
+     var ing = new Image();
+     ing.src="earthzalivka.png";
+     ing.addEventListener("load",styleMyGeo,false);
+ 
+     canvas5.shadowColor=color1;
+     canvas5.shadowOffsetX=0;
+     canvas5.shadowOffsetY=0;
+     canvas5.shadowBlur=0;
+ 
+     var slon = new Image();
+     slon.src="earth.png";
+     slon.addEventListener("load",function(){
+         canvas5.drawImage(slon,540,10,250,250);
+     },false);
+ }
+ 
+ function styleMyGeo(e)
+ {
+     var ing4=e.target;
+     var styleMy=canvas5.createPattern(ing4,'repeat');
+     canvas5.fillStyle=styleMy;
+ 
+     canvas5.font="bold 274px arial";
+     canvas5.textAlign="start";
+     canvas5.textBaseline="top";
+     canvas5.fillText("GEO",15,235,500);
+ 
+ }
 
       // перетаскивание Arduino
       function createPreviewArduino()

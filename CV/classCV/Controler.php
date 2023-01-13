@@ -33,7 +33,7 @@ class Controler
     }
     static function control()
     {
-        //$_SESSION['level']=8;
+        $_SESSION['level']=0;
         // вывести список шаблонов, если шаг = 0
         if ($_SESSION['level']==0) {                   // Создать объект для работы со страницей выбора шаблона
             $patternCV = new SelectPattern();
@@ -95,11 +95,11 @@ class Controler
             $cvSetting = new Setting();
         }
 
-        if ($_SESSION['level']==1001) {                   // генерируем страницу сохранения данных
+        if ($_SESSION['level']==1001) {                   // Запись переменных сессии
             $cvSave = new SaveCV();
         }
 
-        if ($_SESSION['level']==1002) {                   // генерируем страницу сохранения данных
+        if ($_SESSION['level']==1002) {                   // чтение переменных сессии
             $cvLoad = new LoadCV();
         }
 
