@@ -24,3 +24,5 @@ CV/class/*
 /CV/vendor/
 CV/compos*.*
 tmp
+test
+test_bootstrap
