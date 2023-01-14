@@ -39,6 +39,7 @@ class torg
         $this->apple=$apple;
         $this->melon=$melon;
         $this->peach=$peach;
+
         $this->apple_juice=$apple_juice;
         $this->grape_juice=$grape_juice;
         $this->tomato_juice=$tomato_juice;
@@ -53,38 +54,61 @@ class torg
 
 class torgThing extends torg
 {
-    public function __construct($apple, $melon, $peach)
-    {
-        parent::__construct($apple, $melon, $peach, 0, 0, 0);
-    }
+    // public function __construct($apple, $melon, $peach)
+    // {
+    //     parent::__construct($apple, $melon, $peach, 0, 0, 0);
+    // }
     
     public function getThing()
     {
         $this->thing=$this->apple+$this->melon+$this->peach;
         return $this->thing;
     }
+
+    public function getPrice()
+    {
+        return parent::getPrice() - ($this->apple_juice*2.5+$this->grape_juice*3+$this->tomato_juice*0.5);
+    }
+
 }
 
 class torgLiter extends torg
 {
-    public function __construct($apple_juice, $grape_juice, $tomato_juice)
-    {
-        parent::__construct(0,0,0, $apple_juice, $grape_juice, $tomato_juice);
-    }
+    // public function __construct($apple_juice, $grape_juice, $tomato_juice)
+    // {
+    //     parent::__construct(0,0,0, $apple_juice, $grape_juice, $tomato_juice);
+    // }
 
     public function getLiter()
     {
         $this->liter=$this->apple_juice+$this->grape_juice+$this->tomato_juice;
         return $this->liter;
     }
+
+    public function getPrice()
+    {
+        return parent::getPrice() - ($this->apple*0.5+$this->melon*1.5+$this->peach*2);
+    }
 }
 
 
+$objStart = new torg(2,3,4,5,6,7);
 
-$obj = new torgLiter(2,3,4);
-echo '<pre>';
-var_dump($obj);
-echo '<pre>';
+$obj1 = new torgThing(2,3,4,5,6,7);
+$obj = new torgLiter(2,3,4,5,6,7);
+
+
+echo $objStart->getPrice();
+echo '<br>';
+echo $obj1->getPrice();
+echo '<br>';
+echo $obj->getPrice();
+echo '<br>';
+echo $obj->getPrice()+$obj1->getPrice();
+
+// echo '<pre>';
+// var_dump($obj);
+// echo '<pre>';
 // echo $obj->getPrice();
 
 // echo $obj->getThing();
