@@ -26,3 +26,4 @@ CV/compos*.*
 tmp
 test
 test_bootstrap
+node_modules
