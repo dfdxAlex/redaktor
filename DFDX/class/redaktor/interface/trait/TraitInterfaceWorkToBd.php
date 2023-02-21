@@ -9,22 +9,20 @@ trait TraitInterfaceWorkToBd
        * Создать объект или вернуть ссылку на него.
        * Вторая строка запускает метод по поиску файла
       */
-      $obj = \class\nonBD\SearchPathFromFile::createObj();
-      $pathFile = $obj->searchPath('tmp/initBD.ini');
 
-      $fd = fopen($pathFile, 'r') or die("не удалось открыть файл");
-      $this->host=stristr(fgets($fd),';',true); 
-      $this->loginBD=stristr(fgets($fd),';',true); 
-      $this->parol=stristr(fgets($fd),';',true); 
-      $this->nameBD=stristr(fgets($fd),';',true); 
-      $this->site=stristr(fgets($fd),';',true); 
-      $this->smtpServerFoPhpMailer=stristr(fgets($fd),';',true); 
-      $this->mailFoPhpMailer=stristr(fgets($fd),';',true); 
-      $this->parolFoMailFoPhpMailer=stristr(fgets($fd),';',true); 
-      $this->siteRootDirectory=stristr(fgets($fd),';',true); 
-      fclose($fd);
-      $this->con = mysqli_connect($this->initBdHost(),$this->initBdLogin(),$this->initBdParol(),$this->initBdNameBD()) OR die ('ошибка подключения БД');   //подключить бд        mysqli_set_charset ( $con , "utf8" ) ;
-  }
+      $obj = \class\redaktor\DatabaseConn::dBConnection();
+      $this->con = $obj->getCon();
+      $this->host=$obj->initBdHost(); 
+      $this->loginBD=$obj->initBdLogin(); 
+      $this->parol=$obj->initBdParol();
+      $this->nameBD=$obj->initBdNameBD();
+      $this->site=$obj->initsite();
+      $this->smtpServerFoPhpMailer=$obj->smtpServerFoPhpMailer();
+      $this->mailFoPhpMailer=$obj->initMailFoPhpMailer();
+      $this->parolFoMailFoPhpMailer=$obj->initParolFoMailFoPhpMailer();
+      $this->siteRootDirectory=$obj->siteRootDirectory(); 
+  
+    }
 
   public function tableValidationCMS()
       {
@@ -274,19 +272,21 @@ trait TraitInterfaceWorkToBd
          return $boolRez; 
       }
       
-     public function zaprosSQL($zapros)
+     public function zaprosSQL($zapros) //тут
      {
-         $statistikTrueFalseRez=mysqli_query($this->con,'SELECT statik_true FROM statistik_dfdx WHERE 1');
-         $statistikTrueFalse=mysqli_fetch_assoc($statistikTrueFalseRez);
-         if ($statistikTrueFalse['statik_true']==1) {
-             $statistikTrueFalseRez=mysqli_query($this->con,'SELECT n_zapros FROM statistik_dfdx WHERE 1');
-             $statistik_n_zapros=mysqli_fetch_assoc($statistikTrueFalseRez);
-             $statistik_n_zapros['n_zapros']++;
-             mysqli_query($this->con,'UPDATE statistik_dfdx SET n_zapros='.$statistik_n_zapros['n_zapros'].' WHERE 1');
-             mysqli_query($this->con,'UPDATE statistik_dfdx SET d_zapros="'.date("y.m.d").'" WHERE 1');
-          }
-         $rez=mysqli_query($this->con,$zapros);
-         return $rez;
+        //  $statistikTrueFalseRez=mysqli_query($this->con,'SELECT statik_true FROM statistik_dfdx WHERE 1');
+        //  $statistikTrueFalse=mysqli_fetch_assoc($statistikTrueFalseRez);
+        //  if ($statistikTrueFalse['statik_true']==1) {
+        //      $statistikTrueFalseRez=mysqli_query($this->con,'SELECT n_zapros FROM statistik_dfdx WHERE 1');
+        //      $statistik_n_zapros=mysqli_fetch_assoc($statistikTrueFalseRez);
+        //      $statistik_n_zapros['n_zapros']++;
+        //      mysqli_query($this->con,'UPDATE statistik_dfdx SET n_zapros='.$statistik_n_zapros['n_zapros'].' WHERE 1');
+        //      mysqli_query($this->con,'UPDATE statistik_dfdx SET d_zapros="'.date("y.m.d").'" WHERE 1');
+        //   }
+        //  $rez=mysqli_query($this->con,$zapros);
+        //  return $rez;
+
+        return \class\redaktor\DatabaseQuery::createDbQuery()->dbQuery($zapros);
      }
 
      public function killZapisTablicy($nameTablice,$were) 

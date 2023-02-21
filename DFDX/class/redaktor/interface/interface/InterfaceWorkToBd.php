@@ -15,42 +15,50 @@ interface InterfaceWorkToBd
     // функция возвращает параметр host для подключения к базе данных.
     // funkcja zwraca parametr hosta do połączenia z bazą danych.
     // the function returns the host parameter for connecting to the database.
-    public function initBdHost();
+    //устарел/outdated
+    //public function initBdHost();
 
     // функция возвращает имя пользователя базы данных.
     // funkcja zwraca nazwę użytkownika bazy danych.
     // function returns the name of the database user.
-    public function initBdLogin();
+    //устарел/outdated
+    //public function initBdLogin();
 
     // функция возвращает пароль пользователя базы данных
     // funkcja zwraca hasło użytkownika bazy danych
     // the function returns the password of the database user
-    public function initBdParol();
+    //устарел/outdated
+    //public function initBdParol();
 
     //функция возвращает имя базы данных
     //funkcja zwraca nazwę bazy danych
     //function returns database name
-    public function initBdNameBD();
+    //устарел/outdated
+    //public function initBdNameBD();
 
     //функция возвращает главную страницу сайта
     //funkcja zwraca stronę główną serwisu
     //function returns the main page of the site
-    public function initsite();
+    //устарел/outdated
+    //public function initsite();
 
     //функция возвращает почту, которая используется для отправки писем и работает с PHPMailer
     //funkcja zwraca pocztę używaną do wysyłania e-maili i współpracuje z PHPMailer
     //function returns the mail that is used to send emails and works with PHPMailer
-    public function initMailFoPhpMailer();
+    //устарел/outdated
+    //public function initMailFoPhpMailer();
 
     //функция возвращает пароль к почте, которая используется для отправки писем и работает с PHPMailer
     //funkcja zwraca hasło do poczty używanej do wysyłania e-maili i współpracuje z PHPMailer
     //function returns the password for the mail that is used to send emails and works with PHPMailer
-    public function initParolFoMailFoPhpMailer();
+    //устарел/outdated
+    //public function initParolFoMailFoPhpMailer();
 
     //функция возвращает корневой каталог сайта. Полезна в тех случаях, когда необходимо задать не стандартный домашний каталог сайте
     //funkcja zwraca katalog główny serwisu. Przydatne w przypadkach, gdy konieczne jest ustawienie niestandardowego katalogu domowego witryny
     //function returns the root directory of the site. Useful in cases where it is necessary to set a non-standard site home directory
-    public function siteRootDirectory();
+    //устарел/outdated
+    //public function siteRootDirectory();
 
     //функция возвращает главную страницу сайта. Точный аналог функции initsite();
     //funkcja zwraca stronę główną serwisu. Dokładny odpowiednik funkcji initsite();

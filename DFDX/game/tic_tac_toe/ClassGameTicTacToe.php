@@ -6,7 +6,7 @@ class ClassGameTicTacToe implements \class\redaktor\interface\interface\Interfac
     use \class\redaktor\interface\trait\TraitInterfaceButton;
     use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
     use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
-    use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
+    // use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
     use \class\redaktor\interface\trait\TraitInterfaceDebug;
 
     // выбрать чем играть, крестиками или ноликами
