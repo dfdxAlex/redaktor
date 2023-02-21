@@ -6,7 +6,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
     {
         use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
         use \class\redaktor\interface\trait\TraitInterfaceDebug;
-        use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
+        // use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
         use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
         use \class\redaktor\interface\trait\TraitInterfaceButton;
         use \class\redaktor\interface\trait\TraitInterfaceFoUser;
@@ -69,7 +69,8 @@ class Modul implements interface\interface\InterfaceWorkToModul
     // перебираем все параметры и выдергиваем данные, которые пришли на вход
     // Ищем имя таблицы
     //-------------------------------------------------------------------------------------------
-          foreach($parametr as $value) {
+
+           foreach($parametr as $value) {
               if (stripos('sss'.$value,'nameTD=')) {
                  $nametablice=preg_replace('/nameTD=/','',$value);
                  $nametablice=mb_strtolower($nametablice);
@@ -174,7 +175,17 @@ class Modul implements interface\interface\InterfaceWorkToModul
 
                    echo '<p></p>';
                 }
-          } // конец перебора входных данных
+          } // конец перебора входных данны
+
+          /**
+           * Проверить если статья в необходимом разделе.
+           * Если нет, то выходим из функции.
+           */
+          if ($razdel!=='') {
+              $rez=$this->zaprosSQL("select razdel FROM bd2 WHERE razdel=\"$razdel\" AND id>0");
+              $stroka=mysqli_fetch_array($rez);
+              if (is_null($stroka)) return;
+          }
               /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Запись статьи, если была нажата кнопка Сохранить
@@ -466,7 +477,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                           //echo 'Первая статья'.$pokazatStatiuPoId;
                            $class='statiaKrutka btn'; // класс заголовка по умолчанию
                            // Условие сработает если задан какой-либо вид оформления статьи
-                           if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0) { // класс заголовка в зависимости от стиля тут
+                           if ($this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon')>0) { // класс заголовка в зависимости от стиля
                                $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
                                $class='nazwanie'.$hablon.' btn'; // класс по шаблону
                                $perwSymbol=mb_substr($dataMas[$ii][0][1][0][0],0,1);  // подготовить первый символ
@@ -848,7 +859,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
        if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
            if ($_SESSION['status']==4 || $_SESSION['status']==5 || $_SESSION['login']==$dataMas[$i][0][0][1][0]) {  
 
-               $dfdx=file($this->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
+               $dfdx=file(\class\nonBD\SearchPathFromFile::createObj()->searchPath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
                
                foreach ($dfdx as &$value) { 
                   $valueTemp=preg_filter('/action.*php/u','action=#',$value); // Замена страниц обработчиков

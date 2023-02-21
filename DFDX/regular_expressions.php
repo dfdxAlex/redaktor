@@ -23,7 +23,7 @@ use \class\rare_use\class\ClassRegularTest;
   
     $class->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
     $header->headStart('<title>Регулярные выражения</title>');
-    $header->headBootStrap5([$class->searcNamePath('styli.css'),$class->searcNamePath('dfdx.css')]);
+    $header->headBootStrap5([\class\nonBD\SearchPathFromFile::createObj()->searchPath('styli.css'),\class\nonBD\SearchPathFromFile::createObj()->searchPath('dfdx.css')]);
   
   echo '</head>';
   echo '<body>';

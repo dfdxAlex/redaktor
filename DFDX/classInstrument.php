@@ -262,7 +262,7 @@ class Modul
                           $killName=preg_filter('/news\/.+\//','',$killPath[0]);
                    }
                   if ($killName!='')
-                      unlink($classPhp->searcNamePath($killName));
+                      unlink(\class\nonBD\SearchPathFromFile::createObj()->searchPath($killName));
                   $classPhp->killZapisTablicy('url_po_id_'.$nametablice,'WHERE id='.$killStroka);
 
                   if (($_SESSION['status']==4 || $_SESSION['status']==5) && $this->statusStati($killStroka)) {
@@ -566,7 +566,7 @@ class Modul
                    // если статусы 4 или 5 или смотрит статью её автор, то работаем
                    if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
                        if ($_SESSION['status']==4 || $_SESSION['status']==5 || ($_SESSION['login']==$dataMas[$i][0][0][1][0])) {  
-                           $dfdx=file($classPhp->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
+                           $dfdx=file(\class\nonBD\SearchPathFromFile::createObj()->searchPath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
                            foreach ($dfdx as &$value) { 
                               $valueTemp=preg_filter('/\$action.*php/u','\$action=\'action=#',$value); // Замена страниц обработчиков
                               if (!is_null($valueTemp)) $value=$valueTemp;
@@ -803,7 +803,7 @@ class Modul
               }
         foreach($parametr as $value)
           if ($value=='link' || $value=='образец')
-              return  '<a href="'.$classPhp->searcNamePath('obrazec.php').'" target="_blank">Посмотреть образцы оформлений</a>';
+              return  '<a href="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath('obrazec.php').'" target="_blank">Посмотреть образцы оформлений</a>';
     
         foreach($parametr as $value) // показать радио кнопки
           if (stripos('sss'.$value,'вариантов=')) {

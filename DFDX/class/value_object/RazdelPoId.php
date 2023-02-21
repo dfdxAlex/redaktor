@@ -5,7 +5,7 @@ class RazdelPoId implements \class\redaktor\interface\interface\InterfaceWorkToB
 {
     use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
     use \class\redaktor\interface\trait\TraitInterfaceDebug;
-    use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
+    // use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
     use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
 
     // класс вытягивает из базы данных раздел статьи по ID

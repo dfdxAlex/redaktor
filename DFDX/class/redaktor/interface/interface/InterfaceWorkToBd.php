@@ -5,7 +5,7 @@ namespace class\redaktor\interface\interface;
 // interfejs dla funkcji pracujących z bazą danych
 // interface for functions working with the database
 
-interface InterfaceWorkToBd extends InterfaceWorkToFiles
+interface InterfaceWorkToBd
 {
     //Подключение к базе данных. Параметры подключения находятся в файле initBD.ini
     //Połączenie z bazą danych. Ustawienia połączenia znajdują się w pliku initBD.ini

@@ -9,7 +9,7 @@ class NameFile  implements \class\redaktor\interface\interface\InterfaceWorkToBd
 
     use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
     use \class\redaktor\interface\trait\TraitInterfaceDebug;
-    use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
+    // use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
     use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
 
     protected $rezult;

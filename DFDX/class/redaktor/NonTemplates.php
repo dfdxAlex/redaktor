@@ -12,7 +12,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
   use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
   use \class\redaktor\interface\trait\TraitInterfaceButton;
   use \class\redaktor\interface\trait\TraitInterfaceDebug;
-  use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
+//   use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
   use \class\redaktor\interface\trait\TraitInterfaceFoUser;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToMenu;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToNonTemplates;
@@ -34,32 +34,32 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
             'submit',
             'levBlock',
             'API DFDX',
-            $this->searcNamePath('apidfdx.php'),
+            \class\nonBD\SearchPathFromFile::createObj()->searchPath('apidfdx.php'),
             'br',
             'submit',
             'levBlock',
             'CMS DFDX',
-            $this->searcNamePath('cms-dfdx.php'),
+            \class\nonBD\SearchPathFromFile::createObj()->searchPath('cms-dfdx.php'),
             'br',
             'submit',
             'levBlock',
             'GIT',
-            $this->searcNamePath('git.php'),
+            \class\nonBD\SearchPathFromFile::createObj()->searchPath('git.php'),
             'br',
             'submit',
             'levBlock',
             'HTML',
-            $this->searcNamePath('htmlFoDfdx.php'),
+            \class\nonBD\SearchPathFromFile::createObj()->searchPath('htmlFoDfdx.php'),
             'br',
             'submit',
             'levBlock',
             'XHTML',
-            $this->searcNamePath('xhtml.php'),
+            \class\nonBD\SearchPathFromFile::createObj()->searchPath('xhtml.php'),
             'br',
             'submit',
             'levBlock',
             'HTML5',
-            $this->searcNamePath('html5FoDfdx.php'),
+            \class\nonBD\SearchPathFromFile::createObj()->searchPath('html5FoDfdx.php'),
             'br',
             'submit',
             'levBlock',
@@ -79,7 +79,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
             'submit',
             'levBlock',
             'Регулярные в...',
-            $this->searcNamePath('regular_expressions.php'),
+            \class\nonBD\SearchPathFromFile::createObj()->searchPath('regular_expressions.php'),
             'br',
             'submit',
             'levBlock',
@@ -89,13 +89,13 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
              'submit',
              'levBlock',
              'PSR',
-             $this->searcNamePath('psr.php'),
+             \class\nonBD\SearchPathFromFile::createObj()->searchPath('psr.php'),
              'br',
              '3',
              'submit',
              'levBlock',
              'Задачи',
-             $this->searcNamePath('leson.php')
+             \class\nonBD\SearchPathFromFile::createObj()->searchPath('leson.php')
             );
 
        echo '</div>';
@@ -121,7 +121,6 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
         $bylPoisk=false;
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
         
-
         // часть кода работает с главной страницей и со страницами генерации персональных файлов для статей и их просмотр и поиск
         // работаем с полем поиска слов в базе данных
         if (isset($_POST['poisk']) && $searchСategory=='#категория для поиска#') {
@@ -132,7 +131,7 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
                 $bylPoisk=true;
          }
 
-         
+       
         if (!$bylPoisk && $searchСategory=='#категория для поиска#') {
             
 
@@ -150,7 +149,6 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
             //if (isset($_SESSION['statiaPoId']))
             //   if ($statiaPoId=='netKnopki') 
             //       $statiaPoId=$_SESSION['statiaPoId'];
-
             //$modul->headerTrue();
             //echo $runNewsIsNews1.'--';
             if ($runNewsIsNews1>-1 && !isset($_POST['menu_up_dfdx']))
@@ -165,7 +163,6 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
                 if (!$_SESSION["runStrNews"]) 
                     $statiaPoId=$runNewsIsNews1; 
           }
-
           // часть кода работает с системой генерации новых страниц общих. rd_nova_str.php
           if (isset($_POST['poisk']) && $searchСategory!='#категория для поиска#') {
               $this->poiskStati('#таблица для поиска#',$_POST['strPoisk'],$idStati,'#категория для поиска#') ;
@@ -174,14 +171,17 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
                       $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
                       $bylPoisk=true;
            }
-           
+          
            if (!$bylPoisk && $searchСategory!='#категория для поиска#') {
                 $statiaPoId=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
+                // echo "nameBD-$nameBD,  action-$action articleSection-$articleSection   nomerNewsGlawn-$nomerNewsGlawn";
                 if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
                     $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$articleSection,$nomerNewsGlawn);
+                // echo '6';
                 if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
                     $modul->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$articleSection);
             }
+
             if ($twitter!=='buttonTwitter')
                 $this->buttonTwitter($twitter);
             echo '</div>';

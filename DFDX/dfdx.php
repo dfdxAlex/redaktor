@@ -38,7 +38,11 @@ echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
   $header->headStart('<title>dfdx</title>');
-  $header->headBootStrap5([$header->searcNamePath('styli.css'),$header->searcNamePath('dfdx.css')]);
+   /**  Объект по шаблону Singleton, ищет и хранит в себе путь к искомому файлу
+   * Создать объект или вернуть ссылку на него.
+   * Вторая строка запускает метод по поиску файла
+   */
+  $header->headBootStrap5([\class\nonBD\SearchPathFromFile::createObj()->searchPath('styli.css'),\class\nonBD\SearchPathFromFile::createObj()->searchPath('dfdx.css')]);
 
 echo '</head>';
 echo '<body>';
@@ -101,8 +105,7 @@ echo '<section class="container-fluid">
      <div class="row">
      <div class="col-12">';
 //второе меню. В кнопки можно добавлять через массив добавляя пару Название=>ссылка
-$header->menuOfOurProjects(array('Электронные визитки'=>'second_menu\elVisitka.php',
-                                 'Игры на PHP'=>'game\gamesOfPhp.php','Программы на PHP'=>'program\programToPHP.php'));
+$header->menuOfOurProjects(array('Электронные визитки'=>'second_menu\elVisitka.php','Игры на PHP'=>'game\gamesOfPhp.php','Программы на PHP'=>'program\programToPHP.php'));
 echo '</div>
       </div>
       </section>';

@@ -593,7 +593,7 @@ trait TraitInterfaceWorkToMenu
                         && $stroka['NAME']!='hr'  && $stroka['NAME']!='col1' && (!stripos('-'.$stroka['NAME'],'col2') && !stripos($stroka['NAME'],'&') && !stripos ('-'.$stroka['NAME'],'col3')) ) {   
                            $linkButton=$stroka['URL'];
                            if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
-                           echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($linkButton).'">';
+                           echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($linkButton).'">';
                            if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
                      }
                 if ($stroka['ID']==$idPoz)
@@ -643,8 +643,10 @@ trait TraitInterfaceWorkToMenu
                            $ii++;
                         } else echo '<br>';    
                 if ($stroka['ID']==$idPoz)
-                    if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
+                    if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false) {
+                        $obj = \class\nonBD\SearchPathFromFile::createObj();
+                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$obj->searchPath($this->initsite()).'"/>';
+                    }
           
                 if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
                     if ($stroka['URL']=='p' || $stroka['URL']=='h1' || $stroka['URL']=='h2' || $stroka['URL']=='h3' || $stroka['URL']=='h4' || $stroka['URL']=='h5' || $stroka['URL']=='h6' || $stroka['URL']=='div')

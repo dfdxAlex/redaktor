@@ -5,7 +5,14 @@ trait TraitInterfaceWorkToBd
 {
   public function connectToBd()
   {
-      $fd = fopen($this->searcNamePath('tmp/initBD.ini'), 'r') or die("не удалось открыть файл");
+      /**  Объект по шаблону Singleton, ищет и хранит в себе путь к искомому файлу
+       * Создать объект или вернуть ссылку на него.
+       * Вторая строка запускает метод по поиску файла
+      */
+      $obj = \class\nonBD\SearchPathFromFile::createObj();
+      $pathFile = $obj->searchPath('tmp/initBD.ini');
+
+      $fd = fopen($pathFile, 'r') or die("не удалось открыть файл");
       $this->host=stristr(fgets($fd),';',true); 
       $this->loginBD=stristr(fgets($fd),';',true); 
       $this->parol=stristr(fgets($fd),';',true); 

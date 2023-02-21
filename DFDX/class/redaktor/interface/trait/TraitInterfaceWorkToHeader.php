@@ -41,14 +41,19 @@ trait TraitInterfaceWorkToHeader
 
     public function showSiteHeader(string $url)
     {
-        echo '  <img src="'.$this->searcNamePath($url).'" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
+        echo '  <img src="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($url).'" alt="Картинка должна называться image/hapka2.png размер 300 на 300"/>';
     }
 
     public function showNumberOfCoins(\class\redaktor\interface\interface\InterfaceWorkToModul $redaktor)
     {
         echo '<div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-12">';
         if (isset($_SESSION["login"])) {
-            echo '<div class="monetki"><img src="'.$this->searcNamePath('image/pngwingmal.png').'" class="img-fluid" alt="монет"></div>';
+            /**  Объект по шаблону Singleton, ищет и хранит в себе путь к искомому файлу
+             * Создать объект или вернуть ссылку на него.
+             * Вторая строка запускает метод по поиску файла
+            */
+            $obj = \class\nonBD\SearchPathFromFile::createObj();
+            echo '<div class="monetki"><img src="'.$obj->searchPath('image/pngwingmal.png').'" class="img-fluid" alt="монет"></div>';
             echo $redaktor->money('login='.$_SESSION["login"]);
         }
         echo '</div>';
@@ -58,7 +63,12 @@ trait TraitInterfaceWorkToHeader
     {
         echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">';
         if ($_SESSION["status"]>99) $_SESSION["status"]=9;
-        $this->__unserialize(array('menu9','menu_up_dfdx',$this->searcNamePath('dfdx.php'),'Логин','Пароль'));
+        /**  Объект по шаблону Singleton, ищет и хранит в себе путь к искомому файлу
+         * Создать объект или вернуть ссылку на него.
+         * Вторая строка запускает метод по поиску файла
+        */
+        $obj = \class\nonBD\SearchPathFromFile::createObj();
+        $this->__unserialize(array('menu9','menu_up_dfdx',$obj->searchPath('dfdx.php'),'Логин','Пароль'));
         echo '</div>';
 
     }
