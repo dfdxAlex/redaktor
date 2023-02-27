@@ -1,0 +1,41 @@
+html {
+    font-size: 18px;
+    font-family: 'Tilt Prism', cursive;
+}
+
+body {
+    background-color: #c6a5a5;
+    margin: 0px;
+}
+
+.menu-up {
+    height: 50px;
+    background-color: #c58383;
+    font-size: inherit;
+}
+
+.menu-up ul {
+    padding-left: 0px;
+}
+
+.menu-up ul li{
+    list-style-type: none;
+    display: inline;
+    margin-left: 20px;
+}
+
+.menu-up ul li a{
+    text-decoration: none;
+    font-size: 1.7em;
+}
+
+footer {
+    height: 50px;
+    background-color: #694e4e;
+}
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
+
