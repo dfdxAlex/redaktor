@@ -7,8 +7,15 @@ class MenuUp
     {
       $urlDown = \src\libraries\UrlLevel::urlLevel()->getUrlDown();
       $urlUp = \src\libraries\UrlLevel::urlLevel()->getUrlUp();
+      
+      $obj = new \src\libraries\DelegatorLang();
+      $obj->control();
 
-        return "
+      $go = $obj->translator('Вперед');
+      $back = $obj->translator('Назад');
+      // $back = $obj->translator('укаука');
+        
+      return "
           <nav class=\"menu-up\">
             <ul class=\"menu-up--ul\">
               <li class=\"menu-up--li\">
@@ -16,7 +23,7 @@ class MenuUp
                   href=\"$urlDown\"
                   class=\"menu-up--a\"
                 >
-                Back
+                 $back
                 </a>
               </li>
               <li class=\"menu-up--li\">
@@ -24,7 +31,7 @@ class MenuUp
                   href=\"$urlUp\"
                   class=\"menu-up--a\"
                 >
-                  Forward
+                  $go
                 </a>
               </li>
             </ul>

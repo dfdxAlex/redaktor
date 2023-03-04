@@ -2,32 +2,56 @@
 namespace src\libraries;
 
 /** Simpelton
- * Класс хранит текущий шаг и все данные, введенные в полях
- * настроек
+ * Класс для работы с массивом $_SESSION
  */
-/**
-  * The class stores the current step and all the 
-  * data entered in the fields settings.
-*/
 
 /** Manual:
  * Создать объект
  * src\libraries\RamSession::ramSession();
  * 
- * Создать объект и добавить переменную со значением
- * src\libraries\RamSession::ramSession($name, $value);
+ * setPrefix($value) - устанавливает префиекс для работы, возвращает $this
+ * getPrefix() - прочитать значение префикса
  * 
- * Вернуть значение переменной $key
- * src\libraries\RamSession::ramSession()->getRam(string $key)
+ * getRam(), прочитать нужный элемент SESSION
+ * setRam() , усстановить значение для указанного элемента SESSION
  * 
- * Увеличить $key на 1
- * src\libraries\RamSession::ramSession()->setRamPlus(string $name, int $max=10)
+ * Вернуть ассоциативный массив из существующих переменных SESSION
+ * Если параметр $outError по умолчанию, то будет выкинута ошибка,
+ * если переменных не найдено.
+ * Параметр префик если true, то выбираем только элементы с префиксом,
+ * иначе все.
+ * Если параметр $print равет true, то подключить echo и вывести результат
+ * на экран.
+ * getRamAllPrefix($prefix=true, $print=false, $outError = true)
  * 
- * Уменьшить $key на 1
- * src\libraries\RamSession::ramSession()->setRamMinus(string $name, int $max=10)
+ * увеличивает любой счётчик на 1
+ * setRamPlus()
+ * уменьшает любой счётчик на 1
+ * setRamMinus()
  * 
- * Посмотреть список всех переменных
- * src\libraries\RamSession::ramSession()->getRamAll()
+ * Преобразовывает массив ассоциативный, полученный из переменныз SESSION в JSON строку
+ * masToJson($prefix=true)
+ * 
+ * Метод преобразовывает строку JSON в массив, ранее строка была
+ * Массивом ассоциативный, полученный в классе из массива SESSION
+ * Если $type=true, то вернем массив, иначе объект
+ * public function jsonToMas($str,$type=true)
+ * 
+ * Преобразовывает внутренний массив объекта в массив SESSION
+ * masToSession($mas)
+ * 
+ * Переводит строку JSON в массив SESSION
+ * jsonToSession($str)
+ * 
+ * Записать JSON в Файл
+ *public function jsonToFile($nameFile, $str)
+ *
+ * Метод читает JSON из файла в массив
+ *public function fileJsonToMas($nameFile)
+ * 
+ * читает json из файла, переводит строку в массив, массив переводит 
+ * в массив SESSION
+ * fileJsonToSession($nameFile)
  */
 
 class RamSession
@@ -231,7 +255,7 @@ class RamSession
     }
 
     /**
-     * Метод переводит строку DJSON сразу в SESSION
+     * Метод переводит строку JSON сразу в SESSION
      */
     public function jsonToSession($str)
     {

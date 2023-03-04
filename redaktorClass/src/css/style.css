@@ -18,7 +18,7 @@ body {
     padding-left: 0px;
 }
 
-.menu-up ul li{
+.menu-up ul li, .lang-menu--li{
     list-style-type: none;
     display: inline;
     margin-left: 20px;
@@ -33,7 +33,9 @@ footer {
     height: 50px;
     background-color: #694e4e;
 }
-
+.redaktor-lang {
+    margin-left: 20px;
+}
 
 
 

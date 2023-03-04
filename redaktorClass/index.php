@@ -6,19 +6,18 @@ session_start();
 /** Вывести верхнюю часть разметки */
 echo new src\libraries\Header;
 
+// $obj2 = new src\libraries\DelegatorLang();
+// $obj2->control();
+
+$obj = new src\libraries\DelegatorLang();
+$obj->control();
+
 echo new src\libraries\MenuUp();
 
-// echo src\libraries\RamSession::ramSession()->setPrefix('ram_test_')->getPrefix().PHP_EOL;
+// src\libraries\UrlLevel::urlLevel($min=1, $max=10);
 
-// echo src\libraries\RamSession::ramSession()->setRam('test','25')->getRam('test').PHP_EOL;
-// $ggg = src\libraries\RamSession::ramSession()->fileJsonToMas('Info.jsn');
 
-// src\libraries\RamSession::ramSession()->setPrefix('')->jsonToFile('Info.jsn',$ggg);
-src\libraries\RamSession::ramSession()->fileJsonToSession('Info.jsn');
-var_dump($_SESSION);
-
-// var_dump($ggg);
-
+$obj->setLang();
 
 
 

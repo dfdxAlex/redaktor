@@ -72,6 +72,13 @@ class UrlLevel
      */
     private static $min;
     private static $max;
+
+    /**
+     * Переменная для хранения имени элемента массива GET
+     * с которым работаем. По умолчанию работаем с GET[level]
+     */
+    private static $getName = 'level';
+
     /**
      * Конструктор типа protected, для запрета создания нового 
      * объекта оператором new
@@ -102,12 +109,21 @@ class UrlLevel
         self::$min=$min;
         self::$max=$max;
 
+        /**
+         * Переменная содержит рабочее имя элемента массива Get.
+         * Данная переменная используется для организации работы с другими целями,
+         * отличными от цели перемещения по страницам сайта.
+         * Для стабильной работы, данная переменная всегда сбрасывается в значение level
+         * и изменяется непосредственно перед другим применением класса.
+         */
+        self::$getName='level';
+
         /** 
          * Если есть значение на входе конструктора, то 
          * поместить его в статическую переменную
          */
-        if (isset($_GET['level']))
-            self::$level=$_GET['level'];
+        if (isset($_GET[self::$getName]))
+            self::$level=$_GET[self::$getName];
         else self::$level = $min;
         
         /** 
@@ -154,11 +170,24 @@ class UrlLevel
         return self::$getMas;
     }
 
+
     /** вывести на экран все гет параметры*/
     public function printGetMas()
     {
         foreach(self::$getMas as $key=>$value)
             echo "$key => $value <br>";
+    }
+    /** функция из массива делает строку с параметрами GET */
+    public function getStr(array $mas):string
+    {
+        $i=0;
+        $rez='';
+        foreach($mas as $key=>$value) {
+            $i==0 ? $rez.= "?" : $rez.= "&";
+            $rez.="$key=$value";
+            $i++;
+        }
+        return $rez;
     }
 
     /** вывести ссылку для движения вперед */
@@ -169,36 +198,21 @@ class UrlLevel
         if (self::$getMas['level']<$this->getMax()) {
             self::$getMas['level']++;
         }
-
-        $i=0;
-        $rez='';
-        foreach(self::$getMas as $key=>$value) {
-            $i==0 ? $rez.= "?" : $rez.= "&";
-            $rez.="$key=$value";
-            $i++;
-        }
-
-        return $this->getUrlStart().$rez;
+        return $this->getUrlStart().$this->getStr(self::$getMas);
     }
 
     /** вывести ссылку для движения назад */
     public function getUrlDown()
     {
+
         if (empty(self::$getMas['level'])) self::$getMas['level']=$this->getMax()+1;
-        
+    
         if (self::$getMas['level']>$this->getMin()) 
             self::$getMas['level']--;
 
-        $i=0;
-        $rez='';
-        foreach(self::$getMas as $key=>$value) {
-            $i==0 ? $rez.= "?" : $rez.= "&";
-            $rez.="$key=$value";
-            $i++;
-        }
-
-        return $this->getUrlStart().$rez;
+        return $this->getUrlStart().$this->getStr(self::$getMas);
     }
+
 
     /** Прочитать минимальный предел изменения переменной Level */
     public function getMin()
@@ -209,5 +223,10 @@ class UrlLevel
     public function getMax()
     {
         return self::$max;
+    }
+
+    public function setGetMas($key, $value)
+    {
+        self::$getMas[$key] = $value;
     }
 }
