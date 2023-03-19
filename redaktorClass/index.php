@@ -6,18 +6,27 @@ session_start();
 /** Вывести верхнюю часть разметки */
 echo new src\libraries\Header;
 
-// $obj2 = new src\libraries\DelegatorLang();
-// $obj2->control();
-
+/**
+ * Объект работает с переводами фраз на разные языки
+ */
 $obj = new src\libraries\DelegatorLang();
+// $obj->setRedactorLang(true);
 $obj->control();
+//  $obj->echoDataMas(); //посмотреть или отредактировать базу переводов
 
-echo new src\libraries\MenuUp();
+/**
+ * Верхнее меню с кнопками вперед/назад
+ */
+echo new src\libraries\MenuUp($obj);
 
-// src\libraries\UrlLevel::urlLevel($min=1, $max=10);
 
+/**
+ * Формы для рабоиы с сервисом
+ * Фабрикаиспользует GET параметр level
+ */
+echo src\libraries\Forms::formsFactory($obj);
 
-$obj->setLang();
+// $obj->setLang();
 
 
 

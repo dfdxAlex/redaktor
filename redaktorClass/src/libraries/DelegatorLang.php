@@ -1,7 +1,22 @@
 <?php
 namespace src\libraries;
 
-
+/**
+ * Класс управляет процессом подстановки переводов на разные языки и процессом
+ * создания бах для переводов.
+ * Класс создан по шаблону Делегирования, все зависимости находятся в папке
+ * DelegatorLang.
+ * 
+ * Для использования класса нужно создать объект:
+ * $obj = new \src\libraries\DelegatorLang();
+ * запустить метод $obj->control(false); // параметр false определяет показывать ли редактор
+ * и пользоваться после этого методом $go = $obj->translator('Вперед');
+ * 
+ * Все возможные настройки задаются в свойствах класса и в методе control();
+ * 
+ * Чтобы перейти в режим добавления данных, свойство  private $redaktor = false;
+ * нужно заменить на  private $redaktor = true;
+ */
 class DelegatorLang
 {
     private $urlLevelLink = null;
@@ -14,14 +29,20 @@ class DelegatorLang
 
     public static $objLanguageDataCreate = null;
 
+    public function __construct()
+    {
+        // $this->control(false);
+    }
     public function translator($messages)
     {
         //echo $messages;
         return $this->objLanguageData->returnMessage($messages);
     }
 
-    public function control()
+    public function control($redaktor = false)
     {
+        /**определяет показывать ли редактор */
+        $this->setRedactorLang($redaktor);
         /**
          * Создать объект по работе со ссылками, 
          * либо получить ссылку на него
@@ -34,7 +55,7 @@ class DelegatorLang
          */
         $this->masGet = $this->urlLevelLink->getGetMas();
 
-        $this->setMasUrl(['ru','ua','pl','en']);
+        $this->setMasUrl(['en','pl','ua','ru']);
 
         /**если не было выбрано языка, то английский */
         $this->resetLang();
@@ -53,8 +74,16 @@ class DelegatorLang
         // записать объект в файл
         $this->objLanguageData->saveData();
 
-    }
+        
 
+    }
+    /**
+     * распечатать всё содержимое файла с данными
+     */
+    public function echoDataMas()
+    {
+        $this->objLanguageData->echoDataMas();
+    }
     /**
      * Функция позволяет возвращать защищенные свойства 
      * класса за его пределами
@@ -121,12 +150,11 @@ class DelegatorLang
     {
         if ($this->redaktor==false) {
             if (is_null(DelegatorLang::$objLanguageDataCreate))
-                DelegatorLang::$objLanguageDataCreate = new delegatorLang\ButtonLang($this);
+            DelegatorLang::$objLanguageDataCreate = new delegatorLang\ButtonLang($this);
             
         }
         else {
-            if (is_null(DelegatorLang::$objLanguageDataCreate))
-            DelegatorLang::$objLanguageDataCreate = new delegatorLang\PoleRedaktorLang($this);
+            new delegatorLang\PoleRedaktorLang($this);
         }
     }
 }

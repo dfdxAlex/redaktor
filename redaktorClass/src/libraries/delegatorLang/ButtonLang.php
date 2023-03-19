@@ -10,11 +10,12 @@ class ButtonLang
     public function __construct($in)
     {
         $this->in = $in;
+        echo '<div class="menu-lang">';
         echo "<ul class={$this->classMode}ol>";
         foreach($this->masUrl as $key=>$value) {
             echo "<li class={$this->classMode}li><a href='$value' class={$this->classMode}a>$key</a></li>";
         }
-        echo "</ul>";
+        echo "</ul></div>";
     }
 
     public function __get($property)

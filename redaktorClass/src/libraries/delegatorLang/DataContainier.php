@@ -9,10 +9,72 @@ class DataContainier
     private $dataMas;
     private $obj;
     private $objController;
-    private $dubl = false;
+    // private $dubl = false;
+
+    /**
+     * Вывести все переводы с кнопками на удаление лишних
+     */
+    public function echoDataMas()
+    {
+        /**если был запрос на удаление, то удалить и записать */
+        $this->killTranslate();
+        
+        echo "<form 
+                method='post' 
+                id='form'
+              >
+              </form>";
+
+        foreach($this->dataMas as $keyMas=>$value) {
+            foreach($value as $key=>$value2) {
+                if ($key!=='ru')
+                    echo "$key => $value2 <br>";
+                else {
+                    echo "<input 
+                            type='submit'
+                            name='$keyMas'
+                            form='form'
+                            value='x'
+                          > 
+                          => $value2 <br>";
+                }
+            }
+            echo '<br>';
+        }
+    }
+
+    /**
+     * метод перехватывает post запрос от кнопок удаления
+     * информации из массива и удаляет элемент
+     */
+    private function killTranslate()
+    {
+        if (isset($_POST))
+            foreach ($_POST as $key=>$value) {
+                if ($value='x') {//echo "попытка удалить элемент $key";
+                    unset($this->dataMas[$key]);
+                    file_put_contents($this->obj->getNameFile(),json_encode($this->dataMas));
+                }
+            }
+    }
+
+    /**
+     * Метод очищает строку от пробелов по краям и от 
+     * двойных пробелов
+     */
+    private function clearSpace($in)
+    {
+         //очистить текст русской фразы от двойных пробелов
+         $textRu = preg_replace('/\s+/', ' ', $in);
+         //очистить текст русской фразы от пробелов вначале
+         $textRu = preg_replace('/^\s+/', '', $textRu);
+         $textRu = preg_replace('/$\s+/', '', $textRu);
+         return $textRu;
+    }
 
     public function createObj()
     {
+        // echo "запустили из ".$_POST['areaSubmit'];
         // массив локальный, для внутренней работы
         $newMas = [];
         // массив с элементами языков, ru, en...
@@ -27,20 +89,18 @@ class DataContainier
             */
             foreach($this->dataMas as $value)
             {
-                $this->dubl = false;
+                $dubl = false;
                 // проверка на совпадение ключевой русской фразы
-                if ($value['ru'] === preg_replace('/\s+/', ' ', $_POST['textarearu'])) {
-                    // echo 'первый этап';
-                    $this->dubl=true;
+                if ($value['ru'] === $this->clearSpace($_POST['textarearu'])) {
+                    $dubl=true;
                     foreach($mas as $valueLang) {
-                        if ($value[$valueLang] !== preg_replace('/\s+/', ' ', $_POST['textarea'.$valueLang])) {
-                            $this->dubl=false;
-                            //echo "{$value[$valueLang]}  {$_POST['textarea'.$valueLang]})";
+                        if ($value[$valueLang] !== $this->clearSpace($_POST['textarea'.$valueLang])) {
+                            $dubl=false;
                         }
                     }
                 }
             }
-            if ($this->dubl) throw new \Exception("Сообщение полностью совпадает с другим сообщением");
+            if ($dubl) throw new \Exception("Сообщение полностью совпадает с другим сообщением");
         
         } catch (\Exception $e) {
             echo $e->getMessage();
@@ -48,7 +108,7 @@ class DataContainier
         }
 
         foreach($mas as $value) {
-            $newMas[$value] = preg_replace('/\s+/', ' ', $_POST['textarea'.$value]);
+            $newMas[$value] = $this->clearSpace($_POST['textarea'.$value]);
         }
 
         $this->dataMas[] = $newMas;
@@ -59,7 +119,7 @@ class DataContainier
         return $dataObj[$key];
     }
 
-    // прочитать информацию из файла и поместить в объект
+    // прочитать информацию из файла и поместить в массив
     public function loadData()
     {
        $name = $this->obj->getNameFile();
@@ -76,19 +136,16 @@ class DataContainier
         foreach($this->dataMas as $value) {
             if ($value['ru'] === $messages) 
                 return $value[$_GET['lang']];
-            
         }
         foreach($this->dataMas as $value) {
             if (mb_strtolower($value['ru']) === $messages) 
                 return $value[$_GET['lang']];
         }
-
     }
 
     public function saveData()
     {
         if (isset($_POST['areaSubmit'])) {
-        
 
         if ($this->createObj()!==false)
             file_put_contents($this->obj->getNameFile(),json_encode($this->dataMas));

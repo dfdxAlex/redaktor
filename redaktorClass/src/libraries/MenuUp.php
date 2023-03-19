@@ -3,17 +3,31 @@ namespace src\libraries;
 
 class MenuUp
 {
+    private $linkFromDelegatorLang;
+    public function __construct($in)
+    {
+        $this->linkFromDelegatorLang=$in;
+
+    }
     public function __toString()
     {
       $urlDown = \src\libraries\UrlLevel::urlLevel()->getUrlDown();
       $urlUp = \src\libraries\UrlLevel::urlLevel()->getUrlUp();
       
-      $obj = new \src\libraries\DelegatorLang();
-      $obj->control();
+      /**
+       * Инициализация объекта -переводчика DelegatorLang
+       */
+      //$obj = new \src\libraries\DelegatorLang();
+      //$obj->setRedactorLang(false); // false - работа, true - редактор
+      // $obj->setRedactorLang(true); // для редактирования
+      //$obj->control();
 
-      $go = $obj->translator('Вперед');
-      $back = $obj->translator('Назад');
-      // $back = $obj->translator('укаука');
+      
+      /**
+       * Запуск метода translator() для получения результата
+       */
+      $go = $this->linkFromDelegatorLang->translator('Вперед');
+      $back = $this->linkFromDelegatorLang->translator('Назад');
         
       return "
           <nav class=\"menu-up\">
