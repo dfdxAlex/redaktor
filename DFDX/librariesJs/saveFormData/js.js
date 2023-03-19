@@ -13,7 +13,14 @@ var sessionOrLocal = true;
 // id кнопки активирующей запись
 setupButton('ok');
 // список id полей, с которыми работаем
-listSaveId('text'
+listSaveId('text',
+           'text1',
+           'text2',
+           'text3',
+           'text4',
+           'text5',
+           'text6',
+           'text7'
            );
 // true по умолчанию. если труе, то запись на всегда, если false, то на время сессии
 typeSave(true);
@@ -50,13 +57,14 @@ function initialSaveLoad()
             butElement.addEventListener('click', save, false);
         }
     }
-    
+
     var resetB;
     resetB = document.querySelector('input[type="reset"]');
     if (resetB!=null) {
         resetB.addEventListener('click', resetF, false);
     }
 
+    window.addEventListener('storage', load, false);
     load();
 }
 
