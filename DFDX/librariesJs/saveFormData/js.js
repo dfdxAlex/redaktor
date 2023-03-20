@@ -78,6 +78,7 @@ function resetF()
  */
 function listSaveId(...args)
 {
+    // клонируем массив.
     masElementSave = args.concat();
 }
 
