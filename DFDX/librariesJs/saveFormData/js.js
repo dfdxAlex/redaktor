@@ -14,13 +14,9 @@ var sessionOrLocal = true;
 setupButton('ok');
 // список id полей, с которыми работаем
 listSaveId('text',
-           'text1',
-           'text2',
-           'text3',
-           'text4',
-           'text5',
-           'text6',
-           'text7'
+           'text11',
+           'text22',
+           'text33'
            );
 // true по умолчанию. если труе, то запись на всегда, если false, то на время сессии
 typeSave(true);
@@ -82,9 +78,7 @@ function resetF()
  */
 function listSaveId(...args)
 {
-    for (let i=0; i<args.length; i++) {
-        masElementSave.push(args[i]);
-    }
+    masElementSave = args.concat();
 }
 
 /**
