@@ -9,9 +9,12 @@ namespace class\redaktor\interface\trait\formblockmas;
 
 class ClasForFormBlockMas
 {
-    public static function factoryForFormBlockMas($in, array $parametr, $i) 
+    static $linkObj = false;
+    public static function factoryForFormBlockMas($in, array $parametr, $i, $nameBlock='', $actionN='') 
     {
-        if ($in == 'span') return new ClassToSpanForBlockMas($parametr, $i);
+        if (empty(self::$linkObj)) self::$linkObj = new \class\redaktor\interface\trait\formblock\SearchParam($parametr);
+        if ($in == 'span') return new ClassToSpanForBlockMas($parametr, $i, self::$linkObj);
+        if ($in == 'submit3') return new ClassToSubmit3ForBlockMas($parametr, $i, self::$linkObj, $actionN);
         
         if ($in=='p' 
           || $in=='h1' 
@@ -19,7 +22,7 @@ class ClasForFormBlockMas
               || $in=='h3' 
                 || $in=='h4' 
                   || $in=='h5' 
-                    || $in=='h6') return new ClassToH1ForBlockMas($parametr, $i, $in);
+                    || $in=='h6') return new ClassToH1ForBlockMas($parametr, $i, $in, self::$linkObj);
     }
 }
 

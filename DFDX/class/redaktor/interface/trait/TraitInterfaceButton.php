@@ -433,13 +433,6 @@ foreach($parametr as $value) {
           if ($value=='submit' || $value=='submit2') 
               if ($this->tegiInputButtonSubmit($parametr, $i)) continue;
 
-          // Кнопка Submit3
-          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
-          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
-          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
-          if ($value=='submit3') 
-              if ($this->tegiInputButtonSubmit3($parametr, $i)) continue;
-
           // Кнопка из Url
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
@@ -447,20 +440,8 @@ foreach($parametr as $value) {
           if ($value=='buttonUrl') 
               if ($this->buttonUrl($parametr, $i)) continue;
 
-          // Блок абзацев
-          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
-          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
-          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
-          // if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') 
-          //     if ($this->pH1H6($value, $parametr, $i)) continue;
-           
-          // Контейнер span
-          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
-          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
-          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
-          //if ($value=='span') 
-            //  if ($this->spanF($parametr, $i)) continue;
-          echo formblockmas\ClasForFormBlockMas::factoryForFormBlockMas($value,$parametr,$i);
+        
+          echo formblockmas\ClasForFormBlockMas::factoryForFormBlockMas($value,$parametr,$i,$nameBlock, $actionN);
 
           // Контейнер Color
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
@@ -836,30 +817,6 @@ foreach($parametr as $value) {
           return true;
         }
 
-        // // Контейнер span
-        // function spanF(array $parametr, int &$i)
-        // {
-        //   $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-        //   if ($this->searchParam($parametr, $i)) 
-        //       $text=$parametr[++$i]; 
-        //   else $text='';
-        //   if ($this->searchParam($parametr, $i)) 
-        //       $class=$parametr[++$i]; 
-        //   else $class=$this->nameB.$value.$iForOld;
-        //   echo "<span class='$class'>$text</span>";
-        //   return true;
-        // }
-
-        // // Блок абзацев
-        // function pH1H6(string $value, array $parametr, int &$i)
-        // {
-        //   $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-        //   if ($this->searchParam($parametr, $i)) $text=$parametr[++$i]; else $text='';
-        //   if ($this->searchParam($parametr, $i)) $class=$parametr[++$i]; else $class=$this->nameB.$value.$iForOld;
-        //   echo "<div class='{$class}PH'><$value class='$class' id='$class'>$text</$value></div>";
-        //   return true;
-        // }
-
         // Кнопка из Url, тега а
         function buttonUrl(array $parametr, int &$i)
         {
@@ -876,26 +833,6 @@ foreach($parametr as $value) {
                 $class=$class.' btn '.$this->btnBtn;
           }
           echo "<div class='{$class}FoDivDiv'><a class='$class' href='$textWww'>$textValue</a></div>";
-          return true;
-        }
-
-        // Кнопка типа Submit 3
-        function tegiInputButtonSubmit3(array $parametr, int &$i)
-        {
-          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-          if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.'submit'.$iForOld;
-          if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='Ok';
-          if ($this->searchParam($parametr, $i)) $textWww=$parametr[++$i]; else $textWww=$this->actionForm;
-          if ($this->searchParam($parametr, $i)) $class=$parametr[++$i]; else $class='';
-          $class=$this->nameB.$name.$iForOld;
-          $classFoDiv=$class;
-          if (!$this->zeroStyle) {
-            if ($this->btnStart)
-                $class='btn '.$this->btnBtn.$class;
-            else
-                $class=$class.' btn '.$this->btnBtn;
-          }
-          echo "<div class='{$classFoDiv}Div'><input type='submit' id='$name' name='$name' value='$textValue' class='$class' formaction='$textWww'></div>";
           return true;
         }
 
@@ -1156,18 +1093,6 @@ foreach($parametr as $value) {
              if (!$zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'">';
              if ($zero_style) echo '<input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'">';
            }
-         if ($value=='submit3') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1])) $name=$parametr[$i+1]; else $name=$parametr[0].'submit'.$i; else $name=$parametr[0].'submit'.$i;
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $textValue=$parametr[$i+2]; else $textValue='Ok'; else $textValue='Ok';
-             if (isset($parametr[$i+3]) && $parametr[$i+3]!='bootstrap-start' && $parametr[$i+3]!='bootstrap-f-start' && $parametr[$i+3]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3])) $textWww=$parametr[$i+3]; else $textWww=$parametr[1]; else $textWww=$parametr[1];
-             if (isset($parametr[$i+4]) && $parametr[$i+4]!='bootstrap-start' && $parametr[$i+4]!='bootstrap-f-start' && $parametr[$i+4]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2]) && !$this->searcTegFormBlock($parametr[$i+3]) && !$this->searcTegFormBlock($parametr[$i+4])) $class=$parametr[$i+4]; else $class=''; else $textWww='';
-             if (!$zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'"></div>';
-             if ($zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'"></div>';
-           }
 
            /**
             * Фабрика возвращает объект с нужным элементом
@@ -1201,7 +1126,7 @@ foreach($parametr as $value) {
     */
    function searchParam(array $parametr, int $i)
    {
-        $obj = new formblock\SearchParam;
+        $obj = new formblock\SearchParam($parametr);
         return $obj->searchParam($parametr, $i);
    }
 }

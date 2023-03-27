@@ -162,14 +162,14 @@ class Test
 
   public function __construct()
   {
-      $this->formBlockMas(['class-test','test.php','test',
-                           'h1',
-                           'two pizzes please',
+      $this->formBlockMas(['class-test','#','test',
+                           'submit3',
+                           'test',
                            'class-for-span',
                           ]);
-      $this->formBlock('class-test','test.php','test',
-                          'span',
-                          'two pizzes please',
+      $this->formBlock('class-test','#','test',
+                          'submit3',
+                          'test',
                           'class-for-span',
                          );
   }
