@@ -10,7 +10,14 @@ trait TraitInterfaceWorkToBd
        * Вторая строка запускает метод по поиску файла
       */
 
+      /**
+       * получить ссылку на канал соединения с базой данных
+       */
       $obj = \class\redaktor\DatabaseConn::dBConnection();
+      /**
+       * вызов методов из объекта DatabaseConn;
+       * объект отвечает за соединение с базой данных
+       */
       $this->con = $obj->getCon();
       $this->host=$obj->initBdHost(); 
       $this->loginBD=$obj->initBdLogin(); 
@@ -58,6 +65,8 @@ trait TraitInterfaceWorkToBd
                                                       )  ";
               $this->zaprosSQL($zapros);
             } 
+
+            // заменить на отдельный класс
             //проверим есть ли вспомогательная таблица и матов
             if (!$this->searcNameTablic('maty'))
                  $this->zaprosSQL("CREATE TABLE maty(mat VARCHAR(15))");
@@ -67,6 +76,8 @@ trait TraitInterfaceWorkToBd
             //проверим есть ли вспомогательная таблица для матов от пользователей
             if (!$this->searcNameTablic('mat_ot_polzovatelej'))
                  $this->zaprosSQL("CREATE TABLE mat_ot_polzovatelej(mat VARCHAR(15), login VARCHAR(15))");
+
+
 
               // проверка присутствия таблиц для модуля работы со статистикой
                 $this->createTab(
@@ -137,7 +148,8 @@ trait TraitInterfaceWorkToBd
                );
       }
 
-  public function createTab(...$parametr) //функция проверяет есть ли таблица и если нет, то создает её
+  //функция проверяет есть ли таблица и если нет, то создает её
+  public function createTab(...$parametr) 
   {
    $nametablice='';
    $masN=array();
@@ -272,20 +284,8 @@ trait TraitInterfaceWorkToBd
          return $boolRez; 
       }
       
-     public function zaprosSQL($zapros) //тут
+     public function zaprosSQL($zapros)
      {
-        //  $statistikTrueFalseRez=mysqli_query($this->con,'SELECT statik_true FROM statistik_dfdx WHERE 1');
-        //  $statistikTrueFalse=mysqli_fetch_assoc($statistikTrueFalseRez);
-        //  if ($statistikTrueFalse['statik_true']==1) {
-        //      $statistikTrueFalseRez=mysqli_query($this->con,'SELECT n_zapros FROM statistik_dfdx WHERE 1');
-        //      $statistik_n_zapros=mysqli_fetch_assoc($statistikTrueFalseRez);
-        //      $statistik_n_zapros['n_zapros']++;
-        //      mysqli_query($this->con,'UPDATE statistik_dfdx SET n_zapros='.$statistik_n_zapros['n_zapros'].' WHERE 1');
-        //      mysqli_query($this->con,'UPDATE statistik_dfdx SET d_zapros="'.date("y.m.d").'" WHERE 1');
-        //   }
-        //  $rez=mysqli_query($this->con,$zapros);
-        //  return $rez;
-
         return \class\redaktor\DatabaseQuery::createDbQuery()->dbQuery($zapros);
      }
 
@@ -470,7 +470,7 @@ trait TraitInterfaceWorkToBd
       return $this->smtpServerFoPhpMailer;
     } 
 
-    public function siteRootDirectory()//
+    public function siteRootDirectory()
     {
       if ($this->siteRootDirectory=='') return $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR;
       $this->siteRootDirectory=preg_replace('/\//',DIRECTORY_SEPARATOR,$this->siteRootDirectory);
@@ -481,10 +481,13 @@ trait TraitInterfaceWorkToBd
     {
       $zapros="SELECT status FROM ".$nameTable."_status WHERE stolb=".$pole." AND str=".$str;
       $rez=$this->zaprosSQL($zapros);
-      if ($rez===false) return ' ';
+      if ($rez===false) 
+          return ' ';
       $stroka=mysqli_fetch_array($rez);
-      if ($stroka===false) return ' ';
-      if (stripos($stroka['0'],$status)!==false) return 'checked';
+      if ($stroka===false) 
+          return ' ';
+      if (stripos($stroka['0'],$status)!==false) 
+          return 'checked';
       $rez=$this->zaprosSQL($zapros);
       $stroka=mysqli_fetch_array($rez);
       return ' ';

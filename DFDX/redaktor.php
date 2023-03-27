@@ -7,7 +7,7 @@ include 'funcii.php';
 // подключение автозагрузчика от PHPMailer, библиотека инсталлирована с помощью Composer
 // podłączenie autoloadera z PHPMailera, biblioteka jest instalowana za pomocą Composera
 // connecting the autoloader from PHPMailer, the library is installed using Composer
-require "PHPMailer-6.5.4/PHPMailer-6.5.4/vendor/autoload.php";
+require "vendor/autoload.php";
 
 include 'class.php';
 

@@ -4,7 +4,8 @@ namespace class\redaktor;
 class DatabaseConn
 {
     /**redaktor\DatabaseConnection.php
-     * В свойстве будет находиться идентификатор соединения с базой
+     * В свойстве $con будет находиться идентификатор соединения 
+     * с базой
      */
     private static $con = null;
     private static $host; 

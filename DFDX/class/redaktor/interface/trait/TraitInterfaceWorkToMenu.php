@@ -92,7 +92,7 @@ trait TraitInterfaceWorkToMenu
                 if ($stroka['URL']!='default')
                     echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
                 if ($stroka['URL']=='default')
-                    echo '<form class="form_'.$stroka['CLASS'].'" action="'.$this->searcNamePath($this->initsite()).'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+                    echo '<form class="form_'.$stroka['CLASS'].'" action="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($this->initsite()).'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
             $i++;
         }
         echo'</section>';
@@ -166,7 +166,7 @@ trait TraitInterfaceWorkToMenu
                    echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
            if ($this->kn[$i])
                if ($stroka['URL']=='default')
-                   echo '<form class="form_'.$stroka['CLASS'].'" action="'.$this->searcNamePath($this->initsite()).'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+                   echo '<form class="form_'.$stroka['CLASS'].'" action="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($this->initsite()).'" method="POST"><button class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
         $i++;
         }
         echo'</section>';
@@ -190,7 +190,7 @@ trait TraitInterfaceWorkToMenu
            if ($stroka['URL']!='default')
            echo '<form class="form_'.$stroka['CLASS'].'" action="'.$stroka['URL'].'" method="POST"><button class="button_'.$stroka['CLASS'].'" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
            if ($stroka['URL']=='default')
-           echo '<form class="form_'.$stroka['CLASS'].'" action="'.$this->searcNamePath($this->initsite()).'" method="POST"><button class="button_'.$stroka['CLASS'].'" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
+           echo '<form class="form_'.$stroka['CLASS'].'" action="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($this->initsite()).'" method="POST"><button class="button_'.$stroka['CLASS'].'" name="'.$nameTablic.'" value="'.$stroka['NAME'].'">'.$stroka['NAME'].'</button></form>';
          }
         unset($value);
         echo'</section>';
@@ -252,7 +252,7 @@ trait TraitInterfaceWorkToMenu
                 } else echo '<br>';           
 
             if ($stroka['URL']=='default')
-                echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
+                echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($this->initsite()).'"/>';
             $i++;
         }
         echo '</form>';
@@ -318,7 +318,7 @@ trait TraitInterfaceWorkToMenu
                   } else echo '<br>';    
              
              if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-                 echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
+                 echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($this->initsite()).'"/>';
              $i++;
         }
         echo '</form>';
@@ -349,7 +349,7 @@ trait TraitInterfaceWorkToMenu
             if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP'  && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
                 $linkButton=$stroka['URL'];
             if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
-            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($linkButton).'"/>';
+            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($linkButton).'"/>';
             if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
           }
 
@@ -389,7 +389,7 @@ trait TraitInterfaceWorkToMenu
                     } else echo '<br>';  
 
               if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-                  echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
+                  echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($this->initsite()).'"/>';
          }
         echo '</form>';
         echo'</section>';
@@ -418,12 +418,11 @@ trait TraitInterfaceWorkToMenu
         for ($idPoz=0; $idPoz<=$idMax; $idPoz++) { 
             while (!is_null($stroka=(mysqli_fetch_array($rez)))) {
                 if (!isset($stroka['STATUS'])) $stroka['STATUS']='-s0123459';
-                //echo $stroka['STATUS'];
                 if ($stroka['ID']==$idPoz)
                     if ($stroka['URL']!='text'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2'  && $stroka['URL']!='textP' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
                         $linkButton=$stroka['URL'];
                         if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];
-                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($linkButton).'">';
+                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($linkButton).'">';
                         if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
                     }
                 if ($stroka['ID']==$idPoz)
@@ -468,7 +467,7 @@ trait TraitInterfaceWorkToMenu
 
                 if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)
                     if ($stroka['URL']=='default')
-                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
+                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($this->initsite()).'"/>';
     
              }
              $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
@@ -504,7 +503,7 @@ trait TraitInterfaceWorkToMenu
                     if ($stroka['URL']!='textarea'  && $stroka['URL']!='text2P'  && $stroka['URL']!='textP2' && $stroka['URL']!='textP' && $stroka['URL']!='text' && $stroka['URL']!='text2' && $stroka['URL']!='reset' && strrpos($stroka['STATUS'],$status)!=false && $stroka['URL']!='default') {   
                         $linkButton=$stroka['URL'];
                         if (isset($_SESSION[$linkButton])) $linkButton=$_SESSION[$linkButton];  
-                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($linkButton).'">';
+                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($linkButton).'">';
                         if (isset($_SESSION[$linkButton])) session_unset($_SESSION[$linkButton]);
                     }
                     if ($stroka['ID']==$idPoz)
@@ -556,7 +555,7 @@ trait TraitInterfaceWorkToMenu
 
                     if ($stroka['ID']==$idPoz)
                         if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false)
-                            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$this->searcNamePath($this->initsite()).'"/>';
+                            echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($this->initsite()).'"/>';
                  }
               $zapros="SELECT * FROM ".$nameTablic." WHERE 1";
               $rez=$this->zaprosSQL($zapros);
@@ -645,7 +644,7 @@ trait TraitInterfaceWorkToMenu
                 if ($stroka['ID']==$idPoz)
                     if ($stroka['URL']=='default' &&  strrpos($stroka['STATUS'],$status)!=false) {
                         $obj = \class\nonBD\SearchPathFromFile::createObj();
-                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.$obj->searchPath($this->initsite()).'"/>';
+                        echo '<input class="button_'.$stroka['CLASS'].'" type="submit" name="'.$nameTablic.'" value="'.$stroka['NAME'].'" formaction="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath($this->initsite()).'"/>';
                     }
           
                 if ($stroka['ID']==$idPoz &&  strrpos($stroka['STATUS'],$status)!=false)

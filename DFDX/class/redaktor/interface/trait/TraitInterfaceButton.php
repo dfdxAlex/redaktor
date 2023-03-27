@@ -32,7 +32,8 @@ trait TraitInterfaceButton
     echo '</div>';
   }
 
-    // функция рисует кнопку с использованием параметров префикса и переменной. Работает с функцией buttonHanter()
+    // функция рисует кнопку с использованием параметров префикса и переменной. 
+    // Работает с функцией buttonHanter()
 public function buttonPrefix(...$parametr)
 {
  $container=false;
@@ -450,15 +451,16 @@ foreach($parametr as $value) {
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
-          if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') 
-              if ($this->pH1H6($value, $parametr, $i)) continue;
+          // if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') 
+          //     if ($this->pH1H6($value, $parametr, $i)) continue;
            
           // Контейнер span
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
-          if ($value=='span') 
-              if ($this->spanF($parametr, $i)) continue;
+          //if ($value=='span') 
+            //  if ($this->spanF($parametr, $i)) continue;
+          echo formblockmas\ClasForFormBlockMas::factoryForFormBlockMas($value,$parametr,$i);
 
           // Контейнер Color
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
@@ -532,7 +534,9 @@ foreach($parametr as $value) {
           $jMas=0;
           // создать массив со всеми найденными параметрами
           // параметры пунктов для выбора
+          
           while($this->searchParam($parametr, $j+4)) {
+            
             //если параметры заданы простым способом _value=name-userText
             if (stripos($parametr[$j+5],'pull:')===false) 
                 $mas[$jMas]=$parametr[$j+5];
@@ -652,9 +656,10 @@ foreach($parametr as $value) {
           $jMas=0;
           // создать массив со всеми найденными параметрами
           while($this->searchParam($parametr, $j)) {
+            
             if (stripos($parametr[++$j],'pull:')===false) 
                 $mas[$jMas++]=$parametr[$j];
-            
+                
             else {
                  //если находим строку с началом pull: то разбераем её на отдельные параметры и заносим в массив
                  $paramText=preg_replace('/pull:/','',$parametr[$j]);
@@ -716,6 +721,7 @@ foreach($parametr as $value) {
           if ($parametr[$i]=='olli') $teg='ol';
           // создать массив со всеми найденными параметрами
           while($this->searchParam($parametr, $j)) {
+            if ($j>100) throw new Error('цикл'); //удалить
             if (stripos($parametr[++$j],'pull:')===false) 
                 $mas[$jMas++]=$parametr[$j];
             else {
@@ -830,25 +836,29 @@ foreach($parametr as $value) {
           return true;
         }
 
-        // Контейнер span
-        function spanF(array $parametr, int &$i)
-        {
-          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-          if ($this->searchParam($parametr, $i)) $text=$parametr[++$i]; else $text='';
-          if ($this->searchParam($parametr, $i)) $class=$parametr[++$i]; else $class=$this->nameB.$value.$iForOld;
-          echo "<span class='$class'>$text</span>";
-          return true;
-        }
+        // // Контейнер span
+        // function spanF(array $parametr, int &$i)
+        // {
+        //   $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+        //   if ($this->searchParam($parametr, $i)) 
+        //       $text=$parametr[++$i]; 
+        //   else $text='';
+        //   if ($this->searchParam($parametr, $i)) 
+        //       $class=$parametr[++$i]; 
+        //   else $class=$this->nameB.$value.$iForOld;
+        //   echo "<span class='$class'>$text</span>";
+        //   return true;
+        // }
 
-        // Блок абзацев
-        function pH1H6(string $value, array $parametr, int &$i)
-        {
-          $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-          if ($this->searchParam($parametr, $i)) $text=$parametr[++$i]; else $text='';
-          if ($this->searchParam($parametr, $i)) $class=$parametr[++$i]; else $class=$this->nameB.$value.$iForOld;
-          echo "<div class='{$class}PH'><$value class='$class' id='$class'>$text</$value></div>";
-          return true;
-        }
+        // // Блок абзацев
+        // function pH1H6(string $value, array $parametr, int &$i)
+        // {
+        //   $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
+        //   if ($this->searchParam($parametr, $i)) $text=$parametr[++$i]; else $text='';
+        //   if ($this->searchParam($parametr, $i)) $class=$parametr[++$i]; else $class=$this->nameB.$value.$iForOld;
+        //   echo "<div class='{$class}PH'><$value class='$class' id='$class'>$text</$value></div>";
+        //   return true;
+        // }
 
         // Кнопка из Url, тега а
         function buttonUrl(array $parametr, int &$i)
@@ -1007,8 +1017,13 @@ foreach($parametr as $value) {
           $kolWoBr=$parametr[++$i];
       else 
           $kolWoBr=1;
-      for($j=0; $j<$kolWoBr; $j++)
+
+      if (!is_int($kolWoBr)) $kolWoBr=1; //если не задано число знаков br, то равно 1
+      for($j=0; $j<$kolWoBr; $j++) {
           echo '<br>';
+          if ($j>100) throw new \Error("$kolWoBr цикл 1016"); //удалить
+      }
+
       return true;
     }
 
@@ -1153,100 +1168,40 @@ foreach($parametr as $value) {
              if (!$zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'"></div>';
              if ($zero_style) echo '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'"></div>';
            }
-         if ($value=='p' || $value=='h1' || $value=='h2' || $value=='h3' || $value=='h4' || $value=='h5' || $value=='h6') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$parametr[0].$value.$i; else $class=$class=$parametr[0].$value.$i;
-             echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'">'.$text.'</'.$value.'></div>';
-           }
-         if ($value=='span') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1])) $text=$parametr[$i+1]; else $text=''; else $text='';
-             if (isset($parametr[$i+2]) && $parametr[$i+2]!='bootstrap-start' && $parametr[$i+2]!='bootstrap-f-start' && $parametr[$i+2]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1]) && !$this->searcTegFormBlock($parametr[$i+2])) $class=$parametr[$i+2]; else $class=$parametr[0].$value.$i; else $class=$class=$parametr[0].$value.$i;
-             echo '<div class="'.$class.'PH"><'.$value.' class="'.$class.'">'.$text.'</'.$value.'></div>';
-           }
+
+           /**
+            * Фабрика возвращает объект с нужным элементом
+            */
+           echo formblockmas\ClasForFormBlockMas::factoryForFormBlockMas($value,$parametr,$i);
+
            $i++; 
         }
         echo '</div>'; // конец внутреннего блока
-        if (!$form_not_close)
-           echo '</form>';
+
+        if (!$form_not_close) echo '</form>';
         echo '</div>';
-        if (!$zero_style) 
-           echo '</div></section>';
+        if (!$zero_style) echo '</div></section>';
     }
 
-       // Служебная функция проверяет не является ли параметр кнопкой
+  /**
+   * Функция обертка, осталась для работы старого кода
+   * Служебная функция проверяет не является ли параметр кнопкой
+   */
    function searcTegFormBlock($parametr)
    {
-       if ($parametr=='br') return true;
-       if ($parametr=='text') return true;
-       if ($parametr=='text2') return true;
-       if ($parametr=='password') return true;
-       if ($parametr=='password2') return true;
-       if ($parametr=='reset') return true;
-       if ($parametr=='p') return true;
-       if ($parametr=='h1') return true;
-       if ($parametr=='h2') return true;
-       if ($parametr=='h3') return true;
-       if ($parametr=='h4') return true;
-       if ($parametr=='h5') return true;
-       if ($parametr=='h6') return true;
-       if ($parametr=='pButton') return true;
-       if ($parametr=='h1Button') return true;
-       if ($parametr=='h2Button') return true;
-       if ($parametr=='h3Button') return true;
-       if ($parametr=='h4Button') return true;
-       if ($parametr=='h5Button') return true;
-       if ($parametr=='h6Button') return true;
-       if ($parametr=='submit') return true;
-       if ($parametr=='submit2') return true;
-       if ($parametr=='submit3') return true;
-       if ($parametr=='span') return true;
-       if ($parametr=='color') return true;
-       if ($parametr=='radio') return true;
-       if ($parametr=='checkbox') return true;
-       if ($parametr=='buttonUrl') return true;
-       if ($parametr=='textL') return true;
-       if ($parametr=='textLH') return true;
-       if ($parametr=='div') return true;
-       if ($parametr=='ulli') return true;
-       if ($parametr=='olli') return true;
-       if ($parametr=='dlli') return true;
-       if ($parametr=='select') return true;
-       return false;
-   }
-   // функция проверяет не являются ли параметры тегами или на оборот
-   // входящий параметр $parametr - это массив с входящими данными
-   // $start - это стартовая позиция или позиция текущего обрабатываемого тега
-   // $nom задает число параметров вперед, которые нужно проверить.
-   // если один из необходимых параметров окажется тегом или названием объекта, то возвращаем true
-   // УДАЛИТЬ ПОСЛЕ ПОЛНОЙ МОДЕРНИЗАЦИИ МЕТОДА formBlock
-   function searcTegFor($parametr,$start,$nom)
-   {
-    for ($i=1; $i<=$nom; $i++)
-           if ($this->searcTegFormBlock($parametr[$start+$i])) return true;
-    return false;
+        $obj = new formblock\SearcTegFormBlock;
+        return $obj->searcTegFormBlock($parametr);
    }
 
-   // Функция проверяет существует ли следующий элемент в массиве, не является ли он тегом для бутстрапа и не является ли он тегов в принципе
+   /**
+    * Функция обертка, осталась для работы старого кода
+    * Функция проверяет существует ли следующий элемент в массиве, 
+    * не является ли он тегом для бутстрапа и не является ли он тегоm 
+    * в принципе
+    */
    function searchParam(array $parametr, int $i)
    {
-       if (isset($parametr[$i+1]))                              // если следующий параметр существует
-           if ($this->noBootstrap($parametr[$i+1]))             // если это не разметка бутстрапа
-               if (!$this->searcTegFormBlock($parametr[$i+1]))  // если это не следующая форма
-                   return true;
-       return false;
-   }
-   //функция проверяет, не находится ли в очередном параметре ключевые слова работы с бутстрапом
-   function noBootstrap($attrib)
-   {
-        return match ($attrib) {
-            'bootstrap-start'=>false,
-            'bootstrap-f-start'=>false,
-            'bootstrap-finish'=>false,
-            default => true
-        };
+        $obj = new formblock\SearchParam;
+        return $obj->searchParam($parametr, $i);
    }
 }

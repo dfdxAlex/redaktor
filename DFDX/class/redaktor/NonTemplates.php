@@ -12,7 +12,6 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
   use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
   use \class\redaktor\interface\trait\TraitInterfaceButton;
   use \class\redaktor\interface\trait\TraitInterfaceDebug;
-//   use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
   use \class\redaktor\interface\trait\TraitInterfaceFoUser;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToMenu;
   use \class\redaktor\interface\trait\TraitInterfaceWorkToNonTemplates;
@@ -130,38 +129,23 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
                     $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
                 $bylPoisk=true;
          }
-
        
         if (!$bylPoisk && $searchСategory=='#категория для поиска#') {
-            
 
             // проверяем была ли нажата кнопка правого меню сайта
             $statiaPoId=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
-            
 
-            // проверяем был ли нажат заголовок статьи, если да, то вернуть ID статьи
-            //if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели проверяем нажатие заголовков статей
-             //   $statiaPoId=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=statiaKorotka","returnNameDynamic");
-
-                //echo $_SESSION['statiaPoId'];
-
-            // комент пишется позднее, скорее всего данные строки хранят номер статьи.
-            //if (isset($_SESSION['statiaPoId']))
-            //   if ($statiaPoId=='netKnopki') 
-            //       $statiaPoId=$_SESSION['statiaPoId'];
-            //$modul->headerTrue();
-            //echo $runNewsIsNews1.'--';
             if ($runNewsIsNews1>-1 && !isset($_POST['menu_up_dfdx']))
                 $modul->news1("id=".$runNewsIsNews1,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
 
             // переход на страницу при нажатии на верхнее меню.
             if ($runNewsIsNews1<0)
             if ($statiaPoId=='netKnopki' || isset($_POST['menu_up_dfdx']))  // Если не была нажата кнопка правой панели
-                $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
-
+               $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$nomerNewsGlawn);
             if ($action!='action=dfdx.php' && $statiaPoId==-1)
                 if (!$_SESSION["runStrNews"]) 
                     $statiaPoId=$runNewsIsNews1; 
+            
           }
           // часть кода работает с системой генерации новых страниц общих. rd_nova_str.php
           if (isset($_POST['poisk']) && $searchСategory!='#категория для поиска#') {
@@ -171,17 +155,13 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
                       $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,'id='.$value);
                       $bylPoisk=true;
            }
-          
            if (!$bylPoisk && $searchСategory!='#категория для поиска#') {
                 $statiaPoId=$this->hanterButton("false=netKnopki","rez=hant","nameStatic=panelPrawa","returnNameDynamic");
-                // echo "nameBD-$nameBD,  action-$action articleSection-$articleSection   nomerNewsGlawn-$nomerNewsGlawn";
                 if ($statiaPoId=='netKnopki' )  // Если не была нажата кнопка правой панели
                     $modul->news1($nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$articleSection,$nomerNewsGlawn);
-                // echo '6';
                 if ($statiaPoId>-1 && $statiaPoId!='netKnopki') // Если была нажата кнопка правой панели
                     $modul->news1("id=".$statiaPoId,$nameBD,"Заголовок=h3","Статус редактора=-s12345","Шаблон=2","Отступ=1",$action,$articleSection);
             }
-
             if ($twitter!=='buttonTwitter')
                 $this->buttonTwitter($twitter);
             echo '</div>';
@@ -197,7 +177,6 @@ class NonTemplates implements interface\interface\InterfaceWorkToNonTemplates,
          echo '</div>';
      }
  
-     // interface\interface\InterfaceWorkToStatistik $InterfaceWorkToStatistik передача объекта для исползования его методов
      // string $kluc, - категория, с которой работаем
      // int $nBootton - число кнопок максимальное
      function pravoePole(interface\interface\InterfaceWorkToStatistik $InterfaceWorkToStatistik, string $kluc, int $nBootton=1000000)

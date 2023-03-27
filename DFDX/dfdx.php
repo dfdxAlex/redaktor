@@ -38,6 +38,7 @@ echo '<head>';
 
   $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
   $header->headStart('<title>dfdx</title>');
+
    /**  Объект по шаблону Singleton, ищет и хранит в себе путь к искомому файлу
    * Создать объект или вернуть ссылку на него.
    * Вторая строка запускает метод по поиску файла
@@ -68,7 +69,7 @@ $header->resetOperatingMode();
 // The function checks the login and password fields, if they are filled, then pulls the user status 
 // from the database and enters it into the $_SESSION["status"] variable
 // Also, the function handles the button press Enter and Exit
-$header->checkUserStatus();
+$header->checkUserStatus(); 
 //$_SESSION['status']=5;
 
 echo '<section class="container-fluid">';
@@ -79,12 +80,12 @@ echo '<div class="row">';
 // Podpis klasy administratora modułu $redaktor
 // the function downloads and shows the number of coins the user has
 // Modul $redaktor admin class signature
-$header->showNumberOfCoins($redaktor);
+$header->showNumberOfCoins($redaktor); 
 
 // Функция реализует установку и обработку верхнего главного меню
 // Funkcja realizuje ustawienia i przetwarzanie w górnym menu głównym
 // The function implements the setting and processing of the top main menu
-$header->topMenuProcessing();
+$header->topMenuProcessing(); 
 echo '</div>';
 echo '</section>';
 
@@ -133,7 +134,6 @@ $nameBD='nameTD='.$nameBD;
 // funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
 // the function controls the output of articles in different modes using the news1 function
 $nonTemplates->publishNews($redaktor,'action=dfdx.php','Число_статей=5',-1,$nameBD,'#категория для поиска#','Раздел=regular_expressions','buttonTwitter');
-
 //Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
 //The commented out line at the bottom is replaced with a twitter button in generated articles 
 //button-Twitter
@@ -154,3 +154,27 @@ $futter->futterGeneral($statistik,$metka);
 // функция подключает вторую часть бутстрапа и закрывает документ html
 // the function connects the second part of the bootstrap and closes the html document
 $futter->closeHtmlDok();
+
+
+class Test
+{
+  use interface\trait\TraitInterfaceButton;
+
+  public function __construct()
+  {
+      $this->formBlockMas(['class-test','test.php','test',
+                           'h1',
+                           'two pizzes please',
+                           'class-for-span',
+                          ]);
+      $this->formBlock('class-test','test.php','test',
+                          'span',
+                          'two pizzes please',
+                          'class-for-span',
+                         );
+  }
+  
+}
+
+$obj = new Test;
+

@@ -6,7 +6,6 @@ class Modul implements interface\interface\InterfaceWorkToModul
     {
         use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
         use \class\redaktor\interface\trait\TraitInterfaceDebug;
-        // use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles;
         use \class\redaktor\interface\trait\TraitInterfaceWorkToBd;
         use \class\redaktor\interface\trait\TraitInterfaceButton;
         use \class\redaktor\interface\trait\TraitInterfaceFoUser;
@@ -53,7 +52,8 @@ class Modul implements interface\interface\InterfaceWorkToModul
            if (!isset($_SESSION['newsTab']))
               $_SESSION['newsTab']=''; // хранит имя таблицы, которую использует модуль news1 для использования за пределами класса
 
-           if (!isset($_SESSION['redaktirowatId'])) $_SESSION['redaktirowatId']=-1;
+           if (!isset($_SESSION['redaktirowatId'])) 
+              $_SESSION['redaktirowatId']=-1;
 
            if (!isset($_SESSION['mas_time_name_news']))
               $_SESSION['mas_time_name_news']='';
@@ -66,6 +66,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
 
            if (!isset($_SESSION['status']))
               $_SESSION['status']=0;
+           //$_SESSION['status']=0; // удалить
     // перебираем все параметры и выдергиваем данные, которые пришли на вход
     // Ищем имя таблицы
     //-------------------------------------------------------------------------------------------
@@ -76,13 +77,11 @@ class Modul implements interface\interface\InterfaceWorkToModul
                  $nametablice=mb_strtolower($nametablice);
                  $_SESSION['newsTab']=$nametablice;
               }
-
               // ищем обработчик кнопок Сохранить ...
               if (stripos('sss'.$value,'action=')) {
                 $action=preg_replace('/action=/','',$value);
                 $_SESSION['action']=$action;
               }
-
               // Ищем размер заголовка
               if (stripos('sss'.$value,'Заголовок='))
                $zagolowok=preg_replace('/Заголовок=/','',$value);
@@ -176,7 +175,6 @@ class Modul implements interface\interface\InterfaceWorkToModul
                    echo '<p></p>';
                 }
           } // конец перебора входных данны
-
           /**
            * Проверить если статья в необходимом разделе.
            * Если нет, то выходим из функции.
@@ -212,6 +210,10 @@ class Modul implements interface\interface\InterfaceWorkToModul
   if  ($_SESSION['status']==1 || $_SESSION['status']==3) $status_1_3=true;
   if  ($_SESSION['status']==4 || $_SESSION['status']==5) $status_4_5=true;
   if  ($status_1_3 || $_SESSION['status']==2) $status_1_2_3=true;
+  //$status_1_3=false; // удалить
+  //$status_4_5=false;
+  //$status_1_2_3=false;
+  //$_SESSION['status']=0;
 
   // условие входа в блок сохранения информации (кнопки Сохранить, Выбрать, Загрузить, Сохранить--Картинку)
   $condition=$tablicaOk & ($buttonBaveRedaktor | $buttonBaveRedaktor2) // Нажата одна из кнопок Сохранить статью
@@ -226,7 +228,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
    }  
 
   // условие сохранения с записью статьи
-  if ($condition) {                                                    // Вошли в блок Сохранить статью
+  if ($condition) {                                                 // Вошли в блок Сохранить статью
       $dlinaStati=0;
       $loginAwtora='';
       $id=-1;
@@ -246,7 +248,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                           
       // длина статьи из текстового окна сайта
       $dlinaStati=strlen($news); 
-
+      
       // если есть Ид статьи
       // Если Сохранить была нажата при редактировании существующей статьи
       if (isset($_SESSION['redaktirowatId']) && $_SESSION['redaktirowatId']>-1) { 
@@ -316,7 +318,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                           $killName=preg_filter('/news\/.+\//','',$killPath[0]);
                    }
                   if ($killName!='')
-                      unlink($this->searcNamePath($killName));
+                      unlink(\class\nonBD\SearchPathFromFile::createObj()->searchPath($killName));
                   $this->killZapisTablicy('url_po_id_'.$nametablice,'WHERE id='.$killStroka);
 
                   if (($status_4_5) && $this->statusStati($killStroka)) {
@@ -333,6 +335,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                   $this->killZapisTablicy('status_statii_dfdx','WHERE id='.$killStroka);
                   $this->killZapisTablicy('vernul_statii_dfdx','WHERE id='.$killStroka);
            }
+   
          /////////////////////////////////////////////////////////////////////////////////////////////////////
          /////////////////////////////////////// работаем с кнопкой редактировать ////////////////////////////
          if ($this->hanterButton('rez=hant','nameStatic=statia','returnValue')=='Редактировать') {
@@ -451,10 +454,11 @@ class Modul implements interface\interface\InterfaceWorkToModul
              $outBlokStranic=true;
              if ($pokazatStatiuPoId>-1) $outBlokStranic=false;// запретить показ модуля страниц
              
-    if ($hablonNews==2)
-
+    if ($hablonNews==2)  
       if (!isset($_POST['dobawitNow'])) 
-        for ($ii=$i-1; $ii>-1; $ii--) {  
+        for ($ii=$i-1; $ii>-1; $ii--) 
+        {  
+ 
             // считает число статей, которые можно было показать     
             $nomerStatejSumm++; 
             
@@ -472,7 +476,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                 if ($pokazatStatiuPoId<0 || ($pokazatStatiuPoId==$dataMas[$ii][0][0][0][0] && $statusStatii))
                   if (stripos('sss'.$dataMas[$ii][0][0][0][1],$razdel) || $dataMas[$ii][0][0][0][1]=='-' || $razdel=='') {// Если заданный раздел входит в категорию статьи
                     if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))      // Если труе, то статья проверена модератором
-                      if ($pokazalStatej==0/* && $nomerZagolowkaStati=='www'*/) {  // первая статья не по клику по названию статьи
+                      if ($pokazalStatej==0) {  // первая статья не по клику по названию статьи
                         if (!$statiaVozwrat) { // показ первой статьи при обычных условиях
                           //echo 'Первая статья'.$pokazatStatiuPoId;
                            $class='statiaKrutka btn'; // класс заголовка по умолчанию
@@ -490,6 +494,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                                if (!isset($url)) $url='image/logo.php';
                                if (gettype($url)=='array') {
                                    $i=0;
+                         
                                    foreach($alt[0] as $value) {
                                       $altVstavki=$value;
                                       $altReg=preg_filter('/\s/','\s',$altVstavki,-1); // строка alt без пробелов, для регулярного выражения
@@ -507,6 +512,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                              // найдём сначала массив всех тегов в тексте, заключённых в бибитеги [less] и [more]
                              preg_match_all('/\[less\]\w*\[more\]?/u',$text,$masLessMore);
                              // удалить из текста неразрешенные теги, в базе они остаются.
+
                              foreach ($masLessMore[0] as $value) {
                               $value=preg_replace('/(\[less\])|(\[more\])/','',$value);
                               if ($this->tegAllowed($value)===false) {
@@ -520,14 +526,14 @@ class Modul implements interface\interface\InterfaceWorkToModul
                              echo '<section class="container-fluid">';
                              echo '<div class="row">';
                              echo '<div class="col-12">';
-                             if (file_exists(false)) {
+                             //if (file_exists(false)) {
                                 //echo '<form method="post" action="'.$action.'"><input class="'.$class.'" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>';
                                 //echo '<a class="'.$class.'"></a>';
-                             }
-                                else {
+                             //}
+                               // else {
                                 //echo '<p class="'.$class.'"><a href="'.$this->urlFoNews($statusStatii, $pokazatStatiuPoId).'">'.$dataMas[$ii][1][0][0][0].'</a></p>';
                                 echo '<p class="'.$class.'"><a href="'.$this->urlFoNews($statusStatii, $dataMas[$ii][0][0][0][0]).'">'.$dataMas[$ii][1][0][0][0].'</a></p>';
-                                }
+                                //}
                                 echo '</div></div>';
                              echo '<div class="row">';
                              echo '<div class="col-12">';
@@ -574,9 +580,11 @@ class Modul implements interface\interface\InterfaceWorkToModul
                         echo 'Причина возврата: '.$this->vernutStatiKomment($dataMas[$ii][0][0][0][0]);
                  }
            }
+
            ///////////////////////////Вторая и следующие статьи//////////////////////////////
            if ($statusStatii || (isset($_SESSION['login']) && $statiaVozwrat && $dataMas[$ii][0][0][1][0]==$_SESSION['login']))     // Если труе, то статья проверена модератором
                if ($pokazalStatej>0)  { // вторая и дальше статья не по клику по названию статьи
+ 
                   $nomerStatej--;
                   $hablon=$this->styliStati('id='.$dataMas[$ii][0][0][0][0],'id-hablon'); // читаем тип шаблона из таблицы
                   $text=$dataMas[$ii][0][1][0][0]; 
@@ -599,7 +607,10 @@ class Modul implements interface\interface\InterfaceWorkToModul
                  //echo '<form method="post" action="'.$action.'"><input class="statiaKrutka btn" name="statiaKorotka'.$dataMas[$ii][0][0][0][0].'" type="submit" value="'.$dataMas[$ii][1][0][0][0].'"></form>'.'<div>'.mb_substr($text,0,$prevju).'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
                  echo '<a class="statiaKrutka btn" href="'.$this->urlFoNews($statusStatii,$dataMas[$ii][0][0][0][0]).'"> '.$dataMas[$ii][1][0][0][0].'</a><div>'.mb_substr($text,0,$prevju).'</div><small> автор: '.$dataMas[$ii][0][0][1][0].'</small>';  
                  echo $otstupBr; 
+                  
              }
+
+
              /*
             //////////////////////////////////// Блок выводит статью при нажатии на её заголовок-///////////////////////////////////////
             //$this->urlFoNews($statusStatii, $pokazatStatiuPoId);
@@ -650,7 +661,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                    // если статусы 4 или 5 или смотрит статью её автор, то работаем
                    if (!$urlNews) // если ИД этой статьи отсутствует в таблице связи ИД и отдельной ссылки
                        if ($status_4_5 || $_SESSION['login']==$dataMas[$i][0][0][1][0]) {  
-                           $dfdx=file($this->searcNamePath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
+                           $dfdx=file(\class\nonBD\SearchPathFromFile::createObj()->searchPath("dfdx.php"), FILE_SKIP_EMPTY_LINES);   //поместили файл в массив
                            
                            foreach ($dfdx as &$value) { 
                               $valueTemp=preg_filter('/action.*php/u','action=#',$value); // Замена страниц обработчиков
@@ -743,21 +754,24 @@ class Modul implements interface\interface\InterfaceWorkToModul
                                                             'кнопок-1','c1=-'.$classKill.' btn-','action=-"'.$action.'"-');
                       }
                     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    
                     if ($statusStatii)   $pokazalStatej++;   // Если труе, то статья проверена модератором
-
+  
                     ///////////////////////////////////Кнопки удаления, редактирования, добавления
                      if ($status_4_5)
                         $this->buttonPrefix('classButton=SaveLoadRedaktButton','container','class=-row-','v1-Удалить','v2-Редактировать','v3-Добавить','n3-dobawitNow', // кнопки удалить и редактировать
                                                 'n2-statia'.$_SESSION['login'].'redakt'.$dataMas[$ii][0][0][0][0],'n1-statia'.$_SESSION['login'].'kill'.$dataMas[$ii][0][0][0][0],
                                                 'кнопок-3','c3=-'.$classKill.' btn-','c1=-'.$classKill.' btn-','c2=-'.$classRedakt.' btn-','action=-"'.$action.'"-');
                       ///////////////////////////////////////////////////////////////////////////////////////////////
-                  } // конец IF
+                  
+                    } // конец IF
                    if ($_SESSION['redaktirowatId']==$dataMas[$ii][0][0][0][0]) {// Сравнение ИД статьи, которую следует редактировать с ИД текущей статьи
                         $this->poleRedaktStatia($nametablice,$razresheniePoLoginu,$statusRedaktora,$action);
                         $poleRedaktora=true; // Показывает было ли установлено поле редактора
                       }
               
     } // конец FOR
+ 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    // Выводит поле редактирования в случае, если не вывелось ни одной статьи или нажата кнопка Добавить
@@ -1028,7 +1042,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
               }
         foreach($parametr as $value)
           if ($value=='link' || $value=='образец')
-              return  '<a href="'.$this->searcNamePath('obrazec.php').'" target="_blank">Посмотреть образцы оформлений</a>';
+              return  '<a href="'.\class\nonBD\SearchPathFromFile::createObj()->searchPath('obrazec.php').'" target="_blank">Посмотреть образцы оформлений</a>';
     
         foreach($parametr as $value) // показать радио кнопки
           if (stripos('sss'.$value,'вариантов=')) {
@@ -1131,6 +1145,7 @@ class Modul implements interface\interface\InterfaceWorkToModul
                   if ($_SESSION['mas_time_news']!='') $statia=$_SESSION['mas_time_news'];
                   if ($_SESSION['mas_time_name_news']!='') $zagolowok=$_SESSION['mas_time_name_news'];
                         $statia=preg_replace('/<br>/','',$statia);
+                        
                         $this->formBlock($nametablice."_redaktor", $action,'text','zagolowok',$zagolowok,'br',
                                             'textarea', 'statia',$statia,'br',
                                             'p',$awtor,'br',
