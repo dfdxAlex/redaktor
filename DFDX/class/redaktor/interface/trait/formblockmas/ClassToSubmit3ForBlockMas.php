@@ -39,12 +39,11 @@ namespace class\redaktor\interface\trait\formblockmas;
                 $textValue=$this->parametr[$this->i+2];
                 if ($this->obj->searchParam($this->parametr, $this->i+2)) {
                     $textWww=$this->parametr[$this->i+3];
-                    if ($this->obj->searchParam($this->parametr, $this->i+2)) {
+                    if ($this->obj->searchParam($this->parametr, $this->i+3)) {
                         $class=$this->parametr[$this->i+4];
                     }
                 }
             }
-
         }
 
         if (!$this->obj->getZeroStyle()) $rez = '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'"></div>';
