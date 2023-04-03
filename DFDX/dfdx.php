@@ -163,16 +163,12 @@ class Test
   public function __construct()
   {
       $this->formBlockMas(['class-test','#','test',
-                           'submit2',
+                           'submit3',
                            'test',
-                           'class-for-span',
-                           '#',
                           ]);
-      $this->formBlock('class-test','#','test',
-                          'submit2',
+      $this->formBlock('class-test','#','test','btn_start',
+                          'submit3',
                           'test',
-                          'class-for-span',
-                          '#',
                          );
   }
   

@@ -8,46 +8,92 @@ namespace class\redaktor\interface\trait\formblockmas;
 
  class ClassToSubmit3ForBlockMas
  {
-     private $parametr;
-     private $i;
-     private $obj;
-     private $actionN = false;
-     public function __construct($parametr, $i, $obj, $actionN=false)
+  private $parametr;
+  public $i;
+  public $obj;
+  private $old;
+  public $nameB;
+  public $actionN = false;
+
+  public $textWww;
+  public $name;
+  public $class;
+     public function __construct($parametr, $i, $obj, $actionN=false, $old, $nameB)
      {
          $this->parametr = $parametr;
          $this->i = $i;
          $this->obj = $obj;
          $this->actionN = $actionN;
+         $this->old = $old;
+         $this->nameB = $nameB;
      }
 
      public function __toString()
      {
-        $name=$this->parametr[0].'submit'.$this->i;
+        $this->name=$this->parametr[0].'submit'.$this->i;
         $textValue='Ok';
-        /**
-         * Класс работает с двумя функциями, в одну из них следует передавать параметр
-         * actionN.
-         * Если параметр не равен false, то присваиваем ссылку для кнопки из этой переменной.
-         */
-        if (empty($this->actionN)) $textWww=$this->parametr[1]; 
-        else $textWww=$this->actionN;
+        $this->textWww=$this->parametr[1];
 
         $class=''; 
         if ($this->obj->searchParam($this->parametr, $this->i)) {
-            $name=$this->parametr[$this->i+1]; 
+            $this->name=$this->parametr[$this->i+1]; 
             if ($this->obj->searchParam($this->parametr, $this->i+1)) {
                 $textValue=$this->parametr[$this->i+2];
                 if ($this->obj->searchParam($this->parametr, $this->i+2)) {
-                    $textWww=$this->parametr[$this->i+3];
+                    $this->textWww=$this->parametr[$this->i+3];
                     if ($this->obj->searchParam($this->parametr, $this->i+3)) {
-                        $class=$this->parametr[$this->i+4];
+                        $this->class=$this->parametr[$this->i+4];
                     }
                 }
             }
         }
-
-        if (!$this->obj->getZeroStyle()) $rez = '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.' btn" formaction="'.$textWww.'"></div>';
-        if ($this->obj->getZeroStyle()) $rez = '<div class="'.$class.'Div"><input type="submit" name="'.$name.'" value="'.$textValue.'" class="'.$class.'" formaction="'.$textWww.'"></div>';
+        if (!$this->old) {
+            if (!$this->obj->getZeroStyle()) 
+                $rez = '
+                       <div 
+                         class="'.$this->class.'Div"
+                       >
+                       <input 
+                         type="submit" 
+                         name="'.$this->name.'" 
+                         value="'.$textValue.'" 
+                         class="'.$this->class.' btn" 
+                         formaction="'.$this->textWww.'"
+                       >
+                       </div>';
+            if ($this->obj->getZeroStyle()) 
+                $rez = '<div 
+                          class="'.$this->class.'Div"
+                        >
+                        <input 
+                          type="submit" 
+                          name="'.$this->name.'" 
+                          value="'.$textValue.'" 
+                          class="'.$this->class.'" 
+                          formaction="'.$this->textWww.'"
+                        >
+                        </div>';
+        } else {
+        // $textWww=$this->actionN;
+        // $class=$this->nameB.$name.$this->i;
+        // if (!$this->obj->getZeroStyle()) {
+        //     if ($this->obj->getBtnStart())
+        //         $class='btn '.$this->obj->getBtnStart().$class;
+        //     else
+        //         $class=$class.' btn '.$this->obj->getBtnStart();
+        // }
+        $obj1 = new BtnStartOrEnd($this);
+        $obj1->setStyle();
+        
+        $rez = "<input 
+        type='submit' 
+        id='$this->name' 
+        name='$this->name' 
+        value='$textValue' 
+        class='$this->class' 
+        formaction='$this->textWww'
+      >";
+    }
 
         return $rez;
      }

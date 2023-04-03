@@ -10,13 +10,14 @@ namespace class\redaktor\interface\trait\formblockmas;
 class ClasForFormBlockMas
 {
     static $linkObj = false;
-    public static function factoryForFormBlockMas($in, array $parametr, $i, $nameBlock='', $actionN='') 
+    public static function factoryForFormBlockMas($in, array $parametr, $i, $nameBlock='', $actionN='', $old=false) 
     {
         if (empty(self::$linkObj)) self::$linkObj = new \class\redaktor\interface\trait\formblock\SearchParam($parametr);
         
-        if ($in == 'span') return new ClassToSpanForBlockMas($parametr, $i, self::$linkObj);
-        if ($in == 'submit3') return new ClassToSubmit3ForBlockMas($parametr, $i, self::$linkObj, $actionN);
-        if ($in == 'submit2') return new ClassToSubmit3ForBlockMas($parametr, $i, self::$linkObj, $actionN);
+        if ($in == 'span') return new ClassToSpanForBlockMas($parametr, $i, self::$linkObj, $old, $nameBlock);
+        if ($in == 'submit3') return new ClassToSubmit3ForBlockMas($parametr, $i, self::$linkObj, $actionN, $old, $nameBlock);
+        if ($in == 'submit2') return new ClassToSubmit2ForBlockMas($parametr, $i, self::$linkObj, $actionN, $old, $nameBlock);
+        if ($in == 'submit') return new ClassToSubmitForBlockMas($parametr, $i, self::$linkObj, $actionN, $old, $nameBlock);
         
         if ($in=='p' 
           || $in=='h1' 
@@ -24,7 +25,7 @@ class ClasForFormBlockMas
               || $in=='h3' 
                 || $in=='h4' 
                   || $in=='h5' 
-                    || $in=='h6') return new ClassToH1ForBlockMas($parametr, $i, $in, self::$linkObj);
+                    || $in=='h6') return new ClassToH1ForBlockMas($parametr, $i, $in, self::$linkObj, $old, $nameBlock);
     }
 }
 
