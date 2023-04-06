@@ -48,31 +48,13 @@ namespace class\redaktor\interface\trait\formblockmas;
             }
         }
         if (!$this->old) {
+            
             if (!$this->obj->getZeroStyle()) 
-                $rez = '
-                       <div 
-                         class="'.$this->class.'Div"
-                       >
-                       <input 
-                         type="submit" 
-                         name="'.$this->name.'" 
-                         value="'.$this->textValue.'" 
-                         class="'.$this->class.' btn" 
-                         formaction="'.$this->textWww.'"
-                       >
-                       </div>';
+                $rez = new ReturnSubmitOld($this, true, true);
+
             if ($this->obj->getZeroStyle()) 
-                $rez = '<div 
-                          class="'.$this->class.'Div"
-                        >
-                        <input 
-                          type="submit" 
-                          name="'.$this->name.'" 
-                          value="'.$this->textValue.'" 
-                          class="'.$this->class.'" 
-                          formaction="'.$this->textWww.'"
-                        >
-                        </div>';
+                $rez = new ReturnSubmitOld($this, false, true);
+
         } else {
        /**
         * класс определяет будет ли бутстрап в классе, если да, 
@@ -91,3 +73,6 @@ namespace class\redaktor\interface\trait\formblockmas;
         return $rez;
      }
 }
+
+
+

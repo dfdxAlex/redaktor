@@ -355,8 +355,6 @@ foreach($parametr as $value) {
 
        echo '<div class="'.$this->nameB.'-div">';
 
-       //$i=0;
-       //foreach ($parametr as $key => $value) {
        for ($i=0; $i<count($parametr); $i++) {
           $value=$parametr[$i];
           
@@ -425,13 +423,6 @@ foreach($parametr as $value) {
           // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
           if ($value=='reset') 
               if ($this->tegiInputButtonReset($parametr, $i)) continue;
-
-          // Кнопка Submit
-          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
-          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
-          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
-          // if ($value=='submit') 
-          //     if ($this->tegiInputButtonSubmit($parametr, $i)) continue;
 
           // Кнопка из Url
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
@@ -835,24 +826,6 @@ foreach($parametr as $value) {
           echo "<div class='{$class}FoDivDiv'><a class='$class' href='$textWww'>$textValue</a></div>";
           return true;
         }
-
-        // Кнопка типа Submit 1-2
-        // function tegiInputButtonSubmit(array $parametr, int &$i)
-        // {
-        //   $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-        //   if ($this->searchParam($parametr, $i)) $name=$parametr[++$i]; else $name=$this->nameB.'submit'.$iForOld;
-        //   if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='Ok';
-        //   if ($this->searchParam($parametr, $i)) $textWww=$parametr[++$i]; else $textWww=$this->actionForm;
-        //   $class=$this->nameB.$name.$iForOld;
-        //   if (!$this->zeroStyle) {
-        //     if ($this->btnStart)
-        //         $class='btn '.$this->btnBtn.$class;
-        //     else
-        //         $class=$class.' btn '.$this->btnBtn;
-        //   }
-        //   echo "<input type='submit' id='$name' name='$name' value='$textValue' class='$class' formaction='$textWww'>";
-        //   return true;
-        // }
 
     // Кнопка типа Reset
     function tegiInputButtonReset(array $parametr, int &$i)

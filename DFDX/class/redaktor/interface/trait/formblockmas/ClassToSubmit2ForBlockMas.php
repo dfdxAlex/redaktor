@@ -45,37 +45,26 @@ namespace class\redaktor\interface\trait\formblockmas;
         }
         
         if (!$this->old) {
-         if (!$this->obj->getZeroStyle()) 
-             $rez = '<input 
-                       type="submit" 
-                       name="'.$this->name.'" 
-                       value="'.$this->textValue.'" 
-                       class="'.$this->class.' btn" 
-                       formaction="'.$this->textWww.'"
-                     >';
+            if (!$this->obj->getZeroStyle()) 
+                $rez = new ReturnSubmitOld($this, true);
 
-         if ($this->obj->getZeroStyle()) 
-             $rez = '<input 
-                       type="submit" 
-                       name="'.$this->name.'" 
-                       value="'.$this->textValue.'" 
-                       class="'.$this->class.'" 
-                       formaction="'.$this->textWww.'"
-                     >';
-                   } else {
-                      /**
-                       * класс определяет будет ли бутстрап в классе, если да, 
-                       * то впереди или позади
-                       */
-                       $obj1 = new BtnStartOrEnd($this);
-                       $obj1->setStyle();
+            if ($this->obj->getZeroStyle()) 
+                $rez = new ReturnSubmitOld($this);
 
-                    /**
-                     * выводит кнопку если работаем со старыми вариантами
-                     * реализации класса, функция formBlock
-                     */
-                    $rez = new ReturnSubmitNew($this);
-                   }
+         } else {
+            /**
+             * класс определяет будет ли бутстрап в классе, если да, 
+             * то впереди или позади
+             */
+             $obj1 = new BtnStartOrEnd($this);
+             $obj1->setStyle();
+
+             /**
+              * выводит кнопку если работаем со старыми вариантами
+              * реализации класса, функция formBlock
+              */
+             $rez = new ReturnSubmitNew($this);
+         }
 
 
 
