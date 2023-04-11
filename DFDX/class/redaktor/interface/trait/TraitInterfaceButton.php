@@ -417,13 +417,6 @@ foreach($parametr as $value) {
           if ($value=='textarea') 
               if ($this->tegiInputTextArea($parametr, $i)) continue;
 
-          // Кнопка Reset
-          // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
-          // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
-          // рабочая функция увеличивает переменную счётчика $i на число параметров, переданных через условие. (сократить вход в FOR)
-          if ($value=='reset') 
-              if ($this->tegiInputButtonReset($parametr, $i)) continue;
-
           // Кнопка из Url
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
           // CONTINUE нужен для того, чтобы выйти при отработке функции из цикла
@@ -827,22 +820,6 @@ foreach($parametr as $value) {
           return true;
         }
 
-    // Кнопка типа Reset
-    function tegiInputButtonReset(array $parametr, int &$i)
-    {
-      $iForOld=$i; // Сохраняем значение $i для совместимости со старыми функциями formBlock()
-      if ($this->searchParam($parametr, $i)) $textValue=$parametr[++$i]; else $textValue='Reset';
-      $class=$this->nameB.'reset'.$iForOld;
-      if (!$this->zeroStyle) {
-          if ($this->btnStart)
-              $class='btn '.$this->btnBtn.$class;
-          else
-              $class=$class.' btn '.$this->btnBtn;
-      }
-      echo "<input type='reset' class='$class' value='$textValue'>";
-      return true;
-    }
-
   // текстовое поле для ввода текста
   function tegiInputTextArea(array $parametr, int &$i)
   {
@@ -1037,13 +1014,7 @@ foreach($parametr as $value) {
              $class=$parametr[0].$name.$i;
              echo '<input type="password" name="'.$name.'" placeholder="'.$textValue.'" class="'.$class.'">';
            }
-         if ($value=='reset') {
-             if (isset($parametr[$i+1]) && $parametr[$i+1]!='bootstrap-start' && $parametr[$i+1]!='bootstrap-f-start' && $parametr[$i+1]!='bootstrap-finish')
-               if (!$this->searcTegFormBlock($parametr[$i+1])) $textValue=$parametr[$i+1]; else $textValue='Reset'; else $textValue='Reset';
-             $class=$parametr[0].'reset'.$i;
-             if (!$zero_style) echo '<input type="reset" class="'.$class.' btn" value="'.$textValue.'">';
-             if ($zero_style) echo '<input type="reset" class="'.$class.' " value="'.$textValue.'">';
-           }
+
 
            /**
             * Фабрика возвращает объект с нужным элементом

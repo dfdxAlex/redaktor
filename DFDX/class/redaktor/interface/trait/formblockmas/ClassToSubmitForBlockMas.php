@@ -8,7 +8,7 @@ namespace class\redaktor\interface\trait\formblockmas;
 
  class ClassToSubmitForBlockMas
  {
-    private $parametr;
+    public $parametr;
     public $i;
     public $obj;
     private $old;
@@ -34,20 +34,30 @@ namespace class\redaktor\interface\trait\formblockmas;
         $this->textValue='Ok';
         $this->textWww=$this->parametr[1];
 
-        if ($this->obj->searchParam($this->parametr,$this->i)) {
-            $this->name=$this->parametr[$this->i+1]; 
-                if ($this->obj->searchParam($this->parametr,$this->i+1)) {
-                    $this->textValue=$this->parametr[$this->i+2]; 
-                    if ($this->obj->searchParam($this->parametr,$this->i+2)) 
-                        $this->textWww=$this->parametr[$this->i+3]; 
-                }
-        }
+        /**
+         * Класс проверяет есть ли параметры для помещения в 
+         * устанавливаемый элемент. Вложенность до 4-х параметров.
+         * Первый параметр - это ссылка на вызываемый объект This
+         * Остальные параметры, до 4-х - это имена переменных, 
+         * которые необходимо изменить.
+         * Если переменных меньше 4-х, то их можно не указывать.
+         * Первая переменная - это первый аттрибут элемента и так далее
+         */
+        $obj2 = new ClassFormBlockSearchParametr($this, 'name', 'textValue', 'textWww');
+        $obj2->searchParametr();
         
         if (!$this->old) {
             $this->class=$this->parametr[0].$this->name.$this->i;
+            /**
+             * выводит кнопку если работаем со старыми вариантами
+             * реализации класса, функция formBlockMas с бутстрапом
+             */
             if (!$this->obj->getZeroStyle()) 
                 $rez = new ReturnSubmitOld($this, true);
-
+            /**
+             * выводит кнопку если работаем со старыми вариантами
+             * реализации класса, функция formBlockMas без бутстрапа
+             */
             if ($this->obj->getZeroStyle()) 
                 $rez = new ReturnSubmitOld($this);
 

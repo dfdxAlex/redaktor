@@ -163,16 +163,19 @@ class Test
   public function __construct()
   {
       $this->formBlockMas(['class-test','#','test',
-                           'submit',
-                           'test',
+                           'reset',
+                           'Сброс',
                           ]);
       $this->formBlock('class-test','#','test','btn_start',
-                          'submit',
-                          'test',
+                          'reset',
+                          'Сброс',
                          );
+
   }
   
 }
 
 $obj = new Test;
+
+
 

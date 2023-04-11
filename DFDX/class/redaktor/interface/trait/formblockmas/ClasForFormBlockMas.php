@@ -18,6 +18,7 @@ class ClasForFormBlockMas
         if ($in == 'submit3') return new ClassToSubmit3ForBlockMas($parametr, $i, self::$linkObj, $actionN, $old, $nameBlock);
         if ($in == 'submit2') return new ClassToSubmit2ForBlockMas($parametr, $i, self::$linkObj, $actionN, $old, $nameBlock);
         if ($in == 'submit') return new ClassToSubmitForBlockMas($parametr, $i, self::$linkObj, $actionN, $old, $nameBlock);
+        if ($in == 'reset') return new ClassToResetForBlockMas($parametr, $i, self::$linkObj, $actionN, $old, $nameBlock);
         
         if ($in=='p' 
           || $in=='h1' 

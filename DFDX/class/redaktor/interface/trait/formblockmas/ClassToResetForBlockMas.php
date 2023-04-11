@@ -6,7 +6,7 @@ namespace class\redaktor\interface\trait\formblockmas;
  * проверяет остальные параметры и возвращает содержимое
  */
 
- class ClassToSubmit3ForBlockMas
+ class ClassToResetForBlockMas
  {
   public $parametr;
   public $i;
@@ -30,10 +30,9 @@ namespace class\redaktor\interface\trait\formblockmas;
 
      public function __toString()
      {
-        $this->name=$this->parametr[0].'submit'.$this->i;
-        $this->textValue='Ok';
-        $this->textWww=$this->parametr[1];
-        $this->class=''; 
+        $this->textValue='Reset';
+        $this->class=$this->parametr[0].'reset'.$this->i;
+
 
         /**
          * Класс проверяет есть ли параметры для помещения в 
@@ -44,16 +43,16 @@ namespace class\redaktor\interface\trait\formblockmas;
          * Если переменных меньше 4-х, то их можно не указывать.
          * Первая переменная - это первый аттрибут элемента и так далее
          */
-        $obj2 = new ClassFormBlockSearchParametr($this, 'name', 'textValue', 'textWww', 'class');
+        $obj2 = new ClassFormBlockSearchParametr($this, 'textValue');
         $obj2->searchParametr();
 
 
         if (!$this->old) {
             if (!$this->obj->getZeroStyle()) 
-                $rez = new ReturnSubmitOld($this, true, true);
+                $rez = new ReturnButtomResetNew($this);
 
             if ($this->obj->getZeroStyle()) 
-                $rez = new ReturnSubmitOld($this, false, true);
+                $rez = new ReturnButtomResetNew($this);
 
         } else {
        /**
@@ -67,12 +66,44 @@ namespace class\redaktor\interface\trait\formblockmas;
        * выводит кнопку если работаем со старыми вариантами
        * реализации класса, функция formBlock
        */
-       $rez = new ReturnSubmitNew($this);
+       $rez = new ReturnButtomResetNew($this);
     }
 
         return $rez;
      }
 }
+
+
+// <?php
+// namespace class\redaktor\interface\trait\formblockmas;
+
+class ReturnButtomResetNew
+{
+
+/**
+ * Служебный класс для функций formBlock() и formBlockMas
+ * Класс выводит кнопку Reset
+ * Входящий параметр in содержит ссылку на вызываемый объект,
+ * от туда и берется информация о параметрах кнопки
+ */
+
+
+    private $in;
+    public function __construct($in)
+    {
+        $this->in = $in;
+    }
+
+    public function __toString()
+    {
+        return "<input 
+                  type='reset' 
+                  value='{$this->in->textValue}' 
+                  class='{$this->in->class}' 
+                >";
+    }
+}
+
 
 
 

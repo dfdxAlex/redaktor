@@ -8,11 +8,15 @@ namespace class\redaktor\interface\trait\formblockmas;
 
 class ClassToSpanForBlockMas
 {
-    private $parametr;
-    private $i;
-    private $obj;
+    public $parametr;
+    public $i;
+    public $obj;
     private $old;
     private $nameB;
+
+    public $text;
+    public $class;
+
     public function __construct($parametr, $i, $obj, $old, $nameB)
     {
         $this->parametr = $parametr;
@@ -24,29 +28,35 @@ class ClassToSpanForBlockMas
 
     public function __toString()
     {
-        $text='';
+        $this->text='';
         /**
          * если $old=true, то класс работает с функцией formBlock
          * усли $old=false, то с formBlockMas
          */
         if ($this->old) 
-          $class=$this->nameB.$this->i;
+          $this->class=$this->nameB.$this->i;
         else 
-          $class=$this->parametr[0].'span'.$this->i; 
-          
-        if ($this->obj->searchParam($this->parametr, $this->i)) {// метод searchParam() сам добавляет $i+1
-           $text=$this->parametr[$this->i+1]; 
-           if ($this->obj->searchParam($this->parametr, $this->i+1))
-              $class=$this->parametr[$this->i+2]; 
-        }
+          $this->class=$this->parametr[0].'span'.$this->i; 
+
+        /**
+         * Класс проверяет есть ли параметры для помещения в 
+         * устанавливаемый элемент. Вложенность до 4-х параметров.
+         * Первый параметр - это ссылка на вызываемый объект This
+         * Остальные параметры, до 4-х - это имена переменных, 
+         * которые необходимо изменить.
+         * Если переменных меньше 4-х, то их можно не указывать.
+         * Первая переменная - это первый аттрибут элемента и так далее
+         */
+        $obj2 = new ClassFormBlockSearchParametr($this, 'text', 'class');
+        $obj2->searchParametr();
 
             return "<div 
-                      class='{$class}PH'
+                      class='{$this->class}PH'
                     >
                       <span 
-                        class='$class'
+                        class='$this->class'
                       >
-                        $text
+                        $this->text
                       </span>
                     </div>";
     }

@@ -8,12 +8,12 @@ namespace class\redaktor\interface\trait\formblockmas;
 
 class ClassToH1ForBlockMas
 {
-    private $parametr;
-    private $i;
+    public $parametr;
+    public $i;
     private $old;
     private $nameB;
     private $value;
-    private $obj;
+    public $obj;
 
     public function __construct($parametr, $i, $value, $obj, $old, $nameB)
     {
@@ -27,30 +27,36 @@ class ClassToH1ForBlockMas
 
     public function __toString()
     {
-        $text='';
+        $this->text='';
         /**
          * если $old=true, то класс работает с функцией formBlock
          * усли $old=false, то с formBlock
          */
         if ($this->old) 
-            $class=$this->nameB.$this->i;
+            $this->class=$this->nameB.$this->i;
         else
-            $class=$this->parametr[0].$this->value.$this->i; 
+            $this->class=$this->parametr[0].$this->value.$this->i; 
 
-        if ($this->obj->searchParam($this->parametr, $this->i)) {
-            $text=$this->parametr[$this->i+1]; 
-            if ($this->obj->searchParam($this->parametr, $this->i+1)) 
-                $class=$this->parametr[$this->i+2]; 
-        }
+        /**
+         * Класс проверяет есть ли параметры для помещения в 
+         * устанавливаемый элемент. Вложенность до 4-х параметров.
+         * Первый параметр - это ссылка на вызываемый объект This
+         * Остальные параметры, до 4-х - это имена переменных, 
+         * которые необходимо изменить.
+         * Если переменных меньше 4-х, то их можно не указывать.
+         * Первая переменная - это первый аттрибут элемента и так далее
+         */
+        $obj2 = new ClassFormBlockSearchParametr($this, 'text', 'class');
+        $obj2->searchParametr();
 
 
          return "<div 
-                   class='{$class}PH'
+                   class='{$this->class}PH'
                  >
                    <$this->value 
-                     class='$class'
+                     class='$this->class'
                    >
-                     $text
+                     $this->text
                    </$this->value>
                  </div>";
     }
