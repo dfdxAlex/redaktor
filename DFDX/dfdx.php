@@ -163,12 +163,14 @@ class Test
   public function __construct()
   {
       $this->formBlockMas(['class-test','#','test',
-                           'reset',
+                           'span',
                            'Сброс',
+                           'i am is class',
                           ]);
       $this->formBlock('class-test','#','test','btn_start',
-                          'reset',
+                          'span',
                           'Сброс',
+                          'i am is class',
                          );
 
   }

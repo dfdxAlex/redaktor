@@ -16,14 +16,16 @@ class ClassToSpanForBlockMas
 
     public $text;
     public $class;
+    public $value;
 
-    public function __construct($parametr, $i, $obj, $old, $nameB)
+    public function __construct($parametr, $i, $obj, $old, $nameB, $value)
     {
         $this->parametr = $parametr;
         $this->i = $i;
         $this->obj = $obj;
         $this->old = $old;
         $this->nameB = $nameB;
+        $this->value = $value;
     }
 
     public function __toString()
@@ -50,14 +52,7 @@ class ClassToSpanForBlockMas
         $obj2 = new ClassFormBlockSearchParametr($this, 'text', 'class');
         $obj2->searchParametr();
 
-            return "<div 
-                      class='{$this->class}PH'
-                    >
-                      <span 
-                        class='$this->class'
-                      >
-                        $this->text
-                      </span>
-                    </div>";
+        return new ReturnH1($this);
+
     }
 }

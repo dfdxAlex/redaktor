@@ -56,19 +56,19 @@ namespace class\redaktor\interface\trait\formblockmas;
                 $rez = new ReturnSubmitOld($this, false, true);
 
         } else {
-       /**
-        * класс определяет будет ли бутстрап в классе, если да, 
-        * то впереди или позади
-        */
-        $obj1 = new BtnStartOrEnd($this);
-        $obj1->setStyle();
+           /**
+            * класс определяет будет ли бутстрап в классе, если да, 
+            * то впереди или позади
+            */
+            $obj1 = new BtnStartOrEnd($this);
+            $obj1->setStyle();
 
-        /**
-       * выводит кнопку если работаем со старыми вариантами
-       * реализации класса, функция formBlock
-       */
-       $rez = new ReturnSubmitNew($this);
-    }
+            /**
+           * выводит кнопку если работаем со старыми вариантами
+           * реализации класса, функция formBlock
+           */
+           $rez = new ReturnSubmitNew($this);
+       }
 
         return $rez;
      }

@@ -12,7 +12,7 @@ class ClassToH1ForBlockMas
     public $i;
     private $old;
     private $nameB;
-    private $value;
+    public $value;
     public $obj;
 
     public function __construct($parametr, $i, $value, $obj, $old, $nameB)
@@ -49,15 +49,6 @@ class ClassToH1ForBlockMas
         $obj2 = new ClassFormBlockSearchParametr($this, 'text', 'class');
         $obj2->searchParametr();
 
-
-         return "<div 
-                   class='{$this->class}PH'
-                 >
-                   <$this->value 
-                     class='$this->class'
-                   >
-                     $this->text
-                   </$this->value>
-                 </div>";
+        return new ReturnH1($this);
     }
 }

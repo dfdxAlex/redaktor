@@ -14,7 +14,7 @@ class ClasForFormBlockMas
     {
         if (empty(self::$linkObj)) self::$linkObj = new \class\redaktor\interface\trait\formblock\SearchParam($parametr);
         
-        if ($in == 'span') return new ClassToSpanForBlockMas($parametr, $i, self::$linkObj, $old, $nameBlock);
+        if ($in == 'span') return new ClassToSpanForBlockMas($parametr, $i, self::$linkObj, $old, $nameBlock, $in);
         if ($in == 'submit3') return new ClassToSubmit3ForBlockMas($parametr, $i, self::$linkObj, $actionN, $old, $nameBlock);
         if ($in == 'submit2') return new ClassToSubmit2ForBlockMas($parametr, $i, self::$linkObj, $actionN, $old, $nameBlock);
         if ($in == 'submit') return new ClassToSubmitForBlockMas($parametr, $i, self::$linkObj, $actionN, $old, $nameBlock);
