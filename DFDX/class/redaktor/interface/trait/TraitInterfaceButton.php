@@ -425,7 +425,7 @@ foreach($parametr as $value) {
               if ($this->buttonUrl($parametr, $i)) continue;
 
         
-          echo formblockmas\ClasForFormBlockMas::factoryForFormBlockMas($value,$parametr,$i,$nameBlock, $actionN, true);
+          echo formblockmas\FactoryForFormBlockMas::factoryForFormBlockMas($value,$parametr,$i,$nameBlock, $actionN, true);
 
           // Контейнер Color
           // рабочая функция находится в IF и всегда выдает TRUE - это сделано для того, чтобы не ставить фигурные скобки для CONTINUE
@@ -1019,15 +1019,17 @@ foreach($parametr as $value) {
            /**
             * Фабрика возвращает объект с нужным элементом
             */
-           echo formblockmas\ClasForFormBlockMas::factoryForFormBlockMas($value,$parametr,$i);
+           echo formblockmas\FactoryForFormBlockMas::factoryForFormBlockMas($value,$parametr,$i);
            $i++; 
         }
         
         echo '</div>'; // конец внутреннего блока
 
-        if (!$form_not_close) echo '</form>';
+        if (!$form_not_close) 
+            echo '</form>';
         echo '</div>';
-        if (!$zero_style) echo '</div></section>';
+        if (!$zero_style) 
+            echo '</div></section>';
     }
 
   /**

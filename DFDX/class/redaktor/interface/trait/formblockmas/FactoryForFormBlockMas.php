@@ -7,7 +7,7 @@ namespace class\redaktor\interface\trait\formblockmas;
  * Работает с функцией formBlockMas() и formBlock()
  */
 
-class ClasForFormBlockMas
+class FactoryForFormBlockMas
 {
     static $linkObj = false;
     public static function factoryForFormBlockMas($in, array $parametr, $i, $nameBlock='', $actionN='', $old=false) 
