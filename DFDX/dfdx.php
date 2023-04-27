@@ -8,7 +8,6 @@ session_start();
 
 require "funcii.php";
 require "functionDfdx.php"; 
-require "image/swapImages.php"; 
 
 // подключение автозагрузчика от PHPMailer, библиотека инсталлирована с помощью Composer
 // podłączenie autoloadera z PHPMailera, biblioteka jest instalowana za pomocą Composera
@@ -96,8 +95,6 @@ $header->showSiteHeader('image/logo.png');
  
  // Функция показывает раздел сайта под шапкой, либо, если это статья по персональной ссылке, то бегущую строку названия статьи
  // Если картинки нет для раздела, то так-же будет выведена бегущая строка раздела сайта
- // Funkcja wyświetla sekcję witryny pod nagłówkiem lub, jeśli jest to artykuł za pośrednictwem osobistego linku, przewijany wiersz tytułu artykułu
- // Jeśli nie ma obrazu dla sekcji, zostanie również wyświetlony bieżący wiersz sekcji witryny
  // The function shows the section of the site under the header, or, if this is an article via a personal link, then the scrolling line of the article title
  // If there is no picture for the section, then the running line of the site section will also be displayed
 $header->showSiteSection('image/home.png','home');   

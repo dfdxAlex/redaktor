@@ -86,7 +86,14 @@ trait TraitInterfaceWorkToHeader
             $alt=preg_replace('/image\//','',$alt);
             if (file_exists($pathFileSection)) 
                 echo '<img src="'.$pathFileSection.'" alt="'.$alt.'">';
-            else $functionAnalogSectionImages();
+            else 
+                {
+                    if (function_exists($functionAnalogSectionImages))
+                        $functionAnalogSectionImages();
+                    else
+                        \class\classNew\SwapImages::swapImages()
+                                        ->noImage($functionAnalogSectionImages);
+                }
         }
         // Блок работает тогда, когда данный файл вызывается из персональных ссылок для статей
         if (stripos($_SERVER['REQUEST_URI'],'news')!==false) {

@@ -4,48 +4,66 @@ namespace game\tic_tac_toe;
 //файл сгенерирован CMS-DFDX 2022-03-20 19:06:45
 //file generated CMS-DFDX 2022-03-20 19:06:45
 session_start();
-require "../../funcii.php";
-require "../../functionDfdx.php";
-require "../../image/swapImages.php";
+
+// require "../../funcii.php";
+// require "../../functionDfdx.php";
+
 require "../../class.php";
 
-use \class\redaktor\Modul;
-use \class\redaktor\statistic;
-use \class\redaktor\Header;
-use \class\redaktor\futter;
-use \class\redaktor\NonTemplates;
+use \class\redaktor as libr;
 
-  $redaktor= new Modul();
-  $statistik = new statistic();
-  $header = new Header();
-  $futter = new futter();
-  $nonTemplates = new NonTemplates();
-  $gameF = new ClassGameTicTacToe();
+$redaktor= new libr\Modul();
+$statistik = new libr\statistic();
+$header = new libr\Header();
+$futter = new libr\futter();
+$nonTemplates = new libr\NonTemplates();
+
+$gameF = new ClassGameTicTacToe();
 
 echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
 echo '<head>';
 
-  $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ'); 
+  /**
+   * подключение статистики от google
+   * connect statistics from google
+   */
+  new \class\classNew\analitic\GoogleAnalitic();
+
   $header->headStart('<title>tic_tac_toe</title>');
-  $header->headBootStrap5([\class\nonBD\SearchPathFromFile::createObj()->searchPath('styli.css'),\class\nonBD\SearchPathFromFile::createObj()->searchPath('dfdx.css'),\class\nonBD\SearchPathFromFile::createObj()->searchPath('styliGame.css')]);
-  //$header->headBootStrap5([$header->searcNamePath('styli.css'),$header->searcNamePath('dfdx.css')]);
+
+  /**
+   * поиск файла с общими стилями
+   * search for a file with common styles
+   */
+  $fileStyle = \class\nonBD\SearchPathFromFile::createObj()
+                            ->searchPath('styli.css');
+  /**
+   * поиск главной страницы сайта
+   * home page search
+   */
+  $fileDfdx = \class\nonBD\SearchPathFromFile::createObj()
+                           ->searchPath('dfdx.css');
+  /**
+   * поиск файла стилей игры
+   * search for game style file
+   */
+  $fileStyleGame = \class\nonBD\SearchPathFromFile::createObj()
+                                ->searchPath('styliGame.css');
+
+  $header->headBootStrap5([$fileStyle, $fileDfdx,$fileStyleGame]);
+
 
 echo '</head>';
 echo '<body>';
 
 // функция создает переменные сессий при первом посещении страницы
-// funkcja tworzy zmienne sesji przy pierwszej wizycie na stronie
 // function creates session variables on first visit to the page
 $header->firstCreationSessionVariables();
 
 // Функция проверяет поля логина и пароля, если они заполнены, то вытягивает из базы статус 
 // пользователя и заносит его в переменную $_SESSION["status"]
 // Также функция обрабатывает нажатие кнопки Вход и Выход
-   
-// Funkcja sprawdza pola login i hasło, czy są wypełnione, a następnie pobiera status 
-// użytkownika z bazy danych i wpisuje go do zmiennej $_SESSION["status"]
-// Funkcja obsługuje również naciśnięcie klawisza Enter i Exit
 
 // The function checks the login and password fields, if they are filled, then pulls the user status 
 // from the database and enters it into the $_SESSION["status"] variable
@@ -56,30 +74,28 @@ echo '<section class="container-fluid">';
 echo '<div class="row">';
 // функция скачивает и показывает колличество монет у пользователя
 // Modul $redaktor сигнатура класса работы с админкой
-// funkcja pobiera i pokazuje liczbę monet, które posiada użytkownik
-// Podpis klasy administratora modułu $redaktor
+
 // the function downloads and shows the number of coins the user has
 // Modul $redaktor admin class signature
 $header->showNumberOfCoins($redaktor);
 
 // Функция реализует установку и обработку верхнего главного меню
-// Funkcja realizuje ustawienia i przetwarzanie w górnym menu głównym
 // The function implements the setting and processing of the top main menu
 $header->topMenuProcessing();
 echo '</div>';
 echo '</section>';
 
 // Функция выводит картинку шапки
-// Funkcja wyświetla obraz nagłówka
 // The function displays the header image
 $header->showSiteHeader('../../image/logo.png');
 
- // Функция показывает раздел сайта под шапкой, либо, если это статья по персональной ссылке, то бегущую строку названия статьи
+ // Функция показывает раздел сайта под шапкой, либо, если это статья по персональной ссылке, 
+ // то бегущую строку названия статьи
  // Если картинки нет для раздела, то так-же будет выведена бегущая строка раздела сайта
- // Funkcja wyświetla sekcję witryny pod nagłówkiem lub, jeśli jest to artykuł za pośrednictwem osobistego linku, przewijany wiersz tytułu artykułu
- // Jeśli nie ma obrazu dla sekcji, zostanie również wyświetlony bieżący wiersz sekcji witryny
- // The function shows the section of the site under the header, or, if this is an article via a personal link, then the scrolling line of the article title
- // If there is no picture for the section, then the running line of the site section will also be displayed
+ // The function shows the section of the site under the header, or, 
+ // if this is an article via a personal link, then the scrolling line of the article title
+ // If there is no picture for the section, then the running line of the site section will 
+ // also be displayed
  $header->showSiteSection('../../image/home.png','tictactoe');   
 
 echo '<section class="container-fluid">';
