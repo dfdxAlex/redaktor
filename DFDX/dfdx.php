@@ -35,7 +35,12 @@ echo '<!DOCTYPE html>';
 echo '<html lang="ru">';
 echo '<head>';
 
-  $statistik->googleAnalitic('https://www.googletagmanager.com/gtag/js?id=G-MF3F7YTKCQ');
+  /**
+   * подключение статистики от google
+   * connect statistics from google
+   */
+  new \class\classNew\analitic\GoogleAnalitic();
+  
   $header->headStart('<title>dfdx</title>');
 
    /**  Объект по шаблону Singleton, ищет и хранит в себе путь к искомому файлу
@@ -146,7 +151,8 @@ echo '</section>';
 
 // Функция выводит нижнюю часть сайта
 // The function displays the bottom of the site
-$futter->futterGeneral($statistik,$metka);
+// $futter->futterGeneral($statistik,$metka);
+new \class\classNew\futter\FutterGeneral($metka);
 
 // функция подключает вторую часть бутстрапа и закрывает документ html
 // the function connects the second part of the bootstrap and closes the html document

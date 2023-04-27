@@ -13,7 +13,6 @@ require "../../class.php";
 use \class\redaktor as libr;
 
 $redaktor= new libr\Modul();
-$statistik = new libr\statistic();
 $header = new libr\Header();
 $futter = new libr\futter();
 $nonTemplates = new libr\NonTemplates();
@@ -136,10 +135,12 @@ echo '</div>'; //закрыть центр
 //$nonTemplates->rightMenu($statistik,"home");
 echo '</div>';
 echo '</section>';
+
 // Функция выводит нижнюю часть сайта
 // The function displays the bottom of the site
-$futter->futterGeneral($statistik,$metka);
+// $futter->futterGeneral($statistik,$metka);
+new \class\classNew\futter\FutterGeneral($metka);
 
 // функция подключает вторую часть бутстрапа и закрывает документ html
 // the function connects the second part of the bootstrap and closes the html document
-$futter->closeHtmlDok();
+new \class\classNew\futter\HtmlClose;
