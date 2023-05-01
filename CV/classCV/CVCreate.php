@@ -47,7 +47,7 @@ class CVCreate
             /////////////////////////////////////////////////////////////////////////////////listSkillRowSetup
 
             $listSkills=(string)  new \class\nonBD\Translation('Список навыков');
-            $listSkills_text="<section class='container-fluid'>";
+            $listSkills_text="<section class='container-fluid list-skills--container'>";
             $priznak=true;
             $numberColumns=$_SESSION['number_columns_skill_list'];
             $numbersCol=12/$numberColumns;

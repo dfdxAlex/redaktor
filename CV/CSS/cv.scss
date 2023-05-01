@@ -15,7 +15,9 @@
     padding: 0;
     border: 0;
     height: 32cm;
-    background-color: #098b9f;  
+    background-image: url("../images/f3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     .pole-info{
         background: -webkit-linear-gradient(top, rgba(255, 255, 255) 50%, rgb(234, 229, 229) 100%) no-repeat, #97c49a ;
         height: 83%;
@@ -25,39 +27,46 @@
         border-radius: 10px;
         outline: 1px solid black;
         outline-offset: -4px;
-        .summary, .experience, .education, .language, .sertificates, .git, .list-skills{
+
+        .summary, .experience, .education, .language, 
+        .sertificates, .git, .list-skills, .summary-text, 
+        .experience-text, .education_text, .git-text,
+        .list-skills--container, .language_text, .sertificates_text {
+            margin-top: 10px;
+            font-weight: 700;
             width: 100%;
-            div {
-                margin-top: 30px;
-                font-weight: 900;
-                font-size: 25px;
-                padding-left: 10px;
-                line-height: 10px;
-            }
-        }
-        .summary-text, .experience-text, .education_text, .git-text, .list-skills-text{
-            width: 100%;
-            div {
-                margin-top: 10px;
-                padding-left: 25px;
-                font-size: 16px;
-            }
-        }
-        .list-skills-text{
-            div {
-                padding-left: 12px;
-            }
-        }
-        .language{
-            margin-bottom: 15px;
-        }
-        .language_text div, .sertificates_text div{
-            padding-left: 13px;
             font-size: 16px;
         }
-        .sertificates div{
-            margin-top: 20px;
-            margin-bottom: 15px;
+
+        .summary, .experience, .education, .language, 
+        .sertificates, .git, .list-skills {
+            div {
+                padding-left: 10px;
+                font-size: 23px;
+                line-height: 27px;
+                border-bottom: 1px solid #090909;
+            }
+        }
+        .summary-text, .experience-text, 
+        .education_text, .git-text {
+            div {
+                padding: 0 25px;
+                // border: 1px solid #648880;
+                // border-left-width: 10px;
+                border-left: 2mm ridge rgba(24, 3, 65, 0.6);
+                font-weight: 400;
+            }
+        }
+        .list-skills--container,
+        .language_text, .sertificates_text {
+            padding: 0 25px;
+            // border: solid #648880;
+            border-left: 2mm ridge rgba(24, 3, 65, 0.6);
+            // border-left-width: 10px;
+        }
+
+        .skills{
+            min-height: 10px;
         }
     } // конец pole-info
 
@@ -94,7 +103,6 @@
 ///////////////////////////////////////////////////////////////////////
 
 .servis-create-dfdx{
-    // float: left;
     font-size: 11px;
     margin-top: 7px;
     color: rgb(248, 242, 242);
