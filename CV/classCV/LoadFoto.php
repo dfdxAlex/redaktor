@@ -33,8 +33,6 @@ class LoadFoto
             $linkFoto=$_SESSION['linkFoto'];
 
         echo '
-        <script src="js/MyLib.js"></script>
-
         <div class="load-foto-form">
             <section class="container-fluid">
                 <div class="row">

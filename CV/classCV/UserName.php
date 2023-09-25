@@ -26,9 +26,7 @@ class UserName
     }
     public function nameForm()
     {
-        
         echo '
-        <script src="js/MyLib.js"></script>
             <div class="name-form">
                 <section class="container">
                     <div class="row">

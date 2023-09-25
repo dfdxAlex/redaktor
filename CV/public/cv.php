@@ -7,6 +7,8 @@ session_start();
 // подключение автозагрузчика библиотеки DFDX
 require_once "../class/autoloader.php";
 
+use \src\php\FutterDecorator;
+
 use \class\nonBD\HtmlHead;
 use \class\nonBD\HtmlFutter;
 // класс хранит шаг пользователя
@@ -33,7 +35,6 @@ SelectLanguage::setLenguage();
 
 //////////////////////////////////////////////начало страницы body/////////////////////////////////////////////
 // подключение библиотеки с js функциями
-echo "<script src='../src/js/MyLib.js'></script>";
 //сгенерировать верхнюю часть сайта header
 echo new HtmlHead('../src/CSS/cv.css','CV');
 ///////////////////////////////////////////// 
@@ -53,8 +54,4 @@ Level::dataHunt(new \classCV\Certificates(),
 $controller = new Controler();
 Controler::control();
 
-
-
-// установка futter
-echo new HtmlFutter();
-///////////////////////////////////////////
+new FutterDecorator();
