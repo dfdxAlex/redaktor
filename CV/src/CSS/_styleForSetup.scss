@@ -1,0 +1,13 @@
+
+@mixin styleForSetup {
+.container-setting {
+    margin-top: 40px;
+    .styleText {
+        font-size: 18px;
+        margin-left: 20px;
+    }
+    p {
+        font-size: 18px;
+    }
+}
+}

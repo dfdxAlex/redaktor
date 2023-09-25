@@ -1,0 +1,19 @@
+@mixin loadFont{
+  @font-face {
+      font-family: 'beer';
+      src: url('/src/CSS/fonts/beer-money12.ttf') format("truetype");
+  }
+  @font-face {
+      font-family: 'pirate';
+      src: url('../fonts/pirate-keg-italic4.ttf') format("truetype");
+  }
+  @font-face {
+      font-family: 'cd2f1';
+      src: url('../fonts/cd2f1-36d91_sunday.ttf') format("truetype");
+  }  
+
+  @font-face {
+      font-family: 'React';
+      src: url('../fonts/ReactiveAnchor-L3L0n.ttf') format("truetype");
+  }
+}

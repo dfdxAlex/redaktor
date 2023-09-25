@@ -10,7 +10,6 @@ require_once "../class/autoloader.php";
 use \src\php\FutterDecorator;
 
 use \class\nonBD\HtmlHead;
-use \class\nonBD\HtmlFutter;
 // класс хранит шаг пользователя
 use \classCV\Level;
 use \class\nonBD\SelectLanguage;
