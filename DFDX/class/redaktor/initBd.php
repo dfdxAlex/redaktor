@@ -14,15 +14,9 @@ class initBd implements interface\interface\InterfaceCollectScolding
     use \class\redaktor\interface\trait\TraitInterfaceFoUser;
     use \class\redaktor\interface\trait\TraitInterfaceWorkToMail;
     
-    //use \class\redaktor\interface\interface\InterfaceWorkToMail;
-
     public function __construct()
     {
         $this->connectToBd();
         $this->tableValidationCMS();
     }
-      public function __destruct()
-      {
-        mysqli_close($this->con);
-      }
 }

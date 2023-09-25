@@ -63,6 +63,7 @@ class DatabaseConn
             self::$parolFoMailFoPhpMailer=stristr(fgets($fd),';',true); 
             self::$siteRootDirectory=stristr(fgets($fd),';',true); 
             fclose($fd);
+            // echo self::$host.'--'.self::$loginBD.'--'.self::$parol.'--'.self::$nameBD;
             self::$con = mysqli_connect(self::$host,self::$loginBD,self::$parol,self::$nameBD) OR die ('ошибка подключения БД'); 
             }
 

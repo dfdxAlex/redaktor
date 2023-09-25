@@ -25,13 +25,13 @@ class SelectPattern
                 <form action="#" method="post">
                 <div class="row">
                     <div class="col-4">
-                        <div><button name="CV1" class="'.$this->classToImages(1).'"> <img  class="image-pattern" src="images/CV_origin_2.png"> </button></div>
+                        <div><button name="CV1" class="'.$this->classToImages(1).'"> <img  class="image-pattern" src="../src/images/CV_origin_2.png"> </button></div>
                     </div>
                     <div class="col-4">
-                        <button name="CV2" class="'.$this->classToImages(2).'"> <img  class="image-pattern" src="images/CV_origin_1.png"> </button>
+                        <button name="CV2" class="'.$this->classToImages(2).'"> <img  class="image-pattern" src="../src/images/CV_origin_1.png"> </button>
                     </div>
                     <div class="col-4">
-                        <button name="CV3" class="'.$this->classToImages(3).'"> <img  class="image-pattern" src="images/CV_origin_3.png"> </button>
+                        <button name="CV3" class="'.$this->classToImages(3).'"> <img  class="image-pattern" src="../src/images/CV_origin_3.png"> </button>
                     </div>
                 </form>
                 </div>

@@ -17,59 +17,50 @@ class Address
     {
         return '
         <section class="container-fluid form-kontakt">
-        <form action="#" method="post">
-            <div class="row">
-                <div class="col-6">
-                    <label for="address">'. (string) new \class\nonBD\Translation('Адрес').':</label>
-                </div>
-                <div class="col-6">
-                    <input type="text" name="address" id="address" value="'.$_SESSION['address'].'"><br>
-                </div>
-            </div>
-            <div class="row">
-            <div class="col-6">
-                <label for="tel">'. (string) new \class\nonBD\Translation('Телефон').':</label>
-                </div>
-                <div class="col-6">
-                <input type="tel" name="tel" id="tel" value="'.$_SESSION['tel'].'"><br>
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-6">
-                <label for="email">'. (string) new \class\nonBD\Translation('Почта').':</label>
-                </div>
-                <div class="col-6">
-                <input type="email" name="email" id="email" value="'.$_SESSION['email'].'"><br>
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-6">
-                <label for="Linkedln">Linkedln:</label>
-            </div>
-            <div class="col-6">
-                <input type="url" name="Linkedln" id="Linkedln" value="'.$_SESSION['Linkedln'].'"><br>
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-6">
-                <label for="git">Git:</label>
-            </div>
-            <div class="col-6">
-                <input type="url" name="git" id="git" value="'.$_SESSION['git'].'"><br>
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-6">
-                
-            </div>
-            <div class="col-6">
-            <input type="submit" name="adresButton" value="'. (string) new \class\nonBD\Translation('Отправить').'" class="btn btn-info"><br>
-            </div>
-            </div>
-        </form>
+        <form action="#" method="post">'
+              .$this->label('address').$this->label('tel').$this->label('email').
+               $this->label('Linkedln').$this->label('Git').$this->label('').
+            '</form>
         </section>
         ';
+    }
 
+    /**
+     * Depending on the input parameter, the function generates elements
+     * forms.
+     * В зависимости от входного параметра функция формирует элементы 
+     * формы.
+     */
+    function label($for)
+    {
+        
+        $strBeginRow = '<div class="row">';
+        $strBeginCol = '<div class="col-6">';
+        $strEnd =   '</div>';
+        $str = '';
+        $str2 = '<input type="submit" name="adresButton" value="'. new \class\nonBD\Translation('Отправить').'" class="btn btn-info"><br>';
+
+        if ($for==="Git") {
+            $str = '<label for="git">Git:</label>';
+            $str2 = '<input type="url" name="git" id="git" value="'.$_SESSION['git'].'"><br>';
+        }
+        if ($for==="Linkedln") {
+            $str = '<label for="Linkedln">Linkedln:</label>';
+            $str2 = '<input type="url" name="Linkedln" id="Linkedln" value="'.$_SESSION['Linkedln'].'"><br>';
+        }
+        if ($for==="email") {
+            $str = '<label for="email">'. new \class\nonBD\Translation('Почта').':</label>';
+            $str2 = '<input type="email" name="email" id="email" value="'.$_SESSION['email'].'"><br>';
+        }
+        if ($for==="tel") {
+            $str = '<label for="tel">'. new \class\nonBD\Translation('Телефон').':</label>';
+            $str2 = '<input type="tel" name="tel" id="tel" value="'.$_SESSION['tel'].'"><br>';
+        }
+        if ($for==="address") {
+            $str = '<label for="address">'. new \class\nonBD\Translation('Адрес').':</label>';
+            $str2 = '<input type="text" name="address" id="address" value="'.$_SESSION['address'].'"><br>';
+        }
+        return $strBeginRow.$strBeginCol.$str.$strEnd.$strBeginCol.$str2.$strEnd.$strEnd;
     }
 
     public function addressHunt()
@@ -82,7 +73,4 @@ class Address
             $_SESSION['git']=$_REQUEST['git'];
         }
     }
-
-
-
 }

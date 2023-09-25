@@ -13,6 +13,10 @@ class CVCreate
 
     function CV1()
     {
+        $skills_text="";
+        
+        if (!isset($_SESSION['number_columns_skill_list']))
+            $_SESSION['number_columns_skill_list']=2;
         
         // формирование строки с адресом
         if ($_SESSION['address']!='') {
@@ -143,10 +147,10 @@ class CVCreate
             }
         } else $language='';  
 
-        $servisCreateDFDX=(string) new \class\nonBD\Translation('Сервис создан на базе CMS DFDX');
+        $servisCreateDFDX=(string) new \class\nonBD\Translation('CV сгенерировано на моем проекте "cv.php"');
         
        // $menu = new ButtonMenuUp;
-
+        
         return '
                <section class="container create-cv">
                 <div class="row">
@@ -231,9 +235,22 @@ class CVCreate
                         </div>
                     </div>
 
-
+                    <div class="danych">
+                    Na podstawie art. 7 ust. 1 Rozporządzenia Parlamentu 
+                    Europejskiego i Rady UE 2016/679 z 27 kwietnia 
+                    2016 r. w sprawie ochrony osób fizycznych w związku 
+                    z przetwarzaniem danych osobowych i w sprawie 
+                    swobodnego przepływu takich danych oraz uchylenia 
+                    dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie 
+                    danych), oświadczam, iż wyrażam zgodę na przetwarzanie 
+                    przez Administratora, moich 
+                    danych osobowych w zakresie ujętym w CV, w celu 
+                    przeprowadzenia procedury rekrutacji na to stanowisko
+                    </div> 
                 </section>
+
                 <div class="servis-create-dfdx">'.$servisCreateDFDX.'</div> 
+
             </section>
         ';
     }

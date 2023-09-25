@@ -8,8 +8,6 @@
 // The class has been redesigned for interfaces and traits. This file was left for compatibility with the old logic.
 namespace class\redaktor;
 
-
-
 // API
 //function notFalseAndNULL($data):true/false  If the variable exists, is not equal to false and is not equal to NULL then return true
 //function printMas($mas)                     Displays the contents of a variable with a hint of what type it is.
@@ -18,13 +16,8 @@ namespace class\redaktor;
 
 class instrument implements interface\interface\InterfaceWorkToType, 
                             interface\interface\InterfaceButton, 
-                            interface\interface\InterfaceWorkToFiles,
                             interface\interface\InterfaceFoUser
 {
-    public function __construct()
-    {
-    }  
-
    use \class\redaktor\interface\trait\TraitInterfaceWorkToType;
    use \class\redaktor\interface\trait\TraitInterfaceButton;
    use \class\redaktor\interface\trait\TraitInterfaceWorkToFiles; 
@@ -33,9 +26,6 @@ class instrument implements interface\interface\InterfaceWorkToType,
    use \class\redaktor\interface\trait\TraitInterfaceDebug;
    use \class\redaktor\interface\trait\TraitInterfaceWorkToMail;
 }
-
-
-
 
 // API
 // function notFalseAndNULL($data):true/false Если переменная существует, не равна false и не равна NULL то вернуть true

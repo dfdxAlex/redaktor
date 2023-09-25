@@ -1,0 +1,97 @@
+html {
+    font-size: 18px;
+    font-family: 'Tilt Prism', cursive;
+}
+
+body {
+    background-color: #c6a5a5;
+    margin: 0px;
+    min-height: 500px;
+}
+
+section {
+    min-height: 450px;
+}
+
+.form-InputClassName {
+    width: 120px;
+}
+/* стиль кнопки первая страница */
+.buttom-level-one {
+    height: 35px;
+    width: 260px;
+    background-color: #c58383;
+    color:azure;
+    text-align:left;
+    font-size: 14px;
+    margin-top: 1px;
+    border: 0px;
+}
+
+.buttom-level-one:hover{
+    color:#551A8B;
+}
+
+.buttom-level-one:active{
+    color:#10001e;
+    background-color: #dec3c3;
+}
+
+.select-div {
+  position:absolute;
+  top: 75px;
+  right: 15%;
+  width: 450;
+  
+}
+
+.test-obj--to-string {
+  position:absolute;
+  left:300px;
+  top:110px;
+}
+
+.buttom-level-one--select {
+    width: 100px;
+}
+
+.menu-lang {
+    position:fixed;
+    right: 10px;
+    font-size: 34px;
+    top: -20px;
+}
+
+.menu-up {
+    height: 50px;
+    background-color: #c58383;
+    font-size: inherit;
+}
+
+.menu-up ul {
+    padding-left: 0px;
+}
+
+.menu-up ul li, .lang-menu--li{
+    list-style-type: none;
+    display: inline;
+    margin-left: 20px;
+}
+
+.menu-up ul li a{
+    text-decoration: none;
+    font-size: 1.7em;
+}
+
+footer {
+    height: 50px;
+    background-color: #694e4e;
+}
+.redaktor-lang {
+    margin-left: 20px;
+}
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
+

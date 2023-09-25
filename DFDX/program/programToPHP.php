@@ -6,7 +6,6 @@ namespace class\redaktor;
 session_start();
 require "../funcii.php";
 require "../functionDfdx.php";
-require "../image/swapImages.php";
 require "../class.php";
 
   $redaktor= new Modul();
@@ -79,7 +78,7 @@ $header->showSiteHeader('image/logo.png');
  <div class="col-12">';
 //второе меню. В кнопки можно добавлять через массив добавляя пару Название=>ссылка
 //названия кнопок должны отличаться. 
-$header->menuOfOurProjects(array('IP Калькулятор'=>'IPCalculator\IPCalculator.php','CV creator'=>'../../CV/cv.php'));
+$header->menuOfOurProjects(array('IP Калькулятор'=>'IPCalculator\IPCalculator.php','CV creator'=>'../../CV/public/cv.php'));
 echo '</div>
   </div>
   </section>';

@@ -101,23 +101,38 @@ echo '<section class="container-fluid">';
 echo '<div class="row">';
 
 // блок для вывода левого меню
+// blok wyświetlania lewego menu
 // block for displaying the left menu
 $nonTemplates->leftMenu();
 
 // имя таблица со статьями для функции news1
+// nazwa tabeli z artykułami dla funkcji news1
 // table name with articles for news1 function
 $nameBD='bd2';
 $nameBD='nameTD='.$nameBD;
 
 //метка для счётчика статистики посещения конкретной страницы
+//etykieta licznika statystyk odwiedzin na określonej stronie
 //label for the statistics counter of visits to a specific page
 $metka="tic_tac_toe"; //метка для счётчика статистики посещения конкретной страницы
+
+// функция управляет выводом статей в разных режимах используя функцию news1
+// funkcja steruje wyświetlaniem artykułów w różnych trybach za pomocą funkcji news1
+// the function controls the output of articles in different modes using the news1 function
+//$nonTemplates->publishNews($redaktor,'action=tic_tac_toe.php','Число_статей=5',-1,$nameBD,'категория-tic_tac_toe','Раздел=tictactoe','buttonTwitter');
 
 echo '<div class="col-xl-8 col-lg-8 col-md-9 col-sm-8 col-12">';  // Центр
 // функция начальных установок
 $gameF->pickSide();
-echo '</div>'; 
+echo '</div>'; //закрыть центр
 
+//Закоментированная строка внизу заменяется на кнопку твиттера в сгенерированных статьях    
+//The commented out line at the bottom is replaced with a twitter button in generated articles 
+//buttonTwitter
+
+// функция отображает правое меню вместе со своей частью разметки Бутстрапа и функцией поиска по сайту
+// the function displays the right menu along with its part of the Bootstrap markup and the site search function
+//$nonTemplates->rightMenu($statistik,"home");
 echo '</div>';
 echo '</section>';
 

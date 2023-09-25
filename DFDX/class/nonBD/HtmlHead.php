@@ -28,7 +28,7 @@ namespace class\nonBD;
 // $indexMin должен быть >=0 но меньше $indexMax
 
 // $oblect = new HtmlHead('css/styles.css','scp',$classBody='non',$indexMin=0,$indexMax=0);
-class HtmlHead
+class HtmlHead implements interface\IHtmlHead
 {
     private $name;
     private $title;
@@ -50,11 +50,11 @@ class HtmlHead
 
         // If the user defined a class for body, then add it without the last quote
         // You need to append without the last quote in order to be able to add the style number,
-        //if random style works
+        // if random style works
 
         // Если для body пользователь определил класс, то дописать его без последней кавычки
         // Дописывать нужно без последней кавычки для того, чтобы иметь возможность добавить номер стиля, 
-        //если работает случайный стиль
+        // если работает случайный стиль
         if ($this->classBody!='non')  $returnClassBody=' class="'.$this->classBody;
 
         // if a random class variant is specified for body, then add a random number to the class name

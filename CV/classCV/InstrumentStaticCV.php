@@ -29,6 +29,10 @@ class InstrumentStaticCV
     // Функция меняет стиль при создании CV, подставляет стили из настроек вместо стилей из таблицы CSS
     static function listSkillFontSetup()
     {
+            if (isset($_SESSION['font_size_skill_list']))
+                $fontSizeSkillList = $_SESSION['font_size_skill_list'];
+            else
+                $fontSizeSkillList=16;
             // найти ДИВ который держит в себе один из списка Скилов скил и задать ему стиль
             echo "<script>
                     function listSkillFontSetup()
@@ -37,7 +41,7 @@ class InstrumentStaticCV
                        
                         for (zzz in name1) 
                             if (typeof name1[zzz]=='object')
-                                name1[zzz].style.fontSize = '{$_SESSION['font_size_skill_list']}px';
+                                name1[zzz].style.fontSize = '".$fontSizeSkillList."px';
                         
                     }
                   </script>";
@@ -45,6 +49,9 @@ class InstrumentStaticCV
 
     static function listSkillRowSetup()
     {
+            if (!isset($_SESSION['row_size_skill_list']))
+                $_SESSION['row_size_skill_list']=2;
+
             // найти ДИВ который держит в себе один из списка Скилов скил и задать ему стиль
             echo "<script>
                     function listSkillRowSetup()
@@ -53,7 +60,7 @@ class InstrumentStaticCV
                        
                         for (zzz in name1) 
                             if (typeof name1[zzz]=='object')
-                                name1[zzz].style.lineHeight = '{$_SESSION['row_size_skill_list']}px';
+                                name1[zzz].style.lineHeight = '".$_SESSION['row_size_skill_list']."px';
                         
                     }
                   </script>";

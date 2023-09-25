@@ -10,6 +10,7 @@ echo new src\libraries\Header;
  * Объект работает с переводами фраз на разные языки
  */
 $obj = new src\libraries\DelegatorLang();
+
 // $obj->setRedactorLang(true);
 $obj->control();
 //  $obj->echoDataMas(); //посмотреть или отредактировать базу переводов

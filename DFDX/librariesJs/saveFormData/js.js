@@ -81,7 +81,6 @@ function listSaveId(...args)
     // клонируем массив.
     masElementSave = args.concat();
 }
-
 /**
  *  функция определяет тип записи, session or local
  *  по умолчанию запись типа local - на всегда

@@ -1,9 +1,5 @@
 # Project: "Generator CV"
 
-<!-- <div id="header" align="left">
-  <img src="https://media.giphy.com/media/hp8svqfEfk7q4qPgfy/giphy.gif" width="260"/>
-</div> -->
-
 <div>
 <a href="https://www.youtube.com/channel/UCsIw_8Tx-R3ZKEcwvw5oGzA">
   <img src="https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white">
@@ -41,15 +37,31 @@
        - Observer  
        - Property container  
 - Gradually study and implement design patterns in projects.
-- To work with tables in my projects I use technology MySQL.
-- At the same time, I study frontend technologies. In the frontend I use technologies: HTML5+API, CSS3, JavaScript+jQuery+Bootstrap
+- To work with tables in my projects I use technology MySQL.  
+- At the same time, I study frontend technologies. In the frontend I use technologies:  
+   - HTML5+API  
+      - Forms  
+      - Canvas  
+      - Drag&Drop  
+      - Web Storage  
+      - Geolocation  
+   - CSS3  
+   - JavaScript  
+      - DOM  
+      - jQuery  
+      - Bootstrap  
 
 ***
 
 ### :man_technologist: About the project :
-- :smile_cat: The task of the project is to accept data from the user and create a CV according to the template.
-- :smile_cat: The server part of the project, the back-end, I will create in PHP. The information is stored in a database using MySQL technology.
-- :smile_cat: Part of the frontend is built on HTML5, CSS3, JavaScript, Bootstrap technologies.
+- The task of the project is to accept data from the user and create a CV according to the template.
+- The server part of the project, the back-end, I will create in PHP. The information is stored in a database using MySQL technology.
+- Part of the frontend is built on HTML5, CSS3, JavaScript, Bootstrap technologies.
+- The project consists of:
+   - CSS (style directory)  
+   - class (basic PHP library)  
+   - classCV (project library)  
+   - cv.php (project start file)
 
 <hr>
 
