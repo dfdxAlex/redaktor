@@ -1,6 +1,4 @@
-@mixin baseStyles
-{
+
     body{
-        background: linear-gradient(#648880, #293f50);
+        background: linear-gradient($startGradient, $finishGradient);
     }
-}

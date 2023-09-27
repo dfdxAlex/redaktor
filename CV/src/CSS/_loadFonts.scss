@@ -1,5 +1,4 @@
-@mixin loadFonts
-{
+
     @font-face {
         font-family: 'beer';
         src: url('../fonts/beer-money12.ttf') format("truetype");
@@ -18,4 +17,4 @@
         src: url('../fonts/ReactiveAnchor-L3L0n.ttf') format("truetype");
     }
     
-}
+

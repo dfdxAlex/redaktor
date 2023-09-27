@@ -1,3 +1,6 @@
+@import "globalProperty";
+
+@import "baseStyles";
 @import "pageSetting";
 @import "createCv";
 @import "protectedPersonalData";
@@ -5,26 +8,4 @@
 @import "loadFoto";
 @import "loadFonts";
 @import "buttonSelectLang";
-@import "baseStyles";
-
-@include pageSetting;
-@include createCv;
-@include protectedPersonalData;
-@include pagesInputData;
-@include loadFoto;
-@include loadFonts;
-@include buttonSelectLang;
-@include baseStyles;
-
-
-///////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
 
