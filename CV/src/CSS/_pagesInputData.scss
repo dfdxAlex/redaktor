@@ -1,3 +1,5 @@
+@import "pagesInputData/pageSelectPatternCV";
+@import "pagesInputData/pageInputName";
 
 .form-languages, .form-certificates, .skills_short{
     float: left;
@@ -71,63 +73,6 @@
     }
 }
 
-.name-form{
-    float:left;
-    margin-top: 150px;
-    form div{
-        width: 200px;
-        float:left;
-        input {
-            margin-left: 20px;
-            color:black;
-            height: 38px;
-        }
-        input[type="submit"]{
-            background: #466368;
-        }
-    }
-    p {
-        float:left;
-        margin-left: 100px; 
-        font-size: 25px; 
-    }
-}
+@include pageInputName;
 
-.pattern-row-1{
-    float: left;
-    margin-top: 150px;
-    height: auto;
-    .image-pattern{
-        height: 300px;
-        width: 200px;
-        padding: 0px;
-    }
-    .image-pattern-button{
-        height: 300px;
-        width: 200px;
-        padding: 0px;
-    }
-    .image-pattern-button:hover{
-        height: 300px;
-        width: 200px;
-        padding: 0px;
-        position: relative;
-        top:-20px;
-    }
-    .image-pattern-button-2{
-        height: 300px;
-        width: 200px;
-        padding: 0px;
-        position: relative;
-        top:-20px;
-    }
-    .image-pattern:hover{
-        height: 300px;
-        width: 200px;
-        padding: 0px;
-    }
-    .mesage-select-pattern{
-        color:hsl(204, 62%, 67%);
-        font-size: 25px;
-    }
-}
+@include pageSelectPatternCV;

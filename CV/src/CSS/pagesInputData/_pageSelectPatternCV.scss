@@ -1,0 +1,27 @@
+@mixin pageSelectPatternCV {
+    .pattern-row-1{
+        float: left;
+        margin-top: 150px;
+        height: auto;
+        .image-pattern, .image-pattern-button,
+        .image-pattern-button:hover, .image-pattern-button-2,
+        .image-pattern:hover
+        {
+            height: 300px;
+            width: 200px;
+            padding: 0px;
+        }
+        .image-pattern-button:hover{
+            position: relative;
+            top:-20px;
+        }
+        .image-pattern-button-2{
+            position: relative;
+            top:-20px;
+        }
+        .mesage-select-pattern{
+            color:hsl(204, 62%, 67%);
+            font-size: 25px;
+        }
+    }
+}
