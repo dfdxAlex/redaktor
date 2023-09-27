@@ -1,0 +1,50 @@
+@mixin poleInfo 
+{
+    .pole-info{
+        background: -webkit-linear-gradient(top, rgba(255, 255, 255) 50%, rgb(234, 229, 229) 100%) no-repeat, #97c49a ;
+        height: 83%;
+        width: 22cm;
+        margin-top: 10px;
+        box-shadow:  #495253 10px 10px;/*inset;*/
+        border-radius: 10px;
+        outline: 1px solid black;
+        outline-offset: -4px;
+
+        .summary, .experience, .education, .language, 
+        .sertificates, .git, .list-skills, .summary-text, 
+        .experience-text, .education_text, .git-text,
+        .list-skills--container, .language_text, .sertificates_text {
+            margin-top: 10px;
+            font-weight: 700;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .summary, .experience, .education, .language, 
+        .sertificates, .git, .list-skills {
+            div {
+                padding-left: 10px;
+                font-size: 23px;
+                line-height: 27px;
+                border-bottom: 1px solid #090909;
+            }
+        }
+        .summary-text, .experience-text, 
+        .education_text, .git-text {
+            div {
+                padding: 0 25px;
+                border-left: 2mm ridge rgba(24, 3, 65, 0.6);
+                font-weight: 400;
+            }
+        }
+        .list-skills--container,
+        .language_text, .sertificates_text {
+            padding: 0 25px;
+            border-left: 2mm ridge rgba(24, 3, 65, 0.6);
+        }
+
+        .skills{
+            min-height: 10px;
+        }
+    } 
+}

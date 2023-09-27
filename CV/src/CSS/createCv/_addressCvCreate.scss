@@ -1,0 +1,15 @@
+@mixin addressCvCreate{
+    .address-cv-create p{
+        margin-top: 10px;
+        font-size: 16px;
+        line-height: 15px;
+        color:#fefbfb;
+    }
+    .address-cv-create p:nth-child(odd) {
+        font-weight: 900;
+        line-height: 5px;
+    }
+    div[class="col-5 address-cv-create"] {
+        height: 150px;
+    }
+}

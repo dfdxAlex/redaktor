@@ -1,3 +1,6 @@
+@import "createCv/serviseCreateDfdx";
+@import "createCv/addressCvCreate";
+@import "createCv/poleInfo";
 
     .create-cv{
         width: 100%;
@@ -7,88 +10,12 @@
         background-image: url("../images/f3.jpg");
         background-repeat: no-repeat;
         background-size: cover;
-        .pole-info{
-            background: -webkit-linear-gradient(top, rgba(255, 255, 255) 50%, rgb(234, 229, 229) 100%) no-repeat, #97c49a ;
-            height: 83%;
-            width: 22cm;
-            margin-top: 10px;
-            box-shadow:  #495253 10px 10px;/*inset;*/
-            border-radius: 10px;
-            outline: 1px solid black;
-            outline-offset: -4px;
-    
-            .summary, .experience, .education, .language, 
-            .sertificates, .git, .list-skills, .summary-text, 
-            .experience-text, .education_text, .git-text,
-            .list-skills--container, .language_text, .sertificates_text {
-                margin-top: 10px;
-                font-weight: 700;
-                width: 100%;
-                font-size: 16px;
-            }
-    
-            .summary, .experience, .education, .language, 
-            .sertificates, .git, .list-skills {
-                div {
-                    padding-left: 10px;
-                    font-size: 23px;
-                    line-height: 27px;
-                    border-bottom: 1px solid #090909;
-                }
-            }
-            .summary-text, .experience-text, 
-            .education_text, .git-text {
-                div {
-                    padding: 0 25px;
-                    border-left: 2mm ridge rgba(24, 3, 65, 0.6);
-                    font-weight: 400;
-                }
-            }
-            .list-skills--container,
-            .language_text, .sertificates_text {
-                padding: 0 25px;
-                border-left: 2mm ridge rgba(24, 3, 65, 0.6);
-            }
-    
-            .skills{
-                min-height: 10px;
-            }
-        } // конец pole-info
-    
-        // стиль заголовка - имя и фамилия
-        .name p{
-            margin-top: 20px;
-            margin-left: 20px;
-            font-size: 55px;
-            font-weight: 900;
-            line-height: 50px;
-            color:#fefbfb;
-            text-shadow: #466368 5px 5px;
-            font-family: "cd2f1";
-            transform: translate(15px, -5px) rotate(-5deg);  // перемещает элемент на новое место
-        }
-        .name button{
-            all: initial; // сбросить унаследованные стили
-        }
-            
-        .address-cv-create p{
-            margin-top: 10px;
-            font-size: 16px;
-            line-height: 15px;
-            color:#fefbfb;
-        }
-        .address-cv-create p:nth-child(odd) {
-            font-weight: 900;
-            line-height: 5px;
-        }
-        div[class="col-5 address-cv-create"] {
-            height: 150px;
-        }
-    } /*конец create-cv*/
 
+        @include poleInfo;
 
-.servis-create-dfdx{
-    font-size: 11px;
-    margin-top: 7px;
-    color: rgb(248, 242, 242);
-}
+        @include addressCvCreate;
+
+    }
+
+@include serviseCreateDfdx;
+
