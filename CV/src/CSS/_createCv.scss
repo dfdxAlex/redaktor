@@ -1,6 +1,7 @@
 @import "createCv/serviseCreateDfdx";
 @import "createCv/addressCvCreate";
 @import "createCv/poleInfo";
+@import "createCv/nameAndButton";
 
     .create-cv{
         width: 100%;
@@ -18,4 +19,7 @@
     }
 
 @include serviseCreateDfdx;
+
+@include nameAndButton;
+
 
