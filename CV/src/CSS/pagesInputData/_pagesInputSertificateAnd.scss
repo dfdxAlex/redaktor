@@ -1,0 +1,31 @@
+    .form-languages, 
+    .form-certificates, 
+    .skills_short{
+        float: left;
+        margin-top: 150px;
+        width: 400px;
+        font-size: 25px;
+        input[name="form_plus"], 
+        input[name="form_minus"] {
+            margin-top: 50px;
+            margin-left: 5px;
+            float: right;
+            height: 40px;
+            width: 40px;
+        }
+        ul {
+            margin-top: 5px;
+        }
+        li{
+            text-align: left;
+        }
+        input[name*="form_text"] {
+            width: 100%;
+            height: 38px;
+            border-radius: 5px;
+        }
+        p {
+            color:#c2d5e2;
+        }
+    }
+
