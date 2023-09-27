@@ -1,4 +1,6 @@
  
+@import "loadFoto/displayWebkit";
+
 .field__wrapper {
     width: 100%;
     position: relative;
@@ -14,15 +16,10 @@
    
   .field__file-wrapper {
     width: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+    @include displayWebkit;
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
   }
@@ -30,12 +27,7 @@
   .field__file-fake {
     height: 60px;
     width: calc(100% - 130px);
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    @include displayWebkit;
     padding: 0 15px;
     border: 1px solid #c7c7c7;
     border-radius: 3px 0 0 3px;
@@ -49,12 +41,7 @@
     color: #fff;
     font-size: 1.125rem;
     font-weight: 700;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    @include displayWebkit;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
@@ -85,9 +72,6 @@
     .pole-text-name-CV{
         color:black;
         height: 38px;
-    }
-    .pole-boot-col-name-CV{
-        float:left;
     }
 }
 
