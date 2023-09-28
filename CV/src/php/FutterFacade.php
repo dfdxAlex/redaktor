@@ -2,7 +2,7 @@
 namespace src\php;
 
 use \class\nonBD\HtmlFutter;
-use \class\js\connectFunctionJs\ConnectObjRunConstruct;
+use \src\php\loadClassJs\ConnectObjRunConstruct;
 
 class FutterFacade
 {
@@ -12,13 +12,8 @@ class FutterFacade
 
         $newStringConnect = str_replace('</body>','',$stringConnectBootstrap);
         
-        // $linkForFileJs = new ConnectLibraryJs([
-        //     '../src/js/MyLib.js'
-        // ]);
-        $linkForFileJs="";
-
         new ConnectObjRunConstruct(['src/js/isValid/ClassIsValidFontSize']);
 
-        echo $linkForFileJs.$stringConnectBootstrap.'</body>';
+        echo $stringConnectBootstrap.'</body>';
     }
 }
