@@ -50,7 +50,7 @@ class Setting
             </div>
             <div class='row'>
                 <div class='col-1'>
-                    <input type='number' name='listSkillFontSize' min='1', max='50' id='listSkillFontSize' form='form_setting' value='{$_SESSION['font_size_skill_list']}'>
+                    <input type='number' name='listSkillFontSize' id='listSkillFontSize' form='form_setting' value='{$_SESSION['font_size_skill_list']}'>
                 </div>
                 <div class='col-11'>
                     <label class='styleText' for='listSkillFontSize'> $text2 </label>

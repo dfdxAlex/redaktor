@@ -7,7 +7,7 @@ session_start();
 // подключение автозагрузчика библиотеки DFDX
 require_once "../class/autoloader.php";
 
-use \src\php\FutterDecorator;
+use \src\php\FutterFacade;
 
 use \class\nonBD\HtmlHead;
 // класс хранит шаг пользователя
@@ -53,4 +53,4 @@ Level::dataHunt(new \classCV\Certificates(),
 $controller = new Controler();
 Controler::control();
 
-new FutterDecorator();
+new FutterFacade();
