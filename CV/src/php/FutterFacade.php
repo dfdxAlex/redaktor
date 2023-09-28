@@ -12,7 +12,10 @@ class FutterFacade
 
         $newStringConnect = str_replace('</body>','',$stringConnectBootstrap);
         
-        new ConnectObjRunConstruct(['src/js/isValid/ClassIsValidFontSize']);
+        new ConnectObjRunConstruct(['src/js/isValid/ClassIsValidFontSize',
+                                    'src/js/isValid/ClassIsValidRowSize',
+                                    'src/js/isValid/CheckNumberOfColumns'
+                                   ]);
 
         echo $stringConnectBootstrap.'</body>';
     }
