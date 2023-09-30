@@ -8,6 +8,7 @@ use \classCV\forCvCreate\StackTehnologi;
 use \classCV\forCvCreate\CommercialExperience;
 use \classCV\forCvCreate\Experience;
 use \classCV\forCvCreate\GetPropertyEducation;
+use \classCV\forCvCreate\CreateLinkForGit;
 
 // класс формирует страницу
 class CVCreate
@@ -21,8 +22,6 @@ class CVCreate
 
     function CV1()
     {
-        $skills_text="";
-
         new SetPropertySession;
 
         new UserInfo($mas);
@@ -40,15 +39,9 @@ class CVCreate
         new GetPropertyEducation($mas);
         [$education, $education_text] = $mas;
 
+        new CreateLinkForGit($mas);
+        [$git, $git_text] = $mas;
 
-        // формирование ссылки на гит
-        if ($_SESSION['git']!='') {
-            $git='GIT';
-            $git_text="<a href='{$_SESSION['git']}' target='_blank'>{$_SESSION['git']}</a>";
-        } else {
-               $git='';  
-               $git_text='';
-        }
 
         // формирование строки с перечнем сертификатов
         if ($_SESSION['certificates_numer']>0) {
