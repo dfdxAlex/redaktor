@@ -9,6 +9,7 @@ use \classCV\forCvCreate\CommercialExperience;
 use \classCV\forCvCreate\Experience;
 use \classCV\forCvCreate\GetPropertyEducation;
 use \classCV\forCvCreate\CreateLinkForGit;
+use \classCV\forCvCreate\GetPropertySertificates;
 
 // класс формирует страницу
 class CVCreate
@@ -42,22 +43,9 @@ class CVCreate
         new CreateLinkForGit($mas);
         [$git, $git_text] = $mas;
 
-
-        // формирование строки с перечнем сертификатов
-        if ($_SESSION['certificates_numer']>0) {
-            $certificates=(string)  new Translation('Сертификаты');
-            $certificates_text="";
-            for ($i=0; $i<$_SESSION['certificates_numer']; $i++) {
-                $sert=$_SESSION['certificates_name'.$i];
-                $certificates_text.="
-                    <div class='row'>
-                        <div class='col-12'>
-                            <div>$sert</div> 
-                        </div>
-                    </div>
-                ";
-            }
-        } else $certificates='';  
+        new GetPropertySertificates($mas);
+        [$certificates, $certificates_text] = $mas;
+ 
 
         // формирование строк с перечнем языков и уровнем владения языками
         if ($_SESSION['languages_numer']>0) {
