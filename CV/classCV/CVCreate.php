@@ -1,8 +1,9 @@
 <?php
 namespace classCV;
 
-use classCV\forCvCreate\SetPropertySession;
+use \classCV\forCvCreate\SetPropertySession;
 use \class\nonBD\Translation;
+use \classCV\forCvCreate\UserInfo;
 
 // класс формирует страницу
 class CVCreate
@@ -17,26 +18,15 @@ class CVCreate
     function CV1()
     {
         $skills_text="";
-        
+
         new SetPropertySession;
 
-        // формирование строки с адресом
-        if ($_SESSION['address']!='') {
-            $address=(string)  new Translation('Адрес');
-            $addressTeg="<p>$address :</p><p>{$_SESSION['address']}</p>";
-        } else $addressTeg='';
+        new UserInfo($mas);
+        [$addressTeg, $telTeg, $emailTeg] = $mas;
 
-        // формирование строки с телефоном
-        if ($_SESSION['tel']!='') {
-            $tel=(string)  new Translation('Телефон');
-            $telTeg="<p>$tel :</p><p>{$_SESSION['tel']}</p>";
-        } else $telTeg='';     
+    
         
-        // формирование строки с электронной почтой
-        if ($_SESSION['email']!='') {
-            $email=(string)  new Translation('Почта');
-            $emailTeg="<p>$email :</p><p>{$_SESSION['email']}</p>";
-        } else $emailTeg='';  
+
 
         // формирование строк для списка скилов
         if ($_SESSION['skillsbriefly_numer']>0) {
