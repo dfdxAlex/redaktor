@@ -6,6 +6,8 @@ use \class\nonBD\Translation;
 use \classCV\forCvCreate\UserInfo;
 use \classCV\forCvCreate\StackTehnologi;
 use \classCV\forCvCreate\CommercialExperience;
+use \classCV\forCvCreate\Experience;
+use \classCV\forCvCreate\GetPropertyEducation;
 
 // класс формирует страницу
 class CVCreate
@@ -32,24 +34,12 @@ class CVCreate
         new CommercialExperience($mas);
         [$skills, $skills_text] = $mas;
 
-        // формирование строк с описанием опыта
-        if ($_SESSION['experience']!='') {
-            $experience=(string)  new Translation('Опыт');
-            $experience_text="{$_SESSION['experience']}";
-        } else {
-                $experience='';  
-                $experience_text='';
-            }
+        new Experience($mas);
+        [$experience, $experience_text] = $mas;
 
+        new GetPropertyEducation($mas);
+        [$education, $education_text] = $mas;
 
-        // формирование строк с описанием образования
-        if ($_SESSION['education']!='') {
-            $education=(string)  new Translation('Образование');
-            $education_text="{$_SESSION['education']}";
-        } else {
-               $education='';  
-               $education_text='';
-        }
 
         // формирование ссылки на гит
         if ($_SESSION['git']!='') {
