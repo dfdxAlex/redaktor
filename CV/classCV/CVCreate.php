@@ -1,6 +1,7 @@
 <?php
 namespace classCV;
 
+use classCV\forCvCreate\SetPropertySession;
 // класс формирует страницу
 class CVCreate
 {
@@ -15,9 +16,8 @@ class CVCreate
     {
         $skills_text="";
         
-        if (!isset($_SESSION['number_columns_skill_list']))
-            $_SESSION['number_columns_skill_list']=2;
-        
+        new SetPropertySession;
+
         // формирование строки с адресом
         if ($_SESSION['address']!='') {
             $address=(string)  new \class\nonBD\Translation('Адрес');
@@ -80,7 +80,7 @@ class CVCreate
         // формирование строк со скилами
         if ($_SESSION['skills']!='') {
             $skills=(string)  new \class\nonBD\Translation('Резюме');
-            $skills_text="{$_SESSION['skills']}";
+            $skills_text=$_SESSION['skills'];
         } else $skills='';  
 
         // формирование строк с описанием опыта
