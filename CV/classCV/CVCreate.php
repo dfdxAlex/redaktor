@@ -4,6 +4,8 @@ namespace classCV;
 use \classCV\forCvCreate\SetPropertySession;
 use \class\nonBD\Translation;
 use \classCV\forCvCreate\UserInfo;
+use \classCV\forCvCreate\StackTehnologi;
+
 
 // класс формирует страницу
 class CVCreate
@@ -24,50 +26,8 @@ class CVCreate
         new UserInfo($mas);
         [$addressTeg, $telTeg, $emailTeg] = $mas;
 
-    
-        
-
-
-        // формирование строк для списка скилов
-        if ($_SESSION['skillsbriefly_numer']>0) {
-
-            /////////////////////////////////////////////////////////////////////////////////
-            // объявление функции listSkillFontSetup()
-            InstrumentStaticCV::listSkillFontSetup();
-            // объявление функции listSkillRowSetup()
-            InstrumentStaticCV::listSkillRowSetup();
-            // Скрипт загружает событие, которое отслеживает вводимую информацию в число столбцов
-            InstrumentStaticCV::loadFunctionEventLoad('listSkillFontSetup');
-            // Скрипт загружает событие, которое отслеживает вводимую информацию в число столбцов
-            InstrumentStaticCV::loadFunctionEventLoad('listSkillRowSetup');
-            /////////////////////////////////////////////////////////////////////////////////listSkillRowSetup
-
-            $listSkills=(string)  new Translation('Список навыков');
-            $listSkills_text="<section class='container-fluid list-skills--container'>";
-            $priznak=true;
-            $numberColumns=$_SESSION['number_columns_skill_list'];
-            $numbersCol=12/$numberColumns;
-
-            for ($i=1; $i<=$_SESSION['skillsbriefly_numer']; $i++) {
-                $skillsL=$_SESSION['skillsbriefly_name'.$i-1];
-
-                if ((($i-1)%$numberColumns==0 && $i>$numberColumns) || $i==1) {
-                    $listSkills_text.="<div class='row list-skills-text'>";
-                    $priznak=false;
-                }
-                $listSkills_text.="
-                        <div class='col-$numbersCol'>
-                            <div class='skills'>$skillsL</div> 
-                        </div>
-                ";
-                if ((($i)%$numberColumns==0 && $i>2) || ($numberColumns==1)) {
-                    $listSkills_text.="</div>";
-                    $priznak=true;
-                }
-            }
-            if (!$priznak) $listSkills_text.="</div>";
-            $listSkills_text.="</section>";
-        }
+        new StackTehnologi($mas);
+        [$listSkills,$listSkills_text] = $mas;
 
         // формирование строк со скилами
         if ($_SESSION['skills']!='') {

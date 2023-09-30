@@ -9,7 +9,7 @@ class UserInfo
     {
         $mas[0] = $this->adress();
         $mas[1] = $this->tel();
-        $mas[1] = $this->email();
+        $mas[2] = $this->email();
     }
 
     private function adress()

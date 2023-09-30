@@ -65,8 +65,4 @@ class InstrumentStaticCV
                     }
                   </script>";
     }
-
-    
-
-
 }
