@@ -10,7 +10,7 @@ use \classCV\forCvCreate\Experience;
 use \classCV\forCvCreate\GetPropertyEducation;
 use \classCV\forCvCreate\CreateLinkForGit;
 use \classCV\forCvCreate\GetPropertySertificates;
-
+use \classCV\forCvCreate\GetLanguage;
 // класс формирует страницу
 class CVCreate
 {
@@ -18,7 +18,7 @@ class CVCreate
     public function __toString()
     {
         if ($_SESSION['pattern']==1)
-        return (string) $this->CV1();
+        return $this->CV1();
     }
 
     function CV1()
@@ -46,26 +46,8 @@ class CVCreate
         new GetPropertySertificates($mas);
         [$certificates, $certificates_text] = $mas;
  
-
-        // формирование строк с перечнем языков и уровнем владения языками
-        if ($_SESSION['languages_numer']>0) {
-            $language=(string)  new Translation('Знания языков');
-            $language_text="";
-            for ($i=0; $i<$_SESSION['languages_numer']; $i++) {
-                $lang=$_SESSION['languages'.$i];
-                $langLevl=$_SESSION['languages-level'.$i];
-                $language_text.="
-                    <div class='row'>
-                        <div class='col-4'>
-                            <div>$lang</div>
-                        </div>
-                        <div class='col-8'>
-                            <div>$langLevl</div>
-                        </div>
-                    </div>
-                ";
-            }
-        } else $language='';  
+        new GetLanguage($mas);
+        [$language, $language_text] = $mas;
 
         $servisCreateDFDX=(string) new Translation('CV сгенерировано на моем проекте "cv.php"');
         
@@ -175,32 +157,33 @@ class CVCreate
         ';
     }
 
-    public function buttonLoadCV()
-    {
-        $cvCreate=(string) new Translation('Скачать CV');
-        echo "<form action='#' method='post'>
-            <input type='submit' value='$cvCreate' name='loadCV' class='btn btn-info'>
-        </form>";
-    }
+    // public function buttonLoadCV()
+    // {
+    //     $cvCreate=(string) new Translation('Скачать CV');
+    //     echo "<form action='#' method='post'>
+    //         <input type='submit' value='$cvCreate' name='loadCV' class='btn btn-info'>
+    //     </form>";
+    // }
 
-    public function buttonPrintCV()
-    {
-        $cvCreate=(string) new Translation('Создать CV');
-        echo "<form action='#' method='post'>
-            <input type='submit' value='$cvCreate' name='printCV' class='btn btn-info'>
-        </form>";
-    }
+    // public function buttonPrintCV()
+    // {
+    //     $cvCreate=(string) new Translation('Создать CV');
+    //     echo "<form action='#' method='post'>
+    //         <input type='submit' value='$cvCreate' name='printCV' class='btn btn-info'>
+    //     </form>";
+    // }
 
     public function createCV()
     {
             echo $this->CV1();
     }
-    public function printCV()
-    {
-        if ($_SESSION['nameFile']=='') return false;
-        $cvCreate=(string) new Translation('Открыть последнее CV');
-        echo "<form action='{$_SESSION['nameFile']}' method='post'>
-            <input type='submit' value='$cvCreate' name='printCV' class='btn btn-info'>
-        </form>";
-    }
+
+    // public function printCV()
+    // {
+    //     if ($_SESSION['nameFile']=='') return false;
+    //     $cvCreate=(string) new Translation('Открыть последнее CV');
+    //     echo "<form action='{$_SESSION['nameFile']}' method='post'>
+    //         <input type='submit' value='$cvCreate' name='printCV' class='btn btn-info'>
+    //     </form>";
+    // }
 }
