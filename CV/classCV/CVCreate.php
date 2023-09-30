@@ -5,7 +5,7 @@ use \classCV\forCvCreate\SetPropertySession;
 use \class\nonBD\Translation;
 use \classCV\forCvCreate\UserInfo;
 use \classCV\forCvCreate\StackTehnologi;
-
+use \classCV\forCvCreate\CommercialExperience;
 
 // класс формирует страницу
 class CVCreate
@@ -29,11 +29,8 @@ class CVCreate
         new StackTehnologi($mas);
         [$listSkills,$listSkills_text] = $mas;
 
-        // формирование строк со скилами
-        if ($_SESSION['skills']!='') {
-            $skills=(string)  new Translation('Резюме');
-            $skills_text=$_SESSION['skills'];
-        } else $skills='';  
+        new CommercialExperience($mas);
+        [$skills, $skills_text] = $mas;
 
         // формирование строк с описанием опыта
         if ($_SESSION['experience']!='') {
