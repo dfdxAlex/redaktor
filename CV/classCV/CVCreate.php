@@ -1,8 +1,9 @@
 <?php
 namespace classCV;
 
-use \classCV\forCvCreate\SetPropertySession;
 use \class\nonBD\Translation;
+
+use \classCV\forCvCreate\SetPropertySession;
 use \classCV\forCvCreate\UserInfo;
 use \classCV\forCvCreate\StackTehnologi;
 use \classCV\forCvCreate\CommercialExperience;
@@ -11,6 +12,8 @@ use \classCV\forCvCreate\GetPropertyEducation;
 use \classCV\forCvCreate\CreateLinkForGit;
 use \classCV\forCvCreate\GetPropertySertificates;
 use \classCV\forCvCreate\GetLanguage;
+use \classCV\forCvCreate\VievCv;
+
 // класс формирует страницу
 class CVCreate
 {
@@ -23,138 +26,47 @@ class CVCreate
 
     function CV1()
     {
+        $masRez = [];
+
         new SetPropertySession;
 
         new UserInfo($mas);
         [$addressTeg, $telTeg, $emailTeg] = $mas;
+        array_push($masRez, $addressTeg, $telTeg, $emailTeg);
 
         new StackTehnologi($mas);
         [$listSkills,$listSkills_text] = $mas;
+        array_push($masRez, $listSkills, $listSkills_text);
 
         new CommercialExperience($mas);
         [$skills, $skills_text] = $mas;
+        array_push($masRez, $skills, $skills_text);
 
         new Experience($mas);
         [$experience, $experience_text] = $mas;
+        array_push($masRez, $experience, $experience_text);
 
         new GetPropertyEducation($mas);
         [$education, $education_text] = $mas;
+        array_push($masRez, $education, $education_text);
 
         new CreateLinkForGit($mas);
         [$git, $git_text] = $mas;
+        array_push($masRez, $git, $git_text);
 
         new GetPropertySertificates($mas);
         [$certificates, $certificates_text] = $mas;
+        array_push($masRez, $certificates, $certificates_text);
  
         new GetLanguage($mas);
         [$language, $language_text] = $mas;
+        array_push($masRez, $language, $language_text);
 
-        $servisCreateDFDX=(string) new Translation('CV сгенерировано на моем проекте "cv.php"');
-        
-       // $menu = new ButtonMenuUp;
-        
-        return '
-               <section class="container create-cv">
-                <div class="row">
-                    <div class="col-7 name">
-                        <button name="lives1" form="form_setting">
-                        <p> '.$_SESSION['name'].' </p>
-                        <p> '.$_SESSION['surname'].'</p>
-                        </button>
-                    </div>
-                    <div class="col-5 address-cv-create">
-                        '.$addressTeg.'
-                        '.$telTeg.'
-                        '.$emailTeg.'
-                    </div>
-                </div>
+        $servisCreateDFDX = new Translation('CV сгенерировано на моем проекте "cv.php"');
+        $masRez[] = $servisCreateDFDX;
 
-                <section class="container-fluid pole-info">
-
-                   <div class="row">
-                       <div class="col-12 list-skills">
-                           <div>'.$listSkills.'</div>
-                       </div>
-                   </div>
-                           '.$listSkills_text.'
-
-                    <div class="row">
-                        <div class="col-12 summary">
-                            <div>'.$skills.'</div>
-                        </div>
-                    </div><div class="row">
-                        <div class="col-12 summary-text">
-                            <div>'.$skills_text.'</div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 experience">
-                            <div>'.$experience.'</div>
-                        </div>
-                    </div><div class="row">
-                        <div class="col-12 experience-text">
-                            <div>'.$experience_text.'</div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 education">
-                            <div>'.$education.'</div>
-                        </div>
-                        </div><div class="row">
-                        <div class="col-12 experience-text">
-                            <div>'.$education_text.'</div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 language">
-                            <div>'.$language.'</div>
-                        </div>
-                    </div>
-                    <div class="language_text">
-                       '.$language_text.'
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 sertificates">
-                            <div>'.$certificates.'</div>
-                        </div>
-                    </div>
-
-                    <div class="sertificates_text">
-                        '.$certificates_text.'
-                    </div>
-
-                    <div class="row">
-                    <div class="col-12 git">
-                        <div>'.$git.'</div>
-                    </div>
-                    </div><div class="row">
-                        <div class="col-12 git-text">
-                            <div>'.$git_text.'</div>
-                        </div>
-                    </div>
-
-                    <div class="danych">
-                    Na podstawie art. 7 ust. 1 Rozporządzenia Parlamentu 
-                    Europejskiego i Rady UE 2016/679 z 27 kwietnia 
-                    2016 r. w sprawie ochrony osób fizycznych w związku 
-                    z przetwarzaniem danych osobowych i w sprawie 
-                    swobodnego przepływu takich danych oraz uchylenia 
-                    dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie 
-                    danych), oświadczam, iż wyrażam zgodę na przetwarzanie 
-                    przez Administratora, moich 
-                    danych osobowych w zakresie ujętym w CV, w celu 
-                    przeprowadzenia procedury rekrutacji na to stanowisko
-                    </div> 
-                </section>
-
-                <div class="servis-create-dfdx">'.$servisCreateDFDX.'</div> 
-
-            </section>
-        ';
+        $obj = new VievCv($masRez);
+        return $obj->getCv();
     }
 
     // public function buttonLoadCV()
