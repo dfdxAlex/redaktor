@@ -14,7 +14,6 @@ use \classCV\forCvCreate\GetPropertySertificates;
 use \classCV\forCvCreate\GetLanguage;
 use \classCV\forCvCreate\VievCv;
 
-// класс формирует страницу
 class CVCreate
 {
 
@@ -69,33 +68,9 @@ class CVCreate
         return $obj->getCv();
     }
 
-    // public function buttonLoadCV()
-    // {
-    //     $cvCreate=(string) new Translation('Скачать CV');
-    //     echo "<form action='#' method='post'>
-    //         <input type='submit' value='$cvCreate' name='loadCV' class='btn btn-info'>
-    //     </form>";
-    // }
-
-    // public function buttonPrintCV()
-    // {
-    //     $cvCreate=(string) new Translation('Создать CV');
-    //     echo "<form action='#' method='post'>
-    //         <input type='submit' value='$cvCreate' name='printCV' class='btn btn-info'>
-    //     </form>";
-    // }
-
     public function createCV()
     {
             echo $this->CV1();
     }
 
-    // public function printCV()
-    // {
-    //     if ($_SESSION['nameFile']=='') return false;
-    //     $cvCreate=(string) new Translation('Открыть последнее CV');
-    //     echo "<form action='{$_SESSION['nameFile']}' method='post'>
-    //         <input type='submit' value='$cvCreate' name='printCV' class='btn btn-info'>
-    //     </form>";
-    // }
 }
