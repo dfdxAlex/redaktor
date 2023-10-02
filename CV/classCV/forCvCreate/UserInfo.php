@@ -16,7 +16,7 @@ class UserInfo
     {
         if ($_SESSION['address']!='') {
             $address=(string) new Translation('Адрес');
-            return "<p>$address :</p><p>".$_SESSION['address']."</p>";
+            return "<p>$address :".$_SESSION['address']."</p>";
         }
         return '';
     }
@@ -25,7 +25,7 @@ class UserInfo
     {
         if ($_SESSION['tel']!='') {
             $tel=(string) new Translation('Телефон');
-            return "<p>$tel :</p><p>".$_SESSION['tel']."</p>";
+            return "<p>$tel :".$_SESSION['tel']."</p>";
         } 
         return '';
     }
@@ -34,7 +34,7 @@ class UserInfo
     {
         if ($_SESSION['email']!='') {
             $email=(string) new Translation('Почта');
-            return "<p>$email :</p><p>".$_SESSION['email']."</p>";
+            return "<p>$email :".$_SESSION['email']."</p>";
         } 
         return '';
     }

@@ -24,15 +24,15 @@ class VievCv
         ] = $mas;
 
         $this->vievCv = '
-               <section class="container create-cv">
+               <section class="container-fluid create-cv">
                 <div class="row">
-                    <div class="col-7 name">
+                    <div class="col-3 name">
                         <button name="lives1" form="form_setting">
                         <p> '.$_SESSION['name'].' </p>
                         <p> '.$_SESSION['surname'].'</p>
                         </button>
                     </div>
-                    <div class="col-5 address-cv-create">
+                    <div class="col-9 address-cv-create">
                         '.$addressTeg.'
                         '.$telTeg.'
                         '.$emailTeg.'

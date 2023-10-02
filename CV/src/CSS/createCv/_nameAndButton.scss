@@ -1,17 +1,24 @@
 @mixin nameAndButton
 {
           // стиль заголовка - имя и фамилия
-          .name p{
-            margin-top: 20px;
-            margin-left: 20px;
-            font-size: 55px;
-            font-weight: 900;
-            line-height: 50px;
-            color:#fefbfb;
-            text-shadow: #466368 5px 5px;
-            font-family: "cd2f1";
-            transform: translate(15px, -5px) rotate(-5deg);  // перемещает элемент на новое место
-        }
+          .name{
+             p:nth-child(1) {
+                 font-size: 30px;
+             }
+             p{
+              margin-top: 20px;
+              margin-left: 5px;
+              font-size: 45px;
+              font-weight: 900;
+              line-height: 50px;
+              color:#fefbfb;
+              text-shadow: #466368 5px 5px;
+              font-family: "cd2f1";
+              transform: translate(15px, -5px) rotate(-5deg);  // перемещает элемент на новое место
+              }
+
+           }
+
         .name button{
             all: initial; // сбросить унаследованные стили
         }

@@ -3,16 +3,13 @@ namespace classCV;
 
 use \class\nonBD\Translation;
 
-use \classCV\forCvCreate\SetPropertySession;
-use \classCV\forCvCreate\UserInfo;
-use \classCV\forCvCreate\StackTehnologi;
-use \classCV\forCvCreate\CommercialExperience;
-use \classCV\forCvCreate\Experience;
-use \classCV\forCvCreate\GetPropertyEducation;
-use \classCV\forCvCreate\CreateLinkForGit;
-use \classCV\forCvCreate\GetPropertySertificates;
-use \classCV\forCvCreate\GetLanguage;
-use \classCV\forCvCreate\VievCv;
+use \classCV\forCvCreate\{
+                          SetPropertySession, UserInfo,
+                          StackTehnologi, CommercialExperience,
+                          Experience, GetPropertyEducation,
+                          CreateLinkForGit, GetPropertySertificates,
+                          GetLanguage, VievCv
+                        };
 
 class CVCreate
 {
@@ -20,7 +17,7 @@ class CVCreate
     public function __toString()
     {
         if ($_SESSION['pattern']==1)
-        return $this->CV1();
+            return $this->CV1();
     }
 
     function CV1()

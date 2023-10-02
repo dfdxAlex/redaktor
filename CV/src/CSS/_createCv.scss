@@ -4,9 +4,10 @@
 @import "createCv/nameAndButton";
 
     .create-cv{
-        width: 100%;
+        border: 2px solid white;
+        margin-left: 0;
+        width: 22cm;
         padding: 0;
-        border: 0;
         height: 32cm;
         background-image: url("../images/f3.jpg");
         background-repeat: no-repeat;
