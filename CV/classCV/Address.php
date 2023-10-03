@@ -46,7 +46,7 @@ class Address
         }
         if ($for==="Linkedln") {
             $str = '<label for="Linkedln">Linkedln:</label>';
-            $str2 = '<input type="url" name="Linkedln" id="Linkedln" value="'.$_SESSION['Linkedln'].'"><br>';
+            $str2 = '<input type="text" name="Linkedln" id="Linkedln" value="'.$_SESSION['Linkedln'].'"><br>';
         }
         if ($for==="email") {
             $str = '<label for="email">'. new \class\nonBD\Translation('Почта').':</label>';

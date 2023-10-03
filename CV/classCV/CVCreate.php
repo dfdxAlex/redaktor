@@ -27,8 +27,10 @@ class CVCreate
         new SetPropertySession;
 
         new UserInfo($mas);
-        [$addressTeg, $telTeg, $emailTeg] = $mas;
-        array_push($masRez, $addressTeg, $telTeg, $emailTeg);
+        [$addressTeg, $telTeg, $emailTeg, 
+         $youtube, $gitHub, $linkdln] = $mas;
+        array_push($masRez, $addressTeg, $telTeg, $emailTeg, 
+                   $youtube, $gitHub, $linkdln);
 
         new StackTehnologi($mas);
         [$listSkills,$listSkills_text] = $mas;

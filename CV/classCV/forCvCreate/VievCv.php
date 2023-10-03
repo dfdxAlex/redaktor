@@ -13,6 +13,7 @@ class VievCv
     public function __construct(array $mas)
     {
         [$addressTeg, $telTeg, $emailTeg,
+        $youtube, $gitHub, $linkdln,
         $listSkills,$listSkills_text,
         $skills, $skills_text,
         $experience, $experience_text,
@@ -32,10 +33,17 @@ class VievCv
                         <p> '.$_SESSION['surname'].'</p>
                         </button>
                     </div>
-                    <div class="col-9 address-cv-create">
+                    <div class="col-5 address-cv-create">
                         '.$addressTeg.'
                         '.$telTeg.'
                         '.$emailTeg.'
+                        '.$youtube.'
+                        '.$gitHub.'
+                        '.$linkdln.'
+                    </div>
+                    <div class="col-4">
+                        <div class="fotoCvCreate">
+                        </div>
                     </div>
                 </div>
 
