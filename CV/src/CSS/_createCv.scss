@@ -1,14 +1,15 @@
-@import "createCv/serviseCreateDfdx";
+// @import "createCv/serviseCreateDfdx";
 @import "createCv/addressCvCreate";
 @import "createCv/poleInfo";
 @import "createCv/nameAndButton";
 
     .create-cv{
         border: 2px solid white;
-        margin-left: 0;
-        width: 22cm;
+        // margin-left: 0;
+        width: 25cm;
         padding: 0;
-        height: 32cm;
+        height: 37cm;
+        // height: 31.5cm;
         background-image: url("../images/f3.jpg");
         background-repeat: no-repeat;
         background-size: cover;
@@ -19,7 +20,7 @@
 
     }
 
-@include serviseCreateDfdx;
+// @include serviseCreateDfdx;
 
 @include nameAndButton;
 

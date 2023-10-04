@@ -105,16 +105,6 @@ class VievCv
                         '.$certificates_text.'
                     </div>
 
-                    <div class="row">
-                    <div class="col-12 git">
-                        <div>'.$git.'</div>
-                    </div>
-                    </div><div class="row">
-                        <div class="col-12 git-text">
-                            <div>'.$git_text.'</div>
-                        </div>
-                    </div>
-
                     <div class="danych">
                     Na podstawie art. 7 ust. 1 Rozporządzenia Parlamentu 
                     Europejskiego i Rady UE 2016/679 z 27 kwietnia 
@@ -128,10 +118,8 @@ class VievCv
                     przeprowadzenia procedury rekrutacji na to stanowisko
                     </div> 
                 </section>
-
-                <div class="servis-create-dfdx">'.$servisCreateDFDX.'</div> 
-
             </section>
         ';
     }
 }
+

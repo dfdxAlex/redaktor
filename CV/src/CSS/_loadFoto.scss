@@ -75,15 +75,19 @@
     }
 }
 
+$koef:1.0;
+$width: 149px*$koef;
+$height: 179px*$koef;
+// @debug $width;
 .fotoCvCreate {
   box-shadow:  #495253 5px 5px;
-  width: 149px;
-  height: 179px;
+  width: $width;
+  height: $height;
   position: relative;
   top: 5px;
   left: 15px;
   background-image: url("../images/fotoCV.jpg");
   background-repeat: no-repeat;
-  border-radius: 25px;
+  border-radius: 5px;
 }
 
