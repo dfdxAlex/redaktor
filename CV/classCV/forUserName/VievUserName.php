@@ -41,7 +41,7 @@ class VievUserName
 
     public function vievRowTwo()
     {
-        return '
+        $rez = '
         <div class="row">
           <div class="col-3">
             <input type="text" name="name" value="'.$this->in->getName().'">
@@ -56,6 +56,7 @@ class VievUserName
           </div>
         </div>
         ';
+        return $rez;
     }
 
     public function vievRowOne()

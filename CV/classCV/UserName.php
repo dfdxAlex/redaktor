@@ -3,6 +3,7 @@ namespace classCV;
 
 use \class\nonBD\Translation;
 use \classCV\forUserName\VievUserName;
+use \Exception;
 
 // класс Класс принимает имя пользователя
 class UserName
@@ -21,12 +22,16 @@ class UserName
 
     public function getName()
     {
-        return $_SESSION['name'];
+        if (isset($_SESSION['name']))
+            return $_SESSION['name'];
+        return '';
     }
 
     public function getSurname()
     {
-        return $_SESSION['surname'];
+        if (isset($_SESSION['surname']))
+            return $_SESSION['surname'];
+        return '';
     }
 
     public function nameForm()
@@ -50,18 +55,31 @@ class UserName
 
     private function createSessionName()
     {
-        if (!isset($_SESSION['name']) 
-            || (isset($_SESSION['name']) 
-                && ($_SESSION['name']=='' 
-                    || $_SESSION['name']=='Name'  
-                        || $_SESSION['name']=='Imię' 
-                            || $_SESSION['name']=='Ім\'я' 
-                                || $_SESSION['name']=='Имя'))) 
-            $_SESSION['name'] = new Translation('Имя');
+        try {
+            if (!isset($_SESSION['name']) 
+                || (isset($_SESSION['name']) 
+                    && ($_SESSION['name']=='' 
+                        || $_SESSION['name']=='Name'  
+                            || $_SESSION['name']=='Imię' 
+                                || $_SESSION['name']=='Ім\'я' 
+                                    || $_SESSION['name']=='Имя'))) {
+                                        $_SESSION['name'] = (string) new Translation('Имя');
+                                    }
+                                    
+            $typ = gettype($_SESSION['name']);
+            if ($typ == "object") throw new Exception('');
+        } catch (Exception $e) {
+            unset($_SESSION['name']);
+            $_SESSION['name'] = (string) new Translation('Имя');
+        }
+            
     }
 
+
+    
     private function createSessionSurname()
     {
+        try {
         if (!isset($_SESSION['surname']) 
             || (isset($_SESSION['surname']) 
                 && ($_SESSION['surname']=='' 
@@ -69,7 +87,14 @@ class UserName
                         || $_SESSION['surname']=='Nazwisko' 
                             || $_SESSION['surname']=='Прізвище' 
                                 || $_SESSION['surname']=='Фамилия'))) 
-            $_SESSION['surname'] = new Translation('Фамилия');
+            $_SESSION['surname'] = (string) new Translation('Фамилия');
+
+            $typ = gettype($_SESSION['surname']);
+            if ($typ == "object") throw new Exception('');
+        } catch (Exception $e) {
+            unset ($_SESSION['surname']);
+            $_SESSION['surname'] = (string) new Translation('Фамилия');
+        }
     }
 
     private function createSessionYoutube()
