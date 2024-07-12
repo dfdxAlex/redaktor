@@ -1,4 +1,9 @@
 <?php
+/**
+ *Создает переменные сессий, если они ещё не созданыы и дает им 
+ *значения стартовые.
+ */
+
 namespace classCV\forCvCreate;
 
 class SetPropertySession

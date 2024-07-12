@@ -3,22 +3,44 @@
           // стиль заголовка - имя и фамилия
           .name{
              p:nth-child(1) {
+                @if $patternMin!=1 {
                  font-size: 30px;
+                 
+                } @else {
+                    font-size: 25px;
+                    padding-left: 30px;
+                    width: 400px;
+                  //   background-color: #b56a6a;
+                }
              }
+             p:nth-child(2) {
+               @if $patternMin==1 {
+                   font-size: 25px;
+                   padding-left: 30px;
+                   width: 500px;
+                }
+               }
              p{
-              margin-top: 20px;
-              margin-left: 5px;
-              font-size: 45px;
-              font-weight: 900;
-              line-height: 50px;
-              color:#fefbfb;
-              text-shadow: #466368 5px 5px;
-              font-family: "cd2f1";
-              transform: translate(15px, -5px) rotate(-5deg);  // перемещает элемент на новое место
-              }
-
+               @if $patternMin!=1 {
+                margin-top: 20px;
+                margin-left: 5px;
+                font-size: 45px;
+                font-weight: 900;
+                line-height: 50px;
+                color:#fefbfb;
+                text-shadow: #466368 5px 5px;
+                font-family: "cd2f1";
+                transform: translate(15px, -5px) rotate(-5deg);  // перемещает элемент на новое место
+               } @else {
+                margin-top: 20px;
+                margin-left: 35px;
+                font-size: 25px;
+                font-weight: 900;
+                line-height: 15px;
+               //  background-color: #b56a6a;
+               }
+            }
            }
-
         .name button{
             all: initial; // сбросить унаследованные стили
         }

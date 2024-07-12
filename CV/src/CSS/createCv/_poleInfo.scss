@@ -2,14 +2,20 @@
 {
     // поле с резюме
     .pole-info{
-        background: -webkit-linear-gradient(top, rgba(255, 255, 255) 50%, rgb(234, 229, 229) 100%) no-repeat, #97c49a ;
         height: 83%;
         width: 22cm;
-        margin-top: 10px;
-        box-shadow:  #495253 10px 10px;
-        border-radius: 10px;
-        outline: 1px solid black;
-        outline-offset: -4px;
+        // margin-top: 10px;
+        margin-top: -50px;
+        @if $patternMin!=1 {
+            background: -webkit-linear-gradient(top, rgba(255, 255, 255) 50%, rgb(234, 229, 229) 100%) no-repeat, #97c49a ;
+            box-shadow:  #495253 10px 10px;
+            border-radius: 10px;
+            outline: 1px solid black;
+            outline-offset: -4px;
+        }
+        
+        
+        
 
         .summary, .experience, .education, .language, 
         .sertificates, .list-skills, .summary-text, 

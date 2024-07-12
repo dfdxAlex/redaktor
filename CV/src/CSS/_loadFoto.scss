@@ -80,6 +80,7 @@ $width: 149px*$koef;
 $height: 179px*$koef;
 // @debug $width;
 .fotoCvCreate {
+  @if $photoNon!=1 {
   box-shadow:  #495253 5px 5px;
   width: $width;
   height: $height;
@@ -89,5 +90,6 @@ $height: 179px*$koef;
   background-image: url("../images/fotoCV.jpg");
   background-repeat: no-repeat;
   border-radius: 5px;
+ }
 }
 

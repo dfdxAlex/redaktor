@@ -4,6 +4,12 @@
         font-size: 16px;
         line-height: 15px;
         color:#fefbfb;
+        @if $patternMin==1 {
+            color:#080000;
+            padding-left: 300px;
+            width: 700px;
+        }
+        // background-color: #381414;
     }
     .address-cv-create p:nth-child(odd) {
         font-weight: 900;

@@ -8,7 +8,7 @@ class Languages
     {
         if (!isset($_SESSION['languages_numer'])) $_SESSION['languages_numer']=1; // число полей для заполнения
 
-
+        // echo $_SESSION['languages_numer'];
     }
 
     public function __toString()
@@ -37,11 +37,12 @@ class Languages
                     '.$nameLevelButton.'
                     </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Родной').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Свободное владение языком').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Читаю, пишу и разговариваю').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Могу читать и разговаривать').'"></li>
-                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Читаю документацию с переводчиком').'"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="C2"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="C1"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="B2"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="B1"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="A2"></li>
+                    <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="A1"></li>
                 </ul>
                 </div>
             </div> 
@@ -99,3 +100,11 @@ class Languages
         return $button;
     }
 }
+
+// Старый блок выбора языка. Если в будущем не понадобится, 
+// то удалить!!
+// <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Родной').'"></li>
+// <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Свободное владение языком').'"></li>
+// <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Читаю, пишу и разговариваю').'"></li>
+// <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Могу читать и разговаривать').'"></li>
+// <li><input type="submit" name="form_sub'.$i.'" class="dropdown-item" value="'.(string) new \class\nonBD\Translation('Читаю документацию с переводчиком').'"></li>
