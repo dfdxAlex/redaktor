@@ -27,36 +27,6 @@ class CVCreate
          * UserInfo($mas); изменяет переданный массив и наполняет его
          * html инфой личных данных. 
          */
-        // new UserInfo($mas);
-        // array_push($masRez, ...$mas);
-        // unset($mas);
-
-        // new StackTehnologi($mas);
-        // array_push($masRez, ...$mas);
-        // unset($mas);
-
-        // new CommercialExperience($mas);
-        // array_push($masRez, ...$mas);
-        // unset($mas);
-
-        // new Experience($mas);
-        // array_push($masRez, ...$mas);
-        // unset($mas);
-
-        // new GetPropertyEducation($mas);
-        // array_push($masRez, ...$mas);
-        // unset($mas);
-
-        // new CreateLinkForGit($mas);
-        // array_push($masRez, ...$mas);
-        // unset($mas);
-
-        // new GetPropertySertificates($mas);
-        // array_push($masRez, ...$mas);
-        // unset($mas);
- 
-        // new GetLanguage($mas);
-        // array_push($masRez, ...$mas);
 
         $classes = [
             'UserInfo',
