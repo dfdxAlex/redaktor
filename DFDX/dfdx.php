@@ -158,29 +158,3 @@ new \class\classNew\futter\FutterGeneral($metka);
 // the function connects the second part of the bootstrap and closes the html document
 $futter->closeHtmlDok();
 
-
-class Test
-{
-  use interface\trait\TraitInterfaceButton;
-
-  public function __construct()
-  {
-      $this->formBlockMas(['class-test','#','test',
-                           'span',
-                           'Сброс',
-                           'i am is class',
-                          ]);
-      $this->formBlock('class-test','#','test','btn_start',
-                          'span',
-                          'Сброс',
-                          'i am is class',
-                         );
-
-  }
-  
-}
-
-$obj = new Test;
-
-
-
