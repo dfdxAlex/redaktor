@@ -50,7 +50,7 @@ class VievUserName
             <input type="text" name="surname" value="'.$this->in->getSurname().'">
           </div>
           <div class="col-3">
-            <input type="text" name="youtube" value="@amatorDed">
+            <input type="text" name="youtube" value="'.$_SESSION['youtube'].'">
           </div>
           <div class="col-3">
           </div>

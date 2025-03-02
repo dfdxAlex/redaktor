@@ -1,9 +1,9 @@
 
     body{
         min-height: 100vh;
-        @if $patternMin!=1 {
-            background: linear-gradient($startGradient, $finishGradient);
-        } @else {
-            background: -webkit-linear-gradient(top, rgba(255, 255, 255) 50%, rgb(234, 229, 229) 100%) no-repeat, #97c49a ;
-        }
+        // @if $patternMin!=1 {
+        //     background: linear-gradient($startGradient, $finishGradient);
+        // } @else {
+        //     background: -webkit-linear-gradient(top, rgba(255, 255, 255) 50%, rgb(234, 229, 229) 100%) no-repeat, #97c49a ;
+        // }
     }

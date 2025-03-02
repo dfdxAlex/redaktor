@@ -14,7 +14,10 @@ class VievCv
     {
         [$addressTeg, $telTeg, $emailTeg,
         $youtube, $gitHub, $linkdln,
+
         $listSkills,$listSkills_text,
+
+        $position, $position_text,
         $skills, $skills_text,
         $experience, $experience_text,
         $education, $education_text,
@@ -55,12 +58,22 @@ class VievCv
                        </div>
                    </div>
                            '.$listSkills_text.'
-
+                    <div class="row">
+                       <div class="col-12 list-skills">
+                           <div>'.$position.'</div>
+                       </div>
+                   </div>
+                    <div class="row">
+                        <div class="col-12 summary-text">
+                            <div>'.$position_text.'</div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12 summary">
                             <div>'.$skills.'</div>
                         </div>
-                    </div><div class="row">
+                    </div>
+                    <div class="row">
                         <div class="col-12 summary-text">
                             <div>'.$skills_text.'</div>
                         </div>

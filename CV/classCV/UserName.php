@@ -42,14 +42,15 @@ class UserName
     function nameHunt()
     {
         if (isset($_REQUEST['nameFoCV'])) {
-            if ($_REQUEST['name']!='')
-                $_SESSION['name']=$_REQUEST['name'];
+            //if ($_REQUEST['name']!='')
+            $_SESSION['name']=$_REQUEST['name'];
 
-            if ($_REQUEST['surname']!='')
-                $_SESSION['surname']=$_REQUEST['surname'];
+            //if ($_REQUEST['surname']!='')
+            $_SESSION['surname']=$_REQUEST['surname'];
 
-            if ($_REQUEST['youtube']!='')
-                $_SESSION['youtube']=$_REQUEST['youtube'];
+//            if ($_REQUEST['youtube']!='')
+            $_SESSION['youtube']=$_REQUEST['youtube'];
+            //echo $_REQUEST['youtube'];
         } 
     }
 
@@ -99,9 +100,7 @@ class UserName
 
     private function createSessionYoutube()
     {
-        if (!isset($_SESSION['youtube']) 
-            || (isset($_SESSION['youtube']) 
-                && $_SESSION['youtube']=='')) 
+        if (!isset($_SESSION['youtube'])) 
             $_SESSION['youtube'] = "@amatorDed";
     }
 }

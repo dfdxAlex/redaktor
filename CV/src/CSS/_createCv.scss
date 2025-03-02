@@ -6,12 +6,12 @@
     .create-cv{
         width: 25cm;
         padding: 0;
-        // height: 37cm;
+        // height: 39cm;
         height: 35.5cm;
 
         @if $patternMin!=1 {
             border: 2px solid white;
-            background-image: url("../images/f3.jpg");
+            // background-image: url("../images/f3.jpg");
             background-repeat: no-repeat;
             background-size: cover;
         }

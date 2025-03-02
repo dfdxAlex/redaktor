@@ -2,16 +2,17 @@
 {
     // поле с резюме
     .pole-info{
-        height: 83%;
+        // height: 83%;
+        height: 90%;
         width: 22cm;
         // margin-top: 10px;
         margin-top: -20px;
         @if $patternMin!=1 {
-            background: -webkit-linear-gradient(top, rgba(255, 255, 255) 50%, rgb(234, 229, 229) 100%) no-repeat, #97c49a ;
-            box-shadow:  #495253 10px 10px;
-            border-radius: 10px;
-            outline: 1px solid black;
-            outline-offset: -4px;
+            // background: -webkit-linear-gradient(top, rgba(255, 255, 255) 50%, rgb(234, 229, 229) 100%) no-repeat, #97c49a ;
+            // box-shadow:  #495253 10px 10px;
+            // border-radius: 10px;
+            // outline: 1px solid black;
+            // outline-offset: -4px;
         }
         
         

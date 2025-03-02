@@ -52,7 +52,7 @@ class UserInfo
         if ($_SESSION['youtube']!='') {
             $youtube='youtube';
             return "<p>$youtube :".$_SESSION['youtube']."</p>";
-        } 
+        }
         return '';
     }
 

@@ -5,11 +5,9 @@ use \class\nonBD\Translation;
 
 use \classCV\forCvCreate\SetPropertySession;
 use \classCV\forCvCreate\VievCv;
-                        
 
 class CVCreate
 {
-
     public function __toString()
     {
         if ($_SESSION['pattern']==1)
@@ -24,13 +22,14 @@ class CVCreate
         new SetPropertySession;
 
         /**
-         * UserInfo($mas); изменяет переданный массив и наполняет его
-         * html инфой личных данных. 
+         * Массив содержит список слассов, которые будут 
+         * использованны при построении последней страницы CV
          */
 
         $classes = [
             'UserInfo',
             'StackTehnologi',
+            'Position',
             'CommercialExperience',
             'Experience',
             'GetPropertyEducation',
@@ -39,6 +38,12 @@ class CVCreate
             'GetLanguage'
         ];
         
+        /**
+         * Цикл перебирает массив в слассами, из которых создаются
+         * объекты, для получения информации о последней странице.
+         * В переменную $class дописывается путь для автозагрузчика
+         * так как при разыменовании пространство имён не срабатывает.
+         */
         foreach ($classes as $class) {
             $mas = [];
             $class="\\classCV\\forCvCreate\\".$class;
