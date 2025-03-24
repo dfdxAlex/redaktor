@@ -41,6 +41,7 @@ class VievUserName
 
     public function vievRowTwo()
     {
+        if (!isset($_SESSION['youtube'])) $_SESSION['youtube'] = '';
         $rez = '
         <div class="row">
           <div class="col-3">

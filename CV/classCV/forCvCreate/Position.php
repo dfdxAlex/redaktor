@@ -10,14 +10,9 @@ class Position
 
             $listSkills = new Translation('Желаемая должность');
             
-            // $listSkills_text="
-            //                         <strong>
-            //                           FrontEnd, BackEnd, FullStack
-            //                         </strong>
-            //                   ";
             $listSkills_text="
                   <strong>
-                    Programista PLC
+                    Frontend Developer
                   </strong>
             ";
 
